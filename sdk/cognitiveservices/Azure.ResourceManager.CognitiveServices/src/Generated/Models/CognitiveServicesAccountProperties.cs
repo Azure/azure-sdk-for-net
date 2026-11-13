@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -17,8 +16,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private CostControlConnections _costControlConnections;
-        private bool _costControlConnectionsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountProperties"/>. </summary>
         public CognitiveServicesAccountProperties()
@@ -31,8 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CommitmentPlanAssociations = new ChangeTrackingList<CommitmentPlanAssociation>();
             AIFoundryNetworkInjections = new ChangeTrackingList<AIFoundryNetworkInjection>();
             AssociatedProjects = new ChangeTrackingList<string>();
-            AgentHostingConfigurations = new ChangeTrackingList<AgentHostingConfiguration>();
-            CostControlIds = new ChangeTrackingList<ResourceIdentifier>();
+            TrustedCertificateSources = new ChangeTrackingList<TrustedCertificateSource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountProperties"/>. </summary>
@@ -68,19 +64,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="abusePenalty"> The abuse penalty. </param>
         /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
         /// <param name="aiFoundryNetworkInjections"></param>
-        /// <param name="foundryAutoUpgrade"> Represents the foundry auto-upgrade configuration for a Cognitive Services account. </param>
         /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
-        /// <param name="capabilitySettings"> Reusable default agent capability settings inherited by child projects. </param>
-        /// <param name="agentHostingConfigurations"> Customer-owned AKS hosting configurations for Foundry agents. This property can only be specified when the account is created; an existing account without a hosting configuration cannot add one later. This API version supports exactly one configuration, while the array shape is reserved for future API versions that may support multiple configurations. Once set, the configuration cannot be changed, removed, or reordered. Account update requests should omit this property or send the complete existing value unchanged. Responses only include hosting configuration types defined by the requested API version. </param>
-        /// <param name="costControlIds">
-        /// The full resource IDs of cost controls directly attached to this account.
-        /// At the moment the service only supports a single cost control. This will be expanded in future API versions.
-        /// </param>
-        /// <param name="costControlConnections"> The account-level connections used to publish cost control telemetry and events. Application Insights is optional for attachment, accounting, and enforcement and can be configured later. Event Grid must be configured before attaching a cost control with an alert threshold. </param>
+        /// <param name="trustedCertificateSources"> Private CA trust sources for supported features in an AIServices account with allowProjectManagement enabled. Supports one Azure Key Vault source containing version-pinned references to secrets with PEM-encoded CA certificates or certificate bundles. On PUT or PATCH, a non-null array replaces the complete configuration, so include all references to retain. Omit this property or send null to preserve the existing configuration; send an empty array to clear it. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, bool? isStoredCompletionsDisabled, bool? isA365LoggingEnabled, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections, FoundryAutoUpgrade foundryAutoUpgrade, bool? allowProjectManagement, string defaultProject, IList<string> associatedProjects, CognitiveServicesAgentCapabilitySettings capabilitySettings, IList<AgentHostingConfiguration> agentHostingConfigurations, IList<ResourceIdentifier> costControlIds, CostControlConnections costControlConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, bool? isStoredCompletionsDisabled, bool? isA365LoggingEnabled, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IList<string> associatedProjects, IList<TrustedCertificateSource> trustedCertificateSources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -114,14 +103,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AbusePenalty = abusePenalty;
             RaiMonitorConfig = raiMonitorConfig;
             AIFoundryNetworkInjections = aiFoundryNetworkInjections;
-            FoundryAutoUpgrade = foundryAutoUpgrade;
             AllowProjectManagement = allowProjectManagement;
             DefaultProject = defaultProject;
             AssociatedProjects = associatedProjects;
-            CapabilitySettings = capabilitySettings;
-            AgentHostingConfigurations = agentHostingConfigurations;
-            CostControlIds = costControlIds;
-            _costControlConnections = costControlConnections;
+            TrustedCertificateSources = trustedCertificateSources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -253,10 +238,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("networkInjections")]
         public IList<AIFoundryNetworkInjection> AIFoundryNetworkInjections { get; }
 
-        /// <summary> Represents the foundry auto-upgrade configuration for a Cognitive Services account. </summary>
-        [WirePath("foundryAutoUpgrade")]
-        public FoundryAutoUpgrade FoundryAutoUpgrade { get; set; }
-
         /// <summary> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </summary>
         [WirePath("allowProjectManagement")]
         public bool? AllowProjectManagement { get; set; }
@@ -269,34 +250,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("associatedProjects")]
         public IList<string> AssociatedProjects { get; }
 
-        /// <summary> Reusable default agent capability settings inherited by child projects. </summary>
-        [WirePath("capabilitySettings")]
-        public CognitiveServicesAgentCapabilitySettings CapabilitySettings { get; set; }
-
-        /// <summary> Customer-owned AKS hosting configurations for Foundry agents. This property can only be specified when the account is created; an existing account without a hosting configuration cannot add one later. This API version supports exactly one configuration, while the array shape is reserved for future API versions that may support multiple configurations. Once set, the configuration cannot be changed, removed, or reordered. Account update requests should omit this property or send the complete existing value unchanged. Responses only include hosting configuration types defined by the requested API version. </summary>
-        [WirePath("agentHostingConfigurations")]
-        public IList<AgentHostingConfiguration> AgentHostingConfigurations { get; }
-
-        /// <summary>
-        /// The full resource IDs of cost controls directly attached to this account.
-        /// At the moment the service only supports a single cost control. This will be expanded in future API versions.
-        /// </summary>
-        [WirePath("costControlIds")]
-        public IList<ResourceIdentifier> CostControlIds { get; }
-
-        /// <summary> The account-level connections used to publish cost control telemetry and events. Application Insights is optional for attachment, accounting, and enforcement and can be configured later. Event Grid must be configured before attaching a cost control with an alert threshold. </summary>
-        [WirePath("costControlConnections")]
-        public CostControlConnections CostControlConnections
-        {
-            get
-            {
-                return _costControlConnections;
-            }
-            set
-            {
-                _costControlConnections = value;
-                _costControlConnectionsIsDefined = true;
-            }
-        }
+        /// <summary> Private CA trust sources for supported features in an AIServices account with allowProjectManagement enabled. Supports one Azure Key Vault source containing version-pinned references to secrets with PEM-encoded CA certificates or certificate bundles. On PUT or PATCH, a non-null array replaces the complete configuration, so include all references to retain. Omit this property or send null to preserve the existing configuration; send an empty array to clear it. </summary>
+        [WirePath("trustedCertificateSources")]
+        public IList<TrustedCertificateSource> TrustedCertificateSources { get; set; }
     }
 }
