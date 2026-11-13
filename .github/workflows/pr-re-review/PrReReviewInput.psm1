@@ -9,7 +9,7 @@ function Invoke-PrReReviewGhApi {
     param([Parameter(Mandatory)][string[]]$Arguments, [switch]$Raw)
 
     if ($Raw) {
-        return Read-PrReReviewNativeOutput -FilePath 'gh' -Arguments (@('api') + $Arguments)
+        return Read-PrReReviewNativeOutput -Command 'gh' -Arguments (@('api') + $Arguments)
     }
     $output = & gh api @Arguments
     if ($LASTEXITCODE -ne 0) {
@@ -19,15 +19,15 @@ function Invoke-PrReReviewGhApi {
 }
 
 function Read-PrReReviewNativeOutput {
-    param([Parameter(Mandatory)][string]$FilePath, [Parameter(Mandatory)][string[]]$Arguments)
+    param([Parameter(Mandatory)][string]$Command, [Parameter(Mandatory)][string[]]$Arguments)
 
     # Capturing a native command's stdout splits it into lines and drops the final newline;
     # PowerShell 7.4+ keeps the exact bytes when the output is redirected to a file.
     $path = [IO.Path]::GetTempFileName()
     try {
-        & $FilePath @Arguments > $path
+        & $Command @Arguments > $path
         if ($LASTEXITCODE -ne 0) {
-            throw "$FilePath $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
+            throw "$Command $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
         }
         $bytes = [IO.File]::ReadAllBytes($path)
         # Preserve the existing binary fallback, but do not replace invalid text bytes: distinct
@@ -36,7 +36,7 @@ function Read-PrReReviewNativeOutput {
         try {
             return [Text.UTF8Encoding]::new($false, $true).GetString($bytes)
         } catch [Text.DecoderFallbackException] {
-            throw "Cannot decode $FilePath output as UTF-8; refusing to review lossy text."
+            throw "Cannot decode $Command output as UTF-8; refusing to review lossy text."
         }
     } finally {
         Remove-Item -LiteralPath $path -Force -ErrorAction SilentlyContinue

@@ -256,15 +256,15 @@ Describe 'Get-PrReReviewHeadContent' {
         @{ Encoded = 'YYFi'; Label = '0x81' }
     ) {
         $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::OpenStandardOutput().Write([Convert]::FromBase64String('$Encoded'))")
-        { InModuleScope PrReReviewInput -Parameters @{ FilePath = (Get-Process -Id $PID).Path; Arguments = $arguments } {
-            Read-PrReReviewNativeOutput -FilePath $FilePath -Arguments $Arguments
+        { InModuleScope PrReReviewInput -Parameters @{ Command = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -Command $Command -Arguments $Arguments
         } } | Should -Throw
     }
 
     It 'recognizes binary native output containing NUL even when it is not UTF-8' {
         $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::OpenStandardOutput().Write([Convert]::FromBase64String('YQCA'))")
-        $output = InModuleScope PrReReviewInput -Parameters @{ FilePath = (Get-Process -Id $PID).Path; Arguments = $arguments } {
-            Read-PrReReviewNativeOutput -FilePath $FilePath -Arguments $Arguments
+        $output = InModuleScope PrReReviewInput -Parameters @{ Command = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -Command $Command -Arguments $Arguments
         }
         ($null -eq $output) | Should -BeTrue
     }
@@ -276,8 +276,8 @@ Describe 'Get-PrReReviewHeadContent' {
     ) {
         $encoded = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Text))
         $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::Out.Write([Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('$encoded')))")
-        $output = InModuleScope PrReReviewInput -Parameters @{ FilePath = (Get-Process -Id $PID).Path; Arguments = $arguments } {
-            Read-PrReReviewNativeOutput -FilePath $FilePath -Arguments $Arguments
+        $output = InModuleScope PrReReviewInput -Parameters @{ Command = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -Command $Command -Arguments $Arguments
         }
         $output | Should -BeExactly $Text
     }
