@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local shell call. </summary>
-    public partial class ItemFieldLocalShellToolCall : ItemField, IJsonModel<ItemFieldLocalShellToolCall>
+    internal partial class ItemFieldLocalShellToolCall : ItemField, IJsonModel<ItemFieldLocalShellToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldLocalShellToolCall"/> for deserialization. </summary>
         internal ItemFieldLocalShellToolCall()
@@ -149,7 +148,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldLocalShellToolCall(

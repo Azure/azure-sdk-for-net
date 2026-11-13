@@ -95,7 +95,7 @@ public class TextResponseTests
         var events = await CollectEventsAsync(response);
 
         var delta = XAssert.IsType<ResponseTextDeltaEvent>(events[4]);
-        Assert.That(delta.Delta, Is.EqualTo("The answer is 42."));
+        Assert.That(delta.Delta.ToString(), Is.EqualTo("The answer is 42."));
     }
 
     [Test]
@@ -173,9 +173,9 @@ public class TextResponseTests
         var delta1 = XAssert.IsType<ResponseTextDeltaEvent>(events[5]);
         var delta2 = XAssert.IsType<ResponseTextDeltaEvent>(events[6]);
 
-        Assert.That(delta0.Delta, Is.EqualTo("Hello"));
-        Assert.That(delta1.Delta, Is.EqualTo(", "));
-        Assert.That(delta2.Delta, Is.EqualTo("world!"));
+        Assert.That(delta0.Delta.ToString(), Is.EqualTo("Hello"));
+        Assert.That(delta1.Delta.ToString(), Is.EqualTo(", "));
+        Assert.That(delta2.Delta.ToString(), Is.EqualTo("world!"));
     }
 
     [Test]
@@ -209,17 +209,17 @@ public class TextResponseTests
     [Test]
     public async Task Configure_IsCalledBeforeCreatedEvent()
     {
-        double? capturedTemp = null;
+        float? capturedTemp = null;
 
         var response = new TextResponse(CreateContext(), CreateRequest(),
-            configure: r => r.Temperature = 0.7,
+            configure: r => r.Temperature = 0.7f,
             createText: ct => Task.FromResult("hi"));
 
         var events = await CollectEventsAsync(response);
 
         var created = XAssert.IsType<ResponseCreatedEvent>(events[0]);
         capturedTemp = created.Response.Temperature;
-        Assert.That(capturedTemp, Is.EqualTo(0.7));
+        Assert.That(capturedTemp, Is.EqualTo(0.7f));
     }
 
     [Test]
@@ -237,13 +237,13 @@ public class TextResponseTests
     public async Task Configure_WorksWithStreamingMode()
     {
         var response = new TextResponse(CreateContext(), CreateRequest(),
-            configure: r => r.Temperature = 0.9,
+            configure: r => r.Temperature = 0.9f,
             createTextStream: ct => ToAsyncEnumerable("hi"));
 
         var events = await CollectEventsAsync(response);
 
         var created = XAssert.IsType<ResponseCreatedEvent>(events[0]);
-        Assert.That(created.Response.Temperature, Is.EqualTo(0.9));
+        Assert.That(created.Response.Temperature, Is.EqualTo(0.9f));
     }
 
     // ── Edge Cases ───────────────────────────────────────────
@@ -258,7 +258,7 @@ public class TextResponseTests
 
         Assert.That(events, Has.Count.EqualTo(9));
         var delta = XAssert.IsType<ResponseTextDeltaEvent>(events[4]);
-        Assert.That(delta.Delta, Is.EqualTo(""));
+        Assert.That(delta.Delta.ToString(), Is.EqualTo(""));
     }
 
     [Test]

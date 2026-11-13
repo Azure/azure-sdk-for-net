@@ -196,7 +196,7 @@ public class MessageBuilderTests
         Assert.That(item.Status, Is.EqualTo(MessageStatus.Completed));
         XAssert.Single(item.Content);
 
-        var content = XAssert.IsType<MessageContentOutputTextContent>(item.Content[0]);
+        var content = XAssert.IsInstanceOf<ResponseContentPart>(item.Content[0]);
         Assert.That(content.Text, Is.EqualTo("Hello, world!"));
     }
 

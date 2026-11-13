@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Keys are strings with a maximum length of 64 characters. Values are strings
     /// with a maximum length of 512 characters.
     /// </summary>
-    public partial class Metadata : IJsonModel<Metadata>
+    internal partial class Metadata : IJsonModel<Metadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -133,12 +133,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                 switch (prop.Value.ValueKind)
                 {
                     case JsonValueKind.String:
-                        additionalProperties.Add(prop.Name, prop.Value.GetString());
+                        additionalProperties[prop.Name] = prop.Value.GetString();
                         continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new Metadata(additionalProperties, additionalBinaryDataProperties);

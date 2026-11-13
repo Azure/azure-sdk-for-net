@@ -56,9 +56,9 @@ public sealed class TestHandler : ResponseHandler
         }
 
         // Default: simple lifecycle
-        var response = new Models.ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 }

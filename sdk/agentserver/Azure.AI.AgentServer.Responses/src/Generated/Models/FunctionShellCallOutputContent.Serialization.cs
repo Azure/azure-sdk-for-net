@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call output content. </summary>
-    public partial class FunctionShellCallOutputContent : IJsonModel<FunctionShellCallOutputContent>
+    internal partial class FunctionShellCallOutputContent : IJsonModel<FunctionShellCallOutputContent>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputContent"/> for deserialization. </summary>
         internal FunctionShellCallOutputContent()
@@ -160,7 +159,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FunctionShellCallOutputContent(stdout, stderr, outcome, createdBy, additionalBinaryDataProperties);

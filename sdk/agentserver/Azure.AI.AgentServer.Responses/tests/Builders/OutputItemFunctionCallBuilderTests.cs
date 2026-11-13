@@ -107,9 +107,9 @@ public class OutputItemFunctionCallBuilderTests
         var item = XAssert.IsType<OutputItemFunctionToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(fc.ItemId));
         Assert.That(item.CallId, Is.EqualTo("call_001"));
-        Assert.That(item.Name, Is.EqualTo("get_weather"));
-        Assert.That(item.Arguments, Is.EqualTo(""));
-        Assert.That(item.Status, Is.EqualTo(ItemFunctionToolCallStatus.InProgress));
+        Assert.That(item.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(item.FunctionArguments.ToString(), Is.EqualTo(""));
+        Assert.That(item.Status, Is.EqualTo(FunctionCallStatus.InProgress));
     }
 
     [Test]
@@ -134,7 +134,7 @@ public class OutputItemFunctionCallBuilderTests
         var evt = fc.EmitArgumentsDelta("{\"loc");
 
         XAssert.IsType<ResponseFunctionCallArgumentsDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("{\"loc"));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("{\"loc"));
         Assert.That(evt.ItemId, Is.EqualTo(fc.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(fc.OutputIndex));
     }
@@ -148,9 +148,9 @@ public class OutputItemFunctionCallBuilderTests
         var evt = fc.EmitArgumentsDone("{\"location\":\"Seattle\"}");
 
         XAssert.IsType<ResponseFunctionCallArgumentsDoneEvent>(evt);
-        Assert.That(evt.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(evt.FunctionArguments.ToString(), Is.EqualTo("{\"location\":\"Seattle\"}"));
         Assert.That(evt.ItemId, Is.EqualTo(fc.ItemId));
-        Assert.That(evt.Name, Is.EqualTo("get_weather"));
+        Assert.That(evt.FunctionName, Is.EqualTo("get_weather"));
         Assert.That(evt.OutputIndex, Is.EqualTo(fc.OutputIndex));
     }
 
@@ -183,9 +183,9 @@ public class OutputItemFunctionCallBuilderTests
         var item = XAssert.IsType<OutputItemFunctionToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(fc.ItemId));
         Assert.That(item.CallId, Is.EqualTo("call_001"));
-        Assert.That(item.Name, Is.EqualTo("get_weather"));
-        Assert.That(item.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
-        Assert.That(item.Status, Is.EqualTo(ItemFunctionToolCallStatus.Completed));
+        Assert.That(item.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(item.FunctionArguments.ToString(), Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(item.Status, Is.EqualTo(FunctionCallStatus.Completed));
     }
 
     [Test]

@@ -16,3 +16,12 @@ nowarn:AZC0100
 # would either deadlock under ASP.NET Core or duplicate code without value.
 # Same exemption as the parent Azure.AI.AgentServer.Core (and AMQP-based SDKs).
 nowarn:AZC0004
+
+# OPENAI001 is forwarded, not suppressed: public APIs that expose OpenAI.Responses experimental
+# types carry [Experimental("OPENAI001")] (generated models via the TypeSpec @experimental
+# decorator in client.tsp, hand-written APIs directly), and internal code is attributed or
+# pragma-scoped. The one remaining site that cannot be annotated at the source is the
+# System.ClientModel model-reader source generator, which emits an unwrapped OpenAI.OpenAIContext
+# reference into a .g.cs file. Remove this entry once a System.ClientModel release with the fix
+# for https://github.com/Azure/azure-sdk-for-net/issues/64703 is consumed.
+nowarn:OPENAI001 SourceGenerated

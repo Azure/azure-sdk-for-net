@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell tool call. </summary>
-    public partial class ItemFieldFunctionShellCall : ItemField, IJsonModel<ItemFieldFunctionShellCall>
+    internal partial class ItemFieldFunctionShellCall : ItemField, IJsonModel<ItemFieldFunctionShellCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionShellCall"/> for deserialization. </summary>
         internal ItemFieldFunctionShellCall()
@@ -83,6 +82,18 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Caller, _callerIsDefined))
+            {
+                if (Caller != null)
+                {
+                    writer.WritePropertyName("caller"u8);
+                    writer.WriteObjectValue(Caller, options);
+                }
+                else
+                {
+                    writer.WriteNull("caller"u8);
+                }
+            }
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action, options);
             writer.WritePropertyName("status"u8);
@@ -132,8 +143,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            bool callerIsDefined = false;
+            ToolCallCaller caller = default;
             FunctionShellAction action = default;
-            LocalShellCallStatus status = default;
+            FunctionShellCallStatus status = default;
             FunctionShellCallEnvironment environment = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
@@ -153,6 +166,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("caller"u8))
+                {
+                    callerIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCaller.DeserializeToolCallCaller(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("action"u8))
                 {
                     action = FunctionShellAction.DeserializeFunctionShellAction(prop.Value, options);
@@ -160,7 +184,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToLocalShellCallStatus();
+                    status = prop.Value.GetString().ToFunctionShellCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("environment"u8))
@@ -180,7 +204,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldFunctionShellCall(
@@ -188,10 +212,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                 additionalBinaryDataProperties,
                 id,
                 callId,
+                caller,
                 action,
                 status,
                 environment,
-                createdBy);
+                createdBy)
+            {
+                _callerIsDefined = callerIsDefined
+            };
         }
     }
 }

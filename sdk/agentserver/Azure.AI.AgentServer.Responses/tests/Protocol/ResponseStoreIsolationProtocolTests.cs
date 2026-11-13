@@ -125,18 +125,14 @@ public class ResponseStoreIsolationProtocolTests
     {
         _resolvedInput = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
         _resolvedHistory = await context.GetHistoryAsync(cancellationToken: cancellationToken);
-        yield return new ResponseCreatedEvent(0, new ResponseObject(context.ResponseId, "test"));
-        var message = new OutputItemMessage($"msg_{Guid.NewGuid():N}", MessageStatus.Completed,
-            new MessageContent[]
-            {
-                new MessageContentOutputTextContent("owned output", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
-            });
-        yield return new ResponseOutputItemAddedEvent(0, 0, message);
-        yield return new ResponseOutputItemDoneEvent(0, 0, message);
-        var completed = new ResponseObject(context.ResponseId, "test");
-        completed.Output.Add(message);
+        yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = new ResponseObject { Id = context.ResponseId, Model = "test" } };
+        var message = MessageItemFactory.OutputMessage($"msg_{Guid.NewGuid():N}", MessageStatus.Completed, new[] { ResponseContentPart.CreateOutputTextPart("owned output", Array.Empty<ResponseMessageAnnotation>()) });
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = 0, OutputIndex = 0, Item = message };
+        yield return new ResponseOutputItemDoneEvent { SequenceNumber = 0, OutputIndex = 0, Item = message };
+        var completed = new ResponseObject { Id = context.ResponseId, Model = "test" };
+        completed.OutputItems.Add(message);
         completed.SetCompleted();
-        yield return new ResponseCompletedEvent(0, completed);
+        yield return new ResponseCompletedEvent { SequenceNumber = 0, Response = completed };
     }
 
     [TestCase(null, "user-b")]
@@ -153,13 +149,13 @@ public class ResponseStoreIsolationProtocolTests
             ResponseContext context, [EnumeratorCancellation] CancellationToken ct)
         {
             handlerCancellation = ct;
-            var response = new ResponseObject(context.ResponseId, "test");
-            yield return new ResponseCreatedEvent(0, response);
+            var response = new ResponseObject { Id = context.ResponseId, Model = "test" };
+            yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
             try
             {
                 await release.Task.WaitAsync(ct);
                 response.SetCompleted();
-                yield return new ResponseCompletedEvent(0, response);
+                yield return new ResponseCompletedEvent { SequenceNumber = 0, Response = response };
             }
             finally
             {
@@ -213,13 +209,13 @@ public class ResponseStoreIsolationProtocolTests
         async IAsyncEnumerable<ResponseStreamEvent> WaitingResponse(
             ResponseContext context, [EnumeratorCancellation] CancellationToken ct)
         {
-            var response = new ResponseObject(context.ResponseId, "active");
-            yield return new ResponseCreatedEvent(0, response);
+            var response = new ResponseObject { Id = context.ResponseId, Model = "active" };
+            yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
             try
             {
                 await release.Task.WaitAsync(ct);
                 response.SetCompleted();
-                yield return new ResponseCompletedEvent(1, response);
+                yield return new ResponseCompletedEvent { SequenceNumber = 1, Response = response };
             }
             finally
             {
@@ -259,13 +255,13 @@ public class ResponseStoreIsolationProtocolTests
             var user = context.PlatformContext.UserIdKey!;
             var release = releases.GetOrAdd(user, _ => new(TaskCreationOptions.RunContinuationsAsynchronously));
             var done = finished.GetOrAdd(user, _ => new(TaskCreationOptions.RunContinuationsAsynchronously));
-            var response = new ResponseObject(context.ResponseId, user);
-            yield return new ResponseCreatedEvent(0, response);
+            var response = new ResponseObject { Id = context.ResponseId, Model = user };
+            yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
             try
             {
                 await release.Task.WaitAsync(ct);
                 response.SetCompleted();
-                yield return new ResponseCompletedEvent(1, response);
+                yield return new ResponseCompletedEvent { SequenceNumber = 1, Response = response };
             }
             finally
             {

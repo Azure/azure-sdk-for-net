@@ -60,7 +60,7 @@ public class CodeInterpreterCallBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemCodeInterpreterToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemCodeInterpreterToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(CodeInterpreterCallStatus.InProgress));
         Assert.That(item.Code, Is.EqualTo(""));
     }
 
@@ -108,7 +108,7 @@ public class CodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitCodeDelta("import ");
         XAssert.IsType<ResponseCodeInterpreterCallCodeDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("import "));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("import "));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
@@ -120,8 +120,8 @@ public class CodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var d1 = builder.EmitCodeDelta("import ");
         var d2 = builder.EmitCodeDelta("math\n");
-        Assert.That(d1.Delta, Is.EqualTo("import "));
-        Assert.That(d2.Delta, Is.EqualTo("math\n"));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("import "));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("math\n"));
     }
 
     [Test]
@@ -159,7 +159,7 @@ public class CodeInterpreterCallBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemCodeInterpreterToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemCodeInterpreterToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(CodeInterpreterCallStatus.Completed));
         Assert.That(item.Code, Is.EqualTo("print('hi')"));
     }
 

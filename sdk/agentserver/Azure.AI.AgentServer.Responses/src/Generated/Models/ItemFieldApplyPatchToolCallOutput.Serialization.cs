@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Apply patch tool call output. </summary>
-    public partial class ItemFieldApplyPatchToolCallOutput : ItemField, IJsonModel<ItemFieldApplyPatchToolCallOutput>
+    internal partial class ItemFieldApplyPatchToolCallOutput : ItemField, IJsonModel<ItemFieldApplyPatchToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldApplyPatchToolCallOutput"/> for deserialization. </summary>
         internal ItemFieldApplyPatchToolCallOutput()
@@ -83,12 +82,31 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Caller, _callerIsDefined))
+            {
+                if (Caller != null)
+                {
+                    writer.WritePropertyName("caller"u8);
+                    writer.WriteObjectValue(Caller, options);
+                }
+                else
+                {
+                    writer.WriteNull("caller"u8);
+                }
+            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
-            if (Optional.IsDefined(Output))
+            if (Optional.IsDefined(Output, _outputIsDefined))
             {
-                writer.WritePropertyName("output"u8);
-                writer.WriteStringValue(Output);
+                if (Output != null)
+                {
+                    writer.WritePropertyName("output"u8);
+                    writer.WriteStringValue(Output);
+                }
+                else
+                {
+                    writer.WriteNull("output"u8);
+                }
             }
             if (Optional.IsDefined(CreatedBy))
             {
@@ -126,7 +144,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            bool callerIsDefined = false;
+            ToolCallCaller caller = default;
             ApplyPatchCallOutputStatus status = default;
+            bool outputIsDefined = false;
             string output = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
@@ -146,6 +167,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("caller"u8))
+                {
+                    callerIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCaller.DeserializeToolCallCaller(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     status = prop.Value.GetString().ToApplyPatchCallOutputStatus();
@@ -153,6 +185,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("output"u8))
                 {
+                    outputIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         output = null;
@@ -168,7 +201,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldApplyPatchToolCallOutput(
@@ -176,9 +209,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                 additionalBinaryDataProperties,
                 id,
                 callId,
+                caller,
                 status,
                 output,
-                createdBy);
+                createdBy)
+            {
+                _callerIsDefined = callerIsDefined,
+                _outputIsDefined = outputIsDefined
+            };
         }
     }
 }

@@ -6,20 +6,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Apply patch delete file operation. </summary>
-    public partial class ApplyPatchDeleteFileOperation : ApplyPatchFileOperation
+    internal partial class ApplyPatchDeleteFileOperation : ApplyPatchFileOperation
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchDeleteFileOperation"/>. </summary>
         /// <param name="path"> Path of the file to delete. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public ApplyPatchDeleteFileOperation(string path) : base(ApplyPatchFileOperationType.DeleteFile)
         {
-            Argument.AssertNotNull(path, nameof(path));
-
             Path = path;
         }
 

@@ -9,13 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// How the model should select which tool (or tools) to use when generating
-    /// a response. See the `tools` parameter to see how to specify which tools
-    /// the model can call.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceAllowed"/>, <see cref="ToolChoiceFunction"/>, <see cref="ToolChoiceMCP"/>, <see cref="ToolChoiceCustom"/>, <see cref="SpecificApplyPatchParam"/>, <see cref="SpecificFunctionShellParam"/>, <see cref="ToolChoiceFileSearch"/>, <see cref="ToolChoiceWebSearchPreview"/>, <see cref="ToolChoiceComputerUsePreview"/>, <see cref="ToolChoiceWebSearchPreview20250311"/>, <see cref="ToolChoiceImageGeneration"/>, <see cref="ToolChoiceCodeInterpreter"/>, <see cref="ToolChoiceComputer"/>, and <see cref="ToolChoiceComputerUse"/>.
-    /// </summary>
-    public abstract partial class ToolChoiceParam
+    internal abstract partial class ToolChoiceParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

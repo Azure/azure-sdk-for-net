@@ -94,10 +94,10 @@ public class BackgroundTerminalEventTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> FailingStream(
@@ -105,8 +105,8 @@ public class BackgroundTerminalEventTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         throw new InvalidOperationException("Simulated handler failure");
     }
 

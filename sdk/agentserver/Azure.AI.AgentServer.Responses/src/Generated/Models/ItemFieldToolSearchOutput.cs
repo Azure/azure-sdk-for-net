@@ -6,12 +6,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldToolSearchOutput. </summary>
-    public partial class ItemFieldToolSearchOutput : ItemField
+    [Experimental("OPENAI001")]
+    internal partial class ItemFieldToolSearchOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldToolSearchOutput"/>. </summary>
         /// <param name="id"> The unique ID of the tool search output item. </param>

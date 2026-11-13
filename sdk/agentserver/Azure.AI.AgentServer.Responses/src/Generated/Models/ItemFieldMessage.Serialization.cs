@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Message. </summary>
-    public partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
+    internal partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/> for deserialization. </summary>
         internal ItemFieldMessage()
@@ -92,10 +91,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Phase))
+            if (Optional.IsDefined(Phase, _phaseIsDefined))
             {
-                writer.WritePropertyName("phase"u8);
-                writer.WriteStringValue(Phase.Value.ToSerialString());
+                if (Phase != null)
+                {
+                    writer.WritePropertyName("phase"u8);
+                    writer.WriteStringValue(Phase.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("phase"u8);
+                }
             }
         }
 
@@ -130,6 +136,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             MessageStatus status = default;
             MessageRole role = default;
             IList<MessageContent> content = default;
+            bool phaseIsDefined = false;
             MessagePhase? phase = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,6 +172,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("phase"u8))
                 {
+                    phaseIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         phase = null;
@@ -175,7 +183,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldMessage(
@@ -184,8 +192,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 status,
                 role,
-                content,
-                phase);
+                content ?? new ChangeTrackingList<MessageContent>(),
+                phase)
+            {
+                _phaseIsDefined = phaseIsDefined
+            };
         }
     }
 }

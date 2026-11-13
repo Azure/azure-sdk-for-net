@@ -31,13 +31,22 @@ internal static partial class OutputItemFunctionToolCallOutputValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Required: call_id
-        if (!element.TryGetProperty("call_id", out var callIdProp))
-            errors.Add(new ValidationError("$.call_id", "Required property 'call_id' is missing"));
-        else
+        // Optional: call_id
+        if (element.TryGetProperty("call_id", out var callIdProp))
         {
             if (callIdProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
+        }
+
+        // Optional: caller
+        if (element.TryGetProperty("caller", out var callerProp) && callerProp.ValueKind != JsonValueKind.Null)
+        {
+            var callerResult = ToolCallCallerParamValidator.Validate(callerProp);
+            if (!callerResult.IsValid)
+            {
+                foreach (var e in callerResult.Errors)
+                    errors.Add(new ValidationError("$.caller" + e.Path.Substring(1), e.Message));
+            }
         }
 
         // Required: id
@@ -47,6 +56,20 @@ internal static partial class OutputItemFunctionToolCallOutputValidator
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
+        // Optional: namespace
+        if (element.TryGetProperty("namespace", out var namespaceProp))
+        {
+            if (namespaceProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.namespace", $"Expected string, got {namespaceProp.ValueKind}"));
         }
 
         // Required: output

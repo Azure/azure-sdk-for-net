@@ -6,23 +6,22 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> A pending safety check for the computer call. </summary>
-    public partial class ComputerCallSafetyCheckParam
+    internal partial class ComputerCallSafetyCheckParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _code;
+        private bool _codeIsDefined;
+        private string _message;
+        private bool _messageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ComputerCallSafetyCheckParam"/>. </summary>
         /// <param name="id"> The ID of the pending safety check. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ComputerCallSafetyCheckParam(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 
@@ -34,8 +33,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal ComputerCallSafetyCheckParam(string id, string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Code = code;
-            Message = message;
+            _code = code;
+            _message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,9 +42,31 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; set; }
 
         /// <summary> Gets or sets the Code. </summary>
-        public string Code { get; set; }
+        public string Code
+        {
+            get
+            {
+                return _code;
+            }
+            set
+            {
+                _code = value;
+                _codeIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the Message. </summary>
-        public string Message { get; set; }
+        public string Message
+        {
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                _message = value;
+                _messageIsDefined = true;
+            }
+        }
     }
 }

@@ -9,11 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The FunctionShellCallEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LocalEnvironmentResource"/> and <see cref="ContainerReferenceResource"/>.
-    /// </summary>
-    public abstract partial class FunctionShellCallEnvironment
+    internal abstract partial class FunctionShellCallEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

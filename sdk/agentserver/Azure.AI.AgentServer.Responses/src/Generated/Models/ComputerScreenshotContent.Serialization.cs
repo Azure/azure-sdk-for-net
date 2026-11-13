@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Computer screenshot. </summary>
-    public partial class ComputerScreenshotContent : MessageContent, IJsonModel<ComputerScreenshotContent>
+    internal partial class ComputerScreenshotContent : MessageContent, IJsonModel<ComputerScreenshotContent>
     {
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotContent"/> for deserialization. </summary>
         internal ComputerScreenshotContent()
@@ -99,6 +98,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("detail"u8);
             writer.WriteStringValue(Detail.ToSerialString());
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -131,6 +135,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Uri imageUrl = default;
             string fileId = default;
             ImageDetail detail = default;
+            PromptCacheBreakpointConfig promptCacheBreakpoint = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -163,12 +168,27 @@ namespace Azure.AI.AgentServer.Responses.Models
                     detail = prop.Value.GetString().ToImageDetail();
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointConfig.DeserializePromptCacheBreakpointConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputerScreenshotContent(@type, additionalBinaryDataProperties, imageUrl, fileId, detail);
+            return new ComputerScreenshotContent(
+                @type,
+                additionalBinaryDataProperties,
+                imageUrl,
+                fileId,
+                detail,
+                promptCacheBreakpoint);
         }
     }
 }

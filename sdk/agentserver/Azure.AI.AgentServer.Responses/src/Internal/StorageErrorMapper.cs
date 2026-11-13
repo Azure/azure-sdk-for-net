@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Maps HTTP error responses from the Foundry storage API to SDK exceptions.
 /// </summary>
+[Experimental("OPENAI001")]
 internal static class StorageErrorMapper
 {
     /// <summary>
@@ -48,11 +50,11 @@ internal static class StorageErrorMapper
             case 409:
                 throw new BadRequestException(errorInfo.Message, errorInfo.Code, errorInfo.Param);
             default:
-                var error = new Error(errorInfo.Code ?? "storage_error", errorInfo.Message)
-                {
-                    Param = errorInfo.Param,
-                    Type = errorInfo.Type ?? "server_error",
-                };
+                var error = OpenAIModelFactory.CreateError(
+                    errorInfo.Code ?? "storage_error",
+                    errorInfo.Message,
+                    errorInfo.Param,
+                    errorInfo.Type ?? "server_error");
                 var ex = new ResponsesApiException(error, 500);
                 ex.Data[PlatformErrorDataKey] = true;
                 throw ex;

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Reasoning. </summary>
-    public partial class ItemFieldReasoningItem : ItemField, IJsonModel<ItemFieldReasoningItem>
+    internal partial class ItemFieldReasoningItem : ItemField, IJsonModel<ItemFieldReasoningItem>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldReasoningItem"/> for deserialization. </summary>
         internal ItemFieldReasoningItem()
@@ -81,10 +80,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(EncryptedContent))
+            if (Optional.IsDefined(EncryptedContent, _encryptedContentIsDefined))
             {
-                writer.WritePropertyName("encrypted_content"u8);
-                writer.WriteStringValue(EncryptedContent);
+                if (EncryptedContent != null)
+                {
+                    writer.WritePropertyName("encrypted_content"u8);
+                    writer.WriteStringValue(EncryptedContent);
+                }
+                else
+                {
+                    writer.WriteNull("encrypted_content"u8);
+                }
             }
             writer.WritePropertyName("summary"u8);
             writer.WriteStartArray();
@@ -138,6 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ItemFieldType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
+            bool encryptedContentIsDefined = false;
             string encryptedContent = default;
             IList<SummaryTextContent> summary = default;
             IList<ReasoningTextContent> content = default;
@@ -156,6 +163,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("encrypted_content"u8))
                 {
+                    encryptedContentIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptedContent = null;
@@ -199,7 +207,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldReasoningItem(
@@ -207,9 +215,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                 additionalBinaryDataProperties,
                 id,
                 encryptedContent,
-                summary,
+                summary ?? new ChangeTrackingList<SummaryTextContent>(),
                 content ?? new ChangeTrackingList<ReasoningTextContent>(),
-                status);
+                status)
+            {
+                _encryptedContentIsDefined = encryptedContentIsDefined
+            };
         }
     }
 }

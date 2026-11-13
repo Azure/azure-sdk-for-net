@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input text. </summary>
-    public partial class InputTextContent : IJsonModel<InputTextContent>
+    internal partial class InputTextContent : IJsonModel<InputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="InputTextContent"/> for deserialization. </summary>
         internal InputTextContent()
@@ -82,6 +81,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,6 +130,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             string @type = default;
             string text = default;
+            PromptCacheBreakpointConfig promptCacheBreakpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,12 +144,21 @@ namespace Azure.AI.AgentServer.Responses.Models
                     text = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointConfig.DeserializePromptCacheBreakpointConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InputTextContent(@type, text, additionalBinaryDataProperties);
+            return new InputTextContent(@type, text, promptCacheBreakpoint, additionalBinaryDataProperties);
         }
     }
 }

@@ -304,9 +304,38 @@ namespace Azure.SdkAnalyzers
                 {
                     return true;
                 }
+
+                if (FieldDeclarationContains(reference.GetSyntax(), span))
+                {
+                    return true;
+                }
             }
 
             return false;
+        }
+
+        // A field's declaring syntax is only its variable declarator (the name and initializer), so
+        // diagnostics on the field's type, modifiers, or attributes fall outside it. Widen the match to
+        // the enclosing field declaration, excluding sibling declarators such as `b` in `int a, b;`.
+        private static bool FieldDeclarationContains(SyntaxNode declaringSyntax, TextSpan span)
+        {
+            if (declaringSyntax is not VariableDeclaratorSyntax declarator ||
+                declarator.Parent is not VariableDeclarationSyntax declaration ||
+                declaration.Parent is not BaseFieldDeclarationSyntax field ||
+                !field.Span.Contains(span))
+            {
+                return false;
+            }
+
+            foreach (VariableDeclaratorSyntax sibling in declaration.Variables)
+            {
+                if (sibling != declarator && sibling.Span.Contains(span))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static ImmutableArray<SuppressionDescriptor> BuildSuppressionDescriptors()

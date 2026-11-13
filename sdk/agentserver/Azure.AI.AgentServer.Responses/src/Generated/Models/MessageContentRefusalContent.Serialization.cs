@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Refusal. </summary>
-    public partial class MessageContentRefusalContent : MessageContent, IJsonModel<MessageContentRefusalContent>
+    internal partial class MessageContentRefusalContent : MessageContent, IJsonModel<MessageContentRefusalContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentRefusalContent"/> for deserialization. </summary>
         internal MessageContentRefusalContent()
@@ -125,7 +124,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MessageContentRefusalContent(@type, additionalBinaryDataProperties, refusal);

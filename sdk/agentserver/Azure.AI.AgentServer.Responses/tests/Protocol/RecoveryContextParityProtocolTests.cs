@@ -40,10 +40,10 @@ public sealed class RecoveryContextParityProtocolTests : CrashRecoveryE2ETestBas
         var request = new CreateResponse
         {
             Model = "test-model",
-            Background = true,
-            Store = true,
-            Stream = false,
-            Input = BinaryData.FromObjectAsJson("recover this input"),
+            BackgroundModeEnabled = true,
+            StoredOutputEnabled = true,
+            StreamingEnabled = false,
+            InputItems = { ResponseItem.CreateUserMessageItem("recover this input") },
         };
 
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
@@ -83,8 +83,8 @@ public sealed class RecoveryContextParityProtocolTests : CrashRecoveryE2ETestBas
         // Request parity.
         Assert.That(observedRequest, Is.Not.Null);
         Assert.That(observedRequest!.Model, Is.EqualTo("test-model"));
-        Assert.That(observedRequest.Background, Is.True);
-        Assert.That(observedRequest.Store, Is.True);
+        Assert.That(observedRequest.BackgroundModeEnabled, Is.True);
+        Assert.That(observedRequest.StoredOutputEnabled, Is.True);
 
         // Header parity (case-insensitive keys preserved across the crash boundary — a handler that
         // reads with different casing than stored must still resolve, matching ingress semantics).
@@ -112,10 +112,10 @@ public sealed class RecoveryContextParityProtocolTests : CrashRecoveryE2ETestBas
         var text = await ctx.GetInputTextAsync(resolveReferences: true, ct).ConfigureAwait(false);
         captureInput(text);
 
-        var response = new ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
         signal.TrySetResult();
     }
 }

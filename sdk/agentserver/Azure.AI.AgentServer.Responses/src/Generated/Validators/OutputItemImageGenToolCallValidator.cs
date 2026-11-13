@@ -31,6 +31,24 @@ internal static partial class OutputItemImageGenToolCallValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: action
+        if (element.TryGetProperty("action", out var actionProp) && actionProp.ValueKind != JsonValueKind.Null)
+        {
+            if (actionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.action", $"Expected string, got {actionProp.ValueKind}"));
+            else if (actionProp.GetString() is not ("generate" or "edit" or "auto"))
+                errors.Add(new ValidationError("$.action", $"Value '{actionProp.GetString()}' is not valid. Allowed: generate, edit, auto"));
+        }
+
+        // Optional: background
+        if (element.TryGetProperty("background", out var backgroundProp) && backgroundProp.ValueKind != JsonValueKind.Null)
+        {
+            if (backgroundProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.background", $"Expected string, got {backgroundProp.ValueKind}"));
+            else if (backgroundProp.GetString() is not ("transparent" or "opaque" or "auto"))
+                errors.Add(new ValidationError("$.background", $"Value '{backgroundProp.GetString()}' is not valid. Allowed: transparent, opaque, auto"));
+        }
+
         // Required: id
         if (!element.TryGetProperty("id", out var idProp))
             errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
@@ -40,6 +58,24 @@ internal static partial class OutputItemImageGenToolCallValidator
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
         }
 
+        // Optional: output_format
+        if (element.TryGetProperty("output_format", out var outputFormatProp) && outputFormatProp.ValueKind != JsonValueKind.Null)
+        {
+            if (outputFormatProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.output_format", $"Expected string, got {outputFormatProp.ValueKind}"));
+            else if (outputFormatProp.GetString() is not ("png" or "webp" or "jpeg"))
+                errors.Add(new ValidationError("$.output_format", $"Value '{outputFormatProp.GetString()}' is not valid. Allowed: png, webp, jpeg"));
+        }
+
+        // Optional: quality
+        if (element.TryGetProperty("quality", out var qualityProp) && qualityProp.ValueKind != JsonValueKind.Null)
+        {
+            if (qualityProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.quality", $"Expected string, got {qualityProp.ValueKind}"));
+            else if (qualityProp.GetString() is not ("low" or "medium" or "high" or "xhigh" or "max" or "auto"))
+                errors.Add(new ValidationError("$.quality", $"Value '{qualityProp.GetString()}' is not valid. Allowed: low, medium, high, xhigh, max, auto"));
+        }
+
         // Required (nullable): result
         if (!element.TryGetProperty("result", out var resultProp))
             errors.Add(new ValidationError("$.result", "Required property 'result' is missing"));
@@ -47,6 +83,20 @@ internal static partial class OutputItemImageGenToolCallValidator
         {
             if (resultProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.result", $"Expected string, got {resultProp.ValueKind}"));
+        }
+
+        // Optional: revised_prompt
+        if (element.TryGetProperty("revised_prompt", out var revisedPromptProp) && revisedPromptProp.ValueKind != JsonValueKind.Null)
+        {
+            if (revisedPromptProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.revised_prompt", $"Expected string, got {revisedPromptProp.ValueKind}"));
+        }
+
+        // Optional: size
+        if (element.TryGetProperty("size", out var sizeProp) && sizeProp.ValueKind != JsonValueKind.Null)
+        {
+            if (sizeProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.size", $"Expected string, got {sizeProp.ValueKind}"));
         }
 
         // Required: status

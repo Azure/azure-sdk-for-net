@@ -9,11 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// A content part that makes up an input or output item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SummaryTextContent"/>, <see cref="TextContent"/>, <see cref="ComputerScreenshotContent"/>, <see cref="MessageContentInputTextContent"/>, <see cref="MessageContentOutputTextContent"/>, <see cref="MessageContentReasoningTextContent"/>, <see cref="MessageContentRefusalContent"/>, <see cref="MessageContentInputImageContent"/>, and <see cref="MessageContentInputFileContent"/>.
-    /// </summary>
-    public abstract partial class MessageContent
+    internal abstract partial class MessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

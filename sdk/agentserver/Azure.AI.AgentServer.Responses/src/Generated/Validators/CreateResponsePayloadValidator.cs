@@ -72,31 +72,13 @@ internal static partial class CreateResponsePayloadValidator
         {
             if (contextManagementProp.ValueKind != JsonValueKind.Array)
                 errors.Add(new ValidationError("$.context_management", $"Expected array, got {contextManagementProp.ValueKind}"));
-            else
-            {
-                var contextManagementIdx = 0;
-                foreach (var item in contextManagementProp.EnumerateArray())
-                {
-                    var itemResult = ContextManagementParamValidator.Validate(item);
-                    if (!itemResult.IsValid)
-                    {
-                        foreach (var e in itemResult.Errors)
-                            errors.Add(new ValidationError($"$.context_management[{contextManagementIdx}]" + e.Path.Substring(1), e.Message));
-                    }
-                    contextManagementIdx++;
-                }
-            }
         }
 
         // Optional: conversation
         if (element.TryGetProperty("conversation", out var conversationProp) && conversationProp.ValueKind != JsonValueKind.Null)
         {
-            var conversationResult = ConversationParamValidator.Validate(conversationProp);
-            if (!conversationResult.IsValid)
-            {
-                foreach (var e in conversationResult.Errors)
-                    errors.Add(new ValidationError("$.conversation" + e.Path.Substring(1), e.Message));
-            }
+            if (conversationProp.ValueKind != JsonValueKind.String && conversationProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.conversation", $"Expected string or object, got {conversationProp.ValueKind}"));
         }
 
         // Optional: include
@@ -109,11 +91,21 @@ internal static partial class CreateResponsePayloadValidator
         // Optional: input
         if (element.TryGetProperty("input", out var inputProp))
         {
-            var inputResult = InputParamValidator.Validate(inputProp);
-            if (!inputResult.IsValid)
+            if (inputProp.ValueKind != JsonValueKind.String && inputProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.input", $"Expected string or array, got {inputProp.ValueKind}"));
+            else if (inputProp.ValueKind == JsonValueKind.Array)
             {
-                foreach (var e in inputResult.Errors)
-                    errors.Add(new ValidationError("$.input" + e.Path.Substring(1), e.Message));
+                var inputidx = 0;
+                foreach (var item in inputProp.EnumerateArray())
+                {
+                    var itemResult = ItemValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.input[{inputidx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    inputidx++;
+                }
             }
         }
 
@@ -156,6 +148,13 @@ internal static partial class CreateResponsePayloadValidator
                 errors.Add(new ValidationError("$.model", $"Expected string, got {modelProp.ValueKind}"));
         }
 
+        // Optional: moderation
+        if (element.TryGetProperty("moderation", out var moderationProp) && moderationProp.ValueKind != JsonValueKind.Null)
+        {
+            if (moderationProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.moderation", $"Expected object, got {moderationProp.ValueKind}"));
+        }
+
         // Optional: parallel_tool_calls
         if (element.TryGetProperty("parallel_tool_calls", out var parallelToolCallsProp) && parallelToolCallsProp.ValueKind != JsonValueKind.Null)
         {
@@ -182,10 +181,15 @@ internal static partial class CreateResponsePayloadValidator
         }
 
         // Optional: prompt_cache_key
-        if (element.TryGetProperty("prompt_cache_key", out var promptCacheKeyProp))
+        if (element.TryGetProperty("prompt_cache_key", out var promptCacheKeyProp) && promptCacheKeyProp.ValueKind != JsonValueKind.Null)
         {
             if (promptCacheKeyProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.prompt_cache_key", $"Expected string, got {promptCacheKeyProp.ValueKind}"));
+        }
+
+        // Optional: prompt_cache_options
+        if (element.TryGetProperty("prompt_cache_options", out var promptCacheOptionsProp))
+        {
         }
 
         // Optional: prompt_cache_retention
@@ -193,8 +197,8 @@ internal static partial class CreateResponsePayloadValidator
         {
             if (promptCacheRetentionProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.prompt_cache_retention", $"Expected string, got {promptCacheRetentionProp.ValueKind}"));
-            else if (promptCacheRetentionProp.GetString() is not ("in-memory" or "24h"))
-                errors.Add(new ValidationError("$.prompt_cache_retention", $"Value '{promptCacheRetentionProp.GetString()}' is not valid. Allowed: in-memory, 24h"));
+            else if (promptCacheRetentionProp.GetString() is not ("in_memory" or "24h"))
+                errors.Add(new ValidationError("$.prompt_cache_retention", $"Value '{promptCacheRetentionProp.GetString()}' is not valid. Allowed: in_memory, 24h"));
         }
 
         // Optional: reasoning
@@ -208,17 +212,18 @@ internal static partial class CreateResponsePayloadValidator
             }
         }
 
+        // Optional: routing_config
+        if (element.TryGetProperty("routing_config", out var routingConfigProp))
+        {
+            if (routingConfigProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.routing_config", $"Expected object, got {routingConfigProp.ValueKind}"));
+        }
+
         // Optional: safety_identifier
-        if (element.TryGetProperty("safety_identifier", out var safetyIdentifierProp))
+        if (element.TryGetProperty("safety_identifier", out var safetyIdentifierProp) && safetyIdentifierProp.ValueKind != JsonValueKind.Null)
         {
             if (safetyIdentifierProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.safety_identifier", $"Expected string, got {safetyIdentifierProp.ValueKind}"));
-            else
-            {
-                var strVal = safetyIdentifierProp.GetString()!;
-                if (strVal.Length > 64)
-                    errors.Add(new ValidationError("$.safety_identifier", $"String length {strVal.Length} exceeds maximum 64"));
-            }
         }
 
         // Optional: service_tier
@@ -226,8 +231,8 @@ internal static partial class CreateResponsePayloadValidator
         {
             if (serviceTierProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.service_tier", $"Expected string, got {serviceTierProp.ValueKind}"));
-            else if (serviceTierProp.GetString() is not ("auto" or "default" or "flex" or "scale" or "priority"))
-                errors.Add(new ValidationError("$.service_tier", $"Value '{serviceTierProp.GetString()}' is not valid. Allowed: auto, default, flex, scale, priority"));
+            else if (serviceTierProp.GetString() is not ("auto" or "default" or "flex" or "scale" or "priority" or "fast" or "ultrafast"))
+                errors.Add(new ValidationError("$.service_tier", $"Value '{serviceTierProp.GetString()}' is not valid. Allowed: auto, default, flex, scale, priority, fast, ultrafast"));
         }
 
         // Optional: store
@@ -247,12 +252,8 @@ internal static partial class CreateResponsePayloadValidator
         // Optional: stream_options
         if (element.TryGetProperty("stream_options", out var streamOptionsProp) && streamOptionsProp.ValueKind != JsonValueKind.Null)
         {
-            var streamOptionsResult = ResponseStreamOptionsValidator.Validate(streamOptionsProp);
-            if (!streamOptionsResult.IsValid)
-            {
-                foreach (var e in streamOptionsResult.Errors)
-                    errors.Add(new ValidationError("$.stream_options" + e.Path.Substring(1), e.Message));
-            }
+            if (streamOptionsProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.stream_options", $"Expected object, got {streamOptionsProp.ValueKind}"));
         }
 
         // Optional: structured_inputs
@@ -345,6 +346,13 @@ internal static partial class CreateResponsePayloadValidator
         {
             if (userProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.user", $"Expected string, got {userProp.ValueKind}"));
+        }
+
+        // Optional: user_security_context
+        if (element.TryGetProperty("user_security_context", out var userSecurityContextProp))
+        {
+            if (userSecurityContextProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.user_security_context", $"Expected object, got {userSecurityContextProp.ValueKind}"));
         }
 
         ValidateCustom(element, errors);

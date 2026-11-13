@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -17,6 +18,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// conversation_id, streaming, x-request-id) so downstream spans inherit them.
 /// </para>
 /// </summary>
+[Experimental("OPENAI001")]
 internal class ResponsesActivitySource
 {
     /// <summary>
@@ -76,7 +78,7 @@ internal class ResponsesActivitySource
         }
 
         var conversationId = request.GetConversationId() ?? string.Empty;
-        var isStreaming = request.Stream == true;
+        var isStreaming = request.StreamingEnabled == true;
 
         // Namespaced baggage items for downstream correlation
         activity.AddBaggage(ResponsesTracingConstants.Baggage.ResponseId, responseId);

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP list tools. </summary>
-    public partial class ItemFieldMcpListTools : ItemField, IJsonModel<ItemFieldMcpListTools>
+    internal partial class ItemFieldMcpListTools : ItemField, IJsonModel<ItemFieldMcpListTools>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpListTools"/> for deserialization. </summary>
         internal ItemFieldMcpListTools()
@@ -166,7 +165,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldMcpListTools(
@@ -174,7 +173,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 additionalBinaryDataProperties,
                 id,
                 serverLabel,
-                tools,
+                tools ?? new ChangeTrackingList<MCPListToolsTool>(),
                 error);
         }
     }

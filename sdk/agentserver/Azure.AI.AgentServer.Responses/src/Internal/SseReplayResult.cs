@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
@@ -18,6 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// the same streaming primitive the orchestrator publishes onto. The Responses layer holds no
 /// event-stream store of its own, mirroring the Python implementation.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class SseReplayResult : IResult
 {
     private readonly AgentEventStreamRegistry _eventStreamRegistry;

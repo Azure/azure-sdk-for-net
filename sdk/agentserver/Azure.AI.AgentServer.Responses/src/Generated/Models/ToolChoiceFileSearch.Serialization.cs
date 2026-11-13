@@ -12,11 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Indicates that the model should use a built-in tool to generate a response.
-    /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-    /// </summary>
-    public partial class ToolChoiceFileSearch : ToolChoiceParam, IJsonModel<ToolChoiceFileSearch>
+    internal partial class ToolChoiceFileSearch : ToolChoiceParam, IJsonModel<ToolChoiceFileSearch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -115,7 +111,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ToolChoiceFileSearch(@type, additionalBinaryDataProperties);

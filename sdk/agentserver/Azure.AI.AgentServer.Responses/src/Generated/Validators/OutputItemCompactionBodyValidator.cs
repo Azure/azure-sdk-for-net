@@ -31,6 +31,13 @@ internal static partial class OutputItemCompactionBodyValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: created_by
+        if (element.TryGetProperty("created_by", out var createdByProp))
+        {
+            if (createdByProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.created_by", $"Expected string, got {createdByProp.ValueKind}"));
+        }
+
         // Required: encrypted_content
         if (!element.TryGetProperty("encrypted_content", out var encryptedContentProp))
             errors.Add(new ValidationError("$.encrypted_content", "Required property 'encrypted_content' is missing"));

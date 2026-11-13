@@ -220,6 +220,54 @@ namespace TestNs
         }
 
         [Test]
+        public async Task FieldTarget_SuppressesDiagnosticOnFieldType()
+        {
+            const string source = @"
+namespace TestNs
+{
+    [System.Obsolete(""use the new one"")]
+    public class OldType { }
+
+    public class Consumer
+    {
+        private OldType _field;
+        public object Get() => _field;
+    }
+}";
+            string allowList = "nowarn:CS0618 F:TestNs.Consumer._field";
+            IReadOnlyList<Diagnostic> diagnostics = await RunAsync(source, allowList);
+
+            Diagnostic cs0618 = diagnostics.Single(d => d.Id == "CS0618");
+            Assert.That(cs0618.IsSuppressed, Is.True, "CS0618 on the field's type should be suppressed by its F: entry.");
+        }
+
+        [Test]
+        public async Task FieldTarget_DoesNotSuppressSiblingDeclarator()
+        {
+            const string source = @"
+namespace TestNs
+{
+    [System.Obsolete(""use the new one"")]
+    public class OldType
+    {
+        public static int Make() => 42;
+    }
+
+    public class Consumer
+    {
+        private int _a = OldType.Make(), _b = OldType.Make();
+    }
+}";
+            string allowList = "nowarn:CS0618 F:TestNs.Consumer._a";
+            IReadOnlyList<Diagnostic> diagnostics = await RunAsync(source, allowList);
+
+            List<Diagnostic> cs0618 = diagnostics.Where(d => d.Id == "CS0618").OrderBy(d => d.Location.SourceSpan.Start).ToList();
+            Assert.That(cs0618, Has.Count.EqualTo(2));
+            Assert.That(cs0618[0].IsSuppressed, Is.True, "CS0618 in _a's initializer should be suppressed.");
+            Assert.That(cs0618[1].IsSuppressed, Is.False, "CS0618 in sibling _b's initializer should NOT be suppressed.");
+        }
+
+        [Test]
         public async Task CompilerCS0618_WithWarnAsError_CanBeSuppressed()
         {
             const string source = @"

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Log probability. </summary>
-    public partial class LogProb : IJsonModel<LogProb>
+    internal partial class LogProb : IJsonModel<LogProb>
     {
         /// <summary> Initializes a new instance of <see cref="LogProb"/> for deserialization. </summary>
         internal LogProb()
@@ -177,10 +176,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogProb(token, logprob, bytes, topLogprobs, additionalBinaryDataProperties);
+            return new LogProb(token, logprob, bytes ?? new ChangeTrackingList<long>(), topLogprobs ?? new ChangeTrackingList<TopLogProb>(), additionalBinaryDataProperties);
         }
     }
 }

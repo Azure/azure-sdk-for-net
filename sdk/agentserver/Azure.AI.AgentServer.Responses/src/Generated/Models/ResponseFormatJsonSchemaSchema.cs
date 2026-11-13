@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> JSON schema. </summary>
-    public partial class ResponseFormatJsonSchemaSchema
+    internal partial class ResponseFormatJsonSchemaSchema
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

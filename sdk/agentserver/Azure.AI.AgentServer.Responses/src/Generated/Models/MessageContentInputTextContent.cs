@@ -6,20 +6,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input text. </summary>
-    public partial class MessageContentInputTextContent : MessageContent
+    internal partial class MessageContentInputTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public MessageContentInputTextContent(string text) : base(MessageContentType.InputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 
@@ -27,12 +22,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text input to the model. </param>
-        internal MessageContentInputTextContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        /// <param name="promptCacheBreakpoint"></param>
+        internal MessageContentInputTextContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, PromptCacheBreakpointConfig promptCacheBreakpoint) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
         }
 
         /// <summary> The text input to the model. </summary>
         public string Text { get; set; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
     }
 }

@@ -7,12 +7,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Top log probability. </summary>
-    public partial class TopLogProb
+    internal partial class TopLogProb
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,12 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="token"></param>
         /// <param name="logprob"></param>
         /// <param name="bytes"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> or <paramref name="bytes"/> is null. </exception>
         public TopLogProb(string token, double logprob, IEnumerable<long> bytes)
         {
-            Argument.AssertNotNull(token, nameof(token));
-            Argument.AssertNotNull(bytes, nameof(bytes));
-
             Token = token;
             Logprob = logprob;
             Bytes = bytes.ToList();

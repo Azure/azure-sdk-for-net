@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Apply patch update file operation. </summary>
-    public partial class ApplyPatchUpdateFileOperation : ApplyPatchFileOperation, IJsonModel<ApplyPatchUpdateFileOperation>
+    internal partial class ApplyPatchUpdateFileOperation : ApplyPatchFileOperation, IJsonModel<ApplyPatchUpdateFileOperation>
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchUpdateFileOperation"/> for deserialization. </summary>
         internal ApplyPatchUpdateFileOperation()
@@ -133,7 +132,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplyPatchUpdateFileOperation(@type, additionalBinaryDataProperties, path, diff);

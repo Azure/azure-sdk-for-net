@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Top log probability. </summary>
-    public partial class TopLogProb : IJsonModel<TopLogProb>
+    internal partial class TopLogProb : IJsonModel<TopLogProb>
     {
         /// <summary> Initializes a new instance of <see cref="TopLogProb"/> for deserialization. </summary>
         internal TopLogProb()
@@ -159,10 +158,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TopLogProb(token, logprob, bytes, additionalBinaryDataProperties);
+            return new TopLogProb(token, logprob, bytes ?? new ChangeTrackingList<long>(), additionalBinaryDataProperties);
         }
     }
 }

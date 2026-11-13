@@ -31,8 +31,23 @@ schemas:
   # The "type" field defaults to "message" when absent.
   # ItemValidatorCustom.ResolveDefaultDiscriminator handles discriminator routing;
   # this overlay prevents ItemMessageValidator from rejecting missing "type".
+  #
+  # GAP-07: Clients also omit the server-assigned "id" and "status" on input messages,
+  # and "content" may be a plain string as well as an array of content parts (the OpenAI
+  # EasyInputMessage shorthand). The TypeSpec model only describes the array form, and
+  # reshaping it in client.tsp is not possible because ItemMessage is alt-typed onto
+  # OpenAI.Responses.MessageResponseItem, so the relaxation lives here instead.
   ItemMessage:
-    not_required: ["type"]
+    not_required: ["type", "id", "status"]
+    properties:
+      content:
+        type: null
+        items: null
+        anyOf:
+          - type: string
+          - type: array
+            items:
+              $ref: "#/components/schemas/OpenAI.MessageContent"
 
   # GAP-03: OpenAI spec InputImageContentParamAutoParam only requires [type].
   # The "detail" field is nullable/optional and defaults to "auto".

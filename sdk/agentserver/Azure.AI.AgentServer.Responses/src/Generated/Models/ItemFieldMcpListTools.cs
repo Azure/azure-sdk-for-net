@@ -10,8 +10,7 @@ using System.Linq;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP list tools. </summary>
-    public partial class ItemFieldMcpListTools : ItemField
+    internal partial class ItemFieldMcpListTools : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpListTools"/>. </summary>
         /// <param name="id"> The unique ID of the list. </param>

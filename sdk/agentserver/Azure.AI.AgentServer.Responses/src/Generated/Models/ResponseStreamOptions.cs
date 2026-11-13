@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Options for streaming responses. Only set this when you set `stream: true`. </summary>
-    public partial class ResponseStreamOptions
+    internal partial class ResponseStreamOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -9,11 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Indicates that the model should use a built-in tool to generate a response.
-    /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-    /// </summary>
-    public partial class ToolChoiceFileSearch : ToolChoiceParam
+    internal partial class ToolChoiceFileSearch : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFileSearch"/>. </summary>
         public ToolChoiceFileSearch() : base(ToolChoiceParamType.FileSearch)

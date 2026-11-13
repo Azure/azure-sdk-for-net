@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a web search tool call output item. Provides methods
 /// for the web search lifecycle: added, in-progress, searching, completed, done.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSearchToolCall>
 {
     /// <summary>
@@ -33,10 +35,7 @@ public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSea
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this web search call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemWebSearchToolCall(
-            id: _itemId,
-            status: ItemWebSearchToolCallStatus.InProgress,
-            action: new BinaryData("{}"));
+        var item = new OutputItemWebSearchToolCall { Id = _itemId, Status = WebSearchCallStatus.InProgress };
         return EmitAdded(item);
     }
 
@@ -46,8 +45,7 @@ public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSea
     /// <returns>A <see cref="ResponseWebSearchCallInProgressEvent"/>.</returns>
     public virtual ResponseWebSearchCallInProgressEvent EmitInProgress()
     {
-        return new ResponseWebSearchCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseWebSearchCallInProgressEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -56,8 +54,7 @@ public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSea
     /// <returns>A <see cref="ResponseWebSearchCallSearchingEvent"/>.</returns>
     public virtual ResponseWebSearchCallSearchingEvent EmitSearching()
     {
-        return new ResponseWebSearchCallSearchingEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseWebSearchCallSearchingEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -66,8 +63,7 @@ public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSea
     /// <returns>A <see cref="ResponseWebSearchCallCompletedEvent"/>.</returns>
     public virtual ResponseWebSearchCallCompletedEvent EmitCompleted()
     {
-        return new ResponseWebSearchCallCompletedEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseWebSearchCallCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -76,10 +72,7 @@ public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSea
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this web search call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemWebSearchToolCall(
-            id: _itemId,
-            status: ItemWebSearchToolCallStatus.Completed,
-            action: new BinaryData("{}"));
+        var item = new OutputItemWebSearchToolCall { Id = _itemId, Status = WebSearchCallStatus.Completed };
         return EmitDone(item);
     }
 }

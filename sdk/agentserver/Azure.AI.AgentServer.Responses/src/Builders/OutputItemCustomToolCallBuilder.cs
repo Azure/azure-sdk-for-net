@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -10,6 +12,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a custom tool call output item. Provides methods
 /// for lifecycle events and streaming input deltas.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCustomToolCall>
 {
     private readonly string _callId;
@@ -52,7 +55,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: "",
-            status: FunctionCallStatus.InProgress);
+            status: global::Azure.AI.AgentServer.Responses.Models.FunctionCallStatus.InProgress);
         item.Id = _itemId;
         return EmitAdded(item);
     }
@@ -64,8 +67,15 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseCustomToolCallInputDeltaEvent"/> with the delta.</returns>
     public virtual ResponseCustomToolCallInputDeltaEvent EmitInputDelta(string delta)
     {
-        return new ResponseCustomToolCallInputDeltaEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, delta);
+        return (ResponseCustomToolCallInputDeltaEvent)OpenAIModelFactory.CreateStreamingUpdate(
+            "response.custom_tool_call_input.delta",
+            (int)_stream.NextSequenceNumber(),
+            writer =>
+            {
+                writer.WriteNumber("output_index"u8, _outputIndex);
+                writer.WriteString("item_id"u8, _itemId);
+                writer.WriteString("delta"u8, delta);
+            });
     }
 
     /// <summary>
@@ -76,8 +86,15 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     public virtual ResponseCustomToolCallInputDoneEvent EmitInputDone(string input)
     {
         _finalInput = input;
-        return new ResponseCustomToolCallInputDoneEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, input);
+        return (ResponseCustomToolCallInputDoneEvent)OpenAIModelFactory.CreateStreamingUpdate(
+            "response.custom_tool_call_input.done",
+            (int)_stream.NextSequenceNumber(),
+            writer =>
+            {
+                writer.WriteNumber("output_index"u8, _outputIndex);
+                writer.WriteString("item_id"u8, _itemId);
+                writer.WriteString("input"u8, input);
+            });
     }
 
     /// <summary>
@@ -121,7 +138,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: _finalInput ?? "",
-            status: FunctionCallStatus.Completed);
+            status: global::Azure.AI.AgentServer.Responses.Models.FunctionCallStatus.Completed);
         item.Id = _itemId;
         return EmitDone(item);
     }

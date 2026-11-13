@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -26,6 +27,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// deterministic <see cref="RecoveryPayloadFormatException"/> (never a partial re-invoke).
 /// </para>
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseRecoveryPayload
 {
     /// <summary>Disposition: re-invoke the handler in the next lifetime (Row 1).</summary>
@@ -248,8 +250,8 @@ internal sealed class ResponseRecoveryPayload
         {
             // A non-empty object is a real agent reference; an empty object `{}` (the Python-parity
             // serialization for "none") reads back as null, matching the round-trip contract.
-            agentReference = ModelReaderWriter.Read<AgentReference>(
-                BinaryData.FromString(arElement.GetRawText()), JsonOptions, AzureAIAgentServerResponsesContext.Default);
+            agentReference = ModelJson.Read<AgentReference>(
+                BinaryData.FromString(arElement.GetRawText()), JsonOptions);
         }
 
         return new ResponseRecoveryPayload(
@@ -288,8 +290,8 @@ internal sealed class ResponseRecoveryPayload
 
         try
         {
-            CreateResponse? request = ModelReaderWriter.Read<CreateResponse>(
-                BinaryData.FromString(element.GetRawText()), JsonOptions, AzureAIAgentServerResponsesContext.Default);
+            CreateResponse? request = ModelJson.Read<CreateResponse>(
+                BinaryData.FromString(element.GetRawText()), JsonOptions);
             if (request is null)
             {
                 throw new RecoveryPayloadFormatException(

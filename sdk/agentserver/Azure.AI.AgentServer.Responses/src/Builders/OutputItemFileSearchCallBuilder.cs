@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a file search tool call output item. Provides methods
 /// for the file search lifecycle: added, in-progress, searching, completed, done.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileSearchToolCall>
 {
     /// <summary>
@@ -33,10 +35,11 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this file search call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemFileSearchToolCall(
-            id: _itemId,
-            status: ItemFileSearchToolCallStatus.InProgress,
-            queries: Array.Empty<string>());
+        var item = new OutputItemFileSearchToolCall(Array.Empty<string>())
+        {
+            Id = _itemId,
+            Status = FileSearchCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -46,8 +49,7 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseFileSearchCallInProgressEvent"/>.</returns>
     public virtual ResponseFileSearchCallInProgressEvent EmitInProgress()
     {
-        return new ResponseFileSearchCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseFileSearchCallInProgressEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -56,8 +58,7 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseFileSearchCallSearchingEvent"/>.</returns>
     public virtual ResponseFileSearchCallSearchingEvent EmitSearching()
     {
-        return new ResponseFileSearchCallSearchingEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseFileSearchCallSearchingEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -66,8 +67,7 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseFileSearchCallCompletedEvent"/>.</returns>
     public virtual ResponseFileSearchCallCompletedEvent EmitCompleted()
     {
-        return new ResponseFileSearchCallCompletedEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseFileSearchCallCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -76,10 +76,11 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this file search call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemFileSearchToolCall(
-            id: _itemId,
-            status: ItemFileSearchToolCallStatus.Completed,
-            queries: Array.Empty<string>());
+        var item = new OutputItemFileSearchToolCall(Array.Empty<string>())
+        {
+            Id = _itemId,
+            Status = FileSearchCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }
