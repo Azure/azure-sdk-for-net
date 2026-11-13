@@ -43,6 +43,14 @@ parameters:
     # When true, the invoke step runs under AzureCLI@2 (live MCP inherits the service connection).
     type: boolean
     default: false
+  - name: azureSubscription
+    # Optional override; blank preserves the invoke template's default connection.
+    type: string
+    default: ''
+  - name: vallyArguments
+    # --tag does not filter Prepare's matrix; align evalGlobs so every eval has matching stimuli.
+    type: object
+    default: []
   - name: threshold
     # Pass-rate gate forwarded to `vally eval --threshold` and the shard verdict. Repos may override.
     type: number
@@ -102,6 +110,9 @@ extends:
               vallyRoot: ${{ parameters.vallyRoot }}
               evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
               UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+              azureSubscription: ${{ parameters.azureSubscription }}
+              vallyArguments: ${{ parameters.vallyArguments }}
+              failOnFailedTests: ${{ parameters.failOnFailedTests }}
               threshold: ${{ parameters.threshold }}
               preEvalTemplate: ${{ parameters.preEvalTemplate }}
               postEvalTemplate: ${{ parameters.postEvalTemplate }}

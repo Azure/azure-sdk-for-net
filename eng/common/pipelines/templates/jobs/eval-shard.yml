@@ -10,10 +10,22 @@ parameters:
     # Swap point: runs `vally eval` for the shard (the common template is auth-conditional).
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
+  - name: vallyArguments
+    # --tag does not filter the supplied matrix; each planned eval must retain matching stimuli.
+    type: object
+    default: []
+  - name: failOnFailedTests
+    # Match Summary's gate; multi-run gating is not currently supported.
+    type: boolean
+    default: false
   - name: UseAzSdkAuthentication
     # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
     type: boolean
     default: false
+  - name: azureSubscription
+    # Leave blank to preserve the invoke template's default connection.
+    type: string
+    default: ''
   - name: threshold
     # Pass-rate gate forwarded to the invoke template (`vally eval --threshold` + shard verdict).
     type: number
@@ -71,6 +83,14 @@ jobs:
         inputs:
           version: 24.x
 
+      - ${{ if eq(parameters.evalInvokeTemplate, '/eng/common/pipelines/templates/steps/eval-invoke.yml') }}:
+        - script: |
+            node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" --validate-only
+          displayName: 'Validate eval run configuration'
+          env:
+            VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}
+            EVAL_FAIL_ON_FAILED_TESTS: ${{ parameters.failOnFailedTests }}
+
       # 1ES Official image blocks registry.npmjs.org; restore via the azure-sdk npm mirror.
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
         parameters:
@@ -113,12 +133,17 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/login-to-copilot.yml
 
-      # Runs the eval via the invoke template (auth-conditional in the common default).
       - template: ${{ parameters.evalInvokeTemplate }}
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
           UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+          # Custom invoke templates receive this only when explicitly configured.
+          ${{ if ne(parameters.azureSubscription, '') }}:
+            azureSubscription: ${{ parameters.azureSubscription }}
           threshold: ${{ parameters.threshold }}
+          # Existing custom templates keep their contract unless opting into the argument list.
+          ${{ if ne(length(parameters.vallyArguments), 0) }}:
+            vallyArguments: ${{ parameters.vallyArguments }}
 
       # Optional repo-specific teardown after the eval.
       - ${{ if parameters.postEvalTemplate }}:

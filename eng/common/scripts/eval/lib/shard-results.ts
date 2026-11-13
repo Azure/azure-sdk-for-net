@@ -182,13 +182,15 @@ export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards
         new Set(expectedShards).size !== expectedShards.length) {
         throw new Error("Expected shards must be unique, valid shard names from Prepare.");
     }
+    const resultPrefix = "eval-result-";
     emptyDirectory(selectedRoot);
     const expected = new Set(expectedShards);
     const timeline = jobAttempts?.schemaVersion === 1 && jobAttempts.valid === true ? jobAttempts.attempts : null;
     const selected = new Map();
     const seen = new Set();
     for (const entry of fs.readdirSync(resultsRoot, { withFileTypes: true })) {
-        const match = /^eval-result-(.+)-(\d+)$/.exec(entry.name);
+        if (!entry.name.startsWith(resultPrefix)) continue;
+        const match = /^(.+)-(\d+)$/.exec(entry.name.slice(resultPrefix.length));
         if (!match || !expected.has(match[1])) continue;
         if (!entry.isDirectory()) throw new Error("Shard artifact paths must be directories, not files or symbolic links.");
         const attempt = Number(match[2]);
@@ -232,7 +234,7 @@ export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards
         // The Tests tab and Markdown use the SAME selected attempts as the bundle.
         // Old-layout JUnit remains diagnostic; old artifacts are never upload-ready.
         const files = junit.length ? junit : globFiles(directory, "**/*.junit.xml");
-        const output = path.join(selectedRoot, selectedAttempt.directory, "junit");
+        const output = path.join(selectedRoot, `eval-result-${shard}-${selectedAttempt.attempt}`, "junit");
         fs.mkdirSync(output, { recursive: true });
         for (const [index, file] of files.entries()) {
             try {
