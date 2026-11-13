@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary></summary>
+    /// <summary> The file permission format. </summary>
     public enum FilePermissionFormat
     {
         /// <summary> Sddl. </summary>
