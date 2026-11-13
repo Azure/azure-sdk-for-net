@@ -27,8 +27,10 @@ namespace SignalRServiceExtension.Tests
 {
     public class AzureSignalRClientTests
     {
-        [Fact]
-        public async Task GetClientConnectionInfo()
+        [Theory]
+        [InlineData(false, 0, null)]
+        [InlineData(true, 300, 300)]
+        public async Task GetClientConnectionInfo(bool enableAuthenticationRefresh, int tokenLifetimeSeconds, int? expectedTokenLifetimeSeconds)
         {
             var hubName = "TestHub";
             var hubUrl = "http://localhost";
@@ -44,9 +46,11 @@ namespace SignalRServiceExtension.Tests
             var configuration = new ConfigurationBuilder().AddInMemoryCollection(configDict).Build();
             var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), new TestRouter());
             var azureSignalRClient = await SignalRUtils.GetAzureSignalRClientAsync(connectionStringKey, hubName, serviceManagerStore);
-            var connectionInfo = await azureSignalRClient.GetClientConnectionInfoAsync(userId, idToken, claimTypeList, null);
+            var connectionInfo = await azureSignalRClient.GetClientConnectionInfoAsync(
+                userId, idToken, claimTypeList, null, enableAuthenticationRefresh, tokenLifetimeSeconds);
 
             Assert.Equal(connectionInfo.Url, $"{hubUrl}/client/?hub={hubName.ToLower()}");
+            Assert.Equal(expectedTokenLifetimeSeconds, connectionInfo.TokenLifetimeSeconds);
 
             var claims = new JwtSecurityTokenHandler().ReadJwtToken(connectionInfo.AccessToken).Claims;
             Assert.Equal(expectedName, GetClaimValue(claims, "name"));
@@ -72,7 +76,10 @@ namespace SignalRServiceExtension.Tests
 
             var result = await client.GetClientConnectionInfoAsync("user", new List<Claim>(), httpContext: null);
 
-            Assert.False(capturedOptions.EnableAuthenticationRefresh);
+            Assert.Equal("user", capturedOptions.UserId);
+            Assert.Null(capturedOptions.AuthenticationExpiresOn);
+            Assert.False(capturedOptions.CloseOnAuthenticationExpiration);
+            Assert.Equal(TimeSpan.FromSeconds(Constants.DefaultAccessTokenLifetimeSeconds), capturedOptions.TokenLifetime);
             Assert.Equal(expectedUrl, result.Url);
             Assert.Equal(expectedAccessToken, result.AccessToken);
             Assert.Null(result.TokenLifetimeSeconds);
@@ -116,7 +123,7 @@ namespace SignalRServiceExtension.Tests
                 expectedExpiresOn,
                 closeOnAuthenticationExpiration: true);
 
-            Assert.True(capturedOptions.EnableAuthenticationRefresh);
+            Assert.Equal("user", capturedOptions.UserId);
             Assert.Equal(expectedExpiresOn, capturedOptions.AuthenticationExpiresOn);
             Assert.True(capturedOptions.CloseOnAuthenticationExpiration);
             Assert.Equal(TimeSpan.FromSeconds(tokenLifetimeSeconds), capturedOptions.TokenLifetime);

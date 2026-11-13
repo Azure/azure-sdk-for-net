@@ -15,6 +15,7 @@
 ### Other Changes
 
 - Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+- Updated `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, and `Microsoft.Azure.SignalR.Protocols` dependencies to 1.34.0.
 
 ## 2.1.0 (2025-07-25)
 

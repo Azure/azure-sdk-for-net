@@ -88,7 +88,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 HttpContext = httpContext,
                 TokenLifetime = TimeSpan.FromSeconds(lifetimeSeconds),
                 AuthenticationExpiresOn = authenticationExpiresOn,
-                EnableAuthenticationRefresh = enableAuthenticationRefresh,
                 CloseOnAuthenticationExpiration = closeOnAuthenticationExpiration,
             };
 
