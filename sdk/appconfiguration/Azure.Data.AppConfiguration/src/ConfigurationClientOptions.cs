@@ -19,6 +19,7 @@ namespace Azure.Data.AppConfiguration
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
         private const string AppConfigStagingCloudHostName = "appconfig-staging.azure.com";
+        private const string AppConfigRegionalStagingCloudHostName = "appconfig-stage.azure.com";
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
@@ -109,9 +110,10 @@ namespace Azure.Data.AppConfiguration
             string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
             return host switch
             {
-                // The staging host label is hyphenated ("appconfig-staging") and is not treated as a bare
-                // marker by the derivation below, so it is mapped explicitly.
-                _ when IsHostInDomain(host, AppConfigStagingCloudHostName)
+                // The staging host labels are hyphenated ("appconfig-staging", and "appconfig-stage" for
+                // regional staging endpoints) and are not treated as bare markers by the derivation below,
+                // so they are mapped explicitly. Both share the staging audience.
+                _ when IsHostInDomain(host, AppConfigStagingCloudHostName) || IsHostInDomain(host, AppConfigRegionalStagingCloudHostName)
                     => $"https://{AppConfigStagingCloudHostName}/.default",
                 // All other clouds (including Azure US Government and Azure China) carry the audience
                 // domain in the host, so it is derived directly.
