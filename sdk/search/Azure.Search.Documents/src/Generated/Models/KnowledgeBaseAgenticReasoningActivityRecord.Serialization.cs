@@ -85,16 +85,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("reasoningTokens"u8);
                 writer.WriteNumberValue(ReasoningTokens.Value);
             }
-            if (Optional.IsDefined(RetrievalReasoningEffort))
-            {
-                writer.WritePropertyName("retrievalReasoningEffort"u8);
-                writer.WriteObjectValue(RetrievalReasoningEffort, options);
-            }
-            if (Optional.IsDefined(LogicalReasoningEffort))
-            {
-                writer.WritePropertyName("logicalReasoningEffort"u8);
-                writer.WriteObjectValue(LogicalReasoningEffort, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -131,8 +121,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? reasoningTokens = default;
-            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
-            KnowledgeRetrievalReasoningEffort logicalReasoningEffort = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -195,24 +183,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     reasoningTokens = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("retrievalReasoningEffort"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("logicalReasoningEffort"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    logicalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -227,9 +197,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 error,
                 warning,
                 additionalBinaryDataProperties,
-                reasoningTokens,
-                retrievalReasoningEffort,
-                logicalReasoningEffort);
+                reasoningTokens);
         }
     }
 }

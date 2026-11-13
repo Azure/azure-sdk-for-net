@@ -20,6 +20,94 @@ namespace Azure.Search.Documents.Models
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {
+        /// <summary> Represents an agentic reasoning activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. </param>
+        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
+        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
+        [Obsolete("retrievalReasoningEffort is not returned by any service version this library targets. Use the overload without it.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord record = KnowledgeBaseAgenticReasoningActivityRecord(id, startedOn: null, completedOn: null, elapsedMs, error, warning: null, reasoningTokens);
+            record.RetrievalReasoningEffort = retrievalReasoningEffort;
+            return record;
+        }
+
+        /// <summary> Represents an agentic reasoning activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
+        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
+        /// <remarks> All arguments are required to keep calls that omit arguments unambiguous with the 12.0.0 overload. </remarks>
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, int? reasoningTokens)
+        {
+            return new KnowledgeBaseAgenticReasoningActivityRecord(
+                id,
+                KnowledgeBaseActivityRecordType.AgenticReasoning,
+                startedOn,
+                completedOn,
+                elapsedMs,
+                error,
+                warning,
+                additionalBinaryDataProperties: null,
+                reasoningTokens);
+        }
+
+        /// <summary> Specifies an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog for generating the vector embedding of a query string. </summary>
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
+        /// <param name="amlParameters"> Specifies the properties of the AML vectorizer. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureMachineLearningVectorizer"/> instance for mocking. </returns>
+        [Obsolete("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureMachineLearningVectorizer AzureMachineLearningVectorizer(string vectorizerName = default, AzureMachineLearningParameters amlParameters = default) =>
+            new AzureMachineLearningVectorizer(vectorizerName, VectorSearchVectorizerKind.AML, additionalBinaryDataProperties: null, amlParameters);
+
+        /// <summary> Specifies the properties for connecting to an AML vectorizer. </summary>
+        /// <param name="scoringUri"> The scoring URI of the AML service. </param>
+        /// <param name="authenticationKey"> The key for the AML service. </param>
+        /// <param name="resourceId"> The Azure Resource Manager resource ID of the AML service. </param>
+        /// <param name="timeout"> The timeout for the HTTP client making the API call. </param>
+        /// <param name="region"> The region the AML service is deployed in. </param>
+        /// <param name="modelName"> The name of the embedding model from the Azure AI Foundry Catalog. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureMachineLearningParameters"/> instance for mocking. </returns>
+        [Obsolete("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureMachineLearningParameters AzureMachineLearningParameters(Uri scoringUri = default, string authenticationKey = default, string resourceId = default, TimeSpan? timeout = default, string region = default, AIFoundryModelCatalogName? modelName = default) =>
+            new AzureMachineLearningParameters(scoringUri, authenticationKey, resourceId, timeout, region, modelName, additionalBinaryDataProperties: null);
+
+        /// <summary> Initializes a new instance of <see cref="Models.VectorizableImageBinaryQuery"/> for mocking. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Comma-separated vector fields to search. </param>
+        /// <param name="exhaustive"> Whether to use exhaustive nearest neighbor search. </param>
+        /// <param name="oversampling"> The oversampling factor. </param>
+        /// <param name="weight"> The relative weight of the vector query. </param>
+        /// <param name="base64Image"> The base64-encoded image to vectorize. </param>
+        /// <returns> A new <see cref="Models.VectorizableImageBinaryQuery"/> instance for mocking. </returns>
+        [Obsolete("Image vector queries are not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string base64Image = default) =>
+            new VectorizableImageBinaryQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, VectorQueryKind.ImageBinary, additionalBinaryDataProperties: null, base64Image);
+
+        /// <summary> Initializes a new instance of <see cref="Models.VectorizableImageUrlQuery"/> for mocking. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Comma-separated vector fields to search. </param>
+        /// <param name="exhaustive"> Whether to use exhaustive nearest neighbor search. </param>
+        /// <param name="oversampling"> The oversampling factor. </param>
+        /// <param name="weight"> The relative weight of the vector query. </param>
+        /// <param name="url"> The URL of the image to vectorize. </param>
+        /// <returns> A new <see cref="Models.VectorizableImageUrlQuery"/> instance for mocking. </returns>
+        [Obsolete("Image vector queries are not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, Uri url = default) =>
+            new VectorizableImageUrlQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, VectorQueryKind.ImageUrl, additionalBinaryDataProperties: null, url);
+
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
         /// <param name="token"> The token returned by the analyzer. </param>
         /// <param name="startOffset"> The index of the first character of the token in the input text. </param>
@@ -85,7 +173,7 @@ namespace Azure.Search.Documents.Models
             int failedItemCount,
             string initialTrackingState,
             string finalTrackingState) =>
-            new IndexerExecutionResult(status, statusDetail: null, mode: null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
+            new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
@@ -115,7 +203,7 @@ namespace Azure.Search.Documents.Models
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, statusDetail: null, mode: null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
+            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
@@ -202,7 +290,7 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult,
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
-            new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory, limits, currentState: null, additionalBinaryDataProperties: null);
+            new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory, limits, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -215,7 +303,7 @@ namespace Azure.Search.Documents.Models
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory?.ToList(), limits, currentState: null, additionalBinaryDataProperties: null);
+            return new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory?.ToList(), limits, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
@@ -236,7 +324,6 @@ namespace Azure.Search.Documents.Models
                 lastResult,
                 executionHistory?.ToList(),
                 limits,
-                currentState: null,
                 additionalBinaryDataProperties: null);
         }
 
@@ -255,6 +342,16 @@ namespace Azure.Search.Documents.Models
             string documentationLink) =>
             new SearchIndexerWarning(key, message, name, details, documentationLink, additionalBinaryDataProperties: null);
 
+        /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
+        /// <param name="documentCount"> The number of documents in the index. </param>
+        /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
+        /// <returns> A new SearchIndexStatistics instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexStatistics SearchIndexStatistics(
+            long documentCount,
+            long storageSize) =>
+            new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize: default, additionalBinaryDataProperties: null);
+
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
         /// <param name="usage"> The resource usage amount. </param>
         /// <param name="quota"> The resource amount quota. </param>
@@ -263,6 +360,44 @@ namespace Azure.Search.Documents.Models
             long usage,
             long? quota) =>
             new SearchResourceCounter(usage, quota, additionalBinaryDataProperties: null);
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceCounters SearchServiceCounters(
+            SearchResourceCounter documentCounter,
+            SearchResourceCounter indexCounter,
+            SearchResourceCounter indexerCounter,
+            SearchResourceCounter dataSourceCounter,
+            SearchResourceCounter storageSizeCounter,
+            SearchResourceCounter synonymMapCounter) =>
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null, vectorIndexSizeCounter: null, additionalBinaryDataProperties: null);
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceCounters SearchServiceCounters(
+            SearchResourceCounter documentCounter,
+            SearchResourceCounter indexCounter,
+            SearchResourceCounter indexerCounter,
+            SearchResourceCounter dataSourceCounter,
+            SearchResourceCounter storageSizeCounter,
+            SearchResourceCounter synonymMapCounter,
+            SearchResourceCounter skillsetCounter) =>
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter: null, additionalBinaryDataProperties: null);
 
         // <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -284,7 +419,7 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter synonymMapCounter = null,
             SearchResourceCounter skillsetCounter = null,
             SearchResourceCounter vectorIndexSizeCounter = null) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
@@ -300,7 +435,21 @@ namespace Azure.Search.Documents.Models
         int? maxComplexCollectionFieldsPerIndex = null,
         int? maxComplexObjectsInCollectionsPerDocument = null,
         long? maxStoragePerIndexInBytes = null) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, null, additionalBinaryDataProperties: null);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, maxCumulativeIndexerRuntimeSeconds: null, additionalBinaryDataProperties: null);
+
+        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
+        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
+        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
+        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
+        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
+        /// <returns> A new SearchServiceLimits instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceLimits SearchServiceLimits(
+        int? maxFieldsPerIndex,
+        int? maxFieldNestingDepthPerIndex,
+        int? maxComplexCollectionFieldsPerIndex,
+        int? maxComplexObjectsInCollectionsPerDocument) =>
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
@@ -344,6 +493,7 @@ namespace Azure.Search.Documents.Models
             string queryPlusText) =>
             new AutocompleteItem(text, queryPlusText, additionalBinaryDataProperties: null);
 
+        /* Preview facet metrics are not supported by the GA API.
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="avg"> The resulting total avg for the facet when an avg metric is requested. </param>
@@ -368,6 +518,7 @@ namespace Azure.Search.Documents.Models
 
             return new FacetResult(count, avg, min, max, sum, cardinality, facets, additionalProperties.ToBinaryDataDictionary());
         }
+        */
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
@@ -394,7 +545,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties.ToBinaryDataDictionary());
+            return new FacetResult(count, additionalProperties.ToBinaryDataDictionary());
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
@@ -490,7 +641,7 @@ namespace Azure.Search.Documents.Models
             normalizers ??= new List<LexicalNormalizer>();
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndex(name, description, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption: null, purviewEnabled: null, sharePointConnectorAppRegistration: null, fields, etag, additionalBinaryDataProperties);
+            return new SearchIndex(name, description, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption: null, sharePointConnectorAppRegistration: null, fields, etag, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
@@ -537,7 +688,7 @@ namespace Azure.Search.Documents.Models
             outputFieldMappings ??= new List<FieldMapping>();
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, cache: null, additionalBinaryDataProperties);
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of SynonymMap. </summary>
@@ -553,13 +704,15 @@ namespace Azure.Search.Documents.Models
 
             return new SynonymMap(name, format, synonyms?.Split('\n'), encryptionKey, etag, additionalBinaryDataProperties);
         }
+
         /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors = null)
         {
-            return new DocumentDebugInfo(semantic: null, vectors, innerHits: null, additionalBinaryDataProperties: null);
+            return new DocumentDebugInfo(vectors, additionalBinaryDataProperties: null);
         }
+
         /// <summary> Initializes a new instance of QueryAnswerResult. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
@@ -568,8 +721,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
-            return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
+            return new QueryAnswerResult(score, key, text, highlights, additionalProperties?.ToDictionary(property => property.Key, property => property.Value));
         }
+
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -578,7 +732,55 @@ namespace Azure.Search.Documents.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
+            return new FacetResult(count, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. </param>
+        /// <param name="oversampling"> Oversampling factor. </param>
+        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
+        /// <param name="kind"> The kind of vector query being performed. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
+        {
+            return new UnknownVectorQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, kind, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeSource. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> The description of the knowledge source. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        /// <param name="eTag"> A string representing an ETag that can be used to perform optimistic concurrency control. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
+        {
+            return new UnknownKnowledgeSource(name, description, kind, eTag, encryptionKey, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id, string @type, int? elapsedMs, KnowledgeBaseErrorDetail error)
+        {
+            return KnowledgeBaseActivityRecord(id: id, @type: @type, elapsedMs: elapsedMs, error: error, warning: default);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeSourceParams. </summary>
+        /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string kind)
+        {
+            return KnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, kind: kind);
         }
     }
 }

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -10,6 +12,116 @@ namespace Azure.Search.Documents.Tests.Models
 {
     public sealed class SearchOptionsTests
     {
+        [TestCase("semanticConfiguration", @"""semantic""")]
+        [TestCase("semanticQuery", @"""semantic terms""")]
+        [TestCase("semanticErrorHandling", @"""partial""")]
+        [TestCase("semanticMaxWaitInMilliseconds", "1250")]
+        public void IsolatedSemanticOptionsSurviveDeserialization(string propertyName, string jsonValue)
+        {
+            foreach (string format in new[] { "J", "W" })
+            {
+                ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+                SearchOptions searchOptions = ModelReaderWriter.Read<SearchOptions>(
+                    BinaryData.FromString($"{{\"{propertyName}\":{jsonValue}}}"), options);
+
+                Assert.IsNotNull(searchOptions.SemanticSearch);
+                using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(searchOptions, options));
+                Assert.AreEqual(jsonValue, document.RootElement.GetProperty(propertyName).GetRawText());
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void IsolatedVectorFilterModeSurvivesDeserialization(string format)
+        {
+            SearchOptions options = ModelReaderWriter.Read<SearchOptions>(
+                BinaryData.FromString(@"{""vectorFilterMode"":""postFilter""}"), new ModelReaderWriterOptions(format));
+
+            Assert.IsNotNull(options.VectorSearch);
+            Assert.AreEqual(VectorFilterMode.PostFilter, options.VectorSearch.FilterMode);
+            Assert.IsEmpty(options.VectorSearch.Queries);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void SemanticAndVectorOptionsSurviveRoundtrips(string format)
+        {
+            const string json = @"{
+                ""semanticConfiguration"":""semantic"",
+                ""semanticErrorHandling"":""partial"",
+                ""semanticMaxWaitInMilliseconds"":1250,
+                ""semanticQuery"":""semantic terms"",
+                ""answers"":""extractive|count-3,threshold-0.7,maxcharlength-300"",
+                ""captions"":""extractive|highlight-false,maxcharlength-200"",
+                ""vectorQueries"":[{""kind"":""vector"",""vector"":[1,2,3],""k"":5,""fields"":""embedding""}],
+                ""vectorFilterMode"":""postFilter""}";
+            ModelReaderWriterOptions readerWriterOptions = new ModelReaderWriterOptions(format);
+            SearchOptions options = ModelReaderWriter.Read<SearchOptions>(BinaryData.FromString(json), readerWriterOptions);
+            AssertSemanticAndVectorOptions(options);
+            AssertSemanticAndVectorOptions(ModelReaderWriter.Read<SearchOptions>(
+                ModelReaderWriter.Write(options, readerWriterOptions), readerWriterOptions));
+
+            string token = SearchContinuationToken.Serialize(
+                new Uri("https://fake-search.search.windows.net/indexes/hotels/docs/search"), options);
+            AssertSemanticAndVectorOptions(SearchContinuationToken.Deserialize(token));
+            AssertSemanticAndVectorOptions(new SearchOptions(token));
+        }
+
+        [TestCase("{}")]
+        [TestCase(@"{""semanticConfiguration"":null,""semanticQuery"":null,""semanticErrorHandling"":null,""semanticMaxWaitInMilliseconds"":null,""vectorFilterMode"":null,""vectorQueries"":[]}")]
+        public void EmptyOptionsKeepSuboptionsNull(string json)
+        {
+            SearchOptions options = ModelReaderWriter.Read<SearchOptions>(BinaryData.FromString(json));
+            Assert.IsNull(options.SemanticSearch);
+            Assert.IsNull(options.VectorSearch);
+            Assert.IsNull(new SearchOptions().SemanticSearch);
+            Assert.IsNull(new SearchOptions().VectorSearch);
+        }
+
+        private static void AssertSemanticAndVectorOptions(SearchOptions options)
+        {
+            Assert.IsNotNull(options.SemanticSearch);
+            Assert.AreEqual("semantic", options.SemanticSearch.SemanticConfigurationName);
+            Assert.AreEqual(SemanticErrorMode.Partial, options.SemanticSearch.ErrorMode);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1250), options.SemanticSearch.MaxWait);
+            Assert.AreEqual("semantic terms", options.SemanticSearch.SemanticQuery);
+            Assert.AreEqual(QueryAnswerType.Extractive, options.SemanticSearch.QueryAnswer.AnswerType);
+            Assert.AreEqual(3, options.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual(0.7, options.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual(300, options.SemanticSearch.QueryAnswer.MaxCharLength);
+            Assert.AreEqual(QueryCaptionType.Extractive, options.SemanticSearch.QueryCaption.CaptionType);
+            Assert.IsFalse(options.SemanticSearch.QueryCaption.HighlightEnabled);
+            Assert.AreEqual(200, options.SemanticSearch.QueryCaption.MaxCharLength);
+            Assert.IsNotNull(options.VectorSearch);
+            Assert.AreEqual(VectorFilterMode.PostFilter, options.VectorSearch.FilterMode);
+            Assert.AreEqual(1, options.VectorSearch.Queries.Count);
+            VectorizedQuery query = (VectorizedQuery)options.VectorSearch.Queries[0];
+            CollectionAssert.AreEqual(new float[] { 1, 2, 3 }, query.Vector.ToArray());
+            Assert.AreEqual(5, query.KNearestNeighborsCount);
+            CollectionAssert.AreEqual(new[] { "embedding" }, query.Fields);
+        }
+
+        [Test]
+        [SetCulture("de-DE")]
+        public void QueryAnswerThresholdIsCultureInvariant()
+        {
+            QueryAnswer answer = new QueryAnswer(QueryAnswerType.Extractive)
+            {
+                Count = 3,
+                Threshold = 0.7,
+                MaxCharLength = 300,
+            };
+            const string expected = "extractive|count-3,threshold-0.7,maxcharlength-300";
+            Assert.AreEqual(expected, answer.QueryAnswerRaw);
+
+            QueryAnswer parsed = new QueryAnswer { QueryAnswerRaw = expected };
+            Assert.AreEqual(QueryAnswerType.Extractive, parsed.AnswerType);
+            Assert.AreEqual(3, parsed.Count);
+            Assert.AreEqual(0.7, parsed.Threshold);
+            Assert.AreEqual(300, parsed.MaxCharLength);
+            Assert.AreEqual(expected, parsed.QueryAnswerRaw);
+        }
+
         [Test]
         public void QueryTypeOption()
         {
@@ -336,6 +448,28 @@ namespace Azure.Search.Documents.Tests.Models
 
             Assert.AreEqual("extractive|count-5,threshold-0.8,maxcharlength-300", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
             Assert.AreEqual("extractive|highlight-True,maxcharlength-300", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
+        }
+
+        [Test]
+        public void MoreLikeThisSurvivesCloning()
+        {
+            SearchOptions options = new();
+            Assert.IsNull(options.MoreLikeThis);
+            options.MoreLikeThis = "hotel-1";
+
+            Assert.AreEqual(options.MoreLikeThis, options.Clone().MoreLikeThis);
+        }
+
+        [Test]
+        public void MoreLikeThisSurvivesContinuationTokenRoundtrip()
+        {
+            SearchOptions options = new() { MoreLikeThis = "hotel-1" };
+            string token = SearchContinuationToken.Serialize(
+                new Uri("https://fake-search.search.windows.net/indexes/hotels/docs/search"),
+                options);
+
+            Assert.AreEqual(options.MoreLikeThis, SearchContinuationToken.Deserialize(token).MoreLikeThis);
+            Assert.AreEqual(options.MoreLikeThis, new SearchOptions(token).MoreLikeThis);
         }
 
         [Test]

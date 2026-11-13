@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Samples\Sample01_HelloWorld.Data.cs" DependentUpon="Sample01_HelloWorld.cs" />
+    <Compile Update="Samples\HelloWorld.Data.cs" DependentUpon="HelloWorld.cs" />
   </ItemGroup>
 
   <ItemGroup>
