@@ -20,28 +20,42 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ScenarioRunSummaryAction"/>. </summary>
         internal ScenarioRunSummaryAction()
         {
-            Resources = new ChangeTrackingList<ScenarioRunResource>();
+            Resources = new ChangeTrackingList<ScenarioRunResourceSummary>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScenarioRunSummaryAction"/>. </summary>
-        /// <param name="resources"> The resources associated with the specified action. </param>
+        /// <param name="resources">
+        /// The resources associated with the specified action, including the concrete targets
+        /// evaluated during execution.
+        /// </param>
         /// <param name="actionUrn"> The urn for the given chaos action. </param>
         /// <param name="state"> The state of the action. </param>
         /// <param name="startedOn"> When the action was started. </param>
         /// <param name="completedOn"> When the action was completed. </param>
+        /// <param name="error"> Structured information about the action failure. </param>
+        /// <param name="failureSuppressed">
+        /// Whether this action's failure was suppressed by the effective `failureBehavior`
+        /// and therefore did not fail the scenario run. Present only for actions in the
+        /// `Failed` state; absent otherwise.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioRunSummaryAction(IReadOnlyList<ScenarioRunResource> resources, string actionUrn, ScenarioSummaryState state, DateTimeOffset? startedOn, DateTimeOffset? completedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioRunSummaryAction(IReadOnlyList<ScenarioRunResourceSummary> resources, string actionUrn, ScenarioSummaryState state, DateTimeOffset? startedOn, DateTimeOffset? completedOn, ActionError error, bool? failureSuppressed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             ActionUrn = actionUrn;
             State = state;
             StartedOn = startedOn;
             CompletedOn = completedOn;
+            Error = error;
+            FailureSuppressed = failureSuppressed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resources associated with the specified action. </summary>
-        public IReadOnlyList<ScenarioRunResource> Resources { get; }
+        /// <summary>
+        /// The resources associated with the specified action, including the concrete targets
+        /// evaluated during execution.
+        /// </summary>
+        public IReadOnlyList<ScenarioRunResourceSummary> Resources { get; }
 
         /// <summary> The urn for the given chaos action. </summary>
         public string ActionUrn { get; }
@@ -54,5 +68,15 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> When the action was completed. </summary>
         public DateTimeOffset? CompletedOn { get; }
+
+        /// <summary> Structured information about the action failure. </summary>
+        public ActionError Error { get; }
+
+        /// <summary>
+        /// Whether this action's failure was suppressed by the effective `failureBehavior`
+        /// and therefore did not fail the scenario run. Present only for actions in the
+        /// `Failed` state; absent otherwise.
+        /// </summary>
+        public bool? FailureSuppressed { get; }
     }
 }

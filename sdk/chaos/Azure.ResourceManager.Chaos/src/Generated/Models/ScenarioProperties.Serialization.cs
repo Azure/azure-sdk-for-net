@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the properties of the scenario. </summary>
     public partial class ScenarioProperties : IJsonModel<ScenarioProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ScenarioProperties"/> for deserialization. </summary>
-        internal ScenarioProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ScenarioProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -84,12 +79,12 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedFrom))
+            if (Optional.IsDefined(CreatedFrom))
             {
                 writer.WritePropertyName("createdFrom"u8);
                 writer.WriteStringValue(CreatedFrom);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -99,20 +94,31 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("parameters"u8);
-            writer.WriteStartArray();
-            foreach (ChaosScenarioParameterInfo item in Parameters)
+            if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartArray();
+                foreach (ChaosScenarioParameterInfo item in Parameters)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("actions"u8);
-            writer.WriteStartArray();
-            foreach (ScenarioAction item in Actions)
+            if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (ScenarioAction item in Actions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            if (Optional.IsDefined(FailureBehavior))
+            {
+                writer.WritePropertyName("failureBehavior"u8);
+                writer.WriteStringValue(FailureBehavior.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Recommendation))
             {
                 writer.WritePropertyName("recommendation"u8);
@@ -166,6 +172,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string description = default;
             IList<ChaosScenarioParameterInfo> parameters = default;
             IList<ScenarioAction> actions = default;
+            FailureBehavior? failureBehavior = default;
             ChaosScenarioRecommendation recommendation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -196,6 +203,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ChaosScenarioParameterInfo> array = new List<ChaosScenarioParameterInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -206,12 +217,25 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("actions"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ScenarioAction> array = new List<ScenarioAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ScenarioAction.DeserializeScenarioAction(item, options));
                     }
                     actions = array;
+                    continue;
+                }
+                if (prop.NameEquals("failureBehavior"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failureBehavior = new FailureBehavior(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("recommendation"u8))
@@ -235,6 +259,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 description,
                 parameters ?? new ChangeTrackingList<ChaosScenarioParameterInfo>(),
                 actions ?? new ChangeTrackingList<ScenarioAction>(),
+                failureBehavior,
                 recommendation,
                 additionalBinaryDataProperties);
         }

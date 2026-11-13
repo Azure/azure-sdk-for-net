@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="errors"> System or infrastructure errors encountered during evaluation. </param>
         /// <param name="workspaceId"> The workspace ID this evaluation belongs to. </param>
         /// <param name="resourceSnapshotId"> The resource snapshot ID used for this evaluation. </param>
+        /// <param name="discoveryResultId"> The canonical Azure resource ID of the retained discovery result that supplied resourceSnapshotId. This reference does not change when the latest discovery changes and never identifies the latest alias or a protected LRO polling handle. </param>
         /// <param name="numTemplatesToEvaluate"> The number of templates to evaluate. </param>
         /// <param name="numTemplatesEvaluatedSucceeded"> The number of templates that evaluated successfully. </param>
         /// <param name="numTemplatesEvaluatedFailed"> The number of templates that failed evaluation. </param>
         /// <param name="numTemplatesEvaluatedCancelled"> The number of templates that were cancelled during evaluation. </param>
-        /// <param name="evaluationResult"> The overall evaluation result. </param>
         /// <param name="results"> Per-template evaluation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, int? numTemplatesToEvaluate, int? numTemplatesEvaluatedSucceeded, int? numTemplatesEvaluatedFailed, int? numTemplatesEvaluatedCancelled, RecommendationStatus? evaluationResult, IReadOnlyList<TemplateEvaluationResultItem> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, ResourceIdentifier discoveryResultId, int numTemplatesToEvaluate, int numTemplatesEvaluatedSucceeded, int numTemplatesEvaluatedFailed, int numTemplatesEvaluatedCancelled, IReadOnlyList<TemplateEvaluationResultItem> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartsOn = startsOn;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Chaos.Models
             Errors = errors;
             WorkspaceId = workspaceId;
             ResourceSnapshotId = resourceSnapshotId;
+            DiscoveryResultId = discoveryResultId;
             NumTemplatesToEvaluate = numTemplatesToEvaluate;
             NumTemplatesEvaluatedSucceeded = numTemplatesEvaluatedSucceeded;
             NumTemplatesEvaluatedFailed = numTemplatesEvaluatedFailed;
             NumTemplatesEvaluatedCancelled = numTemplatesEvaluatedCancelled;
-            EvaluationResult = evaluationResult;
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> The resource snapshot ID used for this evaluation. </summary>
         public string ResourceSnapshotId { get; }
 
+        /// <summary> The canonical Azure resource ID of the retained discovery result that supplied resourceSnapshotId. This reference does not change when the latest discovery changes and never identifies the latest alias or a protected LRO polling handle. </summary>
+        public ResourceIdentifier DiscoveryResultId { get; }
+
         /// <summary> The number of templates to evaluate. </summary>
-        public int? NumTemplatesToEvaluate { get; }
+        public int NumTemplatesToEvaluate { get; }
 
         /// <summary> The number of templates that evaluated successfully. </summary>
-        public int? NumTemplatesEvaluatedSucceeded { get; }
+        public int NumTemplatesEvaluatedSucceeded { get; }
 
         /// <summary> The number of templates that failed evaluation. </summary>
-        public int? NumTemplatesEvaluatedFailed { get; }
+        public int NumTemplatesEvaluatedFailed { get; }
 
         /// <summary> The number of templates that were cancelled during evaluation. </summary>
-        public int? NumTemplatesEvaluatedCancelled { get; }
-
-        /// <summary> The overall evaluation result. </summary>
-        public RecommendationStatus? EvaluationResult { get; }
+        public int NumTemplatesEvaluatedCancelled { get; }
 
         /// <summary> Per-template evaluation results. </summary>
         public IReadOnlyList<TemplateEvaluationResultItem> Results { get; }

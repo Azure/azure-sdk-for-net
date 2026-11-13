@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,71 +94,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
             return GetChaosExperiments().Get(experimentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ChaosPrivateAccesses in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ChaosPrivateAccesses and their operations over a ChaosPrivateAccessResource. </returns>
-        public virtual ChaosPrivateAccessCollection GetChaosPrivateAccesses()
-        {
-            return GetCachedClient(client => new ChaosPrivateAccessCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a private access resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/privateAccesses/{privateAccessName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateAccesses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateAccessName"> The name of the private access resource that is being created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateAccessName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateAccessName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosPrivateAccessResource>> GetChaosPrivateAccessAsync(string privateAccessName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateAccessName, nameof(privateAccessName));
-
-            return await GetChaosPrivateAccesses().GetAsync(privateAccessName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a private access resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/privateAccesses/{privateAccessName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateAccesses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateAccessName"> The name of the private access resource that is being created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateAccessName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateAccessName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ChaosPrivateAccessResource> GetChaosPrivateAccess(string privateAccessName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateAccessName, nameof(privateAccessName));
-
-            return GetChaosPrivateAccesses().Get(privateAccessName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ChaosWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
@@ -181,7 +116,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +145,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

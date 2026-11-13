@@ -105,35 +105,35 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceSnapshotId))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("resourceSnapshotId"u8);
                 writer.WriteStringValue(ResourceSnapshotId);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumTemplatesToEvaluate))
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("discoveryResultId"u8);
+                writer.WriteStringValue(DiscoveryResultId);
+            }
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesToEvaluate"u8);
-                writer.WriteNumberValue(NumTemplatesToEvaluate.Value);
+                writer.WriteNumberValue(NumTemplatesToEvaluate);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumTemplatesEvaluatedSucceeded))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesEvaluatedSucceeded"u8);
-                writer.WriteNumberValue(NumTemplatesEvaluatedSucceeded.Value);
+                writer.WriteNumberValue(NumTemplatesEvaluatedSucceeded);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumTemplatesEvaluatedFailed))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesEvaluatedFailed"u8);
-                writer.WriteNumberValue(NumTemplatesEvaluatedFailed.Value);
+                writer.WriteNumberValue(NumTemplatesEvaluatedFailed);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumTemplatesEvaluatedCancelled))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesEvaluatedCancelled"u8);
-                writer.WriteNumberValue(NumTemplatesEvaluatedCancelled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
-            {
-                writer.WritePropertyName("evaluationResult"u8);
-                writer.WriteStringValue(EvaluationResult.Value.ToString());
+                writer.WriteNumberValue(NumTemplatesEvaluatedCancelled);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Results))
             {
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Chaos.Models
             IReadOnlyList<ChaosOperationError> errors = default;
             ResourceIdentifier workspaceId = default;
             string resourceSnapshotId = default;
-            int? numTemplatesToEvaluate = default;
-            int? numTemplatesEvaluatedSucceeded = default;
-            int? numTemplatesEvaluatedFailed = default;
-            int? numTemplatesEvaluatedCancelled = default;
-            RecommendationStatus? evaluationResult = default;
+            ResourceIdentifier discoveryResultId = default;
+            int numTemplatesToEvaluate = default;
+            int numTemplatesEvaluatedSucceeded = default;
+            int numTemplatesEvaluatedFailed = default;
+            int numTemplatesEvaluatedCancelled = default;
             IReadOnlyList<TemplateEvaluationResultItem> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -249,49 +249,29 @@ namespace Azure.ResourceManager.Chaos.Models
                     resourceSnapshotId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("discoveryResultId"u8))
+                {
+                    discoveryResultId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("numTemplatesToEvaluate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     numTemplatesToEvaluate = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("numTemplatesEvaluatedSucceeded"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     numTemplatesEvaluatedSucceeded = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("numTemplatesEvaluatedFailed"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     numTemplatesEvaluatedFailed = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("numTemplatesEvaluatedCancelled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     numTemplatesEvaluatedCancelled = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("evaluationResult"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    evaluationResult = new RecommendationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("results"u8))
@@ -320,11 +300,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 errors ?? new ChangeTrackingList<ChaosOperationError>(),
                 workspaceId,
                 resourceSnapshotId,
+                discoveryResultId,
                 numTemplatesToEvaluate,
                 numTemplatesEvaluatedSucceeded,
                 numTemplatesEvaluatedFailed,
                 numTemplatesEvaluatedCancelled,
-                evaluationResult,
                 results ?? new ChangeTrackingList<TemplateEvaluationResultItem>(),
                 additionalBinaryDataProperties);
         }

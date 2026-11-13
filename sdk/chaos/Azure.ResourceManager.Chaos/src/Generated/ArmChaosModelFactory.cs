@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Models;
@@ -436,141 +437,6 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ExperimentExecutionActionTargetDetailsError(code, message, default);
         }
 
-        /// <summary> PrivateAccesses tracked resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Chaos.ChaosPrivateAccessData"/> instance for mocking. </returns>
-        public static ChaosPrivateAccessData ChaosPrivateAccessData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ChaosPrivateAccessProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ChaosPrivateAccessData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
-        /// <summary> The properties of a private access resource. </summary>
-        /// <param name="provisioningState"> Most recent provisioning state for the given privateAccess resource. </param>
-        /// <param name="privateEndpointConnections"> A readonly collection of private endpoint connection. Currently only one endpoint connection is supported. </param>
-        /// <param name="publicNetworkAccess"> Public Network Access Control for PrivateAccess resource. </param>
-        /// <returns> A new <see cref="Models.ChaosPrivateAccessProperties"/> instance for mocking. </returns>
-        public static ChaosPrivateAccessProperties ChaosPrivateAccessProperties(ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosPrivateEndpointConnectionData> privateEndpointConnections = default, PublicNetworkAccessOption? publicNetworkAccess = default)
-        {
-            privateEndpointConnections ??= new ChangeTrackingList<ChaosPrivateEndpointConnectionData>();
-
-            return new ChaosPrivateAccessProperties(provisioningState, (privateEndpointConnections ?? new ChangeTrackingList<ChaosPrivateEndpointConnectionData>()).ToList(), publicNetworkAccess, default);
-        }
-
-        /// <summary> The private endpoint connection resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="Chaos.ChaosPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ChaosPrivateEndpointConnectionData ChaosPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
-        {
-            return new ChaosPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="privateEndpointId"> The Azure identifier for private endpoint. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, string privateEndpointId = default, ChaosPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ChaosProvisioningState? provisioningState = default)
-        {
-            groupIds ??= new ChangeTrackingList<string>();
-
-            return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.ChaosPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ChaosPrivateLinkServiceConnectionState ChaosPrivateLinkServiceConnectionState(ChaosPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new ChaosPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <summary> Describes a private access update. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ChaosPrivateAccessPatch"/> instance for mocking. </returns>
-        public static ChaosPrivateAccessPatch ChaosPrivateAccessPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ChaosPrivateAccessPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> A list of private link resources. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.ChaosPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static ChaosPrivateLinkResourceListResult ChaosPrivateLinkResourceListResult(IEnumerable<ChaosPrivateLinkResource> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ChaosPrivateLinkResource>();
-
-            return new ChaosPrivateLinkResourceListResult((value ?? new ChangeTrackingList<ChaosPrivateLinkResource>()).ToList(), nextLink, default);
-        }
-
-        /// <summary> A private link resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ChaosPrivateLinkResource"/> instance for mocking. </returns>
-        public static ChaosPrivateLinkResource ChaosPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ChaosPrivateLinkResourceProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ChaosPrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <param name="provisioningState"> Resource provisioning state. Not currently in use. </param>
-        /// <returns> A new <see cref="Models.ChaosPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static ChaosPrivateLinkResourceProperties ChaosPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ChaosProvisioningState? provisioningState = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new ChaosPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -707,37 +573,156 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Model that represents the Workspace properties model. </summary>
         /// <param name="provisioningState"> Most recent provisioning state for the given Workspace resource. </param>
-        /// <param name="communicationEndpoint"> The communication endpoint used to connect and communicate with the workspace for fault-injection orchestration. </param>
         /// <param name="scopes"> The intended workspace-level resource scope to be used by child scenarios. </param>
+        /// <param name="encryption">
+        /// The requested customer key and service observations. Accepted creation fixes
+        /// whether customerManagedKeyEncryption is present. On PUT, omission of
+        /// encryption or its CMK object, or an empty encryption object, is valid for
+        /// Microsoft-managed Workspaces but rejected for CMK-created Workspaces.
+        /// Null is not a valid PUT value. A CMK-created Workspace can replace its key.
+        /// </param>
         /// <returns> A new <see cref="Models.WorkspaceProperties"/> instance for mocking. </returns>
-        public static WorkspaceProperties WorkspaceProperties(ChaosProvisioningState? provisioningState = default, string communicationEndpoint = default, IEnumerable<ResourceIdentifier> scopes = default)
+        public static WorkspaceProperties WorkspaceProperties(ChaosProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> scopes = default, WorkspaceEncryption encryption = default)
         {
             scopes ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new WorkspaceProperties(provisioningState, communicationEndpoint, (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new WorkspaceProperties(provisioningState, (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), encryption, default);
         }
 
-        /// <summary> Describes a workspace update. </summary>
+        /// <param name="customerManagedKeyEncryption">
+        /// The requested customer-managed key. Its presence is fixed by accepted
+        /// Workspace creation: adding CMK to a Microsoft-managed Workspace or removing
+        /// CMK from a CMK-created Workspace is rejected with InvalidEncryptionConfiguration.
+        /// The key pair remains updateable on CMK-created Workspaces, including after
+        /// a failed creation. A present object requires a coherent keyEncryptionKeyUrl and
+        /// keyVaultResourceId pair. After synchronous caller and vault validation,
+        /// the accepted pair can be returned while configuration is Pending.
+        /// It does not prove that active data already uses the requested key.
+        /// </param>
+        /// <param name="customerManagedKeyOnboardingApplicationId">
+        /// The Microsoft Entra application ID used for customer consent, returned for
+        /// existing Workspaces, including Microsoft-managed Workspaces. This does not
+        /// permit adding CMK to an existing Microsoft-managed Workspace. Before
+        /// creating a Workspace with a customer key, obtain the application name and
+        /// ID for the target cloud from the service onboarding documentation or Portal,
+        /// then consent and grant key access. The configuring caller separately needs
+        /// Microsoft.KeyVault/vaults/read on the referenced vault.
+        /// GET returns the same application ID.
+        /// This is not a service principal object ID or an identity selector.
+        /// The Workspace's top-level identity does not select this application.
+        /// </param>
+        /// <param name="status"> The observed result, separate from the requested setting. </param>
+        /// <returns> A new <see cref="Models.WorkspaceEncryption"/> instance for mocking. </returns>
+        public static WorkspaceEncryption WorkspaceEncryption(WorkspaceCustomerManagedKeyEncryption customerManagedKeyEncryption = default, Guid? customerManagedKeyOnboardingApplicationId = default, WorkspaceEncryptionStatus status = default)
+        {
+            return new WorkspaceEncryption(customerManagedKeyEncryption, customerManagedKeyOnboardingApplicationId is null ? default : new WorkspaceCustomerManagedKeyOnboarding(customerManagedKeyOnboardingApplicationId.GetValueOrDefault(), default), status, default);
+        }
+
+        /// <summary> A customer-managed key reference, not key material. </summary>
+        /// <param name="keyEncryptionKeyUri">
+        /// The versionless HTTPS Key Vault key URI in the supported cloud and Workspace
+        /// tenant. The key vault must belong to the same Microsoft Entra tenant as
+        /// the Workspace. Its HTTPS origin must match the vault referenced by
+        /// keyVaultResourceId. The service validates the effective pair and caller
+        /// vault-read permission synchronously through Azure Resource Manager before
+        /// creating public operation metadata, accepting the configuration operation,
+        /// persisting requested encryption, or changing Storage or customer data.
+        /// Supports RSA keys in Azure Key Vault and RSA-HSM keys in Premium Key Vault,
+        /// with key sizes of 2048, 3072, or 4096 bits. Premium RSA-HSM keys use the same
+        /// vault URL. The separate Azure Managed HSM service is not supported;
+        /// Managed HSM endpoints are rejected before operation acceptance.
+        /// A key version, query string, or fragment is not permitted.
+        /// Azure Storage follows key versions automatically. Keep the previous version
+        /// available for at least 24 hours after rotation.
+        /// </param>
+        /// <param name="keyVaultResourceId">
+        /// The fully qualified Azure resource ID of the key vault that contains the key.
+        /// Use /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName},
+        /// not a key child resource, Managed HSM, or URL. Full PUT with CMK and PATCH
+        /// that changes either CMK member require Microsoft.KeyVault/vaults/read on
+        /// the effective vault. The service compares its canonical ID, tenant, and
+        /// vault URI with the requested pair before accepting the operation.
+        /// </param>
+        /// <returns> A new <see cref="Models.WorkspaceCustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static WorkspaceCustomerManagedKeyEncryption WorkspaceCustomerManagedKeyEncryption(Uri keyEncryptionKeyUri = default, ResourceIdentifier keyVaultResourceId = default)
+        {
+            return new WorkspaceCustomerManagedKeyEncryption(keyEncryptionKeyUri, keyVaultResourceId, default);
+        }
+
+        /// <summary> Service observations of protection and access for customer data under the Workspace encryption scope. </summary>
+        /// <param name="state"> The result of configuration or the most recent usable health observation. </param>
+        /// <param name="observedProtection"> The last directly observed active protection. Omitted when unknown. </param>
+        /// <param name="observedKeyEncryptionKeyUri">
+        /// The active key URI reported by Azure Storage, including its version when
+        /// available. Omitted when unknown or when protection is Microsoft-managed.
+        /// This value is not inferred from the requested key.
+        /// </param>
+        /// <param name="lastCheckedOn"> The UTC time of the observation, including a failed check. </param>
+        /// <param name="error">
+        /// The configuration or health error. Failed state includes a code and message.
+        /// CustomerKeyAccessFailed means Azure Storage cannot use the customer key.
+        /// EncryptionConfigurationFailed means a service-side configuration step failed.
+        /// A more specific cause is included only when the platform response identifies it.
+        /// </param>
+        /// <returns> A new <see cref="Models.WorkspaceEncryptionStatus"/> instance for mocking. </returns>
+        public static WorkspaceEncryptionStatus WorkspaceEncryptionStatus(WorkspaceEncryptionState state = default, WorkspaceEncryptionProtection? observedProtection = default, Uri observedKeyEncryptionKeyUri = default, DateTimeOffset? lastCheckedOn = default, ResponseError error = default)
+        {
+            return new WorkspaceEncryptionStatus(
+                state,
+                observedProtection,
+                observedKeyEncryptionKeyUri,
+                lastCheckedOn,
+                error,
+                default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="workspaceUpdateCustomerManagedKeyEncryption">
+        /// The customer key configuration to merge on a CMK-created Workspace.
+        /// Null deletion is rejected on CMK and is a no-op only when already absent
+        /// on a Microsoft-managed Workspace. An empty object retains an existing
+        /// complete pair without a lookup when neither member changes, but is invalid
+        /// when the merged pair is incomplete. Unsupported mode changes are rejected
+        /// before vault lookup, operation creation, desired mutation, or Storage effects.
+        /// </param>
         /// <returns> A new <see cref="Models.ChaosWorkspacePatch"/> instance for mocking. </returns>
-        public static ChaosWorkspacePatch ChaosWorkspacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static ChaosWorkspacePatch ChaosWorkspacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, WorkspaceCustomerManagedKeyEncryptionPatch workspaceUpdateCustomerManagedKeyEncryption = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ChaosWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new ChaosWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, workspaceUpdateCustomerManagedKeyEncryption is null ? default : new WorkspaceUpdateProperties(workspaceUpdateCustomerManagedKeyEncryption is null ? default : new WorkspaceEncryptionPatchMergePatchUpdateOrCreate(workspaceUpdateCustomerManagedKeyEncryption, default), default), default);
         }
 
-        /// <summary> Model that represents the latest workspace discovery result. </summary>
+        /// <summary> A partial customer key reference, validated after merging with the stored setting. </summary>
+        /// <param name="keyEncryptionKeyUri">
+        /// The replacement versionless key URI. Omission retains the URI; null deletes
+        /// it. A same-vault replacement retains the stored vault ID. The effective
+        /// pair is authorized and validated before acceptance; an incomplete or
+        /// mismatched pair is rejected. Key path and name casing is preserved.
+        /// </param>
+        /// <param name="keyVaultResourceId">
+        /// The vault resource ID to merge with the key URL. Omission retains the ID,
+        /// but does not bypass caller authorization when the URL changes. Null deletes
+        /// the ID; a remaining CMK object without both members is invalid. Changing
+        /// vault requires a coherent new URL and ID pair.
+        /// </param>
+        /// <returns> A new <see cref="Models.WorkspaceCustomerManagedKeyEncryptionPatch"/> instance for mocking. </returns>
+        public static WorkspaceCustomerManagedKeyEncryptionPatch WorkspaceCustomerManagedKeyEncryptionPatch(Uri keyEncryptionKeyUri = default, ResourceIdentifier keyVaultResourceId = default)
+        {
+            return new WorkspaceCustomerManagedKeyEncryptionPatch(keyEncryptionKeyUri, keyVaultResourceId, default);
+        }
+
+        /// <summary> A retained workspace discovery result and its accepted coverage facts. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.WorkspaceDiscovery"/> instance for mocking. </returns>
-        public static WorkspaceDiscovery WorkspaceDiscovery(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkspaceDiscoveryProperties properties = default)
+        /// <returns> A new <see cref="Chaos.WorkspaceDiscoveryData"/> instance for mocking. </returns>
+        public static WorkspaceDiscoveryData WorkspaceDiscoveryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkspaceDiscoveryProperties properties = default)
         {
-            return new WorkspaceDiscovery(
+            return new WorkspaceDiscoveryData(
                 id,
                 name,
                 resourceType,
@@ -753,10 +738,16 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="errors"> System or infrastructure errors encountered during discovery. </param>
         /// <param name="workspaceId"> The workspace ID this discovery belongs to. </param>
         /// <param name="resourceSnapshotId"> The resource snapshot ID produced by this discovery. </param>
+        /// <param name="completeness"> The coverage established by the accepted discovery result for Azure Resource Manager scopes. Present with coverageSummary on newly produced snapshot results; absence is not Established or a known zero. </param>
+        /// <param name="coverageSummary"> Coverage facts for the accepted result. Scope counts, resource-occurrence counts, warning counts, and returned inventory-row counts are different units and must not be combined. </param>
+        /// <param name="warnings"> Confirmed access, missing-resource, or access-indeterminate guidance. System verification failures are reported in errors, not as permission warnings. The returned array may be a subset; use warningsTotalCount and warningsTruncated. </param>
+        /// <param name="warningsTotalCount"> The deduplicated number of warning identities before sampling. Identity consists of the expanded scope, affected resource, and reason. Absent means no accepted warning population was recorded, not zero warnings. </param>
+        /// <param name="warningsTruncated"> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </param>
         /// <returns> A new <see cref="Models.WorkspaceDiscoveryProperties"/> instance for mocking. </returns>
-        public static WorkspaceDiscoveryProperties WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default)
+        public static WorkspaceDiscoveryProperties WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, WorkspaceDiscoveryCompleteness? completeness = default, WorkspaceDiscoveryCoverageSummary coverageSummary = default, IEnumerable<WorkspaceDiscoveryWarning> warnings = default, long? warningsTotalCount = default, bool? warningsTruncated = default)
         {
             errors ??= new ChangeTrackingList<ChaosOperationError>();
+            warnings ??= new ChangeTrackingList<WorkspaceDiscoveryWarning>();
 
             return new WorkspaceDiscoveryProperties(
                 status,
@@ -765,6 +756,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
                 workspaceId,
                 resourceSnapshotId,
+                completeness,
+                coverageSummary,
+                (warnings ?? new ChangeTrackingList<WorkspaceDiscoveryWarning>()).ToList(),
+                warningsTotalCount,
+                warningsTruncated,
                 default);
         }
 
@@ -777,16 +773,109 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ChaosOperationError(errorCode, errorMessage, default);
         }
 
-        /// <summary> Model that represents the latest workspace evaluation result. </summary>
+        /// <summary> Aggregate coverage of expanded Azure Resource Manager scope occurrences. Non-Azure Resource Manager discovery ingress is outside this population. VerificationIncomplete dominates KnownPartial, then BaselineUnknown, then Established. </summary>
+        /// <param name="scopes"> The scope-occurrence coverage partitions for this discovery result. </param>
+        /// <param name="resources"> Required resource occurrences only from scopes with a known complete expected inventory set. Absent exactly when knownExpectedSetCount is zero. Unknown is not a known empty set. </param>
+        /// <returns> A new <see cref="Models.WorkspaceDiscoveryCoverageSummary"/> instance for mocking. </returns>
+        public static WorkspaceDiscoveryCoverageSummary WorkspaceDiscoveryCoverageSummary(WorkspaceDiscoveryScopeCoverageSummary scopes = default, WorkspaceDiscoveryResourceCoverageSummary resources = default)
+        {
+            return new WorkspaceDiscoveryCoverageSummary(scopes, resources, default);
+        }
+
+        /// <summary> Two independent partitions of expanded scope occurrences after normalized-scope deduplication. Distinct service groups remain distinct even if their members coincide. The known/unknown counts and the four completeness counts each sum to totalCount. </summary>
+        /// <param name="totalCount"> The number of expanded Azure Resource Manager scope occurrences represented by the result. </param>
+        /// <param name="knownExpectedSetCount"> The number of scopes with an authoritative complete expected resource-occurrence set, including authoritatively empty sets. </param>
+        /// <param name="unknownExpectedSetCount"> The number of scopes whose complete expected inventory set is unavailable. A service group's known subscription or resource-group membership does not establish its descendant-resource denominator. </param>
+        /// <param name="establishedCount"> The number of scopes with Established coverage. </param>
+        /// <param name="baselineUnknownCount"> The number of scopes with a structurally unavailable denominator and no observed shortfall, including successful observed-empty container scans. </param>
+        /// <param name="verificationIncompleteCount"> The number of scopes with required verification failure, unavailable required child enumeration, or a proven accessible required resource absent from the snapshot. </param>
+        /// <param name="knownPartialCount"> The number of scopes with confirmed undelivered obligations and no remaining system-verification gap. </param>
+        /// <returns> A new <see cref="Models.WorkspaceDiscoveryScopeCoverageSummary"/> instance for mocking. </returns>
+        public static WorkspaceDiscoveryScopeCoverageSummary WorkspaceDiscoveryScopeCoverageSummary(long totalCount = default, long knownExpectedSetCount = default, long unknownExpectedSetCount = default, long establishedCount = default, long baselineUnknownCount = default, long verificationIncompleteCount = default, long knownPartialCount = default)
+        {
+            return new WorkspaceDiscoveryScopeCoverageSummary(
+                totalCount,
+                knownExpectedSetCount,
+                unknownExpectedSetCount,
+                establishedCount,
+                baselineUnknownCount,
+                verificationIncompleteCount,
+                knownPartialCount,
+                default);
+        }
+
+        /// <summary> Required resource occurrences from known-set scopes, keyed by normalized scope and resource before global inventory-row deduplication. classifiedCount plus unclassifiedCount equals expectedCount, and coveredCount does not exceed classifiedCount. </summary>
+        /// <param name="expectedCount"> The number of unique required resource occurrences across known-set scopes, not the number of service-group container members or listed inventory rows. </param>
+        /// <param name="classifiedCount"> The number of expected occurrences with a terminal access or presence classification. </param>
+        /// <param name="unclassifiedCount"> The number of expected occurrences that required system verification could not classify. </param>
+        /// <param name="coveredCount"> The number of classified expected occurrences actually represented in the produced snapshot. Access to a container or its descendants does not invent a resource occurrence. </param>
+        /// <returns> A new <see cref="Models.WorkspaceDiscoveryResourceCoverageSummary"/> instance for mocking. </returns>
+        public static WorkspaceDiscoveryResourceCoverageSummary WorkspaceDiscoveryResourceCoverageSummary(long expectedCount = default, long classifiedCount = default, long unclassifiedCount = default, long coveredCount = default)
+        {
+            return new WorkspaceDiscoveryResourceCoverageSummary(expectedCount, classifiedCount, unclassifiedCount, coveredCount, default);
+        }
+
+        /// <summary>
+        /// The common fields of a discovery guidance warning, discriminated by reason. Known reasons use their corresponding subtype; unknown future reasons retain these base fields.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WorkspaceDiscoveryAccessWarning"/>, <see cref="Models.WorkspaceDiscoveryPermissionWarning"/>, and <see cref="Models.WorkspaceDiscoveryResourceWarning"/>.
+        /// </summary>
+        /// <param name="scopeId"> The normalized expanded source scope where the affected obligation was encountered. </param>
+        /// <param name="scopeKind"> The source scope kind, such as Subscription, ResourceGroup, ServiceGroup, or Resource. </param>
+        /// <param name="reason"> The confirmed guidance reason, not a system-verification failure. </param>
+        /// <param name="message"> Human-readable guidance with attribution appropriate to the reason. </param>
+        /// <returns> A new <see cref="Models.WorkspaceDiscoveryWarning"/> instance for mocking. </returns>
+        public static WorkspaceDiscoveryWarning WorkspaceDiscoveryWarning(ResourceIdentifier scopeId = default, string scopeKind = default, string reason = default, string message = default)
+        {
+            return new UnknownWorkspaceDiscoveryWarning(scopeId, scopeKind, reason is null ? default : new WorkspaceDiscoveryWarningReason(reason), message, default);
+        }
+
+        /// <summary> Model that represents the permission error. </summary>
+        /// <param name="resourceId"> The resource id for the affected resource. </param>
+        /// <param name="missingPermissions"> The missing permissions. </param>
+        /// <param name="requiredPermissions"> The required permissions. </param>
+        /// <param name="recommendedRoles"> The recommended roles. </param>
+        /// <param name="identity"> The identity. </param>
+        /// <param name="errorMessage">
+        /// The error message describing the permission validation failure, when the
+        /// failure carries a distinct message (for example, when the target could not
+        /// be read to evaluate access).
+        /// </param>
+        /// <returns> A new <see cref="Models.PermissionError"/> instance for mocking. </returns>
+        public static PermissionError PermissionError(ResourceIdentifier resourceId = default, IEnumerable<string> missingPermissions = default, IEnumerable<string> requiredPermissions = default, IEnumerable<string> recommendedRoles = default, EntraIdentity identity = default, string errorMessage = default)
+        {
+            missingPermissions ??= new ChangeTrackingList<string>();
+            requiredPermissions ??= new ChangeTrackingList<string>();
+            recommendedRoles ??= new ChangeTrackingList<string>();
+
+            return new PermissionError(
+                resourceId,
+                (missingPermissions ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredPermissions ?? new ChangeTrackingList<string>()).ToList(),
+                (recommendedRoles ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                errorMessage,
+                default);
+        }
+
+        /// <summary> Model that represents the Azure Entra identity. </summary>
+        /// <param name="objectId"> The identity object id. </param>
+        /// <param name="tenantId"> The identity tenant id. </param>
+        /// <returns> A new <see cref="Models.EntraIdentity"/> instance for mocking. </returns>
+        public static EntraIdentity EntraIdentity(string objectId = default, string tenantId = default)
+        {
+            return new EntraIdentity(objectId, tenantId, default);
+        }
+
+        /// <summary> A retained workspace evaluation of published scenario-template versions. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ChaosWorkspaceEvaluationData"/> instance for mocking. </returns>
-        public static ChaosWorkspaceEvaluationData ChaosWorkspaceEvaluationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkspaceEvaluationProperties properties = default)
+        /// <returns> A new <see cref="Chaos.ChaosWorkspaceTemplateEvaluationData"/> instance for mocking. </returns>
+        public static ChaosWorkspaceTemplateEvaluationData ChaosWorkspaceTemplateEvaluationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkspaceEvaluationProperties properties = default)
         {
-            return new ChaosWorkspaceEvaluationData(
+            return new ChaosWorkspaceTemplateEvaluationData(
                 id,
                 name,
                 resourceType,
@@ -802,14 +891,14 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="errors"> System or infrastructure errors encountered during evaluation. </param>
         /// <param name="workspaceId"> The workspace ID this evaluation belongs to. </param>
         /// <param name="resourceSnapshotId"> The resource snapshot ID used for this evaluation. </param>
+        /// <param name="discoveryResultId"> The canonical Azure resource ID of the retained discovery result that supplied resourceSnapshotId. This reference does not change when the latest discovery changes and never identifies the latest alias or a protected LRO polling handle. </param>
         /// <param name="numTemplatesToEvaluate"> The number of templates to evaluate. </param>
         /// <param name="numTemplatesEvaluatedSucceeded"> The number of templates that evaluated successfully. </param>
         /// <param name="numTemplatesEvaluatedFailed"> The number of templates that failed evaluation. </param>
         /// <param name="numTemplatesEvaluatedCancelled"> The number of templates that were cancelled during evaluation. </param>
-        /// <param name="evaluationResult"> The overall evaluation result. </param>
         /// <param name="results"> Per-template evaluation results. </param>
         /// <returns> A new <see cref="Models.WorkspaceEvaluationProperties"/> instance for mocking. </returns>
-        public static WorkspaceEvaluationProperties WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, int? numTemplatesToEvaluate = default, int? numTemplatesEvaluatedSucceeded = default, int? numTemplatesEvaluatedFailed = default, int? numTemplatesEvaluatedCancelled = default, RecommendationStatus? evaluationResult = default, IEnumerable<TemplateEvaluationResultItem> results = default)
+        public static WorkspaceEvaluationProperties WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, ResourceIdentifier discoveryResultId = default, int numTemplatesToEvaluate = default, int numTemplatesEvaluatedSucceeded = default, int numTemplatesEvaluatedFailed = default, int numTemplatesEvaluatedCancelled = default, IEnumerable<TemplateEvaluationResultItem> results = default)
         {
             errors ??= new ChangeTrackingList<ChaosOperationError>();
             results ??= new ChangeTrackingList<TemplateEvaluationResultItem>();
@@ -821,26 +910,21 @@ namespace Azure.ResourceManager.Chaos.Models
                 (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
                 workspaceId,
                 resourceSnapshotId,
+                discoveryResultId,
                 numTemplatesToEvaluate,
                 numTemplatesEvaluatedSucceeded,
                 numTemplatesEvaluatedFailed,
                 numTemplatesEvaluatedCancelled,
-                evaluationResult,
                 (results ?? new ChangeTrackingList<TemplateEvaluationResultItem>()).ToList(),
                 default);
         }
 
         /// <summary> Model that represents a single template evaluation result. </summary>
-        /// <param name="templateId">
-        /// The template ID that was evaluated. Optional because the underlying BE field may
-        /// be null for legacy evaluations created before template-centric persistence landed;
-        /// the GW falls back to `scenarioName` in that case (`scenario.Id == templateId` by BE
-        /// convention), so ARM responses are typically populated in practice.
-        /// </param>
-        /// <param name="templateName"> The template name that was evaluated. Optional for the same reason as `templateId`. </param>
+        /// <param name="templateId"> The canonical ARM ID of the evaluated scenario-template version. Scenario IDs and versionless template aliases are not valid substitutes. </param>
+        /// <param name="templateName"> The stable catalog name of the evaluated scenario template, not a localized display name. </param>
         /// <param name="evaluationResult"> The evaluation result for this template. </param>
         /// <returns> A new <see cref="Models.TemplateEvaluationResultItem"/> instance for mocking. </returns>
-        public static TemplateEvaluationResultItem TemplateEvaluationResultItem(string templateId = default, string templateName = default, RecommendationStatus evaluationResult = default)
+        public static TemplateEvaluationResultItem TemplateEvaluationResultItem(ResourceIdentifier templateId = default, string templateName = default, RecommendationStatus evaluationResult = default)
         {
             return new TemplateEvaluationResultItem(templateId, templateName, evaluationResult, default);
         }
@@ -870,9 +954,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="fullyQualifiedIdentifier"> The fully qualified identifier of the discovered resource. </param>
         /// <param name="discoveredOn"> The date and time when the resource was discovered. </param>
         /// <param name="scope"> The scope of the discovered resource. </param>
+        /// <param name="location"> The Azure region the discovered resource is deployed to, in lowercase with no spaces. Absent when no single deployment region was captured, including global and multi-region resources. </param>
+        /// <param name="zones"> The availability zones the discovered resource occupies. Values are logical zone identifiers, such as `["1", "2"]` for a zone-pinned resource, or the single value `zone-redundant` when redundancy is expressed as a flag or SKU rather than a zone list. Absent, and never empty, when no zone information was captured; a non-zone-aware resource and a zone-aware resource without an assigned zone are not distinguished. </param>
         /// <returns> A new <see cref="Models.DiscoveredResourceProperties"/> instance for mocking. </returns>
-        public static DiscoveredResourceProperties DiscoveredResourceProperties(string resourceNamespace = default, string resourceName = default, string resourceType = default, string fullyQualifiedIdentifier = default, DateTimeOffset discoveredOn = default, string scope = default)
+        public static DiscoveredResourceProperties DiscoveredResourceProperties(string resourceNamespace = default, string resourceName = default, string resourceType = default, string fullyQualifiedIdentifier = default, DateTimeOffset discoveredOn = default, string scope = default, AzureLocation? location = default, IEnumerable<string> zones = default)
         {
+            zones ??= new ChangeTrackingList<string>();
+
             return new DiscoveredResourceProperties(
                 resourceNamespace,
                 resourceName,
@@ -880,6 +968,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 fullyQualifiedIdentifier,
                 discoveredOn,
                 scope,
+                location,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
@@ -903,14 +993,40 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Model that represents the properties of the scenario. </summary>
         /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
-        /// <param name="createdFrom"> Resource ID of the template version this scenario was created from (optional). </param>
-        /// <param name="version"> Version of the scenario. </param>
+        /// <param name="createdFrom">
+        /// Resource ID of the template version this scenario was created from (optional).
+        /// The ID has the form
+        /// `/providers/Microsoft.Chaos/scenarioTemplates/{scenarioTemplateName}/versions/{version}`.
+        /// This property retains its existing string representation for compatibility
+        /// with earlier API versions and SDKs.
+        /// A scenario's structure comes from exactly one of two mutually exclusive sources.
+        /// When `createdFrom` is supplied on create, the referenced template version is the
+        /// authoritative source for the scenario's structure; inline `parameters` and
+        /// `actions` are not used. When `createdFrom` is absent, the structure comes from
+        /// the inline `parameters` and `actions` supplied in the request.
+        /// Supplying neither source is rejected by request validation.
+        /// </param>
+        /// <param name="version">
+        /// Version of the scenario, supplied by the author. Defaults to `1.0` when not
+        /// supplied on create. This is the scenario's own version and is independent of
+        /// the version of any template it was created from.
+        /// </param>
         /// <param name="description"> Description of what this scenario does (optional). </param>
         /// <param name="parameters"> Parameter definitions for the scenario. </param>
         /// <param name="actions"> Array of actions that define the scenario's orchestration. </param>
+        /// <param name="failureBehavior">
+        /// Scenario-wide default for how a scenario run reacts when one of its actions fails.
+        /// An action that does not supply its own `failureBehavior` inherits this value; when
+        /// neither is supplied the effective behavior is `Stop`.
+        /// Not used when `createdFrom` is supplied, for the same reason as `parameters` and
+        /// `actions`: the referenced template version is then the authoritative source for the
+        /// scenario's structure, and it supplies this policy too. A value sent in the request is
+        /// ignored in that case — on create the referenced template's policy is used, and on update
+        /// the policy of the already persisted template is preserved.
+        /// </param>
         /// <param name="recommendation"> The recommendation information for this scenario. </param>
         /// <returns> A new <see cref="Models.ScenarioProperties"/> instance for mocking. </returns>
-        public static ScenarioProperties ScenarioProperties(ChaosProvisioningState? provisioningState = default, string createdFrom = default, string version = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, ChaosScenarioRecommendation recommendation = default)
+        public static ScenarioProperties ScenarioProperties(ChaosProvisioningState? provisioningState = default, string createdFrom = default, string version = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, FailureBehavior? failureBehavior = default, ChaosScenarioRecommendation recommendation = default)
         {
             parameters ??= new ChangeTrackingList<ChaosScenarioParameterInfo>();
             actions ??= new ChangeTrackingList<ScenarioAction>();
@@ -922,6 +1038,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 description,
                 (parameters ?? new ChangeTrackingList<ChaosScenarioParameterInfo>()).ToList(),
                 (actions ?? new ChangeTrackingList<ScenarioAction>()).ToList(),
+                failureBehavior,
                 recommendation,
                 default);
         }
@@ -932,8 +1049,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="default"> Default value for the parameter. </param>
         /// <param name="isRequired"> Whether this parameter is required. </param>
         /// <param name="description"> Description of the parameter. </param>
+        /// <param name="format"> Format validation applied to the parameter's value, and examples of values that satisfy it. </param>
         /// <returns> A new <see cref="Models.ChaosScenarioParameterInfo"/> instance for mocking. </returns>
-        public static ChaosScenarioParameterInfo ChaosScenarioParameterInfo(string name = default, ChaosScenarioParameterType @type = default, string @default = default, bool? isRequired = default, string description = default)
+        public static ChaosScenarioParameterInfo ChaosScenarioParameterInfo(string name = default, ChaosScenarioParameterType @type = default, string @default = default, bool? isRequired = default, string description = default, ScenarioParameterFormat format = default)
         {
             return new ChaosScenarioParameterInfo(
                 name,
@@ -941,7 +1059,19 @@ namespace Azure.ResourceManager.Chaos.Models
                 @default,
                 isRequired,
                 description,
+                format,
                 default);
+        }
+
+        /// <summary> Model that represents the format validation applied to a scenario parameter's value. </summary>
+        /// <param name="formatType"> The built-in format the value is validated against. </param>
+        /// <param name="examples"> Human-readable examples of values that satisfy the format. </param>
+        /// <returns> A new <see cref="Models.ScenarioParameterFormat"/> instance for mocking. </returns>
+        public static ScenarioParameterFormat ScenarioParameterFormat(ParameterFormatType? formatType = default, IEnumerable<string> examples = default)
+        {
+            examples ??= new ChangeTrackingList<string>();
+
+            return new ScenarioParameterFormat(formatType, (examples ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="name"> Unique name for the action. </param>
@@ -949,14 +1079,26 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="description"> Human-readable description of what this action does. </param>
         /// <param name="duration"> ISO 8601 duration for how long the action runs (e.g., PT30M for 30 minutes). Supports template macro syntax (%%\{parameters.\&lt;name\&gt;\}%%). </param>
         /// <param name="parameters"> Action-specific parameter values. </param>
+        /// <param name="selectors">
+        /// Action-specific target selectors evaluated during execution. When provided,
+        /// the collection must contain either `logicalZone` and `location`, or `physicalZone`.
+        /// Selector names must be unique, the two modes cannot be combined, and the service
+        /// enforces the cross-item combination at runtime.
+        /// </param>
         /// <param name="runAfter"> Action dependencies that control when this action starts. </param>
         /// <param name="waitBefore"> ISO 8601 duration to wait before action starts (e.g., PT30S for 30 seconds). Supports template macro syntax. </param>
         /// <param name="timeout"> ISO 8601 duration for maximum action execution time. Supports template macro syntax. </param>
         /// <param name="resourceId"> The resource ID of the external resource. </param>
+        /// <param name="failureBehavior">
+        /// Per-action override for how the scenario run reacts when this action fails. When omitted,
+        /// the action inherits the scenario-level `failureBehavior`; when neither is supplied the
+        /// effective behavior is `Stop`.
+        /// </param>
         /// <returns> A new <see cref="Models.ScenarioAction"/> instance for mocking. </returns>
-        public static ScenarioAction ScenarioAction(string name = default, string actionId = default, string description = default, string duration = default, IEnumerable<ChaosKeyValuePair> parameters = default, RunAfter runAfter = default, string waitBefore = default, string timeout = default, ResourceIdentifier resourceId = default)
+        public static ScenarioAction ScenarioAction(string name = default, string actionId = default, string description = default, string duration = default, IEnumerable<ChaosKeyValuePair> parameters = default, IEnumerable<ScenarioActionSelector> selectors = default, RunAfter runAfter = default, string waitBefore = default, string timeout = default, ResourceIdentifier resourceId = default, FailureBehavior? failureBehavior = default)
         {
             parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
+            selectors ??= new ChangeTrackingList<ScenarioActionSelector>();
 
             return new ScenarioAction(
                 name,
@@ -964,11 +1106,22 @@ namespace Azure.ResourceManager.Chaos.Models
                 description,
                 duration,
                 (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(),
+                (selectors ?? new ChangeTrackingList<ScenarioActionSelector>()).ToList(),
                 runAfter,
                 waitBefore,
                 timeout,
                 resourceId is null ? default : new ExternalResource(resourceId, default),
+                failureBehavior,
                 default);
+        }
+
+        /// <summary> Model that represents an action-specific target selector. </summary>
+        /// <param name="name"> The selector name, such as `logicalZone`, `physicalZone`, or `location`. </param>
+        /// <param name="value"> The value that targets must match. Supports template macro syntax. </param>
+        /// <returns> A new <see cref="Models.ScenarioActionSelector"/> instance for mocking. </returns>
+        public static ScenarioActionSelector ScenarioActionSelector(ScenarioActionSelectorName name = default, string value = default)
+        {
+            return new ScenarioActionSelector(name, value, default);
         }
 
         /// <summary> Model that represents action dependencies. </summary>
@@ -999,6 +1152,162 @@ namespace Azure.ResourceManager.Chaos.Models
         public static ChaosScenarioRecommendation ChaosScenarioRecommendation(RecommendationStatus recommendationStatus = default, DateTimeOffset? evaluationRunOn = default)
         {
             return new ChaosScenarioRecommendation(recommendationStatus, evaluationRunOn, default);
+        }
+
+        /// <summary>
+        /// Model that represents a built-in scenario template. A scenario template is a versioned,
+        /// read-only blueprint published by Microsoft that can be used to create a scenario. Templates
+        /// are the same shape as the scenarios they produce, so an action read from a template is valid
+        /// input to a scenario create.
+        /// The template is addressed without a version, and always describes its newest published
+        /// version. Address a specific version through the child versions resource.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the scenario template's newest published version. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioTemplateData"/> instance for mocking. </returns>
+        public static ChaosScenarioTemplateData ChaosScenarioTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScenarioTemplateProperties properties = default)
+        {
+            return new ChaosScenarioTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Model that represents the properties of a scenario template. These are the properties of the
+        /// template's newest published version, together with the version number that identifies it.
+        /// </summary>
+        /// <param name="latestVersion">
+        /// The newest published version of the template, for example 1.2. This is the version whose
+        /// content the remaining properties describe, and the version a scenario records when it is
+        /// created from the template without naming one.
+        /// </param>
+        /// <param name="displayName"> Localized display name of the template. </param>
+        /// <param name="description"> Description of what the template does, and what resilience question it answers. </param>
+        /// <param name="parameters">
+        /// Parameter definitions the template accepts. Values are supplied when the scenario created
+        /// from this template is configured, and are referenced from an action through the
+        /// `%%\{parameters.\&lt;name\&gt;\}%%` macro.
+        /// </param>
+        /// <param name="actions">
+        /// The actions that define the template's orchestration. These are the same model a scenario
+        /// publishes, and carry unresolved `%%\{...\}%%` macros; the macros are substituted when the
+        /// scenario runs, not when it is read or created.
+        /// Three macro namespaces may appear:
+        /// <list type="bullet"><item><description>`%%\{parameters.\&lt;name\&gt;\}%%` — resolves from the parameter values supplied when the</description></item></list>
+        /// scenario is configured. The accepted names are declared by `parameters`.
+        /// <list type="bullet"><item><description>`%%\{resourceTargeting.include.\&lt;dimension\&gt;\}%%` — resolves from the resource targeting</description></item></list>
+        /// of the scenario's configuration (for example `zones`, `locations`). The template does not
+        /// declare these; they are dimensions of the configuration supplied at run time.
+        /// <list type="bullet"><item><description>`%%\{filters.\&lt;dimension\&gt;\}%%` — deprecated spelling of `resourceTargeting.include.`,</description></item></list>
+        /// retained only so that superseded template versions keep resolving. Do not depend on it;
+        /// the newest version of every template uses `resourceTargeting.include.`.
+        /// An action's `failureBehavior` overrides the template-wide `failureBehavior` for that action
+        /// alone; an action that does not carry one inherits the template-wide value.
+        /// </param>
+        /// <param name="failureBehavior">
+        /// Template-wide default for how a scenario run reacts when one of this template's actions
+        /// fails. An action that does not carry its own `failureBehavior` inherits this value; when
+        /// neither is present the effective behavior is `Stop`.
+        /// A scenario created from this template takes this policy with the rest of the template's
+        /// structure, so it is also the scenario's resolved `failureBehavior`. Template versions
+        /// published before this policy existed do not carry one and report it as absent, which the
+        /// run resolves as `Stop`.
+        /// </param>
+        /// <returns> A new <see cref="Models.ScenarioTemplateProperties"/> instance for mocking. </returns>
+        public static ScenarioTemplateProperties ScenarioTemplateProperties(string latestVersion = default, string displayName = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, FailureBehavior? failureBehavior = default)
+        {
+            parameters ??= new ChangeTrackingList<ChaosScenarioParameterInfo>();
+            actions ??= new ChangeTrackingList<ScenarioAction>();
+
+            return new ScenarioTemplateProperties(
+                latestVersion,
+                displayName,
+                description,
+                (parameters ?? new ChangeTrackingList<ChaosScenarioParameterInfo>()).ToList(),
+                (actions ?? new ChangeTrackingList<ScenarioAction>()).ToList(),
+                failureBehavior,
+                default);
+        }
+
+        /// <summary>
+        /// Model that represents a single published version of a scenario template. A published version
+        /// is immutable: corrections are shipped as a new version rather than by changing an existing
+        /// one, so a scenario that records the version it was created from always resolves to the same
+        /// content.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the scenario template version. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioTemplateVersionData"/> instance for mocking. </returns>
+        public static ChaosScenarioTemplateVersionData ChaosScenarioTemplateVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScenarioTemplateVersionProperties properties = default)
+        {
+            return new ChaosScenarioTemplateVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Model that represents the properties of a single published version of a scenario template —
+        /// the blueprint content itself.
+        /// </summary>
+        /// <param name="displayName"> Localized display name of the template. </param>
+        /// <param name="description"> Description of what the template does, and what resilience question it answers. </param>
+        /// <param name="parameters">
+        /// Parameter definitions the template accepts. Values are supplied when the scenario created
+        /// from this template is configured, and are referenced from an action through the
+        /// `%%\{parameters.\&lt;name\&gt;\}%%` macro.
+        /// </param>
+        /// <param name="actions">
+        /// The actions that define the template's orchestration. These are the same model a scenario
+        /// publishes, and carry unresolved `%%\{...\}%%` macros; the macros are substituted when the
+        /// scenario runs, not when it is read or created.
+        /// Three macro namespaces may appear:
+        /// <list type="bullet"><item><description>`%%\{parameters.\&lt;name\&gt;\}%%` — resolves from the parameter values supplied when the</description></item></list>
+        /// scenario is configured. The accepted names are declared by `parameters`.
+        /// <list type="bullet"><item><description>`%%\{resourceTargeting.include.\&lt;dimension\&gt;\}%%` — resolves from the resource targeting</description></item></list>
+        /// of the scenario's configuration (for example `zones`, `locations`). The template does not
+        /// declare these; they are dimensions of the configuration supplied at run time.
+        /// <list type="bullet"><item><description>`%%\{filters.\&lt;dimension\&gt;\}%%` — deprecated spelling of `resourceTargeting.include.`,</description></item></list>
+        /// retained only so that superseded template versions keep resolving. Do not depend on it;
+        /// the newest version of every template uses `resourceTargeting.include.`.
+        /// An action's `failureBehavior` overrides the template-wide `failureBehavior` for that action
+        /// alone; an action that does not carry one inherits the template-wide value.
+        /// </param>
+        /// <param name="failureBehavior">
+        /// Template-wide default for how a scenario run reacts when one of this template's actions
+        /// fails. An action that does not carry its own `failureBehavior` inherits this value; when
+        /// neither is present the effective behavior is `Stop`.
+        /// A scenario created from this template takes this policy with the rest of the template's
+        /// structure, so it is also the scenario's resolved `failureBehavior`. Template versions
+        /// published before this policy existed do not carry one and report it as absent, which the
+        /// run resolves as `Stop`.
+        /// </param>
+        /// <returns> A new <see cref="Models.ScenarioTemplateVersionProperties"/> instance for mocking. </returns>
+        public static ScenarioTemplateVersionProperties ScenarioTemplateVersionProperties(string displayName = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, FailureBehavior? failureBehavior = default)
+        {
+            parameters ??= new ChangeTrackingList<ChaosScenarioParameterInfo>();
+            actions ??= new ChangeTrackingList<ScenarioAction>();
+
+            return new ScenarioTemplateVersionProperties(
+                displayName,
+                description,
+                (parameters ?? new ChangeTrackingList<ChaosScenarioParameterInfo>()).ToList(),
+                (actions ?? new ChangeTrackingList<ScenarioAction>()).ToList(),
+                failureBehavior,
+                default);
         }
 
         /// <summary> Model that represents the scenario. </summary>
@@ -1144,6 +1453,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// (for example zone, location, or explicit exclusions). These resources will not be impacted by the run.
         /// </param>
         /// <param name="errors"> System or infrastructure errors encountered during the scenario run. </param>
+        /// <param name="warnings"> Customer-actionable warnings encountered during the scenario run. </param>
         /// <param name="executionErrors"> Business errors from fault injection — permission and resource state issues. </param>
         /// <param name="scenarioRunJson"> The scenario run json. </param>
         /// <param name="scenarioRunSummary"> The scenario run summary. </param>
@@ -1155,11 +1465,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// requested physical zones, and per-subscription logical zone mappings.
         /// </param>
         /// <returns> A new <see cref="Models.ScenarioRunProperties"/> instance for mocking. </returns>
-        public static ScenarioRunProperties ScenarioRunProperties(string workspaceName = default, string scenarioName = default, string scenarioConfigurationName = default, string managedIdentityPrincipalId = default, string resourceSnapshotId = default, ScenarioRunState status = default, IEnumerable<ScenarioRunResource> resources = default, IEnumerable<ScenarioRunResource> excludedResources = default, IEnumerable<ChaosOperationError> errors = default, ScenarioErrors executionErrors = default, string scenarioRunJson = default, IEnumerable<ScenarioRunSummaryAction> scenarioRunSummary = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ZoneResolutionInfo zoneResolution = default)
+        public static ScenarioRunProperties ScenarioRunProperties(string workspaceName = default, string scenarioName = default, string scenarioConfigurationName = default, string managedIdentityPrincipalId = default, string resourceSnapshotId = default, ScenarioRunState status = default, IEnumerable<ScenarioRunResource> resources = default, IEnumerable<ScenarioRunResource> excludedResources = default, IEnumerable<ChaosOperationError> errors = default, IEnumerable<ScenarioRunWarning> warnings = default, ScenarioErrors executionErrors = default, string scenarioRunJson = default, IEnumerable<ScenarioRunSummaryAction> scenarioRunSummary = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ZoneResolutionInfo zoneResolution = default)
         {
             resources ??= new ChangeTrackingList<ScenarioRunResource>();
             excludedResources ??= new ChangeTrackingList<ScenarioRunResource>();
             errors ??= new ChangeTrackingList<ChaosOperationError>();
+            warnings ??= new ChangeTrackingList<ScenarioRunWarning>();
             scenarioRunSummary ??= new ChangeTrackingList<ScenarioRunSummaryAction>();
 
             return new ScenarioRunProperties(
@@ -1172,6 +1483,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 (resources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
                 (excludedResources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
                 (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
+                (warnings ?? new ChangeTrackingList<ScenarioRunWarning>()).ToList(),
                 executionErrors,
                 scenarioRunJson,
                 (scenarioRunSummary ?? new ChangeTrackingList<ScenarioRunSummaryAction>()).ToList(),
@@ -1189,6 +1501,28 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ScenarioRunResource(id, default);
         }
 
+        /// <summary> Customer-actionable warning associated with a scenario run. </summary>
+        /// <param name="code"> The stable code that identifies the warning. </param>
+        /// <param name="message"> The customer-safe description of the warning. </param>
+        /// <param name="details"> Additional customer-safe details about the warning. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunWarning"/> instance for mocking. </returns>
+        public static ScenarioRunWarning ScenarioRunWarning(string code = default, string message = default, IEnumerable<ScenarioRunWarningDetail> details = default)
+        {
+            details ??= new ChangeTrackingList<ScenarioRunWarningDetail>();
+
+            return new ScenarioRunWarning(code, message, (details ?? new ChangeTrackingList<ScenarioRunWarningDetail>()).ToList(), default);
+        }
+
+        /// <summary> Additional information about a scenario run warning. </summary>
+        /// <param name="code"> The stable code that identifies the warning detail. </param>
+        /// <param name="message"> The customer-safe description of the warning detail. </param>
+        /// <param name="target"> The target associated with the warning detail. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunWarningDetail"/> instance for mocking. </returns>
+        public static ScenarioRunWarningDetail ScenarioRunWarningDetail(string code = default, string message = default, string target = default)
+        {
+            return new ScenarioRunWarningDetail(code, message, target, default);
+        }
+
         /// <summary> Model that represents the scenario run errors. </summary>
         /// <param name="errorCode"> Error code for internal server errors. </param>
         /// <param name="errorMessage"> Error message for internal server errors. </param>
@@ -1203,72 +1537,90 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ScenarioErrors(errorCode, errorMessage, (permission ?? new ChangeTrackingList<PermissionError>()).ToList(), (resource ?? new ChangeTrackingList<ResourceStateError>()).ToList(), default);
         }
 
-        /// <summary> Model that represents the permission error. </summary>
-        /// <param name="resourceId"> The resource id for the affected resource. </param>
-        /// <param name="missingPermissions"> The missing permissions. </param>
-        /// <param name="requiredPermissions"> The required permissions. </param>
-        /// <param name="recommendedRoles"> The recommended roles. </param>
-        /// <param name="identity"> The identity. </param>
-        /// <param name="errorMessage">
-        /// The error message describing the permission validation failure, when the
-        /// failure carries a distinct message (for example, when the target could not
-        /// be read to evaluate access).
-        /// </param>
-        /// <returns> A new <see cref="Models.PermissionError"/> instance for mocking. </returns>
-        public static PermissionError PermissionError(ResourceIdentifier resourceId = default, IEnumerable<string> missingPermissions = default, IEnumerable<string> requiredPermissions = default, IEnumerable<string> recommendedRoles = default, EntraIdentity identity = default, string errorMessage = default)
-        {
-            missingPermissions ??= new ChangeTrackingList<string>();
-            requiredPermissions ??= new ChangeTrackingList<string>();
-            recommendedRoles ??= new ChangeTrackingList<string>();
-
-            return new PermissionError(
-                resourceId,
-                (missingPermissions ?? new ChangeTrackingList<string>()).ToList(),
-                (requiredPermissions ?? new ChangeTrackingList<string>()).ToList(),
-                (recommendedRoles ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                errorMessage,
-                default);
-        }
-
-        /// <summary> Model that represents the Azure Entra identity. </summary>
-        /// <param name="objectId"> The identity object id. </param>
-        /// <param name="tenantId"> The identity tenant id. </param>
-        /// <returns> A new <see cref="Models.EntraIdentity"/> instance for mocking. </returns>
-        public static EntraIdentity EntraIdentity(string objectId = default, string tenantId = default)
-        {
-            return new EntraIdentity(objectId, tenantId, default);
-        }
-
         /// <summary> Model that represents the resource state error. </summary>
         /// <param name="resourceId"> The resource id for the affected resource. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="remediationUri"> The remediation uri. </param>
         /// <returns> A new <see cref="Models.ResourceStateError"/> instance for mocking. </returns>
-        public static ResourceStateError ResourceStateError(ResourceIdentifier resourceId = default, int errorCode = default, string errorMessage = default, string remediationUri = default)
+        public static ResourceStateError ResourceStateError(ResourceIdentifier resourceId = default, string errorCode = default, string errorMessage = default, string remediationUri = default)
         {
             return new ResourceStateError(resourceId, errorCode, errorMessage, remediationUri, default);
         }
 
         /// <summary> Model that represents the scenario run action. </summary>
-        /// <param name="resources"> The resources associated with the specified action. </param>
+        /// <param name="resources">
+        /// The resources associated with the specified action, including the concrete targets
+        /// evaluated during execution.
+        /// </param>
         /// <param name="actionUrn"> The urn for the given chaos action. </param>
         /// <param name="state"> The state of the action. </param>
         /// <param name="startedOn"> When the action was started. </param>
         /// <param name="completedOn"> When the action was completed. </param>
+        /// <param name="error"> Structured information about the action failure. </param>
+        /// <param name="failureSuppressed">
+        /// Whether this action's failure was suppressed by the effective `failureBehavior`
+        /// and therefore did not fail the scenario run. Present only for actions in the
+        /// `Failed` state; absent otherwise.
+        /// </param>
         /// <returns> A new <see cref="Models.ScenarioRunSummaryAction"/> instance for mocking. </returns>
-        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<ScenarioRunResource> resources = default, string actionUrn = default, ScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
+        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<ScenarioRunResourceSummary> resources = default, string actionUrn = default, ScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, ActionError error = default, bool? failureSuppressed = default)
         {
-            resources ??= new ChangeTrackingList<ScenarioRunResource>();
+            resources ??= new ChangeTrackingList<ScenarioRunResourceSummary>();
 
             return new ScenarioRunSummaryAction(
-                (resources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
+                (resources ?? new ChangeTrackingList<ScenarioRunResourceSummary>()).ToList(),
                 actionUrn,
                 state,
                 startedOn,
                 completedOn,
+                error,
+                failureSuppressed,
                 default);
+        }
+
+        /// <summary> Model that represents a resource associated with a scenario run action. </summary>
+        /// <param name="id"> The resource ID. </param>
+        /// <param name="affectedResources"> The resources affected during action execution. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunResourceSummary"/> instance for mocking. </returns>
+        public static ScenarioRunResourceSummary ScenarioRunResourceSummary(string id = default, IEnumerable<ScenarioRunEffectiveTarget> affectedResources = default)
+        {
+            affectedResources ??= new ChangeTrackingList<ScenarioRunEffectiveTarget>();
+
+            return new ScenarioRunResourceSummary(id, (affectedResources ?? new ChangeTrackingList<ScenarioRunEffectiveTarget>()).ToList(), default);
+        }
+
+        /// <summary> Model that represents the outcome for a concrete action target. </summary>
+        /// <param name="id"> The target resource ID. </param>
+        /// <param name="state"> The target execution state. </param>
+        /// <param name="startedOn"> When target processing started. </param>
+        /// <param name="completedOn"> When target processing completed. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunEffectiveTarget"/> instance for mocking. </returns>
+        public static ScenarioRunEffectiveTarget ScenarioRunEffectiveTarget(string id = default, ScenarioRunTargetState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
+        {
+            return new ScenarioRunEffectiveTarget(id, state, startedOn, completedOn, default);
+        }
+
+        /// <summary> Structured information about a scenario action failure. </summary>
+        /// <param name="code"> The stable code that identifies the action failure. </param>
+        /// <param name="message"> The customer-safe description of the action failure. </param>
+        /// <param name="details"> Additional customer-safe details about the action failure. </param>
+        /// <returns> A new <see cref="Models.ActionError"/> instance for mocking. </returns>
+        public static ActionError ActionError(string code = default, string message = default, IEnumerable<ActionErrorDetail> details = default)
+        {
+            details ??= new ChangeTrackingList<ActionErrorDetail>();
+
+            return new ActionError(code, message, (details ?? new ChangeTrackingList<ActionErrorDetail>()).ToList(), default);
+        }
+
+        /// <summary> Additional information about a scenario action failure. </summary>
+        /// <param name="code"> The stable code that identifies the failure detail. </param>
+        /// <param name="message"> The customer-safe description of the failure detail. </param>
+        /// <param name="target"> The target associated with the failure detail. </param>
+        /// <returns> A new <see cref="Models.ActionErrorDetail"/> instance for mocking. </returns>
+        public static ActionErrorDetail ActionErrorDetail(string code = default, string message = default, string target = default)
+        {
+            return new ActionErrorDetail(code, message, target, default);
         }
 
         /// <summary>
@@ -1503,7 +1855,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="tenantId"> The Microsoft Entra tenant ID that the connection identity belongs to. </param>
         /// <param name="certificateSubjectName"> The subject name of the certificate used to authenticate the connection. </param>
         /// <param name="certificateIssuer"> The issuer of the certificate used to authenticate the connection. </param>
-        /// <param name="dstsPrincipal"> The dSTS principal name used to authenticate the connection. </param>
         /// <param name="dataPlaneEndpoint">
         /// The regional Chaos Studio data-plane endpoint assigned to this connection.
         /// Clients and agents use this endpoint to reach the Chaos Studio data plane
@@ -1512,7 +1863,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The current status of the connection. </param>
         /// <param name="provisioningState"> The most recent provisioning state for the connection resource. </param>
         /// <returns> A new <see cref="Models.ChaosConnectionProperties"/> instance for mocking. </returns>
-        public static ChaosConnectionProperties ChaosConnectionProperties(ChaosConnectionKind kind = default, ResourceIdentifier targetResourceId = default, Guid? principalId = default, Guid? tenantId = default, string certificateSubjectName = default, string certificateIssuer = default, string dstsPrincipal = default, Uri dataPlaneEndpoint = default, ChaosConnectionStatus? status = default, ChaosProvisioningState? provisioningState = default)
+        public static ChaosConnectionProperties ChaosConnectionProperties(ChaosConnectionKind kind = default, ResourceIdentifier targetResourceId = default, Guid? principalId = default, Guid? tenantId = default, string certificateSubjectName = default, string certificateIssuer = default, Uri dataPlaneEndpoint = default, ChaosConnectionStatus? status = default, ChaosProvisioningState? provisioningState = default)
         {
             return new ChaosConnectionProperties(
                 kind,
@@ -1521,7 +1872,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 tenantId,
                 certificateSubjectName,
                 certificateIssuer,
-                dstsPrincipal,
                 dataPlaneEndpoint,
                 status,
                 provisioningState,

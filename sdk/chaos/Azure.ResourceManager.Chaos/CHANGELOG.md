@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Updated the default API version to `2026-11-01`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
