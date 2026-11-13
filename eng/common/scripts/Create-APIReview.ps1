@@ -286,9 +286,11 @@ function ProcessPackage($packageInfo)
                 # no need to check API review status when marking a package as shipped
                 if ($MarkPackageAsShipped)
                 {
-                    if ($respCode -eq '500')
+                    # APIView's 200/201/202 responses encode approval state, not shipment failure.
+                    # Reject all other results so HTTP errors cannot report a successful release.
+                    if ($respCode -notin @(200, 201, 202))
                     {
-                        Write-Host "Failed to mark package $($packageInfo.ArtifactName) as released. Please reach out to Azure SDK engineering systems on teams channel."
+                        LogError "Failed to mark package $($packageInfo.ArtifactName) as released. APIView returned HTTP status '$respCode'. Please reach out to Azure SDK engineering systems on teams channel."
                         return 1
                     }
                     Write-Host "Package $($packageInfo.ArtifactName) is marked as released."
