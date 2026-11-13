@@ -23,6 +23,10 @@
   recovery when Responses task execution is disabled, even if Invocations
   enables the shared Core runtime. Tasks started from a Responses request retain
   Responses ownership across restart.
+- Preserve an inbound `azure.ai.agentserver.conversation_id` baggage value instead of
+  overwriting it with the request's conversation ID (or an empty value), so
+  `gen_ai.conversation.id` stays correlated with the caller's conversation across agent
+  handoffs ([#63636](https://github.com/Azure/azure-sdk-for-net/issues/63636)).
 
 ### Other Changes
 
