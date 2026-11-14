@@ -1,0 +1,19 @@
+<!--
+  Filters projects by SDKType so ci.yml (SDKType=client) builds only the data-plane package.
+  ci.mgmt.yml doesn't set SDKType (defaults to "all"), so these filters don't affect it.
+-->
+<Project>
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Data.Cosmos*\**\*.csproj" />
+  </ItemGroup>
+
+  <!-- Captured here because the Traversal SDK later defaults TargetFramework to net45. -->
+  <PropertyGroup>
+    <CosmosRequestedTargetFramework>$(TargetFramework)</CosmosRequestedTargetFramework>
+  </PropertyGroup>
+
+  <!-- Azure.Data.Cosmos targets net10.0 only; keep it out of other-framework legs (e.g. ci.mgmt.yml's default matrix). -->
+  <ItemGroup Condition="'$(CosmosRequestedTargetFramework)' != '' and '$(CosmosRequestedTargetFramework)' != 'net10.0'">
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Data.Cosmos*\**\*.csproj" />
+  </ItemGroup>
+</Project>
