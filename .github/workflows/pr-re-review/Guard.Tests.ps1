@@ -832,7 +832,7 @@ Describe 'Re-review prompt' {
     It 'requires sequential small batches for large changed-file sets' {
         $step3 = [regex]::Match($script:PromptBody, '(?ms)^## Step 3\b.*?(?=^## |\z)').Value
         $step3 | Should -Match '(?i)small sequential batches of 10–20 files'
-        $step3 | Should -Match '(?i)until every page is complete'
+        $step3 | Should -Match '(?i)until every entry is complete'
         $step3 | Should -Match '(?i)do not estimate feasibility'
     }
 }
