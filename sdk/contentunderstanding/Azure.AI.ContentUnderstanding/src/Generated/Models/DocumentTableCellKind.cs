@@ -66,7 +66,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="DocumentTableCellKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentTableCellKind?(string value) => value == null ? null : new DocumentTableCellKind(value);
+        public static implicit operator DocumentTableCellKind?(string value) => value == null ? (DocumentTableCellKind?)null : new DocumentTableCellKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

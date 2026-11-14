@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentSignatureType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentSignatureType?(string value) => value == null ? null : new DocumentSignatureType(value);
+        public static implicit operator DocumentSignatureType?(string value) => value == null ? (DocumentSignatureType?)null : new DocumentSignatureType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

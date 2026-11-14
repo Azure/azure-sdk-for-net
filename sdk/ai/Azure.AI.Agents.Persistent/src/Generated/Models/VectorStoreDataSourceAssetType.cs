@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="VectorStoreDataSourceAssetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreDataSourceAssetType?(string value) => value == null ? null : new VectorStoreDataSourceAssetType(value);
+        public static implicit operator VectorStoreDataSourceAssetType?(string value) => value == null ? (VectorStoreDataSourceAssetType?)null : new VectorStoreDataSourceAssetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

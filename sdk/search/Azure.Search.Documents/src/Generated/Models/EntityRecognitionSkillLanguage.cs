@@ -157,7 +157,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="EntityRecognitionSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityRecognitionSkillLanguage?(string value) => value == null ? null : new EntityRecognitionSkillLanguage(value);
+        public static implicit operator EntityRecognitionSkillLanguage?(string value) => value == null ? (EntityRecognitionSkillLanguage?)null : new EntityRecognitionSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

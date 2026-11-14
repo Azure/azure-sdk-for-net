@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="StringIndexType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StringIndexType?(string value) => value == null ? null : new StringIndexType(value);
+        public static implicit operator StringIndexType?(string value) => value == null ? (StringIndexType?)null : new StringIndexType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

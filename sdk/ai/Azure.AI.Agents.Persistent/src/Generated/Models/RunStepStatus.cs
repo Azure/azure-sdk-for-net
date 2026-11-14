@@ -66,7 +66,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="RunStepStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunStepStatus?(string value) => value == null ? null : new RunStepStatus(value);
+        public static implicit operator RunStepStatus?(string value) => value == null ? (RunStepStatus?)null : new RunStepStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

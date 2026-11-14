@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="AzureOpenAIModelName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureOpenAIModelName?(string value) => value == null ? null : new AzureOpenAIModelName(value);
+        public static implicit operator AzureOpenAIModelName?(string value) => value == null ? (AzureOpenAIModelName?)null : new AzureOpenAIModelName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

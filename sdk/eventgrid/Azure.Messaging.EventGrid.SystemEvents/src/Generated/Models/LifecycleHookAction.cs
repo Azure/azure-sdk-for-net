@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="LifecycleHookAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LifecycleHookAction?(string value) => value == null ? null : new LifecycleHookAction(value);
+        public static implicit operator LifecycleHookAction?(string value) => value == null ? (LifecycleHookAction?)null : new LifecycleHookAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

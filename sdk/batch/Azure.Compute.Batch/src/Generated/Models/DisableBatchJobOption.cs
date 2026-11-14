@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="DisableBatchJobOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisableBatchJobOption?(string value) => value == null ? null : new DisableBatchJobOption(value);
+        public static implicit operator DisableBatchJobOption?(string value) => value == null ? (DisableBatchJobOption?)null : new DisableBatchJobOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

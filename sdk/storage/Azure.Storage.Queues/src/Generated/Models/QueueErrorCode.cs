@@ -327,7 +327,7 @@ namespace Azure.Storage.Queues.Models
 
         /// <summary> Converts a string to a <see cref="QueueErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueueErrorCode?(string value) => value == null ? null : new QueueErrorCode(value);
+        public static implicit operator QueueErrorCode?(string value) => value == null ? (QueueErrorCode?)null : new QueueErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

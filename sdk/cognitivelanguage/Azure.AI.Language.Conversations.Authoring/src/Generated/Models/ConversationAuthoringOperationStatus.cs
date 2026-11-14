@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Converts a string to a <see cref="ConversationAuthoringOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationAuthoringOperationStatus?(string value) => value == null ? null : new ConversationAuthoringOperationStatus(value);
+        public static implicit operator ConversationAuthoringOperationStatus?(string value) => value == null ? (ConversationAuthoringOperationStatus?)null : new ConversationAuthoringOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -76,7 +76,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <summary> Converts a string to a <see cref="VisualFeaturesImpl"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VisualFeaturesImpl?(string value) => value == null ? null : new VisualFeaturesImpl(value);
+        public static implicit operator VisualFeaturesImpl?(string value) => value == null ? (VisualFeaturesImpl?)null : new VisualFeaturesImpl(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.Analytics.OnlineExperimentation
 
         /// <summary> Converts a string to a <see cref="DesiredDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesiredDirection?(string value) => value == null ? null : new DesiredDirection(value);
+        public static implicit operator DesiredDirection?(string value) => value == null ? (DesiredDirection?)null : new DesiredDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

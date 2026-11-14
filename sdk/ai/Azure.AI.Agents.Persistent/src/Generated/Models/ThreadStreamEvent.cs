@@ -46,7 +46,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="ThreadStreamEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreadStreamEvent?(string value) => value == null ? null : new ThreadStreamEvent(value);
+        public static implicit operator ThreadStreamEvent?(string value) => value == null ? (ThreadStreamEvent?)null : new ThreadStreamEvent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

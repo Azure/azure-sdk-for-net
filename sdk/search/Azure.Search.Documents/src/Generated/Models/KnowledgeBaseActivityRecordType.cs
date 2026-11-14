@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeBaseActivityRecordType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeBaseActivityRecordType?(string value) => value == null ? null : new KnowledgeBaseActivityRecordType(value);
+        public static implicit operator KnowledgeBaseActivityRecordType?(string value) => value == null ? (KnowledgeBaseActivityRecordType?)null : new KnowledgeBaseActivityRecordType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

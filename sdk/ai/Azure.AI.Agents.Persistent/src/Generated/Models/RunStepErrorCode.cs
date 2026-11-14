@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="RunStepErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunStepErrorCode?(string value) => value == null ? null : new RunStepErrorCode(value);
+        public static implicit operator RunStepErrorCode?(string value) => value == null ? (RunStepErrorCode?)null : new RunStepErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

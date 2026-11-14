@@ -61,7 +61,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="UnifiedModerateSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UnifiedModerateSource?(string value) => value == null ? null : new UnifiedModerateSource(value);
+        public static implicit operator UnifiedModerateSource?(string value) => value == null ? (UnifiedModerateSource?)null : new UnifiedModerateSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="ImageDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageDetail?(string value) => value == null ? null : new ImageDetail(value);
+        public static implicit operator ImageDetail?(string value) => value == null ? (ImageDetail?)null : new ImageDetail(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

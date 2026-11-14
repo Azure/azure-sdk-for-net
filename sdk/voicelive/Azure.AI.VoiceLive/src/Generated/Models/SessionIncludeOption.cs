@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="SessionIncludeOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionIncludeOption?(string value) => value == null ? null : new SessionIncludeOption(value);
+        public static implicit operator SessionIncludeOption?(string value) => value == null ? (SessionIncludeOption?)null : new SessionIncludeOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

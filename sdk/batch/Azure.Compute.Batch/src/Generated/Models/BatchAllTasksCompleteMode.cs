@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchAllTasksCompleteMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchAllTasksCompleteMode?(string value) => value == null ? null : new BatchAllTasksCompleteMode(value);
+        public static implicit operator BatchAllTasksCompleteMode?(string value) => value == null ? (BatchAllTasksCompleteMode?)null : new BatchAllTasksCompleteMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

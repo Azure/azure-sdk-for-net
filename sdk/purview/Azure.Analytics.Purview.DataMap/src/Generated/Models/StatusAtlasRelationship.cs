@@ -51,7 +51,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="StatusAtlasRelationship"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StatusAtlasRelationship?(string value) => value == null ? null : new StatusAtlasRelationship(value);
+        public static implicit operator StatusAtlasRelationship?(string value) => value == null ? (StatusAtlasRelationship?)null : new StatusAtlasRelationship(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

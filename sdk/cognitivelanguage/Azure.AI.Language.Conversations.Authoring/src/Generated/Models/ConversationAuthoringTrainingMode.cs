@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Converts a string to a <see cref="ConversationAuthoringTrainingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationAuthoringTrainingMode?(string value) => value == null ? null : new ConversationAuthoringTrainingMode(value);
+        public static implicit operator ConversationAuthoringTrainingMode?(string value) => value == null ? (ConversationAuthoringTrainingMode?)null : new ConversationAuthoringTrainingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

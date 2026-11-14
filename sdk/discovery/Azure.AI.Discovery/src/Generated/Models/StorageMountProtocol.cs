@@ -48,7 +48,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="StorageMountProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMountProtocol?(string value) => value == null ? null : new StorageMountProtocol(value);
+        public static implicit operator StorageMountProtocol?(string value) => value == null ? (StorageMountProtocol?)null : new StorageMountProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

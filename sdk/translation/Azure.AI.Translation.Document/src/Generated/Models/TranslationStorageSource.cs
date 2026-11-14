@@ -46,7 +46,7 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Converts a string to a <see cref="TranslationStorageSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TranslationStorageSource?(string value) => value == null ? null : new TranslationStorageSource(value);
+        public static implicit operator TranslationStorageSource?(string value) => value == null ? (TranslationStorageSource?)null : new TranslationStorageSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

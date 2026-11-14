@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeRetrievalOutputMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeRetrievalOutputMode?(string value) => value == null ? null : new KnowledgeRetrievalOutputMode(value);
+        public static implicit operator KnowledgeRetrievalOutputMode?(string value) => value == null ? (KnowledgeRetrievalOutputMode?)null : new KnowledgeRetrievalOutputMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

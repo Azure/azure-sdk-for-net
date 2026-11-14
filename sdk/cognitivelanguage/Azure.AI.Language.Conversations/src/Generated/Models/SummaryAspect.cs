@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="SummaryAspect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SummaryAspect?(string value) => value == null ? null : new SummaryAspect(value);
+        public static implicit operator SummaryAspect?(string value) => value == null ? (SummaryAspect?)null : new SummaryAspect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

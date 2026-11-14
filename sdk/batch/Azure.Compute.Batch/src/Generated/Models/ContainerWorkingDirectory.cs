@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="ContainerWorkingDirectory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerWorkingDirectory?(string value) => value == null ? null : new ContainerWorkingDirectory(value);
+        public static implicit operator ContainerWorkingDirectory?(string value) => value == null ? (ContainerWorkingDirectory?)null : new ContainerWorkingDirectory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

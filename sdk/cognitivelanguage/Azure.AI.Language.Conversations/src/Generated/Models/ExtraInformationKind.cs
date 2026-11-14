@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="ExtraInformationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtraInformationKind?(string value) => value == null ? null : new ExtraInformationKind(value);
+        public static implicit operator ExtraInformationKind?(string value) => value == null ? (ExtraInformationKind?)null : new ExtraInformationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

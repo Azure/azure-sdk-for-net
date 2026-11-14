@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
 
         /// <summary> Converts a string to a <see cref="JsonWebKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JsonWebKeyType?(string value) => value == null ? null : new JsonWebKeyType(value);
+        public static implicit operator JsonWebKeyType?(string value) => value == null ? (JsonWebKeyType?)null : new JsonWebKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

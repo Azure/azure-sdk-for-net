@@ -71,7 +71,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="ContainerHostDataPath"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerHostDataPath?(string value) => value == null ? null : new ContainerHostDataPath(value);
+        public static implicit operator ContainerHostDataPath?(string value) => value == null ? (ContainerHostDataPath?)null : new ContainerHostDataPath(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -63,7 +63,7 @@ namespace Azure.Security.Attestation
 
         /// <summary> Converts a string to a <see cref="PolicyCertificateResolution"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyCertificateResolution?(string value) => value == null ? null : new PolicyCertificateResolution(value);
+        public static implicit operator PolicyCertificateResolution?(string value) => value == null ? (PolicyCertificateResolution?)null : new PolicyCertificateResolution(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

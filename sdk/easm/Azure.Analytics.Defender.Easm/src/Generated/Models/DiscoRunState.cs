@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="DiscoRunState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoRunState?(string value) => value == null ? null : new DiscoRunState(value);
+        public static implicit operator DiscoRunState?(string value) => value == null ? (DiscoRunState?)null : new DiscoRunState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

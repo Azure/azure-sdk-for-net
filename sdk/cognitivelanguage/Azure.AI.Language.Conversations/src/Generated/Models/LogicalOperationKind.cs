@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="LogicalOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogicalOperationKind?(string value) => value == null ? null : new LogicalOperationKind(value);
+        public static implicit operator LogicalOperationKind?(string value) => value == null ? (LogicalOperationKind?)null : new LogicalOperationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Secrets.Models
 
         /// <summary> Converts a string to a <see cref="ContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentType?(string value) => value == null ? null : new ContentType(value);
+        public static implicit operator ContentType?(string value) => value == null ? (ContentType?)null : new ContentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

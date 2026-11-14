@@ -427,7 +427,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Converts a string to a <see cref="ShareErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ShareErrorCode?(string value) => value == null ? null : new ShareErrorCode(value);
+        public static implicit operator ShareErrorCode?(string value) => value == null ? (ShareErrorCode?)null : new ShareErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

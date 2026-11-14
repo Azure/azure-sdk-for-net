@@ -65,7 +65,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Converts a string to a <see cref="ImputeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImputeMode?(string value) => value == null ? null : new ImputeMode(value);
+        public static implicit operator ImputeMode?(string value) => value == null ? (ImputeMode?)null : new ImputeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

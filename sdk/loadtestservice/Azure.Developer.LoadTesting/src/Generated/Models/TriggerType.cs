@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="TriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TriggerType?(string value) => value == null ? null : new TriggerType(value);
+        public static implicit operator TriggerType?(string value) => value == null ? (TriggerType?)null : new TriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

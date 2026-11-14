@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="ObservationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ObservationType?(string value) => value == null ? null : new ObservationType(value);
+        public static implicit operator ObservationType?(string value) => value == null ? (ObservationType?)null : new ObservationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

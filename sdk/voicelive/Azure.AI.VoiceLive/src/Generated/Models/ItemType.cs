@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ItemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ItemType?(string value) => value == null ? null : new ItemType(value);
+        public static implicit operator ItemType?(string value) => value == null ? (ItemType?)null : new ItemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

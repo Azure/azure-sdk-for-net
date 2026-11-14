@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="AIFoundryModelCatalogName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AIFoundryModelCatalogName?(string value) => value == null ? null : new AIFoundryModelCatalogName(value);
+        public static implicit operator AIFoundryModelCatalogName?(string value) => value == null ? (AIFoundryModelCatalogName?)null : new AIFoundryModelCatalogName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeDisableSchedulingOption?(string value) => value == null ? null : new BatchNodeDisableSchedulingOption(value);
+        public static implicit operator BatchNodeDisableSchedulingOption?(string value) => value == null ? (BatchNodeDisableSchedulingOption?)null : new BatchNodeDisableSchedulingOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

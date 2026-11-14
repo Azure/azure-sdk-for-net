@@ -69,7 +69,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="AssetState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssetState?(string value) => value == null ? null : new AssetState(value);
+        public static implicit operator AssetState?(string value) => value == null ? (AssetState?)null : new AssetState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="LoginMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoginMode?(string value) => value == null ? null : new LoginMode(value);
+        public static implicit operator LoginMode?(string value) => value == null ? (LoginMode?)null : new LoginMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

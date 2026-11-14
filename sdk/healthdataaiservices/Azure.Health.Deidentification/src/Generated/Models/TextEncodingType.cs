@@ -56,7 +56,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Converts a string to a <see cref="TextEncodingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextEncodingType?(string value) => value == null ? null : new TextEncodingType(value);
+        public static implicit operator TextEncodingType?(string value) => value == null ? (TextEncodingType?)null : new TextEncodingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

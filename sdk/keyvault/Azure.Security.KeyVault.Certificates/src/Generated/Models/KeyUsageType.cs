@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
 
         /// <summary> Converts a string to a <see cref="KeyUsageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyUsageType?(string value) => value == null ? null : new KeyUsageType(value);
+        public static implicit operator KeyUsageType?(string value) => value == null ? (KeyUsageType?)null : new KeyUsageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

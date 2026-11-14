@@ -74,7 +74,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ReasoningEffort"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReasoningEffort?(string value) => value == null ? null : new ReasoningEffort(value);
+        public static implicit operator ReasoningEffort?(string value) => value == null ? (ReasoningEffort?)null : new ReasoningEffort(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

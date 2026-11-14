@@ -51,7 +51,7 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Converts a string to a <see cref="TextType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextType?(string value) => value == null ? null : new TextType(value);
+        public static implicit operator TextType?(string value) => value == null ? (TextType?)null : new TextType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

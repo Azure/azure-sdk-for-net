@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtractiveSummarizationSortingCriteria?(string value) => value == null ? null : new ExtractiveSummarizationSortingCriteria(value);
+        public static implicit operator ExtractiveSummarizationSortingCriteria?(string value) => value == null ? (ExtractiveSummarizationSortingCriteria?)null : new ExtractiveSummarizationSortingCriteria(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

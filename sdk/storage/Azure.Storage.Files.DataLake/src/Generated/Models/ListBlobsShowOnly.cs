@@ -42,7 +42,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary> Converts a string to a <see cref="ListBlobsShowOnly"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListBlobsShowOnly?(string value) => value == null ? null : new ListBlobsShowOnly(value);
+        public static implicit operator ListBlobsShowOnly?(string value) => value == null ? (ListBlobsShowOnly?)null : new ListBlobsShowOnly(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

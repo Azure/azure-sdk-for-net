@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="SemanticErrorMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticErrorMode?(string value) => value == null ? null : new SemanticErrorMode(value);
+        public static implicit operator SemanticErrorMode?(string value) => value == null ? (SemanticErrorMode?)null : new SemanticErrorMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

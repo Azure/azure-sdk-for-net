@@ -51,7 +51,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="DocumentFormulaKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentFormulaKind?(string value) => value == null ? null : new DocumentFormulaKind(value);
+        public static implicit operator DocumentFormulaKind?(string value) => value == null ? (DocumentFormulaKind?)null : new DocumentFormulaKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

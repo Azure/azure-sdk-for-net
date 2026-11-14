@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="PersistentAgentsToolChoiceOptionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistentAgentsToolChoiceOptionMode?(string value) => value == null ? null : new PersistentAgentsToolChoiceOptionMode(value);
+        public static implicit operator PersistentAgentsToolChoiceOptionMode?(string value) => value == null ? (PersistentAgentsToolChoiceOptionMode?)null : new PersistentAgentsToolChoiceOptionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

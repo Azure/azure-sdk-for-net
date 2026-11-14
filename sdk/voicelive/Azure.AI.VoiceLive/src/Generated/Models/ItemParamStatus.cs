@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ItemParamStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ItemParamStatus?(string value) => value == null ? null : new ItemParamStatus(value);
+        public static implicit operator ItemParamStatus?(string value) => value == null ? (ItemParamStatus?)null : new ItemParamStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

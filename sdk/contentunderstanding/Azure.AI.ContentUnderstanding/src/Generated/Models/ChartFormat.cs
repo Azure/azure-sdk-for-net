@@ -51,7 +51,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="ChartFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChartFormat?(string value) => value == null ? null : new ChartFormat(value);
+        public static implicit operator ChartFormat?(string value) => value == null ? (ChartFormat?)null : new ChartFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

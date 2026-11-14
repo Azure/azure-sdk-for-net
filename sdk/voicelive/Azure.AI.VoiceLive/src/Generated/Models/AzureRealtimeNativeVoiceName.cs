@@ -105,7 +105,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AzureRealtimeNativeVoiceName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureRealtimeNativeVoiceName?(string value) => value == null ? null : new AzureRealtimeNativeVoiceName(value);
+        public static implicit operator AzureRealtimeNativeVoiceName?(string value) => value == null ? (AzureRealtimeNativeVoiceName?)null : new AzureRealtimeNativeVoiceName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

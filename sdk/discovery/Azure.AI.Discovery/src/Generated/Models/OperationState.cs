@@ -66,7 +66,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="OperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationState?(string value) => value == null ? null : new OperationState(value);
+        public static implicit operator OperationState?(string value) => value == null ? (OperationState?)null : new OperationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

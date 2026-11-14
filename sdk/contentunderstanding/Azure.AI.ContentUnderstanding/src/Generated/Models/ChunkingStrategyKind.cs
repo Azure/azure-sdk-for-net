@@ -46,7 +46,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="ChunkingStrategyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChunkingStrategyKind?(string value) => value == null ? null : new ChunkingStrategyKind(value);
+        public static implicit operator ChunkingStrategyKind?(string value) => value == null ? (ChunkingStrategyKind?)null : new ChunkingStrategyKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

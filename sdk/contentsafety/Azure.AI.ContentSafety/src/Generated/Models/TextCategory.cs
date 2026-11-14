@@ -61,7 +61,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="TextCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextCategory?(string value) => value == null ? null : new TextCategory(value);
+        public static implicit operator TextCategory?(string value) => value == null ? (TextCategory?)null : new TextCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="TermStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TermStatus?(string value) => value == null ? null : new TermStatus(value);
+        public static implicit operator TermStatus?(string value) => value == null ? (TermStatus?)null : new TermStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

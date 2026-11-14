@@ -49,7 +49,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ResponseIncompleteDetailsReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponseIncompleteDetailsReason?(string value) => value == null ? null : new ResponseIncompleteDetailsReason(value);
+        public static implicit operator ResponseIncompleteDetailsReason?(string value) => value == null ? (ResponseIncompleteDetailsReason?)null : new ResponseIncompleteDetailsReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

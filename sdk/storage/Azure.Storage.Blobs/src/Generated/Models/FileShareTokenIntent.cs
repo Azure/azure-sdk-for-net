@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Converts a string to a <see cref="FileShareTokenIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareTokenIntent?(string value) => value == null ? null : new FileShareTokenIntent(value);
+        public static implicit operator FileShareTokenIntent?(string value) => value == null ? (FileShareTokenIntent?)null : new FileShareTokenIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -96,7 +96,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="TaskStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskStatus?(string value) => value == null ? null : new TaskStatus(value);
+        public static implicit operator TaskStatus?(string value) => value == null ? (TaskStatus?)null : new TaskStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

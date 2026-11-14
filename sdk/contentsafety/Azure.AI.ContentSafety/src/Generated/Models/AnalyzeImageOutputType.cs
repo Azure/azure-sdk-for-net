@@ -46,7 +46,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="AnalyzeImageOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeImageOutputType?(string value) => value == null ? null : new AnalyzeImageOutputType(value);
+        public static implicit operator AnalyzeImageOutputType?(string value) => value == null ? (AnalyzeImageOutputType?)null : new AnalyzeImageOutputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -71,7 +71,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentIntelligenceOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentIntelligenceOperationStatus?(string value) => value == null ? null : new DocumentIntelligenceOperationStatus(value);
+        public static implicit operator DocumentIntelligenceOperationStatus?(string value) => value == null ? (DocumentIntelligenceOperationStatus?)null : new DocumentIntelligenceOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

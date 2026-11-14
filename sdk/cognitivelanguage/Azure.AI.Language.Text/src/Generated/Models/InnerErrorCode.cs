@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="InnerErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InnerErrorCode?(string value) => value == null ? null : new InnerErrorCode(value);
+        public static implicit operator InnerErrorCode?(string value) => value == null ? (InnerErrorCode?)null : new InnerErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

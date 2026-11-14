@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="McpServerOutputParsingKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator McpServerOutputParsingKind?(string value) => value == null ? null : new McpServerOutputParsingKind(value);
+        public static implicit operator McpServerOutputParsingKind?(string value) => value == null ? (McpServerOutputParsingKind?)null : new McpServerOutputParsingKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="SemanticErrorReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticErrorReason?(string value) => value == null ? null : new SemanticErrorReason(value);
+        public static implicit operator SemanticErrorReason?(string value) => value == null ? (SemanticErrorReason?)null : new SemanticErrorReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

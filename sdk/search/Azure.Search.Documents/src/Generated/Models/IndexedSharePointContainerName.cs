@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="IndexedSharePointContainerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexedSharePointContainerName?(string value) => value == null ? null : new IndexedSharePointContainerName(value);
+        public static implicit operator IndexedSharePointContainerName?(string value) => value == null ? (IndexedSharePointContainerName?)null : new IndexedSharePointContainerName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

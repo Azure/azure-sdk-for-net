@@ -51,7 +51,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="IngestionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IngestionStatus?(string value) => value == null ? null : new IngestionStatus(value);
+        public static implicit operator IngestionStatus?(string value) => value == null ? (IngestionStatus?)null : new IngestionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

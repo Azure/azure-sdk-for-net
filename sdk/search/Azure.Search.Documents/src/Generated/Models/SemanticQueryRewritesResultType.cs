@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="SemanticQueryRewritesResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticQueryRewritesResultType?(string value) => value == null ? null : new SemanticQueryRewritesResultType(value);
+        public static implicit operator SemanticQueryRewritesResultType?(string value) => value == null ? (SemanticQueryRewritesResultType?)null : new SemanticQueryRewritesResultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

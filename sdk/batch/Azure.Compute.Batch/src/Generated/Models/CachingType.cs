@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="CachingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CachingType?(string value) => value == null ? null : new CachingType(value);
+        public static implicit operator CachingType?(string value) => value == null ? (CachingType?)null : new CachingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

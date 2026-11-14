@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AudioTimestampType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AudioTimestampType?(string value) => value == null ? null : new AudioTimestampType(value);
+        public static implicit operator AudioTimestampType?(string value) => value == null ? (AudioTimestampType?)null : new AudioTimestampType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="StatusLevelTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StatusLevelTypes?(string value) => value == null ? null : new StatusLevelTypes(value);
+        public static implicit operator StatusLevelTypes?(string value) => value == null ? (StatusLevelTypes?)null : new StatusLevelTypes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

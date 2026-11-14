@@ -51,7 +51,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="ImportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImportStatus?(string value) => value == null ? null : new ImportStatus(value);
+        public static implicit operator ImportStatus?(string value) => value == null ? (ImportStatus?)null : new ImportStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

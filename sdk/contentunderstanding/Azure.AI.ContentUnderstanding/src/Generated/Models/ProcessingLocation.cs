@@ -56,7 +56,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="ProcessingLocation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProcessingLocation?(string value) => value == null ? null : new ProcessingLocation(value);
+        public static implicit operator ProcessingLocation?(string value) => value == null ? (ProcessingLocation?)null : new ProcessingLocation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

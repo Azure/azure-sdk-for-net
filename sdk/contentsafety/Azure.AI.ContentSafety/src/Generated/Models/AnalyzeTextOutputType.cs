@@ -51,7 +51,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="AnalyzeTextOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeTextOutputType?(string value) => value == null ? null : new AnalyzeTextOutputType(value);
+        public static implicit operator AnalyzeTextOutputType?(string value) => value == null ? (AnalyzeTextOutputType?)null : new AnalyzeTextOutputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="LexicalNormalizerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LexicalNormalizerName?(string value) => value == null ? null : new LexicalNormalizerName(value);
+        public static implicit operator LexicalNormalizerName?(string value) => value == null ? (LexicalNormalizerName?)null : new LexicalNormalizerName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

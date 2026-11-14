@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="ListSortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListSortOrder?(string value) => value == null ? null : new ListSortOrder(value);
+        public static implicit operator ListSortOrder?(string value) => value == null ? (ListSortOrder?)null : new ListSortOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

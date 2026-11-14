@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> Converts a string to a <see cref="OperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationStatus?(string value) => value == null ? null : new OperationStatus(value);
+        public static implicit operator OperationStatus?(string value) => value == null ? (OperationStatus?)null : new OperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="ContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerType?(string value) => value == null ? null : new ContainerType(value);
+        public static implicit operator ContainerType?(string value) => value == null ? (ContainerType?)null : new ContainerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

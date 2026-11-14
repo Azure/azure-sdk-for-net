@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="CharFilterName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CharFilterName?(string value) => value == null ? null : new CharFilterName(value);
+        public static implicit operator CharFilterName?(string value) => value == null ? (CharFilterName?)null : new CharFilterName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

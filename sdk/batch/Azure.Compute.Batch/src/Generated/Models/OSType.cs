@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="OSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OSType?(string value) => value == null ? null : new OSType(value);
+        public static implicit operator OSType?(string value) => value == null ? (OSType?)null : new OSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

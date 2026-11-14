@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="DeltaDetailType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeltaDetailType?(string value) => value == null ? null : new DeltaDetailType(value);
+        public static implicit operator DeltaDetailType?(string value) => value == null ? (DeltaDetailType?)null : new DeltaDetailType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentFontWeight"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentFontWeight?(string value) => value == null ? null : new DocumentFontWeight(value);
+        public static implicit operator DocumentFontWeight?(string value) => value == null ? (DocumentFontWeight?)null : new DocumentFontWeight(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

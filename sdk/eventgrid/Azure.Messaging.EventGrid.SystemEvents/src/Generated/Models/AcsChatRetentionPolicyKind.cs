@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsChatRetentionPolicyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsChatRetentionPolicyKind?(string value) => value == null ? null : new AcsChatRetentionPolicyKind(value);
+        public static implicit operator AcsChatRetentionPolicyKind?(string value) => value == null ? (AcsChatRetentionPolicyKind?)null : new AcsChatRetentionPolicyKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -99,7 +99,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="StacQueryableDefinitionDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StacQueryableDefinitionDataKind?(string value) => value == null ? null : new StacQueryableDefinitionDataKind(value);
+        public static implicit operator StacQueryableDefinitionDataKind?(string value) => value == null ? (StacQueryableDefinitionDataKind?)null : new StacQueryableDefinitionDataKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

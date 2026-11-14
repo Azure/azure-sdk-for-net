@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Converts a string to a <see cref="AnalyzeConversationAuthoringDataGenerationConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeConversationAuthoringDataGenerationConnectionKind?(string value) => value == null ? null : new AnalyzeConversationAuthoringDataGenerationConnectionKind(value);
+        public static implicit operator AnalyzeConversationAuthoringDataGenerationConnectionKind?(string value) => value == null ? (AnalyzeConversationAuthoringDataGenerationConnectionKind?)null : new AnalyzeConversationAuthoringDataGenerationConnectionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

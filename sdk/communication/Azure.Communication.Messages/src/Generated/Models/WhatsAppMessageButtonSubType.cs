@@ -52,7 +52,7 @@ namespace Azure.Communication.Messages.Models.Channels
 
         /// <summary> Converts a string to a <see cref="WhatsAppMessageButtonSubType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WhatsAppMessageButtonSubType?(string value) => value == null ? null : new WhatsAppMessageButtonSubType(value);
+        public static implicit operator WhatsAppMessageButtonSubType?(string value) => value == null ? (WhatsAppMessageButtonSubType?)null : new WhatsAppMessageButtonSubType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

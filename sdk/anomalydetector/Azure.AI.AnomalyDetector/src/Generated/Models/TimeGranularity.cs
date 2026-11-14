@@ -77,7 +77,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Converts a string to a <see cref="TimeGranularity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeGranularity?(string value) => value == null ? null : new TimeGranularity(value);
+        public static implicit operator TimeGranularity?(string value) => value == null ? (TimeGranularity?)null : new TimeGranularity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

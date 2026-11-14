@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="McpApprovalKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator McpApprovalKind?(string value) => value == null ? null : new McpApprovalKind(value);
+        public static implicit operator McpApprovalKind?(string value) => value == null ? (McpApprovalKind?)null : new McpApprovalKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

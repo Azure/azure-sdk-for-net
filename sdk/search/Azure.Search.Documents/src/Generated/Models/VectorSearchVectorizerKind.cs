@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="VectorSearchVectorizerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorSearchVectorizerKind?(string value) => value == null ? null : new VectorSearchVectorizerKind(value);
+        public static implicit operator VectorSearchVectorizerKind?(string value) => value == null ? (VectorSearchVectorizerKind?)null : new VectorSearchVectorizerKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

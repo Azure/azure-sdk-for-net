@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="BlobIndexerPdfTextRotationAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerPdfTextRotationAlgorithm?(string value) => value == null ? null : new BlobIndexerPdfTextRotationAlgorithm(value);
+        public static implicit operator BlobIndexerPdfTextRotationAlgorithm?(string value) => value == null ? (BlobIndexerPdfTextRotationAlgorithm?)null : new BlobIndexerPdfTextRotationAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

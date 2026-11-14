@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="DataBoxStageName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxStageName?(string value) => value == null ? null : new DataBoxStageName(value);
+        public static implicit operator DataBoxStageName?(string value) => value == null ? (DataBoxStageName?)null : new DataBoxStageName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

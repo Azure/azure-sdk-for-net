@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="PermissionFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PermissionFilter?(string value) => value == null ? null : new PermissionFilter(value);
+        public static implicit operator PermissionFilter?(string value) => value == null ? (PermissionFilter?)null : new PermissionFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

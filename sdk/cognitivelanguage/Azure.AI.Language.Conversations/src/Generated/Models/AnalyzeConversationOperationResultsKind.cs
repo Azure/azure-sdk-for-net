@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="AnalyzeConversationOperationResultsKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeConversationOperationResultsKind?(string value) => value == null ? null : new AnalyzeConversationOperationResultsKind(value);
+        public static implicit operator AnalyzeConversationOperationResultsKind?(string value) => value == null ? (AnalyzeConversationOperationResultsKind?)null : new AnalyzeConversationOperationResultsKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -61,7 +61,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="KnowledgeBaseOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeBaseOperationType?(string value) => value == null ? null : new KnowledgeBaseOperationType(value);
+        public static implicit operator KnowledgeBaseOperationType?(string value) => value == null ? (KnowledgeBaseOperationType?)null : new KnowledgeBaseOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

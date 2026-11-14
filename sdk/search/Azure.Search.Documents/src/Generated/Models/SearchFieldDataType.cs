@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="SearchFieldDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchFieldDataType?(string value) => value == null ? null : new SearchFieldDataType(value);
+        public static implicit operator SearchFieldDataType?(string value) => value == null ? (SearchFieldDataType?)null : new SearchFieldDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

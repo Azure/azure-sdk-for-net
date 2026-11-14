@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentSelectionMarkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentSelectionMarkState?(string value) => value == null ? null : new DocumentSelectionMarkState(value);
+        public static implicit operator DocumentSelectionMarkState?(string value) => value == null ? (DocumentSelectionMarkState?)null : new DocumentSelectionMarkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

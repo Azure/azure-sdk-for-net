@@ -52,7 +52,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="EnvironmentTypeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnvironmentTypeStatus?(string value) => value == null ? null : new EnvironmentTypeStatus(value);
+        public static implicit operator EnvironmentTypeStatus?(string value) => value == null ? (EnvironmentTypeStatus?)null : new EnvironmentTypeStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -122,7 +122,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="WeightUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WeightUnit?(string value) => value == null ? null : new WeightUnit(value);
+        public static implicit operator WeightUnit?(string value) => value == null ? (WeightUnit?)null : new WeightUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -91,7 +91,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="CommunicationMessageKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationMessageKind?(string value) => value == null ? null : new CommunicationMessageKind(value);
+        public static implicit operator CommunicationMessageKind?(string value) => value == null ? (CommunicationMessageKind?)null : new CommunicationMessageKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

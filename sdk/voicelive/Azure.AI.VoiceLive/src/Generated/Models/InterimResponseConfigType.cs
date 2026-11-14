@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="InterimResponseConfigType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InterimResponseConfigType?(string value) => value == null ? null : new InterimResponseConfigType(value);
+        public static implicit operator InterimResponseConfigType?(string value) => value == null ? (InterimResponseConfigType?)null : new InterimResponseConfigType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

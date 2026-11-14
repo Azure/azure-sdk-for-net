@@ -507,7 +507,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="LexicalAnalyzerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LexicalAnalyzerName?(string value) => value == null ? null : new LexicalAnalyzerName(value);
+        public static implicit operator LexicalAnalyzerName?(string value) => value == null ? (LexicalAnalyzerName?)null : new LexicalAnalyzerName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

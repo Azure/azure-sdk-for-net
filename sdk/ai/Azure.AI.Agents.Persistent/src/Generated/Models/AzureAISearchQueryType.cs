@@ -66,7 +66,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="AzureAISearchQueryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureAISearchQueryType?(string value) => value == null ? null : new AzureAISearchQueryType(value);
+        public static implicit operator AzureAISearchQueryType?(string value) => value == null ? (AzureAISearchQueryType?)null : new AzureAISearchQueryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeSourceNetworkAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeSourceNetworkAccessMode?(string value) => value == null ? null : new KnowledgeSourceNetworkAccessMode(value);
+        public static implicit operator KnowledgeSourceNetworkAccessMode?(string value) => value == null ? (KnowledgeSourceNetworkAccessMode?)null : new KnowledgeSourceNetworkAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

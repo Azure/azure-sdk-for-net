@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineScaleSetLifecycleHookEventState?(string value) => value == null ? null : new VirtualMachineScaleSetLifecycleHookEventState(value);
+        public static implicit operator VirtualMachineScaleSetLifecycleHookEventState?(string value) => value == null ? (VirtualMachineScaleSetLifecycleHookEventState?)null : new VirtualMachineScaleSetLifecycleHookEventState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

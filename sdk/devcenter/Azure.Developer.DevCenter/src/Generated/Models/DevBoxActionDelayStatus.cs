@@ -52,7 +52,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevBoxActionDelayStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevBoxActionDelayStatus?(string value) => value == null ? null : new DevBoxActionDelayStatus(value);
+        public static implicit operator DevBoxActionDelayStatus?(string value) => value == null ? (DevBoxActionDelayStatus?)null : new DevBoxActionDelayStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

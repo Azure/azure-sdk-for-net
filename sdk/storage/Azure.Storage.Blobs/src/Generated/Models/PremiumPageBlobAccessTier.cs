@@ -97,7 +97,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Converts a string to a <see cref="PremiumPageBlobAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PremiumPageBlobAccessTier?(string value) => value == null ? null : new PremiumPageBlobAccessTier(value);
+        public static implicit operator PremiumPageBlobAccessTier?(string value) => value == null ? (PremiumPageBlobAccessTier?)null : new PremiumPageBlobAccessTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

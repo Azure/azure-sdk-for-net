@@ -69,7 +69,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Converts a string to a <see cref="JobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobStatus?(string value) => value == null ? null : new JobStatus(value);
+        public static implicit operator JobStatus?(string value) => value == null ? (JobStatus?)null : new JobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

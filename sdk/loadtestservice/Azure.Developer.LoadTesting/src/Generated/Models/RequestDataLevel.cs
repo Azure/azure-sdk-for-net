@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="RequestDataLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RequestDataLevel?(string value) => value == null ? null : new RequestDataLevel(value);
+        public static implicit operator RequestDataLevel?(string value) => value == null ? (RequestDataLevel?)null : new RequestDataLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

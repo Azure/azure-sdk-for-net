@@ -53,7 +53,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="EouDetectionModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EouDetectionModel?(string value) => value == null ? null : new EouDetectionModel(value);
+        public static implicit operator EouDetectionModel?(string value) => value == null ? (EouDetectionModel?)null : new EouDetectionModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

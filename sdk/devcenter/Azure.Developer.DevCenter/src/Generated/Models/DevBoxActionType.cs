@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevBoxActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevBoxActionType?(string value) => value == null ? null : new DevBoxActionType(value);
+        public static implicit operator DevBoxActionType?(string value) => value == null ? (DevBoxActionType?)null : new DevBoxActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

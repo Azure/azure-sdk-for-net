@@ -76,7 +76,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="DocumentAnnotationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentAnnotationKind?(string value) => value == null ? null : new DocumentAnnotationKind(value);
+        public static implicit operator DocumentAnnotationKind?(string value) => value == null ? (DocumentAnnotationKind?)null : new DocumentAnnotationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

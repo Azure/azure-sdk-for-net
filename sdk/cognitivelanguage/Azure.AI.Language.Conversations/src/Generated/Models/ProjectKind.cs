@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="ProjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProjectKind?(string value) => value == null ? null : new ProjectKind(value);
+        public static implicit operator ProjectKind?(string value) => value == null ? (ProjectKind?)null : new ProjectKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

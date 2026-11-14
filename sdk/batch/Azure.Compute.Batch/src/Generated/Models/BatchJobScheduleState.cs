@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchJobScheduleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchJobScheduleState?(string value) => value == null ? null : new BatchJobScheduleState(value);
+        public static implicit operator BatchJobScheduleState?(string value) => value == null ? (BatchJobScheduleState?)null : new BatchJobScheduleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchTaskExecutionResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchTaskExecutionResult?(string value) => value == null ? null : new BatchTaskExecutionResult(value);
+        public static implicit operator BatchTaskExecutionResult?(string value) => value == null ? (BatchTaskExecutionResult?)null : new BatchTaskExecutionResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

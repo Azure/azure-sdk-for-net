@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="DistributionModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DistributionModeKind?(string value) => value == null ? null : new DistributionModeKind(value);
+        public static implicit operator DistributionModeKind?(string value) => value == null ? (DistributionModeKind?)null : new DistributionModeKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -117,7 +117,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="ResolutionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResolutionKind?(string value) => value == null ? null : new ResolutionKind(value);
+        public static implicit operator ResolutionKind?(string value) => value == null ? (ResolutionKind?)null : new ResolutionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

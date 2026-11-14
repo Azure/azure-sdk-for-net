@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="QueryRewritesType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryRewritesType?(string value) => value == null ? null : new QueryRewritesType(value);
+        public static implicit operator QueryRewritesType?(string value) => value == null ? (QueryRewritesType?)null : new QueryRewritesType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

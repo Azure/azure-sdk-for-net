@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchJobActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchJobActionKind?(string value) => value == null ? null : new BatchJobActionKind(value);
+        public static implicit operator BatchJobActionKind?(string value) => value == null ? (BatchJobActionKind?)null : new BatchJobActionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

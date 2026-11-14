@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchErrorSourceCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchErrorSourceCategory?(string value) => value == null ? null : new BatchErrorSourceCategory(value);
+        public static implicit operator BatchErrorSourceCategory?(string value) => value == null ? (BatchErrorSourceCategory?)null : new BatchErrorSourceCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

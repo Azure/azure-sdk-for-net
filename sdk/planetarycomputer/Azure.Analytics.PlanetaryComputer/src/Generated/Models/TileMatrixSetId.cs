@@ -100,7 +100,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="TileMatrixSetId"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TileMatrixSetId?(string value) => value == null ? null : new TileMatrixSetId(value);
+        public static implicit operator TileMatrixSetId?(string value) => value == null ? (TileMatrixSetId?)null : new TileMatrixSetId(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

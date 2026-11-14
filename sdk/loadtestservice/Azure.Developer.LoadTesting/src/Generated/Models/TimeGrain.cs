@@ -66,7 +66,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="TimeGrain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeGrain?(string value) => value == null ? null : new TimeGrain(value);
+        public static implicit operator TimeGrain?(string value) => value == null ? (TimeGrain?)null : new TimeGrain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
