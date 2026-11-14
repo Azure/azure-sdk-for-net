@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="TextSplitMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextSplitMode?(string value) => value == null ? null : new TextSplitMode(value);
+        public static implicit operator TextSplitMode?(string value) => value == null ? (TextSplitMode?)null : new TextSplitMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

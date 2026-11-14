@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="LineageDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LineageDirection?(string value) => value == null ? null : new LineageDirection(value);
+        public static implicit operator LineageDirection?(string value) => value == null ? (LineageDirection?)null : new LineageDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

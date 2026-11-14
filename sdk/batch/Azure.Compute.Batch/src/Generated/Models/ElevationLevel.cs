@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="ElevationLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ElevationLevel?(string value) => value == null ? null : new ElevationLevel(value);
+        public static implicit operator ElevationLevel?(string value) => value == null ? (ElevationLevel?)null : new ElevationLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

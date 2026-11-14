@@ -81,7 +81,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="SelMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SelMethod?(string value) => value == null ? null : new SelMethod(value);
+        public static implicit operator SelMethod?(string value) => value == null ? (SelMethod?)null : new SelMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

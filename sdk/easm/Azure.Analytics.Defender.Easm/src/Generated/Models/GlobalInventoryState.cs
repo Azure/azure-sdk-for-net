@@ -86,7 +86,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="GlobalInventoryState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GlobalInventoryState?(string value) => value == null ? null : new GlobalInventoryState(value);
+        public static implicit operator GlobalInventoryState?(string value) => value == null ? (GlobalInventoryState?)null : new GlobalInventoryState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

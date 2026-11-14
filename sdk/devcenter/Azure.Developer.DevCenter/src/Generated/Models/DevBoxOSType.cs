@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevBoxOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevBoxOSType?(string value) => value == null ? null : new DevBoxOSType(value);
+        public static implicit operator DevBoxOSType?(string value) => value == null ? (DevBoxOSType?)null : new DevBoxOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

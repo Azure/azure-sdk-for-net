@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="EouThresholdLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EouThresholdLevel?(string value) => value == null ? null : new EouThresholdLevel(value);
+        public static implicit operator EouThresholdLevel?(string value) => value == null ? (EouThresholdLevel?)null : new EouThresholdLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

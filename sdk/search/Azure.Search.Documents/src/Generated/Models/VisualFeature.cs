@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="VisualFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VisualFeature?(string value) => value == null ? null : new VisualFeature(value);
+        public static implicit operator VisualFeature?(string value) => value == null ? (VisualFeature?)null : new VisualFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

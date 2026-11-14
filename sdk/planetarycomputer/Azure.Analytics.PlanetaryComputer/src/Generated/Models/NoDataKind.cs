@@ -66,7 +66,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="NoDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NoDataKind?(string value) => value == null ? null : new NoDataKind(value);
+        public static implicit operator NoDataKind?(string value) => value == null ? (NoDataKind?)null : new NoDataKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="NotificationEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationEventType?(string value) => value == null ? null : new NotificationEventType(value);
+        public static implicit operator NotificationEventType?(string value) => value == null ? (NotificationEventType?)null : new NotificationEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

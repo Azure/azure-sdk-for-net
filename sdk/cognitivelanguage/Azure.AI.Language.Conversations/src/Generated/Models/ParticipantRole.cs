@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="ParticipantRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParticipantRole?(string value) => value == null ? null : new ParticipantRole(value);
+        public static implicit operator ParticipantRole?(string value) => value == null ? (ParticipantRole?)null : new ParticipantRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

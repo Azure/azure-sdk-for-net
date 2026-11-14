@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="SchedulingState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SchedulingState?(string value) => value == null ? null : new SchedulingState(value);
+        public static implicit operator SchedulingState?(string value) => value == null ? (SchedulingState?)null : new SchedulingState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

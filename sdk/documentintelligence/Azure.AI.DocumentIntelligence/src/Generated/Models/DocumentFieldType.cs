@@ -116,7 +116,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentFieldType?(string value) => value == null ? null : new DocumentFieldType(value);
+        public static implicit operator DocumentFieldType?(string value) => value == null ? (DocumentFieldType?)null : new DocumentFieldType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

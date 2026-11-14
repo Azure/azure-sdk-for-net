@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="SpeedUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SpeedUnit?(string value) => value == null ? null : new SpeedUnit(value);
+        public static implicit operator SpeedUnit?(string value) => value == null ? (SpeedUnit?)null : new SpeedUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

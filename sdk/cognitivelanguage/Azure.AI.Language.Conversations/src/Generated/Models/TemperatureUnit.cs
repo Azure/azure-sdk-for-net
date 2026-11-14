@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="TemperatureUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TemperatureUnit?(string value) => value == null ? null : new TemperatureUnit(value);
+        public static implicit operator TemperatureUnit?(string value) => value == null ? (TemperatureUnit?)null : new TemperatureUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

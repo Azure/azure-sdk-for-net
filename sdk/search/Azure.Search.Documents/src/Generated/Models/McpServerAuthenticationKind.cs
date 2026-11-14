@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="McpServerAuthenticationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator McpServerAuthenticationKind?(string value) => value == null ? null : new McpServerAuthenticationKind(value);
+        public static implicit operator McpServerAuthenticationKind?(string value) => value == null ? (McpServerAuthenticationKind?)null : new McpServerAuthenticationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="PowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PowerState?(string value) => value == null ? null : new PowerState(value);
+        public static implicit operator PowerState?(string value) => value == null ? (PowerState?)null : new PowerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

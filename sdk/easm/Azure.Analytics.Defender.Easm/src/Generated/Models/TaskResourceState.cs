@@ -69,7 +69,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="TaskResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskResourceState?(string value) => value == null ? null : new TaskResourceState(value);
+        public static implicit operator TaskResourceState?(string value) => value == null ? (TaskResourceState?)null : new TaskResourceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

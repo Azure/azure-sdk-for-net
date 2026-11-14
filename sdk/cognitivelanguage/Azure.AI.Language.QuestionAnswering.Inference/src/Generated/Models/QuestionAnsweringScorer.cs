@@ -56,7 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary> Converts a string to a <see cref="QuestionAnsweringScorer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuestionAnsweringScorer?(string value) => value == null ? null : new QuestionAnsweringScorer(value);
+        public static implicit operator QuestionAnsweringScorer?(string value) => value == null ? (QuestionAnsweringScorer?)null : new QuestionAnsweringScorer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

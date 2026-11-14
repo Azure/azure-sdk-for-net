@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsCallParticipantKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsCallParticipantKind?(string value) => value == null ? null : new AcsCallParticipantKind(value);
+        public static implicit operator AcsCallParticipantKind?(string value) => value == null ? (AcsCallParticipantKind?)null : new AcsCallParticipantKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

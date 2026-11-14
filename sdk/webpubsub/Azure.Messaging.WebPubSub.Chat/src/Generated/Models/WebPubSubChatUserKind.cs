@@ -46,7 +46,7 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <summary> Converts a string to a <see cref="WebPubSubChatUserKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebPubSubChatUserKind?(string value) => value == null ? null : new WebPubSubChatUserKind(value);
+        public static implicit operator WebPubSubChatUserKind?(string value) => value == null ? (WebPubSubChatUserKind?)null : new WebPubSubChatUserKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

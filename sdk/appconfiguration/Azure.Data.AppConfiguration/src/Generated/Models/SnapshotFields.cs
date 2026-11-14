@@ -80,7 +80,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Converts a string to a <see cref="SnapshotFields"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotFields?(string value) => value == null ? null : new SnapshotFields(value);
+        public static implicit operator SnapshotFields?(string value) => value == null ? (SnapshotFields?)null : new SnapshotFields(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

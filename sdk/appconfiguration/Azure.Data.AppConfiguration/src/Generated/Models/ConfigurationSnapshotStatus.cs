@@ -61,7 +61,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Converts a string to a <see cref="ConfigurationSnapshotStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfigurationSnapshotStatus?(string value) => value == null ? null : new ConfigurationSnapshotStatus(value);
+        public static implicit operator ConfigurationSnapshotStatus?(string value) => value == null ? (ConfigurationSnapshotStatus?)null : new ConfigurationSnapshotStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

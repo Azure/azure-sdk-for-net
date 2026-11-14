@@ -49,7 +49,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ResponseCancelledDetailsReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponseCancelledDetailsReason?(string value) => value == null ? null : new ResponseCancelledDetailsReason(value);
+        public static implicit operator ResponseCancelledDetailsReason?(string value) => value == null ? (ResponseCancelledDetailsReason?)null : new ResponseCancelledDetailsReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

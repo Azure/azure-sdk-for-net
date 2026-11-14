@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="ScheduleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleType?(string value) => value == null ? null : new ScheduleType(value);
+        public static implicit operator ScheduleType?(string value) => value == null ? (ScheduleType?)null : new ScheduleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

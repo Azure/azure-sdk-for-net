@@ -51,7 +51,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="TableFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TableFormat?(string value) => value == null ? null : new TableFormat(value);
+        public static implicit operator TableFormat?(string value) => value == null ? (TableFormat?)null : new TableFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="PersistentAgentFilePurpose"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistentAgentFilePurpose?(string value) => value == null ? null : new PersistentAgentFilePurpose(value);
+        public static implicit operator PersistentAgentFilePurpose?(string value) => value == null ? (PersistentAgentFilePurpose?)null : new PersistentAgentFilePurpose(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

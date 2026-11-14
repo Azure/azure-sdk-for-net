@@ -76,7 +76,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="TestProfileRunStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TestProfileRunStatus?(string value) => value == null ? null : new TestProfileRunStatus(value);
+        public static implicit operator TestProfileRunStatus?(string value) => value == null ? (TestProfileRunStatus?)null : new TestProfileRunStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ResponseWebSearchCallItemStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponseWebSearchCallItemStatus?(string value) => value == null ? null : new ResponseWebSearchCallItemStatus(value);
+        public static implicit operator ResponseWebSearchCallItemStatus?(string value) => value == null ? (ResponseWebSearchCallItemStatus?)null : new ResponseWebSearchCallItemStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

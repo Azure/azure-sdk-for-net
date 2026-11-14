@@ -892,7 +892,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="OcrSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OcrSkillLanguage?(string value) => value == null ? null : new OcrSkillLanguage(value);
+        public static implicit operator OcrSkillLanguage?(string value) => value == null ? (OcrSkillLanguage?)null : new OcrSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

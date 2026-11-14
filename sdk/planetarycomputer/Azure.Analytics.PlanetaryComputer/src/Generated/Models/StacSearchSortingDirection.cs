@@ -51,7 +51,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="StacSearchSortingDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StacSearchSortingDirection?(string value) => value == null ? null : new StacSearchSortingDirection(value);
+        public static implicit operator StacSearchSortingDirection?(string value) => value == null ? (StacSearchSortingDirection?)null : new StacSearchSortingDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

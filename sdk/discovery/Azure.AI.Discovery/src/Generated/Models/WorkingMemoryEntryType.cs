@@ -46,7 +46,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="WorkingMemoryEntryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkingMemoryEntryType?(string value) => value == null ? null : new WorkingMemoryEntryType(value);
+        public static implicit operator WorkingMemoryEntryType?(string value) => value == null ? (WorkingMemoryEntryType?)null : new WorkingMemoryEntryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

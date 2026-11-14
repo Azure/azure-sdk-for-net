@@ -51,7 +51,7 @@ namespace Azure.Analytics.OnlineExperimentation
 
         /// <summary> Converts a string to a <see cref="LifecycleStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LifecycleStage?(string value) => value == null ? null : new LifecycleStage(value);
+        public static implicit operator LifecycleStage?(string value) => value == null ? (LifecycleStage?)null : new LifecycleStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

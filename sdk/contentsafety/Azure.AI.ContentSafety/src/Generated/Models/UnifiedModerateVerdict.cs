@@ -51,7 +51,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="UnifiedModerateVerdict"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UnifiedModerateVerdict?(string value) => value == null ? null : new UnifiedModerateVerdict(value);
+        public static implicit operator UnifiedModerateVerdict?(string value) => value == null ? (UnifiedModerateVerdict?)null : new UnifiedModerateVerdict(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

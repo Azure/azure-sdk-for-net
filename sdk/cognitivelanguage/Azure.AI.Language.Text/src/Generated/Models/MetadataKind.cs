@@ -131,7 +131,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="MetadataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetadataKind?(string value) => value == null ? null : new MetadataKind(value);
+        public static implicit operator MetadataKind?(string value) => value == null ? (MetadataKind?)null : new MetadataKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

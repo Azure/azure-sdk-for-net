@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="ConversationActionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationActionState?(string value) => value == null ? null : new ConversationActionState(value);
+        public static implicit operator ConversationActionState?(string value) => value == null ? (ConversationActionState?)null : new ConversationActionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

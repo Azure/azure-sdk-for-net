@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="IndexProjectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexProjectionMode?(string value) => value == null ? null : new IndexProjectionMode(value);
+        public static implicit operator IndexProjectionMode?(string value) => value == null ? (IndexProjectionMode?)null : new IndexProjectionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -61,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="VectorStoreFileBatchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreFileBatchStatus?(string value) => value == null ? null : new VectorStoreFileBatchStatus(value);
+        public static implicit operator VectorStoreFileBatchStatus?(string value) => value == null ? (VectorStoreFileBatchStatus?)null : new VectorStoreFileBatchStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

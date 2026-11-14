@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InputModality?(string value) => value == null ? null : new InputModality(value);
+        public static implicit operator InputModality?(string value) => value == null ? (InputModality?)null : new InputModality(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Converts a string to a <see cref="TextAuthoringEvaluationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextAuthoringEvaluationKind?(string value) => value == null ? null : new TextAuthoringEvaluationKind(value);
+        public static implicit operator TextAuthoringEvaluationKind?(string value) => value == null ? (TextAuthoringEvaluationKind?)null : new TextAuthoringEvaluationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

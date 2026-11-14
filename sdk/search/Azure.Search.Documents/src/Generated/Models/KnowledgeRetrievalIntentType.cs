@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeRetrievalIntentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeRetrievalIntentType?(string value) => value == null ? null : new KnowledgeRetrievalIntentType(value);
+        public static implicit operator KnowledgeRetrievalIntentType?(string value) => value == null ? (KnowledgeRetrievalIntentType?)null : new KnowledgeRetrievalIntentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

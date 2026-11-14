@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeBaseMessageContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeBaseMessageContentType?(string value) => value == null ? null : new KnowledgeBaseMessageContentType(value);
+        public static implicit operator KnowledgeBaseMessageContentType?(string value) => value == null ? (KnowledgeBaseMessageContentType?)null : new KnowledgeBaseMessageContentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

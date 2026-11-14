@@ -402,7 +402,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="TextTranslationSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextTranslationSkillLanguage?(string value) => value == null ? null : new TextTranslationSkillLanguage(value);
+        public static implicit operator TextTranslationSkillLanguage?(string value) => value == null ? (TextTranslationSkillLanguage?)null : new TextTranslationSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

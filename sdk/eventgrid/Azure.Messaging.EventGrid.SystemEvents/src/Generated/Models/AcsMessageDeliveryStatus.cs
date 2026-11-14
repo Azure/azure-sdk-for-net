@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsMessageDeliveryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsMessageDeliveryStatus?(string value) => value == null ? null : new AcsMessageDeliveryStatus(value);
+        public static implicit operator AcsMessageDeliveryStatus?(string value) => value == null ? (AcsMessageDeliveryStatus?)null : new AcsMessageDeliveryStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

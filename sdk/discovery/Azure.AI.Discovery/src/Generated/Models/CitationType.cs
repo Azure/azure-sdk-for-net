@@ -46,7 +46,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="CitationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CitationType?(string value) => value == null ? null : new CitationType(value);
+        public static implicit operator CitationType?(string value) => value == null ? (CitationType?)null : new CitationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

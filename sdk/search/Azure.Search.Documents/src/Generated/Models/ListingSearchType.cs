@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="ListingSearchType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListingSearchType?(string value) => value == null ? null : new ListingSearchType(value);
+        public static implicit operator ListingSearchType?(string value) => value == null ? (ListingSearchType?)null : new ListingSearchType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

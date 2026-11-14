@@ -180,7 +180,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="PersistentAgentStreamEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistentAgentStreamEvent?(string value) => value == null ? null : new PersistentAgentStreamEvent(value);
+        public static implicit operator PersistentAgentStreamEvent?(string value) => value == null ? (PersistentAgentStreamEvent?)null : new PersistentAgentStreamEvent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

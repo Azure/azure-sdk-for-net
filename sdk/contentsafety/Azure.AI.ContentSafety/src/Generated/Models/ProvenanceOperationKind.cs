@@ -46,7 +46,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="ProvenanceOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvenanceOperationKind?(string value) => value == null ? null : new ProvenanceOperationKind(value);
+        public static implicit operator ProvenanceOperationKind?(string value) => value == null ? (ProvenanceOperationKind?)null : new ProvenanceOperationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

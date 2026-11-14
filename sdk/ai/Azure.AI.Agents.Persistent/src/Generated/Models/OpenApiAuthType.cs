@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="OpenApiAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenApiAuthType?(string value) => value == null ? null : new OpenApiAuthType(value);
+        public static implicit operator OpenApiAuthType?(string value) => value == null ? (OpenApiAuthType?)null : new OpenApiAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

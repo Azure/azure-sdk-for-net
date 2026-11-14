@@ -81,7 +81,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="LoadTestingFileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadTestingFileType?(string value) => value == null ? null : new LoadTestingFileType(value);
+        public static implicit operator LoadTestingFileType?(string value) => value == null ? (LoadTestingFileType?)null : new LoadTestingFileType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

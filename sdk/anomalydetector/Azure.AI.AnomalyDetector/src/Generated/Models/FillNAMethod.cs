@@ -61,7 +61,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Converts a string to a <see cref="FillNAMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FillNAMethod?(string value) => value == null ? null : new FillNAMethod(value);
+        public static implicit operator FillNAMethod?(string value) => value == null ? (FillNAMethod?)null : new FillNAMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

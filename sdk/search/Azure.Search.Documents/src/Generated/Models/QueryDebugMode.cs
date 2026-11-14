@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="QueryDebugMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryDebugMode?(string value) => value == null ? null : new QueryDebugMode(value);
+        public static implicit operator QueryDebugMode?(string value) => value == null ? (QueryDebugMode?)null : new QueryDebugMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

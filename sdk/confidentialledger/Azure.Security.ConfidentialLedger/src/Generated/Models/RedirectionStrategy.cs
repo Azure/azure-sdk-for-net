@@ -57,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="RedirectionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedirectionStrategy?(string value) => value == null ? null : new RedirectionStrategy(value);
+        public static implicit operator RedirectionStrategy?(string value) => value == null ? (RedirectionStrategy?)null : new RedirectionStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

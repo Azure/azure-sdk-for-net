@@ -49,7 +49,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Converts a string to a <see cref="AlignMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlignMode?(string value) => value == null ? null : new AlignMode(value);
+        public static implicit operator AlignMode?(string value) => value == null ? (AlignMode?)null : new AlignMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

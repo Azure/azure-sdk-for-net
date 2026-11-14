@@ -617,7 +617,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Converts a string to a <see cref="BlobErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobErrorCode?(string value) => value == null ? null : new BlobErrorCode(value);
+        public static implicit operator BlobErrorCode?(string value) => value == null ? (BlobErrorCode?)null : new BlobErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

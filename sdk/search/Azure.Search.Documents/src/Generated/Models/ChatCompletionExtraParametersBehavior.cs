@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="ChatCompletionExtraParametersBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChatCompletionExtraParametersBehavior?(string value) => value == null ? null : new ChatCompletionExtraParametersBehavior(value);
+        public static implicit operator ChatCompletionExtraParametersBehavior?(string value) => value == null ? (ChatCompletionExtraParametersBehavior?)null : new ChatCompletionExtraParametersBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

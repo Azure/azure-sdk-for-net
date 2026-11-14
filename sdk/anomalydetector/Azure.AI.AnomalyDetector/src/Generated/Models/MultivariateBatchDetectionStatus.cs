@@ -57,7 +57,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Converts a string to a <see cref="MultivariateBatchDetectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MultivariateBatchDetectionStatus?(string value) => value == null ? null : new MultivariateBatchDetectionStatus(value);
+        public static implicit operator MultivariateBatchDetectionStatus?(string value) => value == null ? (MultivariateBatchDetectionStatus?)null : new MultivariateBatchDetectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

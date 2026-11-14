@@ -66,7 +66,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersonalVoiceModels?(string value) => value == null ? null : new PersonalVoiceModels(value);
+        public static implicit operator PersonalVoiceModels?(string value) => value == null ? (PersonalVoiceModels?)null : new PersonalVoiceModels(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

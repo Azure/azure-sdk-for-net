@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="SplitSkillEncoderModelName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SplitSkillEncoderModelName?(string value) => value == null ? null : new SplitSkillEncoderModelName(value);
+        public static implicit operator SplitSkillEncoderModelName?(string value) => value == null ? (SplitSkillEncoderModelName?)null : new SplitSkillEncoderModelName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

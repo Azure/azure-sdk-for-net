@@ -216,7 +216,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="RelationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelationType?(string value) => value == null ? null : new RelationType(value);
+        public static implicit operator RelationType?(string value) => value == null ? (RelationType?)null : new RelationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

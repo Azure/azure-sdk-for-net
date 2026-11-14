@@ -122,7 +122,7 @@ namespace Azure.Storage.Blobs.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchAccessTier?(string value) => value == null ? null : new BatchAccessTier(value);
+        public static implicit operator BatchAccessTier?(string value) => value == null ? (BatchAccessTier?)null : new BatchAccessTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

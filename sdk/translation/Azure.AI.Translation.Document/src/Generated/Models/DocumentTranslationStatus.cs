@@ -70,7 +70,7 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Converts a string to a <see cref="DocumentTranslationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentTranslationStatus?(string value) => value == null ? null : new DocumentTranslationStatus(value);
+        public static implicit operator DocumentTranslationStatus?(string value) => value == null ? (DocumentTranslationStatus?)null : new DocumentTranslationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

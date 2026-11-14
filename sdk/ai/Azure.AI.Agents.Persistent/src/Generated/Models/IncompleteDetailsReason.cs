@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="IncompleteDetailsReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IncompleteDetailsReason?(string value) => value == null ? null : new IncompleteDetailsReason(value);
+        public static implicit operator IncompleteDetailsReason?(string value) => value == null ? (IncompleteDetailsReason?)null : new IncompleteDetailsReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="NetworkSecurityGroupRuleAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityGroupRuleAccess?(string value) => value == null ? null : new NetworkSecurityGroupRuleAccess(value);
+        public static implicit operator NetworkSecurityGroupRuleAccess?(string value) => value == null ? (NetworkSecurityGroupRuleAccess?)null : new NetworkSecurityGroupRuleAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

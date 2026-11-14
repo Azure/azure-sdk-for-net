@@ -56,7 +56,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="OperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationKind?(string value) => value == null ? null : new OperationKind(value);
+        public static implicit operator OperationKind?(string value) => value == null ? (OperationKind?)null : new OperationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

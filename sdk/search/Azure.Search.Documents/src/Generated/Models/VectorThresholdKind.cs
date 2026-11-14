@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="VectorThresholdKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorThresholdKind?(string value) => value == null ? null : new VectorThresholdKind(value);
+        public static implicit operator VectorThresholdKind?(string value) => value == null ? (VectorThresholdKind?)null : new VectorThresholdKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="MessageStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageStatus?(string value) => value == null ? null : new MessageStatus(value);
+        public static implicit operator MessageStatus?(string value) => value == null ? (MessageStatus?)null : new MessageStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

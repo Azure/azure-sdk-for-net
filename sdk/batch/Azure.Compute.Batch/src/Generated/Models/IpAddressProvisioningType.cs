@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="IpAddressProvisioningType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IpAddressProvisioningType?(string value) => value == null ? null : new IpAddressProvisioningType(value);
+        public static implicit operator IpAddressProvisioningType?(string value) => value == null ? (IpAddressProvisioningType?)null : new IpAddressProvisioningType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

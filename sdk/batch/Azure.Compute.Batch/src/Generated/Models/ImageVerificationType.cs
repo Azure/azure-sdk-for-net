@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="ImageVerificationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageVerificationType?(string value) => value == null ? null : new ImageVerificationType(value);
+        public static implicit operator ImageVerificationType?(string value) => value == null ? (ImageVerificationType?)null : new ImageVerificationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

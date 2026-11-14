@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentContentFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentContentFormat?(string value) => value == null ? null : new DocumentContentFormat(value);
+        public static implicit operator DocumentContentFormat?(string value) => value == null ? (DocumentContentFormat?)null : new DocumentContentFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

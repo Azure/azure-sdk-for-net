@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="AssetChainSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssetChainSource?(string value) => value == null ? null : new AssetChainSource(value);
+        public static implicit operator AssetChainSource?(string value) => value == null ? (AssetChainSource?)null : new AssetChainSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -71,7 +71,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="LabelOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LabelOperator?(string value) => value == null ? null : new LabelOperator(value);
+        public static implicit operator LabelOperator?(string value) => value == null ? (LabelOperator?)null : new LabelOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

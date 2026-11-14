@@ -57,7 +57,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Converts a string to a <see cref="BlobExpiryOptions"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobExpiryOptions?(string value) => value == null ? null : new BlobExpiryOptions(value);
+        public static implicit operator BlobExpiryOptions?(string value) => value == null ? (BlobExpiryOptions?)null : new BlobExpiryOptions(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

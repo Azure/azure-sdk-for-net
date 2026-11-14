@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="CreatedByType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreatedByType?(string value) => value == null ? null : new CreatedByType(value);
+        public static implicit operator CreatedByType?(string value) => value == null ? (CreatedByType?)null : new CreatedByType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

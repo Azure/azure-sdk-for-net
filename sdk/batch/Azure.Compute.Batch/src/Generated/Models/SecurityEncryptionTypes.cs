@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="SecurityEncryptionTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityEncryptionTypes?(string value) => value == null ? null : new SecurityEncryptionTypes(value);
+        public static implicit operator SecurityEncryptionTypes?(string value) => value == null ? (SecurityEncryptionTypes?)null : new SecurityEncryptionTypes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

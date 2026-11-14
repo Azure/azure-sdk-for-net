@@ -51,7 +51,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="DiscoveryEngineStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryEngineStatus?(string value) => value == null ? null : new DiscoveryEngineStatus(value);
+        public static implicit operator DiscoveryEngineStatus?(string value) => value == null ? (DiscoveryEngineStatus?)null : new DiscoveryEngineStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

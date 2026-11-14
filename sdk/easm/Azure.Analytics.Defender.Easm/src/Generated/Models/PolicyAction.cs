@@ -66,7 +66,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="PolicyAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyAction?(string value) => value == null ? null : new PolicyAction(value);
+        public static implicit operator PolicyAction?(string value) => value == null ? (PolicyAction?)null : new PolicyAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

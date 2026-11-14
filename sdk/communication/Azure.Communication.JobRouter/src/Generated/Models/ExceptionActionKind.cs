@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="ExceptionActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExceptionActionKind?(string value) => value == null ? null : new ExceptionActionKind(value);
+        public static implicit operator ExceptionActionKind?(string value) => value == null ? (ExceptionActionKind?)null : new ExceptionActionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

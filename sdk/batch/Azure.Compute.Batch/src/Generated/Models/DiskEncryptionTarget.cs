@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="DiskEncryptionTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskEncryptionTarget?(string value) => value == null ? null : new DiskEncryptionTarget(value);
+        public static implicit operator DiskEncryptionTarget?(string value) => value == null ? (DiskEncryptionTarget?)null : new DiskEncryptionTarget(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

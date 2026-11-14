@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="SessionResponseItemStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionResponseItemStatus?(string value) => value == null ? null : new SessionResponseItemStatus(value);
+        public static implicit operator SessionResponseItemStatus?(string value) => value == null ? (SessionResponseItemStatus?)null : new SessionResponseItemStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

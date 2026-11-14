@@ -46,7 +46,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Converts a string to a <see cref="SettingLabelFields"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SettingLabelFields?(string value) => value == null ? null : new SettingLabelFields(value);
+        public static implicit operator SettingLabelFields?(string value) => value == null ? (SettingLabelFields?)null : new SettingLabelFields(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

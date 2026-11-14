@@ -61,7 +61,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="ObservationPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ObservationPriority?(string value) => value == null ? null : new ObservationPriority(value);
+        public static implicit operator ObservationPriority?(string value) => value == null ? (ObservationPriority?)null : new ObservationPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

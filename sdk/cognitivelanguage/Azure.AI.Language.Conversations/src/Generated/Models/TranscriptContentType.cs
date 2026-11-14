@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="TranscriptContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TranscriptContentType?(string value) => value == null ? null : new TranscriptContentType(value);
+        public static implicit operator TranscriptContentType?(string value) => value == null ? (TranscriptContentType?)null : new TranscriptContentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

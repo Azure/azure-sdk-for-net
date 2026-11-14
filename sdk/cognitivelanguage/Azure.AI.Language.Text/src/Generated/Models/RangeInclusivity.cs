@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="RangeInclusivity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RangeInclusivity?(string value) => value == null ? null : new RangeInclusivity(value);
+        public static implicit operator RangeInclusivity?(string value) => value == null ? (RangeInclusivity?)null : new RangeInclusivity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillChunkingUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentIntelligenceLayoutSkillChunkingUnit?(string value) => value == null ? null : new DocumentIntelligenceLayoutSkillChunkingUnit(value);
+        public static implicit operator DocumentIntelligenceLayoutSkillChunkingUnit?(string value) => value == null ? (DocumentIntelligenceLayoutSkillChunkingUnit?)null : new DocumentIntelligenceLayoutSkillChunkingUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

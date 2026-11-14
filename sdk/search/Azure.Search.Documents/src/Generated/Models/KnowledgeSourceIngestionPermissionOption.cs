@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeSourceIngestionPermissionOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeSourceIngestionPermissionOption?(string value) => value == null ? null : new KnowledgeSourceIngestionPermissionOption(value);
+        public static implicit operator KnowledgeSourceIngestionPermissionOption?(string value) => value == null ? (KnowledgeSourceIngestionPermissionOption?)null : new KnowledgeSourceIngestionPermissionOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

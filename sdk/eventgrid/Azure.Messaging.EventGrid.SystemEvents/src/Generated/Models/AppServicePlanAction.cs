@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AppServicePlanAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServicePlanAction?(string value) => value == null ? null : new AppServicePlanAction(value);
+        public static implicit operator AppServicePlanAction?(string value) => value == null ? (AppServicePlanAction?)null : new AppServicePlanAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

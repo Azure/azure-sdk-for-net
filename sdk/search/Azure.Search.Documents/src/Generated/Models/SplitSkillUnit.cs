@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="SplitSkillUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SplitSkillUnit?(string value) => value == null ? null : new SplitSkillUnit(value);
+        public static implicit operator SplitSkillUnit?(string value) => value == null ? (SplitSkillUnit?)null : new SplitSkillUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

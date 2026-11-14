@@ -53,7 +53,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AudioNoiseReductionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AudioNoiseReductionType?(string value) => value == null ? null : new AudioNoiseReductionType(value);
+        public static implicit operator AudioNoiseReductionType?(string value) => value == null ? (AudioNoiseReductionType?)null : new AudioNoiseReductionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

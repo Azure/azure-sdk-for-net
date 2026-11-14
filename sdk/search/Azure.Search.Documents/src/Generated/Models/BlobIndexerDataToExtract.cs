@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="BlobIndexerDataToExtract"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerDataToExtract?(string value) => value == null ? null : new BlobIndexerDataToExtract(value);
+        public static implicit operator BlobIndexerDataToExtract?(string value) => value == null ? (BlobIndexerDataToExtract?)null : new BlobIndexerDataToExtract(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

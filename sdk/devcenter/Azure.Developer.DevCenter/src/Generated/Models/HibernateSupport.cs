@@ -57,7 +57,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="HibernateSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HibernateSupport?(string value) => value == null ? null : new HibernateSupport(value);
+        public static implicit operator HibernateSupport?(string value) => value == null ? (HibernateSupport?)null : new HibernateSupport(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

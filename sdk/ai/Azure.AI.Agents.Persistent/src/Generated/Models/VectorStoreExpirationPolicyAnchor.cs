@@ -46,7 +46,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="VectorStoreExpirationPolicyAnchor"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreExpirationPolicyAnchor?(string value) => value == null ? null : new VectorStoreExpirationPolicyAnchor(value);
+        public static implicit operator VectorStoreExpirationPolicyAnchor?(string value) => value == null ? (VectorStoreExpirationPolicyAnchor?)null : new VectorStoreExpirationPolicyAnchor(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

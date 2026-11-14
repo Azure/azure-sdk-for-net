@@ -56,7 +56,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="GenerationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GenerationMethod?(string value) => value == null ? null : new GenerationMethod(value);
+        public static implicit operator GenerationMethod?(string value) => value == null ? (GenerationMethod?)null : new GenerationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

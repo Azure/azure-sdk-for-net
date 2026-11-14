@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="ContentUnderstandingSkillChunkingUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentUnderstandingSkillChunkingUnit?(string value) => value == null ? null : new ContentUnderstandingSkillChunkingUnit(value);
+        public static implicit operator ContentUnderstandingSkillChunkingUnit?(string value) => value == null ? (ContentUnderstandingSkillChunkingUnit?)null : new ContentUnderstandingSkillChunkingUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

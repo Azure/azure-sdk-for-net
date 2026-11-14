@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
 
         /// <summary> Converts a string to a <see cref="DeletionRecoveryLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeletionRecoveryLevel?(string value) => value == null ? null : new DeletionRecoveryLevel(value);
+        public static implicit operator DeletionRecoveryLevel?(string value) => value == null ? (DeletionRecoveryLevel?)null : new DeletionRecoveryLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

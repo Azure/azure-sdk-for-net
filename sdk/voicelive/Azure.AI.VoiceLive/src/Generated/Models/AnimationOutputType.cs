@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AnimationOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnimationOutputType?(string value) => value == null ? null : new AnimationOutputType(value);
+        public static implicit operator AnimationOutputType?(string value) => value == null ? (AnimationOutputType?)null : new AnimationOutputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="TransactionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransactionState?(string value) => value == null ? null : new TransactionState(value);
+        public static implicit operator TransactionState?(string value) => value == null ? (TransactionState?)null : new TransactionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

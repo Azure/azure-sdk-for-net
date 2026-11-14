@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="DependencyAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DependencyAction?(string value) => value == null ? null : new DependencyAction(value);
+        public static implicit operator DependencyAction?(string value) => value == null ? (DependencyAction?)null : new DependencyAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="PiiDetectionSkillMaskingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PiiDetectionSkillMaskingMode?(string value) => value == null ? null : new PiiDetectionSkillMaskingMode(value);
+        public static implicit operator PiiDetectionSkillMaskingMode?(string value) => value == null ? (PiiDetectionSkillMaskingMode?)null : new PiiDetectionSkillMaskingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

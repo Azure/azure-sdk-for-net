@@ -1341,7 +1341,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="ColorMapNames"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ColorMapNames?(string value) => value == null ? null : new ColorMapNames(value);
+        public static implicit operator ColorMapNames?(string value) => value == null ? (ColorMapNames?)null : new ColorMapNames(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

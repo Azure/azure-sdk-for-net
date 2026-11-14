@@ -51,7 +51,7 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Converts a string to a <see cref="FileFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileFormatType?(string value) => value == null ? null : new FileFormatType(value);
+        public static implicit operator FileFormatType?(string value) => value == null ? (FileFormatType?)null : new FileFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

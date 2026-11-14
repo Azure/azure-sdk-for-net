@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexerExecutionStatusDetail?(string value) => value == null ? null : new IndexerExecutionStatusDetail(value);
+        public static implicit operator IndexerExecutionStatusDetail?(string value) => value == null ? (IndexerExecutionStatusDetail?)null : new IndexerExecutionStatusDetail(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

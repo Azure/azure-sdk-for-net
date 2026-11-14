@@ -53,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="TaskResourcePhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskResourcePhase?(string value) => value == null ? null : new TaskResourcePhase(value);
+        public static implicit operator TaskResourcePhase?(string value) => value == null ? (TaskResourcePhase?)null : new TaskResourcePhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

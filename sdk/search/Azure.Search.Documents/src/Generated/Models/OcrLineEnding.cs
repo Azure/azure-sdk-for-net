@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="OcrLineEnding"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OcrLineEnding?(string value) => value == null ? null : new OcrLineEnding(value);
+        public static implicit operator OcrLineEnding?(string value) => value == null ? (OcrLineEnding?)null : new OcrLineEnding(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

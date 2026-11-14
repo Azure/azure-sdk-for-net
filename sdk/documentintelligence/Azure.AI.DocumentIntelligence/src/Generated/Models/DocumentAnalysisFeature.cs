@@ -76,7 +76,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentAnalysisFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentAnalysisFeature?(string value) => value == null ? null : new DocumentAnalysisFeature(value);
+        public static implicit operator DocumentAnalysisFeature?(string value) => value == null ? (DocumentAnalysisFeature?)null : new DocumentAnalysisFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

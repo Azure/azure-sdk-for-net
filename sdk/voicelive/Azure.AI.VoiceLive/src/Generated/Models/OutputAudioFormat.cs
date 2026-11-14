@@ -66,7 +66,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="OutputAudioFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OutputAudioFormat?(string value) => value == null ? null : new OutputAudioFormat(value);
+        public static implicit operator OutputAudioFormat?(string value) => value == null ? (OutputAudioFormat?)null : new OutputAudioFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

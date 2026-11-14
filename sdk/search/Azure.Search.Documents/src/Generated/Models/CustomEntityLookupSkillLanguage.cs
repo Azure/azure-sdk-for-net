@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="CustomEntityLookupSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomEntityLookupSkillLanguage?(string value) => value == null ? null : new CustomEntityLookupSkillLanguage(value);
+        public static implicit operator CustomEntityLookupSkillLanguage?(string value) => value == null ? (CustomEntityLookupSkillLanguage?)null : new CustomEntityLookupSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

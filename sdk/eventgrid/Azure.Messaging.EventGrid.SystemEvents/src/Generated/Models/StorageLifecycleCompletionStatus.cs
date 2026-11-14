@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="StorageLifecycleCompletionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageLifecycleCompletionStatus?(string value) => value == null ? null : new StorageLifecycleCompletionStatus(value);
+        public static implicit operator StorageLifecycleCompletionStatus?(string value) => value == null ? (StorageLifecycleCompletionStatus?)null : new StorageLifecycleCompletionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

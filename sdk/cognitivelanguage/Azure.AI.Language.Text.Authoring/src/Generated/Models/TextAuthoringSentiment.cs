@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Converts a string to a <see cref="TextAuthoringSentiment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextAuthoringSentiment?(string value) => value == null ? null : new TextAuthoringSentiment(value);
+        public static implicit operator TextAuthoringSentiment?(string value) => value == null ? (TextAuthoringSentiment?)null : new TextAuthoringSentiment(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

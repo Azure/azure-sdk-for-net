@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationCloudEnvironmentModel?(string value) => value == null ? null : new CommunicationCloudEnvironmentModel(value);
+        public static implicit operator CommunicationCloudEnvironmentModel?(string value) => value == null ? (CommunicationCloudEnvironmentModel?)null : new CommunicationCloudEnvironmentModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.Security.Attestation
 
         /// <summary> Converts a string to a <see cref="PolicyModification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyModification?(string value) => value == null ? null : new PolicyModification(value);
+        public static implicit operator PolicyModification?(string value) => value == null ? (PolicyModification?)null : new PolicyModification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

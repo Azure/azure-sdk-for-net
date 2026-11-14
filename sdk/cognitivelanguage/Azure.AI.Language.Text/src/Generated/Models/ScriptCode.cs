@@ -211,7 +211,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="ScriptCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptCode?(string value) => value == null ? null : new ScriptCode(value);
+        public static implicit operator ScriptCode?(string value) => value == null ? (ScriptCode?)null : new ScriptCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Converts a string to a <see cref="TextAuthoringOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextAuthoringOperationStatus?(string value) => value == null ? null : new TextAuthoringOperationStatus(value);
+        public static implicit operator TextAuthoringOperationStatus?(string value) => value == null ? (TextAuthoringOperationStatus?)null : new TextAuthoringOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

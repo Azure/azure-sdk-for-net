@@ -131,7 +131,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="AnalyzeTextErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeTextErrorCode?(string value) => value == null ? null : new AnalyzeTextErrorCode(value);
+        public static implicit operator AnalyzeTextErrorCode?(string value) => value == null ? (AnalyzeTextErrorCode?)null : new AnalyzeTextErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

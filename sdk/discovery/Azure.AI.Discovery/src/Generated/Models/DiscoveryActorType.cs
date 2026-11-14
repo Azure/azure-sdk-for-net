@@ -56,7 +56,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="DiscoveryActorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiscoveryActorType?(string value) => value == null ? null : new DiscoveryActorType(value);
+        public static implicit operator DiscoveryActorType?(string value) => value == null ? (DiscoveryActorType?)null : new DiscoveryActorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

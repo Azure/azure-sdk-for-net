@@ -94,7 +94,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="FileState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileState?(string value) => value == null ? null : new FileState(value);
+        public static implicit operator FileState?(string value) => value == null ? (FileState?)null : new FileState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

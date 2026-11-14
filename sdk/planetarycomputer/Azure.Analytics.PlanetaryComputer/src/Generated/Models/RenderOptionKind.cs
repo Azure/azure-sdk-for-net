@@ -56,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="RenderOptionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RenderOptionKind?(string value) => value == null ? null : new RenderOptionKind(value);
+        public static implicit operator RenderOptionKind?(string value) => value == null ? (RenderOptionKind?)null : new RenderOptionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

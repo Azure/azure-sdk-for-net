@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="LexicalTokenizerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LexicalTokenizerName?(string value) => value == null ? null : new LexicalTokenizerName(value);
+        public static implicit operator LexicalTokenizerName?(string value) => value == null ? (LexicalTokenizerName?)null : new LexicalTokenizerName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -177,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Converts a string to a <see cref="ContextTagKeys"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContextTagKeys?(string value) => value == null ? null : new ContextTagKeys(value);
+        public static implicit operator ContextTagKeys?(string value) => value == null ? (ContextTagKeys?)null : new ContextTagKeys(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
