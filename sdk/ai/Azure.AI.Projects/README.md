@@ -1524,11 +1524,23 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     agentName: "evalAgent",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
+// Quality generation requires a model deployment. Setting Scoring opts in to Likert or
+// Boolean rubric scoring. Omitting Scoring keeps the legacy behavior.
 EvaluatorGenerationInputs job = new(
     sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-    model: modelDeploymentName,
-    evaluatorName: "coherence"
-);
+    evaluatorName: "coherence")
+{
+    Model = modelDeploymentName,
+    Category = EvaluatorGenerationCategory.Quality,
+    Scoring = new RubricScoring { Mode = RubricScoringMode.Likert },
+    PassThreshold = 0.6f,
+};
+// Optional: pin dimensions. When Dimensions is empty, regenerating an existing evaluator
+// preserves its previously approved dimensions. An explicit list replaces them.
+job.Dimensions.Add(new EvaluationsDimension(
+    id: "answers_question",
+    description: "The response directly answers the user's question.")
+{ Weight = 3 });
 ```
 
 To generate the evaluator, we need to start the job:
