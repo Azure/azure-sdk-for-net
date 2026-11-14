@@ -36,7 +36,7 @@ namespace Azure.Data.AI.Tests
             var result = InferenceModelFactory.EmbeddingResult(model: "test-model");
             Assert.That(result.Model, Is.EqualTo("test-model"));
             using JsonDocument json = Serialize(result);
-            Assert.That(json.RootElement.GetProperty("modelVersion").ValueKind, Is.EqualTo(JsonValueKind.Null));
+            Assert.That(json.RootElement.TryGetProperty("modelVersion", out _), Is.False);
             Assert.That(result.Data, Is.Empty);
             Assert.That(result.Warnings, Is.Empty);
         }

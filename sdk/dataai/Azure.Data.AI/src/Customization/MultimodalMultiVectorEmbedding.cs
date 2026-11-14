@@ -10,13 +10,6 @@ namespace Azure.Data.AI
     [CodeGenSerialization(nameof(MultiEmbedding), SerializationValueHook = nameof(WriteMultiEmbeddingValue))]
     public partial class MultimodalMultiVectorEmbedding
     {
-        /// <summary>
-        /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
-        /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
-        /// </summary>
-        [CodeGenMember("Truncated")]
-        public bool? IsTruncated { get; }
-
         private void WriteMultiEmbeddingValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (MultiEmbedding == null)

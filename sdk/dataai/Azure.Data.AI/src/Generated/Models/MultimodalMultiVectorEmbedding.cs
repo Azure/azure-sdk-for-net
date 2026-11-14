@@ -91,6 +91,12 @@ namespace Azure.Data.AI
         /// <summary> For images: how many of `tokens` were image tokens. </summary>
         public long? VisualTokens { get; }
 
+        /// <summary>
+        /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
+        /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
+        /// </summary>
+        public bool? IsTruncated { get; }
+
         /// <summary> For truncated items only: the item's tokens before truncation. </summary>
         public long? InputTokens { get; }
 

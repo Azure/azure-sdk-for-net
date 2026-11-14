@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace Azure.Data.AI
 {
+    /// <summary> The EmbedContent. </summary>
     internal partial class EmbedContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,9 +23,11 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </param>
-        internal EmbedContent(IEnumerable<EmbeddingInput> inputs)
+        /// <param name="model"> The model to use, for example `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
+        internal EmbedContent(IEnumerable<EmbeddingInput> inputs, string model)
         {
             Inputs = inputs.ToList();
+            Model = model;
         }
 
         /// <summary> Initializes a new instance of <see cref="EmbedContent"/>. </summary>
@@ -33,14 +36,13 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </param>
-        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
-        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
+        /// <param name="model"> The model to use, for example `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
         /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
         /// <param name="dimensions">
         /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
         /// requested vector kind; the model's native width is the default.
         /// </param>
-        /// <param name="multiDimensions">
+        /// <param name="multiVectorDimensions">
         /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
         /// the model's native multi-vector width is the default.
         /// </param>
@@ -55,14 +57,13 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbedContent(IList<EmbeddingInput> inputs, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbedContent(IList<EmbeddingInput> inputs, string model, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiVectorDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Inputs = inputs;
             Model = model;
-            ModelVersion = modelVersion;
             VectorKind = vectorKind;
             Dimensions = dimensions;
-            MultiDimensions = multiDimensions;
+            MultiVectorDimensions = multiVectorDimensions;
             MaxVectorCount = maxVectorCount;
             OutputDataKind = outputDataKind;
             EncodingFormat = encodingFormat;
@@ -77,7 +78,7 @@ namespace Azure.Data.AI
         /// </summary>
         public IList<EmbeddingInput> Inputs { get; }
 
-        /// <summary> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </summary>
+        /// <summary> The model to use, for example `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </summary>
         public string Model { get; }
 
         /// <summary> The kind of vectors to return. Defaults to `dense`. </summary>
@@ -93,7 +94,7 @@ namespace Azure.Data.AI
         /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
         /// the model's native multi-vector width is the default.
         /// </summary>
-        public int? MultiDimensions { get; }
+        public int? MultiVectorDimensions { get; }
 
         /// <summary> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </summary>
         public int? MaxVectorCount { get; }

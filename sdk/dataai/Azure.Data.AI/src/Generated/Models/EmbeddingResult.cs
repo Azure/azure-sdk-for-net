@@ -19,14 +19,12 @@ namespace Azure.Data.AI
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingResult"/>. </summary>
         /// <param name="model"> The name of the model that produced the vectors. </param>
-        /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
         /// <param name="data"> One entry per item in `inputs`, in request order. Empty when `output` is present. </param>
         /// <param name="usage"> Usage for the operation. </param>
-        internal EmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IEnumerable<EmbeddingItem> data, EmbeddingUsage usage)
+        internal EmbeddingResult(string model, EmbeddingOutputDataKind outputDataKind, IEnumerable<EmbeddingItem> data, EmbeddingUsage usage)
         {
             Model = model;
-            ModelVersion = modelVersion;
             OutputDataKind = outputDataKind;
             Data = data.ToList();
             Usage = usage;
@@ -35,17 +33,15 @@ namespace Azure.Data.AI
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingResult"/>. </summary>
         /// <param name="model"> The name of the model that produced the vectors. </param>
-        /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
         /// <param name="data"> One entry per item in `inputs`, in request order. Empty when `output` is present. </param>
         /// <param name="usage"> Usage for the operation. </param>
         /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
         /// <param name="output"> With `delivery: link`: where to read the results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IList<EmbeddingItem> data, EmbeddingUsage usage, IList<EmbeddingWarning> warnings, EmbeddingOutput output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingResult(string model, EmbeddingOutputDataKind outputDataKind, IList<EmbeddingItem> data, EmbeddingUsage usage, IList<EmbeddingWarning> warnings, EmbeddingOutput output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
-            ModelVersion = modelVersion;
             OutputDataKind = outputDataKind;
             Data = data;
             Usage = usage;

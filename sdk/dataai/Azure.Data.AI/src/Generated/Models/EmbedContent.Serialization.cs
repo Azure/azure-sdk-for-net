@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.Data.AI
 {
+    /// <summary> The EmbedContent. </summary>
     internal partial class EmbedContent : IJsonModel<EmbedContent>
     {
         /// <summary> Initializes a new instance of <see cref="EmbedContent"/> for deserialization. </summary>
@@ -95,16 +96,8 @@ namespace Azure.Data.AI
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Model))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
-            }
-            if (Optional.IsDefined(ModelVersion))
-            {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
-            }
+            writer.WritePropertyName("model"u8);
+            writer.WriteStringValue(Model);
             if (Optional.IsDefined(VectorKind))
             {
                 writer.WritePropertyName("vectorKind"u8);
@@ -115,10 +108,10 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteNumberValue(Dimensions.Value);
             }
-            if (Optional.IsDefined(MultiDimensions))
+            if (Optional.IsDefined(MultiVectorDimensions))
             {
                 writer.WritePropertyName("multiDimensions"u8);
-                writer.WriteNumberValue(MultiDimensions.Value);
+                writer.WriteNumberValue(MultiVectorDimensions.Value);
             }
             if (Optional.IsDefined(MaxVectorCount))
             {
@@ -184,10 +177,9 @@ namespace Azure.Data.AI
             }
             IList<EmbeddingInput> inputs = default;
             string model = default;
-            string modelVersion = default;
             EmbeddingVectorKind? vectorKind = default;
             int? dimensions = default;
-            int? multiDimensions = default;
+            int? multiVectorDimensions = default;
             int? maxVectorCount = default;
             EmbeddingOutputDataKind? outputDataKind = default;
             EmbeddingEncodingFormat? encodingFormat = default;
@@ -208,11 +200,6 @@ namespace Azure.Data.AI
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("modelVersion"u8))
-                {
-                    modelVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("vectorKind"u8))
@@ -239,7 +226,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    multiDimensions = prop.Value.GetInt32();
+                    multiVectorDimensions = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxVectorCount"u8))
@@ -286,10 +273,9 @@ namespace Azure.Data.AI
             return new EmbedContent(
                 inputs ?? new ChangeTrackingList<EmbeddingInput>(),
                 model,
-                modelVersion,
                 vectorKind,
                 dimensions,
-                multiDimensions,
+                multiVectorDimensions,
                 maxVectorCount,
                 outputDataKind,
                 encodingFormat,

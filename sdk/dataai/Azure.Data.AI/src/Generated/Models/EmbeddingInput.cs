@@ -55,6 +55,9 @@ namespace Azure.Data.AI
         /// <summary> A caller-chosen identifier, up to 256 characters, echoed on the matching result. </summary>
         public string Id { get; set; }
 
+        /// <summary> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </summary>
+        public EmbeddingContentKind? ContentKind { get; set; }
+
         /// <summary>
         /// The item, inline. For `text` and `query`: the text, up to 100,000 characters; text over the model's token limit
         /// (currently 8,192 tokens) isn't rejected: only its start is embedded, and the result is flagged with `truncated` and

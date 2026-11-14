@@ -88,8 +88,6 @@ namespace Azure.Data.AI
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            writer.WritePropertyName("modelVersion"u8);
-            writer.WriteStringValue(ModelVersion);
             writer.WritePropertyName("outputDataKind"u8);
             writer.WriteStringValue(OutputDataKind.ToString());
             writer.WritePropertyName("data"u8);
@@ -159,7 +157,6 @@ namespace Azure.Data.AI
                 return null;
             }
             string model = default;
-            string modelVersion = default;
             EmbeddingOutputDataKind outputDataKind = default;
             IList<EmbeddingItem> data = default;
             EmbeddingUsage usage = default;
@@ -171,11 +168,6 @@ namespace Azure.Data.AI
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("modelVersion"u8))
-                {
-                    modelVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("outputDataKind"u8))
@@ -228,7 +220,6 @@ namespace Azure.Data.AI
             }
             return new EmbeddingResult(
                 model,
-                modelVersion,
                 outputDataKind,
                 data ?? new ChangeTrackingList<EmbeddingItem>(),
                 usage,

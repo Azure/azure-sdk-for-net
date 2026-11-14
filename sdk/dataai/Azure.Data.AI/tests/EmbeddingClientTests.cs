@@ -90,7 +90,7 @@ namespace Azure.Data.AI.Tests
             Assert.That(result.Usage, Is.TypeOf<MultimodalEmbeddingUsage>());
             using JsonDocument resultJson = JsonDocument.Parse(
                 ModelReaderWriter.Write(result, ModelReaderWriterOptions.Json, AzureDataAIContext.Default).ToString());
-            Assert.That(resultJson.RootElement.GetProperty("modelVersion").GetString(), Is.EqualTo("v1"));
+            Assert.That(resultJson.RootElement.TryGetProperty("modelVersion", out _), Is.False);
             Assert.That(resultJson.RootElement.GetProperty("usage").GetProperty("kind").GetString(), Is.EqualTo("multimodal"));
             Assert.That(result.Usage.TotalTokens, Is.EqualTo(2));
             Assert.That(((MultimodalEmbeddingUsage)result.Usage).ImageCount, Is.EqualTo(contents.Length - 1));
@@ -276,7 +276,7 @@ namespace Azure.Data.AI.Tests
             Assert.That(response.Value.Model, Is.EqualTo("microsoft-embedding-1-large"));
             using JsonDocument resultJson = JsonDocument.Parse(
                 ModelReaderWriter.Write(response.Value, ModelReaderWriterOptions.Json, AzureDataAIContext.Default).ToString());
-            Assert.That(resultJson.RootElement.GetProperty("modelVersion").GetString(), Is.EqualTo("v1"));
+            Assert.That(resultJson.RootElement.TryGetProperty("modelVersion", out _), Is.False);
             Assert.That(response.Value.Output, Is.Null);
             Assert.That(response.Value.Data, Has.Count.EqualTo(2));
             for (int index = 0; index < contents.Length; index++)

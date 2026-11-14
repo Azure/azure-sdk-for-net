@@ -10,7 +10,6 @@ namespace Azure.Data.AI
 {
     // Uri can be absent; write JSON null instead of dereferencing it.
     [CodeGenSerialization(nameof(Uri), SerializationValueHook = nameof(WriteUriValue))]
-    [CodeGenType("MultimodalEmbeddingOutput")]
     public partial class EmbeddingOutput
     {
         private void WriteUriValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)

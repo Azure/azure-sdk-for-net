@@ -60,10 +60,10 @@ The API contract specifies a maximum of 100 paths.
 Use `InferenceClient.GetEmbeddings` or `GetEmbeddingsAsync` to embed text, queries, or document images.
 Request settings are named method arguments; no request options object is required.
 The `model` argument is required for both typed and anonymous inputs. Embedding
-`modelVersion` is not exposed by the SDK and is omitted from requests; responses
-from the service that include it can still be read. These temporary SDK-only
-customizations use the merged preview specification without changing its REST
-contract. Semantic reranking's `Metadata.ModelVersion` is unchanged.
+`modelVersion` is not part of the embedding API and is omitted from requests;
+legacy service responses that include it can still be read. These behaviors
+are generated from the preview specification. Semantic reranking's
+`Metadata.ModelVersion` is unchanged.
 Embedding model availability and image input support depend on the endpoint.
 
 ## Examples
