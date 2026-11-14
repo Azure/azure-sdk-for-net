@@ -7,6 +7,7 @@
 
 ### Breaking Changes
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
+- The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
 
 ## 3.0.0-beta.6 (2026-10-30)
 
