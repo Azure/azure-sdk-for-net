@@ -227,7 +227,8 @@ public class TracingTests
         A2AServerOptions options) : A2AServer(handler, store, notifier, logger, options)
     {
         public override async IAsyncEnumerable<StreamResponse> SendStreamingMessageAsync(
-            SendMessageRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            SendMessageRequest request, global::A2A.A2ARequestContext? requestContext,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             yield return new StreamResponse { Task = FoundryTaskStoreTests.CreateTask("task-1") };
             await Task.Yield();

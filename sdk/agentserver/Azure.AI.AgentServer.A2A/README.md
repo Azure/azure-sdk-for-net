@@ -189,6 +189,11 @@ does not restart an interrupted executor, restore subscriptions, or enable
 resilient background execution. The default local in-memory store loses tasks
 when the process stops.
 
+Automated coverage against real hosted storage, including service limits and
+brokered user isolation, is a pre-GA requirement tracked in
+[issue #64972](https://github.com/Azure/azure-sdk-for-net/issues/64972).
+The current offline tests do not establish live-service behavior.
+
 ### Errors
 
 The native transport handles JSON-RPC request validation and response serialization.

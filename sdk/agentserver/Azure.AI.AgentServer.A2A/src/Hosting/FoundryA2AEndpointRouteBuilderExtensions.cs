@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using global::A2A;
-using global::A2A.AspNetCore;
 using Azure.AI.AgentServer.A2A.Internal;
 using Azure.AI.AgentServer.Core;
+using global::A2A;
+using global::A2A.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -26,8 +26,7 @@ public static class FoundryA2AEndpointRouteBuilderExtensions
     /// The application owns its listening port, telemetry exporters, and shutdown settings.
     /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="app"/> is <see langword="null"/>.</exception>
-    /// <exception cref="InvalidOperationException">The native card or request handler is not registered.</exception>
-    /// <exception cref="ArgumentException">The card advertises an unsupported capability.</exception>
+    /// <exception cref="InvalidOperationException">The native card or request handler is not registered, or the card advertises an unsupported capability.</exception>
     public static WebApplication MapFoundryA2A(this WebApplication app)
     {
         ArgumentNullException.ThrowIfNull(app);
@@ -46,15 +45,14 @@ public static class FoundryA2AEndpointRouteBuilderExtensions
     /// separately, or use <see cref="MapFoundryA2A(WebApplication)"/>.
     /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="endpoints"/> is <see langword="null"/>.</exception>
-    /// <exception cref="InvalidOperationException">The native card or request handler is not registered.</exception>
-    /// <exception cref="ArgumentException">The card advertises an unsupported capability.</exception>
+    /// <exception cref="InvalidOperationException">The native card or request handler is not registered, or the card advertises an unsupported capability.</exception>
     public static IEndpointRouteBuilder MapFoundryA2A(this IEndpointRouteBuilder endpoints)
     {
         ArgumentNullException.ThrowIfNull(endpoints);
         var card = endpoints.ServiceProvider.GetRequiredService<AgentCard>();
         if (card.Capabilities.PushNotifications == true || card.Capabilities.ExtendedAgentCard == true)
         {
-            throw new ArgumentException("Foundry A2A hosting does not expose push notifications or extended agent cards.");
+            throw new InvalidOperationException("Foundry A2A hosting does not expose push notifications or extended agent cards.");
         }
 
         var handler = endpoints.ServiceProvider.GetRequiredService<IA2ARequestHandler>();

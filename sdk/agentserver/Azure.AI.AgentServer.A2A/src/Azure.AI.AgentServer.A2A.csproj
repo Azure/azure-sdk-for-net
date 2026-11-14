@@ -15,7 +15,6 @@
   <ItemGroup>
     <PackageReference Include="A2A.AspNetCore" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />

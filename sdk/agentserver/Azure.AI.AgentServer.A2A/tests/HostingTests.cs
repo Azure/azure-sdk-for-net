@@ -6,9 +6,9 @@ using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using global::A2A;
 using global::A2A.AspNetCore;
-using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -170,6 +170,74 @@ public class HostingTests
     }
 
     [Test]
+    public void DisposeExposesStandardDerivedCleanupHook()
+    {
+        var method = typeof(FoundryTaskStore).GetMethod(nameof(IDisposable.Dispose), Type.EmptyTypes)!;
+        Assert.That(method.IsVirtual && !method.IsFinal, Is.False);
+        var hook = typeof(FoundryTaskStore).GetMethod("Dispose",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+            null, [typeof(bool)], null);
+        Assert.That(hook, Is.Not.Null);
+        Assert.That(hook!.IsFamily && hook.IsVirtual, Is.True);
+    }
+
+    [Test]
+    public async Task DerivedTaskStoreCleanupAndRepeatedDisposeAreSafe()
+    {
+        var store = new CleanupProbeStore("dispose-probe");
+        store.Dispose();
+        store.Dispose();
+        Assert.That(store.CleanupCalls, Is.EqualTo(1));
+        Assert.ThrowsAsync<ObjectDisposedException>(async () => await store.GetTaskAsync("task"));
+        await Task.CompletedTask;
+    }
+
+    private sealed class CleanupProbeStore(string name) : FoundryTaskStore(name)
+    {
+        public int CleanupCalls { get; private set; }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && CleanupCalls == 0)
+            {
+                CleanupCalls++;
+            }
+            base.Dispose(disposing);
+        }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SuppliedUnsupportedCapabilitiesAreRejectedAtRegistration(bool extendedCard)
+    {
+        var card = CreateCard();
+        card.Capabilities.PushNotifications = !extendedCard;
+        card.Capabilities.ExtendedAgentCard = extendedCard;
+        var services = new ServiceCollection();
+        var exception = Assert.Throws<ArgumentException>(() => services.AddFoundryA2A<EchoHandler>(card));
+        Assert.That(exception!.ParamName, Is.EqualTo("agentCard"));
+        var registered = new ServiceCollection();
+        registered.AddFoundryA2A<EchoHandler>(CreateCard());
+        await using var provider = registered.BuildServiceProvider();
+        var handler = provider.GetRequiredService<IA2ARequestHandler>();
+        exception = Assert.Throws<ArgumentException>(() => services.AddFoundryA2A(card, handler));
+        Assert.That(exception!.ParamName, Is.EqualTo("agentCard"));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task UnsupportedCardResolvedFromDiIsInvalidStartupState(bool extendedCard)
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        var card = CreateCard();
+        builder.Services.AddFoundryA2A<EchoHandler>(card);
+        card.Capabilities.PushNotifications = !extendedCard;
+        card.Capabilities.ExtendedAgentCard = extendedCard;
+        await using var app = builder.Build();
+        Assert.Throws<InvalidOperationException>(() => app.MapFoundryA2A());
+    }
+
+    [Test]
     public void NullServiceCollectionIsRejected()
     {
         IServiceCollection services = null!;
@@ -266,7 +334,7 @@ public class HostingTests
         A2AServerOptions options) : A2AServer(handler, store, notifier, logger, options)
     {
         public override Task<AgentCard> GetExtendedAgentCardAsync(
-            GetExtendedAgentCardRequest request, CancellationToken cancellationToken = default)
+            GetExtendedAgentCardRequest request, global::A2A.A2ARequestContext? requestContext, CancellationToken cancellationToken = default)
         {
             var card = CreateCard();
             card.Name = "native-custom-card";

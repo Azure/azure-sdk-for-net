@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.CodeAnalysis;
+using Azure.AI.AgentServer.A2A.Internal;
+using Azure.AI.AgentServer.Core;
 using global::A2A;
 using global::A2A.AspNetCore;
-using Azure.AI.AgentServer.Core;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using OpenTelemetry.Trace;
-using Microsoft.AspNetCore.Hosting;
-using Azure.AI.AgentServer.A2A.Internal;
 
 namespace Azure.AI.AgentServer.A2A;
 
@@ -47,6 +47,7 @@ public static class FoundryA2AHostingExtensions
     /// <exception cref="ArgumentNullException">
     /// <paramref name="services"/> or <paramref name="agentCard"/> is <see langword="null"/>.
     /// </exception>
+    /// <exception cref="ArgumentException"><paramref name="agentCard"/> advertises an unsupported capability.</exception>
     public static IServiceCollection AddFoundryA2A<
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
         this IServiceCollection services,
@@ -56,6 +57,7 @@ public static class FoundryA2AHostingExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(agentCard);
+        ValidateCapabilities(agentCard);
 
         if (FoundryEnvironment.IsHosted)
         {
@@ -81,6 +83,7 @@ public static class FoundryA2AHostingExtensions
     /// <paramref name="services"/>, <paramref name="agentCard"/>, or <paramref name="requestHandler"/>
     /// is <see langword="null"/>.
     /// </exception>
+    /// <exception cref="ArgumentException"><paramref name="agentCard"/> advertises an unsupported capability.</exception>
     public static IServiceCollection AddFoundryA2A(
         this IServiceCollection services,
         AgentCard agentCard,
@@ -89,10 +92,19 @@ public static class FoundryA2AHostingExtensions
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(agentCard);
         ArgumentNullException.ThrowIfNull(requestHandler);
+        ValidateCapabilities(agentCard);
         services.AddSingleton(agentCard);
         services.AddSingleton(requestHandler);
         RegisterHosting(services);
         return services;
+    }
+
+    private static void ValidateCapabilities(AgentCard agentCard)
+    {
+        if (agentCard.Capabilities.PushNotifications == true || agentCard.Capabilities.ExtendedAgentCard == true)
+        {
+            throw new ArgumentException("Foundry A2A hosting does not expose push notifications or extended agent cards.", nameof(agentCard));
+        }
     }
 
     private static void RegisterHosting(IServiceCollection services)

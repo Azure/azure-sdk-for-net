@@ -27,7 +27,8 @@ namespace Azure.AI.AgentServer.A2A
         public FoundryTaskStore(Azure.AI.AgentServer.Core.Storage.FoundryStateStore store) { }
         public FoundryTaskStore(string name, Azure.Core.TokenCredential? credential = null, System.Uri? endpoint = null, int itemTtlSeconds = 2592000) { }
         public virtual System.Threading.Tasks.Task DeleteTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual void Dispose() { }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public virtual System.Threading.Tasks.Task<A2A.AgentTask?> GetTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<A2A.ListTasksResponse> ListTasksAsync(A2A.ListTasksRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SaveTaskAsync(string taskId, A2A.AgentTask task, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

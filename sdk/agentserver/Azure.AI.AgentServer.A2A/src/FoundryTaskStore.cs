@@ -4,12 +4,12 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using global::A2A;
 using Azure.AI.AgentServer.A2A.Internal;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Storage;
 using Azure.Core;
 using Azure.Identity;
+using global::A2A;
 
 namespace Azure.AI.AgentServer.A2A;
 
@@ -30,6 +30,7 @@ public class FoundryTaskStore : ITaskStore, IDisposable
     private readonly Uri? _endpoint;
     private readonly int _itemTtlSeconds;
     private FoundryStateStore? _store;
+    private bool _isolationVerified;
     private bool _disposed;
 
     /// <summary>Initializes a new instance of the <see cref="FoundryTaskStore"/> class for mocking.</summary>
@@ -276,20 +277,20 @@ public class FoundryTaskStore : ITaskStore, IDisposable
                 ResolveCredential(),
                 _endpoint, userIsolation: FoundryEnvironment.IsHosted,
                 itemTtlSeconds: _itemTtlSeconds, cancellationToken: cancellationToken).ConfigureAwait(false);
+            if (FoundryEnvironment.IsHosted && !_isolationVerified)
+            {
+                var descriptor = await _store.GetAsync(cancellationToken).ConfigureAwait(false);
+                if (descriptor?.UserIsolation != true)
+                {
+                    throw new UnauthorizedAccessException("Hosted A2A task storage requires a user-isolated backing store.");
+                }
+                _isolationVerified = true;
+            }
         }
 
         finally
         {
             _initialization.Release();
-        }
-
-        if (FoundryEnvironment.IsHosted)
-        {
-            var descriptor = await _store.GetAsync(cancellationToken).ConfigureAwait(false);
-            if (descriptor?.UserIsolation != true)
-            {
-                throw new UnauthorizedAccessException("Hosted A2A task storage requires a user-isolated backing store.");
-            }
         }
 
         return _store;
@@ -344,6 +345,7 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         return $"{owner}:sha256:{digest}";
     }
 
+    // Published alpha 20261028.1 used this format for local snapshots, including oversized keys.
     private static string LegacyKey(string taskId, string owner) =>
         $"{owner}:{Convert.ToBase64String(Encoding.UTF8.GetBytes(taskId)).TrimEnd('=').Replace('+', '-').Replace('/', '_')}";
 
@@ -370,10 +372,24 @@ public class FoundryTaskStore : ITaskStore, IDisposable
     }
 
     /// <summary>Releases initialization resources. The backing state store is not deleted.</summary>
-    public virtual void Dispose()
+    public void Dispose()
     {
-        _disposed = true;
-        _initialization.Dispose();
+        Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    /// <summary>Releases the resources owned by this task store.</summary>
+    /// <param name="disposing">Whether to release managed resources.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposed)
+        {
+            return;
+        }
+        if (disposing)
+        {
+            _initialization.Dispose();
+        }
+        _disposed = true;
     }
 }

@@ -21,3 +21,17 @@
   semantic tracing for A2A operations and hosted agent invocations.
 
 ### Bugs Fixed
+
+- Use the standard extensible disposal pattern for `FoundryTaskStore`.
+- Reject unsupported card capabilities when supplied at registration, and report invalid
+  DI-sourced cards as startup configuration errors.
+- Verify hosted storage isolation once after a successful descriptor read, instead of
+  fetching the descriptor on every task operation.
+
+### Other Changes
+
+- Updated native A2A dependencies to `1.0.0-preview4`.
+- Removed the redundant Azure.Identity facade dependency and obsolete test-only Core
+  package exclusions.
+- Retained read/migration compatibility for oversized local keys written by published
+  alpha `1.0.0-alpha.20261028.1`.

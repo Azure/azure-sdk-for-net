@@ -130,6 +130,48 @@ public class HostedBehaviorTests
     }
 
     [Test]
+    public async Task HostedIsolationVerificationIsCachedOnlyAfterSuccess()
+    {
+        var backing = new IsolationProbeStore();
+        using var store = new FoundryTaskStore(backing);
+        var exchange = typeof(FoundryAgentRequestContext).GetMethod("Exchange", BindingFlags.Static | BindingFlags.NonPublic)!;
+        var previous = exchange.Invoke(null, [new FoundryAgentRequestContext { CallId = "brokered-call" }]);
+        try
+        {
+            Assert.ThrowsAsync<UnauthorizedAccessException>(async () => await store.GetTaskAsync("t1"));
+            Assert.ThrowsAsync<UnauthorizedAccessException>(async () => await store.GetTaskAsync("t1"));
+            Assert.That(backing.DescriptorReads, Is.EqualTo(2));
+            backing.Isolated = true;
+            await Task.WhenAll(Enumerable.Range(0, 8).Select(_ => store.GetTaskAsync("t1")));
+            await store.GetTaskAsync("t2");
+            Assert.That(backing.DescriptorReads, Is.EqualTo(3));
+            Assert.That(backing.ItemReads, Is.EqualTo(9));
+        }
+        finally
+        {
+            exchange.Invoke(null, [previous]);
+        }
+    }
+
+    private sealed class IsolationProbeStore : FoundryStateStore
+    {
+        public bool Isolated { get; set; }
+        public int DescriptorReads { get; private set; }
+        public int ItemReads { get; private set; }
+        public override Task<StateStore?> GetAsync(CancellationToken cancellationToken = default)
+        {
+            DescriptorReads++;
+            return Task.FromResult<StateStore?>(AzureAIAgentServerCoreStorageModelFactory.StateStore(userIsolation: Isolated));
+        }
+
+        public override Task<StateStoreItem?> GetItemAsync(string key, CancellationToken cancellationToken = default)
+        {
+            ItemReads++;
+            return Task.FromResult<StateStoreItem?>(null);
+        }
+    }
+
+    [Test]
     public void HostedDefaultUsesFoundryStoreButExplicitNativeStoreWins()
     {
         var services = new ServiceCollection();
