@@ -185,8 +185,11 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public AzureAISearchTool(Azure.AI.Extensions.OpenAI.AzureAISearchToolOptions azureAISearch) : base (default(OpenAI.Responses.ResponseToolKind)) { }
         public Azure.AI.Extensions.OpenAI.AzureAISearchToolOptions AzureAISearch { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public string Description { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public string Name { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -332,6 +335,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public AzureFunctionTool(Azure.AI.Extensions.OpenAI.AzureFunctionDefinition azureFunction) : base (default(OpenAI.Responses.ResponseToolKind)) { }
         public Azure.AI.Extensions.OpenAI.AzureFunctionDefinition AzureFunction { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -500,8 +504,11 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public BingGroundingTool(Azure.AI.Extensions.OpenAI.BingGroundingSearchToolOptions bingGrounding) : base (default(OpenAI.Responses.ResponseToolKind)) { }
         public Azure.AI.Extensions.OpenAI.BingGroundingSearchToolOptions BingGrounding { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public string Description { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public string Name { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -644,9 +651,12 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class CaptureStructuredOutputsTool : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.CaptureStructuredOutputsTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.CaptureStructuredOutputsTool>
     {
         public CaptureStructuredOutputsTool(Azure.AI.Extensions.OpenAI.StructuredOutputDefinition outputDefinition) : base (default(OpenAI.Responses.ResponseToolKind)) { }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public string Description { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public string Name { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.StructuredOutputDefinition OutputDefinition { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1298,6 +1308,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public OpenApiTool(Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition) : base (default(OpenAI.Responses.ResponseToolKind)) { }
         public Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition FunctionDefinition { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

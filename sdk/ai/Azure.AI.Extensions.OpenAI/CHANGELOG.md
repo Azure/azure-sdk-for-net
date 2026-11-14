@@ -3,6 +3,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Marked `ToolConfigs` as obsolete on `AzureAISearchTool`, `AzureFunctionTool`, `BingGroundingTool`, `CaptureStructuredOutputsTool`, and `OpenApiTool`. Also marked `Name` and `Description` as obsolete on `AzureAISearchTool`, `BingGroundingTool`, and `CaptureStructuredOutputsTool`, matching their existing service deprecations.
 
 ### Bugs Fixed
 
