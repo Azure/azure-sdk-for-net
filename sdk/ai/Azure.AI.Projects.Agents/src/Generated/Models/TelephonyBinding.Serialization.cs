@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding owned by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="TwilioTelephonyBinding"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SipTelephonyBinding"/>, <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="TwilioTelephonyBinding"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelephonyBinding))]
     public abstract partial class TelephonyBinding : IJsonModel<TelephonyBinding>
@@ -23,6 +23,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual TelephonyBinding PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
@@ -37,8 +38,10 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(TelephonyBinding)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
@@ -50,36 +53,60 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(TelephonyBinding)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<TelephonyBinding>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         TelephonyBinding IPersistableModel<TelephonyBinding>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<TelephonyBinding>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
+
+        /// <param name="telephonyBinding"> The <see cref="TelephonyBinding"/> to serialize into <see cref="BinaryContent"/>. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
+        public static implicit operator BinaryContent(TelephonyBinding telephonyBinding)
+        {
+            if (telephonyBinding == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(telephonyBinding, ModelSerializationExtensions.WireOptions);
+        }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="TelephonyBinding"/> from. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public static explicit operator TelephonyBinding(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTelephonyBinding(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<TelephonyBinding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
@@ -87,8 +114,11 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(TelephonyBinding)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("provider"u8);
             writer.WriteStringValue(Provider.ToString());
             writer.WritePropertyName("connection_name"u8);
@@ -98,10 +128,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("incoming_call_url"u8);
-            writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("incoming_call_url"u8);
+                SerializeIncomingCallUrl(writer, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -118,13 +149,17 @@ namespace Azure.AI.Projects.Agents
                 }
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         TelephonyBinding IJsonModel<TelephonyBinding>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual TelephonyBinding JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,9 +170,11 @@ namespace Azure.AI.Projects.Agents
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTelephonyBinding(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static TelephonyBinding DeserializeTelephonyBinding(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -148,6 +185,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "sip":
+                        return SipTelephonyBinding.DeserializeSipTelephonyBinding(element, options);
                     case "teams_phone_extensibility":
                         return TeamsPhoneExtensibilityTelephonyBinding.DeserializeTeamsPhoneExtensibilityTelephonyBinding(element, options);
                     case "twilio":
@@ -156,5 +195,6 @@ namespace Azure.AI.Projects.Agents
             }
             return UnknownTelephonyBinding.DeserializeUnknownTelephonyBinding(element, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

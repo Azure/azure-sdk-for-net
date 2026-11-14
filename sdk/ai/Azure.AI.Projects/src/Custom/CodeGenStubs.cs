@@ -5,6 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects;
 
+/// <summary> An error reported by Microsoft Foundry. </summary>
+[CodeGenType("Error")] public partial class ProjectsError { }
+
 // Internal types
 
 [CodeGenType("AgentDefinition")] internal partial class InternalAgentDefinition { }

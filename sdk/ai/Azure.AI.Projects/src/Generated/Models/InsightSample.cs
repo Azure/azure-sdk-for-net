@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Evaluation
@@ -13,7 +12,6 @@ namespace Azure.AI.Projects.Evaluation
     /// A sample from the analysis.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationResultSample"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class InsightSample
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,6 +22,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Sample type. </param>
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected InsightSample(string id, SampleType @type, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo)
         {
             Id = id;
@@ -31,6 +30,7 @@ namespace Azure.AI.Projects.Evaluation
             Features = features;
             CorrelationInfo = correlationInfo;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="InsightSample"/>. </summary>
         /// <param name="id"> The unique identifier for the analysis sample. </param>
@@ -38,6 +38,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal InsightSample(string id, SampleType @type, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -46,6 +47,7 @@ namespace Azure.AI.Projects.Evaluation
             CorrelationInfo = correlationInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The unique identifier for the analysis sample. </summary>
         public string Id { get; }

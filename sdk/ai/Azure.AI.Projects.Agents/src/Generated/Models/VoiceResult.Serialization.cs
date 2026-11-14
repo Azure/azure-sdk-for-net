@@ -22,6 +22,7 @@ namespace Azure.AI.Projects.Agents
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual VoiceResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -36,8 +37,10 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceResult)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -49,36 +52,48 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceResult)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<VoiceResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         VoiceResult IPersistableModel<VoiceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<VoiceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceResult"/> from. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public static explicit operator VoiceResult(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVoiceResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<VoiceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -99,7 +114,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<RealtimeResponseStatus?>(Status.Value, options);
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(StatusDetails))
             {
@@ -160,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStartArray();
                 foreach (RealtimeOutputModality item in OutputModalities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -212,13 +227,17 @@ namespace Azure.AI.Projects.Agents
                 }
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         VoiceResult IJsonModel<VoiceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual VoiceResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -229,9 +248,11 @@ namespace Azure.AI.Projects.Agents
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVoiceResult(document.RootElement, options);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         internal static VoiceResult DeserializeVoiceResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -275,7 +296,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    status = new RealtimeResponseStatus(element.GetProperty("status").GetString());
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -352,7 +373,7 @@ namespace Azure.AI.Projects.Agents
                     List<RealtimeOutputModality> array = new List<RealtimeOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
+                        array.Add(new RealtimeOutputModality(item.GetString()));
                     }
                     outputModalities = array;
                     continue;
@@ -424,5 +445,6 @@ namespace Azure.AI.Projects.Agents
                 completedOn,
                 additionalBinaryDataProperties);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
     }
 }

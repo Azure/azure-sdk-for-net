@@ -4,19 +4,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Dispatches a routine through the raw invocations API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
-    [Experimental("AAIP001")]
     public partial class AgentInvocationsApiRoutineAction : RoutineAction
     {
         /// <summary> Initializes a new instance of <see cref="AgentInvocationsApiRoutineAction"/>. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public AgentInvocationsApiRoutineAction() : base(RoutineActionKind.InvokeAgentInvocationsApi)
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="AgentInvocationsApiRoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
@@ -25,6 +25,7 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> Legacy endpoint-scoped agent identifier for routine dispatch. </param>
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
         /// <param name="sessionId"> An optional existing hosted-agent session identifier to continue during the downstream dispatch. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal AgentInvocationsApiRoutineAction(RoutineActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, string agentEndpointId, BinaryData input, string sessionId) : base(@type, additionalBinaryDataProperties)
         {
             AgentName = agentName;
@@ -32,6 +33,7 @@ namespace Azure.AI.Projects
             Input = input;
             SessionId = sessionId;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The project-scoped agent name for routine dispatch. </summary>
         public string AgentName { get; set; }

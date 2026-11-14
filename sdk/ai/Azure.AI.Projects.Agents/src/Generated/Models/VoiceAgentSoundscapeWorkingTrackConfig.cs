@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A working-loop track with a delay measured from the first pending non-call-control tool. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSoundscapeWorkingTrackConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

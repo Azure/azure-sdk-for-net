@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// An engine that owns conversation handling for a voice agent.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceHostedAgentConversationEngine"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class VoiceConversationEngine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,7 +18,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceConversationEngine"/>. </summary>
         /// <param name="type"> The conversation engine type. </param>
-        private protected VoiceConversationEngine(string @type)
+        private protected VoiceConversationEngine(VoiceConversationEngineType @type)
         {
             Type = @type;
         }
@@ -28,13 +26,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceConversationEngine"/>. </summary>
         /// <param name="type"> The conversation engine type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceConversationEngine(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceConversationEngine(VoiceConversationEngineType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The conversation engine type. </summary>
-        internal string Type { get; set; }
+        internal VoiceConversationEngineType Type { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ProjectsAgentDefinition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="ExternalAgentDefinition"/>, <see cref="HostedAgentDefinition"/>, <see cref="VoiceAgentDefinition"/>, and <see cref="WorkflowAgentDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="ExternalAgentDefinition"/>, <see cref="HostedAgentDefinition"/>, <see cref="VoiceAgentBaseDefinition"/>, and <see cref="WorkflowAgentDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentDefinition))]
     public abstract partial class ProjectsAgentDefinition : IJsonModel<ProjectsAgentDefinition>
@@ -22,6 +22,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -36,8 +37,10 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -49,28 +52,38 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<ProjectsAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         ProjectsAgentDefinition IPersistableModel<ProjectsAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<ProjectsAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<ProjectsAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,13 +114,17 @@ namespace Azure.AI.Projects.Agents
                 }
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         ProjectsAgentDefinition IJsonModel<ProjectsAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,11 +135,13 @@ namespace Azure.AI.Projects.Agents
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProjectsAgentDefinition(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
 #pragma warning disable CS0612 // This generated code references obsolete functionality.
 #pragma warning disable CS0618 // This generated code references obsolete functionality.
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static ProjectsAgentDefinition DeserializeProjectsAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -140,7 +159,7 @@ namespace Azure.AI.Projects.Agents
                     case "hosted":
                         return HostedAgentDefinition.DeserializeHostedAgentDefinition(element, options);
                     case "voice":
-                        return VoiceAgentDefinition.DeserializeVoiceAgentDefinition(element, options);
+                        return VoiceAgentBaseDefinition.DeserializeVoiceAgentBaseDefinition(element, options);
                     case "workflow":
                         return WorkflowAgentDefinition.DeserializeWorkflowAgentDefinition(element, options);
                 }
@@ -149,5 +168,6 @@ namespace Azure.AI.Projects.Agents
         }
 #pragma warning restore CS0612 // This generated code references obsolete functionality.
 #pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

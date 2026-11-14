@@ -30,12 +30,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionName"> Name of the Project Connection that stores the endpoint URL and credentials. The connection must exist on the project and have a non-empty target URL. Supported auth types: ApiKey (sends `api-key` header) and AAD/Entra ID (acquires a bearer token via the project's Managed Identity). </param>
-        internal EndpointBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
+        /// <param name="schemaVersion"> Version of the contract between the service and the evaluator endpoint. Optional on create; if omitted, the service uses `0.0.1`, so existing clients that do not send this property are unaffected. Stored evaluator versions keep the value they were created with. Registration rejects values the service does not support; the type stays extensible so responses can return newer versions. Version `0.0.2` requires `metrics` to contain exactly one metric, of type `ordinal` or `continuous`. </param>
+        internal EndpointBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName, EndpointEvaluatorSchemaVersion? schemaVersion) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
         {
             ConnectionName = connectionName;
+            SchemaVersion = schemaVersion;
         }
 
         /// <summary> Name of the Project Connection that stores the endpoint URL and credentials. The connection must exist on the project and have a non-empty target URL. Supported auth types: ApiKey (sends `api-key` header) and AAD/Entra ID (acquires a bearer token via the project's Managed Identity). </summary>
         public string ConnectionName { get; set; }
+
+        /// <summary> Version of the contract between the service and the evaluator endpoint. Optional on create; if omitted, the service uses `0.0.1`, so existing clients that do not send this property are unaffected. Stored evaluator versions keep the value they were created with. Registration rejects values the service does not support; the type stays extensible so responses can return newer versions. Version `0.0.2` requires `metrics` to contain exactly one metric, of type `ordinal` or `continuous`. </summary>
+        public EndpointEvaluatorSchemaVersion? SchemaVersion { get; set; }
     }
 }

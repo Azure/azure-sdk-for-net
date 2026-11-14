@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The semantic end-of-utterance detection model. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentEndOfUtteranceDetectionModel : IEquatable<VoiceAgentEndOfUtteranceDetectionModel>
     {
         private readonly string _value;

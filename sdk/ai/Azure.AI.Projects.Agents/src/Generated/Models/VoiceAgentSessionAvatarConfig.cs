@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Avatar settings accepted by the stable voice-agent WebSocket contract. </summary>
-    [Experimental("AAIP001")]
     internal partial class VoiceAgentSessionAvatarConfig : VoiceAgentAvatarConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSessionAvatarConfig"/>. </summary>

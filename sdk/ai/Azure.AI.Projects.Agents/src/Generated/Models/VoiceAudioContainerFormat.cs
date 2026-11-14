@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An audio container format. Additional values may be added over time. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAudioContainerFormat : IEquatable<VoiceAudioContainerFormat>
     {
         private readonly string _value;

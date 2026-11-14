@@ -13,6 +13,21 @@ namespace Azure.AI.Projects.Tests.Utils
     /// </summary>
     public static class ProjectsTestSanitizers
     {
+        internal const string PlaybackAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
+        internal const string LegacyDefaultVoiceAgentFeaturePattern = @"(\AMemoryStores=V1Preview,WorkflowAgents=V1Preview,(?:[^,]+,)*DraftAgents=V1Preview),VoiceAgents=V1Preview(?=,ModelRouterControls=V1Preview(?:,|\z))";
+        internal const string LegacyDefaultVoiceAgentFeatureReplacement = "${1}";
+
+        internal static void ApplyLegacyLiveVoiceRecordingHeaders<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
+            where TEnvironment : TestEnvironment, new()
+        {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Old stored-Live recordings used the blanket bundle; creation/history now use explicit Voice opt-ins.
+                // Remove both sides only in that playback fixture. VoiceAgentPreviewHeaderTests checks exact wire headers.
+                testBase.CustomSanitizers.Add(new RemoveHeaderSanitizer(new("Foundry-Features")));
+            }
+        }
+
         // Replacement values
         public const string SANITIZED_SUBSCRIPTION = "00000000-0000-0000-0000-000000000000";
         public const string SANITIZED_HOST = "sanitized-host";
@@ -55,6 +70,22 @@ namespace Azure.AI.Projects.Tests.Utils
         public static void ApplySanitizers<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
             where TEnvironment : TestEnvironment, new()
         {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Normalize recordings captured while the Agent Insights feature flag was retired.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = PlaybackAgentInsightsFeaturePattern,
+                    Value = string.Empty
+                }));
+                // Remove only the obsolete token embedded in the legacy defaults, not explicit Voice opt-ins.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = LegacyDefaultVoiceAgentFeaturePattern,
+                    Value = LegacyDefaultVoiceAgentFeatureReplacement
+                }));
+            }
+
             // Remove default sanitizers that are too restrictive
             testBase.SanitizersToRemove.Add("AZSDK2003"); // Location header (we use a custom one)
             testBase.SanitizersToRemove.Add("AZSDK4001"); // Replaces entire host name (we want to keep structure)
