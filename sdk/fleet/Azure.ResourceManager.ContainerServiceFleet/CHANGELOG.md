@@ -6,12 +6,6 @@
 
 - Upgraded the service API version to `2026-11-01`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0-beta.1 (2026-09-11)
 
 ### Features Added
