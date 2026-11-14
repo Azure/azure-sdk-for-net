@@ -15,7 +15,6 @@ namespace Azure.AI.Projects.Agents
     /// deleting it cascades to its responses, items, metrics, and audio. When finalization fails, any partial persisted
     /// responses, items, and item audio remain readable.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceConversation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -25,6 +24,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The unique id of the conversation. </param>
         /// <param name="status"> The lifecycle status of the conversation. </param>
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the conversation was created. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         internal VoiceConversation(string id, VoiceConversationStatus status, DateTimeOffset createdOn)
         {
             Id = id;
@@ -32,6 +32,7 @@ namespace Azure.AI.Projects.Agents
             CreatedOn = createdOn;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceConversation"/>. </summary>
         /// <param name="id"> The unique id of the conversation. </param>
@@ -43,6 +44,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="usage"> Final aggregate token usage across all responses in this conversation. Absent while `status` is `in_progress` and populated after successful `completed` finalization; it may be absent when `status` is `failed`, and values are not guaranteed to be reported incrementally. </param>
         /// <param name="lastError"> The terminal error that prevented persistence finalization. Present only when `status` is `failed`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal VoiceConversation(string id, string @object, VoiceConversationStatus status, DateTimeOffset createdOn, DateTimeOffset? completedOn, IDictionary<string, string> metadata, RealtimeResponseUsage usage, FoundryOpenAIError lastError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -75,6 +77,7 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> Final aggregate token usage across all responses in this conversation. Absent while `status` is `in_progress` and populated after successful `completed` finalization; it may be absent when `status` is `failed`, and values are not guaranteed to be reported incrementally. </summary>
+        [Experimental("AAIP002")]
         public RealtimeResponseUsage Usage { get; }
     }
 }

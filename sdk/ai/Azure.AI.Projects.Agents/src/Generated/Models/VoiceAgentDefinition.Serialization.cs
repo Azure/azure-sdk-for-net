@@ -14,10 +14,11 @@ namespace Azure.AI.Projects.Agents
     /// managed speech-to-speech experience. Establish realtime voice sessions through
     /// `GET /agents/{agent_name}/endpoint/protocols/voice`. Every create or update produces a new immutable version.
     /// </summary>
-    public partial class VoiceAgentDefinition : ProjectsAgentDefinition, IJsonModel<VoiceAgentDefinition>
+    public partial class VoiceAgentDefinition : VoiceAgentBaseDefinition, IJsonModel<VoiceAgentDefinition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -32,8 +33,10 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceAgentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -45,28 +48,38 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceAgentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<VoiceAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         VoiceAgentDefinition IPersistableModel<VoiceAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceAgentDefinition)PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<VoiceAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<VoiceAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -89,11 +102,6 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("conversation_engine"u8);
                 writer.WriteObjectValue(ConversationEngine, options);
-            }
-            if (Optional.IsDefined(Instructions))
-            {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
             }
             if (Optional.IsDefined(Greeting))
             {
@@ -179,17 +187,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("parallel_tool_calls"u8);
                 writer.WriteBooleanValue(ParallelToolCalls.Value);
             }
-            if (Optional.IsCollectionDefined(StructuredInputs))
-            {
-                writer.WritePropertyName("structured_inputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in StructuredInputs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(SubagentConfig))
             {
                 writer.WritePropertyName("subagent_config"u8);
@@ -200,19 +197,18 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("post_call"u8);
                 writer.WriteObjectValue(PostCall, options);
             }
-            if (Optional.IsDefined(Store))
-            {
-                writer.WritePropertyName("store"u8);
-                writer.WriteBooleanValue(Store.Value);
-            }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         VoiceAgentDefinition IJsonModel<VoiceAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceAgentDefinition)JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,9 +219,11 @@ namespace Azure.AI.Projects.Agents
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVoiceAgentDefinition(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static VoiceAgentDefinition DeserializeVoiceAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -235,10 +233,13 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VoiceAgentSubProtocol subProtocol = default;
+            string instructions = default;
+            IDictionary<string, StructuredInputDefinition> structuredInputs = default;
+            bool? store = default;
             VoiceModelType? modelType = default;
             string model = default;
             VoiceConversationEngine conversationEngine = default;
-            string instructions = default;
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
             VoiceAgentSoundscapeConfig soundscape = default;
@@ -250,10 +251,8 @@ namespace Azure.AI.Projects.Agents
             IList<VoiceAgentTool> tools = default;
             BinaryData internalToolChoice = default;
             bool? parallelToolCalls = default;
-            IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             VoiceAgentSubagentConfig subagentConfig = default;
             VoiceAgentPostCallConfig postCall = default;
-            bool? store = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -268,6 +267,39 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sub_protocol"u8))
+                {
+                    subProtocol = prop.Value.GetString().ToVoiceAgentSubProtocol();
+                    continue;
+                }
+                if (prop.NameEquals("instructions"u8))
+                {
+                    instructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("structured_inputs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, StructuredInputDefinition> dictionary = new Dictionary<string, StructuredInputDefinition>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, StructuredInputDefinition.DeserializeStructuredInputDefinition(prop0.Value, options));
+                    }
+                    structuredInputs = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("store"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    store = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("model_type"u8))
@@ -291,11 +323,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     conversationEngine = VoiceConversationEngine.DeserializeVoiceConversationEngine(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("instructions"u8))
-                {
-                    instructions = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("greeting"u8))
@@ -412,20 +439,6 @@ namespace Azure.AI.Projects.Agents
                     parallelToolCalls = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("structured_inputs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, StructuredInputDefinition> dictionary = new Dictionary<string, StructuredInputDefinition>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, StructuredInputDefinition.DeserializeStructuredInputDefinition(prop0.Value, options));
-                    }
-                    structuredInputs = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("subagent_config"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -444,15 +457,6 @@ namespace Azure.AI.Projects.Agents
                     postCall = VoiceAgentPostCallConfig.DeserializeVoiceAgentPostCallConfig(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("store"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    store = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -462,10 +466,13 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
+                subProtocol,
+                instructions,
+                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
+                store,
                 modelType,
                 model,
                 conversationEngine,
-                instructions,
                 greeting,
                 audio,
                 soundscape,
@@ -477,10 +484,9 @@ namespace Azure.AI.Projects.Agents
                 tools ?? new ChangeTrackingList<VoiceAgentTool>(),
                 internalToolChoice,
                 parallelToolCalls,
-                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
                 subagentConfig,
-                postCall,
-                store);
+                postCall);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

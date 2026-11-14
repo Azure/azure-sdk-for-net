@@ -26,6 +26,8 @@ namespace Azure.AI.Projects.Agents
             }
         };
         private readonly string _apiVersion;
+        [Experimental("AAIP001")]
+        private BetaVoiceAgentsLiveConversations _cachedAgentEndpointLiveConversations;
 
         /// <summary> Initializes a new instance of AgentAdministrationClient for mocking. </summary>
         protected AgentAdministrationClient()
@@ -51,28 +53,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
         public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentAdministrationClientOptions())
         {
-        }
-
-        /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal AgentAdministrationClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            options ??= new AgentAdministrationClientOptions();
-
-            _endpoint = endpoint;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
-            }
-            else
-            {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
-            }
-            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient from a <see cref="AgentAdministrationClientSettings"/>. </summary>
@@ -936,6 +916,13 @@ namespace Azure.AI.Projects.Agents
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the client for stored native Live conversations. </summary>
+        [Experimental("AAIP001")]
+        public virtual BetaVoiceAgentsLiveConversations GetBetaVoiceAgentEndpointLiveConversations()
+        {
+            return (Volatile.Read(ref _cachedAgentEndpointLiveConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointLiveConversations, new BetaVoiceAgentsLiveConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null)) ?? _cachedAgentEndpointLiveConversations;
         }
     }
 }

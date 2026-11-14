@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported identities for routine dispatch authorization. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct RoutineDispatchIdentity : IEquatable<RoutineDispatchIdentity>
     {
         private readonly string _value;

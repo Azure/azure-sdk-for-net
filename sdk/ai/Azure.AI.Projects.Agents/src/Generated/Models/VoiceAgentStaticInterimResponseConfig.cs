@@ -4,16 +4,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A static interim response selected from configured text. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentStaticInterimResponseConfig : VoiceAgentInterimResponseConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentStaticInterimResponseConfig"/>. </summary>
-        public VoiceAgentStaticInterimResponseConfig() : base("static_interim_response")
+        public VoiceAgentStaticInterimResponseConfig() : base(VoiceAgentInterimResponseType.StaticInterimResponse)
         {
             Texts = new ChangeTrackingList<string>();
         }
@@ -24,7 +22,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="texts"> Candidate text values for the interim response. </param>
-        internal VoiceAgentStaticInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> texts) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal VoiceAgentStaticInterimResponseConfig(VoiceAgentInterimResponseType @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> texts) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
             Texts = texts;
         }

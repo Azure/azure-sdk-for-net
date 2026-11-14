@@ -26,6 +26,7 @@ namespace Azure.AI.Projects.Agents
             Name = name;
             Status = status;
             StartedOn = startedOn;
+            Files = new ChangeTrackingList<AgentOptimizationCandidateFile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationCandidate"/>. </summary>
@@ -33,22 +34,30 @@ namespace Azure.AI.Projects.Agents
         /// <param name="jobId"> Identifier of the parent optimization job. </param>
         /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
         /// <param name="status"> The candidate's current lifecycle state. </param>
+        /// <param name="error"> Primary failure or skip reason. Omitted for other candidate statuses. </param>
         /// <param name="startedOn"> Timestamp when work on this candidate slot began, represented in Unix time. </param>
         /// <param name="output"> Typed output generated for this candidate. The output type matches the parent job's optimization type. Omitted until output is available. </param>
+        /// <param name="executionSummary"> Persisted skill execution snapshot, including partial outcomes. Populated on candidate GET when available and omitted from LIST. </param>
+        /// <param name="resolvedContext"> Frozen trace cohort and discovered agent skills for skill optimization. Populated on candidate GET when available and omitted from LIST. </param>
         /// <param name="rationale"> Human-readable explanation of why the optimizer produced this candidate. Populated on candidate GET when available and omitted from LIST. </param>
+        /// <param name="files"> Metadata for files generated for this candidate, such as trace analysis. Populated on candidate GET when available and omitted from LIST. An empty list means no files were generated; omission means the inventory is not available. Metadata does not provide file content or a download URL. </param>
         /// <param name="agentVersion"> Foundry agent version associated with this candidate. Omitted when no temporary or evaluated agent version was created. </param>
-        /// <param name="evaluation"> Comparative evaluation summary. Omitted when this candidate was not comparatively evaluated. </param>
+        /// <param name="evaluation"> Evaluation summary, including reporting-only measurements for skill baseline and generated candidates. Omitted when no measurements are available. Missing scores do not imply success or zero. </param>
         /// <param name="promotion"> Promotion metadata. Omitted if this candidate has not been promoted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationCandidate(string candidateId, string jobId, string name, AgentOptimizationCandidateStatus status, DateTimeOffset startedOn, AgentOptimizationCandidateOutput output, string rationale, string agentVersion, AgentOptimizationCandidateEvaluation evaluation, AgentOptimizationCandidatePromotionInfo promotion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationCandidate(string candidateId, string jobId, string name, AgentOptimizationCandidateStatus status, FoundryOpenAIError error, DateTimeOffset startedOn, AgentOptimizationCandidateOutput output, AgentOptimizationSkillExecutionSummary executionSummary, AgentOptimizationSkillResolvedContext resolvedContext, string rationale, IList<AgentOptimizationCandidateFile> files, string agentVersion, AgentOptimizationCandidateEvaluation evaluation, AgentOptimizationCandidatePromotionInfo promotion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CandidateId = candidateId;
             JobId = jobId;
             Name = name;
             Status = status;
+            Error = error;
             StartedOn = startedOn;
             Output = output;
+            ExecutionSummary = executionSummary;
+            ResolvedContext = resolvedContext;
             Rationale = rationale;
+            Files = files;
             AgentVersion = agentVersion;
             Evaluation = evaluation;
             Promotion = promotion;
@@ -67,19 +76,31 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The candidate's current lifecycle state. </summary>
         public AgentOptimizationCandidateStatus Status { get; }
 
+        /// <summary> Primary failure or skip reason. Omitted for other candidate statuses. </summary>
+        public FoundryOpenAIError Error { get; }
+
         /// <summary> Timestamp when work on this candidate slot began, represented in Unix time. </summary>
         public DateTimeOffset StartedOn { get; }
 
         /// <summary> Typed output generated for this candidate. The output type matches the parent job's optimization type. Omitted until output is available. </summary>
         public AgentOptimizationCandidateOutput Output { get; }
 
+        /// <summary> Persisted skill execution snapshot, including partial outcomes. Populated on candidate GET when available and omitted from LIST. </summary>
+        public AgentOptimizationSkillExecutionSummary ExecutionSummary { get; }
+
+        /// <summary> Frozen trace cohort and discovered agent skills for skill optimization. Populated on candidate GET when available and omitted from LIST. </summary>
+        public AgentOptimizationSkillResolvedContext ResolvedContext { get; }
+
         /// <summary> Human-readable explanation of why the optimizer produced this candidate. Populated on candidate GET when available and omitted from LIST. </summary>
         public string Rationale { get; }
+
+        /// <summary> Metadata for files generated for this candidate, such as trace analysis. Populated on candidate GET when available and omitted from LIST. An empty list means no files were generated; omission means the inventory is not available. Metadata does not provide file content or a download URL. </summary>
+        public IList<AgentOptimizationCandidateFile> Files { get; }
 
         /// <summary> Foundry agent version associated with this candidate. Omitted when no temporary or evaluated agent version was created. </summary>
         public string AgentVersion { get; }
 
-        /// <summary> Comparative evaluation summary. Omitted when this candidate was not comparatively evaluated. </summary>
+        /// <summary> Evaluation summary, including reporting-only measurements for skill baseline and generated candidates. Omitted when no measurements are available. Missing scores do not imply success or zero. </summary>
         public AgentOptimizationCandidateEvaluation Evaluation { get; }
 
         /// <summary> Promotion metadata. Omitted if this candidate has not been promoted. </summary>

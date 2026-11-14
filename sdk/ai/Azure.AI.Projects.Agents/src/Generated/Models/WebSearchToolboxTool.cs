@@ -25,9 +25,11 @@ namespace Azure.AI.Projects.Agents
         private bool _userLocationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public WebSearchToolboxTool() : base(ToolboxToolType.WebSearch)
         {
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>
         /// <param name="type"> The type of tool. </param>

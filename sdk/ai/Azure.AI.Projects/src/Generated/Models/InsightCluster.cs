@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A cluster of analysis samples. </summary>
-    [Experimental("AAIP001")]
     public partial class InsightCluster
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,6 +21,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="suggestionTitle"> The title of the suggestion for the cluster. </param>
         /// <param name="description"> Description of the analysis cluster. </param>
         /// <param name="weight"> The weight of the analysis cluster. This indicate number of samples in the cluster. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal InsightCluster(string id, string label, string suggestion, string suggestionTitle, string description, int weight)
         {
             Id = id;
@@ -34,6 +33,7 @@ namespace Azure.AI.Projects.Evaluation
             SubClusters = new ChangeTrackingList<InsightCluster>();
             Samples = new ChangeTrackingList<InsightSample>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="InsightCluster"/>. </summary>
         /// <param name="id"> The id of the analysis cluster. </param>
@@ -45,6 +45,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="subClusters"> List of subclusters within this cluster. Empty if no subclusters exist. </param>
         /// <param name="samples"> List of samples that belong to this cluster. Empty if samples are part of subclusters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal InsightCluster(string id, string label, string suggestion, string suggestionTitle, string description, int weight, IList<InsightCluster> subClusters, IList<InsightSample> samples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -57,6 +58,7 @@ namespace Azure.AI.Projects.Evaluation
             Samples = samples;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The id of the analysis cluster. </summary>
         public string Id { get; }

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Base model for typed optimization context.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SteeringPromptOptimizationContext"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentTracesOptimizationContext"/>, <see cref="SkillReferencesOptimizationContext"/>, and <see cref="SteeringPromptOptimizationContext"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOptimizationContext))]
     public abstract partial class OptimizationContext : IJsonModel<OptimizationContext>
@@ -126,6 +126,10 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "agent_traces":
+                        return AgentTracesOptimizationContext.DeserializeAgentTracesOptimizationContext(element, options);
+                    case "skill_references":
+                        return SkillReferencesOptimizationContext.DeserializeSkillReferencesOptimizationContext(element, options);
                     case "steering_prompt":
                         return SteeringPromptOptimizationContext.DeserializeSteeringPromptOptimizationContext(element, options);
                 }

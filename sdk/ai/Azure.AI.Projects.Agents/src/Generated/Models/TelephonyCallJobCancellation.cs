@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A cancellation request recorded for an outbound call job. </summary>
-    [Experimental("AAIP001")]
     public partial class TelephonyCallJobCancellation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

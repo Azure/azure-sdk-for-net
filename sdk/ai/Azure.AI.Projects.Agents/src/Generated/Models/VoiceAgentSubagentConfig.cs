@@ -4,38 +4,40 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
-    [Experimental("AAIP001")]
-    public partial class VoiceAgentSubagentConfig
+    /// <summary>
+    /// Configuration for delegated background specialists or inline voice subagents. For compatibility with existing
+    /// delegate configurations, the service treats an omitted `subagent_type` as `delegate`.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentDelegateSubagentConfig"/> and <see cref="VoiceAgentInlineSubagentConfig"/>.
+    /// </summary>
+    public abstract partial class VoiceAgentSubagentConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/>. </summary>
-        /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subagents"/> is null. </exception>
-        public VoiceAgentSubagentConfig(IEnumerable<VoiceAgentSubagent> subagents)
+        /// <param name="subagentType"> The subagent mode. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
+        private protected VoiceAgentSubagentConfig(VoiceAgentSubagentType subagentType)
         {
-            Argument.AssertNotNull(subagents, nameof(subagents));
-
-            Subagents = subagents.ToList();
+            SubagentType = subagentType;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/>. </summary>
-        /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
+        /// <param name="subagentType"> The subagent mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentSubagentConfig(IList<VoiceAgentSubagent> subagents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
+        internal VoiceAgentSubagentConfig(VoiceAgentSubagentType subagentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Subagents = subagents;
+            SubagentType = subagentType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
-        /// <summary> The sibling Foundry text agents, in the same project, that this voice agent may consult. </summary>
-        public IList<VoiceAgentSubagent> Subagents { get; }
+        /// <summary> The subagent mode. </summary>
+        internal VoiceAgentSubagentType SubagentType { get; set; }
     }
 }

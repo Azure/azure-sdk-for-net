@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "llm_generated";
+            VoiceAgentGreetingMode @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string prompt = default;
             BinaryData internalToolChoice = default;
@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceAgentGreetingMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("prompt"u8))

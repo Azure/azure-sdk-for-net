@@ -6,16 +6,16 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    [Experimental("AAIP001")]
     internal partial class ProjectInsightsGetAllAsyncCollectionResultOfT : AsyncCollectionResult<ProjectsInsight>
     {
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private readonly ProjectInsights _client;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private readonly string _foundryFeatures;
         private readonly string _type;
         private readonly string _evalId;
@@ -33,6 +33,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public ProjectInsightsGetAllAsyncCollectionResultOfT(ProjectInsights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             _client = client;
@@ -44,9 +45,11 @@ namespace Azure.AI.Projects.Evaluation
             _includeCoordinates = includeCoordinates;
             _options = options;
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
             PipelineMessage message = _client.CreateGetAllRequest(_foundryFeatures, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
@@ -64,10 +67,12 @@ namespace Azure.AI.Projects.Evaluation
                 message = _client.CreateNextGetAllRequest(nextPageUri, _foundryFeatures, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the continuation token from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The continuation token for the specified page. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
             Uri nextPage = ((PagedInsight)page).NextLink;
@@ -80,10 +85,12 @@ namespace Azure.AI.Projects.Evaluation
                 return null;
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         protected override async IAsyncEnumerable<ProjectsInsight> GetValuesFromPageAsync(ClientResult page)
         {
             foreach (ProjectsInsight item in ((PagedInsight)page).Value)
@@ -92,9 +99,11 @@ namespace Azure.AI.Projects.Evaluation
                 await Task.Yield();
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectInsights.GetAll");
@@ -109,5 +118,6 @@ namespace Azure.AI.Projects.Evaluation
                 throw;
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
     }
 }

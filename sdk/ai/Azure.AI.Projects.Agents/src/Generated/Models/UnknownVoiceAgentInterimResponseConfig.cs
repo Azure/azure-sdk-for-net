@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
     internal partial class UnknownVoiceAgentInterimResponseConfig : VoiceAgentInterimResponseConfig
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVoiceAgentInterimResponseConfig"/>. </summary>
@@ -16,7 +14,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVoiceAgentInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal UnknownVoiceAgentInterimResponseConfig(VoiceAgentInterimResponseType @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
         }
     }

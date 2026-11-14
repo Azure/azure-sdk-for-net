@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsCollectionDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);

@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Base model for type-specific optimization configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationConfiguration"/> and <see cref="PromptOptimizationConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationConfiguration"/>, <see cref="PromptOptimizationConfiguration"/>, and <see cref="SkillOptimizationConfiguration"/>.
     /// </summary>
     public abstract partial class AgentOptimizationConfigurationBase
     {

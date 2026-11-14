@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Summary of the error cluster analysis. </summary>
-    [Experimental("AAIP001")]
     public partial class InsightSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -21,6 +19,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="uniqueClusterCount"> Total number of unique clusters. </param>
         /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string methodName, ClusterTokenUsage usage)
         {
             SampleCount = sampleCount;
@@ -29,6 +28,7 @@ namespace Azure.AI.Projects.Evaluation
             MethodName = methodName;
             Usage = usage;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="InsightSummary"/>. </summary>
         /// <param name="sampleCount"> Total number of samples analyzed. </param>
@@ -37,6 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string methodName, ClusterTokenUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SampleCount = sampleCount;
@@ -46,6 +47,7 @@ namespace Azure.AI.Projects.Evaluation
             Usage = usage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Total number of samples analyzed. </summary>
         public int SampleCount { get; }
