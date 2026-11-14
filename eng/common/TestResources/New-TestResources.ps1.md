@@ -614,10 +614,9 @@ Accept wildcard characters: False
 ```
 
 ### -SuppressVsoCommands
-By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
-commands that cause them to be redacted.
-For CI environments that don't support this (like
-stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
+When -CI is set and this switch is false, the script emits Azure Pipelines logging
+commands to register secrets for log redaction. Set this switch to suppress those
+commands in CI environments that don't support them, such as stress test clusters.
 
 ```yaml
 Type: SwitchParameter
