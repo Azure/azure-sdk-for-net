@@ -7,13 +7,17 @@ using OpenAI.Realtime;
 
 namespace Azure.AI.Projects;
 
-/// <summary> Options for connecting to a Foundry Voice Agent realtime session. </summary>
+/// <summary>
+/// Options for connecting to a Foundry Voice Agent realtime session. Preview agent features require
+/// an explicit <c>VoiceAgents=V1Preview</c> opt-in using <c>Foundry-Features</c> in
+/// <see cref="RealtimeSessionClientOptions.Headers"/> or <c>foundry_features</c> in
+/// <see cref="RealtimeSessionClientOptions.QueryString"/>, but not both.
+/// </summary>
 [Experimental("AAIP002")]
 public class ProjectsRealtimeSessionClientOptions : RealtimeSessionClientOptions
 {
     /// <summary>
-    /// The optional transport selection for this session. The SDK applies the selection during connection setup.
-    /// WebRTC selects signaling over the WebSocket; the application must manage the peer connection and media.
+    /// The connection transport. WebRTC provides signaling only; your application must handle the peer connection and audio.
     /// </summary>
     public VoiceAgentTransport? Transport { get; set; }
 }

@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -104,28 +105,54 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Create an Agent Insights monitor for an agent. </summary>
-        /// <param name="monitor"> The monitor to create. </param>
+        /// <param name="agentName"> The agent this monitor should analyze. </param>
+        /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
+        /// <param name="enabled"> Whether scheduled insight generation should be armed. Defaults to false. </param>
+        /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. Defaults to 6. </param>
+        /// <param name="priorities"> Analysis priorities for the monitor. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitor"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentInsightMonitor> Create(AgentInsightMonitorCreate monitor, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentInsightMonitor> Create(string agentName, string modelDeploymentName, bool? enabled = default, double? runIntervalHours = default, AgentInsightPriorities priorities = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(monitor, nameof(monitor));
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(modelDeploymentName, nameof(modelDeploymentName));
 
-            ClientResult result = Create(monitor, cancellationToken.ToRequestOptions());
+            CreateContent spreadModel = new CreateContent(
+                agentName,
+                enabled,
+                runIntervalHours,
+                modelDeploymentName,
+                priorities,
+                default);
+            ClientResult result = Create(spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
         }
 
         /// <summary> Create an Agent Insights monitor for an agent. </summary>
-        /// <param name="monitor"> The monitor to create. </param>
+        /// <param name="agentName"> The agent this monitor should analyze. </param>
+        /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
+        /// <param name="enabled"> Whether scheduled insight generation should be armed. Defaults to false. </param>
+        /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. Defaults to 6. </param>
+        /// <param name="priorities"> Analysis priorities for the monitor. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitor"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentInsightMonitor>> CreateAsync(AgentInsightMonitorCreate monitor, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentInsightMonitor>> CreateAsync(string agentName, string modelDeploymentName, bool? enabled = default, double? runIntervalHours = default, AgentInsightPriorities priorities = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(monitor, nameof(monitor));
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(modelDeploymentName, nameof(modelDeploymentName));
 
-            ClientResult result = await CreateAsync(monitor, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            CreateContent spreadModel = new CreateContent(
+                agentName,
+                enabled,
+                runIntervalHours,
+                modelDeploymentName,
+                priorities,
+                default);
+            ClientResult result = await CreateAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
         }
 
@@ -380,7 +407,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Reset an Agent Insights monitor's overview, checkpoint, and active insight state.
+        /// [Protocol Method] Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -412,7 +439,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Reset an Agent Insights monitor's overview, checkpoint, and active insight state.
+        /// [Protocol Method] Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -443,7 +470,7 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary> Reset an Agent Insights monitor's overview, checkpoint, and active insight state. </summary>
+        /// <summary> Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
@@ -456,7 +483,7 @@ namespace Azure.AI.Projects
             return Reset(monitorId, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Reset an Agent Insights monitor's overview, checkpoint, and active insight state. </summary>
+        /// <summary> Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
@@ -530,36 +557,36 @@ namespace Azure.AI.Projects
         /// <summary> Start an Agent Insights run for a monitor. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="run"> Run inputs. Send an empty object to use the default 168-hour lookback window. </param>
+        /// <param name="lookbackHours"> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="run"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         [Experimental("SCME0006")]
-        public virtual OperationResult CreateRun(bool waitUntilCompleted, string monitorId, AgentInsightRunCreate run, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual OperationResult CreateRun(bool waitUntilCompleted, string monitorId, double? lookbackHours = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
-            Argument.AssertNotNull(run, nameof(run));
 
-            OperationResult result = CreateRun(waitUntilCompleted, monitorId, run, operationId, cancellationToken.ToRequestOptions());
+            CreateRunContent spreadModel = new CreateRunContent(lookbackHours, default);
+            OperationResult result = CreateRun(waitUntilCompleted, monitorId, spreadModel, operationId, cancellationToken.ToRequestOptions());
             return result;
         }
 
         /// <summary> Start an Agent Insights run for a monitor. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="run"> Run inputs. Send an empty object to use the default 168-hour lookback window. </param>
+        /// <param name="lookbackHours"> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="run"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         [Experimental("SCME0006")]
-        public virtual async Task<OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, AgentInsightRunCreate run, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, double? lookbackHours = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
-            Argument.AssertNotNull(run, nameof(run));
 
-            OperationResult result = await CreateRunAsync(waitUntilCompleted, monitorId, run, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            CreateRunContent spreadModel = new CreateRunContent(lookbackHours, default);
+            OperationResult result = await CreateRunAsync(waitUntilCompleted, monitorId, spreadModel, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return result;
         }
 
@@ -761,6 +788,106 @@ namespace Azure.AI.Projects
 
             ClientResult result = await CancelRunAsync(monitorId, runId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentInsightRun)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] List current insights for a monitor. Filter types combine with AND; values within each list combine with OR.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
+        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
+        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
+        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
+        /// <param name="categories"> Match any listed category. Commas separate identifiers; identifiers containing commas cannot be filtered individually. </param>
+        /// <param name="severities"> Match any listed severity. </param>
+        /// <param name="statuses"> Match any listed status. </param>
+        /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetInsights(string monitorId, string after, string before, int? limit, string order, IEnumerable<string> categories, IEnumerable<AgentInsightSeverity> severities, IEnumerable<AgentInsightStatus> statuses, bool? includeDetails, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetInsights");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                return new AgentInsightMonitorsGetInsightsCollectionResult(
+                    this,
+                    monitorId,
+                    after,
+                    before,
+                    limit,
+                    order,
+                    categories,
+                    severities,
+                    statuses,
+                    includeDetails,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List current insights for a monitor. Filter types combine with AND; values within each list combine with OR.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
+        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
+        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
+        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
+        /// <param name="categories"> Match any listed category. Commas separate identifiers; identifiers containing commas cannot be filtered individually. </param>
+        /// <param name="severities"> Match any listed severity. </param>
+        /// <param name="statuses"> Match any listed status. </param>
+        /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetInsightsAsync(string monitorId, string after, string before, int? limit, string order, IEnumerable<string> categories, IEnumerable<AgentInsightSeverity> severities, IEnumerable<AgentInsightStatus> statuses, bool? includeDetails, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetInsights");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                return new AgentInsightMonitorsGetInsightsAsyncCollectionResult(
+                    this,
+                    monitorId,
+                    after,
+                    before,
+                    limit,
+                    order,
+                    categories,
+                    severities,
+                    statuses,
+                    includeDetails,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

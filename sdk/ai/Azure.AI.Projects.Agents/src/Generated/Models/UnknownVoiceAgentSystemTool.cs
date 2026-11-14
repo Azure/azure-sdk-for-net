@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
     internal partial class UnknownVoiceAgentSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVoiceAgentSystemTool"/>. </summary>
@@ -16,7 +14,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
         /// <param name="description"> An optional description of the system tool. </param>
-        internal UnknownVoiceAgentSystemTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description) : base(@type ?? "unknown", additionalBinaryDataProperties, name != default ? name : "unknown", description)
+        /// <param name="timeoutSeconds"> The execution timeout in seconds, from 1 to 300. If omitted, the service defaults to 60 seconds. </param>
+        internal UnknownVoiceAgentSystemTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties, name != default ? name : "unknown", description, timeoutSeconds)
         {
         }
     }

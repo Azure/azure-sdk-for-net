@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A voice-audio participant role. Additional values may be added over time. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAudioRole : IEquatable<VoiceAudioRole>
     {
         private readonly string _value;

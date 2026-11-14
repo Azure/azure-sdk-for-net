@@ -304,6 +304,110 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// [Protocol Method] Downloads a declared file as a binary stream. The path must match a file descriptor returned by the service. When candidate_id is omitted, the request is scoped to the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the parent optimization job. </param>
+        /// <param name="path"> The file path returned in the file descriptor. </param>
+        /// <param name="candidateId"> The candidate that owns the file. Omit to request a job-level file. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="path"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult DownloadFile(string jobId, string path, string candidateId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.DownloadFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+                using PipelineMessage message = CreateDownloadFileRequest(jobId, path, candidateId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Downloads a declared file as a binary stream. The path must match a file descriptor returned by the service. When candidate_id is omitted, the request is scoped to the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the parent optimization job. </param>
+        /// <param name="path"> The file path returned in the file descriptor. </param>
+        /// <param name="candidateId"> The candidate that owns the file. Omit to request a job-level file. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="path"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> DownloadFileAsync(string jobId, string path, string candidateId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.DownloadFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+                using PipelineMessage message = CreateDownloadFileRequest(jobId, path, candidateId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Downloads a declared file as a binary stream. The path must match a file descriptor returned by the service. When candidate_id is omitted, the request is scoped to the job. </summary>
+        /// <param name="jobId"> The ID of the parent optimization job. </param>
+        /// <param name="path"> The file path returned in the file descriptor. </param>
+        /// <param name="candidateId"> The candidate that owns the file. Omit to request a job-level file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="path"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<BinaryData> DownloadFile(string jobId, string path, string candidateId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+            ClientResult result = DownloadFile(jobId, path, candidateId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary> Downloads a declared file as a binary stream. The path must match a file descriptor returned by the service. When candidate_id is omitted, the request is scoped to the job. </summary>
+        /// <param name="jobId"> The ID of the parent optimization job. </param>
+        /// <param name="path"> The file path returned in the file descriptor. </param>
+        /// <param name="candidateId"> The candidate that owns the file. Omit to request a job-level file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="path"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<BinaryData>> DownloadFileAsync(string jobId, string path, string candidateId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+            ClientResult result = await DownloadFileAsync(jobId, path, candidateId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// [Protocol Method] Requests cancellation of a running or queued job. Returns 409 Conflict if the job is already in a terminal state.
         /// <list type="bullet">
         /// <item>

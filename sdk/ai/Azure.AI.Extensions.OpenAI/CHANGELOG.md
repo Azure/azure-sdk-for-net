@@ -1,3 +1,14 @@
+## 3.0.1-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- Marked `ToolConfigs` as obsolete on `AzureAISearchTool`, `AzureFunctionTool`, `BingGroundingTool`, `CaptureStructuredOutputsTool`, and `OpenApiTool`. Also marked `Name` and `Description` as obsolete on `AzureAISearchTool`, `BingGroundingTool`, and `CaptureStructuredOutputsTool`, matching their existing service deprecations.
+
+### Bugs Fixed
+
+### Other Changes
+
 # Release History
 
 ## 3.0.0 (2026-11-12)
@@ -12,11 +23,16 @@
 - `ProjectResponsesClient.GetResponseStreamingAsync` now yields strongly typed response items.
 - `ProjectResponsesClient`'s experimental diagnostic changed from `OPENAI001` to `AAIP002`.
 
+- Removed the unrelated Voice Agents preview flag from default OpenAI-compatible requests.
+
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.15.0`. See the [OpenAI 2.15.0 release notes](https://github.com/openai/openai-dotnet/blob/OpenAI_2.15.0/CHANGELOG.md#2150-2026-11-04) for the upstream breaking changes to experimental APIs, including the async-only streaming methods that `ProjectResponsesClient` inherits.
 
 ### Sample Updates
 - Synchronous streaming samples were removed, because streaming in synchronous scenarios is not supported anymore. 
+
+- No user-facing API changes.
+- Regenerated from `foundry/snap-20261109` at [`3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b`](https://github.com/Azure/azure-rest-api-specs/tree/3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

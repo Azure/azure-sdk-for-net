@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -26,7 +25,6 @@ namespace Azure.AI.Projects
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
-        [Experimental("AAIP001")]
         internal SimpleQnADataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int maxSamples, IList<SimpleQnAFineTuningQuestionType> questionTypes) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
             MaxSamples = maxSamples;
@@ -37,7 +35,6 @@ namespace Azure.AI.Projects
         public int MaxSamples { get; set; }
 
         /// <summary> The question types to generate. Used only for fine-tuning scenarios. </summary>
-        [Experimental("AAIP001")]
         public IList<SimpleQnAFineTuningQuestionType> QuestionTypes { get; }
     }
 }

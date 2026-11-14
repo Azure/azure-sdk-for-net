@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configuration of the model used in the insight generation. </summary>
-    [Experimental("AAIP001")]
     public partial class InsightModelConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,21 +17,25 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="InsightModelConfiguration"/>. </summary>
         /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelDeploymentName"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public InsightModelConfiguration(string modelDeploymentName)
         {
             Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
 
             ModelDeploymentName = modelDeploymentName;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="InsightModelConfiguration"/>. </summary>
         /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal InsightModelConfiguration(string modelDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelDeploymentName = modelDeploymentName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </summary>
         public string ModelDeploymentName { get; set; }

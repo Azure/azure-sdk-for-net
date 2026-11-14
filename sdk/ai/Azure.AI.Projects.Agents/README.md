@@ -19,8 +19,10 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Key concepts](#key-concepts)
   - [Service API versions](#service-api-versions)
   - [Select a service API version](#select-a-service-api-version)
+  - [Voice Agent feature stages](#voice-agent-feature-stages)
 - [Additional concepts](#additional-concepts)
 - [Examples](#examples)
+  - [Voice Agents REST administration and telephony](#voice-agents-rest-administration-and-telephony)
   - [Declarative Agents](#declarative-agents)
     - [Agent version drafts](#agent-version-drafts)
   - [Hosted Agents](#hosted-agents)
@@ -84,6 +86,23 @@ AgentAdministrationClientOptions options = new(version: AgentAdministrationClien
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
+### Voice Agent feature stages
+
+Voice Agent features have individual release stages in the `v1` service contract:
+
+| Stage | Features |
+| --- | --- |
+| GA | Realtime and cascaded voice agents; agent generation and version management; persisted Realtime conversations, responses, and items; heard/generated audio and conversation recordings; audio, voice, transcription, avatar, and soundscape configuration; function, MCP, system, and toolbox tools; delegate subagents; Twilio and Teams Phone Extensibility bindings, calls, transfers, and direct outbound call jobs. |
+| Preview | Native GPT Live; inline subagents and handoff; SIP addresses and bindings; telephony campaigns; post-call delivery, including `VoiceAgentDefinition.PostCall`. |
+
+Preview models and members retain the `AAIP001` experimental opt-in. The `VoiceAgents=V1Preview` feature header remains available for operations or configurations that require preview features; GA configurations do not require a blanket Voice Agents preview opt-in. Shared base types can represent both GA and preview variants without making every variant experimental.
+
+The client does not automatically opt GA Voice Agent reads, non-SIP telephony operations, or `agents:generate` into preview. Native GPT Live conversation operations and telephony campaigns always send their required `VoiceAgents=V1Preview` opt-in. Conditional features require an explicit caller opt-in: pass `foundryFeatures: "VoiceAgents=V1Preview"` when creating or updating a definition that uses native Live, inline/Handoff, or post-call delivery. For protocol operations accepting `RequestOptions`, use `SetHeader("Foundry-Features", "VoiceAgents=V1Preview")`; for typed telephony methods, configure a caller pipeline policy when operating on SIP resources. The SDK preserves explicitly supplied feature headers rather than replacing them with unrelated defaults.
+
+Existing `BetaVoiceAgents...` client names are retained for compatibility and do not determine a feature's release stage. `AAIP002` separately identifies members that depend on experimental OpenAI SDK types, even when the Foundry feature is GA. The NuGet package's prerelease version is also independent of the service's per-feature stages.
+
+Service availability still depends on the selected model, provider, and deployment. Soundscapes are rendered only for telephony calls, not direct WebSocket or browser WebRTC sessions, and are not mixed into persisted conversation recordings. Configuring the GA `gpt-live-transcribe` transcription model does not make the native GPT Live protocol GA.
+
 ### Additional concepts
 
 The Azure.AI.Projects.Agents framework is organized so that for each call requiring a REST API request, there are synchronous and asynchronous counterparts, where the latter has the "Async" suffix. For example, the following code demonstrates the creation of a `ProjectsAgentVersion` object.
@@ -124,6 +143,17 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 In most of the code snippets we will show only the asynchronous sample for brevity. Please refer to the individual [samples][samples] for both synchronous and asynchronous code.
 
 ## Examples
+
+### Voice Agents REST administration and telephony
+
+Use the [Voice Agents REST sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects.Agents/samples/Sample_VoiceAgents_REST.md) to create and inspect a
+typed voice agent definition and to read existing telephony bindings, call history, call jobs,
+transfer targets, and campaign status. The telephony examples are read-only and do not place calls
+or submit campaigns.
+
+For runtime scenarios that use WebSockets, realtime sessions, or GPT Live audio, see the
+[`Azure.AI.Projects` voice agent sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent.md) and
+[`Azure.AI.Projects` GPT Live sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md).
 
 ### Declarative Agents
 

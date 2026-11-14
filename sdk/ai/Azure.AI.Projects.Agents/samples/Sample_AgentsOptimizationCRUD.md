@@ -66,7 +66,7 @@ Synchronous sample:
 AgentOptimizationConfiguration conf = new(
     evaluationConfiguration: new(
         trainingSet: GetDataset(0, 7),
-        evaluators: [ new AgentOptimizationEvaluator(name: "builtin.meteor_score") ],
+        evaluators: [new AgentOptimizationEvaluator(name: "builtin.meteor_score")],
         evaluationModel: new(modelDeploymentName)
         )
     {
@@ -134,7 +134,7 @@ Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
 Synchronous sample:
 ```C# Snippet:Sample_GetOptimizationJob_AgentsOptimization_Sync
 int reportedWarnings = 0;
-while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded)
+while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded && submittedJob1.Status != AgentsJobStatus.Cancelled)
 {
     Thread.Sleep(500);
     submittedJob1 = jobsClient.Get(submittedJob1.Id, cancellationToken: default);
@@ -147,7 +147,7 @@ while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status !=
         }
     }
 }
-if (submittedJob1.Status == AgentsJobStatus.Failed)
+if (submittedJob1.Status != AgentsJobStatus.Succeeded)
 {
     throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
 }
@@ -156,7 +156,7 @@ if (submittedJob1.Status == AgentsJobStatus.Failed)
 Asynchronous sample:
 ```C# Snippet:Sample_GetOptimizationJob_AgentsOptimization_Async
 int reportedWarnings = 0;
-if (submittedJob1.Status == AgentsJobStatus.Failed)
+if (submittedJob1.Status != AgentsJobStatus.Succeeded)
 {
     throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
 }
@@ -268,7 +268,7 @@ while (DateTime.UtcNow < deadline)
     }
     catch { }
 }
-Console.WriteLine($"The job {submittedJob2.Id} was{(wasDeleted ? "": " not")}.");
+Console.WriteLine($"The job {submittedJob2.Id} was{(wasDeleted ? "" : " not")}.");
 await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```

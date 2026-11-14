@@ -10,7 +10,6 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Input audio configuration for a voice agent. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentAudioInputConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -25,9 +24,11 @@ namespace Azure.AI.Projects.Agents
         private bool _transcriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAudioInputConfig"/>. </summary>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public VoiceAgentAudioInputConfig()
         {
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAudioInputConfig"/>. </summary>
         /// <param name="format"> The input audio format. </param>
@@ -36,6 +37,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="echoCancellation"> Optional server-side echo cancellation settings. </param>
         /// <param name="transcription"> Asynchronous input-audio transcription. Set to null to disable transcription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal VoiceAgentAudioInputConfig(RealtimeAudioFormat format, VoiceAgentNoiseReduction noiseReduction, VoiceAgentTurnDetectionConfig turnDetection, VoiceAgentEchoCancellation echoCancellation, VoiceAgentInputTranscription transcription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
@@ -47,6 +49,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input audio format. </summary>
+        [Experimental("AAIP002")]
         public RealtimeAudioFormat Format { get; set; }
 
         /// <summary> Input noise reduction. Set to null to disable. </summary>

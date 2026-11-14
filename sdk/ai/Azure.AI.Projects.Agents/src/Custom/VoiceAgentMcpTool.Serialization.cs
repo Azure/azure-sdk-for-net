@@ -8,7 +8,9 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
+#pragma warning disable AAIP002
 [CodeGenSerialization(nameof(AllowedTools), DeserializationValueHook = nameof(DeserializeAllowedToolsValue))]
+#pragma warning restore AAIP002
 public partial class VoiceAgentMcpTool : IJsonModel<VoiceAgentMcpTool>
 {
     // CUSTOM: Accepts the MCP shorthand allowed_tools array form and normalizes it into McpToolFilter.

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
-    <Version>3.0.0-beta.7</Version>
+    <Version>3.0.1-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>2.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Projects</PackageTags>
@@ -30,6 +30,7 @@
 
     <!-- Shared source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="..\..\Azure.AI.Projects.Agents\src\Custom\Internal\FoundryFeaturesPolicy.cs" Link="Shared\FoundryFeaturesPolicy.cs" />
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
