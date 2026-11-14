@@ -926,9 +926,16 @@ file does not expose secrets based on `bicep lint`, a `.env` file is written nex
 `test-resources.bicep` that can be loaded by a test harness to be used for recording tests.
 
 .PARAMETER SuppressVsoCommands
-When -CI is set and this switch is false, the script emits Azure Pipelines logging
-commands to register secrets for log redaction. Set this switch to suppress those
-commands in CI environments that don't support them, such as stress test clusters.
+When -CI is set and this switch is $false (the default in Azure Pipelines), the
+script emits Azure Pipelines logging commands to publish deployment outputs as
+pipeline variables and register secret outputs for log masking.
+
+Setting this switch to $true suppresses all Azure Pipelines logging commands
+emitted by this script. Deployment outputs will not be available as pipeline
+variables to later steps, and secret outputs will not be registered for log
+masking. Use true only in CI environments that don't support Azure Pipelines
+logging commands (like stress test clusters). This switch does not mask values
+printed or logged by other means.
 
 .PARAMETER ServicePrincipalAuth
 Use the provisioner SP credentials to deploy, and pass the test SP credentials
