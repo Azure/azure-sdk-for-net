@@ -823,9 +823,12 @@ Describe 'Re-review prompt' {
         $stated | Select-Object -Unique | Should -Be $minutes
     }
 
-    It 'reserves report_incomplete for failures that happen, not a size estimate' {
+    It 'reserves report_incomplete for actual failures, not projected work' {
         $script:Step4 | Should -Match '\breport_incomplete\b'
         $script:Step4 | Should -Match '(?i)\bestimate\b'
+        $script:Step4 | Should -Match '(?i)actual 50-minute limit is close'
+        $script:Step4 | Should -Match '(?i)Do not report incomplete based on a projected duration or changed-file count'
+        $script:Step4 | Should -Match '(?i)start reviewing the first batch'
         $script:Step4 | Should -Match '(?i)\blist the files you reviewed\b'
     }
 
