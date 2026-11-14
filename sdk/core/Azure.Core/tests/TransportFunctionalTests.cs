@@ -282,6 +282,45 @@ namespace Azure.Core.Tests
                 new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
             };
 
+        public static object[] HeaderValuesWithCrlf =>
+            new object[]
+            {
+                new object[] { "value\r" },
+                new object[] { "value\n" },
+                new object[] { "value\r\nInjected: 1" },
+                new object[] { "value\0" },
+            };
+
+        [TestCaseSource(nameof(HeaderValuesWithCrlf))]
+        public void AddRejectsHeaderValuesContainingCrlf(string headerValue)
+        {
+            Request request = GetTransport().CreateRequest();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => request.Headers.Add("Custom-Header", headerValue));
+
+            Assert.AreEqual("value", ex.ParamName);
+        }
+
+        [TestCaseSource(nameof(HeaderValuesWithCrlf))]
+        public void AddHttpHeaderRejectsHeaderValuesContainingCrlf(string headerValue)
+        {
+            Request request = GetTransport().CreateRequest();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => request.Headers.Add(new HttpHeader("Custom-Header", headerValue)));
+
+            Assert.AreEqual("header", ex.ParamName);
+        }
+
+        [TestCaseSource(nameof(HeaderValuesWithCrlf))]
+        public void SetValueRejectsHeaderValuesContainingCrlf(string headerValue)
+        {
+            Request request = GetTransport().CreateRequest();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => request.Headers.SetValue("Custom-Header", headerValue));
+
+            Assert.AreEqual("value", ex.ParamName);
+        }
+
         [TestCaseSource(nameof(HeadersWithValues))]
         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
