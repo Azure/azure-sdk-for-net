@@ -152,7 +152,7 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteAsync("mcp2");
         }
         catch { }
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
@@ -220,7 +220,7 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteAsync("mcp");
         }
         catch { }
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
@@ -401,7 +401,7 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxRecord> records = await toolboxClient.GetAllAsync().ToListAsync();
         int created = 0;
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
@@ -452,7 +452,7 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxVersion> records = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Ascending).ToListAsync();
         int created = 0;
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
@@ -752,21 +752,21 @@ public class AgentsTests : AgentsTestBase
         // Download
         string temporaryFile = Path.GetTempFileName();
         File.Delete(temporaryFile);
-        BinaryData dataBin = await filesClient.DownloadAsync(
+        BinaryData dataBin = (await filesClient.DownloadAsync(
             sessionStoragePath: $"storage/{file2}",
             localPath: temporaryFile
-        );
+        )).GetRawResponse().Content;
         string data = File.ReadAllText(temporaryFile);
         Assert.That(data, Is.EqualTo("The test file\n"));
         data = dataBin.ToString();
         Assert.That(data, Is.EqualTo("The test file\n"));
         // Delete
-        await filesClient.DeleteAsync(localPath: $"storage/{file2}");
+        await filesClient.DeleteAsync(sessionStoragePath: $"storage/{file2}");
         response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         lstEntries = await response.Select(x => x.Name).ToListAsync();
         Assert.That(lstEntries, Has.Count.EqualTo(1));
         Assert.That(lstEntries[0], Is.EqualTo(file1));
-        await filesClient.DeleteAsync(localPath: $"storage/{file1}");
+        await filesClient.DeleteAsync(sessionStoragePath: $"storage/{file1}");
         response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         Assert.That(await response.ToListAsync(), Has.Count.EqualTo(0));
         await agentsClient.DeleteSessionAsync(

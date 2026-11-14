@@ -404,7 +404,7 @@ Toolboxes allow us to store tools in Azure so that they can be retrieved and use
 
 In the example below we create two versions of an MCP tool and save them to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-MCPToolboxTool tool = new(serverLabel: "api-specs")
+McpToolboxTool tool = new(serverLabel: "api-specs")
 {
     Name = "mcp-tool",
     Description = "Sample MCP tool",
