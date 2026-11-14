@@ -14,6 +14,7 @@ namespace Azure.AI.Projects.Tests.Utils
     public static class ProjectsTestSanitizers
     {
         internal const string PlaybackAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
+        internal const string PlaybackExternalAgentsFeaturePattern = @"(?:^ExternalAgents=V1Preview(?:,|$)|,ExternalAgents=V1Preview(?=,|$))";
         internal const string LegacyDefaultVoiceAgentFeaturePattern = @"(\AMemoryStores=V1Preview,WorkflowAgents=V1Preview,(?:[^,]+,)*DraftAgents=V1Preview),VoiceAgents=V1Preview(?=,ModelRouterControls=V1Preview(?:,|\z))";
         internal const string LegacyDefaultVoiceAgentFeatureReplacement = "${1}";
 
@@ -76,6 +77,12 @@ namespace Azure.AI.Projects.Tests.Utils
                 testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
                 {
                     Regex = PlaybackAgentInsightsFeaturePattern,
+                    Value = string.Empty
+                }));
+                // External Agents is GA; older recordings still carry its preview opt-in.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = PlaybackExternalAgentsFeaturePattern,
                     Value = string.Empty
                 }));
                 // Remove only the obsolete token embedded in the legacy defaults, not explicit Voice opt-ins.
