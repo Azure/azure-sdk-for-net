@@ -186,14 +186,14 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult> DownloadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<BinaryData>> DownloadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
         ClientResult result = await DownloadAsync(_agentName, _sessionId, sessionStoragePath, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
-        return result;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary> Download a file from the session sandbox as a binary stream. Also return file as binary data. </summary>
@@ -203,14 +203,14 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult Download(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual ClientResult<BinaryData> Download(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
         ClientResult result = Download(_agentName, _sessionId, sessionStoragePath, cancellationToken.ToRequestOptions());
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
-        return result;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary>

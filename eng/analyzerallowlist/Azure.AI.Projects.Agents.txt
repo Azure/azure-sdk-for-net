@@ -60,3 +60,5 @@ nowarn:AAIP002 M:Azure.AI.Projects.Agents.ToolboxShellContainerAutoEnvironment.J
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.ToolboxShellContainerAutoEnvironment.DeserializeToolboxShellContainerAutoEnvironment(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.McpToolboxTool.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.McpToolboxTool.DeserializeMcpToolboxTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.FileSearchToolboxTool.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.FileSearchToolboxTool.DeserializeFileSearchToolboxTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)

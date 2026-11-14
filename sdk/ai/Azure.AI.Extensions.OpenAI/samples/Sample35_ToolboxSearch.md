@@ -15,7 +15,7 @@ AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentT
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolSearch_Sync
-MCPToolboxTool mcp = new(serverLabel: "api-specs")
+McpToolboxTool mcp = new(serverLabel: "api-specs")
 {
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
     ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
@@ -40,7 +40,7 @@ ToolboxVersion toolBox = toolboxClient.CreateVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolSearch_Async
-MCPToolboxTool mcp = new(serverLabel: "api-specs")
+McpToolboxTool mcp = new(serverLabel: "api-specs")
 {
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
     ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)

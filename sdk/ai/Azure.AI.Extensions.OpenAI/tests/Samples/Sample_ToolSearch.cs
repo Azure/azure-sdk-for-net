@@ -38,7 +38,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolSearch_Async
-        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        McpToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
             ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
@@ -154,7 +154,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolSearch_Sync
-        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        McpToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
             ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)

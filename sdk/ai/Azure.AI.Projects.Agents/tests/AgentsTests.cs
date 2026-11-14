@@ -755,7 +755,7 @@ public class AgentsTests : AgentsTestBase
         BinaryData dataBin = (await filesClient.DownloadAsync(
             sessionStoragePath: $"storage/{file2}",
             localPath: temporaryFile
-        )).GetRawResponse().Content;
+        ));
         string data = File.ReadAllText(temporaryFile);
         Assert.That(data, Is.EqualTo("The test file\n"));
         data = dataBin.ToString();

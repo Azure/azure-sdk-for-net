@@ -2397,7 +2397,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="filters"></param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
         /// <returns> A new <see cref="Agents.FileSearchToolboxTool"/> instance for mocking. </returns>
-        public static FileSearchToolboxTool FileSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, long? maxNumResults = default, object rankingOptions = default, BinaryData filters = default, IEnumerable<string> vectorStoreIds = default)
+        [Experimental("AAIP002")]
+        public static FileSearchToolboxTool FileSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, long? maxNumResults = default, FileSearchToolRankingOptions rankingOptions = default, BinaryData filters = default, IEnumerable<string> vectorStoreIds = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
             vectorStoreIds ??= new ChangeTrackingList<string>();

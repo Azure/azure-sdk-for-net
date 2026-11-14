@@ -124,6 +124,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.FabricIQPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FileSearchToolboxTool))]
+#pragma warning disable OPENAI001 // global::OpenAI.Responses.FileSearchToolRankingOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(FileSearchToolRankingOptions))]
+#pragma warning restore OPENAI001 // global::OpenAI.Responses.FileSearchToolRankingOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.GenerateVoiceAgentContent is experimental and may change in future versions.
