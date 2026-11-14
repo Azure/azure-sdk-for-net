@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.Projects.Evaluation;
+namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("ModelSamplingParams")]
 public partial class ModelSamplingParams
 {
     /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/>. </summary>

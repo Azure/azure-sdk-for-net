@@ -1,12 +1,13 @@
 # Release History
 
-## 3.0.0-beta.7 (2026-11-12)
+## 3.0.0 (2026-11-12)
 
 ### Features Added
 - Uploading of models now can be cancelled.
 
 ### Breaking Changes
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
+- The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

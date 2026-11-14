@@ -1,12 +1,18 @@
 # Release History
 
-## 3.0.0-beta.7 (2026-11-12)
+## 3.0.0 (2026-11-12)
 
 ### Breaking Changes
 - `AzureFunctionDefinitionFunction` was removed, please use the same class from `Azure.AI.Extensions.OpenAI`.
 - Renamed `GenerateVoiceAgentRequest` to `GenerateVoiceAgentContent` and `UpdateToolboxRequest` to `UpdateToolboxContent`.
 - Removed the `AgentCard(string, IEnumerable<AgentCardSkill>)` and `VersionSelector(IEnumerable<VersionSelectionRule>)` constructors. Use the parameterless constructors and set `Version`/`Skills` and `VersionSelectionRules` with initializers.
 - `TelephonyTransferTarget` constructor no longer takes `name`; set the `Name` property instead.
+- `AgentReference` class was removed, please use class `AgentReference` from `Azure.AI.Extensions.OpenAI` package.
+- `MCPToolboxTool` was renamed to `McpToolboxTool`.
+- `PSTNTelephonyTransferDestination` was renamed to `PstnTelephonyTransferDestination`.
+- The order of `GetAgentVersionsAsync` and `GetAgentVersions` arguments was changed. Now it is `string agentName, bool? includeDrafts, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default`.
+- The `DownloadAgentCode` and `DownloadAgentCodeAsync` methods of `AgentAdministrationClient` are now returning `ClientResult<BinaryData>` amd `Task<ClientResult<BinaryData>>` respectively.
+- The `Download` and `DownloadAsync` methods of `AgentSessionFiles` are now returning  returning `ClientResult<BinaryData>` amd `Task<ClientResult<BinaryData>>` respectively.
 
 ### Bugs Fixed
 - Fixed the cancellation of `ToolboxRecord` update.

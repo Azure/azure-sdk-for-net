@@ -54,8 +54,15 @@ To use Azure AI Agents capabilities, you must have an [Azure subscription](https
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
+dotnet add package Azure.AI.Projects.Agents
+```
+
+To install latest beta version please run:
+
+```dotnetcli
 dotnet add package Azure.AI.Projects.Agents --prerelease
 ```
+
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
 
@@ -397,7 +404,7 @@ Toolboxes allow us to store tools in Azure so that they can be retrieved and use
 
 In the example below we create two versions of an MCP tool and save them to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-MCPToolboxTool tool = new(serverLabel: "api-specs")
+McpToolboxTool tool = new(serverLabel: "api-specs")
 {
     Name = "mcp-tool",
     Description = "Sample MCP tool",
@@ -779,7 +786,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
 [samples]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/net/samples
-[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-v1
 [nuget]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/package
 [source_code]: https://aka.ms/Azure.AI.Projects.Agents/net/code
 [product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc

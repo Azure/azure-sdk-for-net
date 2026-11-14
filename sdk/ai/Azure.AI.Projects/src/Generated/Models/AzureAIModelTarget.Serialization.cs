@@ -80,11 +80,6 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(SamplingParams))
-            {
-                writer.WritePropertyName("sampling_params"u8);
-                writer.WriteObjectValue(SamplingParams, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,7 +110,6 @@ namespace Azure.AI.Projects.Evaluation
             string @type = "azure_ai_model";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string model = default;
-            ModelSamplingParams samplingParams = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -128,21 +122,12 @@ namespace Azure.AI.Projects.Evaluation
                     model = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sampling_params"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    samplingParams = ModelSamplingParams.DeserializeModelSamplingParams(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureAIModelTarget(@type, additionalBinaryDataProperties, model, samplingParams);
+            return new AzureAIModelTarget(@type, additionalBinaryDataProperties, model);
         }
     }
 }

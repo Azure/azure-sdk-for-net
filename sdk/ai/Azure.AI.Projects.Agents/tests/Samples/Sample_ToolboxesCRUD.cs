@@ -44,7 +44,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Sample MCP tool",
@@ -130,7 +130,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         string toolboxName = "mcp";
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Sync
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Sample MCP tool",

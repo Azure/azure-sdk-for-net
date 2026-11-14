@@ -124,6 +124,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.FabricIQPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FileSearchToolboxTool))]
+#pragma warning disable OPENAI001 // global::OpenAI.Responses.FileSearchToolRankingOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(FileSearchToolRankingOptions))]
+#pragma warning restore OPENAI001 // global::OpenAI.Responses.FileSearchToolRankingOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.GenerateVoiceAgentContent is experimental and may change in future versions.
@@ -142,7 +145,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InvocationsWsProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(McpProtocolConfiguration))]
-    [ModelReaderWriterBuildable(typeof(MCPToolboxTool))]
+    [ModelReaderWriterBuildable(typeof(McpToolboxTool))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(McpToolFilter))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
@@ -165,9 +168,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(PromptOptimizationConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(PSTNTelephonyTransferDestination))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.PstnTelephonyTransferDestination is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(PstnTelephonyTransferDestination))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.PstnTelephonyTransferDestination is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RaiInvocationModeration))]
     [ModelReaderWriterBuildable(typeof(RaiSseTextSelector))]
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeAudioFormat is experimental and may change in future versions.

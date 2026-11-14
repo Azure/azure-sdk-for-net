@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
-public partial class MCPToolboxTool
+[CodeGenType("MCPToolboxTool")]
+public partial class McpToolboxTool
 {
     [CodeGenMember("RequireApproval")]
     internal BinaryData RequireApprovalInternal { get; set; }

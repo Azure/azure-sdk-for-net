@@ -12,10 +12,10 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP tool stored in a toolbox. </summary>
-    public partial class MCPToolboxTool : ToolboxTool, IJsonModel<MCPToolboxTool>
+    public partial class McpToolboxTool : ToolboxTool, IJsonModel<McpToolboxTool>
     {
-        /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/> for deserialization. </summary>
-        internal MCPToolboxTool()
+        /// <summary> Initializes a new instance of <see cref="McpToolboxTool"/> for deserialization. </summary>
+        internal McpToolboxTool()
         {
         }
 
@@ -23,45 +23,45 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ToolboxTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McpToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMCPToolboxTool(document.RootElement, options);
+                        return DeserializeMcpToolboxTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MCPToolboxTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McpToolboxTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McpToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MCPToolboxTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McpToolboxTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MCPToolboxTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<McpToolboxTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCPToolboxTool IPersistableModel<MCPToolboxTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (MCPToolboxTool)PersistableModelCreateCore(data, options);
+        McpToolboxTool IPersistableModel<McpToolboxTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (McpToolboxTool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MCPToolboxTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<McpToolboxTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MCPToolboxTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<McpToolboxTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McpToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MCPToolboxTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(McpToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
@@ -183,24 +183,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCPToolboxTool IJsonModel<MCPToolboxTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MCPToolboxTool)JsonModelCreateCore(ref reader, options);
+        McpToolboxTool IJsonModel<McpToolboxTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (McpToolboxTool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ToolboxTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McpToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MCPToolboxTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(McpToolboxTool)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMCPToolboxTool(document.RootElement, options);
+            return DeserializeMcpToolboxTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MCPToolboxTool DeserializeMCPToolboxTool(JsonElement element, ModelReaderWriterOptions options)
+        internal static McpToolboxTool DeserializeMcpToolboxTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -372,7 +372,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MCPToolboxTool(
+            return new McpToolboxTool(
                 @type,
                 name,
                 description,

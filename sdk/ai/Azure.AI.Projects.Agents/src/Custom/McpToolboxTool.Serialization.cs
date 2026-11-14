@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents;
 # pragma warning disable AAIP002
 
 [CodeGenSerialization(nameof(AllowedTools), DeserializationValueHook = nameof(DeserializeAllowedToolsValue))]
-public partial class MCPToolboxTool : IJsonModel<MCPToolboxTool>
+public partial class McpToolboxTool : IJsonModel<McpToolboxTool>
 {
     // CUSTOM: Accepts the MCP shorthand allowed_tools array form and normalizes it into McpToolFilter.
     private static void DeserializeAllowedToolsValue(JsonProperty property, ref McpToolFilter allowedTools, ModelReaderWriterOptions options = null)

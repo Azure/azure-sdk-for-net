@@ -16,7 +16,7 @@ string toolboxName = "mcp";
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Sync
-MCPToolboxTool tool = new(serverLabel: "api-specs")
+McpToolboxTool tool = new(serverLabel: "api-specs")
 {
     Name = "mcp-tool",
     Description = "Sample MCP tool",
@@ -46,7 +46,7 @@ Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tool
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-MCPToolboxTool tool = new(serverLabel: "api-specs")
+McpToolboxTool tool = new(serverLabel: "api-specs")
 {
     Name = "mcp-tool",
     Description = "Sample MCP tool",

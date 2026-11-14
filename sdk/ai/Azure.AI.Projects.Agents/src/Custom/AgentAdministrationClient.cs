@@ -355,7 +355,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<ProjectsAgentVersion> GetAgentVersions(bool? includeDrafts, string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ProjectsAgentVersion> GetAgentVersions(string agentName, bool? includeDrafts, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -439,7 +439,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<ProjectsAgentVersion> GetAgentVersionsAsync(bool? includeDrafts, string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ProjectsAgentVersion> GetAgentVersionsAsync(string agentName, bool? includeDrafts, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -1040,7 +1040,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual BinaryData DownloadAgentCode(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<BinaryData> DownloadAgentCode(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
@@ -1051,7 +1051,7 @@ public partial class AgentAdministrationClient
         );
         BinaryData data = result.GetRawResponse().Content;
         FileHelper.SaveAndUnzipData(path, data);
-        return data;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary>
@@ -1075,7 +1075,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<BinaryData> DownloadAgentCodeAsync(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<BinaryData>> DownloadAgentCodeAsync(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
@@ -1086,7 +1086,7 @@ public partial class AgentAdministrationClient
         ).ConfigureAwait(false);
         BinaryData data = result.GetRawResponse().Content;
         FileHelper.SaveAndUnzipData(path, data);
-        return data;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary> Gets the lazily-initialized agent toolboxes sub-client. </summary>

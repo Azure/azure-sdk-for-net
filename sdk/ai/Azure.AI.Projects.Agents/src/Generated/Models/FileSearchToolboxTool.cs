@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -35,7 +37,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="rankingOptions"> Ranking options for search. </param>
         /// <param name="filters"></param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxNumResults, object rankingOptions, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxNumResults, FileSearchToolRankingOptions rankingOptions, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             MaxNumResults = maxNumResults;
             RankingOptions = rankingOptions;
@@ -47,7 +50,8 @@ namespace Azure.AI.Projects.Agents
         public long? MaxNumResults { get; set; }
 
         /// <summary> Ranking options for search. </summary>
-        public object RankingOptions { get; set; }
+        [Experimental("AAIP002")]
+        public FileSearchToolRankingOptions RankingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the Filters.

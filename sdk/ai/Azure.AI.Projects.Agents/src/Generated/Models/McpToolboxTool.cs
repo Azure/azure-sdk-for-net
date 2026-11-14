@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP tool stored in a toolbox. </summary>
-    public partial class MCPToolboxTool : ToolboxTool
+    public partial class McpToolboxTool : ToolboxTool
     {
 #pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
@@ -19,10 +19,10 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _allowedToolsIsDefined;
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="McpToolboxTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
-        public MCPToolboxTool(string serverLabel) : base(ToolboxToolType.Mcp)
+        public McpToolboxTool(string serverLabel) : base(ToolboxToolType.Mcp)
         {
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
             AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="McpToolboxTool"/>. </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         [Experimental("AAIP002")]
-        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, McpToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal McpToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, McpToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUri = serverUri;

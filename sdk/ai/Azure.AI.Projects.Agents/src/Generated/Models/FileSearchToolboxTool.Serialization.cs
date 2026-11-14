@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -80,7 +81,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue<object>(RankingOptions, options);
+                writer.WriteObjectValue(RankingOptions, options);
             }
             if (Optional.IsDefined(Filters, _filtersIsDefined))
             {
@@ -149,7 +150,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? maxNumResults = default;
-            object rankingOptions = default;
+            FileSearchToolRankingOptions rankingOptions = default;
             bool filtersIsDefined = false;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
@@ -206,7 +207,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    rankingOptions = prop.Value.GetObject();
+                    rankingOptions = ModelReaderWriter.Read<FileSearchToolRankingOptions>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

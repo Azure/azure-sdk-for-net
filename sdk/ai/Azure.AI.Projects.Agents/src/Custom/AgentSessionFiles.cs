@@ -77,7 +77,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public ClientResult<SessionFileWriteResult> Upload(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual ClientResult<SessionFileWriteResult> Upload(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
@@ -186,14 +186,14 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<BinaryData> DownloadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<BinaryData>> DownloadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
         ClientResult result = await DownloadAsync(_agentName, _sessionId, sessionStoragePath, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
-        return result.GetRawResponse().Content;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary> Download a file from the session sandbox as a binary stream. Also return file as binary data. </summary>
@@ -203,47 +203,47 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual BinaryData Download(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual ClientResult<BinaryData> Download(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
         ClientResult result = Download(_agentName, _sessionId, sessionStoragePath, cancellationToken.ToRequestOptions());
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
-        return result.GetRawResponse().Content;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary>
     /// Delete a file or directory from the session sandbox.
     /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
     /// </summary>
-    /// <param name="localPath"> The file or directory path to delete, relative to the session home directory. </param>
+    /// <param name="sessionStoragePath"> The file or directory path to delete, relative to the session home directory. </param>
     /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="localPath"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="localPath"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="sessionStoragePath"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult Delete(string localPath, bool? recursive = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult Delete(string sessionStoragePath, bool? recursive = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
+        Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
 
-        return Delete(_agentName, _sessionId, localPath, recursive, cancellationToken.ToRequestOptions());
+        return Delete(_agentName, _sessionId, sessionStoragePath, recursive, cancellationToken.ToRequestOptions());
     }
 
     /// <summary>
     /// Delete a file or directory from the session sandbox.
     /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
     /// </summary>
-    /// <param name="localPath"> The file or directory path to delete, relative to the session home directory. </param>
+    /// <param name="sessionStoragePath"> The file or directory path to delete, relative to the session home directory. </param>
     /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="localPath"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="localPath"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="sessionStoragePath"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult> DeleteAsync(string localPath, bool? recursive = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult> DeleteAsync(string sessionStoragePath, bool? recursive = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
+        Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
 
-        return await DeleteAsync(_agentName, _sessionId, localPath, recursive, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return await DeleteAsync(_agentName, _sessionId, sessionStoragePath, recursive, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 }

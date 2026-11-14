@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -133,7 +134,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("promoted_agent"u8))
                 {
-                    promotedAgent = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    promotedAgent = ModelReaderWriter.Read<AgentReference>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

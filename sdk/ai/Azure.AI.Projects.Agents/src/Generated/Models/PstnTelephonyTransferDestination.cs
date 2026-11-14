@@ -10,23 +10,23 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A PSTN destination for a telephony transfer target. </summary>
     [Experimental("AAIP001")]
-    public partial class PSTNTelephonyTransferDestination : TelephonyTransferDestination
+    public partial class PstnTelephonyTransferDestination : TelephonyTransferDestination
     {
-        /// <summary> Initializes a new instance of <see cref="PSTNTelephonyTransferDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PstnTelephonyTransferDestination"/>. </summary>
         /// <param name="value"> The E.164 phone number to call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PSTNTelephonyTransferDestination(string value) : base(TelephonyTransferDestinationKind.Pstn)
+        public PstnTelephonyTransferDestination(string value) : base(TelephonyTransferDestinationKind.Pstn)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PSTNTelephonyTransferDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PstnTelephonyTransferDestination"/>. </summary>
         /// <param name="kind"> The telephony transfer destination type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The E.164 phone number to call. </param>
-        internal PSTNTelephonyTransferDestination(TelephonyTransferDestinationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value) : base(kind, additionalBinaryDataProperties)
+        internal PstnTelephonyTransferDestination(TelephonyTransferDestinationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value) : base(kind, additionalBinaryDataProperties)
         {
             Value = value;
         }
