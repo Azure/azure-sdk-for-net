@@ -1,14 +1,21 @@
-# Azure Semantic Reranker client library for .NET
+# Azure Data AI client library for .NET
 
-Azure.Data.AI provides semantic reranking operations for .NET applications.
+Azure.Data.AI provides semantic reranking and multimodal embedding operations for .NET applications.
 
-Version 1.0.0 is the first stable release and targets service API version `2026-10-30`.
+Version `1.1.0-beta.1` is a preview release that defaults to service API version `2026-11-01-preview`.
+For semantic reranking against the stable API, configure `InferenceClientOptions.ServiceVersion.V2026_10_30`.
 
 ## Getting started
 
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
+
+```dotnetcli
+dotnet add package Azure.Data.AI --prerelease
+```
+
+To select only stable package versions, omit `--prerelease`:
 
 ```dotnetcli
 dotnet add package Azure.Data.AI
@@ -50,7 +57,60 @@ the returned `SemanticRerankingResult`. For JSON documents, set `DocumentType` t
 `TargetPaths` collection; the client serializes them as a comma-separated string.
 The API contract specifies a maximum of 100 paths.
 
+Use `InferenceClient.GetEmbeddings` or `GetEmbeddingsAsync` to embed text, queries, or document images.
+Request settings are named method arguments; no request options object is required.
+The `model` argument is required for both typed and anonymous inputs. Embedding
+`modelVersion` is not part of the embedding API and is omitted from requests;
+legacy service responses that include it can still be read. These behaviors
+are generated from the preview specification. Semantic reranking's
+`Metadata.ModelVersion` is unchanged.
+Embedding model availability and image input support depend on the endpoint.
+
 ## Examples
+
+### Multimodal embeddings with anonymous inputs
+
+The .NET overloads accept anonymous objects or dictionaries using the JSON property names
+`kind`, `id`, `content`, `url`, and `sasToken`. Omit `kind` for text, or set it to `query` or `image`.
+Anonymous members and dictionary keys can also use PascalCase, and `kind` accepts
+`EmbeddingContentKind` values. Unknown or duplicate properties are rejected before sending.
+`JsonElement` inputs must use the exact JSON property names.
+Settings stay as named arguments and the response is typed.
+For image inputs, authenticate `client` with Microsoft Entra ID and provide a caller-signed
+user-delegation SAS for the image blob.
+
+```C# Snippet:Inference_GetMultimodalEmbeddings
+Response<EmbeddingResult> response = await client.GetEmbeddingsAsync(
+    inputs: new object[]
+    {
+        new
+        {
+            id = "map-question",
+            kind = "query",
+            content = "Which walking route follows the lake?"
+        },
+        new
+        {
+            id = "trail-map",
+            kind = "image",
+            url = imageBlobUrl,
+            sasToken = imageSasToken
+        }
+    },
+    model: "microsoft-embedding-1-large",
+    dimensions: 2560,
+    delivery: EmbeddingDelivery.Inline);
+
+EmbeddingResult result = response.Value;
+```
+
+Use a model and dimension supported by your endpoint. Omit `dimensions` to use the
+model's native width. Each input produces a separate embedding, not a fused query/image embedding.
+Anonymous inputs use reflection-based JSON serialization; trimmed or Native AOT applications
+should use the typed `EmbeddingInput` overloads instead. These inputs have a parameterless
+constructor and optional `ContentKind`, so text inputs only need `Content`. `EmbeddingResult` exposes generic
+`EmbeddingItem` and `EmbeddingUsage` bases; cast to the concrete multimodal models to access their
+vector payloads and modality-specific metadata.
 
 See [Semantic reranking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dataai/Azure.Data.AI/samples/Sample1_SemanticReranking.md).
 

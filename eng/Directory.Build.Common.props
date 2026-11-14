@@ -178,13 +178,10 @@
   TARGET FRAMEWORK DEFINITIONS
 
     Define the target frameworks that client libraries must support by default. These will change
-    as new .NET versions are released and older versions reach end-of-life. See:
-    https://azure.github.io/azure-sdk/dotnet_introduction.html#target-frameworks
+    as new .NET versions are released and older versions reach end-of-life. See
+    doc/TargetFrameworkGuidelines.md for when they change and what else to update.
 
     IMPORTANT NOTES:
-
-      - When multiple frameworks are present, list from newest to oldest so that the most recent version
-        is used by default for test runs.
 
       - When updating, change pipelines/templates/steps/install-dotnet.yml as needed, without
         re-installing SDKs already found on all supported agents.
