@@ -61,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepId"> Identifier of the run step. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
@@ -101,7 +101,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepId"> Identifier of the run step. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
@@ -134,7 +134,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepId"> Identifier of the run step. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
@@ -156,7 +156,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepId"> Identifier of the run step. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
