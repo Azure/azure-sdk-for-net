@@ -762,6 +762,7 @@ Describe 'Re-review prompt' {
     BeforeAll {
         Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
         $script:Frontmatter, $script:PromptBody = ([IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md')) -split '(?m)^---\s*$', 3)[1, 2]
+        $script:Step0 = [regex]::Match($script:PromptBody, '(?ms)^## Step 0\b.*?(?=^## |\z)').Value
         $script:Step4 = [regex]::Match($script:PromptBody, '(?ms)^## Step 4\b.*?(?=^## |\z)').Value
     }
 
@@ -778,6 +779,20 @@ Describe 'Re-review prompt' {
     It 'reads GitHub through the MCP tools, not the unauthenticated gh CLI' {
         $script:PromptBody | Should -Not -Match '\bgh\s+(?:pr\s+(?:diff|view)|api\s+graphql)\b'
         $script:PromptBody | Should -Match '\bpull_request_read\b'
+    }
+
+    It 'retrieves the authoritative Azure SDK guidelines through GitHub MCP rather than curl' {
+        $script:Step0 | Should -Match '(?is)get_file_contents.*?owner `Azure`.*?repo `azure-sdk`.*?`docs/dotnet/introduction\.md`'
+        $script:Step0 | Should -Match '(?i)do not use `curl` or `wget`'
+    }
+
+    It 'tries permitted alternatives before reporting a missing tool and does not publish afterward' {
+        $script:PromptBody | Should -Match '(?i)try permitted alternatives before calling `missing_tool`'
+        $script:PromptBody | Should -Match '(?i)after calling `missing_tool`.*do not call `submit_pull_request_review` or `create_pull_request_review_comment`'
+    }
+
+    It 'reports incomplete when required guidelines remain unavailable after permitted alternatives' {
+        $script:Step0 | Should -Match '(?i)if a required guideline source remains unavailable after permitted alternatives, call `report_incomplete`'
     }
 
     It 'points the agent at the patches the export step writes instead of get_files' {
