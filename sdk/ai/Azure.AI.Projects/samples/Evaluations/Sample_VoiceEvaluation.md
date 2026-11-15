@@ -11,15 +11,15 @@ a chat deployment named `gpt-4.1` (or the optional simulator override) and acces
 the managed `gpt-realtime` voice model. The simulator and judge serve different
 purposes; an audio judge is not necessarily a chat-capable simulator.
 
-The [runnable sample](../../tests/Samples/Evaluation/Sample_VoiceEvaluation.cs) contains
+The [runnable sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/Evaluation/Sample_VoiceEvaluation.cs) contains
 both workflows and their shared helpers. Authenticate with `DefaultAzureCredential`
 as in the other project samples. Result parsing and pagination reuse
-[EvaluationSampleBase](../../tests/Samples/Evaluation/EvaluationSampleBase.cs).
+[EvaluationSampleBase](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/Evaluation/EvaluationSampleBase.cs).
 
 ## Grade existing recordings
 
 Set the endpoint and judge variables above. By default, the sample uploads the
-[bundled synthetic conversation](../../tests/TestData/VoiceEvaluation/README.md)
+[bundled synthetic conversation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/TestData/VoiceEvaluation/README.md)
 as a folder dataset, then creates and uploads a separate JSONL dataset referencing
 that recording. Both datasets and the working folder are removed after evaluation,
 including on failure. No target agent is invoked.
@@ -47,7 +47,7 @@ Use one compact object per line in the actual JSONL file. The recording must
 be registered in the same project. Its reference uses `/datasets/` and a relative
 member path, not a local file or SAS URL. `FOUNDRY_DATASET_ID` identifies the JSONL
 dataset, not the WAV asset. The default setup normalizes the uploaded recording ID
-from `/data/` to `/datasets/`; see [datasets](../Sample1_Datasets.md) for dataset operations.
+from `/data/` to `/datasets/`; see [datasets](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample1_Datasets.md) for dataset operations.
 
 The recorded workflow uses task completion, groundedness, customer satisfaction,
 and coherence audio evaluators:
@@ -455,7 +455,7 @@ authenticated Azure CLI. Set `CLIENTMODEL_DISABLE_BOOTSTRAPPING=true` to prevent
 automatic resource provisioning if a required variable is missing.
 
 To prepare a fresh re-recording fixture, create one short synthetic store-hours
-conversation WAV and follow the [dataset upload sample](../Sample1_Datasets.md)
+conversation WAV and follow the [dataset upload sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample1_Datasets.md)
 to upload and register it as a recording asset. Create a separate one-row,
 transcript-free JSONL file containing
 `{"conversation_artifacts":{"audio":{"asset_id":"<registered recording ID>","asset_file_path":"recordings/conversation.wav"}}}`.

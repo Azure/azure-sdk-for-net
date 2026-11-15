@@ -34,4 +34,4 @@ description: Samples for the Azure.AI.Projects client library.
 
 | Sample | Description |
 | ------ | ----------- |
-| [Voice evaluation](Evaluations/Sample_VoiceEvaluation.md) | Grade existing recorded conversations or simulate and grade a short call against an existing voice agent. |
+| [Voice evaluation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample_VoiceEvaluation.md) | Grade existing recorded conversations or simulate and grade a short call against an existing voice agent. |
