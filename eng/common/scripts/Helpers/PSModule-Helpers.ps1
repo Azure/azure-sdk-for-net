@@ -104,7 +104,13 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     # Temporary registrations can interfere with dotnet tool install on the same feed.
     # Clean them up even on failure, but leave pre-existing registrations untouched.
     if ($registeredRepositoryName) {
-      Unregister-PSRepository -Name $registeredRepositoryName -ErrorAction Stop | Out-Null
+      try {
+        Unregister-PSRepository -Name $registeredRepositoryName -ErrorAction Stop | Out-Null
+      }
+      catch {
+        # Only warn: throwing from finally would replace an install error or discard an installed module.
+        Write-Warning "Failed to unregister temporary package repository '$registeredRepositoryName': $_"
+      }
     }
   }
 }
