@@ -19,7 +19,7 @@ as in the other project samples. Result parsing and pagination reuse
 ## Grade existing recordings
 
 Set the endpoint and judge variables above. By default, the sample uploads the
-[bundled synthetic conversation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/TestData/VoiceEvaluation/README.md)
+[bundled synthetic conversation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/TestData/VoiceEvaluation/Fixture.md)
 as a folder dataset, then creates and uploads a separate JSONL dataset referencing
 that recording. Both datasets and the working folder are removed after evaluation,
 including on failure. No target agent is invoked.
