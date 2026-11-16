@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added opt-in `InvocationsServerOptions.AllowedWebSocketOrigins` validation for
+  Invocations WebSocket upgrades. Empty lists preserve existing behavior, and requests
+  without an `Origin` header remain supported.
+
 ### Breaking Changes
 
 ### Bugs Fixed

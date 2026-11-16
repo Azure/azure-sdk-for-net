@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Invocations;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,45 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class Sample7Snippets
     {
+        public static void ConfigureAuthenticatedServices(WebApplicationBuilder builder)
+        {
+            #region Snippet:Invocations_Sample7_AuthenticatedServices
+
+            // Use the application's existing authentication scheme in production.
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Events.OnRedirectToLogin = context =>
+                    {
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        return Task.CompletedTask;
+                    };
+                });
+            builder.Services.AddAuthorization();
+            builder.Services.AddInvocationsServer(options =>
+            {
+                options.AllowedWebSocketOrigins.Add("https://client.example");
+            });
+
+            #endregion
+        }
+
+        public static void MapAuthenticatedInvocations(WebApplication app)
+        {
+            #region Snippet:Invocations_Sample7_AuthenticatedEndpoints
+
+            app.UseAuthentication();
+
+            // Insert trusted-header normalization and a lifecycle-path guard here
+            // unless a trusted proxy already enforces both.
+            app.UseAgentServerCore();
+
+            app.UseAuthorization();
+            app.MapInvocationsServer().RequireAuthorization();
+
+            #endregion
+        }
+
         [Test]
         public void SelfHost()
         {

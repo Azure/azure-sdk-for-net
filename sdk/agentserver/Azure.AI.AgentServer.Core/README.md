@@ -99,6 +99,59 @@ The `PlatformHeaders` static class defines all HTTP header name constants used a
 | `ErrorSource` | `x-platform-error-source` | Response | Error origin classification |
 | `ErrorDetail` | `x-platform-error-detail` | Response | Diagnostic error context |
 
+### Self-hosting and trusted headers
+
+> **Warning:** The library trusts inbound `x-agent-*` headers as supplied. These headers
+> are metadata, not authentication or proof of a user's identity. Do not expose an
+> unauthenticated agent host directly to untrusted callers.
+
+In a platform-managed deployment, the authenticated gateway is the trust boundary.
+When self-hosting, configure authentication and authorization for protocol HTTP
+endpoints and WebSocket upgrades, or restrict ingress to an authenticated, trusted proxy.
+The proxy or application must remove caller-supplied `x-agent-*` headers and populate
+only the values it can establish from authenticated identity and trusted context.
+In particular, derive `x-agent-user-id` from a stable, authorized user identity before
+using it to partition state. Accept `x-agent-foundry-call-id` only from a trusted
+platform gateway; do not generate or forward an arbitrary client-provided value.
+If the proxy performs these checks, prevent callers from bypassing it to reach the host.
+
+For Tier 3 in-process header normalization, order the pipeline as follows:
+
+1. Authenticate the caller with `UseAuthentication()`.
+2. Remove/replace untrusted headers using your application's trusted-header middleware,
+   and reject or separately authorize private lifecycle requests.
+3. Call `UseAgentServerCore()`, which captures the normalized platform request context.
+4. Apply endpoint authorization with `UseAuthorization()` and map protocol routes with
+   `RequireAuthorization()`.
+
+`UseAgentServerCore()` handles POST requests to `/_agent/before-snapshot`,
+`/_before_snapshot`, `/_agent/after-restore`, and `/_after_restore` in middleware
+before endpoint routing dispatch. These are **not** mapped protocol endpoints:
+`RequireAuthorization()` on a route group does not protect them, and a fallback policy
+enforced by authorization middleware **after** Core is bypassed. Do not rely on endpoint
+authorization or a fallback policy alone. Block all four lifecycle paths at untrusted
+ingress, or add authentication/authorization or reject middleware **before**
+`UseAgentServerCore()`. Permit lifecycle requests only from trusted platform infrastructure.
+The separately mapped `/readiness` health probe is intentionally open by default and is
+not protected by the protocol route group's authorization; preserve access for intended
+health probes when adding broader ingress or middleware restrictions.
+
+Tier 1 and Tier 2 hosts call `UseAgentServerCore()` inside `AgentHostBuilder.Build()`,
+before returning the application. Adding middleware through the returned application
+cannot place it before Core. For in-process header normalization or lifecycle guards,
+register an ASP.NET Core `IStartupFilter` that prepends the required middleware
+(including authentication before identity-based normalization), or enforce these
+checks in a trusted proxy that callers cannot bypass.
+
+`FoundryEnvironment.IsHosted` is environment detection, not an authentication check.
+The library cannot determine whether a host is protected by custom middleware or a
+reverse proxy and does not infer a security policy from hosting mode.
+
+See the [Invocations self-hosting sample][invocations_tier3] for
+`MapInvocationsServer().RequireAuthorization()` and opt-in WebSocket origin validation.
+Origin validation is a browser restriction, not a substitute for authentication:
+non-browser clients can omit or set `Origin`.
+
 ### Request correlation (`x-request-id`)
 
 `RequestIdMiddleware` sets the `x-request-id` response header on every HTTP response. The value is resolved in priority order:

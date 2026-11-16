@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.WebSockets;
 using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Invocations.Internal;
 
@@ -31,13 +33,65 @@ internal sealed class WebSocketEndpointHandler
 
     private readonly InvocationsActivitySource _activitySource;
     private readonly ILogger<WebSocketEndpointHandler> _logger;
+    private readonly InvocationsServerOptions _options;
 
     public WebSocketEndpointHandler(
         InvocationsActivitySource activitySource,
-        ILogger<WebSocketEndpointHandler> logger)
+        ILogger<WebSocketEndpointHandler> logger,
+        IOptions<InvocationsServerOptions> options)
     {
         _activitySource = activitySource;
         _logger = logger;
+        _options = options.Value;
+    }
+
+    private bool IsOriginAllowed(HttpRequest request)
+    {
+        if (_options.AllowedWebSocketOrigins.Count == 0 ||
+            !request.Headers.TryGetValue("Origin", out var origins))
+        {
+            return true;
+        }
+
+        if (origins.Count != 1 || !TryParseOrigin(origins[0], out var origin))
+        {
+            return false;
+        }
+
+        foreach (var allowedOrigin in _options.AllowedWebSocketOrigins)
+        {
+            if (TryParseOrigin(allowedOrigin, out var allowed) &&
+                string.Equals(origin.Scheme, allowed.Scheme, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(origin.IdnHost, allowed.IdnHost, StringComparison.OrdinalIgnoreCase) &&
+                origin.Port == allowed.Port)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool TryParseOrigin(string? value, [NotNullWhen(true)] out Uri? origin)
+    {
+        origin = null;
+        try
+        {
+            return value is not null &&
+                value.AsSpan().Trim().Length == value.Length &&
+                Uri.TryCreate(value, UriKind.Absolute, out origin) &&
+                origin.IsWellFormedOriginalString() &&
+                (origin.Scheme == Uri.UriSchemeHttp || origin.Scheme == Uri.UriSchemeHttps) &&
+                origin.IdnHost.Length != 0 &&
+                origin.UserInfo.Length == 0 &&
+                value.AsSpan(origin.Scheme.Length + 3).IndexOfAny('/', '?', '#') < 0;
+        }
+        catch (UriFormatException)
+        {
+            // IDN normalization can fail after Uri.TryCreate succeeds.
+            origin = null;
+            return false;
+        }
     }
 
     /// <summary>
@@ -59,6 +113,12 @@ internal sealed class WebSocketEndpointHandler
         if (!httpContext.WebSockets.IsWebSocketRequest)
         {
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            return;
+        }
+
+        if (!IsOriginAllowed(httpContext.Request))
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
             return;
         }
 

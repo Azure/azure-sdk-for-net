@@ -2,6 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Net;
+using System.Net.WebSockets;
+using System.Security.Claims;
+using System.Text;
+using Azure.AI.AgentServer.Invocations.Tests.Snippets;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +25,66 @@ namespace Azure.AI.AgentServer.Invocations.Tests;
 [TestFixture]
 public class Tier3SelfHostedInvocationsTests
 {
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SelfHosted_AuthorizationSample_ProtectsHttpAndWebSocket(bool authenticated)
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        Sample7Snippets.ConfigureAuthenticatedServices(builder);
+        builder.Services.AddScoped<InvocationHandler, SampleWs1Snippets.EchoAgentHandler>();
+        await using var app = builder.Build();
+        Sample7Snippets.MapAuthenticatedInvocations(app);
+        app.MapGet("/test-sign-in", async (HttpContext context) =>
+        {
+            var principal = new ClaimsPrincipal(new ClaimsIdentity(
+                new[] { new Claim(ClaimTypes.NameIdentifier, "test-user") },
+                CookieAuthenticationDefaults.AuthenticationScheme));
+            await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        });
+        await app.StartAsync();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        using var client = app.GetTestClient();
+        string? cookie = null;
+        if (authenticated)
+        {
+            using var signIn = await client.GetAsync("/test-sign-in", timeout.Token);
+            cookie = signIn.Headers.GetValues("Set-Cookie").Single().Split(';')[0];
+            client.DefaultRequestHeaders.Add("Cookie", cookie);
+        }
+
+        using var response = await client.PostAsync("/invocations", new StringContent("hello"), timeout.Token);
+        Assert.That(response.StatusCode, Is.EqualTo(authenticated ? HttpStatusCode.OK : HttpStatusCode.Unauthorized));
+        var server = app.GetTestServer();
+        var wsClient = server.CreateWebSocketClient();
+        wsClient.ConfigureRequest = request =>
+        {
+            request.Headers.Origin = "https://client.example";
+            if (cookie is not null)
+            {
+                request.Headers.Cookie = cookie;
+            }
+        };
+        var uri = new Uri(server.BaseAddress, "invocations_ws");
+        if (authenticated)
+        {
+            using var ws = await wsClient.ConnectAsync(uri, timeout.Token);
+            var payload = Encoding.UTF8.GetBytes("authenticated");
+            await ws.SendAsync(payload, WebSocketMessageType.Text, true, timeout.Token);
+            var buffer = new byte[256];
+            var received = await ws.ReceiveAsync(buffer, timeout.Token);
+            Assert.That(Encoding.UTF8.GetString(buffer, 0, received.Count), Is.EqualTo("authenticated"));
+            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", timeout.Token);
+        }
+        else
+        {
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await wsClient.ConnectAsync(uri, timeout.Token));
+            Assert.That(ex!.Message, Does.Contain("401"));
+        }
+    }
+
     [Test]
     public async Task SelfHosted_AddAndMap_WorksWithPlainWebApplication()
     {

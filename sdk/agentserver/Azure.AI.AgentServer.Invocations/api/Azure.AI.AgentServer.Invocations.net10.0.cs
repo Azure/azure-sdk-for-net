@@ -37,6 +37,7 @@ namespace Azure.AI.AgentServer.Invocations
     public partial class InvocationsServerOptions
     {
         public InvocationsServerOptions() { }
+        public System.Collections.Generic.IList<string> AllowedWebSocketOrigins { get { throw null; } }
     }
     public static partial class InvocationsServerServiceCollectionExtensions
     {

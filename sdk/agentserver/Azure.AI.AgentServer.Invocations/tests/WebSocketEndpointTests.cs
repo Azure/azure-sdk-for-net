@@ -457,11 +457,145 @@ public class WebSocketEndpointTests
         }
     }
 
-    private static WebApplication BuildApp(InvocationHandler handler, ILoggerProvider? extraLoggerProvider = null)
+    [TestCase(null, true)]
+    [TestCase("https://client.example", true)]
+    [TestCase("HTTPS://CLIENT.EXAMPLE:443", true)]
+    [TestCase("https://client.example:8443", false)]
+    [TestCase("http://client.example", false)]
+    [TestCase("https://client.example.attacker.example", false)]
+    [TestCase("https://other.example", false)]
+    [TestCase("null", false)]
+    [TestCase("", false)]
+    [TestCase("https://client.example/path", false)]
+    [TestCase("https://client.example/", false)]
+    [TestCase("https://client.example?", false)]
+    [TestCase("https://client.example#fragment", false)]
+    [TestCase("https://user@client.example", false)]
+    [TestCase("https://client.example https://other.example", false)]
+    [TestCase("https://client.example,https://other.example", false)]
+    [TestCase("https://client.example\\", false)]
+    [TestCase("https://client.example ", false)]
+    [TestCase(" https://client.example", false)]
+    public async Task WebSocketOrigins_ConfiguredAllowlist_EnforcesOriginBeforeAccept(string? origin, bool allowed)
+    {
+        var observed = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(new CaptureSessionIdInvocationHandler(observed),
+            configure: options => options.AllowedWebSocketOrigins.Add("https://client.example"));
+        await app.StartAsync();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        var server = app.GetTestServer();
+        var wsClient = server.CreateWebSocketClient();
+        wsClient.ConfigureRequest = request =>
+        {
+            if (origin is not null)
+            {
+                request.Headers.Origin = origin;
+            }
+        };
+        var uri = new Uri(server.BaseAddress, "invocations_ws");
+
+        if (allowed)
+        {
+            using var ws = await wsClient.ConnectAsync(uri, timeout.Token);
+            await observed.Task.WaitAsync(timeout.Token);
+            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", timeout.Token);
+        }
+        else
+        {
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await wsClient.ConnectAsync(uri, timeout.Token));
+            Assert.That(ex!.Message, Does.Contain("403"));
+            Assert.That(observed.Task.IsCompleted, Is.False, "Rejected upgrades must not invoke the handler.");
+        }
+    }
+
+    [Test]
+    public async Task WebSocketOrigins_PlainHttpRequest_Preserves400()
+    {
+        await using var app = BuildApp(new EchoWebSocketInvocationHandler(),
+            configure: options => options.AllowedWebSocketOrigins.Add("https://client.example"));
+        await app.StartAsync();
+        using var client = app.GetTestClient();
+        client.DefaultRequestHeaders.Add("Origin", "https://other.example");
+
+        using var response = await client.GetAsync("/invocations_ws");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test]
+    public async Task WebSocketOrigins_MultipleHeaderValues_Returns403()
+    {
+        await using var app = BuildApp(new EchoWebSocketInvocationHandler(),
+            configure: options => options.AllowedWebSocketOrigins.Add("https://client.example"));
+        await app.StartAsync();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        var server = app.GetTestServer();
+        var wsClient = server.CreateWebSocketClient();
+        wsClient.ConfigureRequest = request => request.Headers.Origin =
+            new[] { "https://client.example", "https://client.example" };
+
+        var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await wsClient.ConnectAsync(new Uri(server.BaseAddress, "invocations_ws"), timeout.Token));
+
+        Assert.That(ex!.Message, Does.Contain("403"));
+    }
+
+    [TestCase("http://localhost:8080", "HTTP://LOCALHOST:8080", true)]
+    [TestCase("http://localhost:8080", "http://localhost", false)]
+    [TestCase("https://[::1]:443", "https://[::1]", true)]
+    [TestCase("https://bücher.example", "https://xn--bcher-kva.example", true)]
+    [TestCase("https://\u200d.example", "https://\u200d.example", false)]
+    [TestCase("https://\u200d.example", "https://client.example", false)]
+    [TestCase("https://client.example/path", "https://client.example", false)]
+    [TestCase("*", "https://client.example", false)]
+    public async Task WebSocketOrigins_AllowlistEntries_MatchOnlyValidOrigins(
+        string configuredOrigin, string origin, bool allowed)
+    {
+        await using var app = BuildApp(new EchoWebSocketInvocationHandler(),
+            configure: options => options.AllowedWebSocketOrigins.Add(configuredOrigin));
+        await app.StartAsync();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        var server = app.GetTestServer();
+        var wsClient = server.CreateWebSocketClient();
+        wsClient.ConfigureRequest = request => request.Headers.Origin = origin;
+        var uri = new Uri(server.BaseAddress, "invocations_ws");
+
+        if (allowed)
+        {
+            using var ws = await wsClient.ConnectAsync(uri, timeout.Token);
+            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", timeout.Token);
+        }
+        else
+        {
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await wsClient.ConnectAsync(uri, timeout.Token));
+            Assert.That(ex!.Message, Does.Contain("403"));
+        }
+    }
+
+    [Test]
+    public async Task WebSocketOrigins_EmptyAllowlist_PreservesExistingBrowserConnections()
+    {
+        await using var app = BuildApp(new EchoWebSocketInvocationHandler());
+        await app.StartAsync();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        var server = app.GetTestServer();
+        var wsClient = server.CreateWebSocketClient();
+        wsClient.ConfigureRequest = request => request.Headers.Origin = "https://client.example";
+
+        using var ws = await wsClient.ConnectAsync(new Uri(server.BaseAddress, "invocations_ws"), timeout.Token);
+        await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", timeout.Token);
+    }
+
+    private static WebApplication BuildApp(
+        InvocationHandler handler,
+        ILoggerProvider? extraLoggerProvider = null,
+        Action<InvocationsServerOptions>? configure = null)
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddInvocationsServer();
+        builder.Services.AddInvocationsServer(configure);
         builder.Services.AddSingleton<InvocationHandler>(handler);
         if (extraLoggerProvider is not null)
         {

@@ -85,9 +85,111 @@ public class SummarizationHandler : InvocationHandler
 }
 ```
 
+## Protect a self-hosted application
+
+> **Warning:** The preceding minimal example does not configure authentication. The
+> library trusts `x-agent-*` headers as supplied; they do not authenticate callers.
+> Before exposing these endpoints, authenticate and authorize requests and remove or
+> replace caller-supplied platform identity headers. See
+> [Self-hosting and trusted headers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/README.md#self-hosting-and-trusted-headers).
+
+Use your application's existing authentication scheme and identity provider. The
+following cookie-based example assumes the application already has a trusted sign-in
+flow. It returns HTTP 401 instead of redirecting unauthenticated API requests.
+Replace the earlier `AddInvocationsServer()` registration with:
+
+```C# Snippet:Invocations_Sample7_AuthenticatedServices
+// Use the application's existing authentication scheme in production.
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        };
+    });
+builder.Services.AddAuthorization();
+builder.Services.AddInvocationsServer(options =>
+{
+    options.AllowedWebSocketOrigins.Add("https://client.example");
+});
+```
+
+Replace, rather than append to, the earlier `UseAgentServerCore()` and
+`MapInvocationsServer()` calls with the following ordered pipeline. Authenticate first,
+then run your application's trusted-header normalization and lifecycle-path guard
+**before** Core captures request headers. Endpoint authorization runs after Core and
+protects the mapped Invocations routes.
+
+The snippet marks the insertion point for that host-specific middleware; it does not
+implement normalization or lifecycle authorization. Insert those checks there, or
+ensure a trusted proxy establishes platform header values from authenticated identity
+and blocks untrusted lifecycle requests before forwarding to the application. Keep the
+separate health probe and other application route mappings from the earlier example.
+
+```C# Snippet:Invocations_Sample7_AuthenticatedEndpoints
+app.UseAuthentication();
+
+// Insert trusted-header normalization and a lifecycle-path guard here
+// unless a trusted proxy already enforces both.
+app.UseAgentServerCore();
+
+app.UseAuthorization();
+app.MapInvocationsServer().RequireAuthorization();
+```
+
+`RequireAuthorization()` protects the entire route group, including HTTP invocations,
+documentation endpoints, `/invocations_ws`, and the typed Voice
+`/voice_conversation_engine` route when registered. If authentication is handled by
+an upstream proxy instead, restrict host ingress so clients cannot bypass the proxy.
+Configure authorization policies appropriate for the application; authentication alone
+does not validate a caller-supplied `x-agent-user-id`.
+
+### Lifecycle and health paths
+
+`UseAgentServerCore()` handles POST requests to `/_agent/before-snapshot`,
+`/_before_snapshot`, `/_agent/after-restore`, and `/_after_restore` in middleware,
+before endpoint routing dispatch. They are not part of the Invocations route group:
+its `RequireAuthorization()` does not protect them. The pipeline above also places
+`UseAuthorization()` after Core, so a fallback policy there does not protect lifecycle
+requests either. Block all four lifecycle paths at untrusted ingress, or insert
+authentication/authorization or reject middleware at the marked point before Core.
+Allow lifecycle requests only from trusted platform infrastructure.
+
+`/readiness` is a separately mapped health probe, intentionally open by default; the
+Invocations authorization requirement does not cover it. Preserve access for intended
+health probes when applying broader restrictions.
+
+This middleware ordering is available directly in **Tier 3**. Tier 1 and Tier 2 hosts
+install `UseAgentServerCore()` inside `AgentHostBuilder.Build()`; middleware added to the
+returned application is too late to normalize headers before Core captures them.
+For those hosts, register an ASP.NET Core `IStartupFilter` that prepends authentication,
+trusted-header normalization, and any lifecycle guard, or enforce normalization and
+lifecycle restrictions in a trusted proxy that clients cannot bypass.
+
+### WebSocket origin validation
+
+`InvocationsServerOptions.AllowedWebSocketOrigins` applies to the Invocations WebSocket
+routes, including the typed Voice route. Configure it through `AddInvocationsServer`,
+`AddInvocations`, or `AddVoice` before starting the host.
+
+- The empty default list disables origin validation, preserving existing clients.
+- A nonempty list permits only a single, valid HTTP or HTTPS `Origin` whose scheme,
+  host, and effective port match an entry. Scheme and host are case-insensitive;
+  omitted default ports match explicit `:80` for HTTP or `:443` for HTTPS.
+- Use origins such as `https://client.example` or `http://localhost:5000`, without
+  paths, a trailing slash, credentials, query strings, or fragments. Wildcards and
+  substring matches are not supported. Invalid entries never match.
+- Invalid, multiple, or unlisted origins receive HTTP 403 before WebSocket acceptance.
+- Requests **without** `Origin` remain allowed for server-to-server compatibility,
+  even when a list is configured. This is not authentication, and does not replace
+  authorization, TLS, or browser HTTP endpoint protections such as antiforgery.
+
 ## Test the endpoints
 
-Your existing routes and the Invocations endpoints coexist:
+For the local, unauthenticated minimal example, your existing routes and the Invocations
+endpoints coexist. With authorization enabled, use your application's authenticated client:
 
 ```bash
 # Your existing route

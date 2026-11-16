@@ -22,6 +22,38 @@ public class VoiceConversationEngineEndpointTests
 {
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
 
+    [TestCase("/invocations_ws", true)]
+    [TestCase("/voice_conversation_engine", true)]
+    [TestCase("/invocations_ws", false)]
+    [TestCase("/voice_conversation_engine", false)]
+    public async Task VoiceRoutesEnforceConfiguredWebSocketOrigins(string path, bool allowed)
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        builder.Services.AddSingleton(new ConnectionObserver());
+        builder.AddVoice<RecordingVoiceHandler>(
+            options => options.AllowedWebSocketOrigins.Add("https://client.example"));
+        await using var app = builder.Build().App;
+        await app.StartAsync();
+        var client = app.GetTestServer().CreateWebSocketClient();
+        client.ConfigureRequest = request => request.Headers.Origin =
+            allowed ? "https://client.example" : "https://other.example";
+        var uri = new Uri(app.GetTestServer().BaseAddress, path);
+
+        if (allowed)
+        {
+            using var socket = await client.ConnectAsync(uri, CancellationToken.None).WaitAsync(TestTimeout);
+            await StartSessionAsync(socket);
+            await CloseAsync(socket);
+        }
+        else
+        {
+            Assert.That(
+                async () => await client.ConnectAsync(uri, CancellationToken.None).WaitAsync(TestTimeout),
+                Throws.TypeOf<InvalidOperationException>().With.Message.Contains("403"));
+        }
+    }
+
     [TestCase(true, "", "/invocations_ws")]
     [TestCase(true, "", "/voice_conversation_engine")]
     [TestCase(false, "", "/invocations_ws")]
