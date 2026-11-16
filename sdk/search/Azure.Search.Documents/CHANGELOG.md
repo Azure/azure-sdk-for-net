@@ -28,6 +28,7 @@
 
 ### Bugs Fixed
 
+- Fixed ambiguous API key and configuration-based client registration extension calls while retaining the legacy static registration methods.
 - Restored the 12.0.0 optional arguments on the `VectorQuery`, `KnowledgeSource`, `FacetResult`, and enumerable-based `SearchIndex` model factories.
 - Restored the 12.0.0 optional arguments on `SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord`. The overload accepting activity timestamps and a warning requires all arguments to avoid ambiguity with existing calls.
 - Fixed explicit `AddSearchClient`, `AddSearchIndexClient`, and `AddSearchIndexerClient` registrations with `TokenCredential`, including `DefaultAzureCredential`. ([#63072](https://github.com/Azure/azure-sdk-for-net/issues/63072))

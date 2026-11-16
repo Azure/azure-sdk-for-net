@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -11,6 +12,7 @@ using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.KnowledgeBases;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -94,6 +96,41 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public void ApiKeyExtensionSyntaxRegistersClients()
+        {
+            var builder = new TestClientFactoryBuilder();
+            var endpoint = new Uri("https://example.search.windows.net");
+            var credential = new AzureKeyCredential("fake-key");
+
+            builder.AddSearchClient(endpoint, "index", credential);
+            Assert.That(builder.RegisteredClient, Is.TypeOf<SearchClient>());
+
+            builder.AddSearchIndexClient(endpoint, credential);
+            Assert.That(builder.RegisteredClient, Is.TypeOf<SearchIndexClient>());
+
+            builder.AddSearchIndexerClient(endpoint, credential);
+            Assert.That(builder.RegisteredClient, Is.TypeOf<SearchIndexerClient>());
+        }
+
+        [Test]
+        public void ConfigurationExtensionSyntaxRegistersClients()
+        {
+            var builder = new TestClientFactoryBuilder();
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(
+                new Dictionary<string, string> { ["KnowledgeBaseRetrievalClient:knowledgeBaseName"] = "knowledge-base" }).Build();
+
+            #region Snippet:Azure_Search_Readme_RegisterClients
+            builder.AddSearchClient(configuration.GetSection("SearchClient"));
+            builder.AddSearchIndexClient(configuration.GetSection("SearchIndexClient"));
+            builder.AddSearchIndexerClient(configuration.GetSection("SearchIndexerClient"));
+            builder.AddKnowledgeBaseRetrievalClient(configuration.GetSection("KnowledgeBaseRetrievalClient"));
+            #endregion
+
+            Assert.That(builder.RegisteredClientType, Is.EqualTo(typeof(KnowledgeBaseRetrievalClient)));
+            Assert.That(((IConfigurationSection)builder.RegisteredConfiguration)["knowledgeBaseName"], Is.EqualTo("knowledge-base"));
+        }
+
+        [Test]
         public void BuilderCredentialExtensionsRemainUnambiguous()
         {
             var builder = new TestClientFactoryBuilder();
@@ -131,7 +168,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public void CompatibilityTypeAndMembersAreHiddenWithoutLosingExtensionMetadata()
+        public void CompatibilityTypeAndMembersAreHiddenWithOnlyUniqueExtensions()
         {
             Type compatibilityType = typeof(DocumentsClientBuilderExtensions);
             Assert.That(compatibilityType.GetCustomAttribute<EditorBrowsableAttribute>()?.State, Is.EqualTo(EditorBrowsableState.Never));
@@ -141,12 +178,15 @@ namespace Azure.Search.Documents.Tests
             foreach (MethodInfo method in methods)
             {
                 Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>()?.State, Is.EqualTo(EditorBrowsableState.Never), method.Name);
-                Assert.That(method.IsDefined(typeof(ExtensionAttribute), false), Is.True, method.Name);
+                bool isUniqueExtension = method.Name == nameof(DocumentsClientBuilderExtensions.AddKnowledgeBaseRetrievalClient) ||
+                    (method.GetGenericArguments().Length == 1 && method.GetParameters()[method.GetParameters().Length - 1].ParameterType != typeof(AzureKeyCredential));
+                Assert.That(method.IsDefined(typeof(ExtensionAttribute), false), Is.EqualTo(isUniqueExtension), method.Name);
             }
         }
 
         private sealed class TestClientFactoryBuilder :
             IAzureClientFactoryBuilderWithConfiguration<object>,
+            IAzureClientFactoryBuilderWithConfiguration<IConfigurationSection>,
             IAzureClientFactoryBuilderWithCredential
         {
             public object RegisteredClient { get; private set; }
@@ -168,6 +208,10 @@ namespace Azure.Search.Documents.Tests
                 RegisteredConfiguration = configuration;
                 return CreateRegistration<TClient, TOptions>();
             }
+
+            public IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(IConfigurationSection configuration)
+                where TOptions : class =>
+                RegisterClientFactory<TClient, TOptions>((object)configuration);
 
             public IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(
                 Func<TOptions, TClient> clientFactory)

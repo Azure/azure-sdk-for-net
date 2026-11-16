@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="credential"> The API key credential. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(
-            this TBuilder builder, Uri endpoint, string indexName, AzureKeyCredential credential)
+            TBuilder builder, Uri endpoint, string indexName, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder =>
             SearchClientBuilderExtensions.AddSearchClient(builder, endpoint, indexName, credential);
 
@@ -46,7 +46,7 @@ namespace Microsoft.Extensions.Azure
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder, TConfiguration>(
-            this TBuilder builder, TConfiguration configuration)
+            TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> =>
             SearchClientBuilderExtensions.AddSearchClient<TBuilder, TConfiguration>(builder, configuration);
 
@@ -56,7 +56,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="credential"> The API key credential. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder>(
-            this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+            TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder =>
             SearchClientBuilderExtensions.AddSearchIndexClient(builder, endpoint, credential);
 
@@ -76,7 +76,7 @@ namespace Microsoft.Extensions.Azure
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder, TConfiguration>(
-            this TBuilder builder, TConfiguration configuration)
+            TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> =>
             SearchClientBuilderExtensions.AddSearchIndexClient<TBuilder, TConfiguration>(builder, configuration);
 
@@ -86,7 +86,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="credential"> The API key credential. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(
-            this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+            TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder =>
             SearchClientBuilderExtensions.AddSearchIndexerClient(builder, endpoint, credential);
 
@@ -106,7 +106,7 @@ namespace Microsoft.Extensions.Azure
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder, TConfiguration>(
-            this TBuilder builder, TConfiguration configuration)
+            TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> =>
             SearchClientBuilderExtensions.AddSearchIndexerClient<TBuilder, TConfiguration>(builder, configuration);
 
