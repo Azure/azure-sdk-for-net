@@ -29,3 +29,10 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample13_DatasetsAsVectorStoreSource](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample13_DatasetsAsVectorStoreSource.md) | Using a Dataset as a source for a vector store search tool in an Agent. |
 | [Sample14_IndexCreationForAISearch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample14_IndexCreationForAISearch.md) | Azure AI Search Index creation sample, for usage as an Agent tool. |
 | [Sample11_InferenceImageEmbedding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample11_InferenceImageEmbedding.md) | Sample for `Azure.AI.Inference` Image Embeddings extensions. |
+
+## Evaluation data generation
+
+| Sample | Description |
+| ------ | ----------- |
+| [Sample19_DataGenerationJob](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample19_DataGenerationJob.md) | Generate evaluation data from a prompt. |
+| [Sample20_DataGenerationJob_RubricGeneration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample20_DataGenerationJob_RubricGeneration.md) | Generate evaluation test cases and rubric dimensions from agent traces. |
