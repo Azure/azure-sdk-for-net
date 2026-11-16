@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("deploymentSizeCapacities"u8);
                 writer.WriteStartArray();
-                foreach (DeploymentSizeCapacity item in DeploymentSizeCapacities)
+                foreach (CognitiveServicesManagedComputeDeploymentSizeCapacity item in DeploymentSizeCapacities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string scopeId = default;
             int? availableAccelerators = default;
             int? totalAvailableAccelerators = default;
-            IReadOnlyList<DeploymentSizeCapacity> deploymentSizeCapacities = default;
+            IReadOnlyList<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<DeploymentSizeCapacity> array = new List<DeploymentSizeCapacity>();
+                    List<CognitiveServicesManagedComputeDeploymentSizeCapacity> array = new List<CognitiveServicesManagedComputeDeploymentSizeCapacity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentSizeCapacity.DeserializeDeploymentSizeCapacity(item, options));
+                        array.Add(CognitiveServicesManagedComputeDeploymentSizeCapacity.DeserializeCognitiveServicesManagedComputeDeploymentSizeCapacity(item, options));
                     }
                     deploymentSizeCapacities = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 scopeId,
                 availableAccelerators,
                 totalAvailableAccelerators,
-                deploymentSizeCapacities ?? new ChangeTrackingList<DeploymentSizeCapacity>(),
+                deploymentSizeCapacities ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentSizeCapacity>(),
                 additionalBinaryDataProperties);
         }
     }

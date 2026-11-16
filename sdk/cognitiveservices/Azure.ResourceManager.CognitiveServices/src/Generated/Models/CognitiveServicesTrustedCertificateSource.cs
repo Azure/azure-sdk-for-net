@@ -14,17 +14,17 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> An Azure resource containing the CA certificate bundles trusted by supported features in the account. </summary>
-    public partial class TrustedCertificateSource
+    public partial class CognitiveServicesTrustedCertificateSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TrustedCertificateSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesTrustedCertificateSource"/>. </summary>
         /// <param name="type"> Type of resource containing the certificate bundles. Currently only AzureKeyVault is supported. </param>
         /// <param name="resourceId"> Azure resource ID of the Key Vault containing the referenced secrets. The account identity must have permission to read these secrets. </param>
         /// <param name="certificateBundleReferences"> References to secrets containing one or more PEM-encoded CA certificates. Each secret name and version pair must be unique within the source, using case-insensitive comparison. The same secret name can be referenced with different versions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="certificateBundleReferences"/> is null. </exception>
-        public TrustedCertificateSource(TrustedCertificateSourceType @type, ResourceIdentifier resourceId, IEnumerable<CertificateBundleReference> certificateBundleReferences)
+        public CognitiveServicesTrustedCertificateSource(CognitiveServicesTrustedCertificateSourceType @type, ResourceIdentifier resourceId, IEnumerable<CognitiveServicesCertificateBundleReference> certificateBundleReferences)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(certificateBundleReferences, nameof(certificateBundleReferences));
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CertificateBundleReferences = certificateBundleReferences.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrustedCertificateSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesTrustedCertificateSource"/>. </summary>
         /// <param name="type"> Type of resource containing the certificate bundles. Currently only AzureKeyVault is supported. </param>
         /// <param name="resourceId"> Azure resource ID of the Key Vault containing the referenced secrets. The account identity must have permission to read these secrets. </param>
         /// <param name="certificateBundleReferences"> References to secrets containing one or more PEM-encoded CA certificates. Each secret name and version pair must be unique within the source, using case-insensitive comparison. The same secret name can be referenced with different versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedCertificateSource(TrustedCertificateSourceType @type, ResourceIdentifier resourceId, IList<CertificateBundleReference> certificateBundleReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesTrustedCertificateSource(CognitiveServicesTrustedCertificateSourceType @type, ResourceIdentifier resourceId, IList<CognitiveServicesCertificateBundleReference> certificateBundleReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ResourceId = resourceId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Type of resource containing the certificate bundles. Currently only AzureKeyVault is supported. </summary>
         [WirePath("type")]
-        public TrustedCertificateSourceType Type { get; set; }
+        public CognitiveServicesTrustedCertificateSourceType Type { get; set; }
 
         /// <summary> Azure resource ID of the Key Vault containing the referenced secrets. The account identity must have permission to read these secrets. </summary>
         [WirePath("resourceId")]
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> References to secrets containing one or more PEM-encoded CA certificates. Each secret name and version pair must be unique within the source, using case-insensitive comparison. The same secret name can be referenced with different versions. </summary>
         [WirePath("certificateBundleReferences")]
-        public IList<CertificateBundleReference> CertificateBundleReferences { get; }
+        public IList<CognitiveServicesCertificateBundleReference> CertificateBundleReferences { get; }
     }
 }

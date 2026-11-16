@@ -12,16 +12,16 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A reference to a specific version of a Key Vault secret containing a PEM-encoded CA certificate or certificate bundle. </summary>
-    public partial class CertificateBundleReference
+    public partial class CognitiveServicesCertificateBundleReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CertificateBundleReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesCertificateBundleReference"/>. </summary>
         /// <param name="secretName"> Name of the Key Vault secret containing the CA certificate or certificate bundle. </param>
         /// <param name="secretVersion"> Required, pinned version of the Key Vault secret. Newer secret versions are not followed automatically. To rotate a bundle, update this value and resubmit the complete account trust configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
-        public CertificateBundleReference(string secretName, string secretVersion)
+        public CognitiveServicesCertificateBundleReference(string secretName, string secretVersion)
         {
             Argument.AssertNotNull(secretName, nameof(secretName));
             Argument.AssertNotNull(secretVersion, nameof(secretVersion));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             SecretVersion = secretVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateBundleReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesCertificateBundleReference"/>. </summary>
         /// <param name="secretName"> Name of the Key Vault secret containing the CA certificate or certificate bundle. </param>
         /// <param name="secretVersion"> Required, pinned version of the Key Vault secret. Newer secret versions are not followed automatically. To rotate a bundle, update this value and resubmit the complete account trust configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateBundleReference(string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesCertificateBundleReference(string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretName = secretName;
             SecretVersion = secretVersion;

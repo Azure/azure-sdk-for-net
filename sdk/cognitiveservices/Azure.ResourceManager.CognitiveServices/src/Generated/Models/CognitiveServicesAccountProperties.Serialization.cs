@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     writer.WritePropertyName("trustedCertificateSources"u8);
                     writer.WriteStartArray();
-                    foreach (TrustedCertificateSource item in TrustedCertificateSources)
+                    foreach (CognitiveServicesTrustedCertificateSource item in TrustedCertificateSources)
                     {
                         writer.WriteObjectValue(item, options);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
-            IList<TrustedCertificateSource> trustedCertificateSources = new ChangeTrackingList<TrustedCertificateSource>();
+            IList<CognitiveServicesTrustedCertificateSource> trustedCertificateSources = new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -766,10 +766,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         trustedCertificateSources = null;
                         continue;
                     }
-                    List<TrustedCertificateSource> array = new List<TrustedCertificateSource>();
+                    List<CognitiveServicesTrustedCertificateSource> array = new List<CognitiveServicesTrustedCertificateSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TrustedCertificateSource.DeserializeTrustedCertificateSource(item, options));
+                        array.Add(CognitiveServicesTrustedCertificateSource.DeserializeCognitiveServicesTrustedCertificateSource(item, options));
                     }
                     trustedCertificateSources = array;
                     continue;

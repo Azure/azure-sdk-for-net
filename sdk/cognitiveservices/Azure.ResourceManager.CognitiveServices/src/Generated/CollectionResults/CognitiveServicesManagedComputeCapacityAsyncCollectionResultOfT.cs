@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _offer, _acceleratorType, _deploymentId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _offer, _acceleratorType, _deploymentId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetCognitiveServicesManagedComputeCapacitiesRequest(nextLink, _subscriptionId, _offer, _acceleratorType, _deploymentId, _location, _context) : _client.CreateGetCognitiveServicesManagedComputeCapacitiesRequest(_subscriptionId, _offer, _acceleratorType, _deploymentId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

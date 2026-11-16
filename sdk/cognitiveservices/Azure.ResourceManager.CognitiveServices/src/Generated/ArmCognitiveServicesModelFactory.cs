@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <param name="trustedCertificateSources"> Private CA trust sources for supported features in an AIServices account with allowProjectManagement enabled. Supports one Azure Key Vault source containing version-pinned references to secrets with PEM-encoded CA certificates or certificate bundles. On PUT or PATCH, a non-null array replaces the complete configuration, so include all references to retain. Omit this property or send null to preserve the existing configuration; send an empty array to clear it. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? isStoredCompletionsDisabled = default, bool? isA365LoggingEnabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default, IEnumerable<TrustedCertificateSource> trustedCertificateSources = default)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? isStoredCompletionsDisabled = default, bool? isA365LoggingEnabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default, IEnumerable<CognitiveServicesTrustedCertificateSource> trustedCertificateSources = default)
         {
             capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             commitmentPlanAssociations ??= new ChangeTrackingList<CommitmentPlanAssociation>();
             aiFoundryNetworkInjections ??= new ChangeTrackingList<AIFoundryNetworkInjection>();
             associatedProjects ??= new ChangeTrackingList<string>();
-            trustedCertificateSources ??= new ChangeTrackingList<TrustedCertificateSource>();
+            trustedCertificateSources ??= new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>();
 
             return new CognitiveServicesAccountProperties(
                 provisioningState,
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 allowProjectManagement,
                 defaultProject,
                 (associatedProjects ?? new ChangeTrackingList<string>()).ToList(),
-                (trustedCertificateSources ?? new ChangeTrackingList<TrustedCertificateSource>()).ToList(),
+                (trustedCertificateSources ?? new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>()).ToList(),
                 default);
         }
 
@@ -545,21 +545,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="type"> Type of resource containing the certificate bundles. Currently only AzureKeyVault is supported. </param>
         /// <param name="resourceId"> Azure resource ID of the Key Vault containing the referenced secrets. The account identity must have permission to read these secrets. </param>
         /// <param name="certificateBundleReferences"> References to secrets containing one or more PEM-encoded CA certificates. Each secret name and version pair must be unique within the source, using case-insensitive comparison. The same secret name can be referenced with different versions. </param>
-        /// <returns> A new <see cref="Models.TrustedCertificateSource"/> instance for mocking. </returns>
-        public static TrustedCertificateSource TrustedCertificateSource(TrustedCertificateSourceType @type = default, ResourceIdentifier resourceId = default, IEnumerable<CertificateBundleReference> certificateBundleReferences = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesTrustedCertificateSource"/> instance for mocking. </returns>
+        public static CognitiveServicesTrustedCertificateSource CognitiveServicesTrustedCertificateSource(CognitiveServicesTrustedCertificateSourceType @type = default, ResourceIdentifier resourceId = default, IEnumerable<CognitiveServicesCertificateBundleReference> certificateBundleReferences = default)
         {
-            certificateBundleReferences ??= new ChangeTrackingList<CertificateBundleReference>();
+            certificateBundleReferences ??= new ChangeTrackingList<CognitiveServicesCertificateBundleReference>();
 
-            return new TrustedCertificateSource(@type, resourceId, (certificateBundleReferences ?? new ChangeTrackingList<CertificateBundleReference>()).ToList(), default);
+            return new CognitiveServicesTrustedCertificateSource(@type, resourceId, (certificateBundleReferences ?? new ChangeTrackingList<CognitiveServicesCertificateBundleReference>()).ToList(), default);
         }
 
         /// <summary> A reference to a specific version of a Key Vault secret containing a PEM-encoded CA certificate or certificate bundle. </summary>
         /// <param name="secretName"> Name of the Key Vault secret containing the CA certificate or certificate bundle. </param>
         /// <param name="secretVersion"> Required, pinned version of the Key Vault secret. Newer secret versions are not followed automatically. To rotate a bundle, update this value and resubmit the complete account trust configuration. </param>
-        /// <returns> A new <see cref="Models.CertificateBundleReference"/> instance for mocking. </returns>
-        public static CertificateBundleReference CertificateBundleReference(string secretName = default, string secretVersion = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesCertificateBundleReference"/> instance for mocking. </returns>
+        public static CognitiveServicesCertificateBundleReference CognitiveServicesCertificateBundleReference(string secretName = default, string secretVersion = default)
         {
-            return new CertificateBundleReference(secretName, secretVersion, default);
+            return new CognitiveServicesCertificateBundleReference(secretName, secretVersion, default);
         }
 
         /// <summary> The resource model definition representing SKU. </summary>
@@ -3071,9 +3071,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </param>
         /// <param name="deploymentSizeCapacities"> Capacity information broken down by deployment size. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeCapacityProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedComputeCapacityProperties CognitiveServicesManagedComputeCapacityProperties(string acceleratorType = default, string offerScope = default, string scopeId = default, int? availableAccelerators = default, int? totalAvailableAccelerators = default, IEnumerable<DeploymentSizeCapacity> deploymentSizeCapacities = default)
+        public static CognitiveServicesManagedComputeCapacityProperties CognitiveServicesManagedComputeCapacityProperties(string acceleratorType = default, string offerScope = default, string scopeId = default, int? availableAccelerators = default, int? totalAvailableAccelerators = default, IEnumerable<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities = default)
         {
-            deploymentSizeCapacities ??= new ChangeTrackingList<DeploymentSizeCapacity>();
+            deploymentSizeCapacities ??= new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentSizeCapacity>();
 
             return new CognitiveServicesManagedComputeCapacityProperties(
                 acceleratorType,
@@ -3081,7 +3081,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 scopeId,
                 availableAccelerators,
                 totalAvailableAccelerators,
-                (deploymentSizeCapacities ?? new ChangeTrackingList<DeploymentSizeCapacity>()).ToList(),
+                (deploymentSizeCapacities ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentSizeCapacity>()).ToList(),
                 default);
         }
 
@@ -3089,10 +3089,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="modelInstanceAcceleratorCount"> The number of accelerators required per model instance. </param>
         /// <param name="totalAvailableCapacity"> The total available capacity for this deployment size. </param>
         /// <param name="largestDeploymentCapacity"> The largest contiguous deployment capacity available for this deployment size. </param>
-        /// <returns> A new <see cref="Models.DeploymentSizeCapacity"/> instance for mocking. </returns>
-        public static DeploymentSizeCapacity DeploymentSizeCapacity(int? modelInstanceAcceleratorCount = default, int? totalAvailableCapacity = default, int? largestDeploymentCapacity = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentSizeCapacity"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentSizeCapacity CognitiveServicesManagedComputeDeploymentSizeCapacity(int? modelInstanceAcceleratorCount = default, int? totalAvailableCapacity = default, int? largestDeploymentCapacity = default)
         {
-            return new DeploymentSizeCapacity(modelInstanceAcceleratorCount, totalAvailableCapacity, largestDeploymentCapacity, default);
+            return new CognitiveServicesManagedComputeDeploymentSizeCapacity(modelInstanceAcceleratorCount, totalAvailableCapacity, largestDeploymentCapacity, default);
         }
 
         /// <summary> Describes an available Cognitive Services SKU. </summary>

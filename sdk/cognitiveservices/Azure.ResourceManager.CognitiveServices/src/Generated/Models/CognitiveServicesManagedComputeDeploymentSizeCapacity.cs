@@ -12,22 +12,22 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Capacity information for a specific deployment size. </summary>
-    public partial class DeploymentSizeCapacity
+    public partial class CognitiveServicesManagedComputeDeploymentSizeCapacity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentSizeCapacity"/>. </summary>
-        internal DeploymentSizeCapacity()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentSizeCapacity"/>. </summary>
+        internal CognitiveServicesManagedComputeDeploymentSizeCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentSizeCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentSizeCapacity"/>. </summary>
         /// <param name="modelInstanceAcceleratorCount"> The number of accelerators required per model instance. </param>
         /// <param name="totalAvailableCapacity"> The total available capacity for this deployment size. </param>
         /// <param name="largestDeploymentCapacity"> The largest contiguous deployment capacity available for this deployment size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSizeCapacity(int? modelInstanceAcceleratorCount, int? totalAvailableCapacity, int? largestDeploymentCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentSizeCapacity(int? modelInstanceAcceleratorCount, int? totalAvailableCapacity, int? largestDeploymentCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelInstanceAcceleratorCount = modelInstanceAcceleratorCount;
             TotalAvailableCapacity = totalAvailableCapacity;

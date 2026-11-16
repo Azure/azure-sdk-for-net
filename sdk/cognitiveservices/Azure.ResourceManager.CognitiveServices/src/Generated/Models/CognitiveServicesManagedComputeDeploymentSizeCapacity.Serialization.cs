@@ -14,51 +14,51 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Capacity information for a specific deployment size. </summary>
-    public partial class DeploymentSizeCapacity : IJsonModel<DeploymentSizeCapacity>
+    public partial class CognitiveServicesManagedComputeDeploymentSizeCapacity : IJsonModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentSizeCapacity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesManagedComputeDeploymentSizeCapacity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeploymentSizeCapacity(document.RootElement, options);
+                        return DeserializeCognitiveServicesManagedComputeDeploymentSizeCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentSizeCapacity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentSizeCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentSizeCapacity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentSizeCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentSizeCapacity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentSizeCapacity IPersistableModel<DeploymentSizeCapacity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesManagedComputeDeploymentSizeCapacity IPersistableModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentSizeCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeploymentSizeCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentSizeCapacity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentSizeCapacity)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ModelInstanceAcceleratorCount))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentSizeCapacity IJsonModel<DeploymentSizeCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesManagedComputeDeploymentSizeCapacity IJsonModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentSizeCapacity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesManagedComputeDeploymentSizeCapacity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentSizeCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentSizeCapacity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentSizeCapacity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentSizeCapacity(document.RootElement, options);
+            return DeserializeCognitiveServicesManagedComputeDeploymentSizeCapacity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeploymentSizeCapacity DeserializeDeploymentSizeCapacity(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesManagedComputeDeploymentSizeCapacity DeserializeCognitiveServicesManagedComputeDeploymentSizeCapacity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeploymentSizeCapacity(modelInstanceAcceleratorCount, totalAvailableCapacity, largestDeploymentCapacity, additionalBinaryDataProperties);
+            return new CognitiveServicesManagedComputeDeploymentSizeCapacity(modelInstanceAcceleratorCount, totalAvailableCapacity, largestDeploymentCapacity, additionalBinaryDataProperties);
         }
     }
 }

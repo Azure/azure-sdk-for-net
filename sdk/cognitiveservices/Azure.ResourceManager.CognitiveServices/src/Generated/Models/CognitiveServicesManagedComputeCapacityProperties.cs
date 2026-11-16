@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeCapacityProperties"/>. </summary>
         internal CognitiveServicesManagedComputeCapacityProperties()
         {
-            DeploymentSizeCapacities = new ChangeTrackingList<DeploymentSizeCapacity>();
+            DeploymentSizeCapacities = new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentSizeCapacity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeCapacityProperties"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </param>
         /// <param name="deploymentSizeCapacities"> Capacity information broken down by deployment size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedComputeCapacityProperties(string acceleratorType, string offerScope, string scopeId, int? availableAccelerators, int? totalAvailableAccelerators, IReadOnlyList<DeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeCapacityProperties(string acceleratorType, string offerScope, string scopeId, int? availableAccelerators, int? totalAvailableAccelerators, IReadOnlyList<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AcceleratorType = acceleratorType;
             OfferScope = offerScope;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Capacity information broken down by deployment size. </summary>
         [WirePath("deploymentSizeCapacities")]
-        public IReadOnlyList<DeploymentSizeCapacity> DeploymentSizeCapacities { get; }
+        public IReadOnlyList<CognitiveServicesManagedComputeDeploymentSizeCapacity> DeploymentSizeCapacities { get; }
     }
 }

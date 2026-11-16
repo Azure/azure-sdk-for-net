@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesManagedComputeCapacity> GetAllAsync(string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacitiesAsync(string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 deploymentId,
                 location,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacities");
         }
 
         /// <summary>
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesManagedComputeCapacity> GetAll(string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacities(string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 deploymentId,
                 location,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacities");
         }
 
         /// <summary>

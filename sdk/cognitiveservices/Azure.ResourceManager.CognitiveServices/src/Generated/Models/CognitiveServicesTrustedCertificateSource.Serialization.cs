@@ -15,56 +15,56 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> An Azure resource containing the CA certificate bundles trusted by supported features in the account. </summary>
-    public partial class TrustedCertificateSource : IJsonModel<TrustedCertificateSource>
+    public partial class CognitiveServicesTrustedCertificateSource : IJsonModel<CognitiveServicesTrustedCertificateSource>
     {
-        /// <summary> Initializes a new instance of <see cref="TrustedCertificateSource"/> for deserialization. </summary>
-        internal TrustedCertificateSource()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesTrustedCertificateSource"/> for deserialization. </summary>
+        internal CognitiveServicesTrustedCertificateSource()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrustedCertificateSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesTrustedCertificateSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesTrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTrustedCertificateSource(document.RootElement, options);
+                        return DeserializeCognitiveServicesTrustedCertificateSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrustedCertificateSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesTrustedCertificateSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesTrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TrustedCertificateSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesTrustedCertificateSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrustedCertificateSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesTrustedCertificateSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrustedCertificateSource IPersistableModel<TrustedCertificateSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesTrustedCertificateSource IPersistableModel<CognitiveServicesTrustedCertificateSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrustedCertificateSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesTrustedCertificateSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TrustedCertificateSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesTrustedCertificateSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesTrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrustedCertificateSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesTrustedCertificateSource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("certificateBundleReferences"u8);
             writer.WriteStartArray();
-            foreach (CertificateBundleReference item in CertificateBundleReferences)
+            foreach (CognitiveServicesCertificateBundleReference item in CertificateBundleReferences)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -110,38 +110,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrustedCertificateSource IJsonModel<TrustedCertificateSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesTrustedCertificateSource IJsonModel<CognitiveServicesTrustedCertificateSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrustedCertificateSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesTrustedCertificateSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesTrustedCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrustedCertificateSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesTrustedCertificateSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrustedCertificateSource(document.RootElement, options);
+            return DeserializeCognitiveServicesTrustedCertificateSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TrustedCertificateSource DeserializeTrustedCertificateSource(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesTrustedCertificateSource DeserializeCognitiveServicesTrustedCertificateSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TrustedCertificateSourceType @type = default;
+            CognitiveServicesTrustedCertificateSourceType @type = default;
             ResourceIdentifier resourceId = default;
-            IList<CertificateBundleReference> certificateBundleReferences = default;
+            IList<CognitiveServicesCertificateBundleReference> certificateBundleReferences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new TrustedCertificateSourceType(prop.Value.GetString());
+                    @type = new CognitiveServicesTrustedCertificateSourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("certificateBundleReferences"u8))
                 {
-                    List<CertificateBundleReference> array = new List<CertificateBundleReference>();
+                    List<CognitiveServicesCertificateBundleReference> array = new List<CognitiveServicesCertificateBundleReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CertificateBundleReference.DeserializeCertificateBundleReference(item, options));
+                        array.Add(CognitiveServicesCertificateBundleReference.DeserializeCognitiveServicesCertificateBundleReference(item, options));
                     }
                     certificateBundleReferences = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TrustedCertificateSource(@type, resourceId, certificateBundleReferences ?? new ChangeTrackingList<CertificateBundleReference>(), additionalBinaryDataProperties);
+            return new CognitiveServicesTrustedCertificateSource(@type, resourceId, certificateBundleReferences ?? new ChangeTrackingList<CognitiveServicesCertificateBundleReference>(), additionalBinaryDataProperties);
         }
     }
 }

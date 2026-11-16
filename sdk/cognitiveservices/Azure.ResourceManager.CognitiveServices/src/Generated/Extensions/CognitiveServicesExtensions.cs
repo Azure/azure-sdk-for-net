@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// per accelerator type, including deployment size information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetAllAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacitiesAsync(string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1181,11 +1181,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CognitiveServicesManagedComputeCapacity> GetAllAsync(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacitiesAsync(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetAllAsync(offer, acceleratorType, deploymentId, location, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesManagedComputeCapacitiesAsync(offer, acceleratorType, deploymentId, location, cancellationToken);
         }
 
         /// <summary>
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// per accelerator type, including deployment size information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetAll(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacities(string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1215,11 +1215,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CognitiveServicesManagedComputeCapacity> GetAll(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
+        public static Pageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacities(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetAll(offer, acceleratorType, deploymentId, location, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesManagedComputeCapacities(offer, acceleratorType, deploymentId, location, cancellationToken);
         }
 
         /// <summary>
