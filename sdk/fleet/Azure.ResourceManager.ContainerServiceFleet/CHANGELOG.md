@@ -4,11 +4,9 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded the service API version to `2026-11-02-preview`.
+- Added identity binding profile management and an Apply operation to apply identity bindings to fleet members selected by label.
+- Added configurable allowed-failure thresholds for update stages and groups, and failure counts in update run, stage, and group status.
 
 ## 1.3.0 (2026-11-16)
 
