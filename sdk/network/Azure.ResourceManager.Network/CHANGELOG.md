@@ -1,17 +1,15 @@
 # Release History
 
-## 1.18.0-beta.4 (Unreleased)
-
-### Features Added
+## 1.18.0-beta.4 (2026-11-18)
 
 ### Breaking Changes
 
 - Removed the preview-only `VirtualNetworkApplianceCapabilityBaseData` type. `VirtualNetworkApplianceCapabilityData` now derives directly from `ResourceData` and declares `Properties` itself.
 - Flattened Interconnect Group and Subgroup properties onto their resource data types and updated the corresponding model factories. The property-envelope types are now internal.
 
-### Bugs Fixed
-
 ### Other Changes
+
+- Regenerated the library from the updated Network specification.
 
 ## 1.18.0-beta.3 (2026-10-30)
 

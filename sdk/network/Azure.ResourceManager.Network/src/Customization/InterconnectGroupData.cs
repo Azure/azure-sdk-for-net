@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    // Remove this customization when https://github.com/Azure/azure-rest-api-specs/pull/47722 is merged and used for regeneration.
     public partial class InterconnectGroupData
     {
         // Retain nested wire storage while exposing the consolidated spec's flattened members.

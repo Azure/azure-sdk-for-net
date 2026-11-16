@@ -15,9 +15,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network.Models
 {
     // Replace envelope-valued factories with the consolidated spec's flattened signatures.
+    // Remove these suppressions when https://github.com/Azure/azure-rest-api-specs/pull/47722 is merged and used for regeneration.
     [CodeGenSuppress("InterconnectGroupData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(InterconnectGroupPropertiesFormat), typeof(string))]
     [CodeGenSuppress("InterconnectGroupSubgroupData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(SubgroupProperties))]
     // Custom serialized members are appended after kind; preserve the consolidated spec's factory parameter order.
+    // Remove this suppression when https://github.com/Azure/azure-rest-api-specs/pull/47722 is merged and used for regeneration.
     [CodeGenSuppress("VirtualNetworkApplianceCapabilityData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(VirtualNetworkApplianceCapabilityProperties))]
     // The generated 1.15.0 object-valued health factory adapter otherwise discards the supplied configuration ID.
     [CodeGenSuppress("LoadBalancerHealthPerRulePerBackendAddress", typeof(string), typeof(NetworkInterfaceIPConfigurationData), typeof(string), typeof(string))]
@@ -40,6 +42,7 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("VirtualNetworkGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ExtendedLocation), typeof(ETag?), typeof(ManagedServiceIdentity), typeof(VirtualNetworkGatewayAutoScaleBounds), typeof(IEnumerable<VirtualNetworkGatewayIPConfiguration>), typeof(VirtualNetworkGatewayType?), typeof(VpnType?), typeof(VpnGatewayGeneration?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ResourceIdentifier), typeof(VirtualNetworkGatewaySku), typeof(VpnClientConfiguration), typeof(IEnumerable<VirtualNetworkGatewayPolicyGroup>), typeof(BgpSettings), typeof(VirtualNetworkAddressSpace), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(bool?), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<VirtualNetworkGatewayNatRuleData>), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ExpressRouteGatewayAdminState?), typeof(ExpressRouteGatewayResiliencyModel?))]
     public static partial class ArmNetworkModelFactory
     {
+        // Remove this factory when https://github.com/Azure/azure-rest-api-specs/pull/47722 is merged and used for regeneration.
         /// <summary> Initializes a virtual network appliance capability for mocking. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             return new UnknownVirtualNetworkApplianceCapability(id, name, resourceType, systemData, kind is null ? default : new VirtualNetworkApplianceCapabilityKind(kind), properties, default);
         }
 
+        // Remove this factory when https://github.com/Azure/azure-rest-api-specs/pull/47722 is merged and used for regeneration.
         /// <summary> Initializes an interconnect group for mocking. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -75,6 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        // Remove this factory when https://github.com/Azure/azure-rest-api-specs/pull/47722 is merged and used for regeneration.
         /// <summary> Initializes an interconnect subgroup for mocking. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
