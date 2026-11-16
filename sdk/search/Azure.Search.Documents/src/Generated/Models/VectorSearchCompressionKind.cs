@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="VectorSearchCompressionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorSearchCompressionKind?(string value) => value == null ? null : new VectorSearchCompressionKind(value);
+        public static implicit operator VectorSearchCompressionKind?(string value) => value == null ? (VectorSearchCompressionKind?)null : new VectorSearchCompressionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
