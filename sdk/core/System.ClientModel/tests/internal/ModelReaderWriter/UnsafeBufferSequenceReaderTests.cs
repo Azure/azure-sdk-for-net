@@ -27,53 +27,61 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         }
 
         [Test]
-        public async Task CancellationToken()
+        public void CancellationToken()
         {
             using UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader();
             long length = reader.Length;
-            using MemoryStream stream = new MemoryStream();
+            using CancellationOnFirstWriteStream stream = new CancellationOnFirstWriteStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
-            var task = Task.Run(() => reader.CopyTo(stream, tokenSource.Token));
-            bool exceptionThrown = false;
-            try
-            {
-                while (stream.Position == 0)
-                { } // wait for the stream to start filling
-                tokenSource.Cancel();
-                await task;
-            }
-            catch (OperationCanceledException)
-            {
-                exceptionThrown = true;
-            }
-            Assert.IsTrue(exceptionThrown);
+
+            stream.OnFirstWrite = tokenSource.Cancel;
+
+            Assert.Throws<OperationCanceledException>(() => reader.CopyTo(stream, tokenSource.Token));
             Assert.Greater(stream.Length, 0);
             Assert.Less(stream.Length, length);
         }
 
         [Test]
-        public async Task CancellationTokenAsync()
+        public void CancellationTokenAsync()
         {
             using UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader();
             long length = reader.Length;
-            using MemoryStream stream = new MemoryStream();
+            using CancellationOnFirstWriteStream stream = new CancellationOnFirstWriteStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
-            var task = Task.Run(() => reader.CopyToAsync(stream, tokenSource.Token));
-            bool exceptionThrown = false;
-            try
-            {
-                while (stream.Position == 0)
-                { } // wait for the stream to start filling
-                tokenSource.Cancel();
-                await task;
-            }
-            catch (OperationCanceledException)
-            {
-                exceptionThrown = true;
-            }
-            Assert.IsTrue(exceptionThrown);
+
+            stream.OnFirstWrite = tokenSource.Cancel;
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await reader.CopyToAsync(stream, tokenSource.Token));
             Assert.Greater(stream.Length, 0);
             Assert.Less(stream.Length, length);
+        }
+
+        private class CancellationOnFirstWriteStream : MemoryStream
+        {
+            private bool _didWrite;
+
+            public Action? OnFirstWrite { get; set; }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                base.Write(buffer, offset, count);
+                CancelAfterFirstWrite();
+            }
+
+            public override async Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                await base.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+                CancelAfterFirstWrite();
+            }
+
+            private void CancelAfterFirstWrite()
+            {
+                if (!_didWrite)
+                {
+                    _didWrite = true;
+                    OnFirstWrite?.Invoke();
+                }
+            }
         }
 
         [Test]
