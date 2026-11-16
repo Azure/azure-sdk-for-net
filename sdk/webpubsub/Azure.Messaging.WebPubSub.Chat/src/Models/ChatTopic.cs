@@ -7,9 +7,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Messaging.WebPubSub.Chat
 {
+    // PATCH uses UpdateTopicOptions, so topic construction must still require a title.
+    [CodeGenSuppress("ChatTopic")]
     [CodeGenSuppress("ChatTopic", typeof(string), typeof(ChatTopicState))]
     public partial class ChatTopic
     {
+        // ModelReaderWriter needs a non-public parameterless constructor for deserialization.
+        internal ChatTopic()
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="ChatTopic"/>. </summary>
         /// <param name="title"> Topic title. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> is null. </exception>

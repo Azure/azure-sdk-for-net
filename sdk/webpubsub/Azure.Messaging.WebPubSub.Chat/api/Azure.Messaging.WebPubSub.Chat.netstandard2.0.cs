@@ -35,7 +35,6 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class ChatTopic : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>
     {
-        public ChatTopic() { }
         public ChatTopic(string title) { }
         public string ConversationId { get { throw null; } }
         public string CreatedBy { get { throw null; } }
@@ -135,7 +134,7 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class WebPubSubChatMessage : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>
     {
-        public WebPubSubChatMessage() { }
+        public WebPubSubChatMessage(string createdBy, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent content) { }
         public Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent Content { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }

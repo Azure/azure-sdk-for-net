@@ -327,6 +327,24 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         public void TopicTitleIsRequired()
         {
             Assert.Throws<ArgumentNullException>(() => new ChatTopic(null));
+            Assert.That(typeof(ChatTopic).GetConstructor(Type.EmptyTypes), Is.Null);
+        }
+
+        [Test]
+        public void MessageConstructorRequiresCreatorAndContent()
+        {
+            var content = WebPubSubChatMessageContent.FromText("Hello");
+            var message = new WebPubSubChatMessage("alice", content);
+
+            Assert.That(message.CreatedBy, Is.EqualTo("alice"));
+            Assert.That(message.Content, Is.SameAs(content));
+            Assert.That(typeof(WebPubSubChatMessage).GetConstructor(Type.EmptyTypes), Is.Null);
+            Assert.Throws<ArgumentNullException>(() => new WebPubSubChatMessage(null, content));
+            Assert.Throws<ArgumentNullException>(() => new WebPubSubChatMessage("alice", null));
+
+            WebPubSubChatMessage restored = ModelReaderWriter.Read<WebPubSubChatMessage>(ModelReaderWriter.Write(message));
+            Assert.That(restored.CreatedBy, Is.EqualTo("alice"));
+            Assert.That(restored.Content.Text, Is.EqualTo("Hello"));
         }
 
         [Test]
