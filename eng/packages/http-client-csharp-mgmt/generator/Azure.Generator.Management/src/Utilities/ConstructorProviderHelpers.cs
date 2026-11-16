@@ -14,6 +14,8 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class ConstructorProviderHelpers
     {
+        // Work around MTG dropping historical constructor overloads that differ by value-type nullability.
+        // https://github.com/microsoft/typespec/issues/12407
         internal static IReadOnlyList<ConstructorProvider> RestoreValueTypeNullabilityOverloads(
             ModelProvider model,
             IReadOnlyList<ConstructorProvider> originalConstructors,
