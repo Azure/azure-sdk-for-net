@@ -454,8 +454,11 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 
 - Assembly name, root namespace, and NuGet package id all match
 - Version bumps: patch for bug fixes only — **no new public API in a patch release**; minor
-  or major for new API or a new service API version. `CHANGELOG.md` must be updated in the
-  same PR
+  or major for new API or a new service API version
+- **`CHANGELOG.md` reflects the PR's public changes.** New or changed public API or
+  customer-visible behavior must be described in the current entry 🟡. If nothing public
+  or behavioral changes, as in a post-release version bump, an empty entry is correct. PR
+  builds only check that the entry exists; the release pipeline rejects an empty one
 - A management library's major-version increase needs explicit .NET architecture approval for
   a coordinated management SDK major release. This coordination does not waive compatibility
   requirements.
@@ -477,9 +480,9 @@ review.
 - **A library's first `<Version>` is a prerelease.** A new package introduced at a stable
   `1.0.0` skips the beta period that exists to let its public surface change without a
   breaking-change process. If nothing is published under that package id yet, the version in
-  the PR should carry a `-beta.N` suffix 🟡. The changelog heading is already forced to match
-  `<Version>` at build time by the `ValidateReleaseNotes` target, so the csproj version is the
-  only part left to judge
+  the PR should carry a `-beta.N` suffix 🟡. The `ValidateReleaseNotes` build target already
+  fails a changelog heading that does not match `<Version>`, so judge the version, not the
+  heading
 - **`<Description>` and `<AssemblyTitle>` are customer-facing** — the description is what
   renders on the package's nuget.org page. The template ships `Azure Widget Analytics client
   library for .NET`; a library still carrying that text, or a description auto-generated from

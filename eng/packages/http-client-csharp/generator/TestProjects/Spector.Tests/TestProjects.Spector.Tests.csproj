@@ -121,6 +121,7 @@
     <ProjectReference Include="..\Spector\http\type\property\value-types\src\Type.Property.ValueTypes.csproj" />
     <ProjectReference Include="..\Spector\http\type\scalar\src\Type.Scalar.csproj" />
     <ProjectReference Include="..\Spector\http\type\union\src\Type.Union.csproj" />
+    <ProjectReference Include="..\Spector\http\type\union\discriminated\extends\src\Type.Union.Discriminated.Extends.csproj" />
     <ProjectReference Include="..\Spector\http\versioning\added\v1\src\Versioning.Added.V1.csproj" Aliases="VersioningAddedV1" />
     <ProjectReference Include="..\Spector\http\versioning\added\v2\src\Versioning.Added.V2.csproj" Aliases="VersioningAddedV2" />
     <ProjectReference Include="..\Spector\http\versioning\madeOptional\v1\src\Versioning.MadeOptional.V1.csproj" Aliases="MadeOptionalV1" />

@@ -160,7 +160,7 @@ function Assert-PrReReviewOutput {
             throw "The review's Coverage line reports $($counts.total) review threads, but the pull request had $($Expected.ThreadsBefore) when the re-review started and has $($Expected.ThreadsNow) now."
         }
         if ($Expected.HeadSha -cne $Expected.AnalyzedHeadSha) {
-            return "Re-review coverage is complete: $line (the head moved to $($Expected.HeadSha), so the changed-file total was not checked)"
+            throw "The pull request head moved from $($Expected.AnalyzedHeadSha) to $($Expected.HeadSha) during the re-review; refusing stale publication."
         }
         if ($counts.changed -ne $Expected.ChangedFiles) {
             throw "The review's Coverage line reports $($counts.changed) changed files, but the pull request has $($Expected.ChangedFiles) at the reviewed head."

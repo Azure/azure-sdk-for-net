@@ -36,8 +36,8 @@ internal static partial class ResponseIncompleteDetailsValidator
         {
             if (reasonProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.reason", $"Expected string, got {reasonProp.ValueKind}"));
-            else if (reasonProp.GetString() is not ("max_output_tokens" or "content_filter"))
-                errors.Add(new ValidationError("$.reason", $"Value '{reasonProp.GetString()}' is not valid. Allowed: max_output_tokens, content_filter"));
+            else if (reasonProp.GetString() is not ("max_output_tokens" or "max_messages" or "content_filter" or "steered"))
+                errors.Add(new ValidationError("$.reason", $"Value '{reasonProp.GetString()}' is not valid. Allowed: max_output_tokens, max_messages, content_filter, steered"));
         }
 
         ValidateCustom(element, errors);

@@ -11,12 +11,12 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the policy for resource's placement in availability zone. Possible values are: <b>Any</b> (used for Virtual Machines), <b>Auto</b> (used for Virtual Machine Scale Sets) - An availability zone will be automatically picked by system as part of resource creation. </summary>
+    /// <summary> Specifies the policy for the resource's placement in an availability zone. Use <b>Auto</b> for Virtual Machines and Virtual Machine Scale Sets to let the system automatically select an availability zone during resource creation. <b>Any</b> remains supported for Virtual Machines for backward compatibility. </summary>
     public readonly partial struct ZonePlacementPolicyType : IEquatable<ZonePlacementPolicyType>
     {
         private readonly string _value;
         private const string AnyValue = "Any";
-        /// <summary> Automatic zone placement in a Virtual Machine Scale Set. </summary>
+        /// <summary> Automatic zone placement for Virtual Machines and Virtual Machine Scale Sets. </summary>
         private const string AutoValue = "Auto";
 
         /// <summary> Initializes a new instance of <see cref="ZonePlacementPolicyType"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the Any. </summary>
         public static ZonePlacementPolicyType Any { get; } = new ZonePlacementPolicyType(AnyValue);
 
-        /// <summary> Automatic zone placement in a Virtual Machine Scale Set. </summary>
+        /// <summary> Automatic zone placement for Virtual Machines and Virtual Machine Scale Sets. </summary>
         public static ZonePlacementPolicyType Auto { get; } = new ZonePlacementPolicyType(AutoValue);
 
         /// <summary> Determines if two <see cref="ZonePlacementPolicyType"/> values are the same. </summary>

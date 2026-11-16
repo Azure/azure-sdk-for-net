@@ -40,6 +40,24 @@ internal static partial class OutputItemFunctionShellCallOutputValidator
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
         }
 
+        // Optional: caller
+        if (element.TryGetProperty("caller", out var callerProp) && callerProp.ValueKind != JsonValueKind.Null)
+        {
+            var callerResult = ToolCallCallerValidator.Validate(callerProp);
+            if (!callerResult.IsValid)
+            {
+                foreach (var e in callerResult.Errors)
+                    errors.Add(new ValidationError("$.caller" + e.Path.Substring(1), e.Message));
+            }
+        }
+
+        // Optional: created_by
+        if (element.TryGetProperty("created_by", out var createdByProp))
+        {
+            if (createdByProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.created_by", $"Expected string, got {createdByProp.ValueKind}"));
+        }
+
         // Required: id
         if (!element.TryGetProperty("id", out var idProp))
             errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));

@@ -11,6 +11,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -58,7 +59,7 @@ public class PersistenceFailureTests : IDisposable
     {
         // Arrange: provider always throws on Create (ResponsesApiException 500)
         _provider.CreateBehavior = _ => throw new ResponsesApiException(
-            new Error("storage_error", "Service unavailable"), 500);
+            OpenAIModelFactory.CreateError("storage_error", "Service unavailable"), 500);
 
         // Act: POST (non-streaming, non-bg)
         var json = JsonSerializer.Serialize(new { model = "test" });
@@ -108,7 +109,7 @@ public class PersistenceFailureTests : IDisposable
         _provider.CreateBehavior = _ =>
         {
             Interlocked.Increment(ref callCount);
-            throw new ResponsesApiException(new Error("storage_error", "Temporary"), 500);
+            throw new ResponsesApiException(OpenAIModelFactory.CreateError("storage_error", "Temporary"), 500);
         };
 
         // Act: POST (non-streaming, non-bg)
@@ -136,7 +137,7 @@ public class PersistenceFailureTests : IDisposable
     {
         // Arrange: provider always throws on Create (simulates persist-before-terminal-yield)
         _provider.CreateBehavior = _ => throw new ResponsesApiException(
-            new Error("storage_error", "Service unavailable"), 500);
+            OpenAIModelFactory.CreateError("storage_error", "Service unavailable"), 500);
 
         // Act: POST streaming (non-bg)
         var json = JsonSerializer.Serialize(new { model = "test", stream = true });
@@ -176,7 +177,7 @@ public class PersistenceFailureTests : IDisposable
     {
         // Arrange: Create succeeds (Phase 1), Update always fails (Phase 2 terminal)
         _provider.UpdateBehavior = _ => throw new ResponsesApiException(
-            new Error("storage_error", "Service unavailable"), 500);
+            OpenAIModelFactory.CreateError("storage_error", "Service unavailable"), 500);
 
         // Act: POST bg (non-streaming)
         var json = JsonSerializer.Serialize(new { model = "test", background = true });
@@ -210,7 +211,7 @@ public class PersistenceFailureTests : IDisposable
     {
         // Arrange: Create succeeds (Phase 1), Update always fails (Phase 2 terminal)
         _provider.UpdateBehavior = _ => throw new ResponsesApiException(
-            new Error("storage_error", "Service unavailable"), 500);
+            OpenAIModelFactory.CreateError("storage_error", "Service unavailable"), 500);
 
         // Act: POST bg (non-streaming) — Phase 1 creates in storage
         var json = JsonSerializer.Serialize(new { model = "test", background = true });
@@ -247,7 +248,7 @@ public class PersistenceFailureTests : IDisposable
         // yielded to the client). Per spec, this is a pre-creation error and must
         // emit a standalone "error" event, NOT response.failed.
         _provider.CreateBehavior = _ => throw new ResponsesApiException(
-            new Error("storage_error", "Service unavailable"), 500);
+            OpenAIModelFactory.CreateError("storage_error", "Service unavailable"), 500);
 
         // Act: POST bg+streaming
         var json = JsonSerializer.Serialize(new { model = "test", stream = true, background = true });
@@ -281,7 +282,7 @@ public class PersistenceFailureTests : IDisposable
     {
         // Arrange: Create succeeds (Phase 1), Update fails (Phase 2 terminal)
         _provider.UpdateBehavior = _ => throw new ResponsesApiException(
-            new Error("storage_error", "Service unavailable"), 500);
+            OpenAIModelFactory.CreateError("storage_error", "Service unavailable"), 500);
 
         // Act: POST bg+streaming
         var json = JsonSerializer.Serialize(new { model = "test", stream = true, background = true });
@@ -424,7 +425,7 @@ public class PersistenceFailureTests : IDisposable
         public IReadOnlyCollection<string> Calls => _calls;
 
         public override async Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("CreateResponseAsync");
             var count = Interlocked.Increment(ref _createCallCount);
@@ -432,7 +433,7 @@ public class PersistenceFailureTests : IDisposable
             await _inner.CreateResponseAsync(request, isolation, cancellationToken);
         }
 
-        public override async Task<Models.ResponseObject> GetResponseAsync(
+        public override async Task<ResponseObject> GetResponseAsync(
             string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("GetResponseAsync");
@@ -440,7 +441,7 @@ public class PersistenceFailureTests : IDisposable
         }
 
         public override async Task UpdateResponseAsync(
-            Models.ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
+            ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("UpdateResponseAsync");
             var count = Interlocked.Increment(ref _updateCallCount);
@@ -455,7 +456,7 @@ public class PersistenceFailureTests : IDisposable
             await _inner.DeleteResponseAsync(responseId, isolation, cancellationToken);
         }
 
-        public override async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+        public override async Task<ResponseItemCollectionPage> GetInputItemsAsync(
             string responseId, PlatformContext isolation, int limit = 20, bool ascending = false,
             string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => await _inner.GetInputItemsAsync(responseId, isolation, limit, ascending, after, before, cancellationToken);

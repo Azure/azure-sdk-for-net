@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The FileSearchToolCallResults. </summary>
-    public partial class FileSearchToolCallResults : IJsonModel<FileSearchToolCallResults>
+    internal partial class FileSearchToolCallResults : IJsonModel<FileSearchToolCallResults>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -88,10 +87,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (Optional.IsDefined(Attributes))
+            if (Optional.IsDefined(Attributes, _attributesIsDefined))
             {
-                writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(Attributes, options);
+                if (Attributes != null)
+                {
+                    writer.WritePropertyName("attributes"u8);
+                    writer.WriteObjectValue(Attributes, options);
+                }
+                else
+                {
+                    writer.WriteNull("attributes"u8);
+                }
             }
             if (Optional.IsDefined(Score))
             {
@@ -143,6 +149,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string fileId = default;
             string text = default;
             string filename = default;
+            bool attributesIsDefined = false;
             VectorStoreFileAttributes attributes = default;
             float? score = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,6 +172,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("attributes"u8))
                 {
+                    attributesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         attributes = null;
@@ -184,7 +192,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FileSearchToolCallResults(
@@ -193,7 +201,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 filename,
                 attributes,
                 score,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _attributesIsDefined = attributesIsDefined
+            };
         }
     }
 }
