@@ -30,6 +30,14 @@ public class AgentInsightFilterContractTests
     public void PlaybackNormalizationRemovesOnlyAgentInsightsFeature(string value, string expected)
         => Assert.That(Regex.Replace(value, Utils.ProjectsTestSanitizers.PlaybackAgentInsightsFeaturePattern, ""), Is.EqualTo(expected));
 
+    [TestCase("Models=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview", "Models=V1Preview,DraftAgents=V1Preview")]
+    [TestCase("ExternalAgents=V1Preview,DraftAgents=V1Preview", "DraftAgents=V1Preview")]
+    [TestCase("DraftAgents=V1Preview,ExternalAgents=V1Preview", "DraftAgents=V1Preview")]
+    [TestCase("ExternalAgents=V1Preview", "")]
+    [TestCase("MyExternalAgents=V1Preview,ExternalAgents=V2Preview", "MyExternalAgents=V1Preview,ExternalAgents=V2Preview")]
+    public void PlaybackNormalizationRemovesOnlyExternalAgentsPreviewFeature(string value, string expected)
+        => Assert.That(Regex.Replace(value, Utils.ProjectsTestSanitizers.PlaybackExternalAgentsFeaturePattern, ""), Is.EqualTo(expected));
+
     [TestCase(RecordedTestMode.Playback, 1)]
     [TestCase(RecordedTestMode.Record, 0)]
     [TestCase(RecordedTestMode.Live, 0)]
