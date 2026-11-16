@@ -15,11 +15,6 @@ namespace Azure.AI.Discovery
     /// <summary> Task assignee information. </summary>
     public partial class TaskAssignee : IJsonModel<TaskAssignee>
     {
-        /// <summary> Initializes a new instance of <see cref="TaskAssignee"/> for deserialization. </summary>
-        internal TaskAssignee()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TaskAssignee PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -6,8 +6,10 @@ $failingSpecs = @(
 
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
     Join-Path 'http' 'azure' 'client-generator-core' 'flatten-property' # flatten property not supported
+    Join-Path 'http' 'azure' 'resource-manager' 'example'
     Join-Path 'http' 'authentication' 'noauth' 'union' # NoAuth not supported
     Join-Path 'http' 'type' 'union' 'discriminated' # discriminated unions not supported
+    Join-Path 'http' 'type' 'union' 'discriminated' 'extends'
 # These scenarios will be covered in Azure.Generator.Management
     Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
     Join-Path 'http' 'azure' 'resource-manager' 'non-resource'

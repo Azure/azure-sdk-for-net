@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Enclave
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private VirtualEnclaveTransitHubProperties _properties;
-        private ResourceReference<VirtualEnclaveCommunity> _parent;
+        private ProvisioningResourceReference<VirtualEnclaveCommunity> _parent;
 
         /// <summary> Creates a new VirtualEnclaveTransitHub. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Enclave
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<VirtualEnclaveTransitHubProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualEnclaveCommunity>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualEnclaveCommunity>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

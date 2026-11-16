@@ -8,8 +8,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> Initializes a new instance of <see cref="EventCountMetricDefinition"/>. </summary>
         /// <param name="eventName"> Name of the event to observe. </param>
         public EventCountMetricDefinition(string eventName)
-            : this(new ObservedEvent(eventName))
+            : this()
         {
+            Event = new ObservedEvent { EventName = eventName };
         }
     }
 }

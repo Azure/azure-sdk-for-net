@@ -21,7 +21,7 @@ namespace Azure.Provisioning.OperationalInsights
         private SystemData _systemData;
         private SavedSearchProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<OperationalInsightsWorkspace> _parent;
+        private ProvisioningResourceReference<OperationalInsightsWorkspace> _parent;
 
         /// <summary> Creates a new OperationalInsightsSavedSearch. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -238,7 +238,7 @@ namespace Azure.Provisioning.OperationalInsights
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SavedSearchProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<OperationalInsightsWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

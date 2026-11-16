@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Sql
         private SystemData _systemData;
         private ManagedInstanceEncryptionProtectorProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<ManagedInstance> _parent;
+        private ProvisioningResourceReference<ManagedInstance> _parent;
 
         /// <summary> Creates a new ManagedInstanceEncryptionProtector. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -192,7 +192,7 @@ namespace Azure.Provisioning.Sql
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedInstanceEncryptionProtectorProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isOutput: true);
-            _parent = DefineResource<ManagedInstance>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ManagedInstance>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

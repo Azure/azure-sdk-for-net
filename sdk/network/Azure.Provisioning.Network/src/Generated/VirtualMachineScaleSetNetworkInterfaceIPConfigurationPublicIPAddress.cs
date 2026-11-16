@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Network
         private PublicIPAddressSku _sku;
         private BicepValue<ETag> _eTag;
         private BicepList<string> _zones;
-        private ResourceReference<VirtualMachineScaleSetNetworkInterfaceIPConfiguration> _parent;
+        private ProvisioningResourceReference<VirtualMachineScaleSetNetworkInterfaceIPConfiguration> _parent;
 
         /// <summary> Creates a new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -457,7 +457,7 @@ namespace Azure.Provisioning.Network
             _sku = DefineModelProperty<PublicIPAddressSku>(nameof(Sku), new string[] { "sku" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            _parent = DefineResource<VirtualMachineScaleSetNetworkInterfaceIPConfiguration>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualMachineScaleSetNetworkInterfaceIPConfiguration>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

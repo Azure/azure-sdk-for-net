@@ -2201,7 +2201,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.ContextCacheNameAvailabilityContent"/> instance for mocking. </returns>
         public static ContextCacheNameAvailabilityContent ContextCacheNameAvailabilityContent(string name = default)
         {
-            return new ContextCacheNameAvailabilityContent(name, default, default);
+            return new ContextCacheNameAvailabilityContent(name, "Microsoft.Storage/contextCaches", default);
         }
 
         /// <summary> The result of the context cache name availability check. </summary>

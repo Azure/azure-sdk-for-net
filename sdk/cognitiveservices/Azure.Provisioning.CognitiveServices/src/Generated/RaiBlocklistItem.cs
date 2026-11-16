@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CognitiveServices
         private RaiBlocklistItemProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
-        private ResourceReference<RaiBlocklist> _parent;
+        private ProvisioningResourceReference<RaiBlocklist> _parent;
 
         /// <summary> Creates a new RaiBlocklistItem. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.CognitiveServices
             _properties = DefineModelProperty<RaiBlocklistItemProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<RaiBlocklist>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<RaiBlocklist>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

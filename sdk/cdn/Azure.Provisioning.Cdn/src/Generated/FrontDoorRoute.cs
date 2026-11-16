@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Cdn
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CdnRouteProperties _properties;
-        private ResourceReference<FrontDoorEndpoint> _parent;
+        private ProvisioningResourceReference<FrontDoorEndpoint> _parent;
 
         /// <summary> Creates a new FrontDoorRoute. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -328,7 +328,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CdnRouteProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorEndpoint>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FrontDoorEndpoint>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

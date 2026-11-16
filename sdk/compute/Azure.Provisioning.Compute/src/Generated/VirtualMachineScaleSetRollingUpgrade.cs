@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Compute
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private VirtualMachineScaleSetRollingUpgradeProperties _properties;
-        private ResourceReference<VirtualMachineScaleSet> _parent;
+        private ProvisioningResourceReference<VirtualMachineScaleSet> _parent;
 
         /// <summary> Creates a new VirtualMachineScaleSetRollingUpgrade. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -156,7 +156,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<VirtualMachineScaleSetRollingUpgradeProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualMachineScaleSet>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

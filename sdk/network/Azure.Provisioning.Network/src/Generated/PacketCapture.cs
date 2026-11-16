@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Network
         private SystemData _systemData;
         private BicepValue<ETag> _eTag;
         private PacketCaptureResultProperties _properties;
-        private ResourceReference<NetworkWatcher> _parent;
+        private ProvisioningResourceReference<NetworkWatcher> _parent;
 
         /// <summary> Creates a new PacketCapture. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -297,7 +297,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<PacketCaptureResultProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkWatcher>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

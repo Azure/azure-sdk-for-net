@@ -21,7 +21,7 @@ namespace Azure.Provisioning.EventGrid
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ChannelProperties _properties;
-        private ResourceReference<PartnerNamespace> _parent;
+        private ProvisioningResourceReference<PartnerNamespace> _parent;
 
         /// <summary> Creates a new PartnerNamespaceChannel. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.EventGrid
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ChannelProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<PartnerNamespace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<PartnerNamespace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.OperationalInsights
         private BicepValue<string> _name;
         private SystemData _systemData;
         private DataExportProperties _properties;
-        private ResourceReference<OperationalInsightsWorkspace> _parent;
+        private ProvisioningResourceReference<OperationalInsightsWorkspace> _parent;
 
         /// <summary> Creates a new OperationalInsightsDataExport. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -234,7 +234,7 @@ namespace Azure.Provisioning.OperationalInsights
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DataExportProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<OperationalInsightsWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

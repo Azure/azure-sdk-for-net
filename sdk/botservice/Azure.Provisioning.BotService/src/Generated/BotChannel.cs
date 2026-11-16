@@ -28,7 +28,7 @@ namespace Azure.Provisioning.BotService
         private BicepValue<BotServiceKind> _kind;
         private BicepValue<ETag> _eTag;
         private BicepList<string> _zones;
-        private ResourceReference<BotResource> _parent;
+        private ProvisioningResourceReference<BotResource> _parent;
 
         /// <summary> Creates a new BotChannel. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -201,7 +201,7 @@ namespace Azure.Provisioning.BotService
             _kind = DefineProperty<BotServiceKind>(nameof(Kind), new string[] { "kind" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
-            _parent = DefineResource<BotResource>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<BotResource>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

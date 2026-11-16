@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private PolicyContractProperties _properties;
-        private ResourceReference<ServiceWorkspaceApi> _parent;
+        private ProvisioningResourceReference<ServiceWorkspaceApi> _parent;
 
         /// <summary> Creates a new ServiceWorkspaceApiPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PolicyContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ServiceWorkspaceApi>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceWorkspaceApi>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 return Condition.AllOf;
             }
+            set
+            {
+                Condition = new AlertRuleAllOfCondition(value);
+            }
         }
 
         /// <summary> The list of the Action Groups. </summary>

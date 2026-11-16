@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ReplicaProperties _properties;
-        private ResourceReference<ContainerAppRevision> _parent;
+        private ProvisioningResourceReference<ContainerAppRevision> _parent;
 
         /// <summary> Creates a new ContainerAppReplica. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -142,7 +142,7 @@ namespace Azure.Provisioning.AppContainers
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerAppRevision>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerAppRevision>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

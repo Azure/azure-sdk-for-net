@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 namespace Azure.Provisioning.Storage;
 
 public partial class FileService
@@ -11,7 +13,7 @@ public partial class FileService
     {
         get
         {
-            return ProtocolSettings is null ? default! : ProtocolSettings.SmbSetting;
+            return ProtocolSettings is null ? default : ProtocolSettings.SmbSetting;
         }
         set
         {

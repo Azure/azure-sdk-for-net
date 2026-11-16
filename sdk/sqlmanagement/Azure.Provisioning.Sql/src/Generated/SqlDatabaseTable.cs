@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private DatabaseTableProperties _properties;
-        private ResourceReference<SqlDatabaseSchema> _parent;
+        private ProvisioningResourceReference<SqlDatabaseSchema> _parent;
 
         /// <summary> Creates a new SqlDatabaseTable. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DatabaseTableProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SqlDatabaseSchema>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlDatabaseSchema>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

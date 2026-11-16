@@ -31,6 +31,20 @@ internal static partial class CustomToolParamValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: allowed_callers
+        if (element.TryGetProperty("allowed_callers", out var allowedCallersProp) && allowedCallersProp.ValueKind != JsonValueKind.Null)
+        {
+            if (allowedCallersProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.allowed_callers", $"Expected array, got {allowedCallersProp.ValueKind}"));
+        }
+
+        // Optional: async
+        if (element.TryGetProperty("async", out var asyncProp))
+        {
+            if (asyncProp.ValueKind != JsonValueKind.True && asyncProp.ValueKind != JsonValueKind.False)
+                errors.Add(new ValidationError("$.async", $"Expected boolean, got {asyncProp.ValueKind}"));
+        }
+
         // Optional: defer_loading
         if (element.TryGetProperty("defer_loading", out var deferLoadingProp))
         {

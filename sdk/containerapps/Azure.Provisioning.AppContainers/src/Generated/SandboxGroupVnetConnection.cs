@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SandboxGroupVnetConnectionProperties _properties;
-        private ResourceReference<SandboxGroup> _parent;
+        private ProvisioningResourceReference<SandboxGroup> _parent;
 
         /// <summary> Creates a new SandboxGroupVnetConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.AppContainers
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SandboxGroupVnetConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SandboxGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SandboxGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

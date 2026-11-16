@@ -23,7 +23,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         private BicepValue<AzureLocation> _location;
         private BackupGenericProtectedItem _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<BackupProtectionContainer> _parent;
+        private ProvisioningResourceReference<BackupProtectionContainer> _parent;
 
         /// <summary> Creates a new BackupProtectedItem. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -153,7 +153,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<BackupGenericProtectedItem>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
-            _parent = DefineResource<BackupProtectionContainer>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<BackupProtectionContainer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

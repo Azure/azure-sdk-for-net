@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Sql
         private GeoBackupPolicyProperties _properties;
         private BicepValue<AzureLocation> _location;
         private BicepValue<string> _kind;
-        private ResourceReference<SqlDatabase> _parent;
+        private ProvisioningResourceReference<SqlDatabase> _parent;
 
         /// <summary> Creates a new GeoBackupPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -156,7 +156,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<GeoBackupPolicyProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isOutput: true);
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

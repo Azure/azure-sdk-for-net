@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CognitiveServices
         private CognitiveServicesPrivateEndpointConnectionProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<CognitiveServicesAccount> _parent;
+        private ProvisioningResourceReference<CognitiveServicesAccount> _parent;
 
         /// <summary> Creates a new CognitiveServicesPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -191,7 +191,7 @@ namespace Azure.Provisioning.CognitiveServices
             _properties = DefineModelProperty<CognitiveServicesPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<CognitiveServicesAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CognitiveServicesAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

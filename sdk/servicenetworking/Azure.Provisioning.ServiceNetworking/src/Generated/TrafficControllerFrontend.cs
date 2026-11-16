@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ServiceNetworking
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private FrontendProperties _properties;
-        private ResourceReference<TrafficController> _parent;
+        private ProvisioningResourceReference<TrafficController> _parent;
 
         /// <summary> Creates a new TrafficControllerFrontend. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -162,7 +162,7 @@ namespace Azure.Provisioning.ServiceNetworking
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<FrontendProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<TrafficController>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<TrafficController>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

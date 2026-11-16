@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         private SystemData _systemData;
         private ApiManagementWorkspaceLinksProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ApiManagementService> _parent;
+        private ProvisioningResourceReference<ApiManagementService> _parent;
 
         /// <summary> Creates a new ApiManagementWorkspaceLinks. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -129,7 +129,7 @@ namespace Azure.Provisioning.ApiManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ApiManagementWorkspaceLinksProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ApiManagementService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ApiManagementService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

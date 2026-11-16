@@ -13,8 +13,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An MCP tool stored in a toolbox. </summary>
     public partial class MCPToolboxTool : ToolboxTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private McpToolFilter _allowedTools;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>

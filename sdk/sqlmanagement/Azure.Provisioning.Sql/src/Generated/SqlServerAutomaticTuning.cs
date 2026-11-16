@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private AutomaticTuningServerProperties _properties;
-        private ResourceReference<SqlServer> _parent;
+        private ProvisioningResourceReference<SqlServer> _parent;
 
         /// <summary> Creates a new SqlServerAutomaticTuning. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "current");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AutomaticTuningServerProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlServer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

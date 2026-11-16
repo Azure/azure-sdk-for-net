@@ -7,12 +7,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell exec action. </summary>
-    public partial class FunctionShellAction
+    internal partial class FunctionShellAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="commands"></param>
         /// <param name="timeoutMs"></param>
         /// <param name="maxOutputLength"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commands"/> is null. </exception>
         public FunctionShellAction(IEnumerable<string> commands, long? timeoutMs, long? maxOutputLength)
         {
-            Argument.AssertNotNull(commands, nameof(commands));
-
             Commands = commands.ToList();
             TimeoutMs = timeoutMs;
             MaxOutputLength = maxOutputLength;

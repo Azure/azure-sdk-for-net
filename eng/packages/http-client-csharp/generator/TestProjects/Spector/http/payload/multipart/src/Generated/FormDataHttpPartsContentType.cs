@@ -29,29 +29,29 @@ namespace Payload.MultiPart._FormData.HttpParts.ContentType
         public virtual Task<Response> ImageJpegContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Response ImageJpegContentType(FileWithHttpPartSpecificContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response ImageJpegContentType(FileWithHttpPartSpecificContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Task<Response> ImageJpegContentTypeAsync(FileWithHttpPartSpecificContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> ImageJpegContentTypeAsync(FileWithHttpPartSpecificContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RequiredContentType(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Task<Response> RequiredContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Response RequiredContentType(FileWithHttpPartRequiredContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response RequiredContentType(FileWithHttpPartRequiredContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Task<Response> RequiredContentTypeAsync(FileWithHttpPartRequiredContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> RequiredContentTypeAsync(FileWithHttpPartRequiredContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response OptionalContentType(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Task<Response> OptionalContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Response OptionalContentType(FileWithHttpPartOptionalContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response OptionalContentType(FileWithHttpPartOptionalContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Task<Response> OptionalContentTypeAsync(FileWithHttpPartOptionalContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> OptionalContentTypeAsync(FileWithHttpPartOptionalContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
     }
 }

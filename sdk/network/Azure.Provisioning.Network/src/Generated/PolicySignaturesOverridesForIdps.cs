@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private SignaturesOverridesProperties _properties;
-        private ResourceReference<FirewallPolicy> _parent;
+        private ProvisioningResourceReference<FirewallPolicy> _parent;
 
         /// <summary> Creates a new PolicySignaturesOverridesForIdps. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _properties = DefineModelProperty<SignaturesOverridesProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FirewallPolicy>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FirewallPolicy>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

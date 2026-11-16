@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Search
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SharedSearchServicePrivateLinkResourceProperties _properties;
-        private ResourceReference<SearchService> _parent;
+        private ProvisioningResourceReference<SearchService> _parent;
 
         /// <summary> Creates a new SharedSearchServicePrivateLink. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -101,7 +101,7 @@ namespace Azure.Provisioning.Search
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SharedSearchServicePrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SearchService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SearchService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

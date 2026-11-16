@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SubgroupProperties _properties;
-        private ResourceReference<InterconnectGroup> _parent;
+        private ProvisioningResourceReference<InterconnectGroup> _parent;
 
         /// <summary> Creates a new InterconnectGroupSubgroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -83,7 +83,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<SubgroupProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<InterconnectGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<InterconnectGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

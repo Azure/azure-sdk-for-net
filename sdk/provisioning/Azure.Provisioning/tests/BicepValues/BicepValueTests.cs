@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
@@ -49,6 +51,67 @@ public class BicepValueTests
         TestHelpers.AssertExpression("-2147483647", new BicepValue<double>(-2147483647d));
         TestHelpers.AssertExpression("-2147483648", new BicepValue<double>(-2147483648d));
         TestHelpers.AssertExpression("json('-2147483649')", new BicepValue<double>(-2147483649d));
+    }
+
+    [Test]
+    public void ValidateResponseErrorBicepValue()
+    {
+        BicepValue<ResponseError> value = new ResponseError("ExampleCode", "Example message");
+
+        TestHelpers.AssertExpression(
+            """
+            {
+              code: 'ExampleCode'
+              message: 'Example message'
+            }
+            """,
+            value);
+        TestHelpers.AssertExpression("object", new TypeExpression(typeof(ResponseError)));
+    }
+
+    [Test]
+    public void ValidateNestedResponseErrorBicepValue()
+    {
+        ResponseError? error = ModelReaderWriter.Read<ResponseError>(
+            BinaryData.FromString(
+                """
+                {
+                  "code": "ExampleCode",
+                  "message": "Example message",
+                  "target": "Example target",
+                  "innererror": {
+                    "code": "InnerCode"
+                  },
+                  "details": [
+                    {
+                      "code": "DetailCode",
+                      "message": "Detail message"
+                    }
+                  ]
+                }
+                """),
+            ModelReaderWriterOptions.Json,
+            AzureCoreContext.Default);
+        Assert.That(error, Is.Not.Null);
+
+        TestHelpers.AssertExpression(
+            """
+            {
+              code: 'ExampleCode'
+              message: 'Example message'
+              target: 'Example target'
+              innererror: {
+                code: 'InnerCode'
+              }
+              details: [
+                {
+                  code: 'DetailCode'
+                  message: 'Detail message'
+                }
+              ]
+            }
+            """,
+            new BicepValue<ResponseError>(error!));
     }
 
     [Test]

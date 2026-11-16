@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private GalleryApplicationProperties _properties;
-        private ResourceReference<GalleryResource> _parent;
+        private ProvisioningResourceReference<GalleryResource> _parent;
 
         /// <summary> Creates a new GalleryApplication. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -255,7 +255,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GalleryApplicationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GalleryResource>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<GalleryResource>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

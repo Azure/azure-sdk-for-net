@@ -16,11 +16,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Test run app component. </summary>
     public partial class TestRunAppComponents : IJsonModel<TestRunAppComponents>
     {
-        /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/> for deserialization. </summary>
-        internal TestRunAppComponents()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunAppComponents PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

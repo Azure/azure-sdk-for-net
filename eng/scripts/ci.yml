@@ -11,6 +11,8 @@ trigger:
   paths:
     include:
       - eng/scripts/*
+      - eng/packages/http-client-csharp-mgmt/ci.yml
+      - eng/pipelines/templates/archetype-typespec-emitter.yml
     exclude:
       - eng/scripts/typespec
 
@@ -24,6 +26,8 @@ pr:
   paths:
     include:
       - eng/scripts/*
+      - eng/packages/http-client-csharp-mgmt/ci.yml
+      - eng/pipelines/templates/archetype-typespec-emitter.yml
     exclude:
       - eng/scripts/typespec
 

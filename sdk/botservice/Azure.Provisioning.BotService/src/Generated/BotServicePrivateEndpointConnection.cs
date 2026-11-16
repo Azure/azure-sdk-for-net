@@ -20,7 +20,7 @@ namespace Azure.Provisioning.BotService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private PrivateEndpointConnectionProperties _properties;
-        private ResourceReference<BotResource> _parent;
+        private ProvisioningResourceReference<BotResource> _parent;
 
         /// <summary> Creates a new BotServicePrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -162,7 +162,7 @@ namespace Azure.Provisioning.BotService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<BotResource>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<BotResource>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

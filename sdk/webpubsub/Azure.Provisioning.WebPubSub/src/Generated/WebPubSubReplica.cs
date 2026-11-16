@@ -24,7 +24,7 @@ namespace Azure.Provisioning.WebPubSub
         private BicepValue<AzureLocation> _location;
         private ReplicaProperties _properties;
         private BillingInfoSku _sku;
-        private ResourceReference<WebPubSubService> _parent;
+        private ProvisioningResourceReference<WebPubSubService> _parent;
 
         /// <summary> Creates a new WebPubSubReplica. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -201,7 +201,7 @@ namespace Azure.Provisioning.WebPubSub
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<BillingInfoSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<WebPubSubService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebPubSubService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

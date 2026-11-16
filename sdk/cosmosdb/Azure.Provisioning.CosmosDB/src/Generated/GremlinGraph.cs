@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<AzureLocation> _location;
         private GremlinGraphProperties _properties;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<GremlinDatabase> _parent;
+        private ProvisioningResourceReference<GremlinDatabase> _parent;
 
         /// <summary> Creates a new GremlinGraph. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -189,7 +189,7 @@ namespace Azure.Provisioning.CosmosDB
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GremlinGraphProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<GremlinDatabase>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<GremlinDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

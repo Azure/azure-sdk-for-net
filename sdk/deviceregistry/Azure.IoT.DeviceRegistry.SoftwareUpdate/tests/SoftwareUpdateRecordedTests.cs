@@ -32,7 +32,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate.Tests
                 });
             var importItem = new ImportUpdateInputItem(manifest);
             importItem.Files.Add(new FileImportMetadata("README.md", TestEnvironment.PayloadUrl));
-            var request = new ImportUpdateRequest(new[] { importItem })
+            var request = new ImportUpdateContent(new[] { importItem })
             {
                 EnableScan = false
             };

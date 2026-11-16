@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.AIInfraOptimization.csproj" />
+  <Project Path="tests/Azure.ResourceManager.AIInfraOptimization.Tests.csproj" />
+</Solution>

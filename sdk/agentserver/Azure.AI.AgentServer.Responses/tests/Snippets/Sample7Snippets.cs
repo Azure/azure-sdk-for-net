@@ -6,6 +6,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -114,8 +115,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
             public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 CancellationToken cancellationToken)
             {

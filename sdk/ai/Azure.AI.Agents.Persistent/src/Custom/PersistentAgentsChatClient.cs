@@ -125,7 +125,7 @@ namespace Azure.AI.Agents.Persistent
                 if (threadId is null)
                 {
                     // No thread ID was provided, so create a new thread.
-                    CreateThreadRequest createThreadRequest = new(
+                    CreateThreadContent createThreadRequest = new(
                         messages: runOptions.ThreadOptions.Messages?.ToList() ?? (IList<ThreadMessageOptions>)new ChangeTrackingList<ThreadMessageOptions>(),
                         toolResources: runOptions.ToolResources,
                         metadata: runOptions.Metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value) ?? (IDictionary<string, string>)new ChangeTrackingDictionary<string, string>(),

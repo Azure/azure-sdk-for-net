@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Sql
         private AdvisorProperties _properties;
         private BicepValue<string> _kind;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<SqlDatabase> _parent;
+        private ProvisioningResourceReference<SqlDatabase> _parent;
 
         /// <summary> Creates a new SqlDatabaseAdvisor. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -176,7 +176,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<AdvisorProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -1511,16 +1511,6 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AzureFunctionDefinitionFunction. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
-        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="Agents.AzureFunctionDefinitionFunction"/> instance for mocking. </returns>
-        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, BinaryData parameters = default)
-        {
-            return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// The ContainerSkill.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.InlineSkillParam"/> and <see cref="Agents.SkillReferenceParam"/>.
@@ -1573,13 +1563,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> An optional agent description. The authoring service resolves its fallback when omitted. </param>
         /// <param name="tools"> Optional tools carried through verbatim onto the generated agent (see `VoiceAgentTool`). </param>
         /// <param name="draft"> (Preview) When `true`, the generated voice agent is created as a draft — an editable, unpublished version the caller can review and refine before publishing it via the standard create/version path. The service defaults to `false` if a value is not specified by the caller, in which case the agent is created and published normally. </param>
-        /// <returns> A new <see cref="Agents.GenerateVoiceAgentRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.GenerateVoiceAgentContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static GenerateVoiceAgentRequest GenerateVoiceAgentRequest(string name = default, VoiceModelType? modelType = default, string model = default, string useCase = default, string goal = default, string description = default, IEnumerable<VoiceAgentTool> tools = default, bool? draft = default)
+        public static GenerateVoiceAgentContent GenerateVoiceAgentContent(string name = default, VoiceModelType? modelType = default, string model = default, string useCase = default, string goal = default, string description = default, IEnumerable<VoiceAgentTool> tools = default, bool? draft = default)
         {
             tools ??= new ChangeTrackingList<VoiceAgentTool>();
 
-            return new GenerateVoiceAgentRequest(
+            return new GenerateVoiceAgentContent(
                 "voice",
                 name,
                 modelType,
@@ -2555,7 +2545,11 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="externalWebAccess"> Allow live internet access for web search. Defaults to true when omitted. When false, the web search tool runs in offline/cache-only mode and will not fetch new external content. </param>
         /// <param name="filters"></param>
-        /// <param name="userLocation"></param>
+        /// <param name="userLocation">
+        /// The approximate location of the user. If omitted or null, defaults to the
+        ///   United States. To avoid this fallback, pass `{"type": "approximate"}` without
+        ///   location fields. To localize results, provide the relevant location fields.
+        /// </param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
         /// <param name="customSearchConfiguration">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
@@ -3933,13 +3927,13 @@ namespace Azure.AI.Projects.Agents
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The UpdateToolboxRequest. </summary>
+        /// <summary> The UpdateToolboxContent. </summary>
         /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
-        /// <returns> A new <see cref="Agents.UpdateToolboxRequest"/> instance for mocking. </returns>
-        public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
+        /// <returns> A new <see cref="Agents.UpdateToolboxContent"/> instance for mocking. </returns>
+        public static UpdateToolboxContent UpdateToolboxContent(string name = default, string defaultVersion = default)
         {
-            return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
+            return new UpdateToolboxContent(name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>

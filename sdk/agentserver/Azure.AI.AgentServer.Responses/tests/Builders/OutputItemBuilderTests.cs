@@ -39,7 +39,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_ReturnsResponseOutputItemAddedEvent()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -51,7 +51,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_SetsOutputIndex()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 5, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -63,7 +63,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_WrapsTheCorrectItem()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -75,7 +75,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_AssignsSequenceNumber()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -91,7 +91,7 @@ public class OutputItemBuilderTests
     public void EmitDone_ReturnsResponseOutputItemDoneEvent()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         builder.EmitAdded(item);
@@ -104,7 +104,7 @@ public class OutputItemBuilderTests
     public void EmitDone_SetsOutputIndex()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 7, "fc_test");
 
         builder.EmitAdded(item);
@@ -117,7 +117,7 @@ public class OutputItemBuilderTests
     public void EmitDone_WrapsTheSameItem()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         builder.EmitAdded(item);
@@ -134,8 +134,8 @@ public class OutputItemBuilderTests
     public void EmitAdded_And_EmitDone_CanReceiveDifferentItems()
     {
         var stream = CreateStream();
-        var addedItem = new OutputItemFunctionToolCall("call_1", "myFunc", "");
-        var doneItem = new OutputItemFunctionToolCall("call_1", "myFunc", "{\"result\":1}");
+        var addedItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString(""));
+        var doneItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{\"result\":1}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var added = builder.EmitAdded(addedItem);
@@ -154,8 +154,8 @@ public class OutputItemBuilderTests
     public void EmitAdded_ThenEmitDone_SequenceNumbersIncrement()
     {
         var stream = CreateStream();
-        var addedItem = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
-        var doneItem = new OutputItemFunctionToolCall("call_1", "myFunc", "{}");
+        var addedItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
+        var doneItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var added = builder.EmitAdded(addedItem);
@@ -173,7 +173,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_WorksWithMcpApprovalResponse()
     {
         var stream = CreateStream();
-        var item = new OutputItemMcpApprovalResponseResource("apr_1", "req_1", true);
+        var item = new OutputItemMcpApprovalResponseResource("req_1", true) { Id = "apr_1" };
         var builder = new OutputItemBuilder<OutputItemMcpApprovalResponseResource>(stream, 2, "apr_test");
 
         var ev = builder.EmitAdded(item);
@@ -187,7 +187,7 @@ public class OutputItemBuilderTests
     public void EmitDone_WorksWithMcpApprovalResponse()
     {
         var stream = CreateStream();
-        var item = new OutputItemMcpApprovalResponseResource("apr_1", "req_1", false);
+        var item = new OutputItemMcpApprovalResponseResource("req_1", false) { Id = "apr_1" };
         var builder = new OutputItemBuilder<OutputItemMcpApprovalResponseResource>(stream, 0, "apr_test");
 
         builder.EmitAdded(item);

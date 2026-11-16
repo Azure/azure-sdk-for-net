@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
@@ -43,6 +46,7 @@ internal static class BicepTypeMapping
         type == typeof(ResourceIdentifier) ? "string" :
         type == typeof(ResourceType) ? "string" :
         type == typeof(AzureLocation) ? "string" :
+        type == typeof(ResponseError) ? "object" :
         typeof(Enum).IsAssignableFrom(type) ? "string" :
         typeof(System.Collections.IDictionary).IsAssignableFrom(type) ? "object" :
         typeof(System.Collections.IEnumerable).IsAssignableFrom(type) ? "array" :
@@ -114,6 +118,7 @@ internal static class BicepTypeMapping
             BinaryData b => ToBicep(b, format),
             AzureLocation azureLocation => BicepSyntax.Value(ToLiteralString(azureLocation, format)),
             ResourceType rt => BicepSyntax.Value(ToLiteralString(rt, format)),
+            ResponseError error => ToBicep(error),
             Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
             ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
@@ -146,6 +151,35 @@ internal static class BicepTypeMapping
             $"Cannot compile BinaryData with unsupported media type '{mediaType}'. " +
             $"Use '{JsonMediaType}', '{BicepMediaType}', or omit the media type for JSON.");
     }
+
+    private static BicepExpression ToBicep(ResponseError value)
+    {
+        // ResponseError only exposes Code and Message publicly, while Target, InnerError,
+        // and Details are internal but included in its supported wire representation.
+        // Serialize through Azure.Core so the native Bicep object preserves the complete error.
+        BinaryData json = ModelReaderWriter.Write(value, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
+        using JsonDocument document = JsonDocument.Parse(json.ToMemory());
+        return ToBicep(document.RootElement);
+    }
+
+    private static BicepExpression ToBicep(JsonElement value) =>
+        value.ValueKind switch
+        {
+            JsonValueKind.Object => new ObjectExpression(
+                value.EnumerateObject()
+                    .Select(property => new PropertyExpression(property.Name, ToBicep(property.Value)))
+                    .ToArray()),
+            JsonValueKind.Array => new ArrayExpression(value.EnumerateArray().Select(ToBicep).ToArray()),
+            JsonValueKind.String => BicepSyntax.Value(value.GetString()!),
+            JsonValueKind.Number when value.TryGetInt64(out long integer) => BicepSyntax.Value(integer),
+            JsonValueKind.Number => BicepSyntax.Value(value.GetDouble()),
+            JsonValueKind.True => BicepSyntax.Value(true),
+            JsonValueKind.False => BicepSyntax.Value(false),
+            JsonValueKind.Null => BicepSyntax.Null(),
+            // Parsed JSON covers every value kind above. Undefined cannot occur in a JsonDocument;
+            // keep the fallback to fail explicitly if System.Text.Json adds another value kind.
+            _ => throw new InvalidOperationException($"Cannot convert JSON value kind {value.ValueKind} to a Bicep expression.")
+        };
 
     private static string DecodeUtf8(BinaryData value, string mediaType)
     {

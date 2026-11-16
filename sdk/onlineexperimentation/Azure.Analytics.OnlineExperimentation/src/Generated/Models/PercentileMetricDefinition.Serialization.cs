@@ -15,11 +15,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of a Percentile metric definition. Calculates a specified percentile of an event property. </summary>
     public partial class PercentileMetricDefinition : ExperimentMetricDefinition, IJsonModel<PercentileMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="PercentileMetricDefinition"/> for deserialization. </summary>
-        internal PercentileMetricDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

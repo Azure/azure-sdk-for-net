@@ -17,10 +17,8 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
-        /// <param name="importKind"> Ingestion type. </param>
-        public IngestionInformation(IngestionKind importKind)
+        public IngestionInformation()
         {
-            ImportKind = importKind;
         }
 
         /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
@@ -46,6 +44,13 @@ namespace Azure.Analytics.PlanetaryComputer
             CreatedOn = createdOn;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
+        /// <param name="importKind"> Ingestion type. </param>
+        public IngestionInformation(IngestionKind importKind) : this()
+        {
+            ImportKind = importKind;
         }
 
         /// <summary> Ingestion id. </summary>

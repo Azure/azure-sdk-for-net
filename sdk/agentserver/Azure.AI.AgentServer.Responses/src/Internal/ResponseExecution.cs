@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Models;
@@ -18,6 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// State persistence is delegated to <see cref="ResponsesProvider"/>; event streaming and
 /// sequence numbering are delegated to the Core event-stream primitive.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseExecution : IDisposable
 {
     public ResponseExecution(string responseId,
@@ -106,7 +108,7 @@ internal sealed class ResponseExecution : IDisposable
     /// <c>null</c> until the handler yields <c>response.created</c> and
     /// <see cref="ResponseMutations.ReplaceResponse"/> sets it.
     /// </summary>
-    public Models.ResponseObject? Response { get; set; }
+    public ResponseObject? Response { get; set; }
 
     /// <summary>Gets the cancellation token source for this execution (used by StopAsync for shutdown).</summary>
     public CancellationTokenSource CancellationTokenSource { get; }
@@ -287,7 +289,7 @@ internal sealed class ResponseExecution : IDisposable
     /// emitting it. Used by the background non-streaming path to wait for the handler's
     /// response before returning to the client.
     /// </summary>
-    public TaskCompletionSource<Models.ResponseObject> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    public TaskCompletionSource<ResponseObject> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
     /// <summary>
     /// Signal that completes when <see cref="ResponseOrchestrator.FinalizeExecutionAsync"/>

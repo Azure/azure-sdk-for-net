@@ -20,7 +20,7 @@ namespace Azure.Provisioning.OperationalInsights
         private BicepValue<string> _name;
         private SystemData _systemData;
         private LogAnalyticsQueryPackQueryProperties _queryProperties;
-        private ResourceReference<LogAnalyticsQueryPack> _parent;
+        private ProvisioningResourceReference<LogAnalyticsQueryPack> _parent;
 
         /// <summary> Creates a new LogAnalyticsQuery. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.OperationalInsights
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _queryProperties = DefineModelProperty<LogAnalyticsQueryPackQueryProperties>(nameof(QueryProperties), new string[] { "properties" });
-            _parent = DefineResource<LogAnalyticsQueryPack>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<LogAnalyticsQueryPack>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

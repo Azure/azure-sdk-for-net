@@ -15,11 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a MultiPoint. </summary>
     public partial class MultiPoint : GeoJsonGeometry, IJsonModel<MultiPoint>
     {
-        /// <summary> Initializes a new instance of <see cref="MultiPoint"/> for deserialization. </summary>
-        internal MultiPoint()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

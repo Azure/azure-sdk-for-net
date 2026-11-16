@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Attestation
         private BicepValue<string> _name;
         private SystemData _systemData;
         private PrivateEndpointConnectionProperties _properties;
-        private ResourceReference<AttestationProvider> _parent;
+        private ProvisioningResourceReference<AttestationProvider> _parent;
 
         /// <summary> Creates a new AttestationPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.Attestation
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<AttestationProvider>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<AttestationProvider>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -2890,11 +2890,11 @@ namespace Azure.Search.Documents.Models
         /// <summary> Multipart request for uploading a file to a File knowledge source. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The raw file content. </param>
-        /// <returns> A new <see cref="Indexes.Models.UploadKnowledgeSourceFileMultipartRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.UploadKnowledgeSourceFileMultipartContent"/> instance for mocking. </returns>
         [Experimental("SCME0004")]
-        public static UploadKnowledgeSourceFileMultipartRequest UploadKnowledgeSourceFileMultipartRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
+        public static UploadKnowledgeSourceFileMultipartContent UploadKnowledgeSourceFileMultipartContent(FileUploadMetadata metadata = default, FileBinaryContent content = default)
         {
-            return new UploadKnowledgeSourceFileMultipartRequest(metadata, content);
+            return new UploadKnowledgeSourceFileMultipartContent(metadata, content);
         }
 
         /// <summary> The JSON 'metadata' part of a multipart/form-data file upload: the full file name/path and custom key/value metadata. The parsing mode and extraction mode are both chosen by the service and are not supplied by the caller. </summary>
@@ -2911,11 +2911,11 @@ namespace Azure.Search.Documents.Models
         /// <summary> Multipart request for updating a file in a File knowledge source. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The raw file content. </param>
-        /// <returns> A new <see cref="Indexes.Models.UpdateKnowledgeSourceFileRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.UpdateKnowledgeSourceFileContent"/> instance for mocking. </returns>
         [Experimental("SCME0004")]
-        public static UpdateKnowledgeSourceFileRequest UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
+        public static UpdateKnowledgeSourceFileContent UpdateKnowledgeSourceFileContent(FileUploadMetadata metadata = default, FileBinaryContent content = default)
         {
-            return new UpdateKnowledgeSourceFileRequest(metadata, content);
+            return new UpdateKnowledgeSourceFileContent(metadata, content);
         }
 
         /// <summary> Response from a get service statistics request. If successful, it includes service level counters and limits. </summary>

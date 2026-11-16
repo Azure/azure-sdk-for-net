@@ -25,7 +25,7 @@ namespace Azure.Provisioning.KeyVault
         private ManagedHsmSku _sku;
         private ManagedServiceIdentity _identity;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ManagedHsm> _parent;
+        private ProvisioningResourceReference<ManagedHsm> _parent;
 
         /// <summary> Creates a new ManagedHsmPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -230,7 +230,7 @@ namespace Azure.Provisioning.KeyVault
             _sku = DefineModelProperty<ManagedHsmSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<ManagedHsm>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ManagedHsm>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

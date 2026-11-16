@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Monitor
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MonitorPrivateLinkResourceProperties _properties;
-        private ResourceReference<MonitorPrivateLinkScope> _parent;
+        private ProvisioningResourceReference<MonitorPrivateLinkScope> _parent;
 
         /// <summary> Creates a new MonitorPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Monitor
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MonitorPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<MonitorPrivateLinkScope>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<MonitorPrivateLinkScope>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

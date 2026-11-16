@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Compute
         private BicepList<string> _zones;
         private ManagedServiceIdentity _identity;
         private BicepValue<string> _eTag;
-        private ResourceReference<VirtualMachineScaleSet> _parent;
+        private ProvisioningResourceReference<VirtualMachineScaleSet> _parent;
 
         /// <summary> Creates a new VirtualMachineScaleSetVm. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -229,7 +229,7 @@ namespace Azure.Provisioning.Compute
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualMachineScaleSet>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

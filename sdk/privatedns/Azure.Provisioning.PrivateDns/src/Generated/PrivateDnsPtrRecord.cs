@@ -21,7 +21,7 @@ namespace Azure.Provisioning.PrivateDns
         private SystemData _systemData;
         private PrivateDnsRecordSetProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<PrivateDnsZone> _parent;
+        private ProvisioningResourceReference<PrivateDnsZone> _parent;
 
         /// <summary> Creates a new PrivateDnsPtrRecord. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.PrivateDns
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateDnsRecordSetProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<PrivateDnsZone>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<PrivateDnsZone>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

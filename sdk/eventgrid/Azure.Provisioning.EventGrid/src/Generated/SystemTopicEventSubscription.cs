@@ -21,7 +21,7 @@ namespace Azure.Provisioning.EventGrid
         private BicepValue<string> _name;
         private SystemData _systemData;
         private EventSubscriptionProperties _properties;
-        private ResourceReference<SystemTopic> _parent;
+        private ProvisioningResourceReference<SystemTopic> _parent;
 
         /// <summary> Creates a new SystemTopicEventSubscription. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -282,7 +282,7 @@ namespace Azure.Provisioning.EventGrid
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<EventSubscriptionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SystemTopic>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SystemTopic>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

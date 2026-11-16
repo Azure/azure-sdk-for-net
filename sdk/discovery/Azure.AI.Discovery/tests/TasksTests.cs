@@ -38,7 +38,7 @@ namespace Azure.AI.Discovery.Tests
                     Title = title,
                     Priority = TaskPriority.High,
                     Description = description,
-                    AssignedTo = new TaskAssignee(TestEnvironment.AgentName, DiscoveryActorType.Application),
+                    AssignedTo = new TaskAssignee { Id = TestEnvironment.AgentName, Type = DiscoveryActorType.Application },
                     InvestigationId = InvestigationPath(),
                 });
         }

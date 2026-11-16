@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private TagApiLinkContractProperties _properties;
-        private ResourceReference<ApiManagementTag> _parent;
+        private ProvisioningResourceReference<ApiManagementTag> _parent;
 
         /// <summary> Creates a new ServiceTagApiLink. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -120,7 +120,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<TagApiLinkContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ApiManagementTag>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ApiManagementTag>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

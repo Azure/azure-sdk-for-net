@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System.ComponentModel;
 using System.Net;
@@ -24,36 +24,36 @@ public partial class AseV3NetworkingConfigurationData : ProvisionableConstruct
     /// </summary>
     public BicepList<IPAddress> WindowsOutboundIPAddresses
     {
-        get { Initialize(); return _windowsOutboundIPAddresses!; }
+        get { Initialize(); return _windowsOutboundIPAddresses; }
     }
-    private BicepList<IPAddress>? _windowsOutboundIPAddresses;
+    private BicepList<IPAddress> _windowsOutboundIPAddresses;
 
     /// <summary>
     /// Gets the linux outbound ip addresses.
     /// </summary>
     public BicepList<IPAddress> LinuxOutboundIPAddresses
     {
-        get { Initialize(); return _linuxOutboundIPAddresses!; }
+        get { Initialize(); return _linuxOutboundIPAddresses; }
     }
-    private BicepList<IPAddress>? _linuxOutboundIPAddresses;
+    private BicepList<IPAddress> _linuxOutboundIPAddresses;
 
     /// <summary>
     /// Gets the external inbound ip addresses.
     /// </summary>
     public BicepList<IPAddress> ExternalInboundIPAddresses
     {
-        get { Initialize(); return _externalInboundIPAddresses!; }
+        get { Initialize(); return _externalInboundIPAddresses; }
     }
-    private BicepList<IPAddress>? _externalInboundIPAddresses;
+    private BicepList<IPAddress> _externalInboundIPAddresses;
 
     /// <summary>
     /// Gets the internal inbound ip addresses.
     /// </summary>
     public BicepList<IPAddress> InternalInboundIPAddresses
     {
-        get { Initialize(); return _internalInboundIPAddresses!; }
+        get { Initialize(); return _internalInboundIPAddresses; }
     }
-    private BicepList<IPAddress>? _internalInboundIPAddresses;
+    private BicepList<IPAddress> _internalInboundIPAddresses;
 
     /// <summary>
     /// Property to enable and disable new private endpoint connection creation
@@ -61,77 +61,77 @@ public partial class AseV3NetworkingConfigurationData : ProvisionableConstruct
     /// </summary>
     public BicepValue<bool> AllowNewPrivateEndpointConnections
     {
-        get { Initialize(); return _allowNewPrivateEndpointConnections!; }
-        set { Initialize(); _allowNewPrivateEndpointConnections!.Assign(value); }
+        get { Initialize(); return _allowNewPrivateEndpointConnections; }
+        set { Initialize(); _allowNewPrivateEndpointConnections.Assign(value); }
     }
-    private BicepValue<bool>? _allowNewPrivateEndpointConnections;
+    private BicepValue<bool> _allowNewPrivateEndpointConnections;
 
     /// <summary>
     /// Property to enable and disable FTP on ASEV3.
     /// </summary>
     public BicepValue<bool> IsFtpEnabled
     {
-        get { Initialize(); return _isFtpEnabled!; }
-        set { Initialize(); _isFtpEnabled!.Assign(value); }
+        get { Initialize(); return _isFtpEnabled; }
+        set { Initialize(); _isFtpEnabled.Assign(value); }
     }
-    private BicepValue<bool>? _isFtpEnabled;
+    private BicepValue<bool> _isFtpEnabled;
 
     /// <summary>
     /// Property to enable and disable Remote Debug on ASEV3.
     /// </summary>
     public BicepValue<bool> IsRemoteDebugEnabled
     {
-        get { Initialize(); return _isRemoteDebugEnabled!; }
-        set { Initialize(); _isRemoteDebugEnabled!.Assign(value); }
+        get { Initialize(); return _isRemoteDebugEnabled; }
+        set { Initialize(); _isRemoteDebugEnabled.Assign(value); }
     }
-    private BicepValue<bool>? _isRemoteDebugEnabled;
+    private BicepValue<bool> _isRemoteDebugEnabled;
 
     /// <summary>
     /// Customer provided Inbound IP Address. Only able to be set on Ase create.
     /// </summary>
     public BicepValue<string> InboundIPAddressOverride
     {
-        get { Initialize(); return _inboundIPAddressOverride!; }
-        set { Initialize(); _inboundIPAddressOverride!.Assign(value); }
+        get { Initialize(); return _inboundIPAddressOverride; }
+        set { Initialize(); _inboundIPAddressOverride.Assign(value); }
     }
-    private BicepValue<string>? _inboundIPAddressOverride;
+    private BicepValue<string> _inboundIPAddressOverride;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
     public BicepValue<string> Kind
     {
-        get { Initialize(); return _kind!; }
-        set { Initialize(); _kind!.Assign(value); }
+        get { Initialize(); return _kind; }
+        set { Initialize(); _kind.Assign(value); }
     }
-    private BicepValue<string>? _kind;
+    private BicepValue<string> _kind;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id
     {
-        get { Initialize(); return _id!; }
+        get { Initialize(); return _id; }
     }
-    private BicepValue<ResourceIdentifier>? _id;
+    private BicepValue<ResourceIdentifier> _id;
 
     /// <summary>
     /// Gets the Name.
     /// </summary>
     public BicepValue<string> Name
     {
-        get { Initialize(); return _name!; }
+        get { Initialize(); return _name; }
     }
-    private BicepValue<string>? _name;
+    private BicepValue<string> _name;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
     public SystemData SystemData
     {
-        get { Initialize(); return _systemData!; }
+        get { Initialize(); return _systemData; }
     }
-    private SystemData? _systemData;
+    private SystemData _systemData;
 
     /// <summary>
     /// Creates a new AseV3NetworkingConfigurationData.

@@ -22,7 +22,7 @@ namespace Azure.Provisioning.AppConfiguration
         private SystemData _systemData;
         private ReplicaProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<AppConfigurationStore> _parent;
+        private ProvisioningResourceReference<AppConfigurationStore> _parent;
 
         /// <summary> Creates a new AppConfigurationReplica. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -146,7 +146,7 @@ namespace Azure.Provisioning.AppConfiguration
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<AppConfigurationStore>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<AppConfigurationStore>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

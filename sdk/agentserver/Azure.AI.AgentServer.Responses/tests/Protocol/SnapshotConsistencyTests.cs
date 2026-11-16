@@ -128,7 +128,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
     /// <summary>
     /// T010: SSE event snapshot isolation — response.output_item.added event's embedded
-    /// Models.ResponseObject does not include items added after it was emitted.
+    /// ResponseObject does not include items added after it was emitted.
     /// response.completed contains all output items.
     /// </summary>
     [Test]
@@ -234,8 +234,8 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         SemaphoreSlim continueGate, SemaphoreSlim itemEmitted,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         handlerStarted.TrySetResult();
 
         var items = new List<OutputItem>();
@@ -245,21 +245,21 @@ public class SnapshotConsistencyTests : ProtocolTestBase
             // Wait for the test to release the gate before emitting the next item
             await continueGate.WaitAsync(ct);
 
-            var msg = new OutputItemMessage(
+            var msg = MessageItemFactory.OutputMessage(
                 $"msg_{i}", MessageStatus.Completed, MessageRole.Assistant,
-                Array.Empty<MessageContent>());
+                Array.Empty<ResponseContentPart>());
             items.Add(msg);
-            yield return new ResponseOutputItemAddedEvent(0, i, msg);
+            yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(i), Item = msg };
 
             // Signal the test that this item has been yielded
             itemEmitted.Release();
         }
 
-        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
+        var completedResponse = new ResponseObject { Id = ctx.ResponseId, Model = "test-model", Status = ResponseStatus.Completed };
         foreach (var item in items)
-            completedResponse.Output.Add(item);
+            completedResponse.OutputItems.Add(item);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = completedResponse };
     }
 
     /// <summary>
@@ -268,26 +268,26 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     private static async IAsyncEnumerable<ResponseStreamEvent> MultiOutputStreamForSnapshotTest(
         ResponseContext ctx)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
-        var msg1 = new OutputItemMessage(
+        var msg1 = MessageItemFactory.OutputMessage(
             "msg_1", MessageStatus.Completed, MessageRole.Assistant,
-            Array.Empty<MessageContent>());
-        yield return new ResponseOutputItemAddedEvent(0, 0, msg1);
+            Array.Empty<ResponseContentPart>());
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = msg1 };
 
         await Task.Yield(); // Ensure async
 
-        var msg2 = new OutputItemMessage(
+        var msg2 = MessageItemFactory.OutputMessage(
             "msg_2", MessageStatus.Completed, MessageRole.Assistant,
-            Array.Empty<MessageContent>());
-        yield return new ResponseOutputItemAddedEvent(0, 1, msg2);
+            Array.Empty<ResponseContentPart>());
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(1), Item = msg2 };
 
-        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
-        completedResponse.Output.Add(msg1);
-        completedResponse.Output.Add(msg2);
+        var completedResponse = new ResponseObject { Id = ctx.ResponseId, Model = "test-model", Status = ResponseStatus.Completed };
+        completedResponse.OutputItems.Add(msg1);
+        completedResponse.OutputItems.Add(msg2);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = completedResponse };
     }
 
     /// <summary>
@@ -296,13 +296,13 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleBackgroundStream(
         ResponseContext ctx, TaskCompletionSource done)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         await done.Task;
 
-        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
+        var completedResponse = new ResponseObject { Id = ctx.ResponseId, Model = "test-model", Status = ResponseStatus.Completed };
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = completedResponse };
     }
 }

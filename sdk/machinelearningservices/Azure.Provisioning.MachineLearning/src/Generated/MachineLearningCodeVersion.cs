@@ -18,7 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MachineLearningCodeVersionProperties _properties;
-        private ResourceReference<MachineLearningCodeContainer> _parent;
+        private ProvisioningResourceReference<MachineLearningCodeContainer> _parent;
 
         /// <summary> Creates a new MachineLearningCodeVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -100,7 +100,7 @@ namespace Azure.Provisioning.MachineLearning
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MachineLearningCodeVersionProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<MachineLearningCodeContainer>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<MachineLearningCodeContainer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
