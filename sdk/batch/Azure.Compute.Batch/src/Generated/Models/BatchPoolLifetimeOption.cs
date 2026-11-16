@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchPoolLifetimeOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchPoolLifetimeOption?(string value) => value == null ? null : new BatchPoolLifetimeOption(value);
+        public static implicit operator BatchPoolLifetimeOption?(string value) => value == null ? (BatchPoolLifetimeOption?)null : new BatchPoolLifetimeOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

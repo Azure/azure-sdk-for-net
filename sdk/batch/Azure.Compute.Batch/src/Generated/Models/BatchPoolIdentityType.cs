@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchPoolIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchPoolIdentityType?(string value) => value == null ? null : new BatchPoolIdentityType(value);
+        public static implicit operator BatchPoolIdentityType?(string value) => value == null ? (BatchPoolIdentityType?)null : new BatchPoolIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
