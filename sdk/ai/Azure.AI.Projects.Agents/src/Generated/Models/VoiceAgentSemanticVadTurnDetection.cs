@@ -10,13 +10,14 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> OpenAI semantic VAD turn-detection settings. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSemanticVadTurnDetection : VoiceAgentTurnDetectionConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSemanticVadTurnDetection"/>. </summary>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public VoiceAgentSemanticVadTurnDetection() : base(VoiceAgentTurnDetectionType.SemanticVad)
         {
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSemanticVadTurnDetection"/>. </summary>
         /// <param name="type"> The turn-detection strategy. </param>
@@ -25,6 +26,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eagerness"></param>
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
+        [Experimental("AAIP002")]
         internal VoiceAgentSemanticVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, RealtimeSemanticVadEagernessLevel? eagerness, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Eagerness = eagerness;
@@ -33,6 +35,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Gets or sets the Eagerness. </summary>
+        [Experimental("AAIP002")]
         public RealtimeSemanticVadEagernessLevel? Eagerness { get; set; }
 
         /// <summary> Gets or sets the CreateResponse. </summary>

@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The Prompt surface changed by a proposed fix. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct AgentInsightPromptSurface : IEquatable<AgentInsightPromptSurface>
     {
         private readonly string _value;

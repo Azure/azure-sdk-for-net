@@ -72,6 +72,8 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(OpenApiTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
@@ -83,6 +85,8 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndObject();
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             writer.WritePropertyName("openapi"u8);
             writer.WriteObjectValue(FunctionDefinition, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

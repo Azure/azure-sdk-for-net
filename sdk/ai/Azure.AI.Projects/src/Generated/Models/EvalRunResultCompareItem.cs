@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Metric comparison for a treatment against the baseline. </summary>
-    [Experimental("AAIP001")]
     public partial class EvalRunResultCompareItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,6 +20,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="deltaEstimate"> Estimated difference between treatment and baseline. </param>
         /// <param name="pValue"> P-value for the treatment effect. </param>
         /// <param name="treatmentEffect"> Type of treatment effect. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalRunResultCompareItem(string treatmentRunId, EvalRunResultSummary treatmentRunSummary, float deltaEstimate, float pValue, TreatmentEffectType treatmentEffect)
         {
             TreatmentRunId = treatmentRunId;
@@ -30,6 +29,7 @@ namespace Azure.AI.Projects.Evaluation
             PValue = pValue;
             TreatmentEffect = treatmentEffect;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvalRunResultCompareItem"/>. </summary>
         /// <param name="treatmentRunId"> The treatment run ID. </param>
@@ -38,6 +38,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="pValue"> P-value for the treatment effect. </param>
         /// <param name="treatmentEffect"> Type of treatment effect. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalRunResultCompareItem(string treatmentRunId, EvalRunResultSummary treatmentRunSummary, float deltaEstimate, float pValue, TreatmentEffectType treatmentEffect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TreatmentRunId = treatmentRunId;
@@ -47,6 +48,7 @@ namespace Azure.AI.Projects.Evaluation
             TreatmentEffect = treatmentEffect;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The treatment run ID. </summary>
         public string TreatmentRunId { get; }

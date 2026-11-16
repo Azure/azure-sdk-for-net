@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The response body for cluster insights. </summary>
-    [Experimental("AAIP001")]
     public partial class ProjectsInsight
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,6 +18,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="displayName"> User friendly display name for the insight. </param>
         /// <param name="request"> Request for the insights analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="request"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public ProjectsInsight(string displayName, InsightRequest request)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
@@ -28,6 +27,7 @@ namespace Azure.AI.Projects.Evaluation
             DisplayName = displayName;
             Request = request;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ProjectsInsight"/>. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
@@ -37,6 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="request"> Request for the insights analysis. </param>
         /// <param name="result"> The result of the insights report. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ProjectsInsight(string id, InsightsMetadata metadata, OperationStatus state, string displayName, InsightRequest request, InsightResult result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -47,6 +48,7 @@ namespace Azure.AI.Projects.Evaluation
             Result = result;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The unique identifier for the insights report. </summary>
         public string Id { get; }

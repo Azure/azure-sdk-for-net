@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -17,7 +16,6 @@ namespace Azure.AI.Projects.Agents
     /// own storage credentials. For Foundry-managed storage `blob_uri` is absent and the bytes are streamed via the
     /// `/audio/content` route instead.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceRecording
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

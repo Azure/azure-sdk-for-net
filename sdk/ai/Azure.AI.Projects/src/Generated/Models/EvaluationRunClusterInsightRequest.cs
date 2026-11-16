@@ -4,20 +4,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights on set of Evaluation Results. </summary>
-    [Experimental("AAIP001")]
     public partial class EvaluationRunClusterInsightRequest : InsightRequest
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationRunClusterInsightRequest"/>. </summary>
         /// <param name="evalId"> Evaluation Id for the insights. </param>
         /// <param name="runIds"> List of evaluation run IDs for the insights. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evalId"/> or <paramref name="runIds"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public EvaluationRunClusterInsightRequest(string evalId, IEnumerable<string> runIds) : base(InsightType.EvaluationRunClusterInsight)
         {
             Argument.AssertNotNull(evalId, nameof(evalId));
@@ -26,6 +25,7 @@ namespace Azure.AI.Projects.Evaluation
             EvalId = evalId;
             RunIds = runIds.ToList();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvaluationRunClusterInsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
@@ -33,12 +33,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evalId"> Evaluation Id for the insights. </param>
         /// <param name="runIds"> List of evaluation run IDs for the insights. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationRunClusterInsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, IList<string> runIds, InsightModelConfiguration modelConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             RunIds = runIds;
             ModelConfiguration = modelConfiguration;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Evaluation Id for the insights. </summary>
         public string EvalId { get; set; }

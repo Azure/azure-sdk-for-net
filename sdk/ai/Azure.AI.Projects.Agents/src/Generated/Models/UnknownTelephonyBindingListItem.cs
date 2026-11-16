@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
     internal partial class UnknownTelephonyBindingListItem : TelephonyBindingListItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTelephonyBindingListItem"/>. </summary>
@@ -16,11 +14,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTelephonyBindingListItem(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, provider != default ? provider : "unknown", connectionName, label, status, incomingCallUrl, etag, additionalBinaryDataProperties)
+        internal UnknownTelephonyBindingListItem(string id, TelephonyProvider provider, string connectionName, string label, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, provider != default ? provider : "unknown", connectionName, label, incomingCallUrl, etag, additionalBinaryDataProperties)
         {
         }
     }

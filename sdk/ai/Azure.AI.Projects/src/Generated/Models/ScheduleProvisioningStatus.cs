@@ -4,13 +4,11 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Schedule provisioning status. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct ScheduleProvisioningStatus : IEquatable<ScheduleProvisioningStatus>
     {
         private readonly string _value;

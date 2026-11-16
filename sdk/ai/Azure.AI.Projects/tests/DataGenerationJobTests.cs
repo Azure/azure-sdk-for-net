@@ -5,8 +5,10 @@
 #pragma warning disable OPENAI001 // Type is for evaluation purposes only
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -96,6 +98,25 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [Test]
+    [SyncOnly]
+    public void TestDataGenerationModelOptions()
+    {
+        ConversationsDataGenerationJobConfiguration dataGeneration = new()
+        {
+            MaxSamples = 42,
+            ModelOptions = new("gpt-4o")
+        };
+        BinaryData dt = ModelReaderWriter.Write(dataGeneration, ModelReaderWriterOptions.Json, Projects.AzureAIProjectsContext.Default);
+        using JsonDocument document = JsonDocument.Parse(dt);
+        JsonProperty[] properties = document.RootElement.EnumerateObject().ToArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(properties.Count(property => property.NameEquals("model_options")), Is.EqualTo(1),
+                "model_options must be serialized exactly once.");
+        });
     }
 
     #region Helpers

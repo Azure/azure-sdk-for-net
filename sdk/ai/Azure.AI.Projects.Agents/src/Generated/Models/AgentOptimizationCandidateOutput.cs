@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Base candidate output. Job types define derived output models with their own fields.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationAgentCandidateOutput"/> and <see cref="AgentOptimizationPromptCandidateOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationAgentCandidateOutput"/>, <see cref="AgentOptimizationPromptCandidateOutput"/>, and <see cref="AgentOptimizationSkillCandidateOutput"/>.
     /// </summary>
     public abstract partial class AgentOptimizationCandidateOutput
     {

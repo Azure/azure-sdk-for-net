@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An output modality the agent may produce. `animation` and `avatar` are used when an avatar is configured. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceOutputModality : IEquatable<VoiceOutputModality>
     {
         private readonly string _value;

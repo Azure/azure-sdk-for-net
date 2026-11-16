@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Server-side voice activity detection. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentServerVadTurnDetection : VoiceAgentTurnDetectionConfig
     {
         private long? _idleTimeoutMs;

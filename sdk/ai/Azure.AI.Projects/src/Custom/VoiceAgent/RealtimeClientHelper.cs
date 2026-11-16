@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text;
 using OpenAI;
 using OpenAI.Realtime;
@@ -98,12 +99,149 @@ internal class RealtimeClientHelper
         }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", experimentalHeaders);
+        if (!string.IsNullOrEmpty(experimentalHeaders))
+        {
+            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", experimentalHeaders);
+        }
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
         return ClientPipeline.Create(options: options, perCallPolicies: [], perTryPolicies: [authPolicy], beforeTransportPolicies: []);
     }
 
-    internal static string ExperimentalHeaders(string experimentalHeaders) => string.IsNullOrEmpty(experimentalHeaders) ? "VoiceAgents=V1Preview" : experimentalHeaders;
+    internal static string ResolveFoundryFeatures(IDictionary<string, string> headers,
+        ref string queryString, bool requireVoiceAgentsPreview)
+    {
+        bool hasFeatureHeader = false;
+        string featureHeader = null;
+        if (headers != null)
+        {
+            foreach (KeyValuePair<string, string> header in headers)
+            {
+                if (header.Key.Equals("Foundry-Features", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (hasFeatureHeader)
+                    {
+                        throw new ArgumentException("Only one Foundry-Features header may be supplied.", nameof(headers));
+                    }
+                    hasFeatureHeader = true;
+                    featureHeader = header.Value;
+                }
+            }
+        }
+
+        queryString = queryString?.TrimStart('?');
+        string[] parameters = queryString?.Split('&') ?? Array.Empty<string>();
+        int featureParameter = -1;
+        string featureQuery = null;
+        for (int index = 0; index < parameters.Length; index++)
+        {
+            string parameter = parameters[index];
+            int separator = parameter.IndexOf('=');
+            string name = Uri.UnescapeDataString(separator < 0 ? parameter : parameter.Substring(0, separator));
+            if (!name.Equals("foundry_features", StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+            if (featureParameter >= 0)
+            {
+                throw new ArgumentException("Only one foundry_features query parameter may be supplied.", nameof(queryString));
+            }
+            if (separator < 0)
+            {
+                throw new ArgumentException("The foundry_features query parameter must have a value.", nameof(queryString));
+            }
+            string encodedFeatures = parameter.Substring(separator + 1);
+            for (int character = 0; character < encodedFeatures.Length; character++)
+            {
+                if (encodedFeatures[character] == '%' &&
+                    (character + 2 >= encodedFeatures.Length ||
+                        !Uri.IsHexDigit(encodedFeatures[character + 1]) || !Uri.IsHexDigit(encodedFeatures[character + 2])))
+                {
+                    throw new ArgumentException("The foundry_features query parameter contains invalid percent encoding.", nameof(queryString));
+                }
+            }
+            featureParameter = index;
+            featureQuery = Uri.UnescapeDataString(encodedFeatures.Replace("+", " "));
+        }
+        if (hasFeatureHeader && featureParameter >= 0)
+        {
+            throw new ArgumentException("Supply Foundry features using either the Foundry-Features header or the foundry_features query parameter, not both.", nameof(headers));
+        }
+        if (featureParameter >= 0)
+        {
+            string features = NormalizeFoundryFeatures(featureQuery, requireVoiceAgentsPreview, true, nameof(queryString));
+            parameters[featureParameter] = "foundry_features=" + Uri.EscapeDataString(features);
+            queryString = string.Join("&", parameters);
+            // Use one feature channel for the handshake, including required native Live opt-ins.
+            return null;
+        }
+        return NormalizeFoundryFeatures(featureHeader,
+            requireVoiceAgentsPreview, hasFeatureHeader, nameof(headers));
+    }
+
+    private static string NormalizeFoundryFeatures(string features, bool requireVoiceAgentsPreview, bool explicitlySupplied, string parameterName)
+    {
+        const string voiceAgentsPreview = "VoiceAgents=V1Preview";
+        if (string.IsNullOrEmpty(features))
+        {
+            if (explicitlySupplied)
+            {
+                throw new ArgumentException("Foundry features must contain non-empty name=value tokens.", parameterName);
+            }
+            return requireVoiceAgentsPreview ? voiceAgentsPreview : null;
+        }
+
+        foreach (char character in features)
+        {
+            if (char.IsControl(character))
+            {
+                throw new ArgumentException("Foundry feature tokens must not contain control characters.", parameterName);
+            }
+        }
+        Dictionary<string, string> values = new(StringComparer.OrdinalIgnoreCase);
+        List<string> normalized = new();
+        foreach (string token in features.Split(','))
+        {
+            string entry = token.Trim();
+            int separator = entry.IndexOf('=');
+            if (separator <= 0 || separator == entry.Length - 1 || entry.IndexOf('=', separator + 1) >= 0)
+            {
+                throw new ArgumentException("Foundry features must contain non-empty name=value tokens.", parameterName);
+            }
+            foreach (char character in entry)
+            {
+                if (char.IsWhiteSpace(character))
+                {
+                    throw new ArgumentException("Foundry feature names and values must not contain whitespace.", parameterName);
+                }
+            }
+            string name = entry.Substring(0, separator);
+            string value = entry.Substring(separator + 1);
+            if (name.Equals("VoiceAgents", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!value.Equals("V1Preview", StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentException("Voice Agents preview requires VoiceAgents=V1Preview.", parameterName);
+                }
+                entry = voiceAgentsPreview;
+                value = "V1Preview";
+            }
+            if (values.TryGetValue(name, out string previous))
+            {
+                if (!value.Equals(previous, StringComparison.Ordinal))
+                {
+                    throw new ArgumentException("Conflicting values were supplied for a Foundry feature.", parameterName);
+                }
+                continue;
+            }
+            values.Add(name, value);
+            normalized.Add(entry);
+        }
+        if (requireVoiceAgentsPreview && !values.ContainsKey("VoiceAgents"))
+        {
+            normalized.Add(voiceAgentsPreview);
+        }
+        return string.Join(",", normalized);
+    }
 }

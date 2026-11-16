@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The provider-neutral phase reached by an inbound telephony call. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallPhase : IEquatable<TelephonyCallPhase>
     {
         private readonly string _value;

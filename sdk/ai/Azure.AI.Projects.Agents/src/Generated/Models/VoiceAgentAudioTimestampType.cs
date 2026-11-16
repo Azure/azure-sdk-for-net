@@ -2,12 +2,9 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An output-audio timestamp kind supported by a voice agent. </summary>
-    [Experimental("AAIP001")]
     public enum VoiceAgentAudioTimestampType
     {
         /// <summary> Word-level timestamps. </summary>

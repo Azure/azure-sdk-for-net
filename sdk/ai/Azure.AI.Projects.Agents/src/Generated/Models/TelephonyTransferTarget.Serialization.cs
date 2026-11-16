@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.Agents
             }
             string name = default;
             string description = default;
-            TelephonyTransferDestination destination = default;
+            TelephonyAddress destination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("destination"u8))
                 {
-                    destination = TelephonyTransferDestination.DeserializeTelephonyTransferDestination(prop.Value, options);
+                    destination = TelephonyAddress.DeserializeTelephonyAddress(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

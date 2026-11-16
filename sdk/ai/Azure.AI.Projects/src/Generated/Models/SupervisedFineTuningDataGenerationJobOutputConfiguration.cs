@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> File output configuration for a supervised fine-tuning data generation job. This is a preview feature. </summary>
-    [Experimental("AAIP001")]
     public partial class SupervisedFineTuningDataGenerationJobOutputConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,18 +16,21 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobOutputConfiguration"/>. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public SupervisedFineTuningDataGenerationJobOutputConfiguration(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobOutputConfiguration"/>. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal SupervisedFineTuningDataGenerationJobOutputConfiguration(string name, DataGenerationJobOutputWriteMode? writeMode, string mergeFileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
@@ -37,6 +38,7 @@ namespace Azure.AI.Projects
             MergeFileId = mergeFileId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Filename to assign to the generated fine-tuning file. </summary>
         public string Name { get; set; }

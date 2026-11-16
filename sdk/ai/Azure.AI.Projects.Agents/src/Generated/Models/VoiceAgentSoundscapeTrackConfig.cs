@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A soundscape track with its own audio source and playback volume. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSoundscapeTrackConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

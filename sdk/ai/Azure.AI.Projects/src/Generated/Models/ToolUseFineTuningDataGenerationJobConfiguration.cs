@@ -4,20 +4,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The configuration for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>
-    [Experimental("AAIP001")]
     public partial class ToolUseFineTuningDataGenerationJobConfiguration : DataGenerationJobConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public ToolUseFineTuningDataGenerationJobConfiguration(int maxSamples) : base(DataGenerationJobKind.ToolUse)
         {
             MaxSamples = maxSamples;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
@@ -25,10 +25,12 @@ namespace Azure.AI.Projects
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ToolUseFineTuningDataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int maxSamples) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
             MaxSamples = maxSamples;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Maximum number of samples to generate, up to service-defined limits. </summary>
         public int MaxSamples { get; set; }

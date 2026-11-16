@@ -4,17 +4,29 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A service-managed voice-session control action. Known values are stable; additional values may be added over time. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentSystemToolName : IEquatable<VoiceAgentSystemToolName>
     {
         private readonly string _value;
         /// <summary> Ends the active conversation. </summary>
         private const string EndConversationValue = "end_conversation";
+        /// <summary> Switches supported conversation language settings. </summary>
+        private const string LanguageDetectionValue = "language_detection";
+        /// <summary> Retrieves the unchanged transcript of the last user audio turn. </summary>
+        private const string DigitRecognitionValue = "digit_recognition";
+        /// <summary> Requests a transfer to an explicitly configured logical target. </summary>
+        private const string TransferValue = "transfer";
+        /// <summary> Collects one complete SMS from an explicitly selected sender. </summary>
+        private const string CollectSmsValue = "collect_sms";
+        /// <summary> Collects keypad digits on the current call. </summary>
+        private const string CollectDtmfValue = "collect_dtmf";
+        /// <summary> Sends literal or templated keypad digits. </summary>
+        private const string SendDtmfValue = "send_dtmf";
+        /// <summary> Sends a text message from the Agent's SMS-capable number. </summary>
+        private const string SendSmsValue = "send_sms";
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSystemToolName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,6 +40,27 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Ends the active conversation. </summary>
         public static VoiceAgentSystemToolName EndConversation { get; } = new VoiceAgentSystemToolName(EndConversationValue);
+
+        /// <summary> Switches supported conversation language settings. </summary>
+        public static VoiceAgentSystemToolName LanguageDetection { get; } = new VoiceAgentSystemToolName(LanguageDetectionValue);
+
+        /// <summary> Retrieves the unchanged transcript of the last user audio turn. </summary>
+        public static VoiceAgentSystemToolName DigitRecognition { get; } = new VoiceAgentSystemToolName(DigitRecognitionValue);
+
+        /// <summary> Requests a transfer to an explicitly configured logical target. </summary>
+        public static VoiceAgentSystemToolName Transfer { get; } = new VoiceAgentSystemToolName(TransferValue);
+
+        /// <summary> Collects one complete SMS from an explicitly selected sender. </summary>
+        public static VoiceAgentSystemToolName CollectSms { get; } = new VoiceAgentSystemToolName(CollectSmsValue);
+
+        /// <summary> Collects keypad digits on the current call. </summary>
+        public static VoiceAgentSystemToolName CollectDtmf { get; } = new VoiceAgentSystemToolName(CollectDtmfValue);
+
+        /// <summary> Sends literal or templated keypad digits. </summary>
+        public static VoiceAgentSystemToolName SendDtmf { get; } = new VoiceAgentSystemToolName(SendDtmfValue);
+
+        /// <summary> Sends a text message from the Agent's SMS-capable number. </summary>
+        public static VoiceAgentSystemToolName SendSms { get; } = new VoiceAgentSystemToolName(SendSmsValue);
 
         /// <summary> Determines if two <see cref="VoiceAgentSystemToolName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

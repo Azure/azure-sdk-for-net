@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    [Experimental("AAIP001")]
     internal partial class UnknownRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRoutineTrigger"/>. </summary>

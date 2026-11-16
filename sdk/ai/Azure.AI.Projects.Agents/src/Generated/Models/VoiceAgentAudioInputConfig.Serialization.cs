@@ -15,6 +15,7 @@ namespace Azure.AI.Projects.Agents
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual VoiceAgentAudioInputConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioInputConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -29,8 +30,10 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceAgentAudioInputConfig)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioInputConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -42,28 +45,38 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceAgentAudioInputConfig)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<VoiceAgentAudioInputConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         VoiceAgentAudioInputConfig IPersistableModel<VoiceAgentAudioInputConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<VoiceAgentAudioInputConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<VoiceAgentAudioInputConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioInputConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,13 +153,17 @@ namespace Azure.AI.Projects.Agents
                 }
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         VoiceAgentAudioInputConfig IJsonModel<VoiceAgentAudioInputConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual VoiceAgentAudioInputConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioInputConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -157,9 +174,11 @@ namespace Azure.AI.Projects.Agents
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVoiceAgentAudioInputConfig(document.RootElement, options);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         internal static VoiceAgentAudioInputConfig DeserializeVoiceAgentAudioInputConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -250,5 +269,6 @@ namespace Azure.AI.Projects.Agents
                 _transcriptionIsDefined = transcriptionIsDefined
             };
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
     }
 }

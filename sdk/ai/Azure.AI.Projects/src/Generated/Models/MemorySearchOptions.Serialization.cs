@@ -22,6 +22,7 @@ namespace Azure.AI.Projects.Memory
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual MemorySearchOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -36,8 +37,10 @@ namespace Azure.AI.Projects.Memory
                     throw new FormatException($"The model {nameof(MemorySearchOptions)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -49,18 +52,26 @@ namespace Azure.AI.Projects.Memory
                     throw new FormatException($"The model {nameof(MemorySearchOptions)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<MemorySearchOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         MemorySearchOptions IPersistableModel<MemorySearchOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<MemorySearchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="memorySearchOptions"> The <see cref="MemorySearchOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public static implicit operator BinaryContent(MemorySearchOptions memorySearchOptions)
         {
             if (memorySearchOptions == null)
@@ -69,18 +80,22 @@ namespace Azure.AI.Projects.Memory
             }
             return BinaryContent.Create(memorySearchOptions, ModelSerializationExtensions.WireOptions);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<MemorySearchOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,13 +141,17 @@ namespace Azure.AI.Projects.Memory
                 }
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         MemorySearchOptions IJsonModel<MemorySearchOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected virtual MemorySearchOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -143,5 +162,6 @@ namespace Azure.AI.Projects.Memory
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMemorySearchOptions(document.RootElement, options);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
     }
 }

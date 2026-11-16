@@ -12,9 +12,8 @@ public partial class VoiceAgentLlmGeneratedGreetingConfig
     internal BinaryData InternalToolChoice { get; set; }
 
     /// <summary>
-    /// How the model chooses tools for generated responses. `none` prevents tool calls, `auto` lets the model decide,
-    /// `required` requires at least one tool call, and a specific function or MCP tool can be selected with an object.
-    /// Defaults to `auto`.
+    /// Controls tool selection: <c>auto</c> lets the model decide (the default), <c>none</c> disables tools,
+    /// and <c>required</c> requires a tool call. Use a tool-choice object to select a specific function or MCP tool.
     /// </summary>
     public ToolChoiceOption ToolChoice { get => ToolChoiceOption.FromBinaryData(InternalToolChoice); set => InternalToolChoice = ModelReaderWriter.Write(value, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default); }
 }

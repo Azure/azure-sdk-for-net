@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The sensitivity threshold for semantic end-of-utterance detection. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentEndOfUtteranceThresholdLevel : IEquatable<VoiceAgentEndOfUtteranceThresholdLevel>
     {
         private readonly string _value;

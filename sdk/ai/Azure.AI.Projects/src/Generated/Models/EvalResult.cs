@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Result of the evaluation. </summary>
-    [Experimental("AAIP001")]
     public partial class EvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,6 +18,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> type of the check. </param>
         /// <param name="score"> score. </param>
         /// <param name="isPassed"> indicates if the check passed or failed. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalResult(string name, string @type, float score, bool isPassed)
         {
             Name = name;
@@ -27,6 +26,7 @@ namespace Azure.AI.Projects.Evaluation
             Score = score;
             IsPassed = isPassed;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvalResult"/>. </summary>
         /// <param name="name"> name of the check. </param>
@@ -34,6 +34,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="score"> score. </param>
         /// <param name="isPassed"> indicates if the check passed or failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalResult(string name, string @type, float score, bool isPassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
@@ -42,6 +43,7 @@ namespace Azure.AI.Projects.Evaluation
             IsPassed = isPassed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> name of the check. </summary>
         public string Name { get; }

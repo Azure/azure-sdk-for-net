@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An audio codec. Additional values may be added over time. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAudioCodec : IEquatable<VoiceAudioCodec>
     {
         private readonly string _value;

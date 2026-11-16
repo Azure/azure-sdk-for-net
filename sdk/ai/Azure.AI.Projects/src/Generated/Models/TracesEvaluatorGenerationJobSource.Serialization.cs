@@ -104,6 +104,21 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteNumberValue(EndsOn.Value, "U");
             }
+            if (Optional.IsCollectionDefined(TraceIds))
+            {
+                writer.WritePropertyName("trace_ids"u8);
+                writer.WriteStartArray();
+                foreach (string item in TraceIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -139,6 +154,7 @@ namespace Azure.AI.Projects
             string agentVersion = default;
             DateTimeOffset startsOn = default;
             DateTimeOffset? endsOn = default;
+            IList<string> traceIds = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -180,6 +196,27 @@ namespace Azure.AI.Projects
                     endsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
+                if (prop.NameEquals("trace_ids"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    traceIds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -193,7 +230,8 @@ namespace Azure.AI.Projects
                 agentName,
                 agentVersion,
                 startsOn,
-                endsOn);
+                endsOn,
+                traceIds ?? new ChangeTrackingList<string>());
         }
     }
 }

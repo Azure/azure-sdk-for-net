@@ -102,13 +102,13 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "unknown";
+            VoiceConversationEngineType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceConversationEngineType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

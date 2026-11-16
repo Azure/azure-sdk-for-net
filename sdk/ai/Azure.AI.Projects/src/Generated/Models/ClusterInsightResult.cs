@@ -4,14 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights from the cluster analysis. </summary>
-    [Experimental("AAIP001")]
     public partial class ClusterInsightResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,12 +18,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="ClusterInsightResult"/>. </summary>
         /// <param name="summary"> Summary of the insights report. </param>
         /// <param name="clusters"> List of clusters identified in the insights. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ClusterInsightResult(InsightSummary summary, IEnumerable<InsightCluster> clusters)
         {
             Summary = summary;
             Clusters = clusters.ToList();
             Coordinates = new ChangeTrackingDictionary<string, ChartCoordinate>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ClusterInsightResult"/>. </summary>
         /// <param name="summary"> Summary of the insights report. </param>
@@ -47,6 +47,7 @@ namespace Azure.AI.Projects.Evaluation
         ///   modify the canonical insights results.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ClusterInsightResult(InsightSummary summary, IList<InsightCluster> clusters, IDictionary<string, ChartCoordinate> coordinates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Summary = summary;
@@ -54,6 +55,7 @@ namespace Azure.AI.Projects.Evaluation
             Coordinates = coordinates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Summary of the insights report. </summary>
         public InsightSummary Summary { get; }

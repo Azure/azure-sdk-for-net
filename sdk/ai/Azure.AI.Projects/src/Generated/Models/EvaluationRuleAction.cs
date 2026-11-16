@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Evaluation action model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationPreviewRuleAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/>, <see cref="DatasetEvaluationRuleAction"/>, <see cref="HumanEvaluationPreviewRuleAction"/>, and <see cref="TraceEvaluationRuleAction"/>.
     /// </summary>
     public abstract partial class EvaluationRuleAction
     {
@@ -19,19 +19,23 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="EvaluationRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected EvaluationRuleAction(EvaluationRuleActionType @type)
         {
             Type = @type;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvaluationRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Type of the evaluation action. </summary>
         internal EvaluationRuleActionType Type { get; set; }

@@ -2,12 +2,9 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The source of reference audio used for echo cancellation. </summary>
-    [Experimental("AAIP001")]
     public enum VoiceAgentEchoCancellationReferenceSource
     {
         /// <summary> Server. </summary>

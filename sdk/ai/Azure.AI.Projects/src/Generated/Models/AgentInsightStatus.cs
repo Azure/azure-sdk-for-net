@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The lifecycle status of an agent insight. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct AgentInsightStatus : IEquatable<AgentInsightStatus>
     {
         private readonly string _value;

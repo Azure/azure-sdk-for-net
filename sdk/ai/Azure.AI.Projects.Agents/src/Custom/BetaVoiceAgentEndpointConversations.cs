@@ -11,7 +11,6 @@ using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents;
 
-[Experimental("AAIP001")]
 [CodeGenType("AgentEndpointConversations")]
 [CodeGenSuppress("GetAgentConversations", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversationsAsync", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]

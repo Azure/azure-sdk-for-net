@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Avatar configuration for a voice agent. These values are session defaults and may be overridden when connecting. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentAvatarConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

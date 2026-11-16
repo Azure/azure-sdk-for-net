@@ -427,7 +427,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             await skillsClient.DeleteSkillAsync(skill);
         }
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-        List<string> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).Select(x => x.Id).ToListAsync();
+        List<string> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME, status: (AgentsJobStatus?)null).Select(x => x.Id).ToListAsync();
         foreach (string record in records)
         {
             DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(5);
@@ -438,7 +438,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                     await jobsClient.DeleteAsync(jobId: record, cancellationToken: default);
                     break;
                 }
-                catch (ClientResultException e) {
+                catch (ClientResultException e)
+                {
                     if (e.Status != 409)
                     {
                         throw;

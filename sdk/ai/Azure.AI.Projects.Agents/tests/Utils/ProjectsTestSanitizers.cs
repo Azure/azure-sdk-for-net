@@ -12,6 +12,57 @@ namespace Azure.AI.Projects.Agents.Tests
     /// </summary>
     public static class ProjectsTestSanitizers
     {
+        internal const string LegacyAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
+        internal const string LegacyDefaultVoiceAgentFeaturePattern = @"(\AMemoryStores=V1Preview,WorkflowAgents=V1Preview,(?:[^,]+,)*DraftAgents=V1Preview),VoiceAgents=V1Preview(?=,ModelRouterControls=V1Preview(?:,|\z))";
+        internal const string LegacyDefaultVoiceAgentFeatureReplacement = "${1}";
+
+        internal const string LegacyRealtimeVoiceDefinitionPattern = @"(""definition""\s*:\s*\{\s*""kind""\s*:\s*""voice""\s*,)(?![^{}]*""sub_protocol""\s*:)";
+        internal const string LegacyRealtimeVoiceDefinitionReplacement = "${1}\"sub_protocol\":\"realtime\",";
+        internal const string LegacyTelephonyCallJobPathPattern = @"(/agents/[^/?]+/)telephony/call_jobs(?=/|:|\?|$)";
+        internal const string LegacyTelephonyCallJobPathReplacement = "${1}telephony_call_jobs";
+        internal const string LegacySkillsPathPattern = @"(\Ahttps?://[^/?#]+/api/projects/[^/?#]+/)openai/v1/skills(?=/|[?#]|$)";
+        internal const string LegacySkillsPathReplacement = "${1}skills";
+
+        internal static void ApplyLegacyVoiceHistoryRecordingHeaders<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
+            where TEnvironment : TestEnvironment, new()
+        {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Old history/telephony recordings sent a bundle that GA omits; matcher ignores still compare presence.
+                // Remove both sides only in these playback fixtures. VoiceAgentPreviewHeaderTests checks exact headers.
+                testBase.CustomSanitizers.Add(new RemoveHeaderSanitizer(new("Foundry-Features")));
+            }
+        }
+
+        internal static void ApplyLegacyTelephonyCallJobRecordingRoutes<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
+            where TEnvironment : TestEnvironment, new()
+        {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Match legacy recording routes without changing requests sent to the live service.
+                testBase.UriRegexSanitizers.Add(new UriRegexSanitizer(new()
+                {
+                    Regex = LegacyTelephonyCallJobPathPattern,
+                    Value = LegacyTelephonyCallJobPathReplacement
+                }));
+            }
+        }
+
+        internal static void ApplyLegacyRealtimeVoiceRecordingDefaults<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
+            where TEnvironment : TestEnvironment, new()
+        {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Older Realtime recordings omit the now-required default discriminator. Keep explicit protocols and body matching intact.
+                testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(new()
+                {
+                    Regex = LegacyRealtimeVoiceDefinitionPattern,
+                    Value = LegacyRealtimeVoiceDefinitionReplacement,
+                    Condition = new(@"/agents/[^/?]+/versions(?:/[^/?]+)?\?")
+                }));
+            }
+        }
+
         // Replacement values
         public const string SANITIZED_SUBSCRIPTION = "00000000-0000-0000-0000-000000000000";
         public const string SANITIZED_HOST = "sanitized-host";
@@ -54,6 +105,28 @@ namespace Azure.AI.Projects.Agents.Tests
         public static void ApplySanitizers<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
             where TEnvironment : TestEnvironment, new()
         {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Normalize recordings across Agent Insights feature-header revisions.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = LegacyAgentInsightsFeaturePattern,
+                    Value = string.Empty
+                }));
+                // Remove only the obsolete token embedded in the legacy defaults, not explicit Voice opt-ins.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = LegacyDefaultVoiceAgentFeaturePattern,
+                    Value = LegacyDefaultVoiceAgentFeatureReplacement
+                }));
+                // Match prior /openai/v1 recordings to the pinned /skills contract without changing live requests.
+                testBase.UriRegexSanitizers.Add(new UriRegexSanitizer(new()
+                {
+                    Regex = LegacySkillsPathPattern,
+                    Value = LegacySkillsPathReplacement
+                }));
+            }
+
             // Remove default sanitizers that are too restrictive
             testBase.SanitizersToRemove.Add("AZSDK2003"); // Location header (we use a custom one)
             testBase.SanitizersToRemove.Add("AZSDK4001"); // Replaces entire host name (we want to keep structure)

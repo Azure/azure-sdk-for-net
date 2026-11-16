@@ -4,19 +4,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A reference to a Foundry toolbox, which is a versioned bundle of tools executed through its MCP endpoint. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentToolboxTool : VoiceAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentToolboxTool"/>. </summary>
         /// <param name="toolboxName"> The name of the toolbox to attach. </param>
         /// <param name="toolboxVersion"> The immutable version of the toolbox to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="toolboxVersion"/> is null. </exception>
-        public VoiceAgentToolboxTool(string toolboxName, string toolboxVersion) : base("toolbox")
+        public VoiceAgentToolboxTool(string toolboxName, string toolboxVersion) : base(VoiceAgentToolType.Toolbox)
         {
             Argument.AssertNotNull(toolboxName, nameof(toolboxName));
             Argument.AssertNotNull(toolboxVersion, nameof(toolboxVersion));
@@ -31,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="toolboxName"> The name of the toolbox to attach. </param>
         /// <param name="toolboxVersion"> The immutable version of the toolbox to attach. </param>
         /// <param name="responseScheduling"> When the toolbox invocation creates a follow-up response. Defaults to `when_idle`. </param>
-        internal VoiceAgentToolboxTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string toolboxName, string toolboxVersion, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentToolboxTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string toolboxName, string toolboxVersion, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
         {
             ToolboxName = toolboxName;
             ToolboxVersion = toolboxVersion;

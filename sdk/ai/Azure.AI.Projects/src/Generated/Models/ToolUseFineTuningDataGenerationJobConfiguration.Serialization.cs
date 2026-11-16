@@ -13,12 +13,15 @@ namespace Azure.AI.Projects
     public partial class ToolUseFineTuningDataGenerationJobConfiguration : DataGenerationJobConfiguration, IJsonModel<ToolUseFineTuningDataGenerationJobConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/> for deserialization. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ToolUseFineTuningDataGenerationJobConfiguration()
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override DataGenerationJobConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -33,8 +36,10 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(ToolUseFineTuningDataGenerationJobConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -46,28 +51,38 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(ToolUseFineTuningDataGenerationJobConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         ToolUseFineTuningDataGenerationJobConfiguration IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolUseFineTuningDataGenerationJobConfiguration)PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<ToolUseFineTuningDataGenerationJobConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -79,13 +94,17 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("max_samples"u8);
             writer.WriteNumberValue(MaxSamples);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         ToolUseFineTuningDataGenerationJobConfiguration IJsonModel<ToolUseFineTuningDataGenerationJobConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ToolUseFineTuningDataGenerationJobConfiguration)JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override DataGenerationJobConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -96,9 +115,11 @@ namespace Azure.AI.Projects
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeToolUseFineTuningDataGenerationJobConfiguration(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static ToolUseFineTuningDataGenerationJobConfiguration DeserializeToolUseFineTuningDataGenerationJobConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -147,5 +168,6 @@ namespace Azure.AI.Projects
             }
             return new ToolUseFineTuningDataGenerationJobConfiguration(@type, trainSplit, modelOptions, additionalBinaryDataProperties, maxSamples);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

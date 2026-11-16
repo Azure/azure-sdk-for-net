@@ -6,15 +6,15 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    [Experimental("AAIP001")]
     internal partial class AIProjectRoutinesGetRoutineRunsAsyncCollectionResultOfT : AsyncCollectionResult<RoutineRun>
     {
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private readonly AIProjectRoutines _client;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private readonly string _routineName;
         private readonly string _foundryFeatures;
         private readonly string _filter;
@@ -35,6 +35,7 @@ namespace Azure.AI.Projects
         /// for descending order.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public AIProjectRoutinesGetRoutineRunsAsyncCollectionResultOfT(AIProjectRoutines client, string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
         {
             _client = client;
@@ -46,9 +47,11 @@ namespace Azure.AI.Projects
             _order = order;
             _options = options;
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
             PipelineMessage message = _client.CreateGetRoutineRunsRequest(_routineName, _foundryFeatures, _filter, _limit, _after, _order, _options);
@@ -66,10 +69,12 @@ namespace Azure.AI.Projects
                 message = _client.CreateNextGetRoutineRunsRequest(nextPageUri, _routineName, _foundryFeatures, _filter, _limit, _after, _order, _options);
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the continuation token from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The continuation token for the specified page. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
             Uri nextPage = ((PagedResultWithNextLinkRoutineRun)page).NextLink;
@@ -82,10 +87,12 @@ namespace Azure.AI.Projects
                 return null;
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         protected override async IAsyncEnumerable<RoutineRun> GetValuesFromPageAsync(ClientResult page)
         {
             foreach (RoutineRun item in ((PagedResultWithNextLinkRoutineRun)page).Data)
@@ -94,9 +101,11 @@ namespace Azure.AI.Projects
                 await Task.Yield();
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutineRuns");
@@ -111,5 +120,6 @@ namespace Azure.AI.Projects
                 throw;
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
     }
 }

@@ -4,34 +4,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights from the evaluation comparison. </summary>
-    [Experimental("AAIP001")]
     public partial class EvaluationComparisonInsightResult : InsightResult
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightResult"/>. </summary>
         /// <param name="comparisons"> Comparison results for each treatment run against the baseline. </param>
         /// <param name="method"> The statistical method used for comparison. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationComparisonInsightResult(IEnumerable<EvalRunResultComparison> comparisons, string @method) : base(InsightType.EvaluationComparison)
         {
             Comparisons = comparisons.ToList();
             Method = @method;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="comparisons"> Comparison results for each treatment run against the baseline. </param>
         /// <param name="method"> The statistical method used for comparison. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationComparisonInsightResult(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EvalRunResultComparison> comparisons, string @method) : base(@type, additionalBinaryDataProperties)
         {
             Comparisons = comparisons;
             Method = @method;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Comparison results for each treatment run against the baseline. </summary>
         public IList<EvalRunResultComparison> Comparisons { get; }

@@ -4,14 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluation Comparison Request. </summary>
-    [Experimental("AAIP001")]
     public partial class EvaluationComparisonInsightRequest : InsightRequest
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightRequest"/>. </summary>
@@ -19,6 +17,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="baselineRunId"> The baseline run ID for comparison. </param>
         /// <param name="treatmentRunIds"> List of treatment run IDs for comparison. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evalId"/>, <paramref name="baselineRunId"/> or <paramref name="treatmentRunIds"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public EvaluationComparisonInsightRequest(string evalId, string baselineRunId, IEnumerable<string> treatmentRunIds) : base(InsightType.EvaluationComparison)
         {
             Argument.AssertNotNull(evalId, nameof(evalId));
@@ -29,6 +28,7 @@ namespace Azure.AI.Projects.Evaluation
             BaselineRunId = baselineRunId;
             TreatmentRunIds = treatmentRunIds.ToList();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
@@ -36,12 +36,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evalId"> Identifier for the evaluation. </param>
         /// <param name="baselineRunId"> The baseline run ID for comparison. </param>
         /// <param name="treatmentRunIds"> List of treatment run IDs for comparison. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationComparisonInsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, string baselineRunId, IList<string> treatmentRunIds) : base(@type, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             BaselineRunId = baselineRunId;
             TreatmentRunIds = treatmentRunIds;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Identifier for the evaluation. </summary>
         public string EvalId { get; set; }

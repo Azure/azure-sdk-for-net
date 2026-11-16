@@ -119,6 +119,21 @@ namespace Azure.AI.Projects.Evaluation
             }
             writer.WritePropertyName("eventType"u8);
             writer.WriteStringValue(EventType.ToString());
+            if (Optional.IsDefined(Schedule))
+            {
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue(Schedule, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
+            {
+                writer.WritePropertyName("provisioningStatus"u8);
+                writer.WriteStringValue(ProvisioningStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
+            }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             if (options.Format != "W")
@@ -185,6 +200,9 @@ namespace Azure.AI.Projects.Evaluation
             EvaluationRuleAction action = default;
             EvaluationRuleFilter filter = default;
             EvaluationRuleEventType eventType = default;
+            ScheduleTrigger schedule = default;
+            ScheduleProvisioningStatus? provisioningStatus = default;
+            ProjectsError error = default;
             bool enabled = default;
             IReadOnlyDictionary<string, string> systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -224,6 +242,33 @@ namespace Azure.AI.Projects.Evaluation
                     eventType = new EvaluationRuleEventType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("schedule"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schedule = ScheduleTrigger.DeserializeScheduleTrigger(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("provisioningStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningStatus = new ScheduleProvisioningStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("error"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = ProjectsError.DeserializeProjectsError(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("enabled"u8))
                 {
                     enabled = prop.Value.GetBoolean();
@@ -258,6 +303,9 @@ namespace Azure.AI.Projects.Evaluation
                 action,
                 filter,
                 eventType,
+                schedule,
+                provisioningStatus,
+                error,
                 enabled,
                 systemData ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);

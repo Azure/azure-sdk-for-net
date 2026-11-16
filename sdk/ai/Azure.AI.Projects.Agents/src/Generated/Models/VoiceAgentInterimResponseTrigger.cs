@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A condition that may trigger an interim response. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentInterimResponseTrigger : IEquatable<VoiceAgentInterimResponseTrigger>
     {
         private readonly string _value;

@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The outcome of one telephony lifecycle observation. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallLifecycleEventOutcome : IEquatable<TelephonyCallLifecycleEventOutcome>
     {
         private readonly string _value;

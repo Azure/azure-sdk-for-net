@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The packaged sounds accepted by a built-in soundscape source. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentSoundscapeSound : IEquatable<VoiceAgentSoundscapeSound>
     {
         private readonly string _value;

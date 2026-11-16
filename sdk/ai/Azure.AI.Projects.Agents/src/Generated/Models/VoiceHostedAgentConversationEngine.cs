@@ -4,18 +4,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A closed reference to the hosted text agent that owns conversation handling for a voice agent. The hosted agent is resolved within the same project and must declare `voice_conversation_engine` version `1.0.0`. Voice Live connects through the dedicated voice-conversation-engine endpoint using the existing Bridge Protocol 1.0 wire semantics; the Bridge message version is independent of the container protocol version and the Hosted Agents API version `v1`. Declaring `invocations_ws` is optional and does not substitute for `voice_conversation_engine`. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceHostedAgentConversationEngine : VoiceConversationEngine
     {
         /// <summary> Initializes a new instance of <see cref="VoiceHostedAgentConversationEngine"/>. </summary>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public VoiceHostedAgentConversationEngine(string name) : base("hosted_agent")
+        public VoiceHostedAgentConversationEngine(string name) : base(VoiceConversationEngineType.HostedAgent)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -27,7 +25,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <param name="version"> The target agent version. Omit this property to select the latest version when the voice session starts. When supplied, use a positive integer or `draft-{positive-unix-timestamp}` whose numeric component fits in a signed 64-bit integer. </param>
-        internal VoiceHostedAgentConversationEngine(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(@type, additionalBinaryDataProperties)
+        internal VoiceHostedAgentConversationEngine(VoiceConversationEngineType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

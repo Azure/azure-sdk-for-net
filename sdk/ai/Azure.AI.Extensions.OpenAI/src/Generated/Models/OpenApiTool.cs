@@ -23,7 +23,11 @@ namespace Azure.AI.Extensions.OpenAI
         {
             Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
 
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             FunctionDefinition = functionDefinition;
         }
 
@@ -34,12 +38,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OpenApiTool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, OpenApiFunctionDefinition functionDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             ToolConfigs = toolConfigs;
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             FunctionDefinition = functionDefinition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        [Obsolete("This property is deprecated and will be removed in a future version.")]
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The openapi function definition. </summary>

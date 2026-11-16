@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> An Agent Insights monitor summary returned by list operations. </summary>
+    /// <summary> Monitor list item without the summary. </summary>
     public partial class AgentInsightMonitorListItem : IJsonModel<AgentInsightMonitorListItem>
     {
         /// <param name="data"> The data to parse. </param>
@@ -110,6 +110,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("suspension"u8);
                 writer.WriteObjectValue(Suspension, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Priorities))
+            {
+                writer.WritePropertyName("priorities"u8);
+                writer.WriteObjectValue(Priorities, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
@@ -165,6 +170,7 @@ namespace Azure.AI.Projects
             DateTimeOffset? nextScheduledRunOn = default;
             AgentInsightEstimatedCost estimatedCost = default;
             AgentInsightSuspension suspension = default;
+            AgentInsightPrioritiesRead priorities = default;
             DateTimeOffset updatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -222,6 +228,15 @@ namespace Azure.AI.Projects
                     suspension = AgentInsightSuspension.DeserializeAgentInsightSuspension(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("priorities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    priorities = AgentInsightPrioritiesRead.DeserializeAgentInsightPrioritiesRead(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("updated_at"u8))
                 {
                     updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
@@ -241,6 +256,7 @@ namespace Azure.AI.Projects
                 nextScheduledRunOn,
                 estimatedCost,
                 suspension,
+                priorities,
                 updatedOn,
                 additionalBinaryDataProperties);
         }

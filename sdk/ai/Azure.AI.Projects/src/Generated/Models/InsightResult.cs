@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Evaluation
     /// The result of the insights.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentClusterInsightResult"/>, <see cref="EvaluationComparisonInsightResult"/>, and <see cref="EvaluationRunClusterInsightResult"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class InsightResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,19 +18,23 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="InsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected InsightResult(InsightType @type)
         {
             Type = @type;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="InsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal InsightResult(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The type of insights result. </summary>
         internal InsightType Type { get; set; }

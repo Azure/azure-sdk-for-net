@@ -5,9 +5,12 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -18,15 +21,18 @@ namespace Azure.AI.Projects.Evaluation
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ProjectEvaluators for mocking. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected ProjectEvaluators()
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ProjectEvaluators(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
@@ -34,12 +40,237 @@ namespace Azure.AI.Projects.Evaluation
             Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Returns immutable publication lineage for the specified evaluator.
+        /// Time, evaluator-version, dimension, and type filters are intersected.
+        /// Returns recorded changes from completed evaluator version writes.
+        /// Historical backfill and diagnostic calculation jobs are not included.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The evaluator name. </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="limit"> The maximum number of lineage entries to return, between 1 and 100. The default is 20. </param>
+        /// <param name="order"> Sort completed diagnostics by `occurred_at`, then diagnostic identifier. The default is `desc`. </param>
+        /// <param name="startTime"> Inclusive lower bound for the diagnostic occurrence time, expressed as Unix seconds. </param>
+        /// <param name="endTime"> Inclusive upper bound for the diagnostic occurrence time, expressed as Unix seconds. Includes all entries occurring within that second. </param>
+        /// <param name="evaluatorVersion"> Filter lineage diagnostics by the exact published evaluator version. </param>
+        /// <param name="dimensionId"> Filter completed diagnostics for one public rubric dimension identifier. </param>
+        /// <param name="type"> Filter by one or more completed diagnostic types by repeating the query parameter. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("AAIP001")]
+        public virtual CollectionResult GetDiagnostics(string name, string after, string before, int? limit, string order, DateTimeOffset? startTime, DateTimeOffset? endTime, string evaluatorVersion, string dimensionId, IEnumerable<EvaluatorDiagnosticType> @type, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetDiagnostics");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                return new ProjectEvaluatorsGetDiagnosticsCollectionResult(
+                    this,
+                    name,
+                    after,
+                    before,
+                    limit,
+                    order,
+                    startTime,
+                    endTime,
+                    evaluatorVersion,
+                    dimensionId,
+                    @type,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns immutable publication lineage for the specified evaluator.
+        /// Time, evaluator-version, dimension, and type filters are intersected.
+        /// Returns recorded changes from completed evaluator version writes.
+        /// Historical backfill and diagnostic calculation jobs are not included.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The evaluator name. </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="limit"> The maximum number of lineage entries to return, between 1 and 100. The default is 20. </param>
+        /// <param name="order"> Sort completed diagnostics by `occurred_at`, then diagnostic identifier. The default is `desc`. </param>
+        /// <param name="startTime"> Inclusive lower bound for the diagnostic occurrence time, expressed as Unix seconds. </param>
+        /// <param name="endTime"> Inclusive upper bound for the diagnostic occurrence time, expressed as Unix seconds. Includes all entries occurring within that second. </param>
+        /// <param name="evaluatorVersion"> Filter lineage diagnostics by the exact published evaluator version. </param>
+        /// <param name="dimensionId"> Filter completed diagnostics for one public rubric dimension identifier. </param>
+        /// <param name="type"> Filter by one or more completed diagnostic types by repeating the query parameter. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("AAIP001")]
+        public virtual AsyncCollectionResult GetDiagnosticsAsync(string name, string after, string before, int? limit, string order, DateTimeOffset? startTime, DateTimeOffset? endTime, string evaluatorVersion, string dimensionId, IEnumerable<EvaluatorDiagnosticType> @type, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetDiagnostics");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                return new ProjectEvaluatorsGetDiagnosticsAsyncCollectionResult(
+                    this,
+                    name,
+                    after,
+                    before,
+                    limit,
+                    order,
+                    startTime,
+                    endTime,
+                    evaluatorVersion,
+                    dimensionId,
+                    @type,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns immutable publication lineage for the specified evaluator.
+        /// Time, evaluator-version, dimension, and type filters are intersected.
+        /// Returns recorded changes from completed evaluator version writes.
+        /// Historical backfill and diagnostic calculation jobs are not included.
+        /// </summary>
+        /// <param name="name"> The evaluator name. </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="limit"> The maximum number of lineage entries to return, between 1 and 100. The default is 20. </param>
+        /// <param name="order"> Sort completed diagnostics by `occurred_at`, then diagnostic identifier. The default is `desc`. </param>
+        /// <param name="startTime"> Inclusive lower bound for the diagnostic occurrence time, expressed as Unix seconds. </param>
+        /// <param name="endTime"> Inclusive upper bound for the diagnostic occurrence time, expressed as Unix seconds. Includes all entries occurring within that second. </param>
+        /// <param name="evaluatorVersion"> Filter lineage diagnostics by the exact published evaluator version. </param>
+        /// <param name="dimensionId"> Filter completed diagnostics for one public rubric dimension identifier. </param>
+        /// <param name="type"> Filter by one or more completed diagnostic types by repeating the query parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual CollectionResult<EvaluatorDiagnostic> GetDiagnostics(string name, string after = default, string before = default, int? limit = default, MemoryStoreListOrder? order = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string evaluatorVersion = default, string dimensionId = default, IEnumerable<EvaluatorDiagnosticType> @type = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return new ProjectEvaluatorsGetDiagnosticsCollectionResultOfT(
+                this,
+                name,
+                after,
+                before,
+                limit,
+                order?.ToString(),
+                startTime,
+                endTime,
+                evaluatorVersion,
+                dimensionId,
+                @type,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Returns immutable publication lineage for the specified evaluator.
+        /// Time, evaluator-version, dimension, and type filters are intersected.
+        /// Returns recorded changes from completed evaluator version writes.
+        /// Historical backfill and diagnostic calculation jobs are not included.
+        /// </summary>
+        /// <param name="name"> The evaluator name. </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="limit"> The maximum number of lineage entries to return, between 1 and 100. The default is 20. </param>
+        /// <param name="order"> Sort completed diagnostics by `occurred_at`, then diagnostic identifier. The default is `desc`. </param>
+        /// <param name="startTime"> Inclusive lower bound for the diagnostic occurrence time, expressed as Unix seconds. </param>
+        /// <param name="endTime"> Inclusive upper bound for the diagnostic occurrence time, expressed as Unix seconds. Includes all entries occurring within that second. </param>
+        /// <param name="evaluatorVersion"> Filter lineage diagnostics by the exact published evaluator version. </param>
+        /// <param name="dimensionId"> Filter completed diagnostics for one public rubric dimension identifier. </param>
+        /// <param name="type"> Filter by one or more completed diagnostic types by repeating the query parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual AsyncCollectionResult<EvaluatorDiagnostic> GetDiagnosticsAsync(string name, string after = default, string before = default, int? limit = default, MemoryStoreListOrder? order = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string evaluatorVersion = default, string dimensionId = default, IEnumerable<EvaluatorDiagnosticType> @type = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return new ProjectEvaluatorsGetDiagnosticsAsyncCollectionResultOfT(
+                this,
+                name,
+                after,
+                before,
+                limit,
+                order?.ToString(),
+                startTime,
+                endTime,
+                evaluatorVersion,
+                dimensionId,
+                @type,
+                cancellationToken.ToRequestOptions());
+        }
 
         /// <summary>
         /// [Protocol Method] Returns the available versions for the specified evaluator.

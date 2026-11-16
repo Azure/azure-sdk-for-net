@@ -4,29 +4,31 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Azure OpenAI file output for a data generation job. This is a preview feature. </summary>
-    [Experimental("AAIP001")]
     public partial class FileDataGenerationJobOutput : DataGenerationJobOutput
     {
         /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobOutput"/>. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal FileDataGenerationJobOutput() : base(DataGenerationJobOutputType.File)
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobOutput"/>. </summary>
         /// <param name="type"> The type of the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The id of the output Azure OpenAI file. </param>
         /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal FileDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string filename) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Filename = filename;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The id of the output Azure OpenAI file. </summary>
         public string Id { get; }

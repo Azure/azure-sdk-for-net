@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The timestamp used as the basis for call duration. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallDurationBasis : IEquatable<TelephonyCallDurationBasis>
     {
         private readonly string _value;

@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Configuration for managing data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobConfiguration"/>, <see cref="SimulationSeedDataGenerationJobConfiguration"/>, <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="TracesDataGenerationJobConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationsDataGenerationJobConfiguration"/>, <see cref="SimpleQnADataGenerationJobConfiguration"/>, <see cref="SimulationSeedDataGenerationJobConfiguration"/>, <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="TracesDataGenerationJobConfiguration"/>.
     /// </summary>
     public abstract partial class DataGenerationJobConfiguration
     {
@@ -43,6 +43,6 @@ namespace Azure.AI.Projects
         public float? TrainSplit { get; set; }
 
         /// <summary> The LLM model options. </summary>
-        public DataGenerationModelOptions ModelOptions { get; set; }
+        public virtual DataGenerationModelOptions ModelOptions { get; set; }
     }
 }

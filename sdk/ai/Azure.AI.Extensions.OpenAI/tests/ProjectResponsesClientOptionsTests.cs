@@ -4,6 +4,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -104,6 +107,33 @@ public class ProjectResponsesClientOptionsTests
             credential: new System.ClientModel.ApiKeyCredential("fake-key-for-smoke-test"),
             options: options);
         Assert.That(client, Is.Not.Null);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ProjectPipelineDoesNotOptOpenAIRequestsIntoVoicePreview(bool isAsync)
+    {
+        MockPipelineTransport transport = new(_ => new MockPipelineResponse(200))
+        {
+            ExpectSyncPipeline = !isAsync
+        };
+        ProjectOpenAIClient client = new(new Uri("https://example.test/api/projects/project"),
+            new MockCredential(), new ProjectOpenAIClientOptions { Transport = transport });
+        using PipelineMessage message = client.Pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("https://example.test/api/projects/project/openai/v1/files");
+        if (isAsync)
+        {
+            await client.Pipeline.SendAsync(message);
+        }
+        else
+        {
+            client.Pipeline.Send(message);
+        }
+        Assert.That(transport.Requests, Has.Count.EqualTo(1));
+        Assert.That(transport.Requests[0].Headers.TryGetValue("Foundry-Features", out string features), Is.True);
+        Assert.That(features, Does.Contain("MemoryStores=V1Preview").And.Contain("Skills=V1Preview")
+            .And.Not.Contain("VoiceAgents="));
     }
 
     private sealed class TestPolicy : PipelinePolicy

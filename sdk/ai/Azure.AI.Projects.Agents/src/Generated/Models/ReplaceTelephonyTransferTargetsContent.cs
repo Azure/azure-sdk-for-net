@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The ReplaceTelephonyTransferTargetsContent. </summary>
-    [Experimental("AAIP001")]
     internal partial class ReplaceTelephonyTransferTargetsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

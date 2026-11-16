@@ -4,33 +4,35 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A manual payload used to test an invocations API routine dispatch. </summary>
-    [Experimental("AAIP001")]
     public partial class AgentInvocationsApiDispatchPayload : RoutineDispatchPayload
     {
         /// <summary> Initializes a new instance of <see cref="AgentInvocationsApiDispatchPayload"/>. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public AgentInvocationsApiDispatchPayload(BinaryData input) : base(RoutineDispatchPayloadType.InvokeAgentInvocationsApi)
         {
             Argument.AssertNotNull(input, nameof(input));
 
             Input = input;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="AgentInvocationsApiDispatchPayload"/>. </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal AgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData input) : base(@type, additionalBinaryDataProperties)
         {
             Input = input;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary>
         /// The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null.

@@ -6,12 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
     internal partial class BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResultOfT : AsyncCollectionResult<TelephonyCallSummary>
     {
         private readonly BetaVoiceAgentsTelephony _client;
@@ -81,12 +80,12 @@ namespace Azure.AI.Projects.Agents
                 ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultTelephonyCallSummary)result).LastId;
+                nextToken = GetTelephonyContinuationCursor((AgentsPagedResultTelephonyCallSummary)result);
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
                 }
-                message = _client.CreateGetTelephonyCallsRequest(_agentName, _foundryFeatures, _provider, _status, _startedAfter, _startedBefore, _limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetTelephonyCallsRequest(_agentName, _foundryFeatures, _provider, _status, _startedAfter, _startedBefore, _limit, _order, _before != null ? null : nextToken, _before != null ? nextToken : null, _options);
             }
         }
 
@@ -95,7 +94,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultTelephonyCallSummary)page).LastId;
+            string nextPage = GetTelephonyContinuationCursor((AgentsPagedResultTelephonyCallSummary)page);
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
@@ -133,6 +132,22 @@ namespace Azure.AI.Projects.Agents
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the boundary cursor only when more results exist. </summary>
+        /// <param name="page"> The current telephony page. </param>
+        private string GetTelephonyContinuationCursor(AgentsPagedResultTelephonyCallSummary page)
+        {
+            if (!page.HasMore)
+            {
+                return null;
+            }
+            string cursor = _before != null ? page.FirstId : page.LastId;
+            if (string.IsNullOrEmpty(cursor))
+            {
+                throw new JsonException(_before != null ? "A backward telephony call-history page with has_more=true must include a non-empty first_id." : "A forward telephony call-history page with has_more=true must include a non-empty last_id.");
+            }
+            return cursor;
         }
     }
 }

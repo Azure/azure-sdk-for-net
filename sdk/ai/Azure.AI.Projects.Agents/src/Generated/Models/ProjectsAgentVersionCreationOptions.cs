@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -63,11 +62,9 @@ namespace Azure.AI.Projects.Agents
         public AgentBlueprintReference BlueprintReference { get; set; }
 
         /// <summary> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </summary>
-        [Experimental("AAIP001")]
         public DigitalWorkerType? DigitalWorkerType { get; set; }
 
         /// <summary> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </summary>
-        [Experimental("AAIP001")]
         public bool? Draft { get; set; }
     }
 }

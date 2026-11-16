@@ -242,6 +242,7 @@ namespace Extensions.Plugin.Visitors
                     methods: methods,
                     fields: fields,
                     properties: properties);
+                ExperimentalAttributeVisitor.SuppressExperimentalImplementationReferences(type, DiagnosticId);
                 return type;
             }
 

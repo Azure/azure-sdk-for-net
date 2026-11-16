@@ -8,40 +8,40 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents;
 
 /// <summary>
-/// The VoiceAgentMaxOutputTokens represents integer value, or infinity.
+/// An output-token limit, using a fixed number, no limit, or the service default.
 /// </summary>
 public partial class VoiceAgentMaxOutputTokens
 {
     /// <summary>
-    /// The numeric equivlant for the number of tokens.
+    /// The numeric token limit, or null for a nonnumeric option.
     /// </summary>
     public int? NumericValue { get; }
     private readonly bool? _isDefaultNullValue;
     private readonly string _stringValue;
 
     /// <summary>
-    /// Creates an options class with infinite tokens possible.
+    /// Creates an option with no output-token limit.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>An unlimited token option.</returns>
     public static VoiceAgentMaxOutputTokens CreateInfiniteMaxTokensOption()
         => new("inf");
     /// <summary>
-    /// Creates an options class with the default number of possible tokens.
+    /// Creates an option that uses the service's default output-token limit.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A default token option.</returns>
     public static VoiceAgentMaxOutputTokens CreateDefaultMaxTokensOption()
         => new(isDefaultNullValue: true);
     /// <summary>
-    /// Creates an options class with a fixed number of tokens.
+    /// Creates a fixed output-token limit.
     /// </summary>
-    /// <param name="maxTokens"></param>
-    /// <returns></returns>
+    /// <param name="maxTokens">The maximum output tokens per response.</param>
+    /// <returns>A numeric token option.</returns>
     public static VoiceAgentMaxOutputTokens CreateNumericMaxTokensOption(int maxTokens)
         => new(numberValue: maxTokens);
     /// <summary>
-    /// Creates an options class with a fixed number of tokens.
+    /// Creates a fixed output-token limit.
     /// </summary>
-    /// <param name="numberValue"></param>
+    /// <param name="numberValue">The maximum output tokens per response.</param>
     public VoiceAgentMaxOutputTokens(int numberValue)
     {
         NumericValue = numberValue;
@@ -60,17 +60,17 @@ public partial class VoiceAgentMaxOutputTokens
     internal VoiceAgentMaxOutputTokens() { }
 
     /// <summary>
-    /// Creates a ResponseMaxOutputTokensOptions class from an integer value.
+    /// Converts an integer to a fixed output-token limit.
     /// </summary>
-    /// <param name="maxTokens"></param>
+    /// <param name="maxTokens">The maximum output tokens per response.</param>
     public static implicit operator VoiceAgentMaxOutputTokens(int maxTokens)
         => CreateNumericMaxTokensOption(maxTokens);
 
     /// <summary>
-    /// Equality operator.
+    /// Determines whether this token limit equals another value.
     /// </summary>
-    /// <param name="obj">The other</param>
-    /// <returns>True is equal</returns>
+    /// <param name="obj">The value to compare.</param>
+    /// <returns>True if the values are equal.</returns>
     public override bool Equals(object obj)
     {
         if (obj is VoiceAgentMaxOutputTokens other)
@@ -94,13 +94,13 @@ public partial class VoiceAgentMaxOutputTokens
     }
 
     /// <summary>
-    /// Hash Code
+    /// Returns a hash code for this instance.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The instance's hash code.</returns>
     public override int GetHashCode() => base.GetHashCode();
 
     /// <summary>
-    /// The convenience method to set VoiceAgentMaxOutputTokens to intfinity.
+    /// An option with no output-token limit.
     /// </summary>
     public static VoiceAgentMaxOutputTokens Infinity { get; } = new VoiceAgentMaxOutputTokens("inf");
 }

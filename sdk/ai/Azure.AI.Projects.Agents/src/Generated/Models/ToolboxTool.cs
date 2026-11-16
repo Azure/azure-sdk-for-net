@@ -19,11 +19,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="ToolboxTool"/>. </summary>
         /// <param name="type"> The type of tool. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected ToolboxTool(ToolboxToolType @type)
         {
             Type = @type;
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ToolboxTool"/>. </summary>
         /// <param name="type"> The type of tool. </param>
@@ -35,6 +37,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
@@ -43,6 +46,7 @@ namespace Azure.AI.Projects.Agents
             ToolConfigs = toolConfigs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The type of tool. </summary>
         internal ToolboxToolType Type { get; set; }

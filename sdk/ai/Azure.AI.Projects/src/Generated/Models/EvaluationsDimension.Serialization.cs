@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> A single dimension — one independent, measurable quality dimension within a rubric evaluator's scoring blueprint. </summary>
+    /// <summary> One measurable criterion within a rubric. Quality criteria may use rating weights; safety criteria classify a behavior as allowed or disallowed. </summary>
     public partial class EvaluationsDimension : IJsonModel<EvaluationsDimension>
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/> for deserialization. </summary>
@@ -20,6 +20,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual EvaluationsDimension PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationsDimension>)this).GetFormatFromOptions(options) : options.Format;
@@ -34,8 +35,10 @@ namespace Azure.AI.Projects.Evaluation
                     throw new FormatException($"The model {nameof(EvaluationsDimension)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationsDimension>)this).GetFormatFromOptions(options) : options.Format;
@@ -47,28 +50,38 @@ namespace Azure.AI.Projects.Evaluation
                     throw new FormatException($"The model {nameof(EvaluationsDimension)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<EvaluationsDimension>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvaluationsDimension IPersistableModel<EvaluationsDimension>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<EvaluationsDimension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<EvaluationsDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationsDimension>)this).GetFormatFromOptions(options) : options.Format;
@@ -80,8 +93,21 @@ namespace Azure.AI.Projects.Evaluation
             writer.WriteStringValue(Id);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            writer.WritePropertyName("weight"u8);
-            writer.WriteNumberValue(Weight);
+            if (Optional.IsDefined(Allowed))
+            {
+                writer.WritePropertyName("allowed"u8);
+                writer.WriteBooleanValue(Allowed.Value);
+            }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GeneratedWeight))
+            {
+                writer.WritePropertyName("generated_weight"u8);
+                writer.WriteNumberValue(GeneratedWeight.Value);
+            }
             if (Optional.IsDefined(IsAlwaysApplicable))
             {
                 writer.WritePropertyName("always_applicable"u8);
@@ -103,13 +129,17 @@ namespace Azure.AI.Projects.Evaluation
                 }
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvaluationsDimension IJsonModel<EvaluationsDimension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual EvaluationsDimension JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationsDimension>)this).GetFormatFromOptions(options) : options.Format;
@@ -120,9 +150,11 @@ namespace Azure.AI.Projects.Evaluation
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEvaluationsDimension(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static EvaluationsDimension DeserializeEvaluationsDimension(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -131,7 +163,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             string id = default;
             string description = default;
-            int weight = default;
+            bool? allowed = default;
+            int? weight = default;
+            int? generatedWeight = default;
             bool? isAlwaysApplicable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -146,9 +180,31 @@ namespace Azure.AI.Projects.Evaluation
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("allowed"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowed = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("weight"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     weight = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("generated_weight"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    generatedWeight = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("always_applicable"u8))
@@ -165,7 +221,15 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties);
+            return new EvaluationsDimension(
+                id,
+                description,
+                allowed,
+                weight,
+                generatedWeight,
+                isAlwaysApplicable,
+                additionalBinaryDataProperties);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

@@ -4,18 +4,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A recurring cron-based routine trigger. </summary>
-    [Experimental("AAIP001")]
     public partial class ScheduleRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleRoutineTrigger"/>. </summary>
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> or <paramref name="timeZone"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public ScheduleRoutineTrigger(string cronExpression, string timeZone) : base(RoutineTriggerKind.Schedule)
         {
             Argument.AssertNotNull(cronExpression, nameof(cronExpression));
@@ -24,17 +23,20 @@ namespace Azure.AI.Projects
             CronExpression = cronExpression;
             TimeZone = timeZone;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ScheduleRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ScheduleRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cronExpression, string timeZone) : base(@type, additionalBinaryDataProperties)
         {
             CronExpression = cronExpression;
             TimeZone = timeZone;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </summary>
         public string CronExpression { get; set; }

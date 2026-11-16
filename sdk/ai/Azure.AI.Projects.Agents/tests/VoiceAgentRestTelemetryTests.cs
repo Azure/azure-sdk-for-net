@@ -40,7 +40,7 @@ public class VoiceAgentRestTelemetryTests
           "status": "queued",
           "provider": "twilio",
           "connection_name": "private-connection",
-          "source": "+15555550102",
+          "source": { "type": "phone_number", "value": "+15555550102" },
           "phone_number": "+15555550101",
           "destination": { "type": "phone_number", "value": "+15555550101" },
           "structured_inputs": { "secret": "private-rest-content" },
@@ -230,6 +230,52 @@ public class VoiceAgentRestTelemetryTests
             Assert.That(span.ParentSpanId, Is.EqualTo(parent.SpanId));
         });
         AssertPrivateSafe(span);
+    }
+
+    private static IEnumerable<TestCaseData> LiveDefinitionTelemetryCases()
+    {
+        foreach (string operation in new[] { "create", "version", "update" })
+        {
+            foreach (bool isAsync in new[] { false, true })
+            {
+                foreach (bool recordContent in new[] { false, true })
+                {
+                    yield return new TestCaseData(operation, isAsync, recordContent);
+                }
+            }
+        }
+    }
+
+    [TestCaseSource(nameof(LiveDefinitionTelemetryCases))]
+    public async Task LiveDefinitionsUseExistingVoiceTelemetry(string operation, bool isAsync, bool recordContent)
+    {
+        SetContentRecording(recordContent);
+        const string definition = """
+            {"kind":"voice","sub_protocol":"live","model_type":"self_deployed","model":"gpt-live-1","instructions":"private-rest-content"}
+            """;
+        string response = AgentResponse.Replace("\"kind\": \"voice\"", "\"kind\": \"voice\", \"sub_protocol\": \"live\"")
+            .Replace("\"model_type\": \"managed\"", "\"model_type\": \"self_deployed\"")
+            .Replace("gpt-realtime", "gpt-live-1");
+        AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(response));
+        await CreateVoiceDefinition(client, operation, isAsync, definition);
+
+        Activity span = GetOnlyGenAiSpan();
+        AssertCommon(span, "create_agent", "create_agent", 200);
+        Assert.Multiple(() =>
+        {
+            Assert.That(span.GetTagItem("gen_ai.agent.type"), Is.EqualTo("voice"));
+            Assert.That(span.GetTagItem("gen_ai.request.model"), Is.EqualTo("gpt-live-1"));
+            Assert.That(span.GetTagItem("gen_ai.agent.id"), Is.EqualTo("agent_123"));
+            Assert.That(span.GetTagItem("gen_ai.agent.version"), Is.EqualTo("1"));
+        });
+        if (recordContent)
+        {
+            AssertSystemInstructions(span, false, PrivateContent);
+        }
+        else
+        {
+            AssertPrivateSafe(span);
+        }
     }
 
     [TestCase("create", false)]
@@ -749,7 +795,7 @@ public class VoiceAgentRestTelemetryTests
     public async Task ConnectionProviderRetainsExistingSdkAndGenAiScopes(bool isAsync, bool enabled)
     {
         MockPipelineTransport transport = new(message =>
-            message.Request.Uri.AbsolutePath.EndsWith("/call_jobs", StringComparison.Ordinal)
+            message.Request.Uri.AbsolutePath.EndsWith("/telephony_call_jobs", StringComparison.Ordinal)
                 ? new MockPipelineResponse(202).WithContent(ResponseBody)
                 : message.Request.Method == "DELETE"
                     ? new MockPipelineResponse(204)
@@ -1042,7 +1088,7 @@ public class VoiceAgentRestTelemetryTests
             return operation switch
             {
                 "delete" => isAsync ? await conversations.DeleteAgentConversationAsync(AgentName, "conv_123") : conversations.DeleteAgentConversation(AgentName, "conv_123"),
-                "create_binding" => isAsync ? await telephony.CreateTelephonyBindingAsync(AgentName, new CreateTwilioTelephonyBindingContent("private-connection", "+15555550101"), CancellationToken.None) : telephony.CreateTelephonyBinding(AgentName, new CreateTwilioTelephonyBindingContent("private-connection", "+15555550101"), CancellationToken.None),
+                "create_binding" => isAsync ? await telephony.CreateTelephonyBindingAsync(AgentName, new TwilioTelephonyBinding("private-connection", "+15555550101"), CancellationToken.None) : telephony.CreateTelephonyBinding(AgentName, new TwilioTelephonyBinding("private-connection", "+15555550101"), CancellationToken.None),
                 "delete_binding" => isAsync ? await telephony.DeleteTelephonyBindingAsync(AgentName, "binding_123", "*", CancellationToken.None) : telephony.DeleteTelephonyBinding(AgentName, "binding_123", "*", CancellationToken.None),
                 "create_call_job" => isAsync ? await telephony.CreateTelephonyCallJobAsync(AgentName, "private-idempotency", CallJobContent(), CancellationToken.None) : telephony.CreateTelephonyCallJob(AgentName, "private-idempotency", CallJobContent(), CancellationToken.None),
                 "cancel_call_job" => isAsync ? await telephony.CancelTelephonyCallJobAsync(AgentName, "job_123", "*", CancellationToken.None) : telephony.CancelTelephonyCallJob(AgentName, "job_123", "*", CancellationToken.None),
@@ -1054,7 +1100,7 @@ public class VoiceAgentRestTelemetryTests
         }
 
         options ??= new RequestOptions();
-        using BinaryContent content = JsonContent("""{"source":"+15555550102","destination":{"type":"phone_number","value":"+15555550101"},"messages":[{"content":"private-rest-content"}]}""");
+        using BinaryContent content = JsonContent("""{"source":{"type":"phone_number","value":"+15555550102"},"destination":{"type":"phone_number","value":"+15555550101"},"messages":[{"content":"private-rest-content"}]}""");
         return operation switch
         {
             "delete" => isAsync ? await conversations.DeleteAgentConversationAsync(AgentName, "conv_123", options) : conversations.DeleteAgentConversation(AgentName, "conv_123", options),
@@ -1070,9 +1116,9 @@ public class VoiceAgentRestTelemetryTests
         };
     }
 
-    private static CreateTelephonyCallJobContent CallJobContent()
+    private static TelephonyCallJobCreate CallJobContent()
     {
-        CreateTelephonyCallJobContent content = new(new TelephonyOutboundDestination(TelephonyOutboundDestinationType.PhoneNumber, "+15555550101"), "private-connection", "+15555550102") { Purpose = PrivateContent };
+        TelephonyCallJobCreate content = new(new PhoneNumber("+15555550101"), "private-connection", new PhoneNumber("+15555550102")) { Purpose = PrivateContent };
         content.StructuredInputs["secret"] = BinaryData.FromString("\"private-rest-content\"");
         return content;
     }

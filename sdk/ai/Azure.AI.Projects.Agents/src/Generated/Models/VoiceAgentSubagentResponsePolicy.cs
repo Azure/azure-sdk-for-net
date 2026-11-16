@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Policy for delivering responses while a voice agent waits for a subagent. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSubagentResponsePolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

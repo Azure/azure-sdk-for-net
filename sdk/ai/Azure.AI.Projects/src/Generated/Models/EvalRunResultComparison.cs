@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Comparison results for treatment runs against the baseline. </summary>
-    [Experimental("AAIP001")]
     public partial class EvalRunResultComparison
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,6 +20,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evaluatorName"> Name of the evaluator for this testing criteria. </param>
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalRunResultComparison(string testingCriteria, string metricName, string evaluatorName, EvalRunResultSummary baselineRunSummary, IEnumerable<EvalRunResultCompareItem> compareItems)
         {
             TestingCriteria = testingCriteria;
@@ -30,6 +29,7 @@ namespace Azure.AI.Projects.Evaluation
             BaselineRunSummary = baselineRunSummary;
             CompareItems = compareItems.ToList();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvalRunResultComparison"/>. </summary>
         /// <param name="testingCriteria"> Name of the testing criteria. </param>
@@ -38,6 +38,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalRunResultComparison(string testingCriteria, string metricName, string evaluatorName, EvalRunResultSummary baselineRunSummary, IList<EvalRunResultCompareItem> compareItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TestingCriteria = testingCriteria;
@@ -47,6 +48,7 @@ namespace Azure.AI.Projects.Evaluation
             CompareItems = compareItems;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Name of the testing criteria. </summary>
         public string TestingCriteria { get; }

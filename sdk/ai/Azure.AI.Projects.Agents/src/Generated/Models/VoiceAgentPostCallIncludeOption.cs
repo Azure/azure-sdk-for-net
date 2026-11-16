@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     public readonly partial struct VoiceAgentPostCallIncludeOption : IEquatable<VoiceAgentPostCallIncludeOption>
     {
         private readonly string _value;
-        /// <summary> A URL to the merged call recording. Not supported in this preview: the service rejects `audio` when the agent version is saved. </summary>
+        /// <summary> A URL to the merged call recording. </summary>
         private const string AudioValue = "audio";
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentPostCallIncludeOption"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
             _value = value;
         }
 
-        /// <summary> A URL to the merged call recording. Not supported in this preview: the service rejects `audio` when the agent version is saved. </summary>
+        /// <summary> A URL to the merged call recording. </summary>
         public static VoiceAgentPostCallIncludeOption Audio { get; } = new VoiceAgentPostCallIncludeOption(AudioValue);
 
         /// <summary> Determines if two <see cref="VoiceAgentPostCallIncludeOption"/> values are the same. </summary>

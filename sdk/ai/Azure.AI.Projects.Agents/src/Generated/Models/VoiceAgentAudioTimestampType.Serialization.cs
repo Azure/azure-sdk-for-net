@@ -3,14 +3,12 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class VoiceAgentAudioTimestampTypeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
-        [Experimental("AAIP001")]
         public static string ToSerialString(this VoiceAgentAudioTimestampType value) => value switch
         {
             VoiceAgentAudioTimestampType.Word => "word",
@@ -18,7 +16,6 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
-        [Experimental("AAIP001")]
         public static VoiceAgentAudioTimestampType ToVoiceAgentAudioTimestampType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "word"))

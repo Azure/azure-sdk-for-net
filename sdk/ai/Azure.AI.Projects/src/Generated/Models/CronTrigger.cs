@@ -4,17 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Cron based trigger. </summary>
-    [Experimental("AAIP001")]
     public partial class CronTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
-        /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
+        /// <param name="expression"> Five-field cron expression that defines the schedule frequency: minute hour day-of-month month day-of-week. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public CronTrigger(string expression) : base(TriggerType.Cron)
         {
@@ -26,7 +24,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
         /// <param name="type"> Type of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
+        /// <param name="expression"> Five-field cron expression that defines the schedule frequency: minute hour day-of-month month day-of-week. </param>
         /// <param name="timeZone"> Time zone for the cron schedule. Defaults to `UTC`. </param>
         /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
         /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
@@ -38,7 +36,7 @@ namespace Azure.AI.Projects.Evaluation
             EndTime = endTime;
         }
 
-        /// <summary> Cron expression that defines the schedule frequency. </summary>
+        /// <summary> Five-field cron expression that defines the schedule frequency: minute hour day-of-month month day-of-week. </summary>
         public string Expression { get; set; }
 
         /// <summary> Time zone for the cron schedule. Defaults to `UTC`. </summary>

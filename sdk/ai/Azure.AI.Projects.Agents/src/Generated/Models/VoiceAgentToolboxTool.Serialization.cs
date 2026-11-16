@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "toolbox";
+            VoiceAgentToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string toolboxName = default;
             string toolboxVersion = default;
@@ -121,7 +121,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceAgentToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("toolbox_name"u8))

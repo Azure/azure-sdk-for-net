@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Agent optimization job resource — a long-running job that produces candidate changes to a Foundry agent configuration. </summary>
+    /// <summary> Agent optimization job resource — a long-running job that produces candidate changes or versioned skill packages. For failed or skipped jobs, error explains the outcome; status distinguishes failure from a skip. </summary>
     public partial class AgentOptimizationJob : IJsonModel<AgentOptimizationJob>
     {
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJob"/> for deserialization. </summary>

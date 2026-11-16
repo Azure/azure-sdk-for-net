@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A bounded durable observation in the lifecycle of one telephony call. </summary>
-    [Experimental("AAIP001")]
     public partial class TelephonyCallLifecycleEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

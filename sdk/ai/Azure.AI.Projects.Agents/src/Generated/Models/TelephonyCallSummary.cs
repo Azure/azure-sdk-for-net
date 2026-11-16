@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A summary of a durable inbound call to a voice agent. </summary>
-    [Experimental("AAIP001")]
     public partial class TelephonyCallSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Token usage for cluster analysis. </summary>
-    [Experimental("AAIP001")]
     public partial class ClusterTokenUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,18 +17,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="inputTokenUsage"> input token usage. </param>
         /// <param name="outputTokenUsage"> output token usage. </param>
         /// <param name="totalTokenUsage"> total token usage. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ClusterTokenUsage(int inputTokenUsage, int outputTokenUsage, int totalTokenUsage)
         {
             InputTokenUsage = inputTokenUsage;
             OutputTokenUsage = outputTokenUsage;
             TotalTokenUsage = totalTokenUsage;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ClusterTokenUsage"/>. </summary>
         /// <param name="inputTokenUsage"> input token usage. </param>
         /// <param name="outputTokenUsage"> output token usage. </param>
         /// <param name="totalTokenUsage"> total token usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ClusterTokenUsage(int inputTokenUsage, int outputTokenUsage, int totalTokenUsage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InputTokenUsage = inputTokenUsage;
@@ -38,6 +39,7 @@ namespace Azure.AI.Projects.Evaluation
             TotalTokenUsage = totalTokenUsage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> input token usage. </summary>
         public int InputTokenUsage { get; }

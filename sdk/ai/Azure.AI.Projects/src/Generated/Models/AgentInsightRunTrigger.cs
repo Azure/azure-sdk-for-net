@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The trigger that started an agent insight run. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct AgentInsightRunTrigger : IEquatable<AgentInsightRunTrigger>
     {
         private readonly string _value;

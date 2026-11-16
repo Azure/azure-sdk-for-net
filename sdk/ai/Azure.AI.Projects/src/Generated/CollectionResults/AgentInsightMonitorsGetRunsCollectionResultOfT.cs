@@ -6,14 +6,14 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    [Experimental("AAIP001")]
     internal partial class AgentInsightMonitorsGetRunsCollectionResultOfT : CollectionResult<AgentInsightRun>
     {
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private readonly AgentInsightMonitors _client;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private readonly string _monitorId;
         private readonly string _after;
         private readonly string _before;
@@ -33,6 +33,7 @@ namespace Azure.AI.Projects
         /// <param name="status"> Filter runs by status. </param>
         /// <param name="trigger"> Filter runs by trigger. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public AgentInsightMonitorsGetRunsCollectionResultOfT(AgentInsightMonitors client, string monitorId, string after, string before, int? limit, string order, string status, string trigger, RequestOptions options)
         {
             _client = client;
@@ -45,9 +46,11 @@ namespace Azure.AI.Projects
             _trigger = trigger;
             _options = options;
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override IEnumerable<ClientResult> GetRawPages()
         {
             PipelineMessage message = _client.CreateGetRunsRequest(_monitorId, _after, _before, _limit, _order, _status, _trigger, _options);
@@ -65,10 +68,12 @@ namespace Azure.AI.Projects
                 message = _client.CreateGetRunsRequest(_monitorId, nextToken, _before, _limit, _order, _status, _trigger, _options);
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the continuation token from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The continuation token for the specified page. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
             string nextPage = ((AgentsPagedResultAgentInsightRun)page).LastId;
@@ -81,17 +86,21 @@ namespace Azure.AI.Projects
                 return null;
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         protected override IEnumerable<AgentInsightRun> GetValuesFromPage(ClientResult page)
         {
             return ((AgentsPagedResultAgentInsightRun)page).Data;
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private ClientResult GetNextResponse(PipelineMessage message)
         {
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentInsightMonitors.GetRuns");
@@ -106,5 +115,6 @@ namespace Azure.AI.Projects
                 throw;
             }
         }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
     }
 }

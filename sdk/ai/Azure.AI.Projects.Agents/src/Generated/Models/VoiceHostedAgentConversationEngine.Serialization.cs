@@ -110,7 +110,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "hosted_agent";
+            VoiceConversationEngineType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string version = default;
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceConversationEngineType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

@@ -13,6 +13,10 @@ namespace Azure.AI.Projects.Agents
         private readonly string _value;
         /// <summary> Natural-language guidance that steers the desired optimization. </summary>
         private const string SteeringPromptValue = "steering_prompt";
+        /// <summary> Agent trace evidence selected from project-authorized telemetry. </summary>
+        private const string AgentTracesValue = "agent_traces";
+        /// <summary> Exact baseline skill references for skill optimization. </summary>
+        private const string SkillReferencesValue = "skill_references";
 
         /// <summary> Initializes a new instance of <see cref="OptimizationContextType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -26,6 +30,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Natural-language guidance that steers the desired optimization. </summary>
         public static OptimizationContextType SteeringPrompt { get; } = new OptimizationContextType(SteeringPromptValue);
+
+        /// <summary> Agent trace evidence selected from project-authorized telemetry. </summary>
+        public static OptimizationContextType AgentTraces { get; } = new OptimizationContextType(AgentTracesValue);
+
+        /// <summary> Exact baseline skill references for skill optimization. </summary>
+        public static OptimizationContextType SkillReferences { get; } = new OptimizationContextType(SkillReferencesValue);
 
         /// <summary> Determines if two <see cref="OptimizationContextType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

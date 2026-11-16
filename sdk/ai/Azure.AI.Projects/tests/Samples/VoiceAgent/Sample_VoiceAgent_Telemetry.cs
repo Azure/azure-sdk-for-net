@@ -20,7 +20,6 @@ using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-#pragma warning disable AAIP001
 #pragma warning disable AAIP002
 #pragma warning disable OPENAI002
 

@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> When a tool invocation creates a follow-up response. Additional values may be added over time. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentToolResponseScheduling : IEquatable<VoiceAgentToolResponseScheduling>
     {
         private readonly string _value;

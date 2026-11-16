@@ -5,16 +5,21 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents;
 
-/// <summary> The ApiError. </summary>
+/// <summary> Details of an error returned by the service. </summary>
 [CodeGenType("Error")]
-internal partial class FoundryOpenAIError
+public partial class FoundryOpenAIError
 {
+    // Preserve upstream diagnostics in serialization without exposing their internal model hierarchy.
+    [CodeGenMember("Misalignment")]
+    internal MisalignmentErrorDetailsResource Misalignment { get; }
+
     internal static FoundryOpenAIError TryCreateFromResponse(PipelineResponse response)
     {
         try
@@ -42,7 +47,7 @@ internal partial class FoundryOpenAIError
         }
     }
 
-    public string ToExceptionMessage(int httpStatus)
+    internal string ToExceptionMessage(int httpStatus)
     {
         StringBuilder messageBuilder = new();
         messageBuilder.Append("HTTP ").Append(httpStatus).Append(" (").Append(Code).AppendLine(")");
@@ -82,7 +87,7 @@ internal partial class FoundryOpenAIError
     /// intended.
     /// </summary>
     /// <returns></returns>
-    public BinaryData ToOpenAIError()
+    internal BinaryData ToOpenAIError()
     {
         StringBuilder messageBuilder = new(Message);
         string parameterDetails = null;
@@ -91,23 +96,29 @@ internal partial class FoundryOpenAIError
             messageBuilder.Append(" (");
             foreach (FoundryOpenAIError error in Details)
             {
-                messageBuilder.Append(error.GetExceptionMessageRecursive());
+                messageBuilder.Append(error.Message);
+                if (error.Details?.Count > 0 == true)
+                {
+                    messageBuilder.AppendLine().Append(error.GetExceptionMessageRecursive());
+                }
                 messageBuilder.Append("; ");
             }
             messageBuilder.Remove(messageBuilder.Length - 2, 2);
             messageBuilder.Append(')');
             parameterDetails = string.Join(";", Details.Select(x => x.Param));
         }
-        BinaryData newErrorBytes = BinaryData.FromString($$"""
-            {
-              "error": {
-                "message": "{{messageBuilder}}",
-                "type": "{{nameof(FoundryOpenAIError)}}",
-                "param": "{{(parameterDetails ?? string.Empty)}}",
-                "code": "{{(Code ?? string.Empty)}}"
-              }
-            }
-            """);
-        return newErrorBytes;
+        using MemoryStream stream = new();
+        using (Utf8JsonWriter writer = new(stream))
+        {
+            writer.WriteStartObject();
+            writer.WriteStartObject("error");
+            writer.WriteString("message", messageBuilder.ToString());
+            writer.WriteString("type", nameof(FoundryOpenAIError));
+            writer.WriteString("param", parameterDetails ?? string.Empty);
+            writer.WriteString("code", Code ?? string.Empty);
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+        return BinaryData.FromBytes(stream.ToArray());
     }
 }

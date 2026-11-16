@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A sample from the evaluation result. </summary>
-    [Experimental("AAIP001")]
     public partial class EvaluationResultSample : InsightSample
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationResultSample"/>. </summary>
@@ -17,10 +15,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationResultSample(string id, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo, EvalResult evaluationResult) : base(id, SampleType.EvaluationResultSample, features, correlationInfo)
         {
             EvaluationResult = evaluationResult;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvaluationResultSample"/>. </summary>
         /// <param name="id"> The unique identifier for the analysis sample. </param>
@@ -29,10 +29,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationResultSample(string id, SampleType @type, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, EvalResult evaluationResult) : base(id, @type, features, correlationInfo, additionalBinaryDataProperties)
         {
             EvaluationResult = evaluationResult;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Evaluation result for the analysis sample. </summary>
         public EvalResult EvaluationResult { get; }

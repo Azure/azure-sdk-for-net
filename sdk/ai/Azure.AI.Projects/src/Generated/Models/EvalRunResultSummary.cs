@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Summary statistics of a metric in an evaluation run. </summary>
-    [Experimental("AAIP001")]
     public partial class EvalRunResultSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,6 +18,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="sampleCount"> Number of samples in the evaluation run. </param>
         /// <param name="average"> Average value of the metric in the evaluation run. </param>
         /// <param name="standardDeviation"> Standard deviation of the metric in the evaluation run. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalRunResultSummary(string runId, int sampleCount, float average, float standardDeviation)
         {
             RunId = runId;
@@ -27,6 +26,7 @@ namespace Azure.AI.Projects.Evaluation
             Average = average;
             StandardDeviation = standardDeviation;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvalRunResultSummary"/>. </summary>
         /// <param name="runId"> The evaluation run ID. </param>
@@ -34,6 +34,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="average"> Average value of the metric in the evaluation run. </param>
         /// <param name="standardDeviation"> Standard deviation of the metric in the evaluation run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalRunResultSummary(string runId, int sampleCount, float average, float standardDeviation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunId = runId;
@@ -42,6 +43,7 @@ namespace Azure.AI.Projects.Evaluation
             StandardDeviation = standardDeviation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The evaluation run ID. </summary>
         public string RunId { get; }

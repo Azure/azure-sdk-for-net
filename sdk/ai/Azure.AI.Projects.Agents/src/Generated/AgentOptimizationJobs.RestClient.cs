@@ -77,6 +77,29 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
+        internal PipelineMessage CreateDownloadFileRequest(string jobId, string path, string candidateId, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agent_optimization_jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/files", false);
+            if (candidateId != null)
+            {
+                uri.AppendQuery("candidate_id", candidateId, true);
+            }
+            uri.AppendQuery("path", path, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/octet-stream");
+            message.Apply(options);
+            return message;
+        }
+
         internal PipelineMessage CreateGetAllRequest(int? limit, string order, string after, string before, string status, string agentName, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
