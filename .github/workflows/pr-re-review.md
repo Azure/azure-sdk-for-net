@@ -30,7 +30,6 @@ checkout:
 # pushes, so the helpers come from the base branch's current tip instead. A pull request cannot change them.
 pre-agent-steps:
   - name: Checkout trusted re-review helpers
-    id: re-review-helpers
     uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     with:
       ref: ${{ github.event.pull_request.base.ref }}
@@ -46,14 +45,17 @@ pre-agent-steps:
       PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
       REVIEW_INPUT_DIR: /tmp/gh-aw/pr-review-input
       REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
-      REVIEW_HELPERS_SHA: ${{ steps.re-review-helpers.outputs.commit }}
     run: |
       $exporter = './.pr-re-review-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1'
       if (!(Test-Path -PathType Leaf $exporter)) {
         throw 'The base branch does not contain the re-review exporter. Deploy the helpers to the base branch before enabling this workflow; do not run the PR version.'
       }
       & $exporter
-      [IO.File]::WriteAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-sha", $env:REVIEW_HELPERS_SHA)
+      $tree = git -C .pr-re-review-helpers rev-parse HEAD:.github/workflows/pr-re-review
+      if ($LASTEXITCODE -ne 0) {
+        throw 'Could not resolve the re-review helpers tree.'
+      }
+      [IO.File]::WriteAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-tree", $tree)
   - name: Upload exported-patch markers
     uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
     with:
@@ -102,21 +104,20 @@ safe-outputs:
       with:
         name: pr-re-review-input
         path: ${{ runner.temp }}/pr-re-review-input
-    - name: Resolve trusted re-review helpers commit
-      id: re-review-helpers
-      shell: pwsh
-      run: |
-        $commit = [IO.File]::ReadAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-sha").Trim()
-        if ($commit -cnotmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$') {
-          throw 'The exported-patch markers do not record a valid re-review helpers commit.'
-        }
-        Add-Content -LiteralPath $env:GITHUB_OUTPUT -Value "commit=$commit"
     - name: Checkout trusted re-review publication guard
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        ref: ${{ steps.re-review-helpers.outputs.commit }}
+        ref: ${{ github.event.pull_request.base.ref }}
         persist-credentials: false
         sparse-checkout: .github/workflows/pr-re-review
+    - name: Verify re-review helpers match the export
+      shell: pwsh
+      run: |
+        $exported = [IO.File]::ReadAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-tree").Trim()
+        $current = git rev-parse HEAD:.github/workflows/pr-re-review
+        if ($LASTEXITCODE -ne 0 -or $exported -cnotmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$' -or $current -cne $exported) {
+          throw "The re-review helpers changed between export ($exported) and publication ($current); refusing to publish."
+        }
     - name: Require complete re-review coverage before publishing
       shell: pwsh
       env:

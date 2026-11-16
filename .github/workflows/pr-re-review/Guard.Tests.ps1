@@ -568,44 +568,43 @@ Describe 'Compiled re-review publication guard' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { "{""head"":{""sha"":""$('a' * 40)""},""base"":{""sha"":""$('b' * 40)""}}" }
     }
 
-    It 'checks out the publication guard at the helpers commit the export recorded, not the merge commit' {
+    It 'checks out the publication guard from the base branch tip, not a ref read from the artifact' {
         $checkout = Get-Step 'Checkout trusted re-review publication guard'
-        (Get-StepMapping $checkout 'with')['ref'] | Should -BeExactly '${{ steps.re-review-helpers.outputs.commit }}'
+        (Get-StepMapping $checkout 'with')['ref'] | Should -BeExactly '${{ github.event.pull_request.base.ref }}'
     }
 
     It 'checks out the guard without persisting credentials' {
         $checkout = Get-Step 'Checkout trusted re-review publication guard'
         Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
         $with = Get-StepMapping $checkout 'with'
-        $with['ref'] | Should -BeExactly '${{ steps.re-review-helpers.outputs.commit }}'
+        $with['ref'] | Should -BeExactly '${{ github.event.pull_request.base.ref }}'
         $with['persist-credentials'] | Should -BeExactly 'false'
         $with['sparse-checkout'] | Should -BeExactly '.github/workflows/pr-re-review'
     }
 
-    It 'resolves the recorded helpers commit only when it is a commit SHA' -ForEach @(
-        @{ Recorded = 'a' * 40; Valid = $true }
-        @{ Recorded = 'main'; Valid = $false }
-        @{ Recorded = ''; Valid = $false }
+    It 'publishes only when the guard''s helpers match the exported tree when <Label>' -ForEach @(
+        @{ Label = 'they match'; Recorded = 'head'; Valid = $true }
+        @{ Label = 'the helpers changed'; Recorded = 'b' * 40; Valid = $false }
+        @{ Label = 'the recorded tree is malformed'; Recorded = 'main'; Valid = $false }
     ) {
-        $resolve = Get-Step 'Resolve trusted re-review helpers commit'
-        Get-StepProperty $resolve 'id' | Should -BeExactly 're-review-helpers'
-        Get-StepProperty $resolve 'shell' | Should -BeExactly 'pwsh'
-        $script = [scriptblock]::Create(((Get-YamlBlock $resolve.Lines.ToArray() 'run: |' 8) | ForEach-Object { $_.TrimStart() }) -join "`n")
-        $previous = @{ RUNNER_TEMP = $env:RUNNER_TEMP; GITHUB_OUTPUT = $env:GITHUB_OUTPUT }
+        $verify = Get-Step 'Verify re-review helpers match the export'
+        Get-StepProperty $verify 'shell' | Should -BeExactly 'pwsh'
+        $script = [scriptblock]::Create(((Get-YamlBlock $verify.Lines.ToArray() 'run: |' 8) | ForEach-Object { $_.TrimStart() }) -join "`n")
+        $previous = $env:RUNNER_TEMP
+        Push-Location $script:RepoRoot
         try {
             $env:RUNNER_TEMP = Join-Path $TestDrive ([guid]::NewGuid())
-            $env:GITHUB_OUTPUT = Join-Path $env:RUNNER_TEMP 'github-output'
             [void][IO.Directory]::CreateDirectory((Join-Path $env:RUNNER_TEMP 'pr-re-review-input'))
-            [IO.File]::WriteAllText((Join-Path $env:RUNNER_TEMP 'pr-re-review-input' 'helpers-sha'), $Recorded)
+            $tree = if ($Recorded -eq 'head') { git rev-parse HEAD:.github/workflows/pr-re-review } else { $Recorded }
+            [IO.File]::WriteAllText((Join-Path $env:RUNNER_TEMP 'pr-re-review-input' 'helpers-tree'), $tree)
             if ($Valid) {
-                & $script
-                [IO.File]::ReadAllText($env:GITHUB_OUTPUT).Trim() | Should -BeExactly "commit=$Recorded"
+                { & $script } | Should -Not -Throw
             } else {
-                { & $script } | Should -Throw -ExpectedMessage '*helpers commit*'
+                { & $script } | Should -Throw -ExpectedMessage '*helpers*'
             }
         } finally {
-            $env:RUNNER_TEMP = $previous.RUNNER_TEMP
-            $env:GITHUB_OUTPUT = $previous.GITHUB_OUTPUT
+            Pop-Location
+            $env:RUNNER_TEMP = $previous
         }
     }
 
@@ -642,22 +641,22 @@ Describe 'Compiled re-review publication guard' {
     It 'runs after the agent output and markers are in place and before anything is published' {
         $located = [array]::IndexOf($script:StepNames, 'Setup agent output environment variable')
         $markers = [array]::IndexOf($script:StepNames, 'Download exported-patch markers')
-        $resolve = [array]::IndexOf($script:StepNames, 'Resolve trusted re-review helpers commit')
         $checkout = [array]::IndexOf($script:StepNames, 'Checkout trusted re-review publication guard')
+        $verify = [array]::IndexOf($script:StepNames, 'Verify re-review helpers match the export')
         $guard = [array]::IndexOf($script:StepNames, 'Require complete re-review coverage before publishing')
         $publish = [array]::IndexOf($script:StepNames, 'Process Safe Outputs')
         $located | Should -BeGreaterOrEqual 0
         $markers | Should -BeGreaterThan $located
-        $resolve | Should -BeGreaterThan $markers
-        $checkout | Should -BeGreaterThan $resolve
-        $guard | Should -BeGreaterThan $checkout
+        $checkout | Should -BeGreaterThan $markers
+        $verify | Should -BeGreaterThan $checkout
+        $guard | Should -BeGreaterThan $verify
         $publish | Should -BeGreaterThan $guard
     }
 
     It '<Name> has no condition or continue-on-error that could bypass a failed guard' -ForEach @(
         @{ Name = 'Download exported-patch markers' }
-        @{ Name = 'Resolve trusted re-review helpers commit' }
         @{ Name = 'Checkout trusted re-review publication guard' }
+        @{ Name = 'Verify re-review helpers match the export' }
         @{ Name = 'Require complete re-review coverage before publishing' }
         @{ Name = 'Process Safe Outputs' }
     ) {
@@ -741,7 +740,6 @@ Describe 'Compiled re-review input export' {
 
     It 'checks out the helpers from the base branch tip, not the stale base.sha snapshot' {
         $checkout = Get-AgentStep 'Checkout trusted re-review helpers'
-        Get-StepProperty $checkout 'id' | Should -BeExactly 're-review-helpers'
         Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
         $with = Get-StepMapping $checkout 'with'
         $with['ref'] | Should -BeExactly '${{ github.event.pull_request.base.ref }}'
@@ -758,7 +756,8 @@ Describe 'Compiled re-review input export' {
         $run | Should -Match 'base branch does not contain the re-review exporter'
         $run | Should -Match '\./\.pr-re-review-helpers/\.github/workflows/pr-re-review/Invoke-PrReReviewInputExport\.ps1'
         $run | Should -Not -Match '(?m)^\s+\./\.github/workflows/pr-re-review/Invoke-PrReReviewInputExport\.ps1$'
-        $run | Should -Match 'pr-re-review-input/helpers-sha'
+        $run | Should -Match 'rev-parse HEAD:\.github/workflows/pr-re-review'
+        $run | Should -Match 'pr-re-review-input/helpers-tree'
         $environment = Get-StepMapping $export 'env'
         $environment['GH_TOKEN'] | Should -BeExactly '${{ github.token }}'
         $environment['PR_NUMBER'] | Should -BeExactly '${{ github.event.pull_request.number }}'
@@ -766,7 +765,6 @@ Describe 'Compiled re-review input export' {
         $environment['PR_BASE_SHA'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
         $environment['REVIEW_INPUT_DIR'] | Should -BeExactly '/tmp/gh-aw/pr-review-input'
         $environment['REVIEW_INPUT_MARKERS'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input/markers.json'
-        $environment['REVIEW_HELPERS_SHA'] | Should -BeExactly '${{ steps.re-review-helpers.outputs.commit }}'
 
         $upload = Get-AgentStep 'Upload exported-patch markers'
         Get-StepProperty $upload 'uses' | Should -BeExactly 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2'
