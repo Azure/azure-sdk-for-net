@@ -541,7 +541,7 @@ namespace Azure.Search.Documents.Models
         /// </example>
         /// <remarks> For more details please refer <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/search-documents#query-parameters"/></remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FacetResult FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
+        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
@@ -585,6 +585,30 @@ namespace Azure.Search.Documents.Models
                     allDocumentsFinalState,
                     resetDocumentsInitialState,
                     resetDocumentsFinalState);
+
+        /// <summary> Initializes a new instance of SearchIndex for mocking. </summary>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="description"> The description of the index. </param>
+        /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
+        /// <param name="defaultScoringProfile"> The default scoring profile. </param>
+        /// <param name="corsOptions"> The cross-origin resource sharing options. </param>
+        /// <param name="suggesters"> The suggesters for the index. </param>
+        /// <param name="analyzers"> The analyzers for the index. </param>
+        /// <param name="tokenizers"> The tokenizers for the index. </param>
+        /// <param name="tokenFilters"> The token filters for the index. </param>
+        /// <param name="charFilters"> The character filters for the index. </param>
+        /// <param name="normalizers"> The normalizers for the index. </param>
+        /// <param name="encryptionKey"> The encryption key for the index. </param>
+        /// <param name="similarity"> The similarity algorithm. </param>
+        /// <param name="semanticSearch"> The semantic search configuration. </param>
+        /// <param name="vectorSearch"> The vector search configuration. </param>
+        /// <param name="fields"> The fields of the index. </param>
+        /// <param name="etag"> The ETag of the index. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndex SearchIndex(string name = null, string description = null, IEnumerable<ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, CorsOptions corsOptions = null, IEnumerable<SearchSuggester> suggesters = null, IEnumerable<LexicalAnalyzer> analyzers = null, IEnumerable<LexicalTokenizer> tokenizers = null, IEnumerable<TokenFilter> tokenFilters = null, IEnumerable<CharFilter> charFilters = null, IEnumerable<LexicalNormalizer> normalizers = null, SearchResourceEncryptionKey encryptionKey = null, SimilarityAlgorithm similarity = null, SemanticSearch semanticSearch = null, VectorSearch vectorSearch = null, IEnumerable<SearchField> fields = null, string etag = null)
+        {
+            return SearchIndex(name: name, description: description, scoringProfiles: scoringProfiles, defaultScoringProfile: defaultScoringProfile, corsOptions: corsOptions, suggesters: suggesters, analyzers: analyzers, tokenizers: tokenizers, tokenFilters: tokenFilters, charFilters: charFilters, normalizers: normalizers, encryptionKey: encryptionKey, similarity: similarity, semanticSearch: semanticSearch, vectorSearch: vectorSearch, permissionFilterOption: default, sharePointConnectorAppRegistration: default, fields: fields, etag: etag);
+        }
 
         /// <summary> Initializes a new instance of SearchIndex. </summary>
         /// <param name="name"> The name of the index. </param>
@@ -728,7 +752,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FacetResult FacetResult(long? count, IDictionary<string, BinaryData> additionalProperties)
+        public static FacetResult FacetResult(long? count = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -743,7 +767,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
         /// <param name="kind"> The kind of vector query being performed. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string kind = default)
         {
             return new UnknownVectorQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, kind, additionalBinaryDataProperties: null);
         }
@@ -755,7 +779,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="eTag"> A string representing an ETag that can be used to perform optimistic concurrency control. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
+        public static KnowledgeSource KnowledgeSource(string name = default, string description = default, string kind = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default)
         {
             return new UnknownKnowledgeSource(name, description, kind, eTag, encryptionKey, additionalBinaryDataProperties: null);
         }

@@ -335,6 +335,56 @@ namespace Azure.Search.Documents.Tests.Models
 #pragma warning restore CS0618
 
         [Test]
+        public void VectorQueryFactorySupportsOmittedAndNamedArguments()
+        {
+            VectorQuery query = SearchModelFactory.VectorQuery(kNearestNeighborsCount: 3, fieldsRaw: "vector", kind: "vector");
+
+            Assert.AreEqual(3, query.KNearestNeighborsCount);
+            CollectionAssert.AreEqual(new[] { "vector" }, query.Fields);
+            Assert.IsNull(query.Exhaustive);
+            Assert.IsNull(query.Weight);
+        }
+
+        [Test]
+        public void KnowledgeSourceFactorySupportsOmittedAndNamedArguments()
+        {
+            KnowledgeSource source = SearchModelFactory.KnowledgeSource(name: "hotels-ks", kind: "searchIndex");
+
+            Assert.AreEqual("hotels-ks", source.Name);
+            Assert.IsNull(source.Description);
+            Assert.IsNull(source.EncryptionKey);
+        }
+
+        [Test]
+        public void FacetResultFactoriesSupportOmittedCount()
+        {
+            FacetResult objectFacet = SearchModelFactory.FacetResult(
+                additionalProperties: new Dictionary<string, object> { ["value"] = "Luxury" });
+            FacetResult binaryFacet = SearchModelFactory.FacetResult(
+                additionalProperties: new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson("Luxury") });
+
+            foreach (FacetResult facet in new[] { objectFacet, binaryFacet })
+            {
+                Assert.IsNull(facet.Count);
+                Assert.AreEqual("Luxury", facet.Value);
+            }
+        }
+
+        [Test]
+        public void SearchIndexFactorySupportsEnumerableFieldsWithOmittedArguments()
+        {
+            SearchField field = new SearchField("id", SearchFieldDataType.String) { IsKey = true };
+            IEnumerable<SearchField> fields = new[] { field, null }.Where(f => f != null);
+
+            SearchIndex index = SearchModelFactory.SearchIndex(name: "hotels", fields: fields);
+
+            Assert.AreEqual("hotels", index.Name);
+            CollectionAssert.AreEqual(new[] { field }, index.Fields);
+            Assert.IsNull(index.Description);
+            Assert.IsEmpty(index.ScoringProfiles);
+        }
+
+        [Test]
         public void FileCapacityDeserializesAndPersists()
         {
             BinaryData data = BinaryData.FromString("""
