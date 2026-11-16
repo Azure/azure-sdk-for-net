@@ -555,6 +555,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-type-union-discriminated-extends": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/type/union/discriminated/extends -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-versioning-added-v1": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/versioning/added/v1 -g AzureStubGenerator",
       "commandName": "Executable",
