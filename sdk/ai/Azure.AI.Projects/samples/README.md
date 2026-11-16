@@ -35,3 +35,10 @@ description: Samples for the Azure.AI.Projects client library.
 | Sample | Description |
 | ------ | ----------- |
 | [Voice evaluation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample_VoiceEvaluation.md) | Grade existing recorded conversations or simulate and grade a short call against an existing voice agent. |
+
+## Evaluation data generation
+
+| Sample | Description |
+| ------ | ----------- |
+| [Sample19_DataGenerationJob](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample19_DataGenerationJob.md) | Generate evaluation data from a prompt. |
+| [Sample20_DataGenerationJob_RubricGeneration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample20_DataGenerationJob_RubricGeneration.md) | Generate evaluation test cases and rubric dimensions from agent traces. |

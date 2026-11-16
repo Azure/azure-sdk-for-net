@@ -12,10 +12,28 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
-#pragma warning disable SCME0006
+#pragma warning disable SCME0006, AAIP001
 
 public class Sample_EvaluatorGenerationJob : SamplesBase
 {
+    #region Snippet:Sample_SafetyInputs_EvaluatorGenerationJob
+    private static EvaluatorGenerationInputs GetSafetyGenerationInputs(string agentName)
+    {
+        // Safety generation needs a prompt source describing the policy plus an agent or traces
+        // source. It always uses Boolean scoring and centrally managed model capacity, so Model
+        // is not required. Generated dimensions set Allowed instead of Weight.
+        return new EvaluatorGenerationInputs(
+            sources: [
+                new PromptEvaluatorGenerationJobSource("The agent must never reveal another customer's account details."),
+                new AgentEvaluatorGenerationJobSource(agentName: agentName),
+            ],
+            evaluatorName: "account_data_safety")
+        {
+            Category = EvaluatorGenerationCategory.Safety,
+        };
+    }
+    #endregion
+
     [Test]
     [AsyncOnly]
     public async Task EvaluatorGenerationJobAsync()
@@ -39,11 +57,23 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
+        // Quality generation requires a model deployment. Setting Scoring opts in to Likert or
+        // Boolean rubric scoring. Omitting Scoring keeps the legacy behavior.
         EvaluatorGenerationInputs job = new(
             sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-            model: modelDeploymentName,
-            evaluatorName: "coherence"
-        );
+            evaluatorName: "coherence")
+        {
+            Model = modelDeploymentName,
+            Category = EvaluatorGenerationCategory.Quality,
+            Scoring = new RubricScoring { Mode = RubricScoringMode.Likert },
+            PassThreshold = 0.6f,
+        };
+        // Optional: pin dimensions. When Dimensions is empty, regenerating an existing evaluator
+        // preserves its previously approved dimensions. An explicit list replaces them.
+        job.Dimensions.Add(new EvaluationsDimension(
+            id: "answers_question",
+            description: "The response directly answers the user's question.")
+        { Weight = 3 });
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Async
         OperationResult result = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: true, job: job);
@@ -58,11 +88,7 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
         #endregion
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Async
-        job = new(
-            sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-            model: modelDeploymentName,
-            evaluatorName: "violence"
-        );
+        job = GetSafetyGenerationInputs(agentName: agentVersion.Name);
         result = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
         EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(await result.UpdateStatusAsync());
         jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
@@ -114,11 +140,23 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
+        // Quality generation requires a model deployment. Setting Scoring opts in to Likert or
+        // Boolean rubric scoring. Omitting Scoring keeps the legacy behavior.
         EvaluatorGenerationInputs job = new(
             sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-            model: modelDeploymentName,
-            evaluatorName: "coherence"
-        );
+            evaluatorName: "coherence")
+        {
+            Model = modelDeploymentName,
+            Category = EvaluatorGenerationCategory.Quality,
+            Scoring = new RubricScoring { Mode = RubricScoringMode.Likert },
+            PassThreshold = 0.6f,
+        };
+        // Optional: pin dimensions. When Dimensions is empty, regenerating an existing evaluator
+        // preserves its previously approved dimensions. An explicit list replaces them.
+        job.Dimensions.Add(new EvaluationsDimension(
+            id: "answers_question",
+            description: "The response directly answers the user's question.")
+        { Weight = 3 });
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Sync
         OperationResult result = projectClient.EvaluatorGenerationJobs.Create(waitUntilCompleted: true, job: job);
@@ -133,11 +171,7 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
         #endregion
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Sync
-        job = new(
-            sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-            model: modelDeploymentName,
-            evaluatorName: "violence"
-        );
+        job = GetSafetyGenerationInputs(agentName: agentVersion.Name);
         result = projectClient.EvaluatorGenerationJobs.Create(waitUntilCompleted: false, job: job);
         EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(result.UpdateStatus());
         jobToCancel = projectClient.EvaluatorGenerationJobs.Cancel(jobToCancel.Id);
