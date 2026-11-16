@@ -117,7 +117,7 @@ internal static async Task WithRecordedDatasetAsync(
         using BinaryContent folder = BinaryContent.Create(new FolderDataset(new Uri(audio.DataUri, ".")));
         await datasets.CreateOrUpdateAsync(audioName, "1", folder);
         string jsonl = Path.Combine(directory, "conversations.jsonl");
-        await File.WriteAllTextAsync(jsonl, JsonSerializer.Serialize(new
+        File.WriteAllText(jsonl, JsonSerializer.Serialize(new
         {
             messages = new[]
             {
