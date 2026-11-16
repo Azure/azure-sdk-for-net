@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed an issue where conditional `409 BlobAlreadyExists`/`ContainerAlreadyExists` responses on structured-message requests were incorrectly classified as non-errors, which could cause `InvalidDataException` to be thrown instead of the expected `RequestFailedException`.
+- Fixed an issue where conditional `409 *AlreadyExists` responses on structured-message requests were incorrectly classified as non-errors, which could cause `InvalidDataException` to be thrown instead of the expected `RequestFailedException`.
 
 ### Other Changes
 
