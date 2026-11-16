@@ -71,6 +71,7 @@ namespace Azure.AI.Projects.Tests
         public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
         public string APPLICATIONINSIGHTS_RESOURCE_ID => GetRecordedVariable(nameof(APPLICATIONINSIGHTS_RESOURCE_ID));
         public string FOUNDRY_AGENT_ID => GetRecordedVariable(nameof(FOUNDRY_AGENT_ID));
+        public string FOUNDRY_AGENT_NAME => GetRecordedVariable(nameof(FOUNDRY_AGENT_NAME));
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
