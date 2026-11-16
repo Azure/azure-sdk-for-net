@@ -12,6 +12,7 @@ trigger:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: mgmtclient
     ServiceDirectory: agrifood
     LimitForPullRequest: true
     Artifacts:

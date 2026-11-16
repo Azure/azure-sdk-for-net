@@ -13,7 +13,7 @@ trigger:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: mgmtclient
+    SDKType: mgmt
     ServiceDirectory: storage
     BuildSnippets: false
     LimitForPullRequest: true
