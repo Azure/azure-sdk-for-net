@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// A content part that makes up an input or output item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SummaryTextContent"/>, <see cref="TextContent"/>, <see cref="ComputerScreenshotContent"/>, <see cref="MessageContentInputTextContent"/>, <see cref="MessageContentOutputTextContent"/>, <see cref="MessageContentReasoningTextContent"/>, <see cref="MessageContentRefusalContent"/>, <see cref="MessageContentInputImageContent"/>, and <see cref="MessageContentInputFileContent"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageContent))]
-    public abstract partial class MessageContent : IJsonModel<MessageContent>
+    internal abstract partial class MessageContent : IJsonModel<MessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContent"/> for deserialization. </summary>
         internal MessageContent()
@@ -119,6 +115,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static MessageContent DeserializeMessageContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -129,12 +126,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "summary_text":
-                        return SummaryTextContent.DeserializeSummaryTextContent(element, options);
-                    case "text":
-                        return TextContent.DeserializeTextContent(element, options);
                     case "computer_screenshot":
                         return ComputerScreenshotContent.DeserializeComputerScreenshotContent(element, options);
+                    case "input_file":
+                        return MessageContentInputFileContent.DeserializeMessageContentInputFileContent(element, options);
+                    case "input_image":
+                        return MessageContentInputImageContent.DeserializeMessageContentInputImageContent(element, options);
                     case "input_text":
                         return MessageContentInputTextContent.DeserializeMessageContentInputTextContent(element, options);
                     case "output_text":
@@ -143,13 +140,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return MessageContentReasoningTextContent.DeserializeMessageContentReasoningTextContent(element, options);
                     case "refusal":
                         return MessageContentRefusalContent.DeserializeMessageContentRefusalContent(element, options);
-                    case "input_image":
-                        return MessageContentInputImageContent.DeserializeMessageContentInputImageContent(element, options);
-                    case "input_file":
-                        return MessageContentInputFileContent.DeserializeMessageContentInputFileContent(element, options);
+                    case "summary_text":
+                        return SummaryTextContent.DeserializeSummaryTextContent(element, options);
+                    case "text":
+                        return TextContent.DeserializeTextContent(element, options);
                 }
             }
             return UnknownMessageContent.DeserializeUnknownMessageContent(element, options);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

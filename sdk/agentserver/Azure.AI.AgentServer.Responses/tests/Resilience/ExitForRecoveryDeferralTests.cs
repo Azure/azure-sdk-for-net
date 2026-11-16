@@ -13,6 +13,7 @@ using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Resilience;
 
@@ -406,22 +407,22 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         // No-op on the non-resilient path — must not throw, handler continues to terminal.
         await ctx.ExitForRecoveryAsync(ct);
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CreatedThenDeferLifecycle(
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         // On a store=false response ExitForRecoveryAsync throws InvalidOperationException (there is
         // no durable state to recover). The orchestrator catches it and marks the response failed.
@@ -429,7 +430,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
 
         // Unreachable on the store=false path (the throw unwinds the iterator).
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CheckpointThenSwallowedDeferLifecycle(
@@ -527,7 +528,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         public int CreateCount => Volatile.Read(ref _createCount);
         public int UpdateCount => Volatile.Read(ref _updateCount);
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
         {
             Interlocked.Increment(ref _createCount);
             return _inner.CreateResponseAsync(request, context, cancellationToken);
@@ -545,7 +546,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, context, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext context, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext context, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);
 
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext context, CancellationToken cancellationToken = default)

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter tool call. </summary>
-    public partial class ItemFieldCodeInterpreterToolCall : ItemField, IJsonModel<ItemFieldCodeInterpreterToolCall>
+    internal partial class ItemFieldCodeInterpreterToolCall : ItemField, IJsonModel<ItemFieldCodeInterpreterToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCodeInterpreterToolCall"/> for deserialization. </summary>
         internal ItemFieldCodeInterpreterToolCall()
@@ -202,7 +201,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     outputs = array;
@@ -210,7 +209,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldCodeInterpreterToolCall(
