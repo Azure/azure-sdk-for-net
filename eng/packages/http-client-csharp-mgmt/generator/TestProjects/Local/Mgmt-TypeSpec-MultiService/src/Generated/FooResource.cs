@@ -313,7 +313,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="FooProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FooProperties> GetPropertiesAsync(CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FooProperties> GetPropertiesAsync(CheckAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -326,7 +326,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                CheckAvailabilityRequest.ToRequestContent(content),
+                CheckAvailabilityContent.ToRequestContent(content),
                 context,
                 "FooResource.GetProperties");
         }
@@ -356,7 +356,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="FooProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FooProperties> GetProperties(CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Pageable<FooProperties> GetProperties(CheckAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -369,7 +369,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                CheckAvailabilityRequest.ToRequestContent(content),
+                CheckAvailabilityContent.ToRequestContent(content),
                 context,
                 "FooResource.GetProperties");
         }

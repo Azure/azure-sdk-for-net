@@ -73,12 +73,25 @@ export async function emitManagementCodeModel(
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
     removeReferenceIdsFromUnknownValues(codeModel);
+    removeConstructorRequirednessOverrides(codeModel);
     return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
   }
 }
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   return emitManagementCodeModel(context);
+}
+
+export function removeConstructorRequirednessOverrides(
+  codeModel: CodeModel
+): void {
+  // Temporarily disable request-aware constructor requiredness to limit management SDK breaking changes.
+  // https://github.com/Azure/azure-sdk-for-net/issues/64981
+  for (const model of codeModel.models) {
+    for (const property of model.properties) {
+      delete property.requiredInConstructor;
+    }
+  }
 }
 
 function setFlattenProperty(

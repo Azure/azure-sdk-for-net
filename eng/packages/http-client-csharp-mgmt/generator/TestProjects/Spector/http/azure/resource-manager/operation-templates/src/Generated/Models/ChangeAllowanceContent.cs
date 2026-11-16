@@ -10,22 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The ChangeAllowanceRequest. </summary>
-    public partial class ChangeAllowanceRequest
+    /// <summary> The ChangeAllowanceContent. </summary>
+    public partial class ChangeAllowanceContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChangeAllowanceRequest"/>. </summary>
-        public ChangeAllowanceRequest()
+        /// <summary> Initializes a new instance of <see cref="ChangeAllowanceContent"/>. </summary>
+        public ChangeAllowanceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChangeAllowanceRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeAllowanceContent"/>. </summary>
         /// <param name="totalAllowed"> The new total allowed widgets. </param>
         /// <param name="reason"> The reason for the change. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeAllowanceRequest(int? totalAllowed, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeAllowanceContent(int? totalAllowed, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalAllowed = totalAllowed;
             Reason = reason;

@@ -11,26 +11,26 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
-    public partial class SAPAvailabilityZoneDetailsRequest
+    /// <summary> The SAPAvailabilityZoneDetailsContent. </summary>
+    public partial class SAPAvailabilityZoneDetailsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SAPAvailabilityZoneDetailsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SAPAvailabilityZoneDetailsContent"/>. </summary>
         /// <param name="preferredAvailabilityZone"> The preferred availability zone. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="preferredAvailabilityZone"/> is null. </exception>
-        public SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone)
+        public SAPAvailabilityZoneDetailsContent(string preferredAvailabilityZone)
         {
             Argument.AssertNotNull(preferredAvailabilityZone, nameof(preferredAvailabilityZone));
 
             PreferredAvailabilityZone = preferredAvailabilityZone;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SAPAvailabilityZoneDetailsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SAPAvailabilityZoneDetailsContent"/>. </summary>
         /// <param name="preferredAvailabilityZone"> The preferred availability zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SAPAvailabilityZoneDetailsContent(string preferredAvailabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PreferredAvailabilityZone = preferredAvailabilityZone;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

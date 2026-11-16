@@ -14,62 +14,62 @@ using Azure.ResourceManager.OperationTemplates;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The ChangeAllowanceRequest. </summary>
-    public partial class ChangeAllowanceRequest : IJsonModel<ChangeAllowanceRequest>
+    /// <summary> The ChangeAllowanceContent. </summary>
+    public partial class ChangeAllowanceContent : IJsonModel<ChangeAllowanceContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChangeAllowanceRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ChangeAllowanceContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeChangeAllowanceRequest(document.RootElement, options);
+                        return DeserializeChangeAllowanceContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeAllowanceContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeAllowanceContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChangeAllowanceRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ChangeAllowanceContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChangeAllowanceRequest IPersistableModel<ChangeAllowanceRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ChangeAllowanceContent IPersistableModel<ChangeAllowanceContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChangeAllowanceRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChangeAllowanceContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="changeAllowanceRequest"> The <see cref="ChangeAllowanceRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ChangeAllowanceRequest changeAllowanceRequest)
+        /// <param name="changeAllowanceContent"> The <see cref="ChangeAllowanceContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ChangeAllowanceContent changeAllowanceContent)
         {
-            if (changeAllowanceRequest == null)
+            if (changeAllowanceContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(changeAllowanceRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(changeAllowanceContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ChangeAllowanceRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChangeAllowanceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeAllowanceContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TotalAllowed))
             {
@@ -114,24 +114,24 @@ namespace Azure.ResourceManager.OperationTemplates.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChangeAllowanceRequest IJsonModel<ChangeAllowanceRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ChangeAllowanceContent IJsonModel<ChangeAllowanceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChangeAllowanceRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ChangeAllowanceContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeAllowanceContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChangeAllowanceRequest(document.RootElement, options);
+            return DeserializeChangeAllowanceContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ChangeAllowanceRequest DeserializeChangeAllowanceRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ChangeAllowanceContent DeserializeChangeAllowanceContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChangeAllowanceRequest(totalAllowed, reason, additionalBinaryDataProperties);
+            return new ChangeAllowanceContent(totalAllowed, reason, additionalBinaryDataProperties);
         }
     }
 }

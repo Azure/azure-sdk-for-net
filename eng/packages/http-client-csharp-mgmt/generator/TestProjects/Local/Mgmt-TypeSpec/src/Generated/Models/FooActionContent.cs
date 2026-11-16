@@ -11,26 +11,26 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The FooActionRequest. </summary>
-    public partial class FooActionRequest
+    /// <summary> The FooActionContent. </summary>
+    public partial class FooActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FooActionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FooActionContent"/>. </summary>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public FooActionRequest(string id)
+        public FooActionContent(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FooActionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FooActionContent"/>. </summary>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooActionRequest(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooActionContent(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

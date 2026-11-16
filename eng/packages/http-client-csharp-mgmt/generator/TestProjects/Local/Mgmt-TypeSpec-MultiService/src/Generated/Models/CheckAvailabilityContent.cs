@@ -11,26 +11,26 @@ using Azure.Generator.MgmtTypeSpec.MultiService.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
 {
-    /// <summary> The CheckAvailabilityRequest. </summary>
-    public partial class CheckAvailabilityRequest
+    /// <summary> The CheckAvailabilityContent. </summary>
+    public partial class CheckAvailabilityContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check availability for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckAvailabilityRequest(string name)
+        public CheckAvailabilityContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check availability for. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckAvailabilityRequest(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CheckAvailabilityContent(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

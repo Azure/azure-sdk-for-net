@@ -14,62 +14,62 @@ using Azure.ResourceManager.OperationTemplates;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityRequest : IJsonModel<CheckNameAvailabilityRequest>
+    /// <summary> The ActionContent. </summary>
+    public partial class ActionContent : IJsonModel<ActionContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CheckNameAvailabilityRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ActionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCheckNameAvailabilityRequest(document.RootElement, options);
+                        return DeserializeActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CheckNameAvailabilityRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CheckNameAvailabilityRequest IPersistableModel<CheckNameAvailabilityRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActionContent IPersistableModel<ActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CheckNameAvailabilityRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="checkNameAvailabilityRequest"> The <see cref="CheckNameAvailabilityRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CheckNameAvailabilityRequest checkNameAvailabilityRequest)
+        /// <param name="actionContent"> The <see cref="ActionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ActionContent actionContent)
         {
-            if (checkNameAvailabilityRequest == null)
+            if (actionContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(checkNameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(actionContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CheckNameAvailabilityRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,20 +80,20 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(ActionType))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("actionType"u8);
+                writer.WriteStringValue(ActionType);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStringValue(Parameters);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -114,42 +114,42 @@ namespace Azure.ResourceManager.OperationTemplates.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CheckNameAvailabilityRequest IJsonModel<CheckNameAvailabilityRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActionContent IJsonModel<ActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CheckNameAvailabilityRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ActionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCheckNameAvailabilityRequest(document.RootElement, options);
+            return DeserializeActionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CheckNameAvailabilityRequest DeserializeCheckNameAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActionContent DeserializeActionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            string @type = default;
+            string actionType = default;
+            string parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("actionType"u8))
                 {
-                    name = prop.Value.GetString();
+                    actionType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("parameters"u8))
                 {
-                    @type = prop.Value.GetString();
+                    parameters = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CheckNameAvailabilityRequest(name, @type, additionalBinaryDataProperties);
+            return new ActionContent(actionType, parameters, additionalBinaryDataProperties);
         }
     }
 }
