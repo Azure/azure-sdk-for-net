@@ -10,14 +10,38 @@ namespace Azure.Generator.Mgmt.Tests
 {
     public class ManagementModelProviderTests
     {
-        [TestCase("WidgetContent", "WidgetContent")]
-        [TestCase("content", "Content")]
-        [TestCase("widget_content", "WidgetContent")]
-        [TestCase("IpAddressContent", "IPAddressContent")]
-        [TestCase("WidgetRequest", "WidgetRequest")]
-        public void InputModelsPreserveManagementContentSuffix(string inputName, string expectedName)
+        private static IEnumerable<TestCaseData> SuffixCases()
         {
-            var input = InputFactory.Model(inputName, usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+            (string Name, string Expected)[] names =
+            [
+                ("WidgetContent", "WidgetContent"),
+                ("content", "Content"),
+                ("widget_content", "WidgetContent"),
+                ("IpAddressContent", "IPAddressContent"),
+                ("WidgetRequest", "WidgetContent"),
+                ("IpAddressRequest", "IPAddressContent")
+            ];
+            InputModelTypeUsage[] usages =
+            [
+                InputModelTypeUsage.Input,
+                InputModelTypeUsage.Output,
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                InputModelTypeUsage.Error
+            ];
+            foreach (var (name, expected) in names)
+            {
+                foreach (var usage in usages)
+                {
+                    yield return new TestCaseData(name, expected, usage);
+                }
+            }
+        }
+
+        [TestCaseSource(nameof(SuffixCases))]
+        public void ModelsUseUpstreamSuffixNormalization(string inputName, string expectedName,
+            InputModelTypeUsage usage)
+        {
+            var input = InputFactory.Model(inputName, usage: usage | InputModelTypeUsage.Json);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
             var model = plugin.Object.TypeFactory.CreateModel(input)!;
 
