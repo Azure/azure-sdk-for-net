@@ -374,7 +374,9 @@ on top of that shared foundation.
 
 ## Step 1 - Gather review history
 
-Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch file under `patches/`; where GitHub omitted a patch, the input contains head content and, for an existing file, its merge-base content. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
+Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch files under `patches/`; where GitHub omitted a patch, the exporter provides a fallback diff, content, or explanation. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
+
+Each entry's `readFiles` is the authoritative list of required reads. For a split patch, `patchFile` is a duplicate full patch kept for context alongside the split parts, not an additional required read. Directory counts from `ls` and disk usage from `du` include these copies and are not estimates of required reading; disk usage also includes filesystem allocation, not just text. Do not estimate whether the work will fit before starting: gather the history below, then work through the `readFiles` in Step 3. Report incomplete only for the actual obstacles in Step 4.
 
 Read GitHub data with the GitHub MCP `pull_request_read` tool. Page every list to its end; a first page is not the full history.
 

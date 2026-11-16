@@ -787,6 +787,13 @@ Describe 'Re-review prompt' {
         $script:PromptBody | Should -Not -Match '\bget_files\b'
     }
 
+    It 'identifies the manifest readFiles as the workload instead of the patch directory size' {
+        $step1 = [regex]::Match($script:PromptBody, '(?ms)^## Step 1\b.*?(?=^## |\z)').Value
+        $step1 | Should -Match '(?i)`readFiles`.*(?:authoritative|only required)'
+        $step1 | Should -Match '(?i)`patchFile`.*(?:duplicate|cop(?:y|ies)).*split'
+        $step1 | Should -Match '(?i)`ls`.*`du`.*(?:not|never).*estimate'
+    }
+
     It 'instructs the agent to recover spilled parts in a single successful tool result' {
         $script:PromptBody | Should -Match '(?i)reread each affected part individually'
         $script:PromptBody | Should -Match '(?i)single successful tool result'
