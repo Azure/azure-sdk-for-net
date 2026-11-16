@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell exec action. </summary>
-    public partial class FunctionShellAction : IJsonModel<FunctionShellAction>
+    internal partial class FunctionShellAction : IJsonModel<FunctionShellAction>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellAction"/> for deserialization. </summary>
         internal FunctionShellAction()
@@ -195,10 +194,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FunctionShellAction(commands, timeoutMs, maxOutputLength, additionalBinaryDataProperties);
+            return new FunctionShellAction(commands ?? new ChangeTrackingList<string>(), timeoutMs, maxOutputLength, additionalBinaryDataProperties);
         }
     }
 }

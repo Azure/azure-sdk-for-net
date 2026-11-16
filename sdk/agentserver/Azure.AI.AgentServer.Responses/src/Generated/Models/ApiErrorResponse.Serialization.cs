@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Error response for API failures. </summary>
-    public partial class ApiErrorResponse : IJsonModel<ApiErrorResponse>
+    internal partial class ApiErrorResponse : IJsonModel<ApiErrorResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/> for deserialization. </summary>
         internal ApiErrorResponse()
@@ -122,18 +121,18 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            Error error = default;
+            ApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("error"u8))
                 {
-                    error = Error.DeserializeError(prop.Value, options);
+                    error = ApiError.DeserializeApiError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApiErrorResponse(error, additionalBinaryDataProperties);

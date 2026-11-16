@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Reasoning text. </summary>
-    public partial class MessageContentReasoningTextContent : MessageContent, IJsonModel<MessageContentReasoningTextContent>
+    internal partial class MessageContentReasoningTextContent : MessageContent, IJsonModel<MessageContentReasoningTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentReasoningTextContent"/> for deserialization. </summary>
         internal MessageContentReasoningTextContent()
@@ -125,7 +124,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MessageContentReasoningTextContent(@type, additionalBinaryDataProperties, text);

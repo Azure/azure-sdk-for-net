@@ -1,12 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Adapter that exposes the cancellation capabilities of <see cref="InMemoryResponsesProvider"/>
 /// as a <see cref="ResponsesCancellationSignalProvider"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class InMemoryCancellationSignalProvider : ResponsesCancellationSignalProvider
 {
     private readonly InMemoryResponsesProvider _provider;

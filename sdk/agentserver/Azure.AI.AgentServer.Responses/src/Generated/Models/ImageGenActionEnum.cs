@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ImageGenActionEnum
+    internal enum ImageGenActionEnum
     {
         /// <summary> Generate. </summary>
         Generate,

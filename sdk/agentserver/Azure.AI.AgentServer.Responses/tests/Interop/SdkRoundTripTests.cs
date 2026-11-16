@@ -25,7 +25,7 @@ using OpenAI;
 using OpenAI.Responses;
 
 // Disambiguate shared type names
-using AzureMessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
+using AzureMessageRole = OpenAI.Responses.MessageRole;
 using SdkResponseStatus = OpenAI.Responses.ResponseStatus;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Interop;
@@ -290,9 +290,10 @@ public class SdkRoundTripTests
         Assert.That(items, Has.Count.EqualTo(1));
         var msg = XAssert.IsType<ItemMessage>(items[0]);
         Assert.That(msg.Role, Is.EqualTo(AzureMessageRole.User));
-        var content = msg.GetContentExpanded();
+        var content = msg.Content;
         Assert.That(content, Has.Count.EqualTo(1));
-        var text = XAssert.IsType<MessageContentInputTextContent>(content[0]);
+        var text = content[0];
+        Assert.That(text.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(text.Text, Is.EqualTo("Hello from SDK"));
     }
 
@@ -379,7 +380,7 @@ public class SdkRoundTripTests
         Assert.That(captured!.Instructions, Is.EqualTo("Be helpful"));
         Assert.That(captured.Temperature, Is.EqualTo(0.7f).Within(0.01f));
         Assert.That(captured.TopP, Is.EqualTo(0.9f).Within(0.01f));
-        Assert.That(captured.MaxOutputTokens, Is.EqualTo(1024));  // Server model uses MaxOutputTokens
+        Assert.That(captured.MaxOutputTokenCount, Is.EqualTo(1024));  // Server model uses MaxOutputTokens
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -796,7 +797,7 @@ public class SdkRoundTripTests
         configureOptions?.Invoke(opts);
 
         var updates = new List<StreamingResponseUpdate>();
-        await foreach (var update in sdkClient.CreateResponseStreamingAsync(opts))
+        await foreach (var update in await sdkClient.CreateResponseStreamingAsync(opts))
         {
             updates.Add(update);
         }
