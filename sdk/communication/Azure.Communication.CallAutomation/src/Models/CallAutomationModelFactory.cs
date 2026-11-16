@@ -92,17 +92,31 @@ namespace Azure.Communication.CallAutomation
             TranscriptionResultState resultState)
         {
             IEnumerable<WordDataInternal> wordDataInternalList = words.Select(w => new WordDataInternal { Text = w.Text, Offset = w.Offset.Ticks, Duration = w.Duration.Ticks });
-            return new TranscriptionData
-            (
-                text,
-                format,
-                confidence,
-                offset,
-                duration,
-                wordDataInternalList,
-                participantRawID,
-                resultState
-            );
+            //return new TranscriptionData
+            //(
+            //    text,
+            //    format,
+            //    confidence,
+            //    offset,
+            //    duration,
+            //    wordDataInternalList,
+            //    participantRawID,
+            //    resultState
+            //);
+
+            var transcriptionDataInternal = new TranscriptionDataInternal
+            {
+                Text = text,
+                Format = format,
+                Confidence = confidence,
+                Offset = offset,
+                Duration = duration,
+                Words = wordDataInternalList,
+                ParticipantRawID = participantRawID,
+                ResultState = resultState
+            };
+
+            return new TranscriptionData(transcriptionDataInternal);
         }
 
         /// <summary>

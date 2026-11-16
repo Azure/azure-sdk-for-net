@@ -2920,7 +2920,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 await client.GetCallConnection(callConnectionId).GetCallMedia().SummarizeCallAsync(summarizeCallOptions);
 
                 var summarizeCallEvent = await WaitForEvent<TranscriptionCallSummaryUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(summarizeCallEvent);
+                Assert.That(summarizeCallEvent, Is.Not.Null);
             }
 
             // Update Transcription

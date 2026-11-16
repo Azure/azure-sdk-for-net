@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="RecognitionChoice"/>. </summary>
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
-        /// <param name="tone"> List of valid stop tones. </param>
+        /// <param name="tone"></param>
         internal RecognitionChoice(string label, IList<string> phrases, DtmfTone? tone)
         {
             Label = label;
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallAutomation
         public string Label { get; set; }
         /// <summary> List of phrases to recognize. </summary>
         public IList<string> Phrases { get; }
-        /// <summary> List of valid stop tones. </summary>
+        /// <summary> Gets or sets the tone. </summary>
         public DtmfTone? Tone { get; set; }
     }
 }

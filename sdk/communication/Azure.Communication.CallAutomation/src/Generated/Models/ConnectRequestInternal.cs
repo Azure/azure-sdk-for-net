@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class ConnectRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="ConnectRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="callbackUri"/> is null. </exception>
         public ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri)
@@ -26,17 +26,17 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="operationContext"> Used by customers to correlate the request to the response event. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="mediaStreamingOptions">
-        /// Options for media streaming.
+        /// Media Streaming Options.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </param>
         /// <param name="transcriptionOptions">
-        /// Options for live transcription.
+        /// Transcription Options.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </param>
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
             EnableLoopbackAudio = enableLoopbackAudio;
         }
 
-        /// <summary> The locator used for joining or taking action on a call. </summary>
+        /// <summary> The call locator. </summary>
         public CallLocatorInternal CallLocator { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
@@ -61,13 +61,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary>
-        /// Options for media streaming.
+        /// Media Streaming Options.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </summary>
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
         /// <summary>
-        /// Options for live transcription.
+        /// Transcription Options.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </summary>
