@@ -4,13 +4,14 @@
 #nullable enable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using ModelReaderWriter = System.ClientModel.Primitives.ModelReaderWriter;
+using ModelReaderWriterOptions = System.ClientModel.Primitives.ModelReaderWriterOptions;
 
 namespace Azure.Core
 {
