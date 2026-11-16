@@ -1,4 +1,3 @@
-import "../../../../../../../../node_modules/@typespec/http-specs/specs/type/union/discriminated/extends/main.tsp";
 import "@azure-tools/typespec-client-generator-core";
 
 using Azure.ClientGenerator.Core;
