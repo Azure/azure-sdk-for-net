@@ -1,5 +1,5 @@
 directory: specification/azure-native-integrations/resource-manager/Kore.AgentPlatform/AgentPlatform
-commit: 01859725603b610b5f452589f348fdfe08554181
+commit: 699308ca6aaa9ec553fef140120432b7c3df04b2
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
