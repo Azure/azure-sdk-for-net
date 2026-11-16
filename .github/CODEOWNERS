@@ -525,6 +525,9 @@
 /sdk/webpubsub/    @JialinXin @vicancy
 
 # PRLabel: %WebPubSub
+/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/    @Y-Sindo @vicancy @JialinXin @chenkennt
+
+# PRLabel: %WebPubSub
 /sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @JialinXin @vicancy @Y-Sindo
 
 # ServiceLabel: %WebPubSub
