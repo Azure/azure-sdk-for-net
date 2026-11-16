@@ -16,11 +16,28 @@ namespace Azure.AI.AgentServer.Responses.Models
     // Custom: OutputItem is mapped to OpenAI's ResponseItem (see client.tsp). ResponseItem only exposes
     // constructors taking the item kind, so the generated constructors, which forward created_by,
     // agent_reference and response_id to the base type, do not compile (CS1729) and are replaced below.
-    [CodeGenSuppress(nameof(OutputItemCustomToolCallOutput), typeof(ResponseItemKind), typeof(BinaryData), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(ToolCallCallerParam), typeof(BinaryData), typeof(FunctionCallOutputStatusEnum), typeof(BinaryData), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress(nameof(OutputItemCustomToolCallOutput), typeof(ResponseItemKind), typeof(BinaryData), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(ToolCallCallerParam), typeof(BinaryData), typeof(CustomToolCallOutputStatus), typeof(BinaryData), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress(nameof(OutputItemCustomToolCallOutput))]
     [CodeGenSerialization(nameof(AgentReferenceInternal), DeserializationValueHook = nameof(DeserializeAgentReferenceValue))]
+    [CodeGenSerialization(nameof(Status), SerializationValueHook = nameof(SerializeStatusValue), DeserializationValueHook = nameof(DeserializeStatusValue))]
     public partial class OutputItemCustomToolCallOutput
     {
+        // Custom: Status uses OpenAI's extensible CustomToolCallOutputStatus instead of a status enum generated
+        // into this package (made internal in client.tsp), so that consumers share the OpenAI type and unknown
+        // status values round-trip instead of throwing.
+        /// <summary> The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </summary>
+        public CustomToolCallOutputStatus Status { get; set; }
+
+        private void SerializeStatusValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStringValue(Status.ToString());
+        }
+
+        private static void DeserializeStatusValue(JsonProperty property, ref CustomToolCallOutputStatus status, ModelReaderWriterOptions options)
+        {
+            status = new CustomToolCallOutputStatus(property.Value.GetString());
+        }
+
         // Custom: replaces the generated constructor so that it calls base(@type) and stores the values the
         // ResponseItem base type has no constructor for.
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCallOutput"/>. </summary>
@@ -35,7 +52,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="status"> The status of the item. </param>
         /// <param name="createdByInternal"> The identifier of the actor that created the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputItemCustomToolCallOutput(ResponseItemKind @type, BinaryData createdBy, AgentReference agentReference, string responseId, string idInternal, string callId, ToolCallCallerParam caller, BinaryData output, FunctionCallOutputStatusEnum status, BinaryData createdByInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal OutputItemCustomToolCallOutput(ResponseItemKind @type, BinaryData createdBy, AgentReference agentReference, string responseId, string idInternal, string callId, ToolCallCallerParam caller, BinaryData output, CustomToolCallOutputStatus status, BinaryData createdByInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             this.CreatedBy = createdBy;
             this.AgentReference = agentReference;

@@ -46,6 +46,7 @@ public static class ResponseItemAttributionExtensions
     private static readonly ReadOnlyMemory<byte> InputPath = "$.input"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> StatusPath = "$.status"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> ApprovalRequestIdPath = "$.approval_request_id"u8.ToArray();
+    private static readonly ReadOnlyMemory<byte> PromptCacheBreakpointPath = "$.prompt_cache_breakpoint"u8.ToArray();
 
     extension(ResponseItem item)
     {
@@ -214,6 +215,19 @@ public static class ResponseItemAttributionExtensions
         {
             get => GetString(ref mcpCall.Patch, ApprovalRequestIdPath.Span);
             set => SetOrClear(ref mcpCall.Patch, ApprovalRequestIdPath.Span, value);
+        }
+    }
+
+    extension(ResponseContentPart part)
+    {
+        /// <summary>
+        /// Gets or sets the raw JSON of the <c>prompt_cache_breakpoint</c> on an input text, image or
+        /// file part (for example <c>{"mode":"explicit"}</c>), which OpenAI does not model.
+        /// </summary>
+        public BinaryData? PromptCacheBreakpoint
+        {
+            get => GetBinaryData(ref part.Patch, PromptCacheBreakpointPath.Span);
+            set => SetOrClear(ref part.Patch, PromptCacheBreakpointPath.Span, value);
         }
     }
 

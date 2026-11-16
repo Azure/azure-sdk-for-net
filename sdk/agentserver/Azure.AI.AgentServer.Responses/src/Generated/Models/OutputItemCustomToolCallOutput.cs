@@ -32,11 +32,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public OutputItemCustomToolCallOutput(string callId, BinaryData output, FunctionCallOutputStatusEnum status) : base("custom_tool_call_output")
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/>, <paramref name="output"/> or <paramref name="status"/> is null. </exception>
+        public OutputItemCustomToolCallOutput(string callId, BinaryData output, OpenAI.Responses.CustomToolCallOutputStatus status) : base("custom_tool_call_output")
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));
+            Argument.AssertNotNull(status, nameof(status));
 
             CallId = callId;
             Output = output;
@@ -101,11 +102,5 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </para>
         /// </summary>
         public BinaryData Output { get; set; }
-
-        /// <summary>
-        /// The status of the item. One of `in_progress`, `completed`, or
-        ///   `incomplete`. Populated when items are returned via API.
-        /// </summary>
-        public FunctionCallOutputStatusEnum Status { get; set; }
     }
 }

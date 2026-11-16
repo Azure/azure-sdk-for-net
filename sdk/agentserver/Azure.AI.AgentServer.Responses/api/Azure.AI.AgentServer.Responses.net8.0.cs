@@ -335,6 +335,7 @@ namespace Azure.AI.AgentServer.Responses
         public static string? get_ItemId(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static int? get_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_OutputText(OpenAI.Responses.ResponseResult response) { throw null; }
+        public static System.BinaryData? get_PromptCacheBreakpoint(OpenAI.Responses.ResponseContentPart part) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? get_Status(OpenAI.Responses.McpToolCallItem mcpCall) { throw null; }
         public static string? get_Text(OpenAI.Responses.ReasoningSummaryPart part) { throw null; }
         public static void set_AgentReference(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Extensions.OpenAI.AgentReference? value) { }
@@ -348,6 +349,7 @@ namespace Azure.AI.AgentServer.Responses
         public static void set_Input(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
         public static void set_ItemId(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
         public static void set_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update, int? value) { }
+        public static void set_PromptCacheBreakpoint(OpenAI.Responses.ResponseContentPart part, System.BinaryData? value) { }
         public static void set_Status(OpenAI.Responses.McpToolCallItem mcpCall, Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? value) { }
         public sealed partial class <G>$18D35430E41928A72CE2C2B20C1EB7D6
         {
@@ -357,6 +359,15 @@ namespace Azure.AI.AgentServer.Responses
             public static partial class <M>$466DE5BA2CFD4B1CD21E5552E78A4323
             {
                 public static void <Extension>$(OpenAI.Responses.McpToolCallItem mcpCall) { }
+            }
+        }
+        public sealed partial class <G>$207B9ED4E777EC84C2EBC071F6C614CF
+        {
+            internal <G>$207B9ED4E777EC84C2EBC071F6C614CF() { }
+            public System.BinaryData? PromptCacheBreakpoint { get { throw null; } set { } }
+            public static partial class <M>$D68B7FE57ABE663C2F24BEBF949BEBD3
+            {
+                public static void <Extension>$(OpenAI.Responses.ResponseContentPart part) { }
             }
         }
         public sealed partial class <G>$70FBCD44F28E7E26DFAD68FC496C4C09
@@ -565,18 +576,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum FunctionCallOutputStatusEnum
-    {
-        InProgress = 0,
-        Completed = 1,
-        Incomplete = 2,
-    }
-    public enum FunctionCallStatus
-    {
-        InProgress = 0,
-        Completed = 1,
-        Incomplete = 2,
-    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ItemExtensions
     {
@@ -593,14 +592,14 @@ namespace Azure.AI.AgentServer.Responses.Models
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemCustomToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
     {
-        public OutputItemCustomToolCall(string callId, string name, string input, Azure.AI.AgentServer.Responses.Models.FunctionCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public OutputItemCustomToolCall(string callId, string name, string input, OpenAI.Responses.CustomToolCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
         public bool? Async { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.ToolCallCaller Caller { get { throw null; } set { } }
         public string CallId { get { throw null; } set { } }
         public string Input { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
-        public Azure.AI.AgentServer.Responses.Models.FunctionCallStatus Status { get { throw null; } set { } }
+        public OpenAI.Responses.CustomToolCallStatus Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -614,11 +613,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemCustomToolCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>
     {
-        public OutputItemCustomToolCallOutput(string callId, System.BinaryData output, Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public OutputItemCustomToolCallOutput(string callId, System.BinaryData output, OpenAI.Responses.CustomToolCallOutputStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
         public Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam Caller { get { throw null; } set { } }
         public string CallId { get { throw null; } set { } }
         public System.BinaryData Output { get { throw null; } set { } }
-        public Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum Status { get { throw null; } set { } }
+        public OpenAI.Responses.CustomToolCallOutputStatus Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

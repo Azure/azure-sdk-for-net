@@ -10,6 +10,9 @@
 - `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (`ToolCallCaller`,
   either `DirectToolCallCaller` or `ProgramToolCallCaller`), plus `Async` on the call, following
   the Foundry spec.
+- `ResponseContentPart.PromptCacheBreakpoint` extension property reads and writes the Azure
+  `prompt_cache_breakpoint` field as raw JSON. The image detail level `"original"` is already
+  supported through OpenAI's `ResponseImageDetailLevel` (`new ResponseImageDetailLevel("original")`).
 
 ### Breaking Changes
 - The package no longer emits its own copies of the OpenAI Responses models. Public handler,
@@ -67,8 +70,11 @@
   `FileInputDetail`, `LogProb`, `TopLogProb`, `ToolChoiceParam` and its `ToolChoice*` subtypes,
   `ToolChoiceOptions`, `ToolChoiceAllowedMode`, `Specific*Param`, `PromptCacheBreakpointConfig`,
   and `ConversationParam`. The remaining public models in `Azure.AI.AgentServer.Responses.Models`
-  (status enums, tool-call callers and the custom tool call items) are tracked for removal in
+  (`MCPToolCallStatus`, the tool-call callers and the custom tool call items) are tracked in
   [#64833](https://github.com/Azure/azure-sdk-for-net/issues/64833).
+- `OutputItemCustomToolCall.Status` and `OutputItemCustomToolCallOutput.Status` (and the matching
+  constructor parameters) now use OpenAI's `CustomToolCallStatus` and `CustomToolCallOutputStatus`
+  instead of `FunctionCallStatus` and `FunctionCallOutputStatusEnum`, which are now internal.
 - `ResponsesProvider.GetInputItemsAsync` now returns `OpenAI.Responses.ResponseItemCollectionPage`
   (was `AgentsPagedResultOutputItem`) and is marked `[Experimental("OPENAI001")]`, so custom
   `ResponsesProvider` implementations must update their override.

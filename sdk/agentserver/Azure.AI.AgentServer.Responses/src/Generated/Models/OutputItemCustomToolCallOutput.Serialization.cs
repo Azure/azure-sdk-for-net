@@ -105,7 +105,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
 #endif
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            SerializeStatusValue(writer, options);
             if (Optional.IsDefined(CreatedByInternal))
             {
                 writer.WritePropertyName("created_by"u8);
@@ -187,7 +187,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             bool callerIsDefined = false;
             ToolCallCallerParam caller = default;
             BinaryData output = default;
-            FunctionCallOutputStatusEnum status = default;
+            OpenAI.Responses.CustomToolCallOutputStatus status = default;
             BinaryData createdByInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -244,7 +244,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToFunctionCallOutputStatusEnum();
+                    DeserializeStatusValue(prop, ref status, options);
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))

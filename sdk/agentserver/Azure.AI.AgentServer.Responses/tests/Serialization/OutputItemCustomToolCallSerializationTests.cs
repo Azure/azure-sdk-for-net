@@ -5,7 +5,8 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.Extensions.OpenAI;
-using CallStatus = Azure.AI.AgentServer.Responses.Models.FunctionCallStatus;
+using CallStatus = OpenAI.Responses.CustomToolCallStatus;
+using OutputStatus = OpenAI.Responses.CustomToolCallOutputStatus;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Serialization;
 
@@ -228,12 +229,38 @@ public class OutputItemCustomToolCallSerializationTests
     [Test]
     public void CustomToolCallOutput_Write_WithoutOptionalFields_OmitsThem()
     {
-        var item = new OutputItemCustomToolCallOutput("call_123", BinaryData.FromString("\"done\""), FunctionCallOutputStatusEnum.Incomplete);
+        var item = new OutputItemCustomToolCallOutput("call_123", BinaryData.FromString("\"done\""), OutputStatus.Incomplete);
 
         using var document = Write(item);
 
         AssertEachPropertyWrittenOnce(document.RootElement, "type", "call_id", "output", "status");
         Assert.That(document.RootElement.GetProperty("status").GetString(), Is.EqualTo("incomplete"));
+    }
+
+    [Test]
+    public void CustomToolCall_UnknownStatus_RoundTrips()
+    {
+        var item = ModelReaderWriter.Read<OutputItemCustomToolCall>(
+            BinaryData.FromString("""{"type":"custom_tool_call","call_id":"call_123","name":"run_script","input":"x","status":"queued"}"""),
+            ModelReaderWriterOptions.Json,
+            AzureAIAgentServerResponsesContext.Default)!;
+
+        Assert.That(item.Status.ToString(), Is.EqualTo("queued"));
+        using var document = Write(item);
+        Assert.That(document.RootElement.GetProperty("status").GetString(), Is.EqualTo("queued"));
+    }
+
+    [Test]
+    public void CustomToolCallOutput_UnknownStatus_RoundTrips()
+    {
+        var item = ModelReaderWriter.Read<OutputItemCustomToolCallOutput>(
+            BinaryData.FromString("""{"type":"custom_tool_call_output","call_id":"call_123","output":"done","status":"queued"}"""),
+            ModelReaderWriterOptions.Json,
+            AzureAIAgentServerResponsesContext.Default)!;
+
+        Assert.That(item.Status.ToString(), Is.EqualTo("queued"));
+        using var document = Write(item);
+        Assert.That(document.RootElement.GetProperty("status").GetString(), Is.EqualTo("queued"));
     }
 
     [Test]
@@ -250,7 +277,7 @@ public class OutputItemCustomToolCallSerializationTests
             Assert.That(item.CallId, Is.EqualTo("call_123"));
             Assert.That(item.Caller, Is.InstanceOf<DirectToolCallCallerParam>());
             Assert.That(item.Output.ToString(), Is.EqualTo("\"done\""));
-            Assert.That(item.Status, Is.EqualTo(FunctionCallOutputStatusEnum.Completed));
+            Assert.That(item.Status, Is.EqualTo(OutputStatus.Completed));
             Assert.That(item.ResponseId, Is.EqualTo("resp_1"));
             Assert.That(item.AgentReference?.Name, Is.EqualTo("my-agent"));
             Assert.That(item.AgentReference?.Version, Is.EqualTo("3"));
@@ -379,7 +406,7 @@ public class OutputItemCustomToolCallSerializationTests
 
     private static OutputItemCustomToolCallOutput CreateCustomToolCallOutput()
     {
-        var item = new OutputItemCustomToolCallOutput("call_123", BinaryData.FromString("\"done\""), FunctionCallOutputStatusEnum.Completed)
+        var item = new OutputItemCustomToolCallOutput("call_123", BinaryData.FromString("\"done\""), OutputStatus.Completed)
         {
             Id = "ctco_123",
             Caller = new DirectToolCallCallerParam(),

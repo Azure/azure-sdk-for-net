@@ -804,7 +804,7 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, BinaryData output)
     {
         var builder = AddOutputItemCustomToolCallOutput();
-        var item = new OutputItemCustomToolCallOutput(callId, output, Models.FunctionCallOutputStatusEnum.Completed);
+        var item = new OutputItemCustomToolCallOutput(callId, output, global::OpenAI.Responses.CustomToolCallOutputStatus.Completed);
         item.Id = builder.ItemId;
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);

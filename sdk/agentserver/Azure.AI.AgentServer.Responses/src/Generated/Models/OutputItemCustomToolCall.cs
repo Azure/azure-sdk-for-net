@@ -29,12 +29,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/>, <paramref name="name"/> or <paramref name="input"/> is null. </exception>
-        public OutputItemCustomToolCall(string callId, string name, string input, FunctionCallStatus status) : base("custom_tool_call")
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/>, <paramref name="name"/>, <paramref name="input"/> or <paramref name="status"/> is null. </exception>
+        public OutputItemCustomToolCall(string callId, string name, string input, OpenAI.Responses.CustomToolCallStatus status) : base("custom_tool_call")
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(status, nameof(status));
 
             CallId = callId;
             Name = name;
@@ -70,11 +71,5 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Whether the custom tool call runs asynchronously. </summary>
         public bool? Async { get; set; }
-
-        /// <summary>
-        /// The status of the item. One of `in_progress`, `completed`, or
-        ///   `incomplete`. Populated when items are returned via API.
-        /// </summary>
-        public FunctionCallStatus Status { get; set; }
     }
 }
