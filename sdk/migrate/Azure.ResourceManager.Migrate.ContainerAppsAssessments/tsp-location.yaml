@@ -1,0 +1,7 @@
+directory: specification/migrate/resource-manager/Microsoft.Migrate/ContainerAppsAssessments
+commit: 2848d3070416778357d51f77cfb953318e36d48a
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+- specification/migrate/resource-manager/Microsoft.Migrate/ContainerAppsAssessments
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
