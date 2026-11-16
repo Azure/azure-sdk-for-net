@@ -118,6 +118,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("tagsReplication"u8);
                 writer.WriteObjectValue(TagsReplication, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationError))
+            {
+                writer.WritePropertyName("replicationError"u8);
+                writer.WriteStringValue(ReplicationError);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -168,6 +178,8 @@ namespace Azure.ResourceManager.Storage.Models
             ObjectReplicationPolicyPropertiesMetrics metrics = default;
             ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication = default;
             ObjectReplicationPolicyPropertiesTagsReplication tagsReplication = default;
+            string status = default;
+            string replicationError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -236,6 +248,16 @@ namespace Azure.ResourceManager.Storage.Models
                     tagsReplication = ObjectReplicationPolicyPropertiesTagsReplication.DeserializeObjectReplicationPolicyPropertiesTagsReplication(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("replicationError"u8))
+                {
+                    replicationError = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -250,6 +272,8 @@ namespace Azure.ResourceManager.Storage.Models
                 metrics,
                 priorityReplication,
                 tagsReplication,
+                status,
+                replicationError,
                 additionalBinaryDataProperties);
         }
     }

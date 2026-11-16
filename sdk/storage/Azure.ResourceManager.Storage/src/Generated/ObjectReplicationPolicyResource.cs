@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -112,8 +114,9 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Optional. Set to policyStatus to include the object replication policy status in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ObjectReplicationPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ObjectReplicationPolicyResource>> GetAsync(GetRequestExpand? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Get");
             scope.Start();
@@ -123,7 +126,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _objectReplicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ObjectReplicationPolicyData> response = Response.FromValue(ObjectReplicationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -160,8 +163,9 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Optional. Set to policyStatus to include the object replication policy status in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ObjectReplicationPolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ObjectReplicationPolicyResource> Get(GetRequestExpand? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Get");
             scope.Start();
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _objectReplicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ObjectReplicationPolicyData> response = Response.FromValue(ObjectReplicationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -400,5 +404,67 @@ namespace Azure.ResourceManager.Storage
                 throw;
             }
         }
+
+        /// <summary>
+        /// Get the object replication policy of the storage account by policy ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ObjectReplicationPolicyOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<ObjectReplicationPolicyResource>> GetAsync(CancellationToken cancellationToken)
+        {
+            return GetAsync(expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the object replication policy of the storage account by policy ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ObjectReplicationPolicyOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<ObjectReplicationPolicyResource> Get(CancellationToken cancellationToken)
+        {
+            return Get(expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

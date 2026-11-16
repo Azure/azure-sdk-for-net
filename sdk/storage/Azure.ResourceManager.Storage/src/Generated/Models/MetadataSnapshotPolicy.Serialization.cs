@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(ContainerName))
+            {
+                writer.WritePropertyName("containerName"u8);
+                writer.WriteStringValue(ContainerName);
+            }
             if (options.Format != "W" && Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             string name = default;
             MetadataSnapshotPolicyStatus status = default;
+            string containerName = default;
             MetadataSnapshotPolicyDefinition definition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,6 +153,11 @@ namespace Azure.ResourceManager.Storage.Models
                 if (prop.NameEquals("status"u8))
                 {
                     status = new MetadataSnapshotPolicyStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("containerName"u8))
+                {
+                    containerName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("definition"u8))
@@ -163,7 +174,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MetadataSnapshotPolicy(name, status, definition, additionalBinaryDataProperties);
+            return new MetadataSnapshotPolicy(name, status, containerName, definition, additionalBinaryDataProperties);
         }
     }
 }

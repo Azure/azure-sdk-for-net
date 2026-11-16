@@ -40,8 +40,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="metrics"> Optional. The object replication policy metrics feature options. </param>
         /// <param name="priorityReplication"> Optional. The object replication policy priority replication feature options. </param>
         /// <param name="tagsReplication"> Optional. The object replication policy tags replication feature options. </param>
+        /// <param name="status"> The status of the object replication policy. </param>
+        /// <param name="replicationError"> The error message associated with the object replication policy status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyProperties(string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication, ObjectReplicationPolicyPropertiesTagsReplication tagsReplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectReplicationPolicyProperties(string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication, ObjectReplicationPolicyPropertiesTagsReplication tagsReplication, string status, string replicationError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyId = policyId;
             EnabledOn = enabledOn;
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.Storage.Models
             Metrics = metrics;
             PriorityReplication = priorityReplication;
             TagsReplication = tagsReplication;
+            Status = status;
+            ReplicationError = replicationError;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -85,6 +89,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Optional. The object replication policy tags replication feature options. </summary>
         [WirePath("tagsReplication")]
         internal ObjectReplicationPolicyPropertiesTagsReplication TagsReplication { get; set; }
+
+        /// <summary> The status of the object replication policy. </summary>
+        [WirePath("status")]
+        public string Status { get; }
+
+        /// <summary> The error message associated with the object replication policy status. </summary>
+        [WirePath("replicationError")]
+        public string ReplicationError { get; }
 
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("metrics.enabled")]

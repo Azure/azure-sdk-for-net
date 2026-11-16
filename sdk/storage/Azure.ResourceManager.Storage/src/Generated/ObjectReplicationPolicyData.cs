@@ -111,6 +111,26 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> The status of the object replication policy. </summary>
+        [WirePath("properties.status")]
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> The error message associated with the object replication policy status. </summary>
+        [WirePath("properties.replicationError")]
+        public string ReplicationError
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationError;
+            }
+        }
+
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("properties.metrics.enabled")]
         public bool? IsMetricsEnabled

@@ -1408,11 +1408,12 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="name"> The server-assigned metadata snapshot policy name. </param>
         /// <param name="status"> The status of the metadata snapshot policy. </param>
+        /// <param name="containerName"> The name of the blob container that stores the metadata snapshots. If not specified, a default container is used. Can only be set when the policy is created. </param>
         /// <param name="definitionRefreshFrequency"> The frequency at which metadata snapshots are refreshed. </param>
         /// <returns> A new <see cref="Models.MetadataSnapshotPolicy"/> instance for mocking. </returns>
-        public static MetadataSnapshotPolicy MetadataSnapshotPolicy(string name = default, MetadataSnapshotPolicyStatus status = default, MetadataSnapshotRefreshFrequency? definitionRefreshFrequency = default)
+        public static MetadataSnapshotPolicy MetadataSnapshotPolicy(string name = default, MetadataSnapshotPolicyStatus status = default, string containerName = default, MetadataSnapshotRefreshFrequency? definitionRefreshFrequency = default)
         {
-            return new MetadataSnapshotPolicy(name, status, definitionRefreshFrequency is null ? default : new MetadataSnapshotPolicyDefinition(definitionRefreshFrequency, default), default);
+            return new MetadataSnapshotPolicy(name, status, containerName, definitionRefreshFrequency is null ? default : new MetadataSnapshotPolicyDefinition(definitionRefreshFrequency, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2696,17 +2697,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="ruleType"> Indicates the type of the advanced platform metrics rule. Possible values include: ContainerLevelCapacityMetrics. </param>
         /// <param name="isEnabled"> A boolean flag which enables the advanced platform metrics rule. </param>
         /// <param name="lastModifiedOn"> Gets the last modification date and time of the advanced platform metrics rule in UTC. </param>
+        /// <param name="metricsToEmit"> The metrics requested by the caller. If omitted in a create or update request, the service enables all metrics supported by the selected rule type. </param>
         /// <param name="metricsEmitted"> The metrics emitted by the rule. Metrics are mapped according to the rule type from RuleTypeProperty. Rule type to metrics mapping: ContainerLevelCapacityMetrics =&gt; {ContainerUsedSize, ContainerBlobCount}. </param>
         /// <param name="ruleConfig"> Configuration for the advanced platform metrics rule. </param>
         /// <returns> A new <see cref="Models.AdvancedPlatformMetricsRuleProperties"/> instance for mocking. </returns>
-        public static AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType = default, bool isEnabled = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<MetricsEmitted> metricsEmitted = default, AdvancedPlatformMetricsRuleConfig ruleConfig = default)
+        public static AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType = default, bool isEnabled = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<MetricsEmitted> metricsToEmit = default, IEnumerable<MetricsEmitted> metricsEmitted = default, AdvancedPlatformMetricsRuleConfig ruleConfig = default)
         {
+            metricsToEmit ??= new ChangeTrackingList<MetricsEmitted>();
             metricsEmitted ??= new ChangeTrackingList<MetricsEmitted>();
 
             return new AdvancedPlatformMetricsRuleProperties(
                 ruleType,
                 isEnabled,
                 lastModifiedOn,
+                (metricsToEmit ?? new ChangeTrackingList<MetricsEmitted>()).ToList(),
                 (metricsEmitted ?? new ChangeTrackingList<MetricsEmitted>()).ToList(),
                 ruleConfig,
                 default);
@@ -2742,18 +2746,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sourceAccount"> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="rules"> The storage account object replication rules. </param>
+        /// <param name="status"> The status of the object replication policy. </param>
+        /// <param name="replicationError"> The error message associated with the object replication policy status. </param>
         /// <param name="isMetricsEnabled"> Indicates whether object replication metrics feature is enabled for the policy. </param>
         /// <param name="isPriorityReplicationEnabled"> Indicates whether object replication priority replication feature is enabled for the policy. </param>
         /// <param name="isTagsReplicationEnabled"> Indicates whether object replication tags replication feature is enabled for the policy. </param>
         /// <returns> A new <see cref="Storage.ObjectReplicationPolicyData"/> instance for mocking. </returns>
-        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string policyId = default, DateTimeOffset? enabledOn = default, string sourceAccount = default, string destinationAccount = default, IEnumerable<ObjectReplicationPolicyRule> rules = default, bool? isMetricsEnabled = default, bool? isPriorityReplicationEnabled = default, bool? isTagsReplicationEnabled = default)
+        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string policyId = default, DateTimeOffset? enabledOn = default, string sourceAccount = default, string destinationAccount = default, IEnumerable<ObjectReplicationPolicyRule> rules = default, string status = default, string replicationError = default, bool? isMetricsEnabled = default, bool? isPriorityReplicationEnabled = default, bool? isTagsReplicationEnabled = default)
         {
             return new ObjectReplicationPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null && isMetricsEnabled is null && isPriorityReplicationEnabled is null && isTagsReplicationEnabled is null ? default : new ObjectReplicationPolicyProperties(
+                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null && isMetricsEnabled is null && isPriorityReplicationEnabled is null && isTagsReplicationEnabled is null && status is null && replicationError is null ? default : new ObjectReplicationPolicyProperties(
                     policyId,
                     enabledOn,
                     sourceAccount,
@@ -2762,6 +2768,8 @@ namespace Azure.ResourceManager.Storage.Models
                     isMetricsEnabled is null ? default : new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
                     isPriorityReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
                     isTagsReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesTagsReplication(isTagsReplicationEnabled, default),
+                    status,
+                    replicationError,
                     default),
                 default);
         }
@@ -2973,6 +2981,63 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageUsageName StorageUsageName(string value = default, string localizedValue = default)
         {
             return new StorageUsageName(value, localizedValue, default);
+        }
+
+        /// <summary> An object that defines the advanced platform metrics rule. </summary>
+        /// <param name="ruleType"> Indicates the type of the advanced platform metrics rule. Possible values include: ContainerLevelCapacityMetrics. </param>
+        /// <param name="isEnabled"> A boolean flag which enables the advanced platform metrics rule. </param>
+        /// <param name="lastModifiedOn"> Gets the last modification date and time of the advanced platform metrics rule in UTC. </param>
+        /// <param name="metricsEmitted"> The metrics emitted by the rule. Metrics are mapped according to the rule type from RuleTypeProperty. Rule type to metrics mapping: ContainerLevelCapacityMetrics =&gt; {ContainerUsedSize, ContainerBlobCount}. </param>
+        /// <param name="ruleConfig"> Configuration for the advanced platform metrics rule. </param>
+        /// <returns> A new <see cref="Models.AdvancedPlatformMetricsRuleProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType, bool isEnabled, DateTimeOffset? lastModifiedOn, IEnumerable<MetricsEmitted> metricsEmitted, AdvancedPlatformMetricsRuleConfig ruleConfig)
+        {
+            return new AdvancedPlatformMetricsRuleProperties(
+                ruleType,
+                isEnabled,
+                lastModifiedOn,
+                default,
+                (metricsEmitted ?? new ChangeTrackingList<MetricsEmitted>()).ToList(),
+                ruleConfig,
+                default);
+        }
+
+        /// <summary> The replication policy between two storage accounts. Multiple rules can be defined in one policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="policyId"> A unique id for object replication policy. </param>
+        /// <param name="enabledOn"> Indicates when the policy is enabled on the source account. </param>
+        /// <param name="sourceAccount"> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
+        /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
+        /// <param name="rules"> The storage account object replication rules. </param>
+        /// <param name="isMetricsEnabled"> Indicates whether object replication metrics feature is enabled for the policy. </param>
+        /// <param name="isPriorityReplicationEnabled"> Indicates whether object replication priority replication feature is enabled for the policy. </param>
+        /// <param name="isTagsReplicationEnabled"> Indicates whether object replication tags replication feature is enabled for the policy. </param>
+        /// <returns> A new <see cref="Storage.ObjectReplicationPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled, bool? isPriorityReplicationEnabled, bool? isTagsReplicationEnabled)
+        {
+            return new ObjectReplicationPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null && isMetricsEnabled is null && isPriorityReplicationEnabled is null && isTagsReplicationEnabled is null ? default : new ObjectReplicationPolicyProperties(
+                    policyId,
+                    enabledOn,
+                    sourceAccount,
+                    destinationAccount,
+                    (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
+                    isMetricsEnabled is null ? default : new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
+                    isPriorityReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
+                    isTagsReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesTagsReplication(isTagsReplicationEnabled, default),
+                    default,
+                    default,
+                    default),
+                default);
         }
 
         /// <summary> The storage account. </summary>
@@ -3972,6 +4037,8 @@ namespace Azure.ResourceManager.Storage.Models
                     isMetricsEnabled is null ? default : new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
                     isPriorityReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
                     default,
+                    default,
+                    default,
                     default),
                 default);
         }
@@ -4501,6 +4568,8 @@ namespace Azure.ResourceManager.Storage.Models
                     isMetricsEnabled is null ? default : new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
                     default,
                     default,
+                    default,
+                    default,
                     default),
                 default);
         }
@@ -4775,6 +4844,8 @@ namespace Azure.ResourceManager.Storage.Models
                     sourceAccount,
                     destinationAccount,
                     (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
+                    default,
+                    default,
                     default,
                     default,
                     default,

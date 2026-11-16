@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string accountName, string objectReplicationPolicyId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string accountName, string objectReplicationPolicyId, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Storage
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

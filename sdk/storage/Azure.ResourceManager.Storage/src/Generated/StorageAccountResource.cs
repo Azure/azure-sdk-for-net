@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2125,28 +2126,30 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="expand"> Optional. Set to policyStatus to include the object replication policy status in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ObjectReplicationPolicyResource>> GetObjectReplicationPolicyAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ObjectReplicationPolicyResource>> GetObjectReplicationPolicyAsync(string objectReplicationPolicyId, GetRequestExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
-            return await GetObjectReplicationPolicies().GetAsync(objectReplicationPolicyId, cancellationToken).ConfigureAwait(false);
+            return await GetObjectReplicationPolicies().GetAsync(objectReplicationPolicyId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="expand"> Optional. Set to policyStatus to include the object replication policy status in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ObjectReplicationPolicyResource> GetObjectReplicationPolicy(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
+        public virtual Response<ObjectReplicationPolicyResource> GetObjectReplicationPolicy(string objectReplicationPolicyId, GetRequestExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
-            return GetObjectReplicationPolicies().Get(objectReplicationPolicyId, cancellationToken);
+            return GetObjectReplicationPolicies().Get(objectReplicationPolicyId, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of StorageAccountLocalUsers in the <see cref="StorageAccountResource"/>. </summary>
@@ -2181,5 +2184,33 @@ namespace Azure.ResourceManager.Storage
 
             return GetStorageAccountLocalUsers().Get(username, cancellationToken);
         }
+
+        /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<ObjectReplicationPolicyResource>> GetObjectReplicationPolicyAsync(string objectReplicationPolicyId, CancellationToken cancellationToken)
+        {
+            return GetObjectReplicationPolicyAsync(objectReplicationPolicyId: objectReplicationPolicyId, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Get the object replication policy of the storage account by policy ID. </summary>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<ObjectReplicationPolicyResource> GetObjectReplicationPolicy(string objectReplicationPolicyId, CancellationToken cancellationToken)
+        {
+            return GetObjectReplicationPolicy(objectReplicationPolicyId: objectReplicationPolicyId, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
