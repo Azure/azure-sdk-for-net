@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
 
         /// <summary> Converts a string to a <see cref="JsonWebKeyCurveName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JsonWebKeyCurveName?(string value) => value == null ? null : new JsonWebKeyCurveName(value);
+        public static implicit operator JsonWebKeyCurveName?(string value) => value == null ? (JsonWebKeyCurveName?)null : new JsonWebKeyCurveName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
