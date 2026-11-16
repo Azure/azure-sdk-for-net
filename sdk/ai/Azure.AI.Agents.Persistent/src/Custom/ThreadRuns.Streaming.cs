@@ -105,7 +105,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(agentId, nameof(agentId));
 
-            CreateRunRequest createRunRequest = new(
+            CreateRunContent createRunRequest = new(
                 agentId,
                 overrideModelName: options.OverrideModelName,
                 overrideInstructions: options.OverrideInstructions,
@@ -155,7 +155,7 @@ namespace Azure.AI.Agents.Persistent
 
             CancellationToken cancellationToken = requestContext.CancellationToken;
 
-            CreateRunRequest createRunRequest = new(
+            CreateRunContent createRunRequest = new(
                 agentId,
                 overrideModelName: options.OverrideModelName,
                 overrideInstructions: options.OverrideInstructions,
@@ -217,7 +217,7 @@ namespace Azure.AI.Agents.Persistent
             if (toolApprovals != null && !toolApprovals.Any())
                 toolApprovals = null;
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
+            SubmitToolOutputsToRunContent submitToolOutputsToRunRequest = new(
                 toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
                 stream: true,
@@ -334,7 +334,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(agentId, nameof(agentId));
 
-            CreateRunRequest createRunRequest = new CreateRunRequest(
+            CreateRunContent createRunRequest = new CreateRunContent(
                 agentId,
                 overrideModelName: options.OverrideModelName,
                 overrideInstructions: options.OverrideInstructions,
@@ -422,7 +422,7 @@ namespace Azure.AI.Agents.Persistent
             if (toolApprovals != null && !toolApprovals.Any())
                 toolApprovals = null;
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
+            SubmitToolOutputsToRunContent submitToolOutputsToRunRequest = new(
                 toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
                 stream: true,
@@ -495,7 +495,7 @@ namespace Azure.AI.Agents.Persistent
             if (toolApprovals != null && !toolApprovals.Any())
                 toolApprovals = null;
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
+            SubmitToolOutputsToRunContent submitToolOutputsToRunRequest = new(
                 toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
                 stream: true,

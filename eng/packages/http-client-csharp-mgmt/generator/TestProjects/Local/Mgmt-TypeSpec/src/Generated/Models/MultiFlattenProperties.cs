@@ -32,13 +32,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
         /// <param name="inner"> Property whose type has a single public property, triggering safe-flatten. </param>
         /// <param name="disabled"> Additional property after inner to verify it is not skipped. </param>
+        /// <param name="independentInternal"> Must not safe-flatten because its model also has an independent internal property. </param>
         /// <param name="patch"></param>
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        internal MultiFlattenProperties(FlattenChannel? channel, SafeFlattenInner inner, bool? disabled, in JsonPatch patch)
+        internal MultiFlattenProperties(FlattenChannel? channel, SafeFlattenInner inner, bool? disabled, IndependentInternalPropertyModel independentInternal, in JsonPatch patch)
         {
             Channel = channel;
             Inner = inner;
             Disabled = disabled;
+            IndependentInternal = independentInternal;
             _patch = patch;
             _patch.SetPropagators(PropagateSet, PropagateGet);
         }
@@ -57,6 +59,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Additional property after inner to verify it is not skipped. </summary>
         [WirePath("disabled")]
         public bool? Disabled { get; set; }
+
+        /// <summary> Must not safe-flatten because its model also has an independent internal property. </summary>
+        [WirePath("independentInternal")]
+        public IndependentInternalPropertyModel IndependentInternal { get; set; }
 
         /// <summary> Gets or sets the SelectionType. </summary>
         [WirePath("inner.selectionType")]

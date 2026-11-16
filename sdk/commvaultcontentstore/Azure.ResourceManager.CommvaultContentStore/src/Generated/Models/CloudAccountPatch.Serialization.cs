@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             IDictionary<string, string> tags = default;
             CloudAccountPatchProperties properties = default;
-            CloudAccountIdentityUpdate identity = default;
+            CloudAccountIdentityPatch identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    identity = CloudAccountIdentityUpdate.DeserializeCloudAccountIdentityUpdate(prop.Value, options);
+                    identity = CloudAccountIdentityPatch.DeserializeCloudAccountIdentityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

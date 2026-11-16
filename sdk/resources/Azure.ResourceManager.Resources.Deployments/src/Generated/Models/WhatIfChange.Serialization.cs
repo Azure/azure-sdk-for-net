@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 writer.WritePropertyName("symbolicName"u8);
                 writer.WriteStringValue(SymbolicName);
             }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
             if (Optional.IsDefined(Identifiers))
             {
                 writer.WritePropertyName("identifiers"u8);
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             string resourceId = default;
             string deploymentId = default;
             string symbolicName = default;
+            string resourceType = default;
             BinaryData identifiers = default;
             ArmDeploymentExtensionDefinition extension = default;
             WhatIfChangeType changeType = default;
@@ -220,6 +226,11 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 if (prop.NameEquals("symbolicName"u8))
                 {
                     symbolicName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceType"u8))
+                {
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("identifiers"u8))
@@ -291,6 +302,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 resourceId,
                 deploymentId,
                 symbolicName,
+                resourceType,
                 identifiers,
                 extension,
                 changeType,

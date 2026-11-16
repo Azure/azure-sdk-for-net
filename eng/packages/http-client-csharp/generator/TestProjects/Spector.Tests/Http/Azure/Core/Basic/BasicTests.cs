@@ -33,7 +33,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
         [SpectorTest]
         public Task Azure_Core_Basic_createOrReplace() => Test(async (host) =>
         {
-            User response = await new BasicClient(host, null).CreateOrReplaceAsync(1, new User("Madge"));
+            User response = await new BasicClient(host, null).CreateOrReplaceAsync(1, new User { Name = "Madge" });
             Assert.AreEqual("Madge", response.Name);
         });
 

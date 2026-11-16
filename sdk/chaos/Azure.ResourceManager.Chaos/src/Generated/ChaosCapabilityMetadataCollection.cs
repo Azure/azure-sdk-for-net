@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing a collection of <see cref="ChaosCapabilityMetadataResource"/> and their operations.
     /// Each <see cref="ChaosCapabilityMetadataResource"/> in the collection will belong to the same instance of <see cref="ChaosTargetMetadataResource"/>.
-    /// To get a <see cref="ChaosCapabilityMetadataCollection"/> instance call the GetChaosCapabilityMetadatas method from an instance of <see cref="ChaosTargetMetadataResource"/>.
+    /// To get a <see cref="ChaosCapabilityMetadataCollection"/> instance call the GetAllChaosCapabilityMetadata method from an instance of <see cref="ChaosTargetMetadataResource"/>.
     /// </summary>
     public partial class ChaosCapabilityMetadataCollection : ArmCollection, IEnumerable<ChaosCapabilityMetadataResource>, IAsyncEnumerable<ChaosCapabilityMetadataResource>
     {

@@ -147,7 +147,7 @@ namespace Azure.AI.Projects.Tests.Utils
                 var actualDoc = JsonDocument.Parse(actualJson);
                 AssertJsonElementDeepEquals(expectedDoc.RootElement, actualDoc.RootElement, key);
             }
-            catch
+            catch (Exception ex) when (ex is not AssertionException)
             {
                 Assert.Fail($"Unable to parse expected or actual for {key}. Expected: {expectedJson}; Actual: {actualJson}");
             }
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Tests.Utils
                     }
                     break;
                 case JsonValueKind.Number:
-                    Assert.That(actual.GetInt64(), Is.EqualTo(expected.GetInt64()), $"Expected value for {key} is {expected}, but was {actual}.");
+                    Assert.That(actual.GetDecimal(), Is.EqualTo(expected.GetDecimal()), $"Expected value for {key} is {expected}, but was {actual}.");
                     break;
                 default:
                     ValidateAttributeValue(expected.GetString(), actual.GetString(), key);

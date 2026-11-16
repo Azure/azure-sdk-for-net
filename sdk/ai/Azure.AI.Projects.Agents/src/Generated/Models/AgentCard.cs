@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -15,16 +14,9 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentCard"/>. </summary>
-        /// <param name="version"> The version of the agent card. </param>
-        /// <param name="skills"> The set of skills that an agent can perform. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="skills"/> is null. </exception>
-        public AgentCard(string version, IEnumerable<AgentCardSkill> skills)
+        public AgentCard()
         {
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNull(skills, nameof(skills));
-
-            Version = version;
-            Skills = skills.ToList();
+            Skills = new ChangeTrackingList<AgentCardSkill>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentCard"/>. </summary>

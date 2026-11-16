@@ -104,6 +104,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("disabled"u8);
                 writer.WriteBooleanValue(Disabled.Value);
             }
+            if (Optional.IsDefined(IndependentInternal) && !Patch.Contains("$.independentInternal"u8))
+            {
+                writer.WritePropertyName("independentInternal"u8);
+                writer.WriteObjectValue(IndependentInternal, options);
+            }
 
             Patch.WriteTo(writer);
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
@@ -138,6 +143,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             FlattenChannel? channel = default;
             SafeFlattenInner inner = default;
             bool? disabled = default;
+            IndependentInternalPropertyModel independentInternal = default;
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
@@ -166,9 +172,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     disabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("independentInternal"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    independentInternal = IndependentInternalPropertyModel.DeserializeIndependentInternalPropertyModel(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    continue;
+                }
                 patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
-            return new MultiFlattenProperties(channel, inner, disabled, patch);
+            return new MultiFlattenProperties(channel, inner, disabled, independentInternal, patch);
         }
 
         /// <summary></summary>
@@ -188,6 +203,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     return false;
                 }
                 return Inner.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("inner"u8.Length)], out value);
+            }
+            if (local.StartsWith("independentInternal"u8))
+            {
+                if (IndependentInternal == null)
+                {
+                    return false;
+                }
+                return IndependentInternal.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("independentInternal"u8.Length)], out value);
             }
             return false;
         }
@@ -209,6 +232,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     return false;
                 }
                 Inner.Patch.Set([.. "$"u8, .. local.Slice("inner"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("independentInternal"u8))
+            {
+                if (IndependentInternal == null)
+                {
+                    return false;
+                }
+                IndependentInternal.Patch.Set([.. "$"u8, .. local.Slice("independentInternal"u8.Length)], value);
                 return true;
             }
             return false;

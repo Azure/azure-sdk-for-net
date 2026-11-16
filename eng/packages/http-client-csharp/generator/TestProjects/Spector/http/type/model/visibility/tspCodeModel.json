@@ -229,7 +229,8 @@
             }
           },
           "isHttpMetadata": true,
-          "isExactName": false
+          "isExactName": false,
+          "requiredInConstructor": false
         },
         {
           "$id": "24",
@@ -264,7 +265,8 @@
             }
           },
           "isHttpMetadata": false,
-          "isExactName": false
+          "isExactName": false,
+          "requiredInConstructor": false
         },
         {
           "$id": "27",
@@ -299,7 +301,8 @@
             }
           },
           "isHttpMetadata": false,
-          "isExactName": false
+          "isExactName": false,
+          "requiredInConstructor": false
         },
         {
           "$id": "30",
@@ -327,7 +330,8 @@
             }
           },
           "isHttpMetadata": false,
-          "isExactName": false
+          "isExactName": false,
+          "requiredInConstructor": false
         }
       ]
     },

@@ -305,9 +305,11 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             WebPubSubChatRoom room = client.GetRoom("room1").Value;
 
             #region Snippet:WebPubSubChatUpdateMessage
-            var updatedMessage = new WebPubSubChatMessage(
-                "user1",
-                new WebPubSubChatMessageContent { Text = "Updated message text" });
+            var updatedMessage = new WebPubSubChatMessage
+            {
+                CreatedBy = "user1",
+                Content = new WebPubSubChatMessageContent { Text = "Updated message text" },
+            };
 
             client.UpdateMessage(
                 room.DefaultConversation,

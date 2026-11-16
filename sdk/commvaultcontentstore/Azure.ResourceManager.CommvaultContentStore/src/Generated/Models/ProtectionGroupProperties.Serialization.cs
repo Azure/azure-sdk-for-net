@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WritePropertyName("plan"u8);
             writer.WriteStringValue(Plan);
             writer.WritePropertyName("resources"u8);
-            writer.WriteObjectValue(Resources, options);
+            writer.WriteObjectValue(ResourceSelection, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("protectionStatus"u8);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("numberOfProtectedItems"u8);
-                writer.WriteNumberValue(NumberOfProtectedItems);
+                writer.WriteNumberValue(ProtectedItemCount);
             }
             if (options.Format != "W")
             {
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             string dataSourceType = default;
             string plan = default;
-            ProtectionGroupResources resources = default;
+            ProtectionGroupResourceSelection resourceSelection = default;
             CommvaultProtectionStatus protectionStatus = default;
-            int numberOfProtectedItems = default;
+            int protectedItemCount = default;
             long lastBackupTime = default;
             string backupActivityStatus = default;
             ResourceProvisioningState? provisioningState = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("resources"u8))
                 {
-                    resources = ProtectionGroupResources.DeserializeProtectionGroupResources(prop.Value, options);
+                    resourceSelection = ProtectionGroupResourceSelection.DeserializeProtectionGroupResourceSelection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("protectionStatus"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("numberOfProtectedItems"u8))
                 {
-                    numberOfProtectedItems = prop.Value.GetInt32();
+                    protectedItemCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("lastBackUpTime"u8))
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new ProtectionGroupProperties(
                 dataSourceType,
                 plan,
-                resources,
+                resourceSelection,
                 protectionStatus,
-                numberOfProtectedItems,
+                protectedItemCount,
                 lastBackupTime,
                 backupActivityStatus,
                 provisioningState,

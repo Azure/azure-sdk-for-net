@@ -110,7 +110,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = default, VectorStoreDataSource dataSource = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreFileRequest spreadModel = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, default);
+            CreateVectorStoreFileContent spreadModel = new CreateVectorStoreFileContent(fileId, dataSource, chunkingStrategy, default);
             Response result = CreateVectorStoreFile(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((VectorStoreFile)result, result);
         }
@@ -124,7 +124,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = default, VectorStoreDataSource dataSource = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreFileRequest spreadModel = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, default);
+            CreateVectorStoreFileContent spreadModel = new CreateVectorStoreFileContent(fileId, dataSource, chunkingStrategy, default);
             Response result = await CreateVectorStoreFileAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((VectorStoreFile)result, result);
         }

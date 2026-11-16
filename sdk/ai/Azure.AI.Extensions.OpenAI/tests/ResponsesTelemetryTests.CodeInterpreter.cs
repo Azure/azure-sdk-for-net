@@ -60,7 +60,7 @@ public partial class ResponsesTelemetryTests
     private async Task<ResponseResult> RunCodeInterpreterStreamingAsync(ProjectResponsesClient client)
     {
         ResponseResult completedResponse = null;
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(CodeInterpreterPrompt))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(CodeInterpreterPrompt))
         {
             if (update is StreamingResponseCompletedUpdate completed)
             {
@@ -77,7 +77,8 @@ public partial class ResponsesTelemetryTests
     private void ValidateCodeInterpreterSpan(
         string agentName,
         object agentVersion,
-        bool contentRecordingEnabled)
+        bool contentRecordingEnabled
+        )
     {
         _exporter.ForceFlush();
 
@@ -201,12 +202,14 @@ public partial class ResponsesTelemetryTests
     #region Streaming tests
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestCodeInterpreterStreamingWithContentRecordingEnabled()
     {
         await RunCodeInterpreterTelemetryTestAsync(contentRecordingEnabled: true, streaming: true);
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestCodeInterpreterStreamingWithContentRecordingDisabled()
     {
         await RunCodeInterpreterTelemetryTestAsync(contentRecordingEnabled: false, streaming: true);
