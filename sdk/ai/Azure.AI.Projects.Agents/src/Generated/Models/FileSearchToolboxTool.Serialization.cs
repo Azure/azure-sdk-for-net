@@ -73,10 +73,10 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(FileSearchToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxNumResults))
+            if (Optional.IsDefined(MaxResultCount))
             {
                 writer.WritePropertyName("max_num_results"u8);
-                writer.WriteNumberValue(MaxNumResults.Value);
+                writer.WriteNumberValue(MaxResultCount.Value);
             }
             if (Optional.IsDefined(RankingOptions))
             {
@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            long? maxNumResults = default;
+            long? maxResultCount = default;
             FileSearchToolRankingOptions rankingOptions = default;
             bool filtersIsDefined = false;
             BinaryData filters = default;
@@ -198,7 +198,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    maxNumResults = prop.Value.GetInt64();
+                    maxResultCount = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("ranking_options"u8))
@@ -253,7 +253,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
-                maxNumResults,
+                maxResultCount,
                 rankingOptions,
                 filters,
                 vectorStoreIds ?? new ChangeTrackingList<string>())

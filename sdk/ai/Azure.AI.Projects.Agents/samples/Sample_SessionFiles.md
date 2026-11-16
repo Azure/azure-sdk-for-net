@@ -26,7 +26,7 @@ string sessionId = Guid.NewGuid().ToString();
 ProjectAgentSession session = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -45,7 +45,7 @@ string sessionId = Guid.NewGuid().ToString("N");
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)

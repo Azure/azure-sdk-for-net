@@ -11,7 +11,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
-public partial class ProjectsAgentsModelFactory
+public static partial class ProjectsAgentsModelFactory
 {
     /// <summary> Creates a new instance of <see cref="Agents.ProjectsAgentRecord"/> for mocking. </summary>
     /// <param name="id">The agent identifier.</param>
@@ -139,7 +139,7 @@ public partial class ProjectsAgentsModelFactory
     /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
     /// when an avatar is configured.
     /// </param>
-    /// <param name="internalMaxOutputTokens"> The maximum output-token count for one response. </param>
+    /// <param name="maxOutputTokens"> The maximum output-token count for one response. </param>
     /// <param name="include"> Additional fields to include in service outputs. </param>
     /// <param name="interimResponse"> Interim-response settings for latency and tool execution. </param>
     /// <param name="avatar"> Optional avatar configuration. These values are session defaults and may be overridden when connecting. </param>
@@ -167,7 +167,7 @@ public partial class ProjectsAgentsModelFactory
     /// </param>
     /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
     [Experimental("AAIP001")]
-    public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, VoiceAgentSoundscapeConfig soundscape = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, ToolChoiceOption toolChoice = null, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, VoiceAgentPostCallConfig postCall = default, bool? store = default)
+    public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfiguration greeting = default, VoiceAgentAudioConfiguration audio = default, VoiceAgentSoundscapeConfiguration soundscape = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfiguration interimResponse = default, VoiceAgentAvatarConfiguration avatar = default, IEnumerable<VoiceAgentTool> tools = default, ToolChoiceOption toolChoice = null, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfiguration subagentConfig = default, VoiceAgentPostCallConfiguration postCall = default, bool? store = default)
     {
         outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
         include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
@@ -186,7 +186,7 @@ public partial class ProjectsAgentsModelFactory
             audio: audio,
             soundscape: soundscape,
             outputModalities: [..outputModalities],
-            internalMaxOutputTokens: internalMaxOutputTokens,
+            internalMaxOutputTokens: maxOutputTokens,
             include: [..include],
             interimResponse: interimResponse,
             avatar: avatar,
@@ -247,7 +247,7 @@ public partial class ProjectsAgentsModelFactory
     /// </param>
     /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
     [Experimental("AAIP001")]
-    internal static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, VoiceAgentSoundscapeConfig soundscape = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, VoiceAgentPostCallConfig postCall = default, bool? store = default)
+    internal static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfiguration greeting = default, VoiceAgentAudioConfiguration audio = default, VoiceAgentSoundscapeConfiguration soundscape = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfiguration interimResponse = default, VoiceAgentAvatarConfiguration avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfiguration subagentConfig = default, VoiceAgentPostCallConfiguration postCall = default, bool? store = default)
     {
         outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
         include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
@@ -282,21 +282,21 @@ public partial class ProjectsAgentsModelFactory
     /// <summary> A greeting authored by the session model from a scoped opening-turn prompt. </summary>
     /// <param name="prompt"> The Handlebars prompt that guides the opening turn. </param>
     /// <param name="internalToolChoice"> The tool-selection policy for the opening response. Defaults to `none`. </param>
-    /// <returns> A new <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfiguration"/> instance for mocking. </returns>
     [Experimental("AAIP001")]
-    internal static VoiceAgentLlmGeneratedGreetingConfig VoiceAgentLlmGeneratedGreetingConfig(string prompt = default, BinaryData internalToolChoice = default)
+    internal static VoiceAgentLlmGeneratedGreetingConfiguration VoiceAgentLlmGeneratedGreetingConfig(string prompt = default, BinaryData internalToolChoice = default)
     {
-        return new VoiceAgentLlmGeneratedGreetingConfig("llm_generated", additionalBinaryDataProperties: null, prompt, internalToolChoice);
+        return new VoiceAgentLlmGeneratedGreetingConfiguration("llm_generated", additionalBinaryDataProperties: null, prompt, internalToolChoice);
     }
 
     /// <summary> A greeting authored by the session model from a scoped opening-turn prompt. </summary>
     /// <param name="prompt"> The Handlebars prompt that guides the opening turn. </param>
     /// <param name="toolChoice"> The tool-selection policy for the opening response. Defaults to `none`. </param>
-    /// <returns> A new <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfiguration"/> instance for mocking. </returns>
     [Experimental("AAIP001")]
-    public static VoiceAgentLlmGeneratedGreetingConfig VoiceAgentLlmGeneratedGreetingConfig(string prompt = default, ToolChoiceOption toolChoice = null)
+    public static VoiceAgentLlmGeneratedGreetingConfiguration VoiceAgentLlmGeneratedGreetingConfiguration(string prompt = default, ToolChoiceOption toolChoice = null)
     {
-        return new VoiceAgentLlmGeneratedGreetingConfig(
+        return new VoiceAgentLlmGeneratedGreetingConfiguration(
             type: "llm_generated",
             additionalBinaryDataProperties: null,
             prompt: prompt,

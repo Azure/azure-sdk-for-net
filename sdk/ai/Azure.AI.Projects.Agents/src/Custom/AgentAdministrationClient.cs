@@ -903,6 +903,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
     public virtual ClientResult<SessionLogEvent> GetSessionLogStream(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -941,6 +942,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<SessionLogEvent>> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -1170,7 +1172,7 @@ public partial class AgentAdministrationClient
         ).ConfigureAwait(false);
     }
     /// <summary> Initializes a new instance of AgentOptimizationJobCandidates. </summary>
-    public virtual AgentOptimizationJobCandidates GetAgentOptimizationJobCandidatesClient()
+    public virtual AgentOptimizationJobCandidates GetAgentOptimizationJobCandidates()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobCandidates) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobCandidates, new AgentOptimizationJobCandidates(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobCandidates;
     }

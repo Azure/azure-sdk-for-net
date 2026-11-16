@@ -347,7 +347,7 @@ await agentsClient.DisableAgentAsync(agentVersion.Name);
 // The new session cannot be created.
 try
 {
-    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
     throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
 }
 catch (ClientResultException ex)
@@ -364,7 +364,7 @@ The disabled Agent may be enabled, and it will be able to accept requests and se
 
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Async
 await agentsClient.EnableAgentAsync(agentVersion.Name);
-ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 Console.WriteLine($"The session {session2.AgentSessionId} was created.");
 ```
 
@@ -458,13 +458,13 @@ string sessionId2 = Guid.NewGuid().ToString();
 ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
 ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
 while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
@@ -490,7 +490,7 @@ string sessionId = Guid.NewGuid().ToString("N");
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -591,7 +591,7 @@ and `GetSessionLogStreamAsync`.
 ```C# Snippet:Sample_Agents_StreamLogs_HostedAgentLogStreaming
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
 Console.WriteLine(logEvent.Data);
@@ -608,7 +608,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
+AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
 ```
 
 An Agent optimization job accepts optimization criteria, evaluators, and several models as parameters. It also accepts baselines used as an optimization starting point.

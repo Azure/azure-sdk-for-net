@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionConfiguration"> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </param>
         /// <param name="enableMemorySnapshot"> Whether this agent version uses memory snapshots. Sessions for a snapshot-enabled version start from a snapshot of the agent's initialized process rather than starting the process from its image. Defaults to false. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default, SessionConfiguration sessionConfiguration = default, bool? enableMemorySnapshot = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfiguration telemetryConfig = default, SessionConfiguration sessionConfiguration = default, bool? enableMemorySnapshot = default)
         {
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
             versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -204,12 +204,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
         /// <param name="endpoints"> Customer-supplied telemetry export endpoint configurations. </param>
-        /// <returns> A new <see cref="Agents.TelemetryConfig"/> instance for mocking. </returns>
-        public static TelemetryConfig TelemetryConfig(IEnumerable<TelemetryEndpoint> endpoints = default)
+        /// <returns> A new <see cref="Agents.TelemetryConfiguration"/> instance for mocking. </returns>
+        public static TelemetryConfiguration TelemetryConfiguration(IEnumerable<TelemetryEndpoint> endpoints = default)
         {
             endpoints ??= new ChangeTrackingList<TelemetryEndpoint>();
 
-            return new TelemetryConfig(endpoints.ToList(), additionalBinaryDataProperties: null);
+            return new TelemetryConfiguration(endpoints.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Authentication configuration for a telemetry endpoint.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuthentication"/>.
         /// </summary>
         /// <param name="type"> The authentication type. </param>
         /// <returns> A new <see cref="Agents.TelemetryEndpointAuthentication"/> instance for mocking. </returns>
@@ -242,10 +242,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
         /// <param name="secretId"> The identifier of the secret store or connection. </param>
         /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
-        /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
-        public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
+        /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuthentication"/> instance for mocking. </returns>
+        public static HeaderTelemetryEndpointAuthentication HeaderTelemetryEndpointAuthentication(string headerName = default, string secretId = default, string secretKey = default)
         {
-            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
+            return new HeaderTelemetryEndpointAuthentication(TelemetryEndpointAuthenticationKind.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
         }
 
         /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
@@ -268,14 +268,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Session defaults applied to sessions created for a hosted agent version. </summary>
-        /// <param name="idleTimeoutSeconds">
+        /// <param name="idleTimeout">
         /// The idle duration, in seconds, before a session's sandbox is suspended. When omitted,
         /// the server defaults to 900 seconds. Must be between 120 and 14400 seconds (4 hours).
         /// </param>
         /// <returns> A new <see cref="Agents.SessionConfiguration"/> instance for mocking. </returns>
-        public static SessionConfiguration SessionConfiguration(TimeSpan? idleTimeoutSeconds = default)
+        public static SessionConfiguration SessionConfiguration(TimeSpan? idleTimeout = default)
         {
-            return new SessionConfiguration(idleTimeoutSeconds, additionalBinaryDataProperties: null);
+            return new SessionConfiguration(idleTimeout, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The prompt agent definition. </summary>
@@ -308,9 +308,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
         /// <returns> A new <see cref="Agents.DeclarativeAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DeclarativeAgentDefinition DeclarativeAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, AgentHarness harness = default, string model = default, string instructions = default, IEnumerable<SkillReference> skills = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
+        public static DeclarativeAgentDefinition DeclarativeAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, AgentHarness harness = default, string model = default, string instructions = default, IEnumerable<AgentSkillReference> skills = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
         {
-            skills ??= new ChangeTrackingList<SkillReference>();
+            skills ??= new ChangeTrackingList<AgentSkillReference>();
             tools ??= new ChangeTrackingList<ResponseTool>();
             structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
 
@@ -362,11 +362,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A reference to a versioned Foundry skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The skill version. If omitted, the current default version is resolved and pinned when the agent version is created. </param>
-        /// <returns> A new <see cref="Agents.SkillReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentSkillReference"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SkillReference SkillReference(string name = default, string version = default)
+        public static AgentSkillReference AgentSkillReference(string name = default, string version = default)
         {
-            return new SkillReference(name, version, additionalBinaryDataProperties: null);
+            return new AgentSkillReference(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> An structured input that can participate in prompt template substitutions and tool argument binding. </summary>
@@ -444,33 +444,43 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Session-start greeting configuration for a voice agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/> and <see cref="Agents.VoiceAgentTemplateGreetingConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfiguration"/> and <see cref="Agents.VoiceAgentTemplateGreetingConfiguration"/>.
         /// </summary>
         /// <param name="type"> The greeting mode. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentGreetingConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentGreetingConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentGreetingConfig VoiceAgentGreetingConfig(string @type = default)
+        public static VoiceAgentGreetingConfiguration VoiceAgentGreetingConfiguration(string @type = default)
         {
-            return new UnknownVoiceAgentGreetingConfig(@type, additionalBinaryDataProperties: null);
+            return new UnknownVoiceAgentGreetingConfiguration(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A deterministic greeting rendered with the voice agent's structured inputs and synthesized without model-authored generation. </summary>
         /// <param name="text"> The Handlebars text template spoken at session start. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentTemplateGreetingConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentTemplateGreetingConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentTemplateGreetingConfig VoiceAgentTemplateGreetingConfig(string text = default)
+        public static VoiceAgentTemplateGreetingConfiguration VoiceAgentTemplateGreetingConfiguration(string text = default)
         {
-            return new VoiceAgentTemplateGreetingConfig("template", additionalBinaryDataProperties: null, text);
+            return new VoiceAgentTemplateGreetingConfiguration("template", additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary> A greeting authored by the session model from a scoped opening-turn prompt. </summary>
+        /// <param name="prompt"> The Handlebars prompt that guides the opening turn. </param>
+        /// <param name="internalToolChoice"> The tool-selection policy for the opening response. Defaults to `none`. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentLlmGeneratedGreetingConfiguration VoiceAgentLlmGeneratedGreetingConfiguration(string prompt, BinaryData internalToolChoice)
+        {
+            return new VoiceAgentLlmGeneratedGreetingConfiguration("llm_generated", additionalBinaryDataProperties: null, prompt, internalToolChoice);
         }
 
         /// <summary> The audio configuration for a voice agent. These values are session defaults and may be overridden when connecting. </summary>
         /// <param name="input"> Input (microphone) audio configuration. </param>
         /// <param name="output"> Output (agent speech) audio configuration. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentAudioConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAudioConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAudioConfig VoiceAgentAudioConfig(VoiceAgentAudioInputConfig input = default, VoiceAgentAudioOutputConfig output = default)
+        public static VoiceAgentAudioConfiguration VoiceAgentAudioConfiguration(VoiceAgentAudioInputConfiguration input = default, VoiceAgentAudioOutputConfiguration output = default)
         {
-            return new VoiceAgentAudioConfig(input, output, additionalBinaryDataProperties: null);
+            return new VoiceAgentAudioConfiguration(input, output, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input audio configuration for a voice agent. </summary>
@@ -479,11 +489,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="turnDetection"> Turn (end-of-speech) detection. Server-side turn detection is enabled by default; set to null to disable it, in which case the client must trigger responses manually. </param>
         /// <param name="echoCancellation"> Optional server-side echo cancellation settings. </param>
         /// <param name="transcription"> Asynchronous input-audio transcription. Set to null to disable transcription. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentAudioInputConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAudioInputConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAudioInputConfig VoiceAgentAudioInputConfig(RealtimeAudioFormat format = default, VoiceAgentNoiseReduction noiseReduction = default, VoiceAgentTurnDetectionConfig turnDetection = default, VoiceAgentEchoCancellation echoCancellation = default, VoiceAgentInputTranscription transcription = default)
+        public static VoiceAgentAudioInputConfiguration VoiceAgentAudioInputConfiguration(RealtimeAudioFormat format = default, VoiceAgentNoiseReduction noiseReduction = default, VoiceAgentTurnDetectionConfiguration turnDetection = default, VoiceAgentEchoCancellation echoCancellation = default, VoiceAgentInputTranscription transcription = default)
         {
-            return new VoiceAgentAudioInputConfig(
+            return new VoiceAgentAudioInputConfiguration(
                 format,
                 noiseReduction,
                 turnDetection,
@@ -519,67 +529,67 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"> The turn-detection strategy. </param>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentTurnDetectionConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentTurnDetectionConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentTurnDetectionConfig VoiceAgentTurnDetectionConfig(string @type = default, bool? autoTruncate = default)
+        public static VoiceAgentTurnDetectionConfiguration VoiceAgentTurnDetectionConfiguration(string @type = default, bool? autoTruncate = default)
         {
-            return new UnknownVoiceAgentTurnDetectionConfig(new VoiceAgentTurnDetectionType(@type), autoTruncate, additionalBinaryDataProperties: null);
+            return new UnknownVoiceAgentTurnDetectionConfiguration(new VoiceAgentTurnDetectionType(@type), autoTruncate, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Server-side voice activity detection. </summary>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="createResponse"></param>
-        /// <param name="interruptResponse"></param>
-        /// <param name="idleTimeoutMs"></param>
-        /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
+        /// <param name="prefixPadding"></param>
+        /// <param name="silenceDuration"></param>
+        /// <param name="createResponseEnabled"></param>
+        /// <param name="interruptResponseEnabled"></param>
+        /// <param name="idleTimeout"></param>
+        /// <param name="speechDuration"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentServerVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentServerVadTurnDetection VoiceAgentServerVadTurnDetection(bool? autoTruncate = default, double? threshold = default, long? prefixPaddingMs = default, long? silenceDurationMs = default, bool? createResponse = default, bool? interruptResponse = default, long? idleTimeoutMs = default, TimeSpan? speechDurationMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default)
+        public static VoiceAgentServerVadTurnDetection VoiceAgentServerVadTurnDetection(bool? autoTruncate = default, double? threshold = default, TimeSpan? prefixPadding = default, TimeSpan? silenceDuration = default, bool? createResponseEnabled = default, bool? interruptResponseEnabled = default, TimeSpan? idleTimeout = default, TimeSpan? speechDuration = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default)
         {
             return new VoiceAgentServerVadTurnDetection(
                 VoiceAgentTurnDetectionType.ServerVad,
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
-                createResponse,
-                interruptResponse,
-                idleTimeoutMs,
-                speechDurationMs,
+                prefixPadding,
+                silenceDuration,
+                createResponseEnabled,
+                interruptResponseEnabled,
+                idleTimeout,
+                speechDuration,
                 endOfUtteranceDetection);
         }
 
         /// <summary> Semantic end-of-utterance detection configuration. </summary>
         /// <param name="model"> The semantic detection model. </param>
         /// <param name="thresholdLevel"> The sensitivity threshold. </param>
-        /// <param name="timeoutMs"> The detection timeout in milliseconds. </param>
+        /// <param name="timeout"> The detection timeout in milliseconds. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentEndOfUtteranceDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentEndOfUtteranceDetection VoiceAgentEndOfUtteranceDetection(VoiceAgentEndOfUtteranceDetectionModel model = default, VoiceAgentEndOfUtteranceThresholdLevel? thresholdLevel = default, TimeSpan? timeoutMs = default)
+        public static VoiceAgentEndOfUtteranceDetection VoiceAgentEndOfUtteranceDetection(VoiceAgentEndOfUtteranceDetectionModel model = default, VoiceAgentEndOfUtteranceThresholdLevel? thresholdLevel = default, TimeSpan? timeout = default)
         {
-            return new VoiceAgentEndOfUtteranceDetection(model, thresholdLevel, timeoutMs, additionalBinaryDataProperties: null);
+            return new VoiceAgentEndOfUtteranceDetection(model, thresholdLevel, timeout, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Azure semantic voice activity detection. </summary>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
-        /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
-        /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
+        /// <param name="prefixPadding"> Audio to include before detected speech, in milliseconds. </param>
+        /// <param name="silenceDuration"> Silence required to end speech detection, in milliseconds. </param>
         /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
+        /// <param name="speechDuration"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
-        /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
-        /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
+        /// <param name="createResponseEnabled"> Whether a response is created automatically when speech stops. </param>
+        /// <param name="interruptResponseEnabled"> Whether user speech may interrupt the agent's response. </param>
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPadding = default, TimeSpan? silenceDuration = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDuration = default, bool? removeFillerWords = default, bool? createResponseEnabled = default, bool? interruptResponseEnabled = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
@@ -588,62 +598,62 @@ namespace Azure.AI.Projects.Agents
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
+                prefixPadding,
+                silenceDuration,
                 idleTimeout,
                 endOfUtteranceDetection,
-                speechDurationMs,
+                speechDuration,
                 removeFillerWords,
-                createResponse,
-                interruptResponse,
+                createResponseEnabled,
+                interruptResponseEnabled,
                 languages.ToList());
         }
 
         /// <summary> English-optimized Azure semantic voice activity detection. </summary>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
-        /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
-        /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
+        /// <param name="prefixPadding"> Audio to include before detected speech, in milliseconds. </param>
+        /// <param name="silenceDuration"> Silence required to end speech detection, in milliseconds. </param>
         /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
+        /// <param name="speechDuration"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
-        /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
-        /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
+        /// <param name="createResponseEnabled"> Whether a response is created automatically when speech stops. </param>
+        /// <param name="interruptResponseEnabled"> Whether user speech may interrupt the agent's response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadEnTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default)
+        public static VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPadding = default, TimeSpan? silenceDuration = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDuration = default, bool? removeFillerWords = default, bool? createResponseEnabled = default, bool? interruptResponseEnabled = default)
         {
             return new VoiceAgentAzureSemanticVadEnTurnDetection(
                 VoiceAgentTurnDetectionType.AzureSemanticVadEn,
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
+                prefixPadding,
+                silenceDuration,
                 idleTimeout,
                 endOfUtteranceDetection,
-                speechDurationMs,
+                speechDuration,
                 removeFillerWords,
-                createResponse,
-                interruptResponse);
+                createResponseEnabled,
+                interruptResponseEnabled);
         }
 
         /// <summary> Multilingual Azure semantic voice activity detection. </summary>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
-        /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
-        /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
+        /// <param name="prefixPadding"> Audio to include before detected speech, in milliseconds. </param>
+        /// <param name="silenceDuration"> Silence required to end speech detection, in milliseconds. </param>
         /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
+        /// <param name="speechDuration"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
-        /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
-        /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
+        /// <param name="createResponseEnabled"> Whether a response is created automatically when speech stops. </param>
+        /// <param name="interruptResponseEnabled"> Whether user speech may interrupt the agent's response. </param>
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPadding = default, TimeSpan? silenceDuration = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDuration = default, bool? removeFillerWords = default, bool? createResponseEnabled = default, bool? interruptResponseEnabled = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
@@ -652,33 +662,33 @@ namespace Azure.AI.Projects.Agents
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
+                prefixPadding,
+                silenceDuration,
                 idleTimeout,
                 endOfUtteranceDetection,
-                speechDurationMs,
+                speechDuration,
                 removeFillerWords,
-                createResponse,
-                interruptResponse,
+                createResponseEnabled,
+                interruptResponseEnabled,
                 languages.ToList());
         }
 
         /// <summary> OpenAI semantic VAD turn-detection settings. </summary>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="eagerness"></param>
-        /// <param name="createResponse"></param>
-        /// <param name="interruptResponse"></param>
+        /// <param name="createResponseEnabled"></param>
+        /// <param name="interruptResponseEnabled"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSemanticVadTurnDetection VoiceAgentSemanticVadTurnDetection(bool? autoTruncate = default, RealtimeSemanticVadEagernessLevel? eagerness = default, bool? createResponse = default, bool? interruptResponse = default)
+        public static VoiceAgentSemanticVadTurnDetection VoiceAgentSemanticVadTurnDetection(bool? autoTruncate = default, RealtimeSemanticVadEagernessLevel? eagerness = default, bool? createResponseEnabled = default, bool? interruptResponseEnabled = default)
         {
             return new VoiceAgentSemanticVadTurnDetection(
                 VoiceAgentTurnDetectionType.SemanticVad,
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 eagerness,
-                createResponse,
-                interruptResponse);
+                createResponseEnabled,
+                interruptResponseEnabled);
         }
 
         /// <summary> Server-side echo cancellation settings for input audio. </summary>
@@ -768,8 +778,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="voiceLocale"> The enforced BCP-47 output locale. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
         /// <param name="speed"> The numeric output speed multiplier. Applies to all known `voice_type` values and defaults to 1. </param>
         /// <param name="voiceTemperature"> The voice variation temperature. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
-        /// <param name="customLexiconUrl"> The URL of a custom pronunciation lexicon. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
-        /// <param name="customTextNormalizationUrl"> The URL of a custom text-normalization configuration. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="customLexiconUri"> The URL of a custom pronunciation lexicon. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="customTextNormalizationUri"> The URL of a custom text-normalization configuration. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
         /// <param name="preferLocales"> Preferred BCP-47 locales for multilingual synthesis. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
         /// <param name="style"> The voice speaking style. Applies only when `voice_type` is `azure-standard`. </param>
         /// <param name="pitch"> The voice pitch adjustment. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
@@ -777,22 +787,22 @@ namespace Azure.AI.Projects.Agents
         /// <param name="customVoiceEndpointId"> The Azure custom-voice deployment endpoint identifier. Applies only when `voice_type` is `azure-custom`. </param>
         /// <param name="personalVoiceModel"> The Azure personal or avatar voice model. Applies only when `voice_type` is `azure-personal` or `avatar-voice-sync`. </param>
         /// <param name="outputAudioTimestampTypes"> Timestamp kinds to include with output audio. Applies to every `voice_type`. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentAudioOutputConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAudioOutputConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAudioOutputConfig VoiceAgentAudioOutputConfig(RealtimeAudioFormat format = default, string voice = default, VoiceType? voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUrl = default, Uri customTextNormalizationUrl = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default, IEnumerable<VoiceAgentAudioTimestampType> outputAudioTimestampTypes = default)
+        public static VoiceAgentAudioOutputConfiguration VoiceAgentAudioOutputConfiguration(RealtimeAudioFormat format = default, string voice = default, VoiceType? voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default, IEnumerable<VoiceAgentAudioTimestampType> outputAudioTimestampTypes = default)
         {
             preferLocales ??= new ChangeTrackingList<string>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<VoiceAgentAudioTimestampType>();
 
-            return new VoiceAgentAudioOutputConfig(
+            return new VoiceAgentAudioOutputConfiguration(
                 format,
                 voice,
                 voiceType,
                 voiceLocale,
                 speed,
                 voiceTemperature,
-                customLexiconUrl,
-                customTextNormalizationUrl,
+                customLexiconUri,
+                customTextNormalizationUri,
                 preferLocales.ToList(),
                 style,
                 pitch,
@@ -809,11 +819,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="opening"> An interruptible cue played before the first agent speech. </param>
         /// <param name="transfer"> A one-shot cue played after queued agent speech drains and before a committed call transfer. </param>
         /// <param name="closing"> A one-shot cue played after queued agent speech drains and before a committed session end. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSoundscapeConfig VoiceAgentSoundscapeConfig(VoiceAgentSoundscapeTrackConfig background = default, VoiceAgentSoundscapeWorkingTrackConfig working = default, VoiceAgentSoundscapeTrackConfig opening = default, VoiceAgentSoundscapeTrackConfig transfer = default, VoiceAgentSoundscapeTrackConfig closing = default)
+        public static VoiceAgentSoundscapeConfiguration VoiceAgentSoundscapeConfiguration(VoiceAgentSoundscapeTrackConfiguration background = default, VoiceAgentSoundscapeWorkingTrackConfiguration working = default, VoiceAgentSoundscapeTrackConfiguration opening = default, VoiceAgentSoundscapeTrackConfiguration transfer = default, VoiceAgentSoundscapeTrackConfiguration closing = default)
         {
-            return new VoiceAgentSoundscapeConfig(
+            return new VoiceAgentSoundscapeConfiguration(
                 background,
                 working,
                 opening,
@@ -825,79 +835,79 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A soundscape track with its own audio source and playback volume. </summary>
         /// <param name="source"> The required audio source for this track. </param>
         /// <param name="gain"> Linear playback gain from 0 to 1, independent of agent speech volume. If omitted, the service defaults to 1. A value of 0 mutes this track. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeTrackConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeTrackConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSoundscapeTrackConfig VoiceAgentSoundscapeTrackConfig(VoiceAgentSoundscapeSourceConfig source = default, double? gain = default)
+        public static VoiceAgentSoundscapeTrackConfiguration VoiceAgentSoundscapeTrackConfiguration(VoiceAgentSoundscapeSourceConfiguration source = default, double? gain = default)
         {
-            return new VoiceAgentSoundscapeTrackConfig(source, gain, additionalBinaryDataProperties: null);
+            return new VoiceAgentSoundscapeTrackConfiguration(source, gain, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A packaged sound selected from the service-managed catalogue. The service rejects unknown source fields and discriminator values. </summary>
         /// <param name="name"> The name of the packaged sound. Only the listed built-in sounds are accepted. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeSourceConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeSourceConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSoundscapeSourceConfig VoiceAgentSoundscapeSourceConfig(VoiceAgentSoundscapeSound name = default)
+        public static VoiceAgentSoundscapeSourceConfiguration VoiceAgentSoundscapeSourceConfiguration(VoiceAgentSoundscapeSound name = default)
         {
-            return new VoiceAgentSoundscapeSourceConfig("built_in", name, additionalBinaryDataProperties: null);
+            return new VoiceAgentSoundscapeSourceConfiguration("built_in", name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A working-loop track with a delay measured from the first pending non-call-control tool. </summary>
         /// <param name="source"> The required audio source for this track. </param>
         /// <param name="gain"> Linear playback gain from 0 to 1, independent of agent speech volume. If omitted, the service defaults to 1. A value of 0 mutes this track. </param>
         /// <param name="delay"> The delay in milliseconds before working audio starts, from 0 to 10000. If omitted, the service defaults to 1000 milliseconds. This delays only working audio, not tool execution, and is valid only on the working track. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeWorkingTrackConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeWorkingTrackConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSoundscapeWorkingTrackConfig VoiceAgentSoundscapeWorkingTrackConfig(VoiceAgentSoundscapeSourceConfig source = default, double? gain = default, TimeSpan? delay = default)
+        public static VoiceAgentSoundscapeWorkingTrackConfiguration VoiceAgentSoundscapeWorkingTrackConfiguration(VoiceAgentSoundscapeSourceConfiguration source = default, double? gain = default, TimeSpan? delay = default)
         {
-            return new VoiceAgentSoundscapeWorkingTrackConfig(source, gain, delay, additionalBinaryDataProperties: null);
+            return new VoiceAgentSoundscapeWorkingTrackConfiguration(source, gain, delay, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Fields shared by interim-response configurations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentLlmInterimResponseConfig"/> and <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentLlmInterimResponseConfiguration"/> and <see cref="Agents.VoiceAgentStaticInterimResponseConfiguration"/>.
         /// </summary>
         /// <param name="type"> The interim-response implementation. </param>
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
-        /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentInterimResponseConfig"/> instance for mocking. </returns>
+        /// <param name="latencyThreshold"> The latency threshold in milliseconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentInterimResponseConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentInterimResponseConfig VoiceAgentInterimResponseConfig(string @type = default, IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default)
+        public static VoiceAgentInterimResponseConfiguration VoiceAgentInterimResponseConfiguration(string @type = default, IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThreshold = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
 
-            return new UnknownVoiceAgentInterimResponseConfig(@type, triggers.ToList(), latencyThresholdMs, additionalBinaryDataProperties: null);
+            return new UnknownVoiceAgentInterimResponseConfiguration(@type, triggers.ToList(), latencyThreshold, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A static interim response selected from configured text. </summary>
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
-        /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
+        /// <param name="latencyThreshold"> The latency threshold in milliseconds. </param>
         /// <param name="texts"> Candidate text values for the interim response. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentStaticInterimResponseConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentStaticInterimResponseConfig VoiceAgentStaticInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, IEnumerable<string> texts = default)
+        public static VoiceAgentStaticInterimResponseConfiguration VoiceAgentStaticInterimResponseConfiguration(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThreshold = default, IEnumerable<string> texts = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
             texts ??= new ChangeTrackingList<string>();
 
-            return new VoiceAgentStaticInterimResponseConfig("static_interim_response", triggers.ToList(), latencyThresholdMs, additionalBinaryDataProperties: null, texts.ToList());
+            return new VoiceAgentStaticInterimResponseConfiguration("static_interim_response", triggers.ToList(), latencyThreshold, additionalBinaryDataProperties: null, texts.ToList());
         }
 
         /// <summary> An interim response generated by a language model. </summary>
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
-        /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
+        /// <param name="latencyThreshold"> The latency threshold in milliseconds. </param>
         /// <param name="model"> The model used to generate interim responses. </param>
         /// <param name="instructions"> Optional instructions for generating interim responses. </param>
         /// <param name="maxCompletionTokens"> The maximum completion-token count for an interim response. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentLlmInterimResponseConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentLlmInterimResponseConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentLlmInterimResponseConfig VoiceAgentLlmInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, string model = default, string instructions = default, int? maxCompletionTokens = default)
+        public static VoiceAgentLlmInterimResponseConfiguration VoiceAgentLlmInterimResponseConfiguration(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThreshold = default, string model = default, string instructions = default, int? maxCompletionTokens = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
 
-            return new VoiceAgentLlmInterimResponseConfig(
+            return new VoiceAgentLlmInterimResponseConfiguration(
                 "llm_interim_response",
                 triggers.ToList(),
-                latencyThresholdMs,
+                latencyThreshold,
                 additionalBinaryDataProperties: null,
                 model,
                 instructions,
@@ -914,11 +924,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="video"> Avatar video encoder and presentation settings. </param>
         /// <param name="scene"> Avatar placement and motion settings. </param>
         /// <param name="outputAuditAudio"> Whether audit audio is emitted with avatar output. Defaults to false. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentAvatarConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAvatarConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAvatarConfig VoiceAgentAvatarConfig(VoiceAgentAvatarType @type = default, string character = default, string style = default, bool? customized = default, VoiceAgentAvatarOutputProtocol? outputProtocol = default, string model = default, VoiceAgentAvatarVideoParams video = default, VoiceAgentAvatarScene scene = default, bool? outputAuditAudio = default)
+        public static VoiceAgentAvatarConfiguration VoiceAgentAvatarConfiguration(VoiceAgentAvatarType @type = default, string character = default, string style = default, bool? customized = default, VoiceAgentAvatarOutputProtocol? outputProtocol = default, string model = default, VoiceAgentAvatarVideoParameters video = default, VoiceAgentAvatarScene scene = default, bool? outputAuditAudio = default)
         {
-            return new VoiceAgentAvatarConfig(
+            return new VoiceAgentAvatarConfiguration(
                 @type,
                 character,
                 style,
@@ -937,11 +947,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="resolution"></param>
         /// <param name="background"></param>
         /// <param name="gopSize"></param>
-        /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoParams"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoParameters"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAvatarVideoParams VoiceAgentAvatarVideoParams(int? bitrate = default, VoiceAgentAvatarVideoCrop crop = default, VoiceAgentAvatarVideoResolution resolution = default, VoiceAgentAvatarVideoBackground background = default, int? gopSize = default)
+        public static VoiceAgentAvatarVideoParameters VoiceAgentAvatarVideoParameters(int? bitrate = default, VoiceAgentAvatarVideoCrop crop = default, VoiceAgentAvatarVideoResolution resolution = default, VoiceAgentAvatarVideoBackground background = default, int? gopSize = default)
         {
-            return new VoiceAgentAvatarVideoParams(
+            return new VoiceAgentAvatarVideoParameters(
                 bitrate,
                 crop,
                 resolution,
@@ -974,13 +984,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The avatar video background. </summary>
-        /// <param name="imageUrl"></param>
+        /// <param name="imageUri"></param>
         /// <param name="color"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoBackground"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAvatarVideoBackground VoiceAgentAvatarVideoBackground(Uri imageUrl = default, string color = default)
+        public static VoiceAgentAvatarVideoBackground VoiceAgentAvatarVideoBackground(Uri imageUri = default, string color = default)
         {
-            return new VoiceAgentAvatarVideoBackground(imageUrl, color, additionalBinaryDataProperties: null);
+            return new VoiceAgentAvatarVideoBackground(imageUri, color, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Avatar placement and motion settings. </summary>
@@ -1042,7 +1052,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUrl">
+        /// <param name="serverUri">
         /// The URL for the MCP server. One of `server_url`, `connector_id`, or
         ///   `tunnel_id` must be provided.
         /// </param>
@@ -1062,7 +1072,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentMcpTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = default, Uri serverUrl = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default, IDictionary<string, ToolConfig> toolConfigs = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
+        public static VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = default, Uri serverUri = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default, IDictionary<string, ToolConfig> toolConfigs = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
             allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
@@ -1072,7 +1082,7 @@ namespace Azure.AI.Projects.Agents
                 "mcp",
                 additionalBinaryDataProperties: null,
                 serverLabel,
-                serverUrl,
+                serverUri,
                 authorization,
                 serverDescription,
                 headers,
@@ -1116,13 +1126,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
         /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentSubagentConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentSubagentConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSubagentConfig VoiceAgentSubagentConfig(IEnumerable<VoiceAgentSubagent> subagents = default)
+        public static VoiceAgentSubagentConfiguration VoiceAgentSubagentConfiguration(IEnumerable<VoiceAgentSubagent> subagents = default)
         {
             subagents ??= new ChangeTrackingList<VoiceAgentSubagent>();
 
-            return new VoiceAgentSubagentConfig(subagents.ToList(), additionalBinaryDataProperties: null);
+            return new VoiceAgentSubagentConfiguration(subagents.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A sibling Foundry text agent that a voice agent may consult as a background specialist. </summary>
@@ -1170,14 +1180,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Post-call delivery configuration. </summary>
         /// <param name="destinations"> The destinations to notify. </param>
         /// <param name="include"> Additional content to include in each delivery. The transcript is always delivered. `audio` is not supported in this preview; the service rejects it when the agent version is saved. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentPostCallConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentPostCallConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentPostCallConfig VoiceAgentPostCallConfig(IEnumerable<VoiceAgentPostCallDestination> destinations = default, IEnumerable<VoiceAgentPostCallIncludeOption> include = default)
+        public static VoiceAgentPostCallConfiguration VoiceAgentPostCallConfiguration(IEnumerable<VoiceAgentPostCallDestination> destinations = default, IEnumerable<VoiceAgentPostCallIncludeOption> include = default)
         {
             destinations ??= new ChangeTrackingList<VoiceAgentPostCallDestination>();
             include ??= new ChangeTrackingList<VoiceAgentPostCallIncludeOption>();
 
-            return new VoiceAgentPostCallConfig(destinations.ToList(), include.ToList(), additionalBinaryDataProperties: null);
+            return new VoiceAgentPostCallConfiguration(destinations.ToList(), include.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1423,7 +1433,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ContainerSkill.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.InlineSkillParam"/> and <see cref="Agents.SkillReferenceParam"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.InlineSkill"/> and <see cref="Agents.SkillReference"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ContainerSkill"/> instance for mocking. </returns>
@@ -1432,31 +1442,31 @@ namespace Azure.AI.Projects.Agents
             return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The SkillReferenceParam. </summary>
+        /// <summary> The SkillReference. </summary>
         /// <param name="skillId"> The ID of the referenced skill. </param>
         /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
-        /// <returns> A new <see cref="Agents.SkillReferenceParam"/> instance for mocking. </returns>
-        public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
+        /// <returns> A new <see cref="Agents.SkillReference"/> instance for mocking. </returns>
+        public static SkillReference SkillReference(string skillId = default, string version = default)
         {
-            return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
+            return new SkillReference(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
         }
 
-        /// <summary> The InlineSkillParam. </summary>
+        /// <summary> The InlineSkill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
-        /// <returns> A new <see cref="Agents.InlineSkillParam"/> instance for mocking. </returns>
-        public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
+        /// <returns> A new <see cref="Agents.InlineSkill"/> instance for mocking. </returns>
+        public static InlineSkill InlineSkill(string name = default, string description = default, InlineSkillSource source = default)
         {
-            return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
+            return new InlineSkill(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
         }
 
         /// <summary> Inline skill payload. </summary>
         /// <param name="data"> Base64-encoded skill zip bundle. </param>
-        /// <returns> A new <see cref="Agents.InlineSkillSourceParam"/> instance for mocking. </returns>
-        public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
+        /// <returns> A new <see cref="Agents.InlineSkillSource"/> instance for mocking. </returns>
+        public static InlineSkillSource InlineSkillSource(string data = default)
         {
-            return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
+            return new InlineSkillSource("base64", "application/zip", data, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1546,7 +1556,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Version indicator determining which agent version backs the session.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VersionRefIndicator"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VersionReferenceIndicator"/>.
         /// </summary>
         /// <param name="type"> The type of version indicator. </param>
         /// <returns> A new <see cref="Agents.VersionIndicator"/> instance for mocking. </returns>
@@ -1557,10 +1567,10 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Version indicator that references a specific agent version by name. </summary>
         /// <param name="agentVersion"> The agent version identifier returned by the agent version APIs. </param>
-        /// <returns> A new <see cref="Agents.VersionRefIndicator"/> instance for mocking. </returns>
-        public static VersionRefIndicator VersionRefIndicator(string agentVersion = default)
+        /// <returns> A new <see cref="Agents.VersionReferenceIndicator"/> instance for mocking. </returns>
+        public static VersionReferenceIndicator VersionReferenceIndicator(string agentVersion = default)
         {
-            return new VersionRefIndicator(VersionIndicatorType.VersionRef, additionalBinaryDataProperties: null, agentVersion);
+            return new VersionReferenceIndicator(VersionIndicatorType.VersionRef, additionalBinaryDataProperties: null, agentVersion);
         }
 
         /// <summary> An agent session providing a long-lived compute sandbox for hosted agent invocations. </summary>
@@ -1713,12 +1723,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="codec"> The audio codec. </param>
         /// <param name="sampleRate"> The sample rate in Hz. </param>
         /// <param name="channels"> The number of audio channels. </param>
-        /// <param name="startOffsetMs"> The offset from the session start at which this segment begins. </param>
-        /// <param name="durationMs"> The duration of the audio segment. </param>
+        /// <param name="startOffset"> The offset from the session start at which this segment begins. </param>
+        /// <param name="duration"> The duration of the audio segment. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/content` route instead. </param>
         /// <returns> A new <see cref="Agents.VoiceAudioItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAudioItem VoiceAudioItem(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffsetMs = default, TimeSpan? durationMs = default, Uri blobUri = default)
+        public static VoiceAudioItem VoiceAudioItem(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffset = default, TimeSpan? duration = default, Uri blobUri = default)
         {
             return new VoiceAudioItem(
                 conversationId,
@@ -1728,8 +1738,8 @@ namespace Azure.AI.Projects.Agents
                 codec,
                 sampleRate,
                 channels,
-                startOffsetMs,
-                durationMs,
+                startOffset,
+                duration,
                 blobUri,
                 additionalBinaryDataProperties: null);
         }
@@ -1747,12 +1757,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="codec"> The audio codec. </param>
         /// <param name="sampleRate"> The sample rate in Hz. </param>
         /// <param name="channels"> The number of audio channels. </param>
-        /// <param name="startOffsetMs"> The offset from the session start at which this segment begins. </param>
-        /// <param name="durationMs"> The duration of the audio segment. </param>
+        /// <param name="startOffset"> The offset from the session start at which this segment begins. </param>
+        /// <param name="duration"> The duration of the audio segment. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the generated audio in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/generated/content` route instead. </param>
         /// <returns> A new <see cref="Agents.VoiceGeneratedAudioItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceGeneratedAudioItem VoiceGeneratedAudioItem(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffsetMs = default, TimeSpan? durationMs = default, Uri blobUri = default)
+        public static VoiceGeneratedAudioItem VoiceGeneratedAudioItem(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffset = default, TimeSpan? duration = default, Uri blobUri = default)
         {
             return new VoiceGeneratedAudioItem(
                 conversationId,
@@ -1762,8 +1772,8 @@ namespace Azure.AI.Projects.Agents
                 codec,
                 sampleRate,
                 channels,
-                startOffsetMs,
-                durationMs,
+                startOffset,
+                duration,
                 blobUri,
                 additionalBinaryDataProperties: null);
         }
@@ -1782,11 +1792,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sampleRate"> The sample rate of the recording in Hz, e.g. 24000. </param>
         /// <param name="channels"> The number of audio channels. The merged recording is stereo (`2`). </param>
         /// <param name="channelLayout"> The role assigned to each stereo channel. </param>
-        /// <param name="durationMs"> The total duration of the recording. </param>
+        /// <param name="duration"> The total duration of the recording. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the `/audio/content` route instead. </param>
         /// <returns> A new <see cref="Agents.VoiceRecording"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceRecording VoiceRecording(string conversationId = default, VoiceAudioContainerFormat format = default, int sampleRate = default, int channels = default, VoiceRecordingChannelLayout channelLayout = default, TimeSpan durationMs = default, Uri blobUri = default)
+        public static VoiceRecording VoiceRecording(string conversationId = default, VoiceAudioContainerFormat format = default, int sampleRate = default, int channels = default, VoiceRecordingChannelLayout channelLayout = default, TimeSpan duration = default, Uri blobUri = default)
         {
             return new VoiceRecording(
                 conversationId,
@@ -1794,7 +1804,7 @@ namespace Azure.AI.Projects.Agents
                 sampleRate,
                 channels,
                 channelLayout,
-                durationMs,
+                duration,
                 blobUri,
                 additionalBinaryDataProperties: null);
         }
@@ -1859,10 +1869,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUri"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <returns> A new <see cref="Agents.TelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyBinding TelephonyBinding(string id = default, string provider = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default)
+        public static TelephonyBinding TelephonyBinding(string id = default, string provider = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUri = default)
         {
             return new UnknownTelephonyBinding(
                 id,
@@ -1870,7 +1880,7 @@ namespace Azure.AI.Projects.Agents
                 connectionName,
                 label,
                 status,
-                incomingCallUrl,
+                incomingCallUri,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1879,12 +1889,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUri"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.TeamsPhoneExtensibilityTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TeamsPhoneExtensibilityTelephonyBinding TeamsPhoneExtensibilityTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default, string resourceAccountObjectId = default)
+        public static TeamsPhoneExtensibilityTelephonyBinding TeamsPhoneExtensibilityTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUri = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
             return new TeamsPhoneExtensibilityTelephonyBinding(
                 id,
@@ -1892,7 +1902,7 @@ namespace Azure.AI.Projects.Agents
                 connectionName,
                 label,
                 status,
-                incomingCallUrl,
+                incomingCallUri,
                 additionalBinaryDataProperties: null,
                 phoneNumber,
                 resourceAccountObjectId);
@@ -1903,11 +1913,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUri"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TwilioTelephonyBinding TwilioTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default)
+        public static TwilioTelephonyBinding TwilioTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUri = default, string phoneNumber = default)
         {
             return new TwilioTelephonyBinding(
                 id,
@@ -1915,7 +1925,7 @@ namespace Azure.AI.Projects.Agents
                 connectionName,
                 label,
                 status,
-                incomingCallUrl,
+                incomingCallUri,
                 additionalBinaryDataProperties: null,
                 phoneNumber);
         }
@@ -1929,11 +1939,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUri"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <returns> A new <see cref="Agents.TelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyBindingListItem TelephonyBindingListItem(string id = default, string provider = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default)
+        public static TelephonyBindingListItem TelephonyBindingListItem(string id = default, string provider = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUri = default, string etag = default)
         {
             return new UnknownTelephonyBindingListItem(
                 id,
@@ -1941,7 +1951,7 @@ namespace Azure.AI.Projects.Agents
                 connectionName,
                 label,
                 status,
-                incomingCallUrl,
+                incomingCallUri,
                 etag,
                 additionalBinaryDataProperties: null);
         }
@@ -1951,13 +1961,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUri"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.TeamsPhoneExtensibilityTelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TeamsPhoneExtensibilityTelephonyBindingListItem TeamsPhoneExtensibilityTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default, string resourceAccountObjectId = default)
+        public static TeamsPhoneExtensibilityTelephonyBindingListItem TeamsPhoneExtensibilityTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUri = default, string etag = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
             return new TeamsPhoneExtensibilityTelephonyBindingListItem(
                 id,
@@ -1965,7 +1975,7 @@ namespace Azure.AI.Projects.Agents
                 connectionName,
                 label,
                 status,
-                incomingCallUrl,
+                incomingCallUri,
                 etag,
                 additionalBinaryDataProperties: null,
                 phoneNumber,
@@ -1977,12 +1987,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUri"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TwilioTelephonyBindingListItem TwilioTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default)
+        public static TwilioTelephonyBindingListItem TwilioTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUri = default, string etag = default, string phoneNumber = default)
         {
             return new TwilioTelephonyBindingListItem(
                 id,
@@ -1990,7 +2000,7 @@ namespace Azure.AI.Projects.Agents
                 connectionName,
                 label,
                 status,
-                incomingCallUrl,
+                incomingCallUri,
                 etag,
                 additionalBinaryDataProperties: null,
                 phoneNumber);
@@ -2009,14 +2019,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="mediaConnectedOn"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
         /// <param name="agentSessionReadyOn"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
         /// <param name="endedOn"> The Unix timestamp (in seconds) for when the call ended. </param>
-        /// <param name="durationMs"> The call duration. </param>
+        /// <param name="duration"> The call duration. </param>
         /// <param name="endReason"> The service-generated reason that this single call ended, rather than the outcome of an overall outbound call job. Additional string codes may be returned. </param>
         /// <param name="providerStatusCode"> The provider status code associated with the terminal result. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the terminal result. </param>
         /// <param name="providerMessage"> The provider message associated with the terminal result. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallSummary"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallSummary TelephonyCallSummary(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedOn = default, DateTimeOffset? answeredOn = default, DateTimeOffset? mediaConnectedOn = default, DateTimeOffset? agentSessionReadyOn = default, DateTimeOffset? endedOn = default, TimeSpan? durationMs = default, TelephonyCallEndReason? endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default)
+        public static TelephonyCallSummary TelephonyCallSummary(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedOn = default, DateTimeOffset? answeredOn = default, DateTimeOffset? mediaConnectedOn = default, DateTimeOffset? agentSessionReadyOn = default, DateTimeOffset? endedOn = default, TimeSpan? duration = default, TelephonyCallEndReason? endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default)
         {
             return new TelephonyCallSummary(
                 id,
@@ -2031,7 +2041,7 @@ namespace Azure.AI.Projects.Agents
                 mediaConnectedOn,
                 agentSessionReadyOn,
                 endedOn,
-                durationMs,
+                duration,
                 endReason,
                 providerStatusCode,
                 providerSubCode,
@@ -2052,7 +2062,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="mediaConnectedOn"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
         /// <param name="agentSessionReadyOn"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
         /// <param name="endedOn"> The Unix timestamp (in seconds) for when the call ended. </param>
-        /// <param name="durationMs"> The call duration. </param>
+        /// <param name="duration"> The call duration. </param>
         /// <param name="endReason"> The service-generated reason that this single call ended, rather than the outcome of an overall outbound call job. Additional string codes may be returned. </param>
         /// <param name="providerStatusCode"> The provider status code associated with the terminal result. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the terminal result. </param>
@@ -2063,7 +2073,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eventsTruncated"> Whether older lifecycle events were omitted from the timeline. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallRecord"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallRecord TelephonyCallRecord(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedOn = default, DateTimeOffset? answeredOn = default, DateTimeOffset? mediaConnectedOn = default, DateTimeOffset? agentSessionReadyOn = default, DateTimeOffset? endedOn = default, TimeSpan? durationMs = default, TelephonyCallEndReason? endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default, TelephonyCallTiming timing = default, TelephonyCallTrace trace = default, IEnumerable<TelephonyCallLifecycleEvent> events = default, bool eventsTruncated = default)
+        public static TelephonyCallRecord TelephonyCallRecord(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedOn = default, DateTimeOffset? answeredOn = default, DateTimeOffset? mediaConnectedOn = default, DateTimeOffset? agentSessionReadyOn = default, DateTimeOffset? endedOn = default, TimeSpan? duration = default, TelephonyCallEndReason? endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default, TelephonyCallTiming timing = default, TelephonyCallTrace trace = default, IEnumerable<TelephonyCallLifecycleEvent> events = default, bool eventsTruncated = default)
         {
             events ??= new ChangeTrackingList<TelephonyCallLifecycleEvent>();
 
@@ -2080,7 +2090,7 @@ namespace Azure.AI.Projects.Agents
                 mediaConnectedOn,
                 agentSessionReadyOn,
                 endedOn,
-                durationMs,
+                duration,
                 endReason,
                 providerStatusCode,
                 providerSubCode,
@@ -2392,13 +2402,13 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
+        /// <param name="maxResultCount"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
         /// <param name="rankingOptions"> Ranking options for search. </param>
         /// <param name="filters"></param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
         /// <returns> A new <see cref="Agents.FileSearchToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static FileSearchToolboxTool FileSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, long? maxNumResults = default, FileSearchToolRankingOptions rankingOptions = default, BinaryData filters = default, IEnumerable<string> vectorStoreIds = default)
+        public static FileSearchToolboxTool FileSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, long? maxResultCount = default, FileSearchToolRankingOptions rankingOptions = default, BinaryData filters = default, IEnumerable<string> vectorStoreIds = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
             vectorStoreIds ??= new ChangeTrackingList<string>();
@@ -2409,7 +2419,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs,
                 additionalBinaryDataProperties: null,
-                maxNumResults,
+                maxResultCount,
                 rankingOptions,
                 filters,
                 vectorStoreIds.ToList());
@@ -2659,7 +2669,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -2675,7 +2685,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
         /// <returns> A new <see cref="Agents.A2AToolboxTool"/> instance for mocking. </returns>
-        public static A2AToolboxTool A2AToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
+        public static A2AToolboxTool A2AToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -2685,7 +2695,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs,
                 additionalBinaryDataProperties: null,
-                baseUrl,
+                baseUri,
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard,
@@ -2700,7 +2710,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -2716,7 +2726,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
+        public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -2726,7 +2736,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs,
                 additionalBinaryDataProperties: null,
-                baseUrl,
+                baseUri,
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard);
@@ -2941,11 +2951,11 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
-        /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
+        /// <param name="contentFilterConfiguration"> Responsible AI content filtering configuration. </param>
         /// <returns> A new <see cref="Agents.ToolboxPolicies"/> instance for mocking. </returns>
-        public static ToolboxPolicies ToolboxPolicies(ContentFilterConfiguration raiConfig = default)
+        public static ToolboxPolicies ToolboxPolicies(ContentFilterConfiguration contentFilterConfiguration = default)
         {
-            return new ToolboxPolicies(raiConfig, additionalBinaryDataProperties: null);
+            return new ToolboxPolicies(contentFilterConfiguration, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A specific version of a toolbox. </summary>
@@ -3141,7 +3151,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="bestScore"> Best normalized score observed from 0.0 to 1.0 for a comparatively evaluated job. Omitted otherwise and until a candidate completes evaluation. </param>
         /// <param name="latestPromotedCandidate"> Most recently promoted candidate for the job. Omitted if no candidates have been promoted. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationResultCandidateSummary"/> instance for mocking. </returns>
-        public static AgentOptimizationResultCandidateSummary AgentOptimizationResultCandidateSummary(int completedCandidateCount = default, string baselineId = default, string bestId = default, double? baselineScore = default, double? bestScore = default, AgentOptimizationCandidatePromotionInfo latestPromotedCandidate = default)
+        public static AgentOptimizationResultCandidateSummary AgentOptimizationResultCandidateSummary(int completedCandidateCount = default, string baselineId = default, string bestId = default, double? baselineScore = default, double? bestScore = default, AgentOptimizationCandidatePromotion latestPromotedCandidate = default)
         {
             return new AgentOptimizationResultCandidateSummary(
                 completedCandidateCount,
@@ -3156,10 +3166,10 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Promotion metadata recorded for a candidate. </summary>
         /// <param name="promotedOn"> Timestamp when promotion occurred, represented in Unix time. </param>
         /// <param name="promotedAgent"> Agent reference associated with the completed promotion. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationCandidatePromotionInfo"/> instance for mocking. </returns>
-        public static AgentOptimizationCandidatePromotionInfo AgentOptimizationCandidatePromotionInfo(DateTimeOffset promotedOn = default, AgentReference promotedAgent = default)
+        /// <returns> A new <see cref="Agents.AgentOptimizationCandidatePromotion"/> instance for mocking. </returns>
+        public static AgentOptimizationCandidatePromotion AgentOptimizationCandidatePromotion(DateTimeOffset promotedOn = default, AgentReference promotedAgent = default)
         {
-            return new AgentOptimizationCandidatePromotionInfo(promotedOn, promotedAgent, additionalBinaryDataProperties: null);
+            return new AgentOptimizationCandidatePromotion(promotedOn, promotedAgent, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Aggregated token usage for one optimization stage and model. </summary>
@@ -3187,12 +3197,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Average latency for one optimization stage and model. </summary>
         /// <param name="stage"> Optimization stage measured by this entry. </param>
         /// <param name="model"> Model name or deployment name measured by this entry. </param>
-        /// <param name="avgLatencyMs"> Average per-call latency, rounded to milliseconds. </param>
+        /// <param name="avgLatency"> Average per-call latency, rounded to milliseconds. </param>
         /// <param name="callCount"> Total number of calls contributing to this entry. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationJobLatency"/> instance for mocking. </returns>
-        public static AgentOptimizationJobLatency AgentOptimizationJobLatency(AgentOptimizationStage stage = default, string model = default, TimeSpan avgLatencyMs = default, long callCount = default)
+        public static AgentOptimizationJobLatency AgentOptimizationJobLatency(AgentOptimizationStage stage = default, string model = default, TimeSpan avgLatency = default, long callCount = default)
         {
-            return new AgentOptimizationJobLatency(stage, model, avgLatencyMs, callCount, additionalBinaryDataProperties: null);
+            return new AgentOptimizationJobLatency(stage, model, avgLatency, callCount, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -3373,18 +3383,18 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Configures the number, length, audio effects, and simulated user behavior of conversations. </summary>
-        /// <param name="maxNumTurns"> Hard limit on turns in each conversation. When omitted, the service defaults to 20. </param>
+        /// <param name="maxTurnCount"> Hard limit on turns in each conversation. When omitted, the service defaults to 20. </param>
         /// <param name="conversationRepetitions"> Number of independent conversation repetitions for each test case. Defaults to 1 when not specified at either the data-source or test-case level. </param>
-        /// <param name="desiredNumTurns"> Target number of turns in each conversation. The effective value cannot exceed the effective `max_num_turns`. When omitted, no target is set and the simulation model determines the conversation length dynamically from the scenario. </param>
+        /// <param name="desiredTurnCount"> Target number of turns in each conversation. The effective value cannot exceed the effective `max_num_turns`. When omitted, no target is set and the simulation model determines the conversation length dynamically from the scenario. </param>
         /// <param name="audioEffects"> Audio effects applied to voice conversation simulations. This property is ignored for text-only simulations. </param>
         /// <param name="userBehavior"> Conversation behavior of the simulated user. </param>
         /// <returns> A new <see cref="Agents.UserConversationSimulationConfiguration"/> instance for mocking. </returns>
-        public static UserConversationSimulationConfiguration UserConversationSimulationConfiguration(int? maxNumTurns = default, int? conversationRepetitions = default, int? desiredNumTurns = default, UserConversationSimulationAudioEffectsConfiguration audioEffects = default, UserConversationSimulationUserBehaviorConfiguration userBehavior = default)
+        public static UserConversationSimulationConfiguration UserConversationSimulationConfiguration(int? maxTurnCount = default, int? conversationRepetitions = default, int? desiredTurnCount = default, UserConversationSimulationAudioEffectsConfiguration audioEffects = default, UserConversationSimulationUserBehaviorConfiguration userBehavior = default)
         {
             return new UserConversationSimulationConfiguration(
-                maxNumTurns,
+                maxTurnCount,
                 conversationRepetitions,
-                desiredNumTurns,
+                desiredTurnCount,
                 audioEffects,
                 userBehavior,
                 additionalBinaryDataProperties: null);
@@ -3627,7 +3637,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evaluation"> Comparative evaluation summary. Omitted when this candidate was not comparatively evaluated. </param>
         /// <param name="promotion"> Promotion metadata. Omitted if this candidate has not been promoted. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationCandidate"/> instance for mocking. </returns>
-        public static AgentOptimizationCandidate AgentOptimizationCandidate(string candidateId = default, string jobId = default, string name = default, AgentOptimizationCandidateStatus status = default, DateTimeOffset startedOn = default, AgentOptimizationCandidateOutput output = default, string rationale = default, string agentVersion = default, AgentOptimizationCandidateEvaluation evaluation = default, AgentOptimizationCandidatePromotionInfo promotion = default)
+        public static AgentOptimizationCandidate AgentOptimizationCandidate(string candidateId = default, string jobId = default, string name = default, AgentOptimizationCandidateStatus status = default, DateTimeOffset startedOn = default, AgentOptimizationCandidateOutput output = default, string rationale = default, string agentVersion = default, AgentOptimizationCandidateEvaluation evaluation = default, AgentOptimizationCandidatePromotion promotion = default)
         {
             return new AgentOptimizationCandidate(
                 candidateId,
@@ -3724,17 +3734,17 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Comparative evaluation summary for a candidate. </summary>
         /// <param name="score"> Average composite score across evaluated tasks. Omitted until scoring produces an aggregate score. </param>
         /// <param name="avgTokens"> Average total tokens consumed per task. Omitted when token usage was not measured. </param>
-        /// <param name="avgLatencyMs"> Average end-to-end latency per task, rounded to milliseconds. </param>
+        /// <param name="avgLatency"> Average end-to-end latency per task, rounded to milliseconds. </param>
         /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. Omitted when unavailable. </param>
         /// <param name="evalRunId"> Foundry evaluation run identifier used to score this candidate. Omitted when unavailable. </param>
         /// <param name="completedOn"> Timestamp when full candidate evaluation completed, represented in Unix time. Omitted when unavailable. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationCandidateEvaluation"/> instance for mocking. </returns>
-        public static AgentOptimizationCandidateEvaluation AgentOptimizationCandidateEvaluation(double? score = default, double? avgTokens = default, TimeSpan? avgLatencyMs = default, string evalId = default, string evalRunId = default, DateTimeOffset? completedOn = default)
+        public static AgentOptimizationCandidateEvaluation AgentOptimizationCandidateEvaluation(double? score = default, double? avgTokens = default, TimeSpan? avgLatency = default, string evalId = default, string evalRunId = default, DateTimeOffset? completedOn = default)
         {
             return new AgentOptimizationCandidateEvaluation(
                 score,
                 avgTokens,
-                avgLatencyMs,
+                avgLatency,
                 evalId,
                 evalRunId,
                 completedOn,

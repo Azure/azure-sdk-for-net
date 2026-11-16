@@ -571,10 +571,10 @@ public class AgentsTests : AgentsTestBase
         // Create
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
-        Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
-        Assert.That(((VersionRefIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionReferenceIndicator)));
+        Assert.That(((VersionReferenceIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -584,10 +584,10 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session1.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
         ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
-        Assert.That(session2.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
-        Assert.That(((VersionRefIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session2.VersionIndicator, Is.InstanceOf<VersionReferenceIndicator>());
+        Assert.That(((VersionReferenceIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -598,8 +598,8 @@ public class AgentsTests : AgentsTestBase
         // Get
         ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         Assert.That(session.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
-        Assert.That(session.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
-        Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session.VersionIndicator, Is.InstanceOf<VersionReferenceIndicator>());
+        Assert.That(((VersionReferenceIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         // Stop
         await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
@@ -652,7 +652,7 @@ public class AgentsTests : AgentsTestBase
                 await agentsClient.CreateSessionAsync(
                     agentName: agentVersion.Name,
                     agentSessionId: $"{sessionIdBase}_{PAGE_SIZE - i}",
-                    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+                    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
                 );
             }
             catch
@@ -706,7 +706,7 @@ public class AgentsTests : AgentsTestBase
             ProjectAgentSession session = await agentsClient.CreateSessionAsync(
                 agentName: agentVersion.Name,
                 agentSessionId: sessionName,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+                versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
             );
         }
         finally
@@ -723,7 +723,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("weather_openapi.json");
@@ -782,7 +782,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("test.txt");
@@ -999,7 +999,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
-        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -1009,7 +1009,7 @@ public class AgentsTests : AgentsTestBase
         await agentsClient.DisableAgentAsync(agentVersion.Name);
         try
         {
-            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             Assert.Fail("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -1017,7 +1017,7 @@ public class AgentsTests : AgentsTestBase
             Assert.That(ex.Status, Is.EqualTo(403));
         }
         await agentsClient.EnableAgentAsync(agentVersion.Name);
-        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -1031,7 +1031,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
+        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
         ProjectsAgentVersion newAgentVersion = await GetAgentVersion(agentsClient);
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
         string opId = IsAsync ? "bdb68305-c2a7-11f1-8f16-f4289d3215d4" : "c58cf2b5-c2a7-11f1-96e3-f4289d3215d4";

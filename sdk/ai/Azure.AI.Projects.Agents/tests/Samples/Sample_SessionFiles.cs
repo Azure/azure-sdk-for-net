@@ -38,7 +38,7 @@ public class Sample_SessionFiles : SamplesBase
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -117,7 +117,7 @@ public class Sample_SessionFiles : SamplesBase
         ProjectAgentSession session = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)

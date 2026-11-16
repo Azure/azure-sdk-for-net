@@ -23,7 +23,7 @@ McpToolboxTool mcp = new(serverLabel: "api-specs")
 };
 ToolboxPolicies raiPolicies = new()
 {
-    RaiConfig = new(raiPolicyName)
+    ContentFilterConfiguration = new(raiPolicyName)
 };
 ToolboxVersion toolBox = toolboxClient.CreateVersion(
     name: "myToolbox",
@@ -42,7 +42,7 @@ McpToolboxTool mcp = new(serverLabel: "api-specs")
 };
 ToolboxPolicies raiPolicies = new()
 {
-    RaiConfig = new(raiPolicyName)
+    ContentFilterConfiguration = new(raiPolicyName)
 };
 ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
     name: "myToolbox",

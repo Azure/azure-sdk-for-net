@@ -47,7 +47,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         };
         ToolboxPolicies raiPolicies = new()
         {
-            RaiConfig = new(raiPolicyName)
+            ContentFilterConfiguration = new(raiPolicyName)
         };
         ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
             name: "myToolbox",
@@ -159,7 +159,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         };
         ToolboxPolicies raiPolicies = new()
         {
-            RaiConfig = new(raiPolicyName)
+            ContentFilterConfiguration = new(raiPolicyName)
         };
         ToolboxVersion toolBox = toolboxClient.CreateVersion(
             name: "myToolbox",

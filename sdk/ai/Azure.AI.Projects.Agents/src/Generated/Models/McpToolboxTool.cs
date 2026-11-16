@@ -139,9 +139,6 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
-
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }
 

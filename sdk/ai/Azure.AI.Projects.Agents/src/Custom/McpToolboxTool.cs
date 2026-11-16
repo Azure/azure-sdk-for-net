@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
@@ -22,4 +23,7 @@ public partial class McpToolboxTool
     /// </summary>
     [CodeGenMember("ServerUrl")]
     public Uri ServerUri { get; set; }
+
+    /// <summary> Gets the AllowedCallers. </summary>
+    public IList<CallableToolAllowedCaller> AllowedCallers { get; }
 }
