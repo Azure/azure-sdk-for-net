@@ -73,12 +73,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         internal SecurityTokenResult() { }
         [Newtonsoft.Json.JsonPropertyAttribute("exception")]
         public System.Exception Exception { get { throw null; } }
+        [Newtonsoft.Json.JsonPropertyAttribute("expiresOn")]
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.Security.Claims.ClaimsPrincipal Principal { get { throw null; } }
         [Newtonsoft.Json.JsonPropertyAttribute("status")]
         public Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenStatus Status { get { throw null; } }
         public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Empty() { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Error(System.Exception ex) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Success(System.Security.Claims.ClaimsPrincipal principal) { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Success(System.Security.Claims.ClaimsPrincipal principal, System.DateTimeOffset? expiresOn) { throw null; }
     }
     public enum SecurityTokenStatus
     {
@@ -148,6 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRConnectionDetail
     {
         public SignalRConnectionDetail() { }
+        public System.DateTimeOffset? AuthenticationExpiresOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Security.Claims.Claim> Claims { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
@@ -156,6 +160,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public SignalRConnectionInfo() { }
         [Newtonsoft.Json.JsonPropertyAttribute("accessToken")]
         public string AccessToken { get { throw null; } set { } }
+        [Newtonsoft.Json.JsonPropertyAttribute("tokenLifetimeSeconds", NullValueHandling=Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? TokenLifetimeSeconds { get { throw null; } set { } }
         [Newtonsoft.Json.JsonPropertyAttribute("url")]
         public string Url { get { throw null; } set { } }
     }
@@ -164,6 +170,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRConnectionInfoAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
     {
         public SignalRConnectionInfoAttribute() { }
+        public bool CloseOnAuthenticationExpiration { get { throw null; } set { } }
+        public bool EnableAuthenticationRefresh { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
+    }
+    [Microsoft.Azure.WebJobs.Description.BindingAttribute]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
+    public partial class SignalRRefreshAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
+    {
+        public SignalRRefreshAttribute() { }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string ConnectionToken { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
@@ -230,6 +248,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRNegotiationAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
     {
         public SignalRNegotiationAttribute() { }
+        public bool CloseOnAuthenticationExpiration { get { throw null; } set { } }
+        public bool EnableAuthenticationRefresh { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
     public partial class SignalROptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {

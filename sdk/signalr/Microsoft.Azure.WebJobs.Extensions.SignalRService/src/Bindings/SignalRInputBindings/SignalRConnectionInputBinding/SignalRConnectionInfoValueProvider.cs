@@ -35,6 +35,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         private object GetUserTypeInfo()
         {
+            if (_info == null)
+            {
+                return null;
+            }
+
             if (Type == typeof(JObject))
             {
                 return JObject.FromObject(_info);

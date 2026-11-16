@@ -77,6 +77,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             var signalRConnectionInfoAttributeRule = context.AddBindingRule<SignalRConnectionInfoAttribute>();
             signalRConnectionInfoAttributeRule.Bind(_inputBindingProvider);
 
+            var signalRRefreshAttributeRule = context.AddBindingRule<SignalRRefreshAttribute>();
+            signalRRefreshAttributeRule.Bind(_inputBindingProvider);
+
             var securityTokenValidationAttributeRule = context.AddBindingRule<SecurityTokenValidationAttribute>();
             securityTokenValidationAttributeRule.Bind(_inputBindingProvider);
 

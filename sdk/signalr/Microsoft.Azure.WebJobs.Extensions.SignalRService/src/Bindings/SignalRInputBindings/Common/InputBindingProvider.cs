@@ -33,6 +33,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 return Task.FromResult<IBinding>(new SignalRConnectionInputBinding(context, configuration, nameResolver, securityTokenValidator, signalRConnectionInfoConfigurer));
             }
+            if (parameterInfo.GetCustomAttribute<SignalRRefreshAttribute>() != null)
+            {
+                return Task.FromResult<IBinding>(new SignalRRefreshInputBinding(context, configuration, nameResolver, securityTokenValidator, signalRConnectionInfoConfigurer));
+            }
             if (parameterInfo.GetCustomAttribute<SecurityTokenValidationAttribute>() != null)
             {
                 return Task.FromResult<IBinding>(new SecurityTokenValidationInputBinding(securityTokenValidator));
