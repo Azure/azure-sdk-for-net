@@ -87,6 +87,11 @@ namespace Azure.Storage
             }
 
             RequestHeaders requestHeaders = message.Request.Headers;
+            if (requestHeaders.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+            {
+                return false;
+            }
+
             return requestHeaders.Contains(HttpHeader.Names.IfMatch) ||
                    requestHeaders.Contains(HttpHeader.Names.IfNoneMatch) ||
                    requestHeaders.Contains(HttpHeader.Names.IfModifiedSince) ||

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where conditional create/write flows using structured-message upload validation could classify `409 *AlreadyExists` responses as non-errors, potentially resulting in `InvalidDataException` instead of the expected `RequestFailedException`.
+
 ### Other Changes
 
 ## 12.29.0-beta.1 (2026-11-05)
