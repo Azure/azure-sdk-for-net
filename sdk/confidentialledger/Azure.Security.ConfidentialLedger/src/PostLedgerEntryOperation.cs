@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Security.ConfidentialLedger.Models;
 
 namespace Azure.Security.ConfidentialLedger
 {
@@ -82,8 +83,15 @@ namespace Azure.Security.ConfidentialLedger
         public PostLedgerEntryOperation(string transactionId, Response rawResponse)
         {
             _id = transactionId;
+            CompletedState = TransactionState.Committed;
             _operationInternal = OperationInternal.Succeeded(rawResponse);
         }
+
+        /// <summary>
+        /// The final transaction state once the operation has completed successfully; <see langword="null"/>
+        /// while the operation is pending or if it failed.
+        /// </summary>
+        internal TransactionState? CompletedState { get; private set; }
 
         /// <summary>
         /// A constructor for mocking.
@@ -153,6 +161,7 @@ namespace Azure.Security.ConfidentialLedger
                 .GetString();
             if (status != "Pending")
             {
+                CompletedState = new TransactionState(status);
                 return OperationState.Success(statusResponse);
             }
             return OperationState.Pending(statusResponse);
@@ -227,6 +236,7 @@ namespace Azure.Security.ConfidentialLedger
                     // Swap the public Id from the gateway operation id to the CCF transaction id
                     // so downstream code can use it with GetReceipt / GetLedgerEntry / etc.
                     _id = transactionId;
+                    CompletedState = TransactionState.Committed;
                     return OperationState.Success(statusResponse);
 
                 case "failed":

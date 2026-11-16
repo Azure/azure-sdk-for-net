@@ -9,13 +9,13 @@ You can specify a `collectionId` when posting a ledger entry to organize your da
 ```C# Snippet:ConfidentialLedger_Collection
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
-    RequestContent.Create(
-        new { contents = "Hello from Chris!", collectionId = "Chris' messages" }));
+    new LedgerEntry("Hello from Chris!"),
+    collectionId: "Chris' messages");
 
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
-    RequestContent.Create(
-        new { contents = "Hello from Allison!", collectionId = "Allison's messages" }));
+    new LedgerEntry("Hello from Allison!"),
+    collectionId: "Allison's messages");
 ```
 
 ## Retrieve entries without specifying a collection
@@ -25,41 +25,28 @@ When no collection ID is specified, entries are stored in the default collection
 ```C# Snippet:ConfidentialLedger_NoCollectionId
 postOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
-    RequestContent.Create(
-        new { contents = "Hello world!" }));
+    new LedgerEntry("Hello world!"));
 
-string content = postOperation.GetRawResponse().Content.ToString();
-transactionId = postOperation.Id;
-string collectionId = "subledger:0";
+transactionId = postOperation.Value.TransactionId;
+string collectionId = postOperation.Value.CollectionId; // "subledger:0"
 
 // Try fetching the ledger entry until it is "loaded".
-Response getByCollectionResponse = default;
-JsonElement rootElement = default;
-bool loaded = false;
-
-while (!loaded)
+LedgerQueryResult queryResult;
+do
 {
     // Provide both the transactionId and collectionId.
-    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
-    rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
-    loaded = rootElement.GetProperty("state").GetString() != "Loading";
+    queryResult = ledgerClient.GetLedgerEntry(transactionId, collectionId).Value;
 }
+while (queryResult.State == ConfidentialLedgerQueryState.Loading);
 
-string contents = rootElement
-    .GetProperty("entry")
-    .GetProperty("contents")
-    .GetString();
+string contents = queryResult.Entry.Contents;
 
 Console.WriteLine(contents); // "Hello world!"
 
 // Now just provide the transactionId.
-getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
+queryResult = ledgerClient.GetLedgerEntry(transactionId).Value;
 
-string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
-    .RootElement
-    .GetProperty("entry")
-    .GetProperty("collectionId")
-    .GetString();
+string collectionId2 = queryResult.Entry.CollectionId;
 
 Console.WriteLine($"{collectionId} == {collectionId2}");
 ```

@@ -17,13 +17,12 @@ var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.c
 Use `PostLedgerEntry` to write an entry. The operation returns a transaction ID that you can use to check status and retrieve a receipt.
 
 ```C# Snippet:ConfidentialLedger_AppendToLedger
-Operation postOperation = ledgerClient.PostLedgerEntry(
+Operation<LedgerWriteResult> postOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
-    RequestContent.Create(
-        new { contents = "Hello world!" }));
+    new LedgerEntry("Hello world!"));
 
-string transactionId = postOperation.Id;
-Console.WriteLine($"Appended transaction with Id: {transactionId}");
+string transactionId = postOperation.Value.TransactionId;
+Console.WriteLine($"Appended transaction with Id: {transactionId} to collection {postOperation.Value.CollectionId}");
 ```
 
 ## Check transaction status
@@ -31,23 +30,15 @@ Console.WriteLine($"Appended transaction with Id: {transactionId}");
 After appending an entry you can verify that the transaction has been committed.
 
 ```C# Snippet:ConfidentialLedger_GetStatus
-Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
-
-string status = JsonDocument.Parse(statusResponse.Content)
-    .RootElement
-    .GetProperty("state")
-    .GetString();
+TransactionStatus transactionStatus = ledgerClient.GetTransactionStatus(transactionId).Value;
+TransactionState status = transactionStatus.State;
 
 Console.WriteLine($"Transaction status: {status}");
 
 // Wait for the entry to be committed
-while (status == "Pending")
+while (status == TransactionState.Pending)
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
-    status = JsonDocument.Parse(statusResponse.Content)
-        .RootElement
-        .GetProperty("state")
-        .GetString();
+    status = ledgerClient.GetTransactionStatus(transactionId).Value.State;
 }
 
 Console.WriteLine($"Transaction status: {status}");
