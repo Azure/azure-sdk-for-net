@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -346,13 +346,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
-        public async Task TypedGetLedgerIdentityReturnsModel()
+        public async Task TypedGetLedgerIdentityInformationReturnsModel()
         {
             var identityClient = InstrumentClient(new ConfidentialLedgerCertificateClient(
                 new Uri("https://identity.confidential-ledger.core.azure.com"),
                 CreateCertificateClientOptions()));
 
-            Response<LedgerIdentityInformation> identity = await identityClient.GetLedgerIdentityAsync("chrissconfidentialledger");
+            Response<LedgerIdentityInformation> identity = await identityClient.GetLedgerIdentityInformationAsync("chrissconfidentialledger");
 
             Assert.AreEqual("chrissconfidentialledger", identity.Value.LedgerId);
             StringAssert.StartsWith("-----BEGIN CERTIFICATE-----", identity.Value.LedgerTlsCertificate);

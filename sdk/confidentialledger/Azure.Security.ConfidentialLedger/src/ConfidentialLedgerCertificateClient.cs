@@ -44,9 +44,9 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         }
 
         /// <summary>
-        /// Parses the response from <see cref="GetLedgerIdentity(string, RequestContext)"/> or <see cref="GetLedgerIdentityAsync(string, RequestContext)"/>.
+        /// Parses the response from <see cref="GetLedgerIdentity"/> or <see cref="GetLedgerIdentityAsync"/>.
         /// </summary>
-        /// <param name="getIdentityResponse">The response from <see cref="GetLedgerIdentity(string, RequestContext)"/> or <see cref="GetLedgerIdentityAsync(string, RequestContext)"/>.</param>
+        /// <param name="getIdentityResponse">The response from <see cref="GetLedgerIdentity"/> or <see cref="GetLedgerIdentityAsync"/>.</param>
         /// <returns>The <see cref="X509Certificate2"/>.</returns>
         internal static X509Certificate2 ParseCertificate(Response getIdentityResponse)
         {

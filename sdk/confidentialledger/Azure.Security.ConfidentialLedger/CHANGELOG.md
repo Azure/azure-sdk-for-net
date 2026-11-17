@@ -6,11 +6,9 @@
 
 - Added typed `PostLedgerEntry`/`PostLedgerEntryAsync` overloads that accept a `LedgerEntry` and return `Operation<LedgerWriteResult>`. When the operation completes, `Value.TransactionId`, `Value.CollectionId` and `Value.State` are populated, so callers no longer need to parse the response JSON or read the `x-ms-ccf-transaction-id` header.
 - Added typed merge-patch overloads that accept and return models: `CreateOrUpdateUser(string, LedgerUser)`, `CreateOrUpdateLedgerUser(string, LedgerUserMultipleRoles)`, `UpdateRuntimeOptionsStable(JsRuntimeOptions)` and `UpdateUserDefinedRoleStable(UserDefinedRoles)`, each with an async counterpart. Only properties that are set are sent, matching JSON merge-patch semantics.
-- Added the `LedgerIdentityInformation` model and typed `ConfidentialLedgerCertificateClient.GetLedgerIdentity(string, CancellationToken)`/`GetLedgerIdentityAsync` overloads that return `Response<LedgerIdentityInformation>`.
+- Added the `LedgerIdentityInformation` model and `ConfidentialLedgerCertificateClient.GetLedgerIdentityInformation`/`GetLedgerIdentityInformationAsync` methods that return `Response<LedgerIdentityInformation>`. The existing `GetLedgerIdentity`/`GetLedgerIdentityAsync` methods are unchanged and still return the raw `Response`.
 
 ### Breaking Changes
-
-- The `RequestContext` parameter of the protocol `ConfidentialLedgerCertificateClient.GetLedgerIdentity(string, RequestContext)`/`GetLedgerIdentityAsync` methods is now required. This disambiguates them from the new typed overloads. Calls such as `GetLedgerIdentity(ledgerId)` now bind to the typed overload; to keep receiving the raw `Response`, pass `new RequestContext()`.
 
 ### Bugs Fixed
 

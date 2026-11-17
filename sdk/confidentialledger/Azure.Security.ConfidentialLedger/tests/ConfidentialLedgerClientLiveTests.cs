@@ -103,7 +103,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
-            var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId, new RequestContext()).ConfigureAwait(false);
+            var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId, new()).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }

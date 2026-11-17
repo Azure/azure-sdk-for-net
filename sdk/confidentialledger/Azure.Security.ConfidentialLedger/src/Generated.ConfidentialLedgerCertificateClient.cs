@@ -52,7 +52,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentityAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context)
+        public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 
@@ -87,7 +87,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentity(string,RequestContext)']/*" />
-        public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context)
+        public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 
@@ -111,7 +111,8 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LedgerIdentityInformation> GetLedgerIdentity(string ledgerId, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Response<LedgerIdentityInformation> GetLedgerIdentityInformation(string ledgerId, CancellationToken cancellationToken = default)
         {
             Response result = GetLedgerIdentity(ledgerId, new RequestContext { CancellationToken = cancellationToken });
             return Response.FromValue((LedgerIdentityInformation)result, result);
@@ -123,7 +124,8 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LedgerIdentityInformation>> GetLedgerIdentityAsync(string ledgerId, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LedgerIdentityInformation>> GetLedgerIdentityInformationAsync(string ledgerId, CancellationToken cancellationToken = default)
         {
             Response result = await GetLedgerIdentityAsync(ledgerId, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
             return Response.FromValue((LedgerIdentityInformation)result, result);

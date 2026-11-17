@@ -213,10 +213,10 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint) { }
         public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint, Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetLedgerIdentity(string ledgerId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Certificate.LedgerIdentityInformation> GetLedgerIdentity(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Certificate.LedgerIdentityInformation>> GetLedgerIdentityAsync(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetLedgerIdentity(string ledgerId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Certificate.LedgerIdentityInformation> GetLedgerIdentityInformation(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Certificate.LedgerIdentityInformation>> GetLedgerIdentityInformationAsync(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConfidentialLedgerCertificateClientOptions : Azure.Core.ClientOptions
     {
