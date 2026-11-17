@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.NetworkSecurity
         public static void WriteBase64UrlStringValue(this Utf8JsonWriter writer, ReadOnlySpan<byte> source)
         {
             byte[] encoded = new byte[Base64.GetMaxEncodedToUtf8Length(source.Length)];
-            OperationStatus status = Base64.EncodeToUtf8(source, encoded, out int bytesConsumed, out int bytesWritten);
-            if (status != OperationStatus.Done || bytesConsumed != source.Length)
+            System.Buffers.OperationStatus status = Base64.EncodeToUtf8(source, encoded, out int bytesConsumed, out int bytesWritten);
+            if (status != System.Buffers.OperationStatus.Done || bytesConsumed != source.Length)
             {
                 throw new InvalidOperationException("Base64Url encoding did not complete.");
             }

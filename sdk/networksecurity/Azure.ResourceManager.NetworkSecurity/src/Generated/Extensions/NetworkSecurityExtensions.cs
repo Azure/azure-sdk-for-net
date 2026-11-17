@@ -129,6 +129,96 @@ namespace Azure.ResourceManager.NetworkSecurity
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="AgentFabricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityArmClient.GetAgentFabricResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AgentFabricResource"/> object. </returns>
+        public static AgentFabricResource GetAgentFabricResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkSecurityArmClient(client).GetAgentFabricResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MemberResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityArmClient.GetMemberResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MemberResource"/> object. </returns>
+        public static MemberResource GetMemberResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkSecurityArmClient(client).GetMemberResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PolicyGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityArmClient.GetPolicyGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PolicyGroupResource"/> object. </returns>
+        public static PolicyGroupResource GetPolicyGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkSecurityArmClient(client).GetPolicyGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ClusterAssociationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityArmClient.GetClusterAssociationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ClusterAssociationResource"/> object. </returns>
+        public static ClusterAssociationResource GetClusterAssociationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkSecurityArmClient(client).GetClusterAssociationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EgressTrustBundleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityArmClient.GetEgressTrustBundleResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EgressTrustBundleResource"/> object. </returns>
+        public static EgressTrustBundleResource GetEgressTrustBundleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkSecurityArmClient(client).GetEgressTrustBundleResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of NeuroShields in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -184,6 +274,116 @@ namespace Azure.ResourceManager.NetworkSecurity
         }
 
         /// <summary>
+        /// Gets a collection of AgentFabrics in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetAgentFabrics()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of AgentFabrics and their operations over a AgentFabricResource. </returns>
+        public static AgentFabricCollection GetAgentFabrics(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetAgentFabrics();
+        }
+
+        /// <summary>
+        /// Get a AgentFabric
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetAgentFabricAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="agentFabricName"> The name of the AgentFabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AgentFabricResource>> GetAgentFabricAsync(this ResourceGroupResource resourceGroupResource, string agentFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetAgentFabricAsync(agentFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AgentFabric
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetAgentFabric(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="agentFabricName"> The name of the AgentFabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AgentFabricResource> GetAgentFabric(this ResourceGroupResource resourceGroupResource, string agentFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetAgentFabric(agentFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of PolicyGroups in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetPolicyGroups()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of PolicyGroups and their operations over a PolicyGroupResource. </returns>
+        public static PolicyGroupCollection GetPolicyGroups(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetPolicyGroups();
+        }
+
+        /// <summary>
+        /// Get a PolicyGroup
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetPolicyGroupAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="policyGroupName"> The name of the PolicyGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PolicyGroupResource>> GetPolicyGroupAsync(this ResourceGroupResource resourceGroupResource, string policyGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetPolicyGroupAsync(policyGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a PolicyGroup
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetPolicyGroup(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="policyGroupName"> The name of the PolicyGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PolicyGroupResource> GetPolicyGroup(this ResourceGroupResource resourceGroupResource, string policyGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetPolicyGroup(policyGroupName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all NeuroShield resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -224,6 +424,78 @@ namespace Azure.ResourceManager.NetworkSecurity
         }
 
         /// <summary>
+        /// List AgentFabric resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetAgentFabricsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AgentFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AgentFabricResource> GetAgentFabricsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetAgentFabricsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List AgentFabric resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetAgentFabrics(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AgentFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AgentFabricResource> GetAgentFabrics(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetAgentFabrics(cancellationToken);
+        }
+
+        /// <summary>
+        /// List PolicyGroup resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetPolicyGroupsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PolicyGroupResource> GetPolicyGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetPolicyGroupsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List PolicyGroup resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetPolicyGroups(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PolicyGroupResource> GetPolicyGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetPolicyGroups(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the status of an asynchronous NeuroShield operation.
         /// <item>
         /// <term> Mocking. </term>
@@ -259,6 +531,44 @@ namespace Azure.ResourceManager.NetworkSecurity
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetNeuroShieldOperationStatus(location, operationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<OperationStatusResult>> GetAsync(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.Get(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<OperationStatusResult> Get(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
         }
     }
 }

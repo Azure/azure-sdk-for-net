@@ -70,5 +70,50 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
             NeuroShieldMitigationResource.ValidateResourceId(id);
             return new NeuroShieldMitigationResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="AgentFabricResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AgentFabricResource"/> object. </returns>
+        public virtual AgentFabricResource GetAgentFabricResource(ResourceIdentifier id)
+        {
+            AgentFabricResource.ValidateResourceId(id);
+            return new AgentFabricResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MemberResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MemberResource"/> object. </returns>
+        public virtual MemberResource GetMemberResource(ResourceIdentifier id)
+        {
+            MemberResource.ValidateResourceId(id);
+            return new MemberResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PolicyGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyGroupResource"/> object. </returns>
+        public virtual PolicyGroupResource GetPolicyGroupResource(ResourceIdentifier id)
+        {
+            PolicyGroupResource.ValidateResourceId(id);
+            return new PolicyGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ClusterAssociationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterAssociationResource"/> object. </returns>
+        public virtual ClusterAssociationResource GetClusterAssociationResource(ResourceIdentifier id)
+        {
+            ClusterAssociationResource.ValidateResourceId(id);
+            return new ClusterAssociationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EgressTrustBundleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EgressTrustBundleResource"/> object. </returns>
+        public virtual EgressTrustBundleResource GetEgressTrustBundleResource(ResourceIdentifier id)
+        {
+            EgressTrustBundleResource.ValidateResourceId(id);
+            return new EgressTrustBundleResource(Client, id);
+        }
     }
 }

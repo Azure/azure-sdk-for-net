@@ -95,5 +95,135 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
 
             return GetNeuroShields().Get(neuroShieldName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of AgentFabrics in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AgentFabrics and their operations over a AgentFabricResource. </returns>
+        public virtual AgentFabricCollection GetAgentFabrics()
+        {
+            return GetCachedClient(client => new AgentFabricCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a AgentFabric
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkSecurity/agentFabrics/{agentFabricName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgentFabrics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentFabricName"> The name of the AgentFabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AgentFabricResource>> GetAgentFabricAsync(string agentFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentFabricName, nameof(agentFabricName));
+
+            return await GetAgentFabrics().GetAsync(agentFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AgentFabric
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkSecurity/agentFabrics/{agentFabricName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgentFabrics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentFabricName"> The name of the AgentFabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AgentFabricResource> GetAgentFabric(string agentFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentFabricName, nameof(agentFabricName));
+
+            return GetAgentFabrics().Get(agentFabricName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PolicyGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PolicyGroups and their operations over a PolicyGroupResource. </returns>
+        public virtual PolicyGroupCollection GetPolicyGroups()
+        {
+            return GetCachedClient(client => new PolicyGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a PolicyGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkSecurity/policyGroups/{policyGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyGroupName"> The name of the PolicyGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyGroupResource>> GetPolicyGroupAsync(string policyGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyGroupName, nameof(policyGroupName));
+
+            return await GetPolicyGroups().GetAsync(policyGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a PolicyGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkSecurity/policyGroups/{policyGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyGroupName"> The name of the PolicyGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyGroupResource> GetPolicyGroup(string policyGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyGroupName, nameof(policyGroupName));
+
+            return GetPolicyGroups().Get(policyGroupName, cancellationToken);
+        }
     }
 }

@@ -384,5 +384,1244 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                 appliedOn,
                 default);
         }
+
+        /// <summary> AgentFabric resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity">
+        /// The managed service identity assigned to this fabric. The service uses it to reach the
+        /// clusters associated with the fabric on the customer's behalf.
+        /// </param>
+        /// <returns> A new <see cref="NetworkSecurity.AgentFabricData"/> instance for mocking. </returns>
+        public static AgentFabricData AgentFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgentFabricProperties properties = default, SystemAssignedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AgentFabricData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
+        /// <summary> AgentFabric properties. </summary>
+        /// <param name="resourceGuid"> The unique identifier (GUID) assigned to the agent fabric by the resource provider when it is created. </param>
+        /// <param name="defaultPolicyGroups">
+        /// The default policy groups to apply to all members of this fabric. A fabric without a configured
+        /// inspection connection cannot reference a group containing any ContentInspection policy,
+        /// even when that policy's selectors currently match no traffic.
+        /// For an existing fabric, compatibility uses the stored configuration when PUT omits
+        /// contentInspectionProfile or supplies an empty object. Existing legacy fabrics retain their regional
+        /// Content Safety connection, which satisfies the inspection prerequisite without new probes.
+        /// A connection still being validated is not an absent connection. Removing a group
+        /// reference remains allowed, subject to other validation.
+        /// </param>
+        /// <param name="contentInspectionProfile">
+        /// The connection to the customer's Azure Content Safety account. For a new
+        /// fabric created with API version `2026-10-07-preview` or later, omitting this profile or supplying {}
+        /// requests no inspection capability and uses no platform-owned account or shared-key fallback.
+        /// For an existing fabric, omitting the profile from PUT, including requests from older clients,
+        /// or supplying {} preserves its customer-owned connection, legacy regional connection, or absence
+        /// of connection. The empty object is a request for no connection change, not a stored replacement
+        /// profile. Neither omission nor {} removes, probes, or creates a connection or cancels a pending
+        /// connection update. Other Fabric fields and policy compatibility rules still apply.
+        /// A nonempty request profile requires both endpoint and apiKey, even at the unchanged endpoint.
+        /// PUT can rotate the key or replace the endpoint by supplying the complete pair. Tags- or
+        /// identity-only PATCH requests cannot change this profile.
+        /// Existing legacy fabrics without a profile retain their regional Content Safety endpoint and
+        /// authentication path. Omission or {} triggers no connection probe, account-management call, key
+        /// retrieval, or credential requirement. Supplying a complete profile explicitly configures a
+        /// customer-owned connection; there is no automatic conversion or failed-connection fallback
+        /// to regional credentials.
+        /// The customer owns, pays for, and operates the account. The service does not create, reserve,
+        /// manage, or delete it. The service validates new or changed endpoint/credential configuration
+        /// and the required Content Safety API before activation; configuration alone does not indicate
+        /// readiness or active policy enforcement. Unchanged configuration, GET, and list do not trigger
+        /// a new validation request. A failed replacement preserves the existing connection and credential,
+        /// including a legacy regional connection.
+        /// </param>
+        /// <param name="trustDomain">
+        /// The trust domain that scopes this fabric's member identities. It is the leading component of
+        /// each member's identity, which takes the form `&lt;trustDomain&gt;/&lt;agentFabricName&gt;/&lt;memberName&gt;`.
+        /// Set at creation and immutable thereafter; when omitted, the shared default trust domain
+        /// `microsoft.agentfabric` is used.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.AgentFabricProperties"/> instance for mocking. </returns>
+        public static AgentFabricProperties AgentFabricProperties(Guid? resourceGuid = default, IEnumerable<ResourceIdentifier> defaultPolicyGroups = default, ContentInspectionProfile contentInspectionProfile = default, string trustDomain = default, ProvisioningState? provisioningState = default)
+        {
+            defaultPolicyGroups ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new AgentFabricProperties(
+                resourceGuid,
+                (defaultPolicyGroups ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                contentInspectionProfile,
+                trustDomain,
+                provisioningState,
+                default);
+        }
+
+        /// <summary>
+        /// A connection to a customer-owned Azure Content Safety account. Configuring the connection
+        /// does not create or attach a ContentInspection policy or select traffic for inspection.
+        /// The endpoint routes Content Safety calls; a key alone cannot identify the account endpoint.
+        /// The customer supplies the key, so the service does not discover account keys through Azure
+        /// Resource Manager or require permission to perform the account's listKeys action.
+        /// Fields are schema-optional to allow an empty request object. Service cross-field validation
+        /// requires both endpoint and apiKey in a nonempty request profile. Read responses contain only
+        /// the endpoint; they are not complete connection-update inputs.
+        /// </summary>
+        /// <param name="endpoint">
+        /// The HTTPS account endpoint, for example `https://contoso.cognitiveservices.azure.com/`.
+        /// Only Azure Content Safety account endpoints in the service's supported Azure cloud are
+        /// accepted. Credentials must not be forwarded to other destinations, including redirects.
+        /// Required together with apiKey in a nonempty request profile, including key rotation.
+        /// Changing the endpoint requires a key for the new account; the stored key is not reused.
+        /// </param>
+        /// <param name="apiKey">
+        /// The nonempty API key for the specified account. Required together with endpoint in every
+        /// nonempty request profile, even when the endpoint is unchanged. Supplying a different key
+        /// with the endpoint on PUT rotates the stored credential. A missing key in a nonempty profile
+        /// is rejected without retrieving a saved key or comparing with the saved endpoint to permit omission.
+        /// Null and empty values are rejected, not treated as removal. The key is never returned in
+        /// resource, list, or long-running operation responses.
+        /// </param>
+        /// <returns> A new <see cref="Models.ContentInspectionProfile"/> instance for mocking. </returns>
+        public static ContentInspectionProfile ContentInspectionProfile(Uri endpoint = default, string apiKey = default)
+        {
+            return new ContentInspectionProfile(endpoint, apiKey, default);
+        }
+
+        /// <summary> Managed service identity (either system assigned, or none). </summary>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.SystemAssignedServiceIdentity"/> instance for mocking. </returns>
+        public static SystemAssignedServiceIdentity SystemAssignedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, SystemAssignedServiceIdentityType @type = default)
+        {
+            return new SystemAssignedServiceIdentity(principalId, tenantId, @type, default);
+        }
+
+        /// <summary> The type used for updating tags in AgentFabric resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identity assigned to this fabric. </param>
+        /// <returns> A new <see cref="Models.AgentFabricPatch"/> instance for mocking. </returns>
+        public static AgentFabricPatch AgentFabricPatch(IDictionary<string, string> tags = default, SystemAssignedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AgentFabricPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+        }
+
+        /// <summary> Member resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetworkSecurity.MemberData"/> instance for mocking. </returns>
+        public static MemberData MemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MemberProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MemberData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> Member properties. </summary>
+        /// <param name="fqdn"> The customer-provided fully qualified domain name associated with the member. </param>
+        /// <param name="workload">
+        /// The workload configuration of the member. Set at creation and immutable
+        /// thereafter; to change the workload, delete and recreate the member.
+        /// </param>
+        /// <param name="spiffeId">
+        /// The SPIFFE ID that identifies this member's workload identity, system-assigned by the service
+        /// at creation time. It takes the form `spiffe://&lt;trustDomain&gt;/&lt;agentFabricName&gt;/&lt;memberName&gt;`,
+        /// using the owning fabric's trust domain (or the default `microsoft.agentfabric` when unset), with
+        /// all segments lower-cased to conform to the SPIFFE ID scheme. Read-only.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.MemberProperties"/> instance for mocking. </returns>
+        public static MemberProperties MemberProperties(string fqdn = default, WorkloadBase workload = default, string spiffeId = default, ProvisioningState? provisioningState = default)
+        {
+            return new MemberProperties(fqdn, workload, spiffeId, provisioningState, default);
+        }
+
+        /// <summary>
+        /// Base workload configuration for a member.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AciWorkload"/>, <see cref="Models.AgentFabricSandboxWorkload"/>, and <see cref="Models.AksWorkload"/>.
+        /// </summary>
+        /// <param name="type"> The workload type. </param>
+        /// <param name="memberGuid">
+        /// The unique identifier (GUID) assigned to the member when it is created. For most workload
+        /// types this is assigned by the resource provider and is read-only. Starting in API version
+        /// `2026-10-07-preview`, ACI workloads instead supply this value at creation: the ACI resource
+        /// provider generates the GUID for the sandbox and this field is immutable afterward. Starting in
+        /// API version `2026-11-02-preview`, the ACI member resource name is this GUID: the service sets
+        /// memberGuid from the member name, and a value supplied in the request must match the member name.
+        /// </param>
+        /// <returns> A new <see cref="Models.WorkloadBase"/> instance for mocking. </returns>
+        public static WorkloadBase WorkloadBase(string @type = default, Guid? memberGuid = default)
+        {
+            return new UnknownWorkloadBase(@type is null ? default : new WorkloadType(@type), memberGuid, default);
+        }
+
+        /// <summary> ACI (Azure Container Instances) sandbox workload configuration. </summary>
+        /// <param name="memberGuid">
+        /// The unique identifier (GUID) assigned to the member when it is created. For most workload
+        /// types this is assigned by the resource provider and is read-only. Starting in API version
+        /// `2026-10-07-preview`, ACI workloads instead supply this value at creation: the ACI resource
+        /// provider generates the GUID for the sandbox and this field is immutable afterward. Starting in
+        /// API version `2026-11-02-preview`, the ACI member resource name is this GUID: the service sets
+        /// memberGuid from the member name, and a value supplied in the request must match the member name.
+        /// </param>
+        /// <param name="resourceId">
+        /// The Azure Resource Manager resource ID of the Azure Container Instances (ACI)
+        /// resource backing this member's sandbox. Starting in API version
+        /// `2026-10-07-preview`, this identifies the parent SandboxGroup -- the enrollment
+        /// boundary associated with the fabric through a ClusterAssociation -- rather than
+        /// the individual container group.
+        /// </param>
+        /// <param name="agentIdentity"> The Entra agent identity associated with the workload. </param>
+        /// <param name="workloadId">
+        /// The human-readable name of the ACI sandbox. The ACI resource provider supplies it at creation.
+        /// It must be unique within the agent fabric and cannot be changed after the member is created.
+        /// The member resource name is the sandbox GUID, not this name.
+        /// </param>
+        /// <returns> A new <see cref="Models.AciWorkload"/> instance for mocking. </returns>
+        public static AciWorkload AciWorkload(Guid? memberGuid = default, ResourceIdentifier resourceId = default, AgentIdentity agentIdentity = default, string workloadId = default)
+        {
+            return new AciWorkload(
+                WorkloadType.ACI,
+                memberGuid,
+                default,
+                resourceId,
+                agentIdentity,
+                workloadId);
+        }
+
+        /// <summary> The Entra agent identity associated with an Agent Fabric sandbox workload. </summary>
+        /// <param name="tenantId"> The Azure tenant ID that owns the agent identity. </param>
+        /// <param name="agentId"> The Entra agent ID representing the workload's identity. </param>
+        /// <param name="blueprintId">
+        /// The Entra agent blueprint ID that this agent identity was instantiated from. The blueprint
+        /// describes the agent's declared capabilities and is used to scope the policies applied to the
+        /// workload.
+        /// </param>
+        /// <returns> A new <see cref="Models.AgentIdentity"/> instance for mocking. </returns>
+        public static AgentIdentity AgentIdentity(string tenantId = default, string agentId = default, string blueprintId = default)
+        {
+            return new AgentIdentity(tenantId, agentId, blueprintId, default);
+        }
+
+        /// <summary>
+        /// AKS workload configuration. The workload already exists in the enrolled
+        /// cluster; the service does not create or schedule it.
+        /// </summary>
+        /// <param name="memberGuid">
+        /// The unique identifier (GUID) assigned to the member when it is created. For most workload
+        /// types this is assigned by the resource provider and is read-only. Starting in API version
+        /// `2026-10-07-preview`, ACI workloads instead supply this value at creation: the ACI resource
+        /// provider generates the GUID for the sandbox and this field is immutable afterward. Starting in
+        /// API version `2026-11-02-preview`, the ACI member resource name is this GUID: the service sets
+        /// memberGuid from the member name, and a value supplied in the request must match the member name.
+        /// </param>
+        /// <param name="clusterAssociationId"> The Azure Resource Manager resource ID of the cluster association through which this member's workload is enrolled. </param>
+        /// <param name="clusterResourceId"> The Azure Resource Manager resource ID of the managed cluster that hosts the workload. </param>
+        /// <param name="workload"> The Kubernetes workload enrolled as this member. Reported when the workload is discovered in the enrolled cluster; member identity derives from the fabric and member name alone. </param>
+        /// <param name="endpoints"> The network endpoints exposed by the workload. </param>
+        /// <param name="workloadId"> The unique identifier assigned to the workload by the resource provider. </param>
+        /// <returns> A new <see cref="Models.AksWorkload"/> instance for mocking. </returns>
+        public static AksWorkload AksWorkload(Guid? memberGuid = default, ResourceIdentifier clusterAssociationId = default, ResourceIdentifier clusterResourceId = default, AksWorkloadReference workload = default, IEnumerable<AksWorkloadPortMapping> endpoints = default, string workloadId = default)
+        {
+            endpoints ??= new ChangeTrackingList<AksWorkloadPortMapping>();
+
+            return new AksWorkload(
+                WorkloadType.AKS,
+                memberGuid,
+                default,
+                clusterAssociationId,
+                clusterResourceId,
+                workload,
+                (endpoints ?? new ChangeTrackingList<AksWorkloadPortMapping>()).ToList(),
+                workloadId);
+        }
+
+        /// <summary> A reference to the Kubernetes workload enrolled as a member. </summary>
+        /// <param name="apiVersion"> The API group and version of the workload, for example `apps/v1`. </param>
+        /// <param name="kind"> The kind of the workload, for example `Deployment`. </param>
+        /// <param name="namespace"> The namespace the workload runs in. </param>
+        /// <param name="name"> The name of the workload. </param>
+        /// <returns> A new <see cref="Models.AksWorkloadReference"/> instance for mocking. </returns>
+        public static AksWorkloadReference AksWorkloadReference(string apiVersion = default, string kind = default, string @namespace = default, string name = default)
+        {
+            return new AksWorkloadReference(apiVersion, kind, @namespace, name, default);
+        }
+
+        /// <summary> A service-to-workload port mapping for an AKS workload. </summary>
+        /// <param name="name"> The name of the port mapping. </param>
+        /// <param name="servicePort"> The port exposed by the service. </param>
+        /// <param name="protocol"> The network protocol used by the endpoint. </param>
+        /// <param name="targetPort"> The port on the workload targeted by the service. </param>
+        /// <returns> A new <see cref="Models.AksWorkloadPortMapping"/> instance for mocking. </returns>
+        public static AksWorkloadPortMapping AksWorkloadPortMapping(string name = default, int servicePort = default, string protocol = default, int targetPort = default)
+        {
+            return new AksWorkloadPortMapping(name, servicePort, protocol, targetPort, default);
+        }
+
+        /// <summary> Agent Fabric sandbox workload configuration. </summary>
+        /// <param name="memberGuid">
+        /// The unique identifier (GUID) assigned to the member when it is created. For most workload
+        /// types this is assigned by the resource provider and is read-only. Starting in API version
+        /// `2026-10-07-preview`, ACI workloads instead supply this value at creation: the ACI resource
+        /// provider generates the GUID for the sandbox and this field is immutable afterward. Starting in
+        /// API version `2026-11-02-preview`, the ACI member resource name is this GUID: the service sets
+        /// memberGuid from the member name, and a value supplied in the request must match the member name.
+        /// </param>
+        /// <param name="image"> The container image to run for the workload. </param>
+        /// <param name="resources"> The compute resources allocated to the workload. </param>
+        /// <param name="agentIdentity"> The Entra agent identity associated with the workload. </param>
+        /// <param name="endpoints"> The network endpoints exposed by the workload. </param>
+        /// <param name="domain"> The resolvable DNS name assigned to the workload. </param>
+        /// <param name="workloadId"> The unique identifier assigned to the workload by the resource provider. </param>
+        /// <returns> A new <see cref="Models.AgentFabricSandboxWorkload"/> instance for mocking. </returns>
+        public static AgentFabricSandboxWorkload AgentFabricSandboxWorkload(Guid? memberGuid = default, AgentFabricSandboxImage image = default, AgentFabricSandboxResources resources = default, AgentIdentity agentIdentity = default, IEnumerable<AgentFabricSandboxEndpoint> endpoints = default, string domain = default, string workloadId = default)
+        {
+            endpoints ??= new ChangeTrackingList<AgentFabricSandboxEndpoint>();
+
+            return new AgentFabricSandboxWorkload(
+                WorkloadType.AgentFabricSandbox,
+                memberGuid,
+                default,
+                image,
+                resources,
+                agentIdentity,
+                (endpoints ?? new ChangeTrackingList<AgentFabricSandboxEndpoint>()).ToList(),
+                domain,
+                workloadId);
+        }
+
+        /// <summary> The container image to run for an Agent Fabric sandbox workload. </summary>
+        /// <param name="uri"> The image reference URI (e.g., registry/repository:tag). </param>
+        /// <param name="digest"> The image content digest used to pin an exact image version. </param>
+        /// <param name="pullPolicy"> The policy controlling when the image is pulled. </param>
+        /// <returns> A new <see cref="Models.AgentFabricSandboxImage"/> instance for mocking. </returns>
+        public static AgentFabricSandboxImage AgentFabricSandboxImage(string uri = default, string digest = default, ImagePullPolicy? pullPolicy = default)
+        {
+            return new AgentFabricSandboxImage(uri, digest, pullPolicy, default);
+        }
+
+        /// <summary> The compute resources allocated to an Agent Fabric sandbox workload. </summary>
+        /// <param name="cpu"> The amount of CPU to allocate to the workload. </param>
+        /// <param name="memory"> The amount of memory to allocate to the workload. </param>
+        /// <param name="disk"> The amount of disk to allocate to the workload. </param>
+        /// <returns> A new <see cref="Models.AgentFabricSandboxResources"/> instance for mocking. </returns>
+        public static AgentFabricSandboxResources AgentFabricSandboxResources(string cpu = default, string memory = default, string disk = default)
+        {
+            return new AgentFabricSandboxResources(cpu, memory, disk, default);
+        }
+
+        /// <summary> A network endpoint exposed by an Agent Fabric sandbox workload. </summary>
+        /// <param name="name"> The name of the endpoint. </param>
+        /// <param name="servicePort"> The port exposed by the service. </param>
+        /// <param name="protocol"> The network protocol used by the endpoint. </param>
+        /// <param name="targetPort"> The port on the workload targeted by the service. </param>
+        /// <returns> A new <see cref="Models.AgentFabricSandboxEndpoint"/> instance for mocking. </returns>
+        public static AgentFabricSandboxEndpoint AgentFabricSandboxEndpoint(string name = default, int servicePort = default, string protocol = default, int targetPort = default)
+        {
+            return new AgentFabricSandboxEndpoint(name, servicePort, protocol, targetPort, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="memberUpdateFqdn"> The customer-provided fully qualified domain name associated with the member. </param>
+        /// <returns> A new <see cref="Models.MemberPatch"/> instance for mocking. </returns>
+        public static MemberPatch MemberPatch(IDictionary<string, string> tags = default, string memberUpdateFqdn = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MemberPatch(tags ?? new ChangeTrackingDictionary<string, string>(), memberUpdateFqdn is null ? default : new MemberUpdateProperties(memberUpdateFqdn, default), default);
+        }
+
+        /// <summary> PolicyGroup resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetworkSecurity.PolicyGroupData"/> instance for mocking. </returns>
+        public static PolicyGroupData PolicyGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PolicyGroupProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PolicyGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> PolicyGroup properties. </summary>
+        /// <param name="displayName"> The display name of the policy group. </param>
+        /// <param name="description"> The description of the policy group. </param>
+        /// <param name="priority"> The priority of the policy group. </param>
+        /// <param name="networkSecurityPolicies">
+        /// The list of network security policies. A PUT introducing a ContentInspection
+        /// policy is incompatible if any associated fabric has no configured inspection connection,
+        /// regardless of whether selectors currently match traffic. The request is rejected before
+        /// persisting or distributing the proposed changes, preserving the previously
+        /// accepted policies; mixed compatible and incompatible associations cannot partially apply
+        /// changes or silently skip inspection. An unattached group, or one attached only to compatible
+        /// fabrics, may contain ContentInspection policies. Removing ContentInspection policies remains allowed,
+        /// subject to other validation.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.PolicyGroupProperties"/> instance for mocking. </returns>
+        public static PolicyGroupProperties PolicyGroupProperties(string displayName = default, string description = default, int? priority = default, IEnumerable<NetworkSecurityPolicyBase> networkSecurityPolicies = default, ProvisioningState? provisioningState = default)
+        {
+            networkSecurityPolicies ??= new ChangeTrackingList<NetworkSecurityPolicyBase>();
+
+            return new PolicyGroupProperties(
+                displayName,
+                description,
+                priority,
+                (networkSecurityPolicies ?? new ChangeTrackingList<NetworkSecurityPolicyBase>()).ToList(),
+                provisioningState,
+                default);
+        }
+
+        /// <summary>
+        /// Base network security policy configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContentInspectionPolicy"/>, <see cref="Models.FqdnFilteringPolicy"/>, <see cref="Models.McpPolicy"/>, <see cref="Models.TlsInspectionPolicy"/>, and <see cref="Models.UrlFilteringPolicy"/>.
+        /// </summary>
+        /// <param name="type"> The network security policy type. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPolicyBase"/> instance for mocking. </returns>
+        public static NetworkSecurityPolicyBase NetworkSecurityPolicyBase(string @type = default)
+        {
+            return new UnknownNetworkSecurityPolicyBase(@type is null ? default : new NetworkSecurityPolicyType(@type), default);
+        }
+
+        /// <summary> FQDN filtering network security policy. </summary>
+        /// <param name="name"> The name of the policy. </param>
+        /// <param name="priority"> The priority of the policy. </param>
+        /// <param name="direction"> The direction of traffic for the policy. </param>
+        /// <param name="ports"> The ports for the policy. </param>
+        /// <param name="source"> The source details for the policy. </param>
+        /// <param name="destination"> The destination details for the policy. </param>
+        /// <returns> A new <see cref="Models.FqdnFilteringPolicy"/> instance for mocking. </returns>
+        public static FqdnFilteringPolicy FqdnFilteringPolicy(string name = default, int? priority = default, PolicyDirection? direction = default, IEnumerable<int> ports = default, FqdnFilteringSource source = default, FqdnFilteringDestination destination = default)
+        {
+            ports ??= new ChangeTrackingList<int>();
+
+            return new FqdnFilteringPolicy(
+                NetworkSecurityPolicyType.FqdnFiltering,
+                default,
+                name,
+                priority,
+                direction,
+                (ports ?? new ChangeTrackingList<int>()).ToList(),
+                source,
+                destination);
+        }
+
+        /// <summary>
+        /// Selects the source(s) that an FQDN filtering policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FqdnFilteringAddressPrefixesSource"/> and <see cref="Models.FqdnFilteringWorkloadIdPatternsSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source selector. </param>
+        /// <returns> A new <see cref="Models.FqdnFilteringSource"/> instance for mocking. </returns>
+        public static FqdnFilteringSource FqdnFilteringSource(string @type = default)
+        {
+            return new UnknownFqdnFilteringSource(@type is null ? default : new FqdnFilteringSourceType(@type), default);
+        }
+
+        /// <summary> Selects FQDN filtering sources by workload ID patterns. </summary>
+        /// <param name="patterns"> The workload ID patterns that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.FqdnFilteringWorkloadIdPatternsSource"/> instance for mocking. </returns>
+        public static FqdnFilteringWorkloadIdPatternsSource FqdnFilteringWorkloadIdPatternsSource(IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new FqdnFilteringWorkloadIdPatternsSource(FqdnFilteringSourceType.WorkloadIdPatterns, default, (patterns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects FQDN filtering sources by IP address prefixes. </summary>
+        /// <param name="prefixes"> The IP address prefixes, in CIDR notation, that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.FqdnFilteringAddressPrefixesSource"/> instance for mocking. </returns>
+        public static FqdnFilteringAddressPrefixesSource FqdnFilteringAddressPrefixesSource(IEnumerable<string> prefixes = default)
+        {
+            prefixes ??= new ChangeTrackingList<string>();
+
+            return new FqdnFilteringAddressPrefixesSource(FqdnFilteringSourceType.AddressPrefixes, default, (prefixes ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary>
+        /// Selects the destination(s) that an FQDN filtering policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FqdnFilteringFqdnsDestination"/>.
+        /// </summary>
+        /// <param name="type"> The type of destination selector. </param>
+        /// <returns> A new <see cref="Models.FqdnFilteringDestination"/> instance for mocking. </returns>
+        public static FqdnFilteringDestination FqdnFilteringDestination(string @type = default)
+        {
+            return new UnknownFqdnFilteringDestination(@type is null ? default : new FqdnFilteringDestinationType(@type), default);
+        }
+
+        /// <summary> Selects FQDN filtering destinations by fully qualified domain names. </summary>
+        /// <param name="fqdns"> The fully qualified domain names that identify the destination(s). </param>
+        /// <returns> A new <see cref="Models.FqdnFilteringFqdnsDestination"/> instance for mocking. </returns>
+        public static FqdnFilteringFqdnsDestination FqdnFilteringFqdnsDestination(IEnumerable<string> fqdns = default)
+        {
+            fqdns ??= new ChangeTrackingList<string>();
+
+            return new FqdnFilteringFqdnsDestination(FqdnFilteringDestinationType.Fqdns, default, (fqdns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> URL filtering network security policy. </summary>
+        /// <param name="defaultAction">
+        /// The action for a request to a host that one of the policy's rules names when no rule matches,
+        /// and the action of a rule that has none. Requests to other hosts are not decided by this policy.
+        /// </param>
+        /// <param name="source"> The source details for the policy. </param>
+        /// <param name="destination"> The destination details for the policy. </param>
+        /// <param name="rules">
+        /// The list of URL filtering rules. Service validation may limit rules-based policies to 1 to 5
+        /// rules; the schema retains the earlier array shape for compatibility. Rules are evaluated in
+        /// ascending priority order and the first matching rule decides; rule priorities must be unique
+        /// within the policy. A rule without an action uses the policy defaultAction. When no rule matches
+        /// a request to a host that a rule names, the policy defaultAction applies. Requests to other
+        /// hosts are not decided by this policy.
+        /// </param>
+        /// <returns> A new <see cref="Models.UrlFilteringPolicy"/> instance for mocking. </returns>
+        public static UrlFilteringPolicy UrlFilteringPolicy(PolicyAction defaultAction = default, UrlFilteringSource source = default, UrlFilteringDestination destination = default, IEnumerable<UrlFilteringRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<UrlFilteringRule>();
+
+            return new UrlFilteringPolicy(
+                NetworkSecurityPolicyType.UrlFiltering,
+                default,
+                defaultAction,
+                source,
+                destination,
+                (rules ?? new ChangeTrackingList<UrlFilteringRule>()).ToList());
+        }
+
+        /// <summary>
+        /// Selects the source(s) that a URL filtering policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.UrlFilteringAddressPrefixesSource"/> and <see cref="Models.UrlFilteringWorkloadIdPatternsSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source selector. </param>
+        /// <returns> A new <see cref="Models.UrlFilteringSource"/> instance for mocking. </returns>
+        public static UrlFilteringSource UrlFilteringSource(string @type = default)
+        {
+            return new UnknownUrlFilteringSource(@type is null ? default : new UrlFilteringSourceType(@type), default);
+        }
+
+        /// <summary> Selects URL filtering sources by workload ID patterns. </summary>
+        /// <param name="patterns"> The workload ID patterns that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.UrlFilteringWorkloadIdPatternsSource"/> instance for mocking. </returns>
+        public static UrlFilteringWorkloadIdPatternsSource UrlFilteringWorkloadIdPatternsSource(IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new UrlFilteringWorkloadIdPatternsSource(UrlFilteringSourceType.WorkloadIdPatterns, default, (patterns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects URL filtering sources by IP address prefixes. </summary>
+        /// <param name="prefixes"> The IP address prefixes, in CIDR notation, that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.UrlFilteringAddressPrefixesSource"/> instance for mocking. </returns>
+        public static UrlFilteringAddressPrefixesSource UrlFilteringAddressPrefixesSource(IEnumerable<string> prefixes = default)
+        {
+            prefixes ??= new ChangeTrackingList<string>();
+
+            return new UrlFilteringAddressPrefixesSource(UrlFilteringSourceType.AddressPrefixes, default, (prefixes ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary>
+        /// Selects the destination(s) that a URL filtering policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.UrlFilteringAddressPrefixesDestination"/>, <see cref="Models.UrlFilteringFqdnsDestination"/>, and <see cref="Models.UrlFilteringWorkloadIdPatternsDestination"/>.
+        /// </summary>
+        /// <param name="type"> The type of destination selector. </param>
+        /// <returns> A new <see cref="Models.UrlFilteringDestination"/> instance for mocking. </returns>
+        public static UrlFilteringDestination UrlFilteringDestination(string @type = default)
+        {
+            return new UnknownUrlFilteringDestination(@type is null ? default : new UrlFilteringDestinationType(@type), default);
+        }
+
+        /// <summary> Selects URL filtering destinations by workload ID patterns. </summary>
+        /// <param name="patterns"> The workload ID patterns that identify the destination(s). </param>
+        /// <returns> A new <see cref="Models.UrlFilteringWorkloadIdPatternsDestination"/> instance for mocking. </returns>
+        public static UrlFilteringWorkloadIdPatternsDestination UrlFilteringWorkloadIdPatternsDestination(IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new UrlFilteringWorkloadIdPatternsDestination(UrlFilteringDestinationType.WorkloadIdPatterns, default, (patterns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects URL filtering destinations by IP address prefixes. </summary>
+        /// <param name="prefixes"> The IP address prefixes, in CIDR notation, that identify the destination(s). </param>
+        /// <returns> A new <see cref="Models.UrlFilteringAddressPrefixesDestination"/> instance for mocking. </returns>
+        public static UrlFilteringAddressPrefixesDestination UrlFilteringAddressPrefixesDestination(IEnumerable<string> prefixes = default)
+        {
+            prefixes ??= new ChangeTrackingList<string>();
+
+            return new UrlFilteringAddressPrefixesDestination(UrlFilteringDestinationType.AddressPrefixes, default, (prefixes ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects URL filtering destinations by fully qualified domain names. </summary>
+        /// <param name="fqdns"> The fully qualified domain names that identify the destination(s). </param>
+        /// <returns> A new <see cref="Models.UrlFilteringFqdnsDestination"/> instance for mocking. </returns>
+        public static UrlFilteringFqdnsDestination UrlFilteringFqdnsDestination(IEnumerable<string> fqdns = default)
+        {
+            fqdns ??= new ChangeTrackingList<string>();
+
+            return new UrlFilteringFqdnsDestination(UrlFilteringDestinationType.Fqdns, default, (fqdns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> A single rule within a URL filtering policy. </summary>
+        /// <param name="name"> The name of the rule. </param>
+        /// <param name="priority"> The priority of the rule. Rules are evaluated in ascending priority order. </param>
+        /// <param name="hostname">
+        /// The hostname matched by the rule, such as api.contoso.com or *.contoso.com, with no scheme,
+        /// port or path. Optional in the schema for compatibility; specify it for rules-based authoring.
+        /// </param>
+        /// <param name="method"> The HTTP method matched by the rule. If omitted, the rule matches any method. </param>
+        /// <param name="paths"> The URL paths matched by the rule. If omitted, the rule matches any path. </param>
+        /// <param name="action"> The action to take when the rule matches. If omitted, the rule uses the policy defaultAction. </param>
+        /// <returns> A new <see cref="Models.UrlFilteringRule"/> instance for mocking. </returns>
+        public static UrlFilteringRule UrlFilteringRule(string name = default, int priority = default, string hostname = default, HttpMethod? @method = default, IEnumerable<string> paths = default, PolicyAction? action = default)
+        {
+            paths ??= new ChangeTrackingList<string>();
+
+            return new UrlFilteringRule(
+                name,
+                priority,
+                hostname,
+                @method,
+                (paths ?? new ChangeTrackingList<string>()).ToList(),
+                action,
+                default);
+        }
+
+        /// <summary> MCP server network security policy. </summary>
+        /// <param name="defaultAction"> The default action to take when no rule in the policy matches. </param>
+        /// <param name="source"> The source(s) that this policy applies to. </param>
+        /// <param name="destination"> The MCP server(s) that this policy applies to. </param>
+        /// <param name="rules"> The list of MCP rules. </param>
+        /// <returns> A new <see cref="Models.McpPolicy"/> instance for mocking. </returns>
+        public static McpPolicy McpPolicy(PolicyAction defaultAction = default, McpPolicySource source = default, McpPolicyDestination destination = default, IEnumerable<McpRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<McpRule>();
+
+            return new McpPolicy(
+                NetworkSecurityPolicyType.Mcp,
+                default,
+                defaultAction,
+                source,
+                destination,
+                (rules ?? new ChangeTrackingList<McpRule>()).ToList());
+        }
+
+        /// <summary>
+        /// Selects the source(s) that an MCP policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.McpPolicyAddressPrefixesSource"/> and <see cref="Models.McpPolicyWorkloadIdPatternsSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source selector. </param>
+        /// <returns> A new <see cref="Models.McpPolicySource"/> instance for mocking. </returns>
+        public static McpPolicySource McpPolicySource(string @type = default)
+        {
+            return new UnknownMcpPolicySource(@type is null ? default : new McpPolicySourceType(@type), default);
+        }
+
+        /// <summary> Selects MCP policy sources by workload ID patterns. </summary>
+        /// <param name="patterns"> The workload ID patterns that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.McpPolicyWorkloadIdPatternsSource"/> instance for mocking. </returns>
+        public static McpPolicyWorkloadIdPatternsSource McpPolicyWorkloadIdPatternsSource(IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new McpPolicyWorkloadIdPatternsSource(McpPolicySourceType.WorkloadIdPatterns, default, (patterns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects MCP policy sources by IP address prefixes. </summary>
+        /// <param name="prefixes"> The IP address prefixes, in CIDR notation, that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.McpPolicyAddressPrefixesSource"/> instance for mocking. </returns>
+        public static McpPolicyAddressPrefixesSource McpPolicyAddressPrefixesSource(IEnumerable<string> prefixes = default)
+        {
+            prefixes ??= new ChangeTrackingList<string>();
+
+            return new McpPolicyAddressPrefixesSource(McpPolicySourceType.AddressPrefixes, default, (prefixes ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary>
+        /// Selects the MCP server(s) that an MCP policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.McpPolicyAddressPrefixesDestination"/>, <see cref="Models.McpPolicyFqdnsDestination"/>, and <see cref="Models.McpPolicyWorkloadIdPatternsDestination"/>.
+        /// </summary>
+        /// <param name="type"> The type of destination selector. </param>
+        /// <returns> A new <see cref="Models.McpPolicyDestination"/> instance for mocking. </returns>
+        public static McpPolicyDestination McpPolicyDestination(string @type = default)
+        {
+            return new UnknownMcpPolicyDestination(@type is null ? default : new McpPolicyDestinationType(@type), default);
+        }
+
+        /// <summary> Selects MCP policy destinations by workload ID patterns. </summary>
+        /// <param name="patterns"> The workload ID patterns that identify the destination(s). </param>
+        /// <returns> A new <see cref="Models.McpPolicyWorkloadIdPatternsDestination"/> instance for mocking. </returns>
+        public static McpPolicyWorkloadIdPatternsDestination McpPolicyWorkloadIdPatternsDestination(IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new McpPolicyWorkloadIdPatternsDestination(McpPolicyDestinationType.WorkloadIdPatterns, default, (patterns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects MCP policy destinations by IP address prefixes. </summary>
+        /// <param name="prefixes"> The IP address prefixes, in CIDR notation, that identify the destination(s). </param>
+        /// <returns> A new <see cref="Models.McpPolicyAddressPrefixesDestination"/> instance for mocking. </returns>
+        public static McpPolicyAddressPrefixesDestination McpPolicyAddressPrefixesDestination(IEnumerable<string> prefixes = default)
+        {
+            prefixes ??= new ChangeTrackingList<string>();
+
+            return new McpPolicyAddressPrefixesDestination(McpPolicyDestinationType.AddressPrefixes, default, (prefixes ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects MCP policy destinations by fully qualified domain names. </summary>
+        /// <param name="fqdns"> The fully qualified domain names that identify the destination(s). </param>
+        /// <returns> A new <see cref="Models.McpPolicyFqdnsDestination"/> instance for mocking. </returns>
+        public static McpPolicyFqdnsDestination McpPolicyFqdnsDestination(IEnumerable<string> fqdns = default)
+        {
+            fqdns ??= new ChangeTrackingList<string>();
+
+            return new McpPolicyFqdnsDestination(McpPolicyDestinationType.Fqdns, default, (fqdns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <param name="name">
+        /// The name of the rule: 1 to 63 ASCII letters, digits, '_', '.' or '-', starting with a
+        /// letter or digit, and unique within the policy ignoring case. Flow logs report the rule
+        /// that decided as `mcp-&lt;n&gt;/&lt;name&gt;`.
+        /// </param>
+        /// <param name="priority">
+        /// The priority of the rule, unique within the policy. Rules are tried from the lowest value
+        /// and the first rule that matches decides; a policy has 1 to 5 rules. When none
+        /// matches, defaultAction applies to every MCP request except session requests (initialize,
+        /// ping, notifications, the list methods, JSON-RPC responses, and requests with no body such
+        /// as GET and DELETE), which pass.
+        /// </param>
+        /// <param name="action"> The action to take for the specified MCP tools. </param>
+        /// <param name="tools"> Deprecated. Legacy MCP tool names retained for compatibility; use matchingConditions.destinations.toolMatching.names for new rules. </param>
+        /// <param name="matchingConditionsDestinations"> The servers and requests the rule matches. </param>
+        /// <returns> A new <see cref="Models.McpRule"/> instance for mocking. </returns>
+        public static McpRule McpRule(string name = default, int? priority = default, PolicyAction? action = default, IEnumerable<string> tools = default, McpRuleDestinationMatching matchingConditionsDestinations = default)
+        {
+            tools ??= new ChangeTrackingList<string>();
+
+            return new McpRule(
+                name,
+                priority,
+                action,
+                (tools ?? new ChangeTrackingList<string>()).ToList(),
+                matchingConditionsDestinations is null ? default : new McpRuleMatchingConditions(matchingConditionsDestinations, default),
+                default);
+        }
+
+        /// <summary>
+        /// The MCP servers and requests an MCP rule matches. Present properties are ANDed. A rule has
+        /// at most one of toolMatching and promptMatching. Without either, it matches every request to
+        /// its servers.
+        /// </summary>
+        /// <param name="serverFqdns">
+        /// The MCP servers: exact names or one leading `*.`, each inside the policy destination.
+        /// Omitted means every server of the policy destination.
+        /// </param>
+        /// <param name="protocolVersions">
+        /// Compared with params.protocolVersion of an initialize request, the protocol version such as
+        /// 2025-06-18 that a client names when it starts a session. A request that names no protocol
+        /// version does not match the rule, so a Deny rule blocks sessions that start with a listed version.
+        /// </param>
+        /// <param name="toolMatching"> Conditions on tool requests. </param>
+        /// <param name="promptMatching"> Conditions on prompt requests. </param>
+        /// <returns> A new <see cref="Models.McpRuleDestinationMatching"/> instance for mocking. </returns>
+        public static McpRuleDestinationMatching McpRuleDestinationMatching(IEnumerable<string> serverFqdns = default, McpStringMatching protocolVersions = default, McpToolMatching toolMatching = default, McpPromptMatching promptMatching = default)
+        {
+            serverFqdns ??= new ChangeTrackingList<string>();
+
+            return new McpRuleDestinationMatching((serverFqdns ?? new ChangeTrackingList<string>()).ToList(), protocolVersions, toolMatching, promptMatching, default);
+        }
+
+        /// <summary>
+        /// Compares one string of an MCP request or response with a list of values. ExactMatch and
+        /// Contains hold when one value matches; NotExactMatch and NotContains hold when no value matches.
+        /// </summary>
+        /// <param name="values"> The values to compare with: 1 to 64, or 1 to 16 non-empty values for Contains and NotContains. </param>
+        /// <param name="matchType"> How the string is compared with the values. </param>
+        /// <param name="matchCase"> Whether the comparison is case-sensitive. The default is CaseSensitive. </param>
+        /// <returns> A new <see cref="Models.McpStringMatching"/> instance for mocking. </returns>
+        public static McpStringMatching McpStringMatching(IEnumerable<string> values = default, McpMatchType matchType = default, McpMatchCase? matchCase = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new McpStringMatching((values ?? new ChangeTrackingList<string>()).ToList(), matchType, matchCase, default);
+        }
+
+        /// <summary> The tool conditions of an MCP rule. Present properties are ANDed. </summary>
+        /// <param name="methods">
+        /// The tool methods to match. Omitted means Call. Names and callArguments need Call alone.
+        /// Titles and descriptions need List alone.
+        /// </param>
+        /// <param name="names"> Compared with the tool name of a tools/call request. </param>
+        /// <param name="titles"> Compared with the title of each tool in a tools/list response. Needs methods List alone. </param>
+        /// <param name="descriptions"> Compared with the description of each tool in a tools/list response. Needs methods List alone. </param>
+        /// <param name="callArguments"> Compared with the arguments of a tools/call request. </param>
+        /// <param name="responseContents"> Compared with the text of each content item, result.content[].text, of a tools/call response. </param>
+        /// <returns> A new <see cref="Models.McpToolMatching"/> instance for mocking. </returns>
+        public static McpToolMatching McpToolMatching(IEnumerable<McpToolMethod> methods = default, McpStringMatching names = default, McpStringMatching titles = default, McpStringMatching descriptions = default, McpArgumentMatching callArguments = default, McpStringMatching responseContents = default)
+        {
+            methods ??= new ChangeTrackingList<McpToolMethod>();
+
+            return new McpToolMatching(
+                (methods ?? new ChangeTrackingList<McpToolMethod>()).ToList(),
+                names,
+                titles,
+                descriptions,
+                callArguments,
+                responseContents,
+                default);
+        }
+
+        /// <summary>
+        /// Compares the argument values of an MCP request with a list of values. Only string values
+        /// are compared, and a boolean compares as true or false. Without a path, object keys are
+        /// compared too.
+        /// </summary>
+        /// <param name="values"> The values to compare with: 1 to 64, or 1 to 16 non-empty values for Contains and NotContains. </param>
+        /// <param name="matchType"> How the string is compared with the values. </param>
+        /// <param name="matchCase"> Whether the comparison is case-sensitive. The default is CaseSensitive. </param>
+        /// <param name="path">
+        /// A JSONPath into the request's params.arguments object, which is `$`: 1 to 8 segments,
+        /// the first `.name` and the others `.name` or `[*]` (at most once), for example
+        /// `$.repoName` or `$.paths[*]`. With a path, a missing key (also in an array element), a key
+        /// that differs only in case, or a value of the wrong type on the way is a mismatch: an Allow
+        /// condition holds only when there is none and every selected value passes, and a Deny
+        /// condition also holds when there is one, when the path selects nothing, or when a selected
+        /// value is not a string or boolean. Without a path every string or boolean argument value and
+        /// every object key is compared; this is allowed only for ExactMatch or Contains in a Deny
+        /// rule and for NotExactMatch or NotContains in an Allow rule.
+        /// </param>
+        /// <returns> A new <see cref="Models.McpArgumentMatching"/> instance for mocking. </returns>
+        public static McpArgumentMatching McpArgumentMatching(IEnumerable<string> values = default, McpMatchType matchType = default, McpMatchCase? matchCase = default, string path = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new McpArgumentMatching((values ?? new ChangeTrackingList<string>()).ToList(), matchType, matchCase, path, default);
+        }
+
+        /// <summary> The prompt conditions of an MCP rule. Present properties are ANDed. </summary>
+        /// <param name="methods">
+        /// The prompt methods to match. Omitted means Get. Names and arguments need Get alone. Titles
+        /// and descriptions need List alone.
+        /// </param>
+        /// <param name="names"> Compared with the prompt name of a prompts/get request. </param>
+        /// <param name="titles"> Compared with the title of each prompt in a prompts/list response. Needs methods List alone. </param>
+        /// <param name="descriptions"> Compared with the description of each prompt in a prompts/list response. Needs methods List alone. </param>
+        /// <param name="arguments"> Compared with the arguments of a prompts/get request. </param>
+        /// <param name="responseContents">
+        /// Compared with the text of each message, result.messages[].content.text, of a prompts/get
+        /// response.
+        /// </param>
+        /// <returns> A new <see cref="Models.McpPromptMatching"/> instance for mocking. </returns>
+        public static McpPromptMatching McpPromptMatching(IEnumerable<McpPromptMethod> methods = default, McpStringMatching names = default, McpStringMatching titles = default, McpStringMatching descriptions = default, McpArgumentMatching arguments = default, McpStringMatching responseContents = default)
+        {
+            methods ??= new ChangeTrackingList<McpPromptMethod>();
+
+            return new McpPromptMatching(
+                (methods ?? new ChangeTrackingList<McpPromptMethod>()).ToList(),
+                names,
+                titles,
+                descriptions,
+                arguments,
+                responseContents,
+                default);
+        }
+
+        /// <summary> TLS inspection network security policy. </summary>
+        /// <param name="source"> The source details for the policy. </param>
+        /// <param name="certificate"> The certificate configuration used for TLS inspection. </param>
+        /// <param name="defaultAction"> The action for TLS connections that no rule matches, and for rules without an action. If omitted, Inspect. </param>
+        /// <param name="rules"> The TLS inspection rules. At most one rule is supported. </param>
+        /// <returns> A new <see cref="Models.TlsInspectionPolicy"/> instance for mocking. </returns>
+        public static TlsInspectionPolicy TlsInspectionPolicy(TlsInspectionPolicySource source = default, TlsInspectionCertificateBase certificate = default, TlsInspectionAction? defaultAction = default, IEnumerable<TlsInspectionRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<TlsInspectionRule>();
+
+            return new TlsInspectionPolicy(
+                NetworkSecurityPolicyType.TlsInspection,
+                default,
+                source,
+                certificate,
+                defaultAction,
+                (rules ?? new ChangeTrackingList<TlsInspectionRule>()).ToList());
+        }
+
+        /// <summary>
+        /// Selects the source(s) that a TLS inspection policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TlsInspectionPolicyWorkloadIdPatternsSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source selector. </param>
+        /// <returns> A new <see cref="Models.TlsInspectionPolicySource"/> instance for mocking. </returns>
+        public static TlsInspectionPolicySource TlsInspectionPolicySource(string @type = default)
+        {
+            return new UnknownTlsInspectionPolicySource(@type is null ? default : new TlsInspectionPolicySourceType(@type), default);
+        }
+
+        /// <summary> Selects TLS inspection sources by workload ID patterns. </summary>
+        /// <param name="patterns"> The workload ID patterns that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.TlsInspectionPolicyWorkloadIdPatternsSource"/> instance for mocking. </returns>
+        public static TlsInspectionPolicyWorkloadIdPatternsSource TlsInspectionPolicyWorkloadIdPatternsSource(IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new TlsInspectionPolicyWorkloadIdPatternsSource(TlsInspectionPolicySourceType.WorkloadIdPatterns, default, (patterns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary>
+        /// Base certificate configuration for a TLS inspection policy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureManagedCaCertificate"/>.
+        /// </summary>
+        /// <param name="mode"> The source mode of the TLS inspection certificate. </param>
+        /// <returns> A new <see cref="Models.TlsInspectionCertificateBase"/> instance for mocking. </returns>
+        public static TlsInspectionCertificateBase TlsInspectionCertificateBase(string mode = default)
+        {
+            return new UnknownTlsInspectionCertificateBase(mode is null ? default : new TlsInspectionCertificateMode(mode), default);
+        }
+
+        /// <summary> TLS inspection certificate issued by an Azure-managed certificate authority. </summary>
+        /// <returns> A new <see cref="Models.AzureManagedCaCertificate"/> instance for mocking. </returns>
+        public static AzureManagedCaCertificate AzureManagedCaCertificate()
+        {
+            return new AzureManagedCaCertificate(TlsInspectionCertificateMode.AzureManagedCA, default);
+        }
+
+        /// <summary> A TLS inspection rule. </summary>
+        /// <param name="name"> The name of the rule, unique within the policy ignoring case. </param>
+        /// <param name="priority"> The priority of the rule, unique within the policy. Rules are evaluated in ascending priority order and the first match applies. </param>
+        /// <param name="action"> The action for TLS connections that match the rule. If omitted, the rule takes the policy's defaultAction, so it only matters for rule ordering. </param>
+        /// <param name="destinations"> The destinations that the rule matches. A connection matches the rule when it matches any of them. At most one destination is supported. </param>
+        /// <returns> A new <see cref="Models.TlsInspectionRule"/> instance for mocking. </returns>
+        public static TlsInspectionRule TlsInspectionRule(string name = default, int priority = default, TlsInspectionAction? action = default, IEnumerable<TlsInspectionRuleDestination> destinations = default)
+        {
+            destinations ??= new ChangeTrackingList<TlsInspectionRuleDestination>();
+
+            return new TlsInspectionRule(name, priority, action, (destinations ?? new ChangeTrackingList<TlsInspectionRuleDestination>()).ToList(), default);
+        }
+
+        /// <summary>
+        /// Selects the destinations that a TLS inspection rule matches.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TlsInspectionRuleFqdnsDestination"/>.
+        /// </summary>
+        /// <param name="type"> The type of destination selector. </param>
+        /// <returns> A new <see cref="Models.TlsInspectionRuleDestination"/> instance for mocking. </returns>
+        public static TlsInspectionRuleDestination TlsInspectionRuleDestination(string @type = default)
+        {
+            return new UnknownTlsInspectionRuleDestination(@type is null ? default : new TlsInspectionRuleDestinationType(@type), default);
+        }
+
+        /// <summary> Selects TLS inspection rule destinations by fully qualified domain names, matched against the TLS server name (SNI). </summary>
+        /// <param name="fqdns"> The fully qualified domain names. Each is an exact name, or a name after one leading '*.', which matches that name and any subdomain of it. Matching ignores case and one trailing dot. </param>
+        /// <returns> A new <see cref="Models.TlsInspectionRuleFqdnsDestination"/> instance for mocking. </returns>
+        public static TlsInspectionRuleFqdnsDestination TlsInspectionRuleFqdnsDestination(IEnumerable<string> fqdns = default)
+        {
+            fqdns ??= new ChangeTrackingList<string>();
+
+            return new TlsInspectionRuleFqdnsDestination(TlsInspectionRuleDestinationType.Fqdns, default, (fqdns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Content inspection network security policy. </summary>
+        /// <param name="source"> The source details for the policy. </param>
+        /// <param name="promptInjectionProtection"> The prompt injection protection configuration. </param>
+        /// <returns> A new <see cref="Models.ContentInspectionPolicy"/> instance for mocking. </returns>
+        public static ContentInspectionPolicy ContentInspectionPolicy(ContentInspectionPolicySource source = default, PromptInjectionProtection promptInjectionProtection = default)
+        {
+            return new ContentInspectionPolicy(NetworkSecurityPolicyType.ContentInspection, default, source, promptInjectionProtection);
+        }
+
+        /// <summary>
+        /// Selects the source(s) that a content inspection policy applies to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContentInspectionPolicyAddressPrefixesSource"/> and <see cref="Models.ContentInspectionPolicyWorkloadIdPatternsSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source selector. </param>
+        /// <returns> A new <see cref="Models.ContentInspectionPolicySource"/> instance for mocking. </returns>
+        public static ContentInspectionPolicySource ContentInspectionPolicySource(string @type = default)
+        {
+            return new UnknownContentInspectionPolicySource(@type is null ? default : new ContentInspectionPolicySourceType(@type), default);
+        }
+
+        /// <summary> Selects content inspection sources by workload ID patterns. </summary>
+        /// <param name="patterns"> The workload ID patterns that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.ContentInspectionPolicyWorkloadIdPatternsSource"/> instance for mocking. </returns>
+        public static ContentInspectionPolicyWorkloadIdPatternsSource ContentInspectionPolicyWorkloadIdPatternsSource(IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new ContentInspectionPolicyWorkloadIdPatternsSource(ContentInspectionPolicySourceType.WorkloadIdPatterns, default, (patterns ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Selects content inspection sources by IP address prefixes. </summary>
+        /// <param name="prefixes"> The IP address prefixes, in CIDR notation, that identify the source(s). </param>
+        /// <returns> A new <see cref="Models.ContentInspectionPolicyAddressPrefixesSource"/> instance for mocking. </returns>
+        public static ContentInspectionPolicyAddressPrefixesSource ContentInspectionPolicyAddressPrefixesSource(IEnumerable<string> prefixes = default)
+        {
+            prefixes ??= new ChangeTrackingList<string>();
+
+            return new ContentInspectionPolicyAddressPrefixesSource(ContentInspectionPolicySourceType.AddressPrefixes, default, (prefixes ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Prompt injection protection configuration. </summary>
+        /// <param name="sensitivity"> The sensitivity level of prompt injection detection. </param>
+        /// <param name="promptLocations"> The JSONPath expressions selecting the parts of the request body to scan for prompt injection. </param>
+        /// <param name="responseLocations"> The JSONPath expressions selecting the parts of the response body to scan for prompt injection. </param>
+        /// <param name="onDetection"> The action to take when prompt injection is detected. </param>
+        /// <returns> A new <see cref="Models.PromptInjectionProtection"/> instance for mocking. </returns>
+        public static PromptInjectionProtection PromptInjectionProtection(ContentInspectionSensitivity? sensitivity = default, IEnumerable<string> promptLocations = default, IEnumerable<string> responseLocations = default, PromptInjectionOnDetection onDetection = default)
+        {
+            promptLocations ??= new ChangeTrackingList<string>();
+            responseLocations ??= new ChangeTrackingList<string>();
+
+            return new PromptInjectionProtection(sensitivity, (promptLocations ?? new ChangeTrackingList<string>()).ToList(), (responseLocations ?? new ChangeTrackingList<string>()).ToList(), onDetection, default);
+        }
+
+        /// <summary> The type used for updating tags in PolicyGroup resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.PolicyGroupPatch"/> instance for mocking. </returns>
+        public static PolicyGroupPatch PolicyGroupPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PolicyGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary>
+        /// ClusterAssociation resource. Enrolls an AKS managed cluster, or an ACI
+        /// SandboxGroup, into this AgentFabric; deleting it removes the enrollment.
+        /// This is not a Member. Workloads are enrolled separately, and creating an
+        /// association does not create members.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetworkSecurity.ClusterAssociationData"/> instance for mocking. </returns>
+        public static ClusterAssociationData ClusterAssociationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ClusterAssociationProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ClusterAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> ClusterAssociation properties. </summary>
+        /// <param name="clusterResourceId">
+        /// The AKS managed cluster or ACI SandboxGroup to enroll. The resource must be
+        /// in the same subscription as the AgentFabric; a different resource group is
+        /// allowed. Set at creation and immutable thereafter; to enroll a different
+        /// resource, delete and recreate the association. AF rejects the request if
+        /// the resource is already associated with another fabric.
+        /// </param>
+        /// <param name="sku">
+        /// Determines which AgentFabric components are deployed to the cluster.
+        /// Defaults to Standard when omitted at creation. An update may upgrade
+        /// Standard to Premium but cannot downgrade Premium to Standard. The SKU
+        /// remains unchanged when omitted during an update.
+        /// </param>
+        /// <param name="workloadClusterGatewayIP">
+        /// The IPv4 or IPv6 address of the workload cluster gateway used for
+        /// internal Agent Fabric routing. The resource provider validates the value.
+        /// </param>
+        /// <param name="status">
+        /// Error code and message for a failed association. A failed association is
+        /// retained rather than deleted, so the failure can be inspected and retried.
+        /// Read-only.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.ClusterAssociationProperties"/> instance for mocking. </returns>
+        public static ClusterAssociationProperties ClusterAssociationProperties(ResourceIdentifier clusterResourceId = default, ClusterAssociationSkuName? sku = default, string workloadClusterGatewayIP = default, ClusterAssociationStatus status = default, ProvisioningState? provisioningState = default)
+        {
+            return new ClusterAssociationProperties(
+                clusterResourceId,
+                sku,
+                workloadClusterGatewayIP,
+                status,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> Error information for a failed cluster association. </summary>
+        /// <param name="code"> Stable, machine-readable error code. </param>
+        /// <param name="message"> Human-readable description of the failure. </param>
+        /// <returns> A new <see cref="Models.ClusterAssociationStatus"/> instance for mocking. </returns>
+        public static ClusterAssociationStatus ClusterAssociationStatus(string code = default, string message = default)
+        {
+            return new ClusterAssociationStatus(code, message, default);
+        }
+
+        /// <summary> The request body for updating a ClusterAssociation. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The ClusterAssociation properties to update. </param>
+        /// <returns> A new <see cref="Models.ClusterAssociationPatch"/> instance for mocking. </returns>
+        public static ClusterAssociationPatch ClusterAssociationPatch(IDictionary<string, string> tags = default, ClusterAssociationUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ClusterAssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> Properties that may be updated on a ClusterAssociation. </summary>
+        /// <param name="clusterResourceId">
+        /// The existing AKS managed cluster or ACI SandboxGroup. This value is
+        /// required so Azure Resource Manager can perform linked authorization and
+        /// must match the immutable clusterResourceId already stored on the
+        /// association.
+        /// </param>
+        /// <param name="sku">
+        /// Determines which AgentFabric components are deployed to the cluster.
+        /// Only an upgrade from Standard to Premium is supported; Premium cannot be
+        /// downgraded to Standard. When omitted, the PATCH request is an authorized
+        /// no-op and the existing SKU remains unchanged.
+        /// </param>
+        /// <param name="workloadClusterGatewayIP">
+        /// The IPv4 or IPv6 address of the workload cluster gateway used for
+        /// internal Agent Fabric routing. The resource provider validates the value.
+        /// </param>
+        /// <returns> A new <see cref="Models.ClusterAssociationUpdateProperties"/> instance for mocking. </returns>
+        public static ClusterAssociationUpdateProperties ClusterAssociationUpdateProperties(ResourceIdentifier clusterResourceId = default, ClusterAssociationSkuName? sku = default, string workloadClusterGatewayIP = default)
+        {
+            return new ClusterAssociationUpdateProperties(clusterResourceId, sku, workloadClusterGatewayIP, default);
+        }
+
+        /// <summary>
+        /// The egress TLS-inspection trust bundle for an agent fabric.
+        /// AgentFabric terminates and re-encrypts enrolled egress traffic, presenting leaf
+        /// certificates signed by an AgentFabric-operated certificate authority. A workload can only
+        /// complete those handshakes if the CA's PUBLIC anchor is already present in its trust store.
+        /// This singleton publishes the anchors that are installed into the fabric's sandboxes, so
+        /// the compute platform can install them during sandbox bring-up and so you can audit exactly
+        /// which authorities your workloads are being asked to trust.
+        /// The resource is read-only and computed: it is never created, updated or deleted through
+        /// ARM, and reading it neither enrolls a workload nor redirects any traffic. It returns PUBLIC
+        /// certificates only -- private key material never leaves AgentFabric's key vault.
+        /// A bundle is always returned as a list, even when it holds a single anchor, so that a CA
+        /// rollover can publish the outgoing and incoming anchors together.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetworkSecurity.EgressTrustBundleData"/> instance for mocking. </returns>
+        public static EgressTrustBundleData EgressTrustBundleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EgressTrustBundleProperties properties = default)
+        {
+            return new EgressTrustBundleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of the platform egress TLS-inspection trust bundle. </summary>
+        /// <param name="certificates">
+        /// The public certificate authority anchors that make up the bundle, ordered with the
+        /// currently signing anchor first. Always contains at least one entry.
+        /// </param>
+        /// <param name="bundleVersion">
+        /// Opaque identifier of this bundle's content. It changes whenever the set of anchors
+        /// changes and is stable otherwise, so a caller can record what a sandbox was provisioned
+        /// with and detect drift without comparing certificate bytes.
+        /// </param>
+        /// <param name="cacheValiditySeconds">
+        /// How long, in seconds, a caller may serve this bundle from its own cache. This is a
+        /// ceiling, not a target: refresh well before it elapses, at roughly half this value, so a
+        /// transient failure still leaves time to retry before the cached copy must be discarded.
+        /// The service sets this value and may change it to steer how often callers re-read, so
+        /// honour the value returned rather than hard-coding an interval. Callers are expected to
+        /// cache; a synchronous dependency on this operation during every sandbox launch is not
+        /// intended.
+        /// </param>
+        /// <param name="cacheExpiresOn">
+        /// The absolute deadline matching `cacheValiditySeconds`. A cached copy must not be used
+        /// after this instant without re-reading. Reaching it means the earlier refresh was missed
+        /// or failing; a caller that cannot obtain an acceptable bundle must fail or retry
+        /// bring-up rather than silently skip anchor installation.
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource. This resource is computed rather than
+        /// provisioned, so a successful read always reports `Succeeded`.
+        /// </param>
+        /// <returns> A new <see cref="Models.EgressTrustBundleProperties"/> instance for mocking. </returns>
+        public static EgressTrustBundleProperties EgressTrustBundleProperties(IEnumerable<EgressTrustBundleCertificate> certificates = default, string bundleVersion = default, int cacheValiditySeconds = default, DateTimeOffset cacheExpiresOn = default, ProvisioningState? provisioningState = default)
+        {
+            certificates ??= new ChangeTrackingList<EgressTrustBundleCertificate>();
+
+            return new EgressTrustBundleProperties(
+                (certificates ?? new ChangeTrackingList<EgressTrustBundleCertificate>()).ToList(),
+                bundleVersion,
+                cacheValiditySeconds,
+                cacheExpiresOn,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> A single public certificate authority anchor within the egress trust bundle. </summary>
+        /// <param name="certificateId">
+        /// Stable identifier of this anchor, unique within the bundle. Derived from the
+        /// certificate itself, so it is identical wherever the same anchor is served.
+        /// </param>
+        /// <param name="pem"> The PEM-encoded X.509 public certificate. This never contains private key material. </param>
+        /// <param name="thumbprintSha256"> Lowercase hexadecimal SHA-256 fingerprint of the certificate's DER encoding. </param>
+        /// <param name="notBefore"> The time from which the certificate is valid. </param>
+        /// <param name="notAfter"> The time after which the certificate is no longer valid. </param>
+        /// <returns> A new <see cref="Models.EgressTrustBundleCertificate"/> instance for mocking. </returns>
+        public static EgressTrustBundleCertificate EgressTrustBundleCertificate(string certificateId = default, string pem = default, string thumbprintSha256 = default, DateTimeOffset notBefore = default, DateTimeOffset notAfter = default)
+        {
+            return new EgressTrustBundleCertificate(
+                certificateId,
+                pem,
+                thumbprintSha256,
+                notBefore,
+                notAfter,
+                default);
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         {
             TryGetApiVersion(ResourceType, out string neuroShieldApiVersion);
             _neuroShieldsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", ResourceType.Namespace, Diagnostics);
-            _neuroShieldsRestClient = new NeuroShields(_neuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkSecurity/neuroShields", out string neuroShieldsApiVersionOverride) ? neuroShieldsApiVersionOverride : "2026-10-01-preview");
+            _neuroShieldsRestClient = new NeuroShields(_neuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _neuroShieldFindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", ResourceType.Namespace, Diagnostics);
             _neuroShieldFindingsRestClient = new NeuroShieldFindings(_neuroShieldFindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, neuroShieldApiVersion ?? "2026-10-01-preview");
             _neuroShieldMitigationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", ResourceType.Namespace, Diagnostics);

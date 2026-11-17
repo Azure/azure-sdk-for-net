@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         internal NeuroShieldCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _neuroShieldsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", NeuroShieldResource.ResourceType.Namespace, Diagnostics);
-            _neuroShieldsRestClient = new NeuroShields(_neuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkSecurity/neuroShields", out string neuroShieldsApiVersionOverride) ? neuroShieldsApiVersionOverride : "2026-10-01-preview");
+            _neuroShieldsRestClient = new NeuroShields(_neuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
