@@ -5227,6 +5227,37 @@ namespace Azure.Storage.Blobs.Test
                 () => containerClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobContainerName does not match Name in the Client. BlobSasBuilder.BlobContainerName must either be left empty or match the Name in the Client"));
         }
+
+        [Test]
+        public void GenerateSas_BuilderNameWithIgnorableUnicode_IsRejected()
+        {
+            string containerName = "container";
+            string spoofedContainerName = "con\u00ADtainer";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(containerName, spoofedContainerName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(containerName, spoofedContainerName, StringComparison.Ordinal));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri("https://account.blob.core.windows.net"))
+            {
+                BlobContainerName = containerName
+            };
+
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                BlobContainerName = spoofedContainerName,
+                Resource = "b"
+            };
+
+            TestHelper.AssertExpectedException(
+                () => containerClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobContainerName does not match Name in the Client. BlobSasBuilder.BlobContainerName must either be left empty or match the Name in the Client"));
+        }
         #endregion
 
         #region GenerateUserDelegationSas
