@@ -15,26 +15,26 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJobLatency"/>. </summary>
         /// <param name="stage"> Optimization stage measured by this entry. </param>
-        /// <param name="avgLatencyMs"> Average per-call latency, rounded to milliseconds. </param>
+        /// <param name="avgLatency"> Average per-call latency, rounded to milliseconds. </param>
         /// <param name="callCount"> Total number of calls contributing to this entry. </param>
-        internal AgentOptimizationJobLatency(AgentOptimizationStage stage, TimeSpan avgLatencyMs, long callCount)
+        internal AgentOptimizationJobLatency(AgentOptimizationStage stage, TimeSpan avgLatency, long callCount)
         {
             Stage = stage;
-            AvgLatencyMs = avgLatencyMs;
+            AvgLatency = avgLatency;
             CallCount = callCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJobLatency"/>. </summary>
         /// <param name="stage"> Optimization stage measured by this entry. </param>
         /// <param name="model"> Model name or deployment name measured by this entry. </param>
-        /// <param name="avgLatencyMs"> Average per-call latency, rounded to milliseconds. </param>
+        /// <param name="avgLatency"> Average per-call latency, rounded to milliseconds. </param>
         /// <param name="callCount"> Total number of calls contributing to this entry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJobLatency(AgentOptimizationStage stage, string model, TimeSpan avgLatencyMs, long callCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJobLatency(AgentOptimizationStage stage, string model, TimeSpan avgLatency, long callCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Stage = stage;
             Model = model;
-            AvgLatencyMs = avgLatencyMs;
+            AvgLatency = avgLatency;
             CallCount = callCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.Agents
         public string Model { get; }
 
         /// <summary> Average per-call latency, rounded to milliseconds. </summary>
-        public TimeSpan AvgLatencyMs { get; }
+        public TimeSpan AvgLatency { get; }
 
         /// <summary> Total number of calls contributing to this entry. </summary>
         public long CallCount { get; }

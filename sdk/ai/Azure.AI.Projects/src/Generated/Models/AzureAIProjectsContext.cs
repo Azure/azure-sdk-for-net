@@ -317,7 +317,6 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelPendingUploadResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelPendingUploadResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelPendingUploadResult is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ModelSamplingParams))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelSourceData is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelSourceData))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelSourceData is experimental and may change in future versions.

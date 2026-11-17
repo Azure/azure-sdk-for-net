@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="bestScore"> Best normalized score observed from 0.0 to 1.0 for a comparatively evaluated job. Omitted otherwise and until a candidate completes evaluation. </param>
         /// <param name="latestPromotedCandidate"> Most recently promoted candidate for the job. Omitted if no candidates have been promoted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationResultCandidateSummary(int completedCandidateCount, string baselineId, string bestId, double? baselineScore, double? bestScore, AgentOptimizationCandidatePromotionInfo latestPromotedCandidate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationResultCandidateSummary(int completedCandidateCount, string baselineId, string bestId, double? baselineScore, double? bestScore, AgentOptimizationCandidatePromotion latestPromotedCandidate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompletedCandidateCount = completedCandidateCount;
             BaselineId = baselineId;
@@ -55,6 +55,6 @@ namespace Azure.AI.Projects.Agents
         public double? BestScore { get; }
 
         /// <summary> Most recently promoted candidate for the job. Omitted if no candidates have been promoted. </summary>
-        public AgentOptimizationCandidatePromotionInfo LatestPromotedCandidate { get; }
+        public AgentOptimizationCandidatePromotion LatestPromotedCandidate { get; }
     }
 }
