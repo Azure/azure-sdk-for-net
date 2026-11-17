@@ -17,7 +17,7 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary> Represents a mongo cluster resource. </summary>
+    /// <summary> Represents a DocumentDB cluster resource. </summary>
     public partial class MongoClusterData : TrackedResourceData, IJsonModel<MongoClusterData>
     {
         /// <summary> Initializes a new instance of <see cref="MongoClusterData"/> for deserialization. </summary>
