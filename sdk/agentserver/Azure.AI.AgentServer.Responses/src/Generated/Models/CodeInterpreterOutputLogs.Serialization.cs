@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter output logs. </summary>
-    public partial class CodeInterpreterOutputLogs : IJsonModel<CodeInterpreterOutputLogs>
+    internal partial class CodeInterpreterOutputLogs : IJsonModel<CodeInterpreterOutputLogs>
     {
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputLogs"/> for deserialization. </summary>
         internal CodeInterpreterOutputLogs()
@@ -141,7 +140,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CodeInterpreterOutputLogs(@type, logs, additionalBinaryDataProperties);

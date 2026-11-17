@@ -1,15 +1,12 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
+## 3.0.0-beta.7 (2026-11-12)
 
 ### Features Added
 - Uploading of models now can be cancelled.
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

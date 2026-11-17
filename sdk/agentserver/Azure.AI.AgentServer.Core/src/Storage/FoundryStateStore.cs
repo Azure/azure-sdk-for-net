@@ -283,9 +283,9 @@ namespace Azure.AI.AgentServer.Core.Storage
                 return await _localBackend.CreateItemAsync(key, value, tags, cancellationToken).ConfigureAwait(false);
             }
 
-            var payload = new CreateItemRequest(key, value);
+            var payload = new CreateItemContent(key, value);
             CopyTags(tags, payload.Tags);
-            BinaryData body = ((IPersistableModel<CreateItemRequest>)payload).Write(ModelSerializationExtensions.WireOptions);
+            BinaryData body = ((IPersistableModel<CreateItemContent>)payload).Write(ModelSerializationExtensions.WireOptions);
             Request request = BuildRequest(
                 RequestMethod.Post,
                 $"{StorePath()}/items",
@@ -348,9 +348,9 @@ namespace Azure.AI.AgentServer.Core.Storage
                 return await _localBackend.SetItemAsync(key, value, tags, header, cancellationToken).ConfigureAwait(false);
             }
 
-            var payload = new PutItemRequest(value);
+            var payload = new PutItemContent(value);
             CopyTags(tags, payload.Tags);
-            BinaryData body = ((IPersistableModel<PutItemRequest>)payload).Write(ModelSerializationExtensions.WireOptions);
+            BinaryData body = ((IPersistableModel<PutItemContent>)payload).Write(ModelSerializationExtensions.WireOptions);
             Request request = BuildRequest(
                 RequestMethod.Put,
                 ItemPath(key),
@@ -539,14 +539,14 @@ namespace Azure.AI.AgentServer.Core.Storage
 
         private async Task<StateStore> CreatePropertiesAsync(CancellationToken cancellationToken)
         {
-            var payload = new CreateStateStoreRequest(_name)
+            var payload = new CreateStateStoreContent(_name)
             {
                 UserIsolation = _userIsolation,
                 ItemTtlSeconds = _itemTtlSeconds,
                 Description = _description,
             };
             CopyTags(_tags, payload.Tags);
-            BinaryData body = ((IPersistableModel<CreateStateStoreRequest>)payload).Write(ModelSerializationExtensions.WireOptions);
+            BinaryData body = ((IPersistableModel<CreateStateStoreContent>)payload).Write(ModelSerializationExtensions.WireOptions);
             Request request = BuildRequest(RequestMethod.Post, "state_stores", content: body);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize(response, StateStore.FromResponse);

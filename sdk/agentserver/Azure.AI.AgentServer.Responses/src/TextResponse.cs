@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -29,6 +30,7 @@ namespace Azure.AI.AgentServer.Responses;
 ///     createText: ct =&gt; Task.FromResult("Hello!"));
 /// </code>
 /// </example>
+[Experimental("OPENAI001")]
 public class TextResponse : IAsyncEnumerable<ResponseStreamEvent>
 {
     private readonly ResponseContext _context;

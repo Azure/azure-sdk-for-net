@@ -17,13 +17,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolSpecification"/>. </summary>
-        /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
-        public BatchPoolSpecification(string vmSize)
+        public BatchPoolSpecification()
         {
-            Argument.AssertNotNull(vmSize, nameof(vmSize));
-
-            VmSize = vmSize;
             ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
             UserAccounts = new ChangeTrackingList<UserAccount>();
             Metadata = new ChangeTrackingList<BatchMetadataItem>();
@@ -73,6 +68,16 @@ namespace Azure.Compute.Batch
             MountConfiguration = mountConfiguration;
             UpgradePolicy = upgradePolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchPoolSpecification"/>. </summary>
+        /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        public BatchPoolSpecification(string vmSize) : this()
+        {
+            Argument.AssertNotNull(vmSize, nameof(vmSize));
+
+            VmSize = vmSize;
         }
 
         /// <summary> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>

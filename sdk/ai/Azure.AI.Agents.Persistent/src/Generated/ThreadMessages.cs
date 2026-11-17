@@ -71,7 +71,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest spreadModel = new CreateMessageRequest(role, content, attachments?.ToList() as IList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            CreateMessageContent spreadModel = new CreateMessageContent(role, content, attachments?.ToList() as IList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = CreateMessage(threadId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((PersistentThreadMessage)result, result);
         }
@@ -101,7 +101,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest spreadModel = new CreateMessageRequest(role, content, attachments?.ToList() as IList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            CreateMessageContent spreadModel = new CreateMessageContent(role, content, attachments?.ToList() as IList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = await CreateMessageAsync(threadId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PersistentThreadMessage)result, result);
         }
@@ -291,7 +291,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            UpdateMessageRequest spreadModel = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            UpdateMessageContent spreadModel = new UpdateMessageContent(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = UpdateMessage(threadId, messageId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((PersistentThreadMessage)result, result);
         }
@@ -309,7 +309,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            UpdateMessageRequest spreadModel = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            UpdateMessageContent spreadModel = new UpdateMessageContent(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = await UpdateMessageAsync(threadId, messageId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PersistentThreadMessage)result, result);
         }

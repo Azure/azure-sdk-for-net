@@ -503,7 +503,7 @@ managing skills in Microsoft Foundry. Skills may be created from a folder with i
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
 AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetDirectory("roll-dice"));
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
-SkillInlineRequest content = new(
+SkillInlineContent content = new(
     description: "Calculates the sum of two numbers.",
     instructions: """
         To calculate the sum  run
@@ -537,7 +537,7 @@ Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Versio
 2. Create the skill.
 
 ```C# Snippet:Sample_CreateSkill_AgentsEndpoint_Async
-SkillInlineRequest content = new(
+SkillInlineContent content = new(
     description: "Calculates the sum of two numbers.",
     instructions: """
         To calculate the sum  run
@@ -557,13 +557,13 @@ make it aware of the skill we have created.
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
     ProtocolConfiguration = new()
     {
         Responses = new()
     }
 };
-AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
+AgentCard card = new() { Version = "1", Skills = { new AgentCardSkill(id: simpleSkill.Id, name: SKILL) } };
 PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,

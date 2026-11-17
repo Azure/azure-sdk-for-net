@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string AvailabilitySetValue = "AvailabilitySet";
         /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
         private const string VirtualMachinesValue = "VirtualMachines";
-        /// <summary> Create an Agent Pool for BYO machines running the FlexNode agent. </summary>
-        private const string FlexNodesValue = "FlexNodes";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -42,9 +40,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
         public static AgentPoolType VirtualMachines { get; } = new AgentPoolType(VirtualMachinesValue);
-
-        /// <summary> Create an Agent Pool for BYO machines running the FlexNode agent. </summary>
-        public static AgentPoolType FlexNodes { get; } = new AgentPoolType(FlexNodesValue);
 
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

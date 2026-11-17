@@ -6,21 +6,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Realtime MCP HTTP error. </summary>
-    public partial class RealtimeMCPHTTPError : RealtimeMCPError
+    internal partial class RealtimeMCPHTTPError : RealtimeMCPError
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPHTTPError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public RealtimeMCPHTTPError(long code, string message) : base(RealtimeMcpErrorType.HttpError)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Code = code;
             Message = message;
         }

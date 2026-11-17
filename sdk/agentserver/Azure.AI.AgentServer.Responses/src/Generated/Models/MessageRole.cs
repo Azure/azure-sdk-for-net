@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum MessageRole
+    internal enum MessageRole
     {
         /// <summary> Unknown. </summary>
         Unknown,

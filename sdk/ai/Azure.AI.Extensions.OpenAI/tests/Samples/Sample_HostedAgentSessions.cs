@@ -73,7 +73,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateTheEndpoint_HostedAgentSessions_Async
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -183,7 +183,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateTheEndpoint_HostedAgentSessions_Sync
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()

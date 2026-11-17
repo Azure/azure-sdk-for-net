@@ -15,11 +15,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing a binding to an HTTP Triggered Azure Function. </summary>
     public partial class FunctionRouterRule : RouterRule, IJsonModel<FunctionRouterRule>
     {
-        /// <summary> Initializes a new instance of <see cref="FunctionRouterRule"/> for deserialization. </summary>
-        internal FunctionRouterRule()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RouterRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

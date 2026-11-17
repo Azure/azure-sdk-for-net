@@ -251,6 +251,7 @@
           "$id": "23",
           "kind": "property",
           "name": "_MyName",
+          "originalName": "name",
           "apiVersions": [],
           "serializedName": "name",
           "type": {

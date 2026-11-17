@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Custom tool. </summary>
-    public partial class ToolChoiceCustom : ToolChoiceParam, IJsonModel<ToolChoiceCustom>
+    internal partial class ToolChoiceCustom : ToolChoiceParam, IJsonModel<ToolChoiceCustom>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceCustom"/> for deserialization. </summary>
         internal ToolChoiceCustom()
@@ -125,7 +124,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ToolChoiceCustom(@type, additionalBinaryDataProperties, name);

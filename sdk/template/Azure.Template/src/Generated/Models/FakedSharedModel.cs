@@ -17,15 +17,8 @@ namespace Azure.Template
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/>. </summary>
-        /// <param name="tag"> The tag. </param>
-        /// <param name="createdOn"> The created date. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
-        public FakedSharedModel(string tag, DateTimeOffset createdOn)
+        public FakedSharedModel()
         {
-            Argument.AssertNotNull(tag, nameof(tag));
-
-            Tag = tag;
-            CreatedOn = createdOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/>. </summary>

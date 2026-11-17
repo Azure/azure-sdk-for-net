@@ -98,6 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(HcrpConfigurationAssignmentData))]
     [ModelReaderWriterBuildable(typeof(HcrpConfigurationAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(HcrpConfigurationAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(IndependentInternalPropertyModel))]
     [ModelReaderWriterBuildable(typeof(IPAddress))]
     [ModelReaderWriterBuildable(typeof(IPAddressData))]
     [ModelReaderWriterBuildable(typeof(IPAddressResource))]
