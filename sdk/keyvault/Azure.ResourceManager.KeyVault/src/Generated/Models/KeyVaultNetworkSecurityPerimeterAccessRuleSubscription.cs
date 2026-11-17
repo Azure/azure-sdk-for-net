@@ -12,21 +12,21 @@ using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> The NetworkSecurityPerimeterAccessRuleSubscription. </summary>
-    public partial class NetworkSecurityPerimeterAccessRuleSubscription
+    /// <summary> The KeyVaultNetworkSecurityPerimeterAccessRuleSubscription. </summary>
+    public partial class KeyVaultNetworkSecurityPerimeterAccessRuleSubscription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleSubscription"/>. </summary>
-        internal NetworkSecurityPerimeterAccessRuleSubscription()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterAccessRuleSubscription"/>. </summary>
+        internal KeyVaultNetworkSecurityPerimeterAccessRuleSubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleSubscription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterAccessRuleSubscription"/>. </summary>
         /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRuleSubscription(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultNetworkSecurityPerimeterAccessRuleSubscription(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

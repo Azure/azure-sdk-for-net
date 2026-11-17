@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeterAccessRule item in AccessRules)
+                foreach (KeyVaultNetworkSecurityPerimeterAccessRule item in AccessRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IList<NetworkSecurityPerimeterAccessRule> accessRules = default;
+            IList<KeyVaultNetworkSecurityPerimeterAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeterAccessRule> array = new List<NetworkSecurityPerimeterAccessRule>();
+                    List<KeyVaultNetworkSecurityPerimeterAccessRule> array = new List<KeyVaultNetworkSecurityPerimeterAccessRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterAccessRule.DeserializeNetworkSecurityPerimeterAccessRule(item, options));
+                        array.Add(KeyVaultNetworkSecurityPerimeterAccessRule.DeserializeKeyVaultNetworkSecurityPerimeterAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new NetworkSecurityProfile(
                 name,
                 accessRulesVersion,
-                accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>(),
+                accessRules ?? new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRule>(),
                 diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

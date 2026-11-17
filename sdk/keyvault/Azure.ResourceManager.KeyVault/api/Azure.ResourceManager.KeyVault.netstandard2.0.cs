@@ -519,6 +519,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult KeyVaultNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason? reason = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet KeyVaultNetworkRuleSet(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleBypassOption? bypass = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleBypassOption?), Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction? defaultAction = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule> ipRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule> virtualNetworkRules = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule KeyVaultNetworkSecurityPerimeterAccessRule(string name = null, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties KeyVaultNetworkSecurityPerimeterAccessRuleProperties(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection? direction = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription KeyVaultNetworkSecurityPerimeterAccessRuleSubscription(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue KeyVaultNetworkSecurityPerimeterProvisioningIssue(string name = null, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType? issueType = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType?), Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity? severity = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule> suggestedAccessRules = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation KeyVaultNetworkSecurityPerimeterResourceAssociation(string name = null, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode?)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultPatch KeyVaultPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultPatch KeyVaultPatch(System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties properties) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties KeyVaultPatchProperties(System.Guid? tenantId, Azure.ResourceManager.KeyVault.Models.KeyVaultSku sku, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> accessPolicies, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, bool? enableRbacAuthorization, int? softDeleteRetentionInDays, Azure.ResourceManager.KeyVault.Models.KeyVaultPatchMode? createMode, bool? enablePurgeProtection, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet networkRuleSet, string publicNetworkAccess) { throw null; }
@@ -561,15 +567,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSku ManagedHsmSku(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily family = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily), Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName name = Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName.StandardB1) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule ManagedHsmVirtualNetworkRule(Azure.Core.ResourceIdentifier subnetId = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(Azure.Core.ResourceIdentifier id = null, System.Guid? perimeterGuid = default(System.Guid?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule NetworkSecurityPerimeterAccessRule(string name = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties NetworkSecurityPerimeterAccessRuleProperties(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection? direction = default(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription NetworkSecurityPerimeterAccessRuleSubscription(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation resourceAssociation = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityProfile profile = null) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue NetworkSecurityPerimeterProvisioningIssue(string name = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties NetworkSecurityPerimeterProvisioningIssueProperties(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType? issueType = default(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType?), Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity? severity = default(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule> suggestedAccessRules = null) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation NetworkSecurityPerimeterResourceAssociation(string name = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode?)) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation resourceAssociation = null, Azure.ResourceManager.KeyVault.Models.NetworkSecurityProfile profile = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.SecretAttributes SecretAttributes(bool? enabled = default(bool?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? expires = default(System.DateTimeOffset?), System.DateTimeOffset? created = default(System.DateTimeOffset?), System.DateTimeOffset? updated = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes SecretBaseAttributes(bool? enabled = default(bool?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? expires = default(System.DateTimeOffset?), System.DateTimeOffset? created = default(System.DateTimeOffset?), System.DateTimeOffset? updated = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.SecretPatchProperties SecretPatchProperties(string value = null, string contentType = null, Azure.ResourceManager.KeyVault.Models.SecretAttributes attributes = null) { throw null; }
@@ -944,6 +944,174 @@ namespace Azure.ResourceManager.KeyVault.Models
         Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KeyVaultNetworkSecurityPerimeterAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule>
+    {
+        internal KeyVaultNetworkSecurityPerimeterAccessRule() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultNetworkSecurityPerimeterAccessRuleDirection : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultNetworkSecurityPerimeterAccessRuleDirection(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KeyVaultNetworkSecurityPerimeterAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties>
+    {
+        internal KeyVaultNetworkSecurityPerimeterAccessRuleProperties() { }
+        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleDirection? Direction { get { throw null; } }
+        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> FullyQualifiedDomainNames { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public System.Collections.Generic.IList<string> PhoneNumbers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription> Subscriptions { get { throw null; } }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KeyVaultNetworkSecurityPerimeterAccessRuleSubscription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>
+    {
+        internal KeyVaultNetworkSecurityPerimeterAccessRuleSubscription() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KeyVaultNetworkSecurityPerimeterProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue>
+    {
+        internal KeyVaultNetworkSecurityPerimeterProvisioningIssue() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties>
+    {
+        internal KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties() { }
+        public string Description { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType? IssueType { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity Error { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultNetworkSecurityPerimeterProvisioningIssueType : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultNetworkSecurityPerimeterProvisioningIssueType(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType ConfigurationPropagationFailure { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType MissingIdentityConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType MissingPerimeterConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KeyVaultNetworkSecurityPerimeterResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation>
+    {
+        internal KeyVaultNetworkSecurityPerimeterResourceAssociation() { }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode? AccessMode { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode Audit { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode Enforced { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode Learning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KeyVaultPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>
     {
@@ -1672,72 +1840,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkSecurityPerimeterAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule>
-    {
-        internal NetworkSecurityPerimeterAccessRule() { }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkSecurityPerimeterAccessRuleDirection : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkSecurityPerimeterAccessRuleDirection(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection Inbound { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection Outbound { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties>
-    {
-        internal NetworkSecurityPerimeterAccessRuleProperties() { }
-        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleDirection? Direction { get { throw null; } }
-        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
-        public System.Collections.Generic.IList<string> FullyQualifiedDomainNames { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
-        public System.Collections.Generic.IList<string> PhoneNumbers { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription> Subscriptions { get { throw null; } }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterAccessRuleSubscription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription>
-    {
-        internal NetworkSecurityPerimeterAccessRuleSubscription() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRuleSubscription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class NetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfiguration>
     {
         internal NetworkSecurityPerimeterConfiguration() { }
@@ -1757,9 +1859,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal NetworkSecurityPerimeterConfigurationProperties() { }
         public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.NetworkSecurityProfile Profile { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation ResourceAssociation { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get { throw null; } }
         protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1792,112 +1894,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkSecurityPerimeterProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue>
-    {
-        internal NetworkSecurityPerimeterProvisioningIssue() { }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties>
-    {
-        internal NetworkSecurityPerimeterProvisioningIssueProperties() { }
-        public string Description { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType? IssueType { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkSecurityPerimeterProvisioningIssueSeverity : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkSecurityPerimeterProvisioningIssueSeverity(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity Error { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkSecurityPerimeterProvisioningIssueType : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkSecurityPerimeterProvisioningIssueType(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType ConfigurationPropagationFailure { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType MissingIdentityConfiguration { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType MissingPerimeterConfiguration { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation>
-    {
-        internal NetworkSecurityPerimeterResourceAssociation() { }
-        public Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode? AccessMode { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkSecurityPerimeterResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkSecurityPerimeterResourceAssociationAccessMode(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode Audit { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode Enforced { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode Learning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class NetworkSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.NetworkSecurityProfile>
     {
         internal NetworkSecurityProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.NetworkSecurityPerimeterAccessRule> AccessRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkSecurityPerimeterAccessRule> AccessRules { get { throw null; } }
         public int? AccessRulesVersion { get { throw null; } }
         public int? DiagnosticSettingsVersion { get { throw null; } }
         public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }

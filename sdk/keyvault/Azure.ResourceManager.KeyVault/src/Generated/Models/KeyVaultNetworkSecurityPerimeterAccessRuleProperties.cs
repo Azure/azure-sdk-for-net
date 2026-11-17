@@ -12,23 +12,23 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Properties of Access Rule. </summary>
-    public partial class NetworkSecurityPerimeterAccessRuleProperties
+    public partial class KeyVaultNetworkSecurityPerimeterAccessRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
-        internal NetworkSecurityPerimeterAccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
+        internal KeyVaultNetworkSecurityPerimeterAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<NetworkSecurityPerimeterAccessRuleSubscription>();
+            Subscriptions = new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRuleProperties(NetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<NetworkSecurityPerimeterAccessRuleSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultNetworkSecurityPerimeterAccessRuleProperties(KeyVaultNetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Direction of the access rule. </summary>
         [WirePath("direction")]
-        public NetworkSecurityPerimeterAccessRuleDirection? Direction { get; }
+        public KeyVaultNetworkSecurityPerimeterAccessRuleDirection? Direction { get; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         [WirePath("addressPrefixes")]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Subscriptions for inbound rules. </summary>
         [WirePath("subscriptions")]
-        public IList<NetworkSecurityPerimeterAccessRuleSubscription> Subscriptions { get; }
+        public IList<KeyVaultNetworkSecurityPerimeterAccessRuleSubscription> Subscriptions { get; }
 
         /// <summary> Network security perimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]

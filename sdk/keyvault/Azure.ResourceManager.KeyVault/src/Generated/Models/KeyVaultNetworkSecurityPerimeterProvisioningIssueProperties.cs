@@ -13,26 +13,26 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
-    public partial class NetworkSecurityPerimeterProvisioningIssueProperties
+    public partial class KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
-        internal NetworkSecurityPerimeterProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        internal KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            SuggestedAccessRules = new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>();
+            SuggestedAccessRules = new ChangeTrackingList<KeyVaultNetworkSecurityPerimeterAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProvisioningIssueProperties(NetworkSecurityPerimeterProvisioningIssueType? issueType, NetworkSecurityPerimeterProvisioningIssueSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<NetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties(KeyVaultNetworkSecurityPerimeterProvisioningIssueType? issueType, KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<KeyVaultNetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Type of issue. </summary>
         [WirePath("issueType")]
-        public NetworkSecurityPerimeterProvisioningIssueType? IssueType { get; }
+        public KeyVaultNetworkSecurityPerimeterProvisioningIssueType? IssueType { get; }
 
         /// <summary> Severity of the issue. </summary>
         [WirePath("severity")]
-        public NetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get; }
+        public KeyVaultNetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
         [WirePath("description")]
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Access rules that can be added to the network security profile (NSP) to remediate the issue. </summary>
         [WirePath("suggestedAccessRules")]
-        public IReadOnlyList<NetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get; }
+        public IReadOnlyList<KeyVaultNetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get; }
     }
 }

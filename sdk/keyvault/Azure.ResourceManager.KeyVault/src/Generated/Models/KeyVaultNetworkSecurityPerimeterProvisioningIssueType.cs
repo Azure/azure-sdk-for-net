@@ -12,7 +12,7 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Type of issue. </summary>
-    public readonly partial struct NetworkSecurityPerimeterProvisioningIssueType : IEquatable<NetworkSecurityPerimeterProvisioningIssueType>
+    public readonly partial struct KeyVaultNetworkSecurityPerimeterProvisioningIssueType : IEquatable<KeyVaultNetworkSecurityPerimeterProvisioningIssueType>
     {
         private readonly string _value;
         /// <summary> Unknown issue type. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> An managed identity hasn't been associated with the resource. The resource will still be able to validate inbound traffic from the network security perimeter (NSP) or matching inbound access rules, but it won't be able to perform outbound access as a member of the NSP. </summary>
         private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetworkSecurityPerimeterProvisioningIssueType(string value)
+        public KeyVaultNetworkSecurityPerimeterProvisioningIssueType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Unknown issue type. </summary>
-        public static NetworkSecurityPerimeterProvisioningIssueType Unknown { get; } = new NetworkSecurityPerimeterProvisioningIssueType(UnknownValue);
+        public static KeyVaultNetworkSecurityPerimeterProvisioningIssueType Unknown { get; } = new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(UnknownValue);
 
         /// <summary> An error occurred while applying the network security perimeter (NSP) configuration. </summary>
-        public static NetworkSecurityPerimeterProvisioningIssueType ConfigurationPropagationFailure { get; } = new NetworkSecurityPerimeterProvisioningIssueType(ConfigurationPropagationFailureValue);
+        public static KeyVaultNetworkSecurityPerimeterProvisioningIssueType ConfigurationPropagationFailure { get; } = new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(ConfigurationPropagationFailureValue);
 
         /// <summary> A network connectivity issue is happening on the resource which could be addressed either by adding new resources to the network security perimeter (NSP) or by modifying access rules. </summary>
-        public static NetworkSecurityPerimeterProvisioningIssueType MissingPerimeterConfiguration { get; } = new NetworkSecurityPerimeterProvisioningIssueType(MissingPerimeterConfigurationValue);
+        public static KeyVaultNetworkSecurityPerimeterProvisioningIssueType MissingPerimeterConfiguration { get; } = new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(MissingPerimeterConfigurationValue);
 
         /// <summary> An managed identity hasn't been associated with the resource. The resource will still be able to validate inbound traffic from the network security perimeter (NSP) or matching inbound access rules, but it won't be able to perform outbound access as a member of the NSP. </summary>
-        public static NetworkSecurityPerimeterProvisioningIssueType MissingIdentityConfiguration { get; } = new NetworkSecurityPerimeterProvisioningIssueType(MissingIdentityConfigurationValue);
+        public static KeyVaultNetworkSecurityPerimeterProvisioningIssueType MissingIdentityConfiguration { get; } = new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(MissingIdentityConfigurationValue);
 
-        /// <summary> Determines if two <see cref="NetworkSecurityPerimeterProvisioningIssueType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(NetworkSecurityPerimeterProvisioningIssueType left, NetworkSecurityPerimeterProvisioningIssueType right) => left.Equals(right);
+        public static bool operator ==(KeyVaultNetworkSecurityPerimeterProvisioningIssueType left, KeyVaultNetworkSecurityPerimeterProvisioningIssueType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="NetworkSecurityPerimeterProvisioningIssueType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(NetworkSecurityPerimeterProvisioningIssueType left, NetworkSecurityPerimeterProvisioningIssueType right) => !left.Equals(right);
+        public static bool operator !=(KeyVaultNetworkSecurityPerimeterProvisioningIssueType left, KeyVaultNetworkSecurityPerimeterProvisioningIssueType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterProvisioningIssueType(string value) => new NetworkSecurityPerimeterProvisioningIssueType(value);
+        public static implicit operator KeyVaultNetworkSecurityPerimeterProvisioningIssueType(string value) => new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(value);
 
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterProvisioningIssueType?(string value) => value == null ? null : new NetworkSecurityPerimeterProvisioningIssueType(value);
+        public static implicit operator KeyVaultNetworkSecurityPerimeterProvisioningIssueType?(string value) => value == null ? null : new KeyVaultNetworkSecurityPerimeterProvisioningIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NetworkSecurityPerimeterProvisioningIssueType other && Equals(other);
+        public override bool Equals(object obj) => obj is KeyVaultNetworkSecurityPerimeterProvisioningIssueType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(NetworkSecurityPerimeterProvisioningIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KeyVaultNetworkSecurityPerimeterProvisioningIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

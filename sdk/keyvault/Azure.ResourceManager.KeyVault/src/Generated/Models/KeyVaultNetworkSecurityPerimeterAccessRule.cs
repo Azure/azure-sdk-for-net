@@ -12,21 +12,21 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-    public partial class NetworkSecurityPerimeterAccessRule
+    public partial class KeyVaultNetworkSecurityPerimeterAccessRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRule"/>. </summary>
-        internal NetworkSecurityPerimeterAccessRule()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterAccessRule"/>. </summary>
+        internal KeyVaultNetworkSecurityPerimeterAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of the access rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRule(string name, NetworkSecurityPerimeterAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultNetworkSecurityPerimeterAccessRule(string name, KeyVaultNetworkSecurityPerimeterAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Properties of the access rule. </summary>
         [WirePath("properties")]
-        public NetworkSecurityPerimeterAccessRuleProperties Properties { get; }
+        public KeyVaultNetworkSecurityPerimeterAccessRuleProperties Properties { get; }
     }
 }

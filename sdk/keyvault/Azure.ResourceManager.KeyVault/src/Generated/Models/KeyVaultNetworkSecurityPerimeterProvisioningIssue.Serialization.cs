@@ -13,52 +13,52 @@ using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Information about resource association. </summary>
-    public partial class NetworkSecurityPerimeterResourceAssociation : IJsonModel<NetworkSecurityPerimeterResourceAssociation>
+    /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
+    public partial class KeyVaultNetworkSecurityPerimeterProvisioningIssue : IJsonModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkSecurityPerimeterResourceAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KeyVaultNetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkSecurityPerimeterResourceAssociation(document.RootElement, options);
+                        return DeserializeKeyVaultNetworkSecurityPerimeterProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterResourceAssociation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultNetworkSecurityPerimeterProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterResourceAssociation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultNetworkSecurityPerimeterProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkSecurityPerimeterResourceAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterResourceAssociation IPersistableModel<NetworkSecurityPerimeterResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KeyVaultNetworkSecurityPerimeterProvisioningIssue IPersistableModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkSecurityPerimeterResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkSecurityPerimeterResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterResourceAssociation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultNetworkSecurityPerimeterProvisioningIssue)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AccessMode))
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("accessMode"u8);
-                writer.WriteStringValue(AccessMode.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,31 +103,31 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterResourceAssociation IJsonModel<NetworkSecurityPerimeterResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KeyVaultNetworkSecurityPerimeterProvisioningIssue IJsonModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkSecurityPerimeterResourceAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KeyVaultNetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultNetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterResourceAssociation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultNetworkSecurityPerimeterProvisioningIssue)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkSecurityPerimeterResourceAssociation(document.RootElement, options);
+            return DeserializeKeyVaultNetworkSecurityPerimeterProvisioningIssue(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkSecurityPerimeterResourceAssociation DeserializeNetworkSecurityPerimeterResourceAssociation(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyVaultNetworkSecurityPerimeterProvisioningIssue DeserializeKeyVaultNetworkSecurityPerimeterProvisioningIssue(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            NetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default;
+            KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("accessMode"u8))
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessMode = new NetworkSecurityPerimeterResourceAssociationAccessMode(prop.Value.GetString());
+                    properties = KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties.DeserializeKeyVaultNetworkSecurityPerimeterProvisioningIssueProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkSecurityPerimeterResourceAssociation(name, accessMode, additionalBinaryDataProperties);
+            return new KeyVaultNetworkSecurityPerimeterProvisioningIssue(name, properties, additionalBinaryDataProperties);
         }
     }
 }

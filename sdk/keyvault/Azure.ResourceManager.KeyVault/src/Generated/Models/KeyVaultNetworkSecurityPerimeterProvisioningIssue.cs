@@ -12,21 +12,21 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
-    public partial class NetworkSecurityPerimeterProvisioningIssue
+    public partial class KeyVaultNetworkSecurityPerimeterProvisioningIssue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssue"/>. </summary>
-        internal NetworkSecurityPerimeterProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
+        internal KeyVaultNetworkSecurityPerimeterProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Details of the provisioning issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProvisioningIssue(string name, NetworkSecurityPerimeterProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultNetworkSecurityPerimeterProvisioningIssue(string name, KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Details of the provisioning issue. </summary>
         [WirePath("properties")]
-        public NetworkSecurityPerimeterProvisioningIssueProperties Properties { get; }
+        public KeyVaultNetworkSecurityPerimeterProvisioningIssueProperties Properties { get; }
     }
 }
