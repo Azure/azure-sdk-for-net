@@ -33,7 +33,23 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void ResourceDataPropertiesResolveLastContractAfterNamespaceVisitor()
+        public void NewResourceDataRequestNamesRetainSuffixNormalization()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(
+                resourceName: "WidgetRequest",
+                resourceModelName: "WidgetRequest");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            var provider = plugin.Object.TypeFactory.CreateModel(models.Single());
+
+            Assert.That(provider, Is.TypeOf<ResourceDataModelProvider>());
+            Assert.That(provider!.Name, Is.EqualTo("WidgetContentData"));
+            Assert.That(provider.LastContractView, Is.Null);
+        }
+
+        [TestCase("ResponseType")]
+        [TestCase("WidgetRequest")]
+        public void ResourceDataPropertiesResolveLastContractAfterNamespaceVisitor(string resourceName)
         {
             var dateTime = new InputDateTimeType(
                 DateTimeKnownEncoding.Rfc3339,
@@ -46,13 +62,14 @@ namespace Azure.Generator.Mgmt.Tests
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                 properties: []);
             var (client, models) = InputResourceData.ClientWithResource(
-                resourceName: "ResponseType",
+                resourceName: resourceName,
                 additionalProperties:
                 [
                     InputFactory.Property("startTime", dateTime, isReadOnly: true),
                     InputFactory.Property("endTime", dateTime, isReadOnly: true)
                 ],
-                baseModel: baseModel);
+                baseModel: baseModel,
+                resourceModelName: resourceName);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => models,
                 clients: () => [client],
@@ -60,10 +77,10 @@ namespace Azure.Generator.Mgmt.Tests
                 configurationJson: "{ \"package-name\": \"sample-library\", \"model-namespace\": true }",
                 lastContractCompilation: () => Helpers.BuildCompilation(
                 [
-                    ("LastContract.cs", """
+                    ("LastContract.cs", $$"""
                         namespace Azure.ResourceManager.Test
                         {
-                            public class ResponseTypeData
+                            public class {{resourceName}}Data
                             {
                                 public System.DateTimeOffset? StartOn { get; }
                                 public System.DateTimeOffset? EndOn { get; }
@@ -72,10 +89,11 @@ namespace Azure.Generator.Mgmt.Tests
                         """)
                 ]));
 
-            var provider = plugin.Object.TypeFactory.CreateModel(models.Single(m => m.Name == "ResponseType"));
+            var provider = plugin.Object.TypeFactory.CreateModel(models.Single(m => m.Name == resourceName));
 
             Assert.That(provider, Is.TypeOf<ResourceDataModelProvider>());
-            Assert.That(provider!.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test"));
+            Assert.That(provider!.Name, Is.EqualTo($"{resourceName}Data"));
+            Assert.That(provider.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test"));
             Assert.That(provider.LastContractView, Is.Not.Null);
             Assert.That(provider.Properties.Select(p => p.Name), Does.Contain("StartOn"));
             Assert.That(provider.Properties.Select(p => p.Name), Does.Contain("EndOn"));
