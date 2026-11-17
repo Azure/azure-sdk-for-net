@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subgroupProfile"> Subgroup profile. </param>
         /// <param name="eTag"> Resource ETag. </param>
         /// <returns> An interconnect group for mocking. </returns>
-        public static InterconnectGroupData InterconnectGroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, InterconnectGroupScope? scope = default, IEnumerable<InterconnectGroupSubgroupData> subgroups = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, SubgroupProfile subgroupProfile = default, string eTag = default)
+        public static InterconnectGroupData InterconnectGroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, InterconnectGroupScope? scope = default, IEnumerable<InterconnectGroupSubgroupData> subgroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubgroupProfile subgroupProfile = default, string eTag = default)
         {
             return new InterconnectGroupData(id, name, resourceType, location, tags ?? new ChangeTrackingDictionary<string, string>(), default,
                 scope is null && subgroups is null && provisioningState is null && resourceGuid is null && subgroupProfile is null

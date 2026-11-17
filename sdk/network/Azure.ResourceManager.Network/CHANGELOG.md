@@ -9,6 +9,7 @@ This release ensures no breaking API changes compared with version 1.15.0 only. 
 - Regenerated the library from the updated Network specification.
 - Updated the preview capability API: removed `VirtualNetworkApplianceCapabilityBaseData`. `VirtualNetworkApplianceCapabilityData` now derives directly from `ResourceData` and declares `Properties` itself.
 - Updated the preview Interconnect Group and Subgroup APIs: flattened properties onto their resource data types and updated the corresponding model factories. The property-envelope types are now internal.
+- Represented the Interconnect Group resource GUID as `Guid?` instead of `string`.
 
 ## 1.18.0-beta.3 (2026-10-30)
 

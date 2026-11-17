@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The resource GUID property of the interconnect group resource. </summary>
         [WirePath("properties.resourceGuid")]
-        public string ResourceGuid => Properties?.ResourceGuid;
+        public Guid? ResourceGuid => Properties?.ResourceGuid;
 
         /// <summary> The subgroup profile of the interconnect group resource. </summary>
         [WirePath("properties.subgroupProfile")]
