@@ -25,6 +25,9 @@ in version 0.15.8); obtain approval if the host disallows this.
 `--proxy-registration-storage`
 is an isolated diagnostic mode, not a BenchmarkDotNet serialization benchmark.
 Check `--help` for BenchmarkDotNet options supported by the installed version.
+The serialization selector is `*ProxyResolutionBenchmark*`; use
+`*ProxyResolutionBenchmark.Read_*` or `*ProxyResolutionBenchmark.Write_*` to select
+one category.
 
 ## Workload and counts
 
@@ -34,6 +37,10 @@ payload and serialization helpers**, and reused caller-owned options. There are
 no collections. Payload/model construction, proxy registration, reflection-cache
 warmup and validation occur in global setup, outside measured operations.
 The operation-local options copy performed by the library remains in the hot path.
+Proxies are registered for `BenchmarkModel` itself, so a miss looks up `BenchmarkModel`
+and then `System.Object` before falling back to the model. The `DerivedModel` write
+scenarios write a `DerivedBenchmarkModel` through those same proxies, adding one
+base-class lookup.
 
 | Suffix | Total registrations | Distinct model keys | Matching position |
 | --- | ---: | ---: | --- |
@@ -47,6 +54,8 @@ The operation-local options copy performed by the library remains in the hot pat
 | Conditional_LastOf10 | 10 | 1 | tenth |
 | AllDecline_1Entry | 1 | 1 | none; one predicate checked |
 | AllDecline_10Entries | 10 | 1 | none; ten predicates checked |
+| DerivedModel_LastOf10 (write only) | 10 | 1 | tenth, via the base class |
+| DerivedModel_AllDecline_10Entries (write only) | 10 | 1 | none; ten predicates checked via the base class |
 
 The meeting left "miss" ambiguous. `LookupMiss` measures an unrelated-model-key
 lookup miss with registrations elsewhere. `AllDecline` measures a same-key
@@ -55,6 +64,7 @@ two interpretations of that question, not two separately stated requirements.
 
 Conditional reads inspect the real UTF-8 `"type"` discriminator using
 `Utf8JsonReader`; writes compare the actual model discriminator ordinally.
+The benchmark uses the context-free `ModelReaderWriter` entrypoints.
 The discriminator is first in this representative payload. Its position and
 predicate implementation affect cost; these results do not cover every possible
 predicate. Proxies and fallback deserialize/serialize identical property sets.
@@ -64,6 +74,9 @@ byte-for-byte write output, and that caller options have no leaked proxy state.
 Instrumented subclasses/counters are **not** used by measured operations.
 Unrelated-key proxy methods throw if incorrectly invoked.
 
+This document reports no measured results; rerun fixture verification and
+measurements after changing the proxy implementation.
+
 ## Interpreting memory and timing
 
 - BenchmarkDotNet `Allocated` is **bytes allocated per read/write**, not retained
@@ -72,7 +85,8 @@ Unrelated-key proxy methods throw if incorrectly invoked.
   differently between call sites. An observed net allocation delta is not
   necessarily the size of the options copy alone. Use allocation traces and
   source-level accounting before attributing every byte to proxy resolution.
-- Storage mode roots 10,000 options graphs and samples full-GC heap differences
+- Storage mode roots 10,000 options graphs, each including the proxy lookup index
+  that the first operation builds, and samples full-GC heap differences
   five times per configuration. It separately samples thread allocation during
   construction. Root arrays are excluded, and proxy implementations, discriminator
   buffers and model keys are shared/precreated. Subtract the zero-registration

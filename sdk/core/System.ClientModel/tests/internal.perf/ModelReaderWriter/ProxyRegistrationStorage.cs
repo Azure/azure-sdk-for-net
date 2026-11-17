@@ -12,6 +12,7 @@ internal static class ProxyRegistrationStorage
 {
     private const int BatchSize = 10000;
     private const int Repetitions = 5;
+    private static readonly ProxyResolutionBenchmark.BenchmarkModel s_model = new();
 
     public static void Run()
     {
@@ -25,7 +26,7 @@ internal static class ProxyRegistrationStorage
             ProxyResolutionBenchmark.Scenario.AllDecline
         ];
         foreach (var scenario in scenarios)
-            GC.KeepAlive(ProxyResolutionBenchmark.CreateOptions(scenario, 10));
+            GC.KeepAlive(CreateIndexedOptions(scenario, 10));
 
         var results = new List<object>();
         foreach (var scenario in scenarios)
@@ -50,7 +51,7 @@ internal static class ProxyRegistrationStorage
         {
             BatchSize,
             Repetitions,
-            Scope = "Options and registration containers/entries only; proxy implementations and model keys are precreated/shared. Array of roots excluded. No serialization invoked.",
+            Scope = "Options, proxy collections, and the lookup index built on first use; proxy implementations and model keys are precreated/shared. Array of roots excluded. No serialization invoked.",
             Method = "GC.GetTotalMemory(true) before/after a strongly rooted batch; GC.GetAllocatedBytesForCurrentThread around batch construction. Report samples, not exact individual object sizes.",
             Results = results
         }, new JsonSerializerOptions { WriteIndented = true }));
@@ -65,11 +66,19 @@ internal static class ProxyRegistrationStorage
         long beforeRetained = GC.GetTotalMemory(true);
         long beforeAllocated = GC.GetAllocatedBytesForCurrentThread();
         for (int i = 0; i < roots.Length; i++)
-            roots[i] = ProxyResolutionBenchmark.CreateOptions(scenario, count);
+            roots[i] = CreateIndexedOptions(scenario, count);
         long allocated = GC.GetAllocatedBytesForCurrentThread() - beforeAllocated;
         long retained = GC.GetTotalMemory(true) - beforeRetained;
         GC.KeepAlive(roots);
         return ((double)retained / BatchSize, (double)allocated / BatchSize);
+    }
+
+    // Resolving builds the lookup index that the first serialization would otherwise build.
+    private static ModelReaderWriterOptions CreateIndexedOptions(ProxyResolutionBenchmark.Scenario scenario, int count)
+    {
+        ModelReaderWriterOptions options = ProxyResolutionBenchmark.CreateOptions(scenario, count);
+        options.ResolveProxy((IPersistableModel<ProxyResolutionBenchmark.BenchmarkModel>)s_model);
+        return options;
     }
 #endif
 }
