@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// for lifecycle events and streaming input deltas.
 /// </summary>
 [Experimental("OPENAI001")]
-public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCustomToolCall>
+public class OutputItemCustomToolCallBuilder : OutputItemBuilder<global::OpenAI.Responses.CustomToolCallItem>
 {
     private readonly string _callId;
     private readonly string _name;
@@ -51,11 +51,10 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this custom tool call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemCustomToolCall(
-            callId: _callId,
-            name: _name,
-            input: "",
-            status: global::OpenAI.Responses.CustomToolCallStatus.InProgress);
+        var item = new global::OpenAI.Responses.CustomToolCallItem(_callId, "", _name)
+        {
+            Status = global::OpenAI.Responses.CustomToolCallStatus.InProgress
+        };
         item.Id = _itemId;
         return EmitAdded(item);
     }
@@ -134,11 +133,10 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this custom tool call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemCustomToolCall(
-            callId: _callId,
-            name: _name,
-            input: _finalInput ?? "",
-            status: global::OpenAI.Responses.CustomToolCallStatus.Completed);
+        var item = new global::OpenAI.Responses.CustomToolCallItem(_callId, _finalInput ?? "", _name)
+        {
+            Status = global::OpenAI.Responses.CustomToolCallStatus.Completed
+        };
         item.Id = _itemId;
         return EmitDone(item);
     }

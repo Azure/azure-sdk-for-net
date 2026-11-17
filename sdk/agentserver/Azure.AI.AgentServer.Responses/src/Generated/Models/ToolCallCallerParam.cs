@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// The execution context that produced this tool call.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DirectToolCallCallerParam"/> and <see cref="ProgramToolCallCallerParam"/>.
     /// </summary>
-    public abstract partial class ToolCallCallerParam
+    internal abstract partial class ToolCallCallerParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

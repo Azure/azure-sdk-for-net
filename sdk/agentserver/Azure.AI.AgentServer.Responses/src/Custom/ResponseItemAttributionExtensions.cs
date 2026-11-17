@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
@@ -47,6 +48,9 @@ public static class ResponseItemAttributionExtensions
     private static readonly ReadOnlyMemory<byte> StatusPath = "$.status"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> ApprovalRequestIdPath = "$.approval_request_id"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> PromptCacheBreakpointPath = "$.prompt_cache_breakpoint"u8.ToArray();
+    private static readonly ReadOnlyMemory<byte> NamespacePath = "$.namespace"u8.ToArray();
+    private static readonly ReadOnlyMemory<byte> AsyncPath = "$.async"u8.ToArray();
+    private static readonly ReadOnlyMemory<byte> CallerPath = "$.caller"u8.ToArray();
 
     extension(ResponseItem item)
     {
@@ -231,6 +235,59 @@ public static class ResponseItemAttributionExtensions
         }
     }
 
+    // OpenAI's CustomToolCallItem deserializes namespace and caller into internal properties, so a
+    // deserialized item does not have them in its JsonPatch. The getters below fall back to the
+    // item's serialized form for those values.
+    extension(CustomToolCallItem customToolCall)
+    {
+        /// <summary>Gets or sets the namespace of the custom tool being called.</summary>
+        public string? Namespace
+        {
+            get => GetString(ref customToolCall.Patch, NamespacePath.Span)
+                ?? GetSerializedProperty(customToolCall, "namespace")?.GetString();
+            set => SetOrClear(ref customToolCall.Patch, NamespacePath.Span, value);
+        }
+
+        /// <summary>Gets or sets whether the custom tool call runs asynchronously.</summary>
+        public bool? Async
+        {
+            get => TryGetValueJson(ref customToolCall.Patch, AsyncPath.Span, out _)
+                ? customToolCall.Patch.GetBoolean(AsyncPath.Span)
+                : null;
+            set
+            {
+                if (value is null)
+                {
+                    customToolCall.Patch.Remove(AsyncPath.Span);
+                }
+                else
+                {
+                    customToolCall.Patch.Set(AsyncPath.Span, value.Value);
+                }
+            }
+        }
+
+        /// <summary>Gets or sets the caller of the custom tool call.</summary>
+        public ToolCallCaller? Caller
+        {
+            get => GetJsonModel<ToolCallCaller>(ref customToolCall.Patch, CallerPath.Span)
+                ?? ReadSerializedModel<ToolCallCaller>(customToolCall, "caller");
+            set => SetOrClear(ref customToolCall.Patch, CallerPath.Span, value);
+        }
+    }
+
+    // As for CustomToolCallItem, OpenAI's CustomToolCallOutputItem keeps caller in an internal property.
+    extension(CustomToolCallOutputItem customToolCallOutput)
+    {
+        /// <summary>Gets or sets the caller of the custom tool call this output is for.</summary>
+        public ToolCallCaller? Caller
+        {
+            get => GetJsonModel<ToolCallCaller>(ref customToolCallOutput.Patch, CallerPath.Span)
+                ?? ReadSerializedModel<ToolCallCaller>(customToolCallOutput, "caller");
+            set => SetOrClear(ref customToolCallOutput.Patch, CallerPath.Span, value);
+        }
+    }
+
     extension(ReasoningSummaryPart part)
     {
         /// <summary>
@@ -279,6 +336,30 @@ public static class ResponseItemAttributionExtensions
         {
             patch.Set(path, value.Value.ToUnixTimeSeconds());
         }
+    }
+
+    private static System.Text.Json.JsonElement? GetSerializedProperty<T>(T model, string name)
+        where T : IPersistableModel<T>
+    {
+        using var document = System.Text.Json.JsonDocument.Parse(ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, global::OpenAI.OpenAIContext.Default));
+        if (!document.RootElement.TryGetProperty(name, out var value) || value.ValueKind == System.Text.Json.JsonValueKind.Null)
+        {
+            return null;
+        }
+
+        return value.Clone();
+    }
+
+    private static TModel? ReadSerializedModel<TModel>(ResponseItem item, string name)
+        where TModel : class, IJsonModel<TModel>
+    {
+        var json = GetSerializedProperty(item, name);
+        return json is null
+            ? null
+            : ModelReaderWriter.Read<TModel>(
+                BinaryData.FromString(json.Value.GetRawText()),
+                ModelReaderWriterOptions.Json,
+                AzureAIAgentServerResponsesContext.Default);
     }
 
     private static string? GetString(ref JsonPatch patch, ReadOnlySpan<byte> path)

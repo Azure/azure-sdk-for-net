@@ -10,10 +10,10 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The DirectToolCallCallerParam. </summary>
-    public partial class DirectToolCallCallerParam : ToolCallCallerParam
+    internal partial class DirectToolCallCallerParam : ToolCallCallerParam
     {
         /// <summary> Initializes a new instance of <see cref="DirectToolCallCallerParam"/>. </summary>
-        public DirectToolCallCallerParam() : base(ToolCallCallerParamType.Direct)
+        internal DirectToolCallCallerParam() : base(ToolCallCallerParamType.Direct)
         {
         }
 

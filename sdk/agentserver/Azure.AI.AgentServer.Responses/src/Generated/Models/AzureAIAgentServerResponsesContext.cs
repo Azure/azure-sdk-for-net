@@ -20,15 +20,7 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(ComputerAction))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ComputerCallAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DirectToolCallCaller))]
-    [ModelReaderWriterBuildable(typeof(DirectToolCallCallerParam))]
-#pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(OutputItemCustomToolCall))]
-#pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall is experimental and may change in future versions.
-#pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(OutputItemCustomToolCallOutput))]
-#pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProgramToolCallCaller))]
-    [ModelReaderWriterBuildable(typeof(ProgramToolCallCallerParam))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ConversationReference))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
@@ -72,7 +64,6 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(ResponseToolChoice))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseToolChoice is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolCallCaller))]
-    [ModelReaderWriterBuildable(typeof(ToolCallCallerParam))]
     public partial class AzureAIAgentServerResponsesContext : ModelReaderWriterContext
     {
     }

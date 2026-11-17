@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DirectToolCallCallerParam"/> and <see cref="ProgramToolCallCallerParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolCallCallerParam))]
-    public abstract partial class ToolCallCallerParam : IJsonModel<ToolCallCallerParam>
+    internal abstract partial class ToolCallCallerParam : IJsonModel<ToolCallCallerParam>
     {
         /// <summary> Initializes a new instance of <see cref="ToolCallCallerParam"/> for deserialization. </summary>
         internal ToolCallCallerParam()
