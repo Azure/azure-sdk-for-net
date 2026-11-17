@@ -51,7 +51,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="DataMapEntityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMapEntityStatus?(string value) => value == null ? null : new DataMapEntityStatus(value);
+        public static implicit operator DataMapEntityStatus?(string value) => value == null ? (DataMapEntityStatus?)null : new DataMapEntityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
