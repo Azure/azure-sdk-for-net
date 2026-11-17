@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed SAS builder/client file system and path name validation to use ordinal comparisons in `DataLakeFileSystemClient`, `DataLakeDirectoryClient`, and `DataLakePathClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
+
 ### Other Changes
 
 ## 12.28.0 (2026-09-28)

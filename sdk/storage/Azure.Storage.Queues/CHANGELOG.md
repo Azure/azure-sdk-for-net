@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed SAS builder/client queue-name validation to use ordinal comparisons in `QueueClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
+
 ### Other Changes
 
 ## 12.28.1 (2026-10-05)

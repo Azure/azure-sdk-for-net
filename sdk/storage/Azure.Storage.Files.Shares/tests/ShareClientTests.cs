@@ -3384,6 +3384,36 @@ namespace Azure.Storage.Files.Shares.Tests
                 () => shareCLient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.ShareName does not match Name in the Client. ShareSasBuilder.ShareName must either be left empty or match the Name in the Client"));
         }
+
+        [Test]
+        public void GenerateSas_BuilderNameWithIgnorableUnicode_IsRejected()
+        {
+            string shareName = "canary";
+            string spoofedShareName = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(shareName, spoofedShareName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(shareName, spoofedShareName, StringComparison.Ordinal));
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(new Uri("https://account.file.core.windows.net"))
+            {
+                ShareName = shareName
+            };
+
+            ShareClient shareClient = InstrumentClient(new ShareClient(
+                shareUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                ShareName = spoofedShareName
+            };
+
+            TestHelper.AssertExpectedException(
+                () => shareClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.ShareName does not match Name in the Client. ShareSasBuilder.ShareName must either be left empty or match the Name in the Client"));
+        }
         #endregion
 
         [Test]
