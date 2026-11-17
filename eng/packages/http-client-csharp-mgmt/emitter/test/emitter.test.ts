@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { createModel } from "@typespec/http-client-csharp";
 import {
   removeConstructorRequirednessOverrides,
-  removeModelDeprecations
+  removeUnsupportedDeprecations
 } from "../src/emitter.js";
 import type { InputClient } from "../src/code-model-types.js";
 import { traverseClient } from "../src/sdk-client-utils.js";
@@ -17,7 +17,7 @@ import {
 } from "./test-util.js";
 
 describe("Management code model", () => {
-  it("removes model deprecation without changing property or operation deprecation", async () => {
+  it("removes unsupported model, property, and child-client operation deprecation", async () => {
     const host = await createEmitterTestHost();
     const program = await typeSpecCompile(
       `
@@ -77,19 +77,20 @@ describe("Management code model", () => {
         (operation) => operation.deprecated === "Deprecated operation."
       )
     ).toBe(true);
-    const operationDeprecations = operations.map(
-      (operation) => operation.deprecated
-    );
+    const operationNames = operations.map((operation) => operation.name);
 
-    removeModelDeprecations(original);
+    removeUnsupportedDeprecations(original);
 
     for (const model of original.models) {
       expect(model).not.toHaveProperty("deprecation");
     }
     expect(original.models.map((model) => model.name)).toEqual(modelNames);
-    expect(legacyProperty?.deprecation).toBe("Deprecated property.");
-    expect(operations.map((operation) => operation.deprecated)).toEqual(
-      operationDeprecations
+    expect(legacyProperty).not.toHaveProperty("deprecation");
+    for (const operation of operations) {
+      expect(operation).not.toHaveProperty("deprecated");
+    }
+    expect(operations.map((operation) => operation.name)).toEqual(
+      operationNames
     );
   });
 
