@@ -2,15 +2,9 @@
 
 ## 2.4.0 (2026/11/20)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - SignalR trigger invocation failures now return a generic error message instead of exposing internal exception details to clients.
-
-### Other Changes
 
 ## 2.3.0 (2026-11-02)
 
