@@ -272,6 +272,17 @@ Write-Host 'Standalone Function App template compiled; reference defaults, share
 $searchTemplate = Invoke-BicepCompilation -Path (Join-Path $infra 'ai-search.bicep')
 $searchResources = @(Get-ArmResources -Template $searchTemplate)
 Assert-NoArmRoleAssignments -Resources $searchResources
+if ($searchTemplate['parameters']['indexName']['defaultValue'] -cne 'sample_index' -or
+    $searchTemplate['variables']['indexingPrefix'] -cne "[replace(parameters('indexName'), '_', '-')]" -or
+    $searchTemplate['variables']['datasourceName'] -cne "[format('{0}-datasource', variables('indexingPrefix'))]" -or
+    $searchTemplate['variables']['skillsetName'] -cne "[format('{0}-skillset', variables('indexingPrefix'))]") {
+    throw 'Keep the .NET index name, but replace underscores in data-source and skillset names.'
+}
+$indexerCopy = @($searchTemplate['variables']['copy'] | Where-Object name -ceq 'indexers')
+if ($indexerCopy.Count -ne 1 -or
+    $indexerCopy[0]['input']['name'] -cnotmatch [regex]::Escape("variables('indexingPrefix')")) {
+    throw 'Indexer names must use the hyphenated indexing prefix, not the underscore-containing index name.'
+}
 $expectedSearchTypes = @('Microsoft.Storage/storageAccounts/blobServices/containers',
     'Microsoft.CognitiveServices/accounts/deployments', 'Microsoft.Resources/deploymentScripts')
 foreach ($type in $expectedSearchTypes) {

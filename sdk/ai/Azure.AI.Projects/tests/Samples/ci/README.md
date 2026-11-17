@@ -162,6 +162,8 @@ query. The Function host is still Python (as in the shared bundle), but uses
 the .NET `foo` request's `query` argument and the `azure-function-foo-input` /
 `azure-function-tool-output` queues. Its only remote dependency is
 `azure-functions`; no dependency is added to the .NET SDK.
+Data-source, skillset and indexer names replace index-name underscores with
+hyphens because Azure Search permits underscores only in the index name.
 The permanent identities remain administered by the linked Python bootstrap;
 this repository does not duplicate that bootstrap or grant roles.
 

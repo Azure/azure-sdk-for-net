@@ -59,8 +59,9 @@ resource embedding 'Microsoft.CognitiveServices/accounts/deployments@2025-10-01-
 var dimensions = 1536
 var searchEndpoint = 'https://${search.name}.search.windows.net'
 var embeddingEndpoint = 'https://${account.name}.openai.azure.com'
-var datasourceName = '${indexName}-datasource'
-var skillsetName = '${indexName}-skillset'
+var indexingPrefix = replace(indexName, '_', '-')
+var datasourceName = '${indexingPrefix}-datasource'
+var skillsetName = '${indexingPrefix}-skillset'
 var searchIdentity = {
   '@odata.type': '#Microsoft.Azure.Search.DataUserAssignedIdentity'
   userAssignedIdentity: sharedSearchIdentityResourceId
@@ -156,7 +157,7 @@ var indexers = [for format in [
   { suffix: 'markdown', extensions: '.md', parsingMode: 'markdown' }
   { suffix: 'documents', extensions: '.pdf,.docx,.pptx,.xlsx,.txt', parsingMode: 'default' }
 ]: {
-  name: '${indexName}-${format.suffix}-indexer'
+  name: '${indexingPrefix}-${format.suffix}-indexer'
   dataSourceName: datasourceName
   targetIndexName: indexName
   skillsetName: skillsetName
