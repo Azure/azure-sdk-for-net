@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -16,19 +17,39 @@ namespace Azure.Provisioning.ContainerService
     {
         private ContainerServiceMachineNetworkProperties _network;
         private BicepValue<ResourceIdentifier> _resourceId;
+        private ContainerServiceMachineHardwareProfile _hardware;
+        private ContainerServiceMachineOSProfile _operatingSystem;
+        private ContainerServiceMachineKubernetesProfile _kubernetes;
+        private BicepValue<AgentPoolMode> _mode;
+        private ContainerServiceMachineSecurityProfile _security;
+        private BicepValue<ScaleSetPriority> _priority;
+        private BicepValue<ScaleSetEvictionPolicy> _evictionPolicy;
+        private MachineBillingProfile _billing;
+        private BicepValue<string> _nodeImageVersion;
+        private BicepValue<string> _provisioningState;
+        private BicepDictionary<string> _tags;
+        private BicepValue<ETag> _eTag;
+        private ContainerServiceMachineStatus _status;
+        private LocalDnsProfile _localDnsProfile;
+        private CapacityReservation _capacityReservation;
 
         /// <summary> Creates a new ContainerServiceMachineProperties. </summary>
         public ContainerServiceMachineProperties()
         {
         }
 
-        /// <summary> Gets the Network. </summary>
-        internal ContainerServiceMachineNetworkProperties Network
+        /// <summary> Gets or sets the Network. </summary>
+        public ContainerServiceMachineNetworkProperties Network
         {
             get
             {
                 Initialize();
                 return _network;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _network, value);
             }
         }
 
@@ -42,12 +63,242 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the IPAddresses. </summary>
-        public BicepList<ContainerServiceMachineIPAddress> NetworkIPAddresses
+        /// <summary> Gets or sets the Hardware. </summary>
+        public ContainerServiceMachineHardwareProfile Hardware
         {
             get
             {
-                return Network is null ? default : Network.IPAddresses;
+                Initialize();
+                return _hardware;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _hardware, value);
+            }
+        }
+
+        /// <summary> Gets or sets the OperatingSystem. </summary>
+        public ContainerServiceMachineOSProfile OperatingSystem
+        {
+            get
+            {
+                Initialize();
+                return _operatingSystem;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _operatingSystem, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Kubernetes. </summary>
+        public ContainerServiceMachineKubernetesProfile Kubernetes
+        {
+            get
+            {
+                Initialize();
+                return _kubernetes;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _kubernetes, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Mode. </summary>
+        public BicepValue<AgentPoolMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
+            set
+            {
+                Initialize();
+                _mode.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Security. </summary>
+        public ContainerServiceMachineSecurityProfile Security
+        {
+            get
+            {
+                Initialize();
+                return _security;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _security, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Priority. </summary>
+        public BicepValue<ScaleSetPriority> Priority
+        {
+            get
+            {
+                Initialize();
+                return _priority;
+            }
+            set
+            {
+                Initialize();
+                _priority.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the EvictionPolicy. </summary>
+        public BicepValue<ScaleSetEvictionPolicy> EvictionPolicy
+        {
+            get
+            {
+                Initialize();
+                return _evictionPolicy;
+            }
+            set
+            {
+                Initialize();
+                _evictionPolicy.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Billing. </summary>
+        internal MachineBillingProfile Billing
+        {
+            get
+            {
+                Initialize();
+                return _billing;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _billing, value);
+            }
+        }
+
+        /// <summary> Gets the NodeImageVersion. </summary>
+        public BicepValue<string> NodeImageVersion
+        {
+            get
+            {
+                Initialize();
+                return _nodeImageVersion;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<string> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the Tags. </summary>
+        public BicepDictionary<string> Tags
+        {
+            get
+            {
+                Initialize();
+                return _tags;
+            }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<ETag> ETag
+        {
+            get
+            {
+                Initialize();
+                return _eTag;
+            }
+        }
+
+        /// <summary> Gets the Status. </summary>
+        public ContainerServiceMachineStatus Status
+        {
+            get
+            {
+                Initialize();
+                return _status;
+            }
+        }
+
+        /// <summary> Gets or sets the LocalDnsProfile. </summary>
+        public LocalDnsProfile LocalDnsProfile
+        {
+            get
+            {
+                Initialize();
+                return _localDnsProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _localDnsProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the CapacityReservation. </summary>
+        internal CapacityReservation CapacityReservation
+        {
+            get
+            {
+                Initialize();
+                return _capacityReservation;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _capacityReservation, value);
+            }
+        }
+
+        /// <summary> Gets or sets the SpotMaxPrice. </summary>
+        public BicepValue<float> BillingSpotMaxPrice
+        {
+            get
+            {
+                return Billing is null ? default : Billing.SpotMaxPrice;
+            }
+            set
+            {
+                if (Billing is null)
+                {
+                    Billing = new MachineBillingProfile();
+                }
+                Billing.SpotMaxPrice = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> CapacityReservationGroupId
+        {
+            get
+            {
+                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
+            }
+            set
+            {
+                if (CapacityReservation is null)
+                {
+                    CapacityReservation = new CapacityReservation();
+                }
+                CapacityReservation.CapacityReservationGroupId = value;
             }
         }
 
@@ -55,8 +306,23 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _network = DefineModelProperty<ContainerServiceMachineNetworkProperties>(nameof(Network), new string[] { "network" }, isOutput: true);
+            _network = DefineModelProperty<ContainerServiceMachineNetworkProperties>(nameof(Network), new string[] { "network" });
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isOutput: true);
+            _hardware = DefineModelProperty<ContainerServiceMachineHardwareProfile>(nameof(Hardware), new string[] { "hardware" });
+            _operatingSystem = DefineModelProperty<ContainerServiceMachineOSProfile>(nameof(OperatingSystem), new string[] { "operatingSystem" });
+            _kubernetes = DefineModelProperty<ContainerServiceMachineKubernetesProfile>(nameof(Kubernetes), new string[] { "kubernetes" });
+            _mode = DefineProperty<AgentPoolMode>(nameof(Mode), new string[] { "mode" });
+            _security = DefineModelProperty<ContainerServiceMachineSecurityProfile>(nameof(Security), new string[] { "security" });
+            _priority = DefineProperty<ScaleSetPriority>(nameof(Priority), new string[] { "priority" });
+            _evictionPolicy = DefineProperty<ScaleSetEvictionPolicy>(nameof(EvictionPolicy), new string[] { "evictionPolicy" });
+            _billing = DefineModelProperty<MachineBillingProfile>(nameof(Billing), new string[] { "billing" });
+            _nodeImageVersion = DefineProperty<string>(nameof(NodeImageVersion), new string[] { "nodeImageVersion" }, isOutput: true);
+            _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
+            _status = DefineModelProperty<ContainerServiceMachineStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
+            _localDnsProfile = DefineModelProperty<LocalDnsProfile>(nameof(LocalDnsProfile), new string[] { "localDNSProfile" });
+            _capacityReservation = DefineModelProperty<CapacityReservation>(nameof(CapacityReservation), new string[] { "capacityReservation" });
             DefineAdditionalProperties();
         }
 

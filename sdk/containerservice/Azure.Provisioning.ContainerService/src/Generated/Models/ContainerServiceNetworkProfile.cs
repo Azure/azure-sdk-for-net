@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -25,11 +26,15 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<ContainerServiceOutboundType> _outboundType;
         private BicepValue<ContainerServiceLoadBalancerSku> _loadBalancerSku;
         private ManagedClusterLoadBalancerProfile _loadBalancerProfile;
+        private ClusterApiConnectivityProfile _clusterApiConnectivityProfile;
         private ManagedClusterNatGatewayProfile _natGatewayProfile;
+        private BicepValue<ResourceIdentifier> _natGatewayId;
         private ManagedClusterStaticEgressGatewayProfile _staticEgressGatewayProfile;
         private BicepList<string> _podCidrs;
         private BicepList<string> _serviceCidrs;
         private BicepList<ContainerServiceIPFamily> _networkIPFamilies;
+        private BicepValue<AgentPoolPodLinkLocalAccess> _podLinkLocalAccess;
+        private ContainerServiceNetworkProfileKubeProxyConfig _kubeProxyConfig;
 
         /// <summary> Creates a new ContainerServiceNetworkProfile. </summary>
         public ContainerServiceNetworkProfile()
@@ -216,6 +221,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ClusterApiConnectivityProfile. </summary>
+        public ClusterApiConnectivityProfile ClusterApiConnectivityProfile
+        {
+            get
+            {
+                Initialize();
+                return _clusterApiConnectivityProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _clusterApiConnectivityProfile, value);
+            }
+        }
+
         /// <summary> Gets or sets the NatGatewayProfile. </summary>
         public ManagedClusterNatGatewayProfile NatGatewayProfile
         {
@@ -228,6 +248,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 AssignOrReplace(ref _natGatewayProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the NatGatewayId. </summary>
+        public BicepValue<ResourceIdentifier> NatGatewayId
+        {
+            get
+            {
+                Initialize();
+                return _natGatewayId;
+            }
+            set
+            {
+                Initialize();
+                _natGatewayId.Assign(value);
             }
         }
 
@@ -291,6 +326,36 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the PodLinkLocalAccess. </summary>
+        public BicepValue<AgentPoolPodLinkLocalAccess> PodLinkLocalAccess
+        {
+            get
+            {
+                Initialize();
+                return _podLinkLocalAccess;
+            }
+            set
+            {
+                Initialize();
+                _podLinkLocalAccess.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the KubeProxyConfig. </summary>
+        public ContainerServiceNetworkProfileKubeProxyConfig KubeProxyConfig
+        {
+            get
+            {
+                Initialize();
+                return _kubeProxyConfig;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _kubeProxyConfig, value);
+            }
+        }
+
         /// <summary> Gets or sets the IsStaticEgressGatewayAddonEnabled. </summary>
         public BicepValue<bool> IsStaticEgressGatewayAddonEnabled
         {
@@ -324,11 +389,15 @@ namespace Azure.Provisioning.ContainerService
             _outboundType = DefineProperty<ContainerServiceOutboundType>(nameof(OutboundType), new string[] { "outboundType" });
             _loadBalancerSku = DefineProperty<ContainerServiceLoadBalancerSku>(nameof(LoadBalancerSku), new string[] { "loadBalancerSku" });
             _loadBalancerProfile = DefineModelProperty<ManagedClusterLoadBalancerProfile>(nameof(LoadBalancerProfile), new string[] { "loadBalancerProfile" });
+            _clusterApiConnectivityProfile = DefineModelProperty<ClusterApiConnectivityProfile>(nameof(ClusterApiConnectivityProfile), new string[] { "clusterAPIConnectivityProfile" });
             _natGatewayProfile = DefineModelProperty<ManagedClusterNatGatewayProfile>(nameof(NatGatewayProfile), new string[] { "natGatewayProfile" });
+            _natGatewayId = DefineProperty<ResourceIdentifier>(nameof(NatGatewayId), new string[] { "natGatewayId" });
             _staticEgressGatewayProfile = DefineModelProperty<ManagedClusterStaticEgressGatewayProfile>(nameof(StaticEgressGatewayProfile), new string[] { "staticEgressGatewayProfile" });
             _podCidrs = DefineListProperty<string>(nameof(PodCidrs), new string[] { "podCidrs" });
             _serviceCidrs = DefineListProperty<string>(nameof(ServiceCidrs), new string[] { "serviceCidrs" });
             _networkIPFamilies = DefineListProperty<ContainerServiceIPFamily>(nameof(NetworkIPFamilies), new string[] { "ipFamilies" });
+            _podLinkLocalAccess = DefineProperty<AgentPoolPodLinkLocalAccess>(nameof(PodLinkLocalAccess), new string[] { "podLinkLocalAccess" });
+            _kubeProxyConfig = DefineModelProperty<ContainerServiceNetworkProfileKubeProxyConfig>(nameof(KubeProxyConfig), new string[] { "kubeProxyConfig" });
             DefineAdditionalProperties();
         }
 

@@ -19,7 +19,10 @@ namespace Azure.Provisioning.ContainerService
         private KubernetesResourceObjectEncryptionProfile _kubernetesResourceObjectEncryptionProfile;
         private ManagedClusterSecurityProfileWorkloadIdentity _workloadIdentity;
         private ManagedClusterSecurityProfileImageCleaner _imageCleaner;
+        private ManagedClusterSecurityProfileImageIntegrity _imageIntegrity;
+        private ManagedClusterSecurityProfileNodeRestriction _nodeRestriction;
         private BicepList<BinaryData> _customCATrustCertificates;
+        private ServiceAccountImagePullProfile _serviceAccountImagePullProfile;
 
         /// <summary> Creates a new ManagedClusterSecurityProfile. </summary>
         public ManagedClusterSecurityProfile()
@@ -101,6 +104,36 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ImageIntegrity. </summary>
+        internal ManagedClusterSecurityProfileImageIntegrity ImageIntegrity
+        {
+            get
+            {
+                Initialize();
+                return _imageIntegrity;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _imageIntegrity, value);
+            }
+        }
+
+        /// <summary> Gets or sets the NodeRestriction. </summary>
+        internal ManagedClusterSecurityProfileNodeRestriction NodeRestriction
+        {
+            get
+            {
+                Initialize();
+                return _nodeRestriction;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _nodeRestriction, value);
+            }
+        }
+
         /// <summary> Gets or sets the CustomCATrustCertificates. </summary>
         public BicepList<BinaryData> CustomCATrustCertificates
         {
@@ -113,6 +146,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _customCATrustCertificates.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ServiceAccountImagePullProfile. </summary>
+        public ServiceAccountImagePullProfile ServiceAccountImagePullProfile
+        {
+            get
+            {
+                Initialize();
+                return _serviceAccountImagePullProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _serviceAccountImagePullProfile, value);
             }
         }
 
@@ -150,6 +198,40 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IsImageIntegrityEnabled. </summary>
+        public BicepValue<bool> IsImageIntegrityEnabled
+        {
+            get
+            {
+                return ImageIntegrity is null ? default : ImageIntegrity.IsImageIntegrityEnabled;
+            }
+            set
+            {
+                if (ImageIntegrity is null)
+                {
+                    ImageIntegrity = new ManagedClusterSecurityProfileImageIntegrity();
+                }
+                ImageIntegrity.IsImageIntegrityEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IsNodeRestrictionEnabled. </summary>
+        public BicepValue<bool> IsNodeRestrictionEnabled
+        {
+            get
+            {
+                return NodeRestriction is null ? default : NodeRestriction.IsNodeRestrictionEnabled;
+            }
+            set
+            {
+                if (NodeRestriction is null)
+                {
+                    NodeRestriction = new ManagedClusterSecurityProfileNodeRestriction();
+                }
+                NodeRestriction.IsNodeRestrictionEnabled = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterSecurityProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -159,7 +241,10 @@ namespace Azure.Provisioning.ContainerService
             _kubernetesResourceObjectEncryptionProfile = DefineModelProperty<KubernetesResourceObjectEncryptionProfile>(nameof(KubernetesResourceObjectEncryptionProfile), new string[] { "kubernetesResourceObjectEncryptionProfile" });
             _workloadIdentity = DefineModelProperty<ManagedClusterSecurityProfileWorkloadIdentity>(nameof(WorkloadIdentity), new string[] { "workloadIdentity" });
             _imageCleaner = DefineModelProperty<ManagedClusterSecurityProfileImageCleaner>(nameof(ImageCleaner), new string[] { "imageCleaner" });
+            _imageIntegrity = DefineModelProperty<ManagedClusterSecurityProfileImageIntegrity>(nameof(ImageIntegrity), new string[] { "imageIntegrity" });
+            _nodeRestriction = DefineModelProperty<ManagedClusterSecurityProfileNodeRestriction>(nameof(NodeRestriction), new string[] { "nodeRestriction" });
             _customCATrustCertificates = DefineListProperty<BinaryData>(nameof(CustomCATrustCertificates), new string[] { "customCATrustCertificates" }, format: "base64");
+            _serviceAccountImagePullProfile = DefineModelProperty<ServiceAccountImagePullProfile>(nameof(ServiceAccountImagePullProfile), new string[] { "serviceAccountImagePullProfile" });
             DefineAdditionalProperties();
         }
 

@@ -15,9 +15,11 @@ namespace Azure.Provisioning.ContainerService
     {
         private BicepValue<string> _maxSurge;
         private BicepValue<string> _maxUnavailable;
+        private BicepValue<string> _maxBlockedNodes;
         private BicepValue<int> _drainTimeoutInMinutes;
         private BicepValue<int> _nodeSoakDurationInMinutes;
         private BicepValue<UndrainableNodeBehavior> _undrainableNodeBehavior;
+        private UpgradeGateSettings _upgradeGateSettings;
 
         /// <summary> Creates a new AgentPoolUpgradeSettings. </summary>
         public AgentPoolUpgradeSettings()
@@ -51,6 +53,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _maxUnavailable.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the MaxBlockedNodes. </summary>
+        public BicepValue<string> MaxBlockedNodes
+        {
+            get
+            {
+                Initialize();
+                return _maxBlockedNodes;
+            }
+            set
+            {
+                Initialize();
+                _maxBlockedNodes.Assign(value);
             }
         }
 
@@ -99,15 +116,49 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the UpgradeGateSettings. </summary>
+        internal UpgradeGateSettings UpgradeGateSettings
+        {
+            get
+            {
+                Initialize();
+                return _upgradeGateSettings;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _upgradeGateSettings, value);
+            }
+        }
+
+        /// <summary> Gets or sets the IsEnabled. </summary>
+        public BicepValue<bool> UpgradeGateIsEnabled
+        {
+            get
+            {
+                return UpgradeGateSettings is null ? default : UpgradeGateSettings.IsEnabled;
+            }
+            set
+            {
+                if (UpgradeGateSettings is null)
+                {
+                    UpgradeGateSettings = new UpgradeGateSettings();
+                }
+                UpgradeGateSettings.IsEnabled = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AgentPoolUpgradeSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _maxSurge = DefineProperty<string>(nameof(MaxSurge), new string[] { "maxSurge" });
             _maxUnavailable = DefineProperty<string>(nameof(MaxUnavailable), new string[] { "maxUnavailable" });
+            _maxBlockedNodes = DefineProperty<string>(nameof(MaxBlockedNodes), new string[] { "maxBlockedNodes" });
             _drainTimeoutInMinutes = DefineProperty<int>(nameof(DrainTimeoutInMinutes), new string[] { "drainTimeoutInMinutes" });
             _nodeSoakDurationInMinutes = DefineProperty<int>(nameof(NodeSoakDurationInMinutes), new string[] { "nodeSoakDurationInMinutes" });
             _undrainableNodeBehavior = DefineProperty<UndrainableNodeBehavior>(nameof(UndrainableNodeBehavior), new string[] { "undrainableNodeBehavior" });
+            _upgradeGateSettings = DefineModelProperty<UpgradeGateSettings>(nameof(UpgradeGateSettings), new string[] { "upgradeGateSettings" });
             DefineAdditionalProperties();
         }
 

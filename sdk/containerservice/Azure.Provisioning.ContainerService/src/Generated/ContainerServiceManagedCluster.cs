@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -36,7 +37,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ContainerServiceManagedCluster. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerServiceManagedCluster(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2026-07-01")
+        public ContainerServiceManagedCluster(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2026-09-02-preview")
         {
         }
 
@@ -506,6 +507,40 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the EnableNodeHardening. </summary>
+        public BicepValue<bool> EnableNodeHardening
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableNodeHardening;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.EnableNodeHardening = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IsNamespaceResourcesEnabled. </summary>
+        public BicepValue<bool> IsNamespaceResourcesEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsNamespaceResourcesEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsNamespaceResourcesEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the NetworkProfile. </summary>
         public ContainerServiceNetworkProfile NetworkProfile
         {
@@ -554,6 +589,23 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.AutoUpgradeProfile = value;
+            }
+        }
+
+        /// <summary> Gets or sets the UpgradeSettings. </summary>
+        public ClusterUpgradeSettings UpgradeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.UpgradeSettings = value;
             }
         }
 
@@ -859,6 +911,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the HealthMonitorProfile. </summary>
+        public ManagedClusterHealthMonitorProfile HealthMonitorProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthMonitorProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.HealthMonitorProfile = value;
+            }
+        }
+
         /// <summary> Gets or sets the Code. </summary>
         public BicepValue<ContainerServiceStateCode> PowerStateCode
         {
@@ -869,6 +938,23 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 return Properties.PowerStateCode;
+            }
+        }
+
+        /// <summary> Gets or sets the SourceResourceId. </summary>
+        public BicepValue<ResourceIdentifier> CreationDataSourceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreationDataSourceResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.CreationDataSourceResourceId = value;
             }
         }
 
@@ -886,23 +972,6 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.NodeResourceGroupRestrictionLevel = value;
-            }
-        }
-
-        /// <summary> Gets or sets the OverrideSettings. </summary>
-        public UpgradeOverrideSettings UpgradeOverrideSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpgradeOverrideSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.UpgradeOverrideSettings = value;
             }
         }
 
@@ -940,6 +1009,40 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IsAgentSandboxProfileEnabled. </summary>
+        public BicepValue<bool> IsAgentSandboxProfileEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAgentSandboxProfileEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsAgentSandboxProfileEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IsPodSnapshotProfileEnabled. </summary>
+        public BicepValue<bool> IsPodSnapshotProfileEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPodSnapshotProfileEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsPodSnapshotProfileEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the SchedulerConfigMode. </summary>
         public BicepValue<SchedulerConfigMode> UpstreamSchedulerConfigMode
         {
@@ -954,6 +1057,40 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.UpstreamSchedulerConfigMode = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ScalingSize. </summary>
+        public BicepValue<ManagedClusterControlPlaneScalingSize> ScalingSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScalingSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.ScalingSize = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NodeDisruptionPolicy. </summary>
+        public BicepValue<AgentPoolNodeDisruptionPolicy> NodeDisruptionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeDisruptionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.NodeDisruptionPolicy = value;
             }
         }
 
@@ -1044,6 +1181,13 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-09-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_02_PREVIEW = "2026-09-02-preview";
+            /// <summary> API version "2026-09-01". </summary>
+            public static readonly string V2026_09_01 = "2026-09-01";
+            /// <summary> API version "2026-08-01". </summary>
+            public static readonly string V2026_08_01 = "2026-08-01";
             /// <summary> API version "2026-07-01". </summary>
             public static readonly string V2026_07_01 = "2026-07-01";
             /// <summary> API version "2026-06-01". </summary>

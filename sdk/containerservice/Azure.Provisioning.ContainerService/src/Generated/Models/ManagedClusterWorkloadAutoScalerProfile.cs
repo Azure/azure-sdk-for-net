@@ -37,7 +37,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the VerticalPodAutoscaler. </summary>
-        internal ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler
+        public ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler
         {
             get
             {
@@ -65,23 +65,6 @@ namespace Azure.Provisioning.ContainerService
                     Keda = new ManagedClusterWorkloadAutoScalerProfileKeda();
                 }
                 Keda.IsKedaEnabled = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IsVpaEnabled. </summary>
-        public BicepValue<bool> VerticalPodAutoscalerIsVpaEnabled
-        {
-            get
-            {
-                return VerticalPodAutoscaler is null ? default : VerticalPodAutoscaler.IsVpaEnabled;
-            }
-            set
-            {
-                if (VerticalPodAutoscaler is null)
-                {
-                    VerticalPodAutoscaler = new ManagedClusterVerticalPodAutoscaler();
-                }
-                VerticalPodAutoscaler.IsVpaEnabled = value;
             }
         }
 

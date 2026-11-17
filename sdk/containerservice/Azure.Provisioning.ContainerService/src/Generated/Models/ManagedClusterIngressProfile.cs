@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ContainerService
     {
         private ManagedClusterIngressProfileWebAppRouting _webAppRouting;
         private ManagedClusterIngressProfileGatewayConfiguration _gatewayApi;
+        private ManagedClusterIngressProfileApplicationLoadBalancer _applicationLoadBalancer;
 
         /// <summary> Creates a new ManagedClusterIngressProfile. </summary>
         public ManagedClusterIngressProfile()
@@ -51,6 +52,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ApplicationLoadBalancer. </summary>
+        public ManagedClusterIngressProfileApplicationLoadBalancer ApplicationLoadBalancer
+        {
+            get
+            {
+                Initialize();
+                return _applicationLoadBalancer;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _applicationLoadBalancer, value);
+            }
+        }
+
         /// <summary> Gets or sets the Installation. </summary>
         public BicepValue<ManagedGatewayType> GatewayApiInstallation
         {
@@ -74,6 +90,7 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _webAppRouting = DefineModelProperty<ManagedClusterIngressProfileWebAppRouting>(nameof(WebAppRouting), new string[] { "webAppRouting" });
             _gatewayApi = DefineModelProperty<ManagedClusterIngressProfileGatewayConfiguration>(nameof(GatewayApi), new string[] { "gatewayAPI" });
+            _applicationLoadBalancer = DefineModelProperty<ManagedClusterIngressProfileApplicationLoadBalancer>(nameof(ApplicationLoadBalancer), new string[] { "applicationLoadBalancer" });
             DefineAdditionalProperties();
         }
 

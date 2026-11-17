@@ -15,6 +15,8 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Use of this is strongly discouraged. </summary>
         AvailabilitySet = 1,
         /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
-        VirtualMachines = 2
+        VirtualMachines = 2,
+        /// <summary> Create an Agent Pool for BYO machines running the FlexNode agent. </summary>
+        FlexNodes = 3
     }
 }

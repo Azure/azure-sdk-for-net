@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -26,7 +27,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ContainerServiceMachine. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ContainerServiceMachine(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/machines", resourceVersion ?? "2026-07-01")
+        public ContainerServiceMachine(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/machines", resourceVersion ?? "2026-09-02-preview")
         {
         }
 
@@ -65,7 +66,7 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         public ContainerServiceMachineProperties Properties
         {
             get
@@ -73,15 +74,25 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _properties;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
         }
 
-        /// <summary> Gets the Zones. </summary>
+        /// <summary> Gets or sets the Zones. </summary>
         public BicepList<string> Zones
         {
             get
             {
                 Initialize();
                 return _zones;
+            }
+            set
+            {
+                Initialize();
+                _zones.Assign(value);
             }
         }
 
@@ -108,7 +119,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ContainerServiceMachineProperties>(nameof(Properties), new string[] { "properties" });
-            _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
+            _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             _parent = new ProvisioningResourceReference<ContainerServiceAgentPool>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
@@ -134,22 +145,9 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-07-01". </summary>
-            public static readonly string V2026_07_01 = "2026-07-01";
-            /// <summary> API version "2026-06-01". </summary>
-            public static readonly string V2026_06_01 = "2026-06-01";
-            /// <summary> API version "2026-05-01". </summary>
-            public static readonly string V2026_05_01 = "2026-05-01";
-            /// <summary> API version "2026-04-01". </summary>
-            public static readonly string V2026_04_01 = "2026-04-01";
-            /// <summary> API version "2026-03-01". </summary>
-            public static readonly string V2026_03_01 = "2026-03-01";
-            /// <summary> API version "2026-02-01". </summary>
-            public static readonly string V2026_02_01 = "2026-02-01";
-            /// <summary> API version "2026-01-01". </summary>
-            public static readonly string V2026_01_01 = "2026-01-01";
-            /// <summary> API version "2025-10-01". </summary>
-            public static readonly string V2025_10_01 = "2025-10-01";
+            /// <summary> API version "2026-09-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_02_PREVIEW = "2026-09-02-preview";
         }
     }
 }

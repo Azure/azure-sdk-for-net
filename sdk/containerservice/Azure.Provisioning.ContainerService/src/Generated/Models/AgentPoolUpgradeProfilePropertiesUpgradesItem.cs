@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ContainerService
     {
         private BicepValue<string> _kubernetesVersion;
         private BicepValue<bool> _isPreview;
+        private BicepValue<bool> _isOutOfSupport;
 
         /// <summary> Creates a new AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
         public AgentPoolUpgradeProfilePropertiesUpgradesItem()
@@ -41,12 +42,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets the IsOutOfSupport. </summary>
+        public BicepValue<bool> IsOutOfSupport
+        {
+            get
+            {
+                Initialize();
+                return _isOutOfSupport;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _kubernetesVersion = DefineProperty<string>(nameof(KubernetesVersion), new string[] { "kubernetesVersion" });
             _isPreview = DefineProperty<bool>(nameof(IsPreview), new string[] { "isPreview" });
+            _isOutOfSupport = DefineProperty<bool>(nameof(IsOutOfSupport), new string[] { "isOutOfSupport" });
             DefineAdditionalProperties();
         }
 

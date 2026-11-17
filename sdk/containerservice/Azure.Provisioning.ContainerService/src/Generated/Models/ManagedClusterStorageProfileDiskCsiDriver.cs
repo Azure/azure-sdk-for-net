@@ -11,9 +11,10 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-    internal partial class ManagedClusterStorageProfileDiskCsiDriver : ProvisionableConstruct
+    public partial class ManagedClusterStorageProfileDiskCsiDriver : ProvisionableConstruct
     {
         private BicepValue<bool> _isDiskCsiDriverEnabled;
+        private ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach _quickAttachDetach;
 
         /// <summary> Creates a new ManagedClusterStorageProfileDiskCsiDriver. </summary>
         public ManagedClusterStorageProfileDiskCsiDriver()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the QuickAttachDetach. </summary>
+        public ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach QuickAttachDetach
+        {
+            get
+            {
+                Initialize();
+                return _quickAttachDetach;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _quickAttachDetach, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterStorageProfileDiskCsiDriver. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _isDiskCsiDriverEnabled = DefineProperty<bool>(nameof(IsDiskCsiDriverEnabled), new string[] { "enabled" });
+            _quickAttachDetach = DefineModelProperty<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>(nameof(QuickAttachDetach), new string[] { "quickAttachDetach" });
             DefineAdditionalProperties();
         }
 

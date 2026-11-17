@@ -1,4 +1,6 @@
 directory: specification/containerservice/resource-manager/Microsoft.ContainerService/aks
-commit: 6f0a58c875a0fae861544e9082e02046360fd115
+commit: cd755eb3575597f0ab4af3c464a58fa903b0798a
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json

@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the DiskCsiDriver. </summary>
-        internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver
+        public ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver
         {
             get
             {
@@ -80,23 +80,6 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 AssignOrReplace(ref _blobCsiDriver, value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsDiskCsiDriverEnabled. </summary>
-        public BicepValue<bool> IsDiskCsiDriverEnabled
-        {
-            get
-            {
-                return DiskCsiDriver is null ? default : DiskCsiDriver.IsDiskCsiDriverEnabled;
-            }
-            set
-            {
-                if (DiskCsiDriver is null)
-                {
-                    DiskCsiDriver = new ManagedClusterStorageProfileDiskCsiDriver();
-                }
-                DiskCsiDriver.IsDiskCsiDriverEnabled = value;
             }
         }
 

@@ -11,9 +11,10 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
-    internal partial class ManagedClusterVerticalPodAutoscaler : ProvisionableConstruct
+    public partial class ManagedClusterVerticalPodAutoscaler : ProvisionableConstruct
     {
         private BicepValue<bool> _isVpaEnabled;
+        private BicepValue<ManagedClusterAddonAutoscaling> _addonAutoscaling;
 
         /// <summary> Creates a new ManagedClusterVerticalPodAutoscaler. </summary>
         public ManagedClusterVerticalPodAutoscaler()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the AddonAutoscaling. </summary>
+        public BicepValue<ManagedClusterAddonAutoscaling> AddonAutoscaling
+        {
+            get
+            {
+                Initialize();
+                return _addonAutoscaling;
+            }
+            set
+            {
+                Initialize();
+                _addonAutoscaling.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterVerticalPodAutoscaler. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _isVpaEnabled = DefineProperty<bool>(nameof(IsVpaEnabled), new string[] { "enabled" }, isRequired: true);
+            _addonAutoscaling = DefineProperty<ManagedClusterAddonAutoscaling>(nameof(AddonAutoscaling), new string[] { "addonAutoscaling" });
             DefineAdditionalProperties();
         }
 

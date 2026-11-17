@@ -22,6 +22,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<int> _idleTimeoutInMinutes;
         private BicepValue<bool> _isMultipleStandardLoadBalancersEnabled;
         private BicepValue<ManagedClusterLoadBalancerBackendPoolType> _backendPoolType;
+        private BicepValue<ClusterServiceLoadBalancerHealthProbeMode> _clusterServiceLoadBalancerHealthProbeMode;
 
         /// <summary> Creates a new ManagedClusterLoadBalancerProfile. </summary>
         public ManagedClusterLoadBalancerProfile()
@@ -143,6 +144,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ClusterServiceLoadBalancerHealthProbeMode. </summary>
+        public BicepValue<ClusterServiceLoadBalancerHealthProbeMode> ClusterServiceLoadBalancerHealthProbeMode
+        {
+            get
+            {
+                Initialize();
+                return _clusterServiceLoadBalancerHealthProbeMode;
+            }
+            set
+            {
+                Initialize();
+                _clusterServiceLoadBalancerHealthProbeMode.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the PublicIPPrefixes. </summary>
         public BicepList<WritableSubResource> OutboundPublicIPPrefixes
         {
@@ -189,6 +205,7 @@ namespace Azure.Provisioning.ContainerService
             _idleTimeoutInMinutes = DefineProperty<int>(nameof(IdleTimeoutInMinutes), new string[] { "idleTimeoutInMinutes" });
             _isMultipleStandardLoadBalancersEnabled = DefineProperty<bool>(nameof(IsMultipleStandardLoadBalancersEnabled), new string[] { "enableMultipleStandardLoadBalancers" });
             _backendPoolType = DefineProperty<ManagedClusterLoadBalancerBackendPoolType>(nameof(BackendPoolType), new string[] { "backendPoolType" });
+            _clusterServiceLoadBalancerHealthProbeMode = DefineProperty<ClusterServiceLoadBalancerHealthProbeMode>(nameof(ClusterServiceLoadBalancerHealthProbeMode), new string[] { "clusterServiceLoadBalancerHealthProbeMode" });
             DefineAdditionalProperties();
         }
 

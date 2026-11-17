@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.ContainerService
     {
         private BicepList<ContainerServiceTimeInWeek> _timesInWeek;
         private BicepList<ContainerServiceTimeSpan> _notAllowedTimes;
+        private BicepValue<ResourceIdentifier> _maintenanceWindowId;
         private ContainerServiceMaintenanceWindow _maintenanceWindow;
 
         /// <summary> Creates a new MaintenanceConfigurationProperties. </summary>
@@ -52,6 +54,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the MaintenanceWindowId. </summary>
+        public BicepValue<ResourceIdentifier> MaintenanceWindowId
+        {
+            get
+            {
+                Initialize();
+                return _maintenanceWindowId;
+            }
+            set
+            {
+                Initialize();
+                _maintenanceWindowId.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the MaintenanceWindow. </summary>
         public ContainerServiceMaintenanceWindow MaintenanceWindow
         {
@@ -73,6 +90,7 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _timesInWeek = DefineListProperty<ContainerServiceTimeInWeek>(nameof(TimesInWeek), new string[] { "timeInWeek" });
             _notAllowedTimes = DefineListProperty<ContainerServiceTimeSpan>(nameof(NotAllowedTimes), new string[] { "notAllowedTime" });
+            _maintenanceWindowId = DefineProperty<ResourceIdentifier>(nameof(MaintenanceWindowId), new string[] { "maintenanceWindowId" });
             _maintenanceWindow = DefineModelProperty<ContainerServiceMaintenanceWindow>(nameof(MaintenanceWindow), new string[] { "maintenanceWindow" });
             DefineAdditionalProperties();
         }

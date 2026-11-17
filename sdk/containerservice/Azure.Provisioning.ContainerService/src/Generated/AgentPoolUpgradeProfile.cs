@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new AgentPoolUpgradeProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal AgentPoolUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles", resourceVersion ?? "2026-07-01")
+        internal AgentPoolUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles", resourceVersion ?? "2026-09-02-preview")
         {
         }
 
@@ -115,6 +116,15 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets the ComponentsByReleases. </summary>
+        public BicepList<KubernetesVersionComponents> ComponentsByReleases
+        {
+            get
+            {
+                return Properties.ComponentsByReleases;
+            }
+        }
+
         /// <summary> Gets the RecentlyUsedVersions. </summary>
         public BicepList<AgentPoolRecentlyUsedVersion> RecentlyUsedVersions
         {
@@ -161,6 +171,13 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-09-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_02_PREVIEW = "2026-09-02-preview";
+            /// <summary> API version "2026-09-01". </summary>
+            public static readonly string V2026_09_01 = "2026-09-01";
+            /// <summary> API version "2026-08-01". </summary>
+            public static readonly string V2026_08_01 = "2026-08-01";
             /// <summary> API version "2026-07-01". </summary>
             public static readonly string V2026_07_01 = "2026-07-01";
             /// <summary> API version "2026-06-01". </summary>

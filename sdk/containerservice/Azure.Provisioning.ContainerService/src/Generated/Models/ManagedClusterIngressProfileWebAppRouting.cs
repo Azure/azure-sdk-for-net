@@ -19,6 +19,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepList<ResourceIdentifier> _dnsZoneResourceIds;
         private ManagedClusterIngressProfileNginx _nginx;
         private ContainerServiceUserAssignedIdentity _identity;
+        private ManagedClusterIngressDefaultDomainProfile _defaultDomain;
 
         /// <summary> Creates a new ManagedClusterIngressProfileWebAppRouting. </summary>
         public ManagedClusterIngressProfileWebAppRouting()
@@ -95,6 +96,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the DefaultDomain. </summary>
+        public ManagedClusterIngressDefaultDomainProfile DefaultDomain
+        {
+            get
+            {
+                Initialize();
+                return _defaultDomain;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _defaultDomain, value);
+            }
+        }
+
         /// <summary> Gets or sets the IstioMode. </summary>
         public BicepValue<GatewayApiIstioMode> GatewayApiImplementationsIstioMode
         {
@@ -138,6 +154,7 @@ namespace Azure.Provisioning.ContainerService
             _dnsZoneResourceIds = DefineListProperty<ResourceIdentifier>(nameof(DnsZoneResourceIds), new string[] { "dnsZoneResourceIds" });
             _nginx = DefineModelProperty<ManagedClusterIngressProfileNginx>(nameof(Nginx), new string[] { "nginx" });
             _identity = DefineModelProperty<ContainerServiceUserAssignedIdentity>(nameof(Identity), new string[] { "identity" }, isOutput: true);
+            _defaultDomain = DefineModelProperty<ManagedClusterIngressDefaultDomainProfile>(nameof(DefaultDomain), new string[] { "defaultDomain" });
             DefineAdditionalProperties();
         }
 
