@@ -34,7 +34,7 @@ steps:
             --threshold ${{ parameters.threshold }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/eng/common/scripts/eval/node_modules/bin/copilot
+        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/eng/common/scripts/eval/node_modules/.bin/copilot
 
   - ${{ else }}:
     - script: |
@@ -47,4 +47,4 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/eng/common/scripts/eval/node_modules/bin/copilot
+        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/eng/common/scripts/eval/node_modules/.bin/copilot
