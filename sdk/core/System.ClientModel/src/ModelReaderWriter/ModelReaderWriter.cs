@@ -114,14 +114,15 @@ public static class ModelReaderWriter
         if (options.IsCoreOwned && options.HasProxies)
         {
             object? proxiedModel = options.ProxiedModel;
-            ModelReaderWriterContext? previousContext = options.ProxyResolutionContext;
+            options.EnterWrite(model!);
             try
             {
                 return WritePersistableOrEnumerableCore(model, options, context);
             }
             finally
             {
-                options.RestoreProxyState(proxiedModel, previousContext);
+                options.ProxiedModel = proxiedModel;
+                options.ExitWrite();
             }
         }
 
@@ -130,7 +131,6 @@ public static class ModelReaderWriter
 
     private static BinaryData WritePersistableOrEnumerableCore<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
-        options.SetProxyResolutionContext(context);
         if (model is IPersistableModel<T> iModel)
         {
             return WritePersistable(iModel, options);
@@ -276,19 +276,16 @@ public static class ModelReaderWriter
             if (options.IsCoreOwned && options.HasProxies)
             {
                 object? proxiedModel = options.ProxiedModel;
-                ModelReaderWriterContext? previousContext = options.ProxyResolutionContext;
                 try
                 {
-                    options.SetProxyResolutionContext(context);
                     return options.ReadWithChain<T>(template, data);
                 }
                 finally
                 {
-                    options.RestoreProxyState(proxiedModel, previousContext);
+                    options.ProxiedModel = proxiedModel;
                 }
             }
 
-            options.SetProxyResolutionContext(context);
             return options.ReadWithChain<T>(template, data);
         }
 
@@ -301,14 +298,13 @@ public static class ModelReaderWriter
         if (options.IsCoreOwned && options.HasProxies)
         {
             object? proxiedModel = options.ProxiedModel;
-            ModelReaderWriterContext? previousContext = options.ProxyResolutionContext;
             try
             {
                 return ReadInternalCore(data, returnType, options, context);
             }
             finally
             {
-                options.RestoreProxyState(proxiedModel, previousContext);
+                options.ProxiedModel = proxiedModel;
             }
         }
 
@@ -327,7 +323,6 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(returnType));
         }
 
-        options.SetProxyResolutionContext(context);
         var builder = context.GetTypeBuilder(returnType);
         var returnObj = builder.CreateObject();
         if (returnObj is ModelReaderWriterTypeBuilder.CollectionWrapper collectionWrapper)

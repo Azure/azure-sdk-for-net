@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ClientPipelineOptions
 {
+    private const string FrozenMessage = "Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.";
+
     private static readonly ClientPipelineOptions _defaultOptions = new();
     internal static ClientPipelineOptions Default => _defaultOptions;
 
@@ -28,7 +31,7 @@ public class ClientPipelineOptions
     private TimeSpan? _timeout;
     private ClientLoggingOptions? _loggingOptions;
     private bool? _enabledDistributedTracing;
-    private ModelReaderWriterOptions? _modelReaderWriterOptions;
+    private ModelProxyCollection? _modelProxies;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ClientPipelineOptions"/>.
@@ -126,40 +129,15 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
-    /// Gets the <see cref="Primitives.ModelReaderWriterOptions"/> containing proxies registered with
-    /// <see cref="AddProxy{T}(IPersistableModel{T})"/> for clients constructed with these options.
+    /// Gets the model proxies used to read and write models for clients constructed with these options.
     /// </summary>
     /// <remarks>
-    /// PROTOTYPE (MRW proxy E2E): this property models the agreed design of carrying
-    /// <see cref="Primitives.ModelReaderWriterOptions"/> on the client options so a generated client can
-    /// inject them at (de)serialization time. It exists to validate the end-to-end scenario locally and is
-    /// pending API review before it becomes part of the public surface.
+    /// A client adds these proxies to the <see cref="ModelReaderWriterOptions.Proxies"/> of the
+    /// <see cref="ModelReaderWriterOptions"/> it uses to read and write models. See
+    /// <see cref="ModelReaderWriterOptions.Proxies"/> for how proxies are matched to models.
+    /// The collection becomes read-only when these options are frozen.
     /// </remarks>
-    public ModelReaderWriterOptions? ModelReaderWriterOptions => _modelReaderWriterOptions;
-
-    /// <summary>
-    /// Registers a proxy for models handled by clients constructed with these options.
-    /// </summary>
-    /// <typeparam name="T">The model type to proxy.</typeparam>
-    /// <param name="proxy">The proxy implementation.</param>
-    public void AddProxy<T>(IPersistableModel<T> proxy)
-    {
-        Argument.AssertNotNull(proxy, nameof(proxy));
-        AssertNotFrozen();
-        (_modelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
-    }
-
-    /// <summary>
-    /// Registers a conditional proxy for models handled by clients constructed with these options.
-    /// </summary>
-    /// <typeparam name="T">The model type to proxy.</typeparam>
-    /// <param name="proxy">The conditional proxy implementation.</param>
-    public void AddProxy<T>(ConditionalModelProxy<T> proxy) where T : IPersistableModel<T>
-    {
-        Argument.AssertNotNull(proxy, nameof(proxy));
-        AssertNotFrozen();
-        (_modelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
-    }
+    public IList<ModelProxy> ModelProxies => _modelProxies ??= new ModelProxyCollection(FrozenMessage, frozen: IsReadOnly);
 
     #endregion
 
@@ -317,8 +295,8 @@ public class ClientPipelineOptions
         clone._timeout = _timeout;
         clone._enabledDistributedTracing = _enabledDistributedTracing;
         clone._loggingOptions = _loggingOptions?.Clone();
-        clone._modelReaderWriterOptions = _modelReaderWriterOptions is { } options
-            ? new ModelReaderWriterOptions(options.Format, options)
+        clone._modelProxies = _modelProxies is { Count: > 0 } proxies
+            ? new ModelProxyCollection(FrozenMessage, items: proxies)
             : null;
         clone.PerCallPolicies = PerCallPolicies is not null
             ? (PipelinePolicy[])PerCallPolicies.Clone()
@@ -342,7 +320,7 @@ public class ClientPipelineOptions
     {
         _frozen = true;
         _loggingOptions?.Freeze();
-        _modelReaderWriterOptions?.Freeze();
+        _modelProxies?.Freeze();
     }
 
     /// <summary>
@@ -356,7 +334,7 @@ public class ClientPipelineOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.");
+            throw new InvalidOperationException(FrozenMessage);
         }
     }
 

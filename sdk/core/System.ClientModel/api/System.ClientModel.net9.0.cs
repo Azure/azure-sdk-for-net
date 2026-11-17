@@ -266,13 +266,11 @@ namespace System.ClientModel.Primitives
         public bool? EnableDistributedTracing { get { throw null; } set { } }
         public bool IsReadOnly { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
-        public System.ClientModel.Primitives.ModelReaderWriterOptions? ModelReaderWriterOptions { get { throw null; } }
+        public System.Collections.Generic.IList<System.ClientModel.Primitives.ModelProxy> ModelProxies { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-        public void AddProxy<T>(System.ClientModel.Primitives.ConditionalModelProxy<T> proxy) where T : System.ClientModel.Primitives.IPersistableModel<T> { }
-        public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
         protected void AssertNotFrozen() { }
         public virtual System.ClientModel.Primitives.ClientPipelineOptions Clone() { throw null; }
         public virtual void Freeze() { }
@@ -310,14 +308,6 @@ namespace System.ClientModel.Primitives
         protected CollectionResult() { }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
-    }
-    public abstract partial class ConditionalModelProxy<T> where T : System.ClientModel.Primitives.IPersistableModel<T>
-    {
-        protected ConditionalModelProxy(System.ClientModel.Primitives.IPersistableModel<T> model) { }
-        public System.ClientModel.Primitives.IPersistableModel<T> Model { get { throw null; } }
-        public virtual bool CanHandle(System.ReadOnlyMemory<byte> data, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
-        public virtual bool CanHandle(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
-        public virtual bool CanHandle(T model, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
     }
     public enum CredentialKind
     {
@@ -532,6 +522,20 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
+    public abstract partial class ModelProxy
+    {
+        internal ModelProxy() { }
+    }
+    public abstract partial class ModelProxy<T> : System.ClientModel.Primitives.ModelProxy, System.ClientModel.Primitives.IPersistableModel<T>
+    {
+        protected ModelProxy() { }
+        public virtual bool CanHandle(System.ReadOnlyMemory<byte> data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual bool CanHandle(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual bool CanHandle(T model, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public abstract T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
     public static partial class ModelReaderWriter
     {
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
@@ -567,15 +571,11 @@ namespace System.ClientModel.Primitives
     public partial class ModelReaderWriterOptions
     {
         public ModelReaderWriterOptions(string format) { }
-        public ModelReaderWriterOptions(string format, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
-        public ModelReaderWriterOptions(string format, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public ModelReaderWriterOptions(string format, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public object? ProxiedModel { get { throw null; } }
+        public System.Collections.Generic.IList<System.ClientModel.Primitives.ModelProxy> Proxies { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
-        public void AddProxy<T>(System.ClientModel.Primitives.ConditionalModelProxy<T> proxy) where T : System.ClientModel.Primitives.IPersistableModel<T> { }
-        public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
         public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
     }

@@ -22,7 +22,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 {
     private readonly ModelReaderWriterOptions _options;
     private readonly ModelReaderWriterContext? _context;
-    private readonly ModelReaderWriterContext _proxyContext;
 
     /// <summary>
     /// Initializes a new instance of <see cref="JsonModelConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
@@ -40,12 +39,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     {
         Argument.AssertNotNull(options, nameof(options));
         _options = options;
-        _context = options.ProxyResolutionContext;
-        _proxyContext = _context ?? GetReflectionContext();
-
-        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Only called by the constructor already marked RequiresUnreferencedCode.")]
-        [UnconditionalSuppressMessage("Aot", "IL3050", Justification = "Only the existing reflection-based constructor uses this fallback; generated contexts are preserved.")]
-        static ModelReaderWriterContext GetReflectionContext() => ModelReaderWriterReflectionContext.Default;
     }
 
     /// <summary>
@@ -66,7 +59,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         }
 
         _context = context;
-        _proxyContext = context;
         _options = options;
     }
 
@@ -103,7 +95,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         }
 
         var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
-        callOptions.SetProxyResolutionContext(_proxyContext);
         var result = callOptions.ReadWithChain(typeToConvert, iJsonModel, ref reader);
         return (IJsonModel<object>?)result;
     }
@@ -114,7 +105,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
-        callOptions.SetProxyResolutionContext(_proxyContext);
         callOptions.ResolveProxy(value).Write(writer, callOptions);
     }
 }
