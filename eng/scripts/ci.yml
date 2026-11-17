@@ -13,6 +13,8 @@ trigger:
       - eng/scripts/*
       - eng/packages/http-client-csharp-mgmt/ci.yml
       - eng/pipelines/templates/archetype-typespec-emitter.yml
+      - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
+      - .github/workflows/close-stale-generator-upgrade-prs.yml
     exclude:
       - eng/scripts/typespec
 
@@ -28,6 +30,8 @@ pr:
       - eng/scripts/*
       - eng/packages/http-client-csharp-mgmt/ci.yml
       - eng/pipelines/templates/archetype-typespec-emitter.yml
+      - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
+      - .github/workflows/close-stale-generator-upgrade-prs.yml
     exclude:
       - eng/scripts/typespec
 
@@ -36,6 +40,25 @@ extends:
   parameters:
     TargetDirectory: eng/scripts/
     TargetTags: 'UnitTest,SdkCompatibilityTest'
+    # Preserve the shared suite's existing reporting policy, but explicitly gate
+    # the dependency-automation regressions (the shared step does not fail on Pester errors).
+    CustomTestSteps:
+      - pwsh: |
+          Import-Module Pester -MinimumVersion 5.7.1 -ErrorAction Stop
+          $config = New-PesterConfiguration
+          $config.CodeCoverage.Enabled = $true
+          $config.TestResult.Enabled = $true
+          $config.Run.PassThru = $true
+          $config.Filter.Tag = @('UnitTest', 'SdkCompatibilityTest')
+          $env:PESTER_TEST_RUN = 'true'
+          Invoke-Pester -Configuration $config | Out-Host
+          $result = Invoke-Pester -Path ./tests/Update-MgmtGeneratorDependency.Tests.ps1,./tests/Mgmt-Dependency-Pipeline.Tests.ps1,./tests/TypeSpec-Emitter-PullRequest.Tests.ps1 -Tag UnitTest -PassThru
+          if ($result.FailedCount -gt 0 -or $result.FailedContainersCount -gt 0 -or $result.TotalCount -eq 0) {
+            throw 'Management dependency automation tests failed or were not discovered.'
+          }
+          $global:LASTEXITCODE = 0
+        displayName: Run PowerShell tests and enforce dependency regressions
+        workingDirectory: $(Build.SourcesDirectory)/eng/scripts
     PreTestSteps:
       # The tests do not consume repository history or tags. Declaring checkout here replaces
       # the implicit checkout performed by Azure Pipelines rather than adding another fetch.

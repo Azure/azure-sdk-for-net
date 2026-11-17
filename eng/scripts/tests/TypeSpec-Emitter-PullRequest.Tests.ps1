@@ -226,6 +226,23 @@ Describe "Stale generator upgrade workflow compatibility" -Tag "UnitTest" {
             }
         }
 
+        foreach ($title in @(
+            'Update management generator branded dependency to 1.0.0-alpha.20260911.1',
+            'Failed: Update management generator branded dependency to 1.0.0-alpha.20260911.1',
+            'Update management generator branded dependency to 1.0.0-alpha.20260912.1',
+            'Update management generator branded dependency to 1.0.0-alpha.20260914.1',
+            '[Preview] Update management generator branded dependency to 1.0.0-alpha.20260911.1'
+        )) {
+            $number = $pulls.Count + 1
+            # Management dependency PRs are excluded: the close API cannot
+            # atomically guard against a maintainer changing the PR head.
+            $pulls += @{ number = $number; title = $title; user = @{ login = 'azure-sdk-automation[bot]' }; head = @{ sha = 'normal' } }
+        }
+        # A maintainer can repair an older failed draft without changing its title.
+        $pulls += @{ number = $pulls.Count + 1; title = 'Failed: Update management generator branded dependency to 1.0.0-alpha.20260911.1'; user = @{ login = 'azure-sdk-automation[bot]' }; head = @{ sha = 'repaired' } }
+        # Missing head metadata must fail closed rather than close an unverifiable PR.
+        $pulls += @{ number = $pulls.Count + 1; title = 'Update management generator branded dependency to 1.0.0-alpha.20260911.1'; user = @{ login = 'azure-sdk-automation[bot]' } }
+
         # Execute the complete checked-in github-script, with only local API fixtures and dry-run enabled.
         $harness = @'
 const { readFileSync } = require("node:fs");
@@ -237,9 +254,13 @@ const github = {
   rest: {
     pulls: { list: listPulls },
     repos: {
-      getContent: async ({ path }) => {
+      getContent: async ({ path, ref }) => {
+        const headVersion = ref === "repaired" ? "1.0.0-alpha.20260915.1" : "1.0.0-alpha.20260911.1";
+        const isMain = ref === "main";
         const content = path.endsWith(".props")
-          ? `<Project><UnbrandedGeneratorVersion>${input.currentVersion}</UnbrandedGeneratorVersion></Project>`
+          ? `<Project><UnbrandedGeneratorVersion>${input.currentVersion}</UnbrandedGeneratorVersion><AzureGeneratorVersion>${isMain ? input.azureGeneratorVersion : headVersion}</AzureGeneratorVersion></Project>`
+          : path === "eng/packages/http-client-csharp-mgmt/package.json"
+            ? JSON.stringify({ dependencies: { "@azure-typespec/http-client-csharp": isMain ? input.managementDependencyVersion : headVersion } })
           : JSON.stringify({
               dependencies: Object.fromEntries(
                 ["http-client-csharp", "http-client-csharp-mgmt", "http-client-csharp-provisioning"]
@@ -256,6 +277,7 @@ const github = {
   },
 };
 const core = {
+  warning: () => {},
   info: (message) => {
     const match = message.match(/^\[dry run\] Would close #(\d+):/);
     if (match) staleNumbers.push(Number(match[1]));
@@ -273,6 +295,8 @@ runInNewContext(`(async () => {${input.script}})()`, {
             script = $steps[0].with.script
             pulls = $pulls
             currentVersion = "1.0.0-alpha.20260912.1"
+            managementDependencyVersion = "1.0.0-alpha.20260910.1"
+            azureGeneratorVersion = "1.0.0-alpha.20260913.1"
         } | ConvertTo-Json -Depth 10 -Compress
 
         $output = $inputJson | & node -e $harness
@@ -280,5 +304,13 @@ runInNewContext(`(async () => {${input.script}})()`, {
         $staleNumbers = @($output | ConvertFrom-Json)
         $staleNumbers.Count | Should -Be 15
         $staleNumbers | Should -Be $expectedStaleNumbers
+
+        # The management npm pin can also be ahead of the central NuGet pin.
+        $fixture = $inputJson | ConvertFrom-Json
+        $fixture.managementDependencyVersion = '1.0.0-alpha.20260913.1'
+        $fixture.azureGeneratorVersion = '1.0.0-alpha.20260910.1'
+        $output = ($fixture | ConvertTo-Json -Depth 10 -Compress) | & node -e $harness
+        $LASTEXITCODE | Should -Be 0
+        @($output | ConvertFrom-Json) | Should -Be $expectedStaleNumbers
     }
 }
