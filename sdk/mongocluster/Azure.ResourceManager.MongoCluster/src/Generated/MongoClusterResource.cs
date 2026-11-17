@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Gets information about a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Gets information about a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Updates an existing mongo cluster. The request body can contain one to many of the properties present in the normal mongo cluster definition.
+        /// Updates an existing DocumentDB cluster. The request body can contain one to many of the properties present in the normal DocumentDB cluster definition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Updates an existing mongo cluster. The request body can contain one to many of the properties present in the normal mongo cluster definition.
+        /// Updates an existing DocumentDB cluster. The request body can contain one to many of the properties present in the normal DocumentDB cluster definition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster.
+        /// Deletes a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster.
+        /// Deletes a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List mongo cluster connection strings. This includes the default connection string using SCRAM-SHA-256, as well as other connection strings supported by the cluster.
+        /// List DocumentDB cluster connection strings. This includes the default connection string using SCRAM-SHA-256, as well as other connection strings supported by the cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List mongo cluster connection strings. This includes the default connection string using SCRAM-SHA-256, as well as other connection strings supported by the cluster.
+        /// List DocumentDB cluster connection strings. This includes the default connection string using SCRAM-SHA-256, as well as other connection strings supported by the cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Promotes a replica mongo cluster to a primary role.
+        /// Promotes a replica DocumentDB cluster to a primary role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Promotes a replica mongo cluster to a primary role.
+        /// Promotes a replica DocumentDB cluster to a primary role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List all the replicas for the mongo cluster.
+        /// List all the replicas for the DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List all the replicas for the mongo cluster.
+        /// List all the replicas for the DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1053,8 +1053,8 @@ namespace Azure.ResourceManager.MongoCluster
             return GetCachedClient(client => new MongoClusterFirewallRuleCollection(client, Id));
         }
 
-        /// <summary> Gets information about a mongo cluster firewall rule. </summary>
-        /// <param name="firewallRuleName"> The name of the mongo cluster firewall rule. </param>
+        /// <summary> Gets information about a DocumentDB cluster firewall rule. </summary>
+        /// <param name="firewallRuleName"> The name of the DocumentDB cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1066,8 +1066,8 @@ namespace Azure.ResourceManager.MongoCluster
             return await GetMongoClusterFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets information about a mongo cluster firewall rule. </summary>
-        /// <param name="firewallRuleName"> The name of the mongo cluster firewall rule. </param>
+        /// <summary> Gets information about a DocumentDB cluster firewall rule. </summary>
+        /// <param name="firewallRuleName"> The name of the DocumentDB cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1119,8 +1119,8 @@ namespace Azure.ResourceManager.MongoCluster
             return GetCachedClient(client => new MongoClusterUserCollection(client, Id));
         }
 
-        /// <summary> Gets the defintion of a Mongo cluster user. </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <summary> Gets the defintion of a DocumentDB cluster user. </summary>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1132,8 +1132,8 @@ namespace Azure.ResourceManager.MongoCluster
             return await GetMongoClusterUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets the defintion of a Mongo cluster user. </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <summary> Gets the defintion of a DocumentDB cluster user. </summary>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>

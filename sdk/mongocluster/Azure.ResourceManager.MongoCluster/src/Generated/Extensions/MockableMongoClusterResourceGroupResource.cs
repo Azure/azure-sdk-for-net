@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Gets information about a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="mongoClusterName"> The name of the DocumentDB cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Gets information about a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="mongoClusterName"> The name of the DocumentDB cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -1,14 +1,11 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.2.0-beta.2 (2026-11-05)
 
 ### Other Changes
+
+- Refreshed API documentation from the latest service specification. Descriptions now use the Azure DocumentDB product name, and the outdated preview note on `MongoClusterStorageType.PremiumSSDv2` has been removed.
+- Upgraded dependent `Azure.Core` to 1.64.0.
 
 ## 1.2.0-beta.1 (2026-09-20)
 

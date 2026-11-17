@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
