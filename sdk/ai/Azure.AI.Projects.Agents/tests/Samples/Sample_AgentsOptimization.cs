@@ -123,7 +123,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
 #endif
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
+        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
         #endregion
         #region Snippet:Sample_CreateAgent_AgentsOptimizationCandidates_Async
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
@@ -226,7 +226,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         opts.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: opts);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
+        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
 
         #region Snippet:Sample_CreateAgent_AgentsOptimizationCandidates_Sync
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(

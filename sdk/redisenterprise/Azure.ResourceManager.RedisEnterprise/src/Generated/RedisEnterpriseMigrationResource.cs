@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(ResourceType, out string redisEnterpriseMigrationApiVersion);
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2026-09-01");
+            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

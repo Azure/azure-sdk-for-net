@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="StorageBlobAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageBlobAccessTier?(string value) => value == null ? null : new StorageBlobAccessTier(value);
+        public static implicit operator StorageBlobAccessTier?(string value) => value == null ? (StorageBlobAccessTier?)null : new StorageBlobAccessTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

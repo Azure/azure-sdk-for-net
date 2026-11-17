@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter output image. </summary>
-    public partial class CodeInterpreterOutputImage
+    internal partial class CodeInterpreterOutputImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputImage"/>. </summary>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public CodeInterpreterOutputImage(Uri url)
         {
-            Argument.AssertNotNull(url, nameof(url));
-
             Url = url;
         }
 

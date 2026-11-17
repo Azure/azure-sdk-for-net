@@ -71,7 +71,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="Frequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Frequency?(string value) => value == null ? null : new Frequency(value);
+        public static implicit operator Frequency?(string value) => value == null ? (Frequency?)null : new Frequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationClaimKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationClaimKind?(string value) => value == null ? null : new ApplicationClaimKind(value);
+        public static implicit operator ApplicationClaimKind?(string value) => value == null ? (ApplicationClaimKind?)null : new ApplicationClaimKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

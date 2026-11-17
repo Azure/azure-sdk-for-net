@@ -49,6 +49,13 @@ internal static partial class WebSearchToolValidator
                 errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
         }
 
+        // Optional: external_web_access
+        if (element.TryGetProperty("external_web_access", out var externalWebAccessProp))
+        {
+            if (externalWebAccessProp.ValueKind != JsonValueKind.True && externalWebAccessProp.ValueKind != JsonValueKind.False)
+                errors.Add(new ValidationError("$.external_web_access", $"Expected boolean, got {externalWebAccessProp.ValueKind}"));
+        }
+
         // Optional: filters
         if (element.TryGetProperty("filters", out var filtersProp) && filtersProp.ValueKind != JsonValueKind.Null)
         {
@@ -74,6 +81,13 @@ internal static partial class WebSearchToolValidator
                 errors.Add(new ValidationError("$.search_context_size", $"Expected string, got {searchContextSizeProp.ValueKind}"));
             else if (searchContextSizeProp.GetString() is not ("low" or "medium" or "high"))
                 errors.Add(new ValidationError("$.search_context_size", $"Value '{searchContextSizeProp.GetString()}' is not valid. Allowed: low, medium, high"));
+        }
+
+        // Optional: tool_configs
+        if (element.TryGetProperty("tool_configs", out var toolConfigsProp))
+        {
+            if (toolConfigsProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.tool_configs", $"Expected object, got {toolConfigsProp.ValueKind}"));
         }
 
         // Required: type

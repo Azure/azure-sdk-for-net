@@ -31,6 +31,17 @@ internal static partial class FunctionAndCustomToolCallOutputInputTextContentVal
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: prompt_cache_breakpoint
+        if (element.TryGetProperty("prompt_cache_breakpoint", out var promptCacheBreakpointProp))
+        {
+            var promptCacheBreakpointResult = PromptCacheBreakpointConfigValidator.Validate(promptCacheBreakpointProp);
+            if (!promptCacheBreakpointResult.IsValid)
+            {
+                foreach (var e in promptCacheBreakpointResult.Errors)
+                    errors.Add(new ValidationError("$.prompt_cache_breakpoint" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         // Required: text
         if (!element.TryGetProperty("text", out var textProp))
             errors.Add(new ValidationError("$.text", "Required property 'text' is missing"));

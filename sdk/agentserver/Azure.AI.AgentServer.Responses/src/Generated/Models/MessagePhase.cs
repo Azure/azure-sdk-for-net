@@ -6,12 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Labels an `assistant` message as intermediate commentary (`commentary`) or the final answer (`final_answer`).
-    /// For models like `gpt-5.3-codex` and beyond, when sending follow-up requests, preserve and resend
-    /// phase on all assistant messages — dropping it can degrade performance. Not used for user messages.
-    /// </summary>
-    public enum MessagePhase
+    internal enum MessagePhase
     {
         /// <summary> Commentary. </summary>
         Commentary,

@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="ObservationRemediationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ObservationRemediationState?(string value) => value == null ? null : new ObservationRemediationState(value);
+        public static implicit operator ObservationRemediationState?(string value) => value == null ? (ObservationRemediationState?)null : new ObservationRemediationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

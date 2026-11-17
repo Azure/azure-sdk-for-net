@@ -2,20 +2,76 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public enum VoiceAgentAudioInputConfigTranscriptionDelay
+    public readonly partial struct VoiceAgentAudioInputConfigTranscriptionDelay : IEquatable<VoiceAgentAudioInputConfigTranscriptionDelay>
     {
-        /// <summary> Minimal. </summary>
-        Minimal,
-        /// <summary> Low. </summary>
-        Low,
-        /// <summary> Medium. </summary>
-        Medium,
-        /// <summary> High. </summary>
-        High,
-        /// <summary> Xhigh. </summary>
-        Xhigh
+        private readonly string _value;
+        private const string MinimalValue = "minimal";
+        private const string LowValue = "low";
+        private const string MediumValue = "medium";
+        private const string HighValue = "high";
+        private const string XhighValue = "xhigh";
+
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentAudioInputConfigTranscriptionDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VoiceAgentAudioInputConfigTranscriptionDelay(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Minimal. </summary>
+        public static VoiceAgentAudioInputConfigTranscriptionDelay Minimal { get; } = new VoiceAgentAudioInputConfigTranscriptionDelay(MinimalValue);
+
+        /// <summary> Gets the Low. </summary>
+        public static VoiceAgentAudioInputConfigTranscriptionDelay Low { get; } = new VoiceAgentAudioInputConfigTranscriptionDelay(LowValue);
+
+        /// <summary> Gets the Medium. </summary>
+        public static VoiceAgentAudioInputConfigTranscriptionDelay Medium { get; } = new VoiceAgentAudioInputConfigTranscriptionDelay(MediumValue);
+
+        /// <summary> Gets the High. </summary>
+        public static VoiceAgentAudioInputConfigTranscriptionDelay High { get; } = new VoiceAgentAudioInputConfigTranscriptionDelay(HighValue);
+
+        /// <summary> Gets the Xhigh. </summary>
+        public static VoiceAgentAudioInputConfigTranscriptionDelay Xhigh { get; } = new VoiceAgentAudioInputConfigTranscriptionDelay(XhighValue);
+
+        /// <summary> Determines if two <see cref="VoiceAgentAudioInputConfigTranscriptionDelay"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VoiceAgentAudioInputConfigTranscriptionDelay left, VoiceAgentAudioInputConfigTranscriptionDelay right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VoiceAgentAudioInputConfigTranscriptionDelay"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VoiceAgentAudioInputConfigTranscriptionDelay left, VoiceAgentAudioInputConfigTranscriptionDelay right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentAudioInputConfigTranscriptionDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentAudioInputConfigTranscriptionDelay(string value) => new VoiceAgentAudioInputConfigTranscriptionDelay(value);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentAudioInputConfigTranscriptionDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentAudioInputConfigTranscriptionDelay?(string value) => value == null ? null : new VoiceAgentAudioInputConfigTranscriptionDelay(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VoiceAgentAudioInputConfigTranscriptionDelay other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(VoiceAgentAudioInputConfigTranscriptionDelay other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

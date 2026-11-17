@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="RouterWorkerStateSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouterWorkerStateSelector?(string value) => value == null ? null : new RouterWorkerStateSelector(value);
+        public static implicit operator RouterWorkerStateSelector?(string value) => value == null ? (RouterWorkerStateSelector?)null : new RouterWorkerStateSelector(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

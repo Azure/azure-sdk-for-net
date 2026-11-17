@@ -101,7 +101,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="RouterJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouterJobStatus?(string value) => value == null ? null : new RouterJobStatus(value);
+        public static implicit operator RouterJobStatus?(string value) => value == null ? (RouterJobStatus?)null : new RouterJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

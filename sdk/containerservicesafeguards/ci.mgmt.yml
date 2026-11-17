@@ -12,7 +12,6 @@ trigger:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: mgmt
     ServiceDirectory: containerservicesafeguards
     BuildSnippets: false
     LimitForPullRequest: true

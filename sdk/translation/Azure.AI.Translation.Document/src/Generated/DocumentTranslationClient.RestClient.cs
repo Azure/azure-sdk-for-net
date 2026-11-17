@@ -28,10 +28,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -47,10 +44,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -102,10 +96,7 @@ namespace Azure.AI.Translation.Document
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -123,10 +114,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath(translationId.ToString(), true);
             uri.AppendPath("/documents/", false);
             uri.AppendPath(documentId.ToString(), true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -142,10 +130,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches/", false);
             uri.AppendPath(translationId.ToString(), true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -161,10 +146,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches/", false);
             uri.AppendPath(translationId.ToString(), true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -181,10 +163,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/document/batches/", false);
             uri.AppendPath(translationId.ToString(), true);
             uri.AppendPath("/documents", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -236,10 +215,7 @@ namespace Azure.AI.Translation.Document
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -254,10 +230,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/formats", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("type", @type, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Deployments;
 
 namespace Azure.ResourceManager.Resources.Deployments.Models
 {
-    /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
+    /// <summary> Represents the value for an extension config property. </summary>
     public partial class ArmDeploymentExtensionConfigItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,21 +24,17 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
-        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
         /// <param name="value"> The value of the extension config property. </param>
         /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
+        /// <param name="extensionConfigPropertyType"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentExtensionConfigItem(BinaryData value, KeyVaultParameterReference keyVaultReference, ExtensionConfigPropertyType? extensionConfigPropertyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExtensionConfigPropertyType = extensionConfigPropertyType;
             Value = value;
             KeyVaultReference = keyVaultReference;
+            ExtensionConfigPropertyType = extensionConfigPropertyType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The value type of the extension config property. </summary>
-        [WirePath("type")]
-        public ExtensionConfigPropertyType? ExtensionConfigPropertyType { get; }
 
         /// <summary>
         /// The value of the extension config property.

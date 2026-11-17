@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call timeout outcome. </summary>
-    public partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome
+    internal partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputTimeoutOutcome"/>. </summary>
         public FunctionShellCallOutputTimeoutOutcome() : base(FunctionShellCallOutputOutcomeType.Timeout)

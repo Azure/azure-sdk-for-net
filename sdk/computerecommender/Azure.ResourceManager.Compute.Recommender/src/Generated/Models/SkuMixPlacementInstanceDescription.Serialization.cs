@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
             writer.WritePropertyName("vmSizes"u8);
             writer.WriteStartArray();
-            foreach (SkuMixPlacementVMSize item in VmSizes)
+            foreach (SkuMixPlacementVmSize item in VmSizes)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 return null;
             }
-            IList<SkuMixPlacementVMSize> vmSizes = default;
+            IList<SkuMixPlacementVmSize> vmSizes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmSizes"u8))
                 {
-                    List<SkuMixPlacementVMSize> array = new List<SkuMixPlacementVMSize>();
+                    List<SkuMixPlacementVmSize> array = new List<SkuMixPlacementVmSize>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SkuMixPlacementVMSize.DeserializeSkuMixPlacementVMSize(item, options));
+                        array.Add(SkuMixPlacementVmSize.DeserializeSkuMixPlacementVmSize(item, options));
                     }
                     vmSizes = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SkuMixPlacementInstanceDescription(vmSizes ?? new ChangeTrackingList<SkuMixPlacementVMSize>(), additionalBinaryDataProperties);
+            return new SkuMixPlacementInstanceDescription(vmSizes ?? new ChangeTrackingList<SkuMixPlacementVmSize>(), additionalBinaryDataProperties);
         }
     }
 }

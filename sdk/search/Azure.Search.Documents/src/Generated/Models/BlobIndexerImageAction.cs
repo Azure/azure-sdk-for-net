@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="BlobIndexerImageAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerImageAction?(string value) => value == null ? null : new BlobIndexerImageAction(value);
+        public static implicit operator BlobIndexerImageAction?(string value) => value == null ? (BlobIndexerImageAction?)null : new BlobIndexerImageAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

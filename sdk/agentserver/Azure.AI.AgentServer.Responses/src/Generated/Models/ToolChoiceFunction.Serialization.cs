@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Function tool. </summary>
-    public partial class ToolChoiceFunction : ToolChoiceParam, IJsonModel<ToolChoiceFunction>
+    internal partial class ToolChoiceFunction : ToolChoiceParam, IJsonModel<ToolChoiceFunction>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/> for deserialization. </summary>
         internal ToolChoiceFunction()
@@ -125,7 +124,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ToolChoiceFunction(@type, additionalBinaryDataProperties, name);

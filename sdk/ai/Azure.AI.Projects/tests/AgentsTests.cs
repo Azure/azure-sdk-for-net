@@ -1733,7 +1733,7 @@ public class AgentsTests : AgentsTestBase
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         // Create a session.
-        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -1761,7 +1761,7 @@ public class AgentsTests : AgentsTestBase
         await projectClient.AgentAdministrationClient.DisableAgentAsync(agentVersion.Name);
         try
         {
-            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             Assert.Fail("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -1770,7 +1770,7 @@ public class AgentsTests : AgentsTestBase
         }
         // Enable Agent Again
         await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
-        session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Delay();

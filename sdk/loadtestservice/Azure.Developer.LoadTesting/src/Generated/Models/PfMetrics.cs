@@ -66,7 +66,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="PfMetrics"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PfMetrics?(string value) => value == null ? null : new PfMetrics(value);
+        public static implicit operator PfMetrics?(string value) => value == null ? (PfMetrics?)null : new PfMetrics(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

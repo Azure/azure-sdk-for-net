@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static ProtectionGroupProperties ProtectionGroupProperties(string plan = default, ProtectionGroupResourceSelection resourceSelection = default, CommvaultProtectionStatus protectionStatus = default, int protectedItemCount = default, long lastBackupTime = default, string backupActivityStatus = default, ResourceProvisioningState? provisioningState = default)
         {
             return new ProtectionGroupProperties(
-                default,
+                "AzureVM",
                 plan,
                 resourceSelection,
                 protectionStatus,

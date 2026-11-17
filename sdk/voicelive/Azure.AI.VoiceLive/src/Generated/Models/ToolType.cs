@@ -52,7 +52,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ToolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ToolType?(string value) => value == null ? null : new ToolType(value);
+        public static implicit operator ToolType?(string value) => value == null ? (ToolType?)null : new ToolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
