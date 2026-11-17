@@ -7,15 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    // TODO: Remove these customizations when the generator emits a compatible public
-    // discriminator and type with matching equality: https://github.com/microsoft/typespec/issues/12524
-    public abstract partial class WorkspaceDiscoveryWarning
-    {
-        /// <summary> The confirmed guidance reason, not a system-verification failure. </summary>
-        [CodeGenMember("Reason")]
-        public WorkspaceDiscoveryWarningReason Reason { get; internal set; }
-    }
-
     // Match the case-sensitive wire discriminator so an unknown reason is not treated as a known one.
     [CodeGenSuppress("Equals", typeof(WorkspaceDiscoveryWarningReason))]
     [CodeGenSuppress("GetHashCode")]
