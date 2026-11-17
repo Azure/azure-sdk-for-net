@@ -174,6 +174,24 @@ function New-GitHubPullRequest { throw 'GitHub unavailable' }
         } finally { Pop-Location }
     }
 
+    It 'records a nonterminating regeneration error and prevents a normal PR' {
+        $fixture = Join-Path $TestDrive ([guid]::NewGuid().ToString())
+        $scripts = Join-Path $fixture 'eng' 'packages' 'http-client-csharp-mgmt' 'eng' 'scripts'
+        New-Item -ItemType Directory -Force $scripts | Out-Null
+        Set-Content -Path (Join-Path $scripts 'Generate.ps1') -Value "Write-Error 'injected generation failure'; `$global:LASTEXITCODE = 0"
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $command = ($steps | Where-Object displayName -eq 'Regenerate management test projects').pwsh
+        $command = $command.Replace('$(Build.SourcesDirectory)', $fixture) + "`nexit `$LASTEXITCODE"
+        $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
+        $previousScript = $env:MGMT_GENERATE_SCRIPT
+        try {
+            $env:MGMT_GENERATE_SCRIPT = Join-Path $scripts 'Generate.ps1'
+            $output = & pwsh -NoLogo -NoProfile -EncodedCommand $encoded 2>&1 | Out-String
+            $LASTEXITCODE | Should -Be 0
+            $output | Should -Match 'variable=MgmtDependencyFailed\]true'
+        } finally { $env:MGMT_GENERATE_SCRIPT = $previousScript }
+    }
+
     It 'records an update failure while allowing the draft PR steps to run' {
         $fixture = Join-Path $TestDrive 'fake-repo'
         $script = Join-Path $fixture 'eng' 'scripts' 'typespec' 'Update-MgmtGeneratorDependency.ps1'

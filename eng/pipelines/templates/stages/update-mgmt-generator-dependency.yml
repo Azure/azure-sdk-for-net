@@ -117,7 +117,7 @@ stages:
 
           - pwsh: |
               $PSNativeCommandUseErrorActionPreference = $false
-              & pwsh -NoLogo -NoProfile -File '$(Build.SourcesDirectory)/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1'
+              & pwsh -NoLogo -NoProfile -Command '$ErrorActionPreference = "Stop"; $global:LASTEXITCODE = 0; & $env:MGMT_GENERATE_SCRIPT; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }'
               if ($LASTEXITCODE -ne 0) {
                 Write-Warning 'Management test-project regeneration failed.'
                 Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true'
@@ -126,6 +126,7 @@ stages:
             displayName: Regenerate management test projects
             condition: and(succeeded(), eq(variables['MgmtDependencyFailed'], 'false'), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
             env:
+              MGMT_GENERATE_SCRIPT: $(Build.SourcesDirectory)/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1
               npm_config_userconfig: $(mgmtNpmrcPath)
 
           # Mint the short-lived token only after the potentially long regeneration.
