@@ -107,66 +107,32 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("TODO: Record after the SRP containerName PR is merged and deployed to canary, then remove this Ignore.")]
-        public async Task CreateWithContainerName_ContainerNameCannotBeChanged()
+        [Ignore("TODO: Validate and record the 2026-12-01 read-only containerName response after the SRP PR is merged and deployed to canary, then remove this Ignore.")]
+        public async Task CreateGetUpdate_ContainerNameIsServerAssigned()
         {
             MetadataPolicyResource policy = await CreateTestStorageAccountAndGetPolicyAsync(allowBlobPublicAccess: false);
-            const string containerName = "sdk-metadata-snapshots";
-            const string replacementContainerName = "sdk-replacement-snapshots";
             MetadataPolicyData enabledPolicy = new MetadataPolicyData(new MetadataPolicyProperties(
-                new MetadataSnapshotPolicy(MetadataSnapshotPolicyStatus.Enabled)
-                {
-                    ContainerName = containerName
-                }));
+                new MetadataSnapshotPolicy(MetadataSnapshotPolicyStatus.Enabled)));
 
             MetadataPolicyResource created = (await policy.CreateOrUpdateAsync(WaitUntil.Completed, enabledPolicy)).Value;
             AssertPolicy(created, policy.Id, MetadataSnapshotPolicyStatus.Enabled);
-            Assert.AreEqual(containerName, created.Data.Properties.SnapshotPolicy.ContainerName);
+            string containerName = created.Data.Properties.SnapshotPolicy.ContainerName;
+            Assert.IsNotEmpty(containerName);
             MetadataPolicyResource retrieved = (await policy.GetAsync()).Value;
             AssertPolicy(retrieved, policy.Id, MetadataSnapshotPolicyStatus.Enabled);
             Assert.AreEqual(containerName, retrieved.Data.Properties.SnapshotPolicy.ContainerName);
 
-            MetadataPolicyData changedContainerPolicy = new MetadataPolicyData(new MetadataPolicyProperties(
-                new MetadataSnapshotPolicy(MetadataSnapshotPolicyStatus.Disabled)
-                {
-                    ContainerName = replacementContainerName
-                }));
-            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
-                async () => await policy.CreateOrUpdateAsync(WaitUntil.Completed, changedContainerPolicy));
-            Assert.AreEqual(400, exception.Status);
-            Assert.AreEqual("StorageMetadataInvalidPolicy", exception.ErrorCode);
-            MetadataPolicyResource unchanged = (await policy.GetAsync()).Value;
-            AssertPolicy(unchanged, policy.Id, MetadataSnapshotPolicyStatus.Enabled);
-            Assert.AreEqual(containerName, unchanged.Data.Properties.SnapshotPolicy.ContainerName);
-
-            MetadataPolicyData disabledPolicy = new MetadataPolicyData(new MetadataPolicyProperties(
-                new MetadataSnapshotPolicy(MetadataSnapshotPolicyStatus.Disabled)
-                {
-                    ContainerName = containerName
-                }));
-            MetadataPolicyResource updated = (await policy.CreateOrUpdateAsync(WaitUntil.Completed, disabledPolicy)).Value;
+            retrieved.Data.Properties.SnapshotPolicy.Status = MetadataSnapshotPolicyStatus.Disabled;
+            MetadataPolicyResource updated = (await policy.CreateOrUpdateAsync(WaitUntil.Completed, retrieved.Data)).Value;
             AssertPolicy(updated, policy.Id, MetadataSnapshotPolicyStatus.Disabled);
             Assert.AreEqual(containerName, updated.Data.Properties.SnapshotPolicy.ContainerName);
-
-            MetadataPolicyData policyWithoutContainer = new MetadataPolicyData(new MetadataPolicyProperties(
-                new MetadataSnapshotPolicy(MetadataSnapshotPolicyStatus.Enabled)));
-            MetadataPolicyResource reenabled = (await policy.CreateOrUpdateAsync(WaitUntil.Completed, policyWithoutContainer)).Value;
-            AssertPolicy(reenabled, policy.Id, MetadataSnapshotPolicyStatus.Enabled);
-            Assert.AreEqual(containerName, reenabled.Data.Properties.SnapshotPolicy.ContainerName);
             MetadataPolicyResource retrievedAfterUpdate = (await policy.GetAsync()).Value;
-            AssertPolicy(retrievedAfterUpdate, policy.Id, MetadataSnapshotPolicyStatus.Enabled);
+            AssertPolicy(retrievedAfterUpdate, policy.Id, MetadataSnapshotPolicyStatus.Disabled);
             Assert.AreEqual(containerName, retrievedAfterUpdate.Data.Properties.SnapshotPolicy.ContainerName);
 
             await policy.DeleteAsync(WaitUntil.Completed);
             RequestFailedException deletedException = Assert.ThrowsAsync<RequestFailedException>(async () => await policy.GetAsync());
             Assert.AreEqual(404, deletedException.Status);
-            MetadataPolicyResource recreated = (await policy.CreateOrUpdateAsync(WaitUntil.Completed, changedContainerPolicy)).Value;
-            AssertPolicy(recreated, policy.Id, MetadataSnapshotPolicyStatus.Disabled);
-            Assert.AreEqual(replacementContainerName, recreated.Data.Properties.SnapshotPolicy.ContainerName);
-            MetadataPolicyResource retrievedAfterRecreate = (await policy.GetAsync()).Value;
-            AssertPolicy(retrievedAfterRecreate, policy.Id, MetadataSnapshotPolicyStatus.Disabled);
-            Assert.AreEqual(replacementContainerName, retrievedAfterRecreate.Data.Properties.SnapshotPolicy.ContainerName);
-            await policy.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task<MetadataPolicyResource> CreateTestStorageAccountAndGetPolicyAsync(bool? allowBlobPublicAccess = null)

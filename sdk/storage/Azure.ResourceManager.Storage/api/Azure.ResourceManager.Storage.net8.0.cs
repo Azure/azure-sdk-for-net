@@ -4453,7 +4453,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class MetadataSnapshotPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.MetadataSnapshotPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.MetadataSnapshotPolicy>
     {
         public MetadataSnapshotPolicy(Azure.ResourceManager.Storage.Models.MetadataSnapshotPolicyStatus status) { }
-        public string ContainerName { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.MetadataSnapshotRefreshFrequency? DefinitionRefreshFrequency { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.MetadataSnapshotPolicyStatus Status { get { throw null; } set { } }

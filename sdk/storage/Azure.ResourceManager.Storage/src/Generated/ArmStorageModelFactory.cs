@@ -1408,7 +1408,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="name"> The server-assigned metadata snapshot policy name. </param>
         /// <param name="status"> The status of the metadata snapshot policy. </param>
-        /// <param name="containerName"> The name of the blob container that stores the metadata snapshots. If not specified, a default container is used. Can only be set when the policy is created. </param>
+        /// <param name="containerName"> The name of the blob container that stores the metadata snapshots. </param>
         /// <param name="definitionRefreshFrequency"> The frequency at which metadata snapshots are refreshed. </param>
         /// <returns> A new <see cref="Models.MetadataSnapshotPolicy"/> instance for mocking. </returns>
         public static MetadataSnapshotPolicy MetadataSnapshotPolicy(string name = default, MetadataSnapshotPolicyStatus status = default, string containerName = default, MetadataSnapshotRefreshFrequency? definitionRefreshFrequency = default)

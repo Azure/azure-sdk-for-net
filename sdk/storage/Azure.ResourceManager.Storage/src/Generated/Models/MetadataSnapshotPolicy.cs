@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="MetadataSnapshotPolicy"/>. </summary>
         /// <param name="name"> The server-assigned metadata snapshot policy name. </param>
         /// <param name="status"> The status of the metadata snapshot policy. </param>
-        /// <param name="containerName"> The name of the blob container that stores the metadata snapshots. If not specified, a default container is used. Can only be set when the policy is created. </param>
+        /// <param name="containerName"> The name of the blob container that stores the metadata snapshots. </param>
         /// <param name="definition"> The server-managed metadata snapshot policy definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MetadataSnapshotPolicy(string name, MetadataSnapshotPolicyStatus status, string containerName, MetadataSnapshotPolicyDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("status")]
         public MetadataSnapshotPolicyStatus Status { get; set; }
 
-        /// <summary> The name of the blob container that stores the metadata snapshots. If not specified, a default container is used. Can only be set when the policy is created. </summary>
+        /// <summary> The name of the blob container that stores the metadata snapshots. </summary>
         [WirePath("containerName")]
-        public string ContainerName { get; set; }
+        public string ContainerName { get; }
 
         /// <summary> The server-managed metadata snapshot policy definition. </summary>
         [WirePath("definition")]
