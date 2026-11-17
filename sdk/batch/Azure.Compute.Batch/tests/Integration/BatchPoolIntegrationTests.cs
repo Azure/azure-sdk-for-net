@@ -193,21 +193,22 @@ namespace Azure.Compute.Batch.Tests.Integration
             WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "SecurityProfilePool", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
             TimeSpan evalInterval = TimeSpan.FromMinutes(6);
-            var VMSize = "STANDARD_D2S_V5";
+            var VMSize = "Standard_DC2as_v5";
             var targetDedicatedNodes = 1;
+            bool poolCreated = false;
 
             try
             {
                 // create a new pool
                 BatchVmImageReference imageReference = new BatchVmImageReference()
                 {
-                    Publisher = "microsoftwindowsserver",
-                    Offer = "windowsserver",
-                    Sku = "2022-datacenter-g2",
+                    Publisher = "canonical",
+                    Offer = "0001-com-ubuntu-confidential-vm-jammy",
+                    Sku = "22_04-lts-cvm",
                     Version = "latest"
                 };
 
-                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64")
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.ubuntu 22.04")
                 {
                     SecurityProfile = new SecurityProfile()
                     {
@@ -251,6 +252,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 };
 
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
+                poolCreated = true;
                 Assert.AreEqual(201, response.Status);
 
                 BatchPool pool = await client.GetPoolAsync(poolID);
@@ -269,7 +271,10 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                if (poolCreated)
+                {
+                    await client.DeletePoolAsync(WaitUntil.Completed, poolID);
+                }
             }
         }
 
@@ -278,11 +283,12 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             var DiskEncryptionSetId = TestEnvironment.DiskEncryptionSetId;
             var client = CreateUserSubBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "SecurityProfilePool", IsPlayBack());
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "DiskEncryptionPool", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
             TimeSpan evalInterval = TimeSpan.FromMinutes(6);
-            var VMSize = "STANDARD_D2S_V5";
+            var VMSize = "Standard_D2s_v3";
             var targetDedicatedNodes = 1;
+            bool poolCreated = false;
 
             try
             {
@@ -290,44 +296,18 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchVmImageReference imageReference = new BatchVmImageReference()
                 {
                     Publisher = "microsoftwindowsserver",
-                    Offer = "windowsserver",
+                    Offer = "windowsserver2022",
                     Sku = "2022-datacenter-g2",
                     Version = "latest"
                 };
 
                 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64")
                 {
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        SecurityType = SecurityTypes.ConfidentialVM,
-                        IsEncryptedAtHost = false,
-                        UefiSettings = new BatchUefiSettings()
-                        {
-                            SecureBootEnabled = true,
-                            VTpmEnabled = true,
-                        },
-                        ProxyAgentSettings = new ProxyAgentSettings
-                        {
-                            Imds = new HostEndpointSettings
-                            {
-                                Mode = HostEndpointSettingsModeType.Audit,
-                            },
-                            Enabled = false,
-                            //WireServer = new HostEndpointSettings
-                            //{
-                            //    InVmAccessControlProfileReferenceId = "id2",
-                            //},
-                        },
-                    },
                     OsDisk = new BatchOsDisk()
                     {
                         Caching = CachingType.ReadWrite,
                         ManagedDisk = new ManagedDisk()
                         {
-                            SecurityProfile = new BatchVmDiskSecurityProfile()
-                            {
-                                SecurityEncryptionType = SecurityEncryptionTypes.VMGuestStateOnly,
-                            },
                             DiskEncryptionSet = new DiskEncryptionSetParameters()
                             {
                                 Id = new ResourceIdentifier(DiskEncryptionSetId)
@@ -354,18 +334,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 };
 
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
+                poolCreated = true;
                 Assert.AreEqual(201, response.Status);
 
                 BatchPool pool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType, SecurityTypes.ConfidentialVM);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.IsEncryptedAtHost, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeType.Audit);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.DiskEncryptionSet.Id, DiskEncryptionSetId);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.DataDisks.Single().ManagedDisk.DiskEncryptionSet.Id, DiskEncryptionSetId);
             }
             catch (RequestFailedException e)
             {
@@ -373,7 +348,10 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                if (poolCreated)
+                {
+                    await client.DeletePoolAsync(WaitUntil.Completed, poolID);
+                }
             }
         }
 

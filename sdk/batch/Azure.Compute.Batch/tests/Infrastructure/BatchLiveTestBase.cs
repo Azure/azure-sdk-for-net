@@ -29,13 +29,23 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public BatchLiveTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             SanitizedHeaders.Add("client-request-id");
+            AddCredentialSanitizers();
             UseDefaultGuidFormatForClientRequestId = true;
         }
 
         public BatchLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("client-request-id");
+            AddCredentialSanitizers();
             UseDefaultGuidFormatForClientRequestId = true;
+        }
+
+        private void AddCredentialSanitizers()
+        {
+            JsonPathSanitizers.Add("$..password");
+            JsonPathSanitizers.Add("$..sshPrivateKey");
+            JsonPathSanitizers.Add("$..accountKey");
+            JsonPathSanitizers.Add("$..protectedSettings");
         }
 
         public bool IsPlayBack()

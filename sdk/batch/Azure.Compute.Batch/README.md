@@ -1234,3 +1234,27 @@ You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+### Recording integration tests
+
+For local recording with an existing Azure CLI login, set `BATCH_USE_AZURE_CLI_CREDENTIAL=true`
+and `BATCH_TENANT_ID` to the tenant containing the test accounts. This explicitly selects
+`AzureCliCredential` for developer authentication; when unset, the normal test-framework
+credential selection is unchanged. Service-principal and pipeline credentials still take precedence.
+
+Configure `batch_account_name` and `batch_account_uri` for the Batch service allocation account.
+For user-subscription tests, also configure `batch_usersub_account_name`,
+`batch_usersub_account_uri`, and `diskencryptionset_id`. Account endpoints must omit `https://`.
+Keep credentials out of source control.
+
+Set `AZURE_TEST_MODE=Record` and use a test-name filter to record only the intended tests.
+Start with `BatchApplicationsIntegrationTests.GetandListApplication`, which only lists and
+reads applications. Other integration tests create and delete billable resources and should
+use dedicated accounts. Run the same tests with `AZURE_TEST_MODE=Playback` afterward.
+The security-profile test uses a confidential-capable Ubuntu VM in the Batch service
+allocation account. The disk-encryption test independently uses an ordinary Windows VM
+with the configured Disk Encryption Set in the user-subscription account; it does not
+require confidential-VM capacity. These tests verify pool configuration, not successful
+node allocation.
+Review sanitized recordings before publishing them and updating `assets.json` as described
+in the [recording instructions](../../core/Azure.Core.TestFramework/README.md#recording).
