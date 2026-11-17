@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRouterWorkerSelectorState?(string value) => value == null ? null : new AcsRouterWorkerSelectorState(value);
+        public static implicit operator AcsRouterWorkerSelectorState?(string value) => value == null ? (AcsRouterWorkerSelectorState?)null : new AcsRouterWorkerSelectorState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
