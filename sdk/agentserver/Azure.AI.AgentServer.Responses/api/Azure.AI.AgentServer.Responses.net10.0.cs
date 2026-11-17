@@ -340,7 +340,7 @@ namespace Azure.AI.AgentServer.Responses
         public static int? get_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_OutputText(OpenAI.Responses.ResponseResult response) { throw null; }
         public static System.BinaryData? get_PromptCacheBreakpoint(OpenAI.Responses.ResponseContentPart part) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? get_Status(OpenAI.Responses.McpToolCallItem mcpCall) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.McpToolCallStatus? get_Status(OpenAI.Responses.McpToolCallItem mcpCall) { throw null; }
         public static string? get_Text(OpenAI.Responses.ReasoningSummaryPart part) { throw null; }
         public static void set_AgentReference(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Extensions.OpenAI.AgentReference? value) { }
         public static void set_AgentReference(OpenAI.Responses.ResponseResult response, Azure.AI.Extensions.OpenAI.AgentReference? value) { }
@@ -358,14 +358,14 @@ namespace Azure.AI.AgentServer.Responses
         public static void set_Namespace(OpenAI.Responses.CustomToolCallItem customToolCall, string? value) { }
         public static void set_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update, int? value) { }
         public static void set_PromptCacheBreakpoint(OpenAI.Responses.ResponseContentPart part, System.BinaryData? value) { }
-        public static void set_Status(OpenAI.Responses.McpToolCallItem mcpCall, Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? value) { }
+        public static void set_Status(OpenAI.Responses.McpToolCallItem mcpCall, Azure.AI.AgentServer.Responses.Models.McpToolCallStatus? value) { }
         public sealed partial class <G>$18D35430E41928A72CE2C2B20C1EB7D6
         {
             internal <G>$18D35430E41928A72CE2C2B20C1EB7D6() { }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")]
             public string? ApprovalRequestId { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] set { } }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")]
-            public Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? Status { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] set { } }
+            public Azure.AI.AgentServer.Responses.Models.McpToolCallStatus? Status { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$466DE5BA2CFD4B1CD21E5552E78A4323")] set { } }
             public static partial class <M>$466DE5BA2CFD4B1CD21E5552E78A4323
             {
                 public static void <Extension>$(OpenAI.Responses.McpToolCallItem mcpCall) { }
@@ -615,7 +615,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public static string GetInputText(this System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> items) { throw null; }
     }
-    public enum MCPToolCallStatus
+    public enum McpToolCallStatus
     {
         InProgress = 0,
         Completed = 1,

@@ -174,7 +174,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             bool outputIsDefined = false;
             string output = default;
             IDictionary<string, BinaryData> error = default;
-            MCPToolCallStatus? status = default;
+            McpToolCallStatus? status = default;
             bool approvalRequestIdIsDefined = false;
             string approvalRequestId = default;
             foreach (var prop in element.EnumerateObject())
@@ -242,7 +242,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToMCPToolCallStatus();
+                    status = prop.Value.GetString().ToMcpToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("approval_request_id"u8))

@@ -200,15 +200,15 @@ public static class ResponseItemAttributionExtensions
     extension(McpToolCallItem mcpCall)
     {
         /// <summary> Gets or sets the call status, which OpenAI does not model on this item. </summary>
-        public Models.MCPToolCallStatus? Status
+        public Models.McpToolCallStatus? Status
         {
             get
             {
                 var raw = GetString(ref mcpCall.Patch, StatusPath.Span);
-                return raw is null ? null : Models.MCPToolCallStatusExtensions.ToMCPToolCallStatus(raw);
+                return raw is null ? null : Models.McpToolCallStatusExtensions.ToMcpToolCallStatus(raw);
             }
 
-            set => SetOrClear(ref mcpCall.Patch, StatusPath.Span, value is null ? null : Models.MCPToolCallStatusExtensions.ToSerialString(value.Value));
+            set => SetOrClear(ref mcpCall.Patch, StatusPath.Span, value is null ? null : Models.McpToolCallStatusExtensions.ToSerialString(value.Value));
         }
 
         /// <summary>

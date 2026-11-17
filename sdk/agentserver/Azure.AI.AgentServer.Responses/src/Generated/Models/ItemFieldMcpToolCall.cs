@@ -43,7 +43,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="error"> The error from the tool call, if any. </param>
         /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
         /// <param name="approvalRequestId"></param>
-        internal ItemFieldMcpToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldMcpToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, McpToolCallStatus? status, string approvalRequestId) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -105,7 +105,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IDictionary<string, BinaryData> Error { get; }
 
         /// <summary> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </summary>
-        public MCPToolCallStatus? Status { get; }
+        public McpToolCallStatus? Status { get; }
 
         /// <summary> Gets the ApprovalRequestId. </summary>
         public string ApprovalRequestId

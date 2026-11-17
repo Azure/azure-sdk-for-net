@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum MCPToolCallStatus
+    public enum McpToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

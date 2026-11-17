@@ -69,9 +69,9 @@
   `SummaryTextContent`, `TextContent`, `ComputerScreenshotContent`, `ImageDetail`,
   `FileInputDetail`, `LogProb`, `TopLogProb`, `ToolChoiceParam` and its `ToolChoice*` subtypes,
   `ToolChoiceOptions`, `ToolChoiceAllowedMode`, `Specific*Param`, `PromptCacheBreakpointConfig`,
-  and `ConversationParam`. The remaining public models in `Azure.AI.AgentServer.Responses.Models`
-  (`MCPToolCallStatus` and the tool-call callers) are tracked in
-  [#64833](https://github.com/Azure/azure-sdk-for-net/issues/64833).
+  and `ConversationParam`.
+- `MCPToolCallStatus` is renamed to `McpToolCallStatus`, matching .NET acronym casing and OpenAI's
+  `McpToolCallItem`.
 - `OutputItemCustomToolCall` and `OutputItemCustomToolCallOutput` are removed in favor of OpenAI's
   `CustomToolCallItem` and `CustomToolCallOutputItem`. `OutputItemCustomToolCallBuilder` now builds
   a `CustomToolCallItem`, and `ResponseEventStream.AddOutputItemCustomToolCallOutput` returns
