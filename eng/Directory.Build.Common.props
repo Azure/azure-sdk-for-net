@@ -90,7 +90,7 @@
     </NoWarn>
 
     <!--
-        Disable .NET 10 prune warning for test/sample/stress/support projects as they may
+        Disable package pruning warnings for test/sample/stress/support projects as they may
         reference packages that are packaged with built-in libraries and cannot be pruned.
     -->
     <NoWarn Condition="'$(IsTestProject)' == 'true' OR '$(IsTestSupportProject)' == 'true' OR '$(IsPerfProject)' == 'true' OR '$(IsStressProject)' == 'true' OR '$(IsSamplesProject)' == 'true'">
@@ -192,7 +192,7 @@
     <RequiredRunnableTargetFrameworks>$(LtsTargetFramework);net8.0</RequiredRunnableTargetFrameworks>
 
     <!-- The set of all runnable modern target frameworks that have not yet reached end-of-life. -->
-    <AllActiveCurrentTargetFrameworks>$(RequiredRunnableTargetFrameworks);net9.0</AllActiveCurrentTargetFrameworks>
+    <AllActiveCurrentTargetFrameworks>$(RequiredRunnableTargetFrameworks);net9.0;net11.0</AllActiveCurrentTargetFrameworks>
 
     <!--
       The set of frameworks for API Compat checks when the current LTS is being built.  These ensure that
