@@ -1,14 +1,11 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
 
 - Upgraded API version to `2026-09-01`.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added member `Planned` to enum `MongoClusterPromoteOption`.
 
 ### Other Changes
 
