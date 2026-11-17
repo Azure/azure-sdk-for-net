@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="RequestImageContentPartDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RequestImageContentPartDetail?(string value) => value == null ? null : new RequestImageContentPartDetail(value);
+        public static implicit operator RequestImageContentPartDetail?(string value) => value == null ? (RequestImageContentPartDetail?)null : new RequestImageContentPartDetail(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

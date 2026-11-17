@@ -76,7 +76,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="ParagraphRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParagraphRole?(string value) => value == null ? null : new ParagraphRole(value);
+        public static implicit operator ParagraphRole?(string value) => value == null ? (ParagraphRole?)null : new ParagraphRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

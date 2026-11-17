@@ -61,7 +61,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="ContentAnalyzerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentAnalyzerStatus?(string value) => value == null ? null : new ContentAnalyzerStatus(value);
+        public static implicit operator ContentAnalyzerStatus?(string value) => value == null ? (ContentAnalyzerStatus?)null : new ContentAnalyzerStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

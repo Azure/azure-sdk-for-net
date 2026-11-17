@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="MessageBlockType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageBlockType?(string value) => value == null ? null : new MessageBlockType(value);
+        public static implicit operator MessageBlockType?(string value) => value == null ? (MessageBlockType?)null : new MessageBlockType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

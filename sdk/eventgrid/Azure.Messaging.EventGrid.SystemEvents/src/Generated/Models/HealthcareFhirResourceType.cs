@@ -846,7 +846,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="HealthcareFhirResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthcareFhirResourceType?(string value) => value == null ? null : new HealthcareFhirResourceType(value);
+        public static implicit operator HealthcareFhirResourceType?(string value) => value == null ? (HealthcareFhirResourceType?)null : new HealthcareFhirResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

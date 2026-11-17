@@ -92,7 +92,7 @@ namespace Azure.Monitor.Query.Logs.Models
 
         /// <summary> Converts a string to a <see cref="LogsColumnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogsColumnType?(string value) => value == null ? null : new LogsColumnType(value);
+        public static implicit operator LogsColumnType?(string value) => value == null ? (LogsColumnType?)null : new LogsColumnType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

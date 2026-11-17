@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="NumberKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NumberKind?(string value) => value == null ? null : new NumberKind(value);
+        public static implicit operator NumberKind?(string value) => value == null ? (NumberKind?)null : new NumberKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

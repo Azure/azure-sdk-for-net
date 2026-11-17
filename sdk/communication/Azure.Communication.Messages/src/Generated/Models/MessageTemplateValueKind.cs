@@ -71,7 +71,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="MessageTemplateValueKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageTemplateValueKind?(string value) => value == null ? null : new MessageTemplateValueKind(value);
+        public static implicit operator MessageTemplateValueKind?(string value) => value == null ? (MessageTemplateValueKind?)null : new MessageTemplateValueKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

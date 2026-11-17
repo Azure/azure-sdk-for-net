@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="ChatCompletionResponseFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChatCompletionResponseFormatType?(string value) => value == null ? null : new ChatCompletionResponseFormatType(value);
+        public static implicit operator ChatCompletionResponseFormatType?(string value) => value == null ? (ChatCompletionResponseFormatType?)null : new ChatCompletionResponseFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Converts a string to a <see cref="TranslationTone"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TranslationTone?(string value) => value == null ? null : new TranslationTone(value);
+        public static implicit operator TranslationTone?(string value) => value == null ? (TranslationTone?)null : new TranslationTone(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

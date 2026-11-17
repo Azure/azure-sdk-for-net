@@ -61,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="VectorStoreFileStatusFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreFileStatusFilter?(string value) => value == null ? null : new VectorStoreFileStatusFilter(value);
+        public static implicit operator VectorStoreFileStatusFilter?(string value) => value == null ? (VectorStoreFileStatusFilter?)null : new VectorStoreFileStatusFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
