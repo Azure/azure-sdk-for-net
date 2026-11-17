@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceTenantId))
             {
                 writer.WritePropertyName("sourceTenantId"u8);
-                writer.WriteStringValue(SourceTenantId);
+                writer.WriteStringValue(SourceTenantId.Value);
             }
             if (Optional.IsDefined(FederatedApplicationClientId))
             {
                 writer.WritePropertyName("federatedApplicationClientId"u8);
-                writer.WriteStringValue(FederatedApplicationClientId);
+                writer.WriteStringValue(FederatedApplicationClientId.Value);
             }
         }
 
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             AdditionalAuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string sourceTenantId = default;
-            string federatedApplicationClientId = default;
+            Guid? sourceTenantId = default;
+            Guid? federatedApplicationClientId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("authenticationType"u8))
@@ -129,12 +129,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (prop.NameEquals("sourceTenantId"u8))
                 {
-                    sourceTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("federatedApplicationClientId"u8))
                 {
-                    federatedApplicationClientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    federatedApplicationClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

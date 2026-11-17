@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             AdditionalAuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string sourceTenantId = default;
-            string federatedApplicationClientId = default;
+            Guid sourceTenantId = default;
+            Guid federatedApplicationClientId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("authenticationType"u8))
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (prop.NameEquals("sourceTenantId"u8))
                 {
-                    sourceTenantId = prop.Value.GetString();
+                    sourceTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("federatedApplicationClientId"u8))
                 {
-                    federatedApplicationClientId = prop.Value.GetString();
+                    federatedApplicationClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

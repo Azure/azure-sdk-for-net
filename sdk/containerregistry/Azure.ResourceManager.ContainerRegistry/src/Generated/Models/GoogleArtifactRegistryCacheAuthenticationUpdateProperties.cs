@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// When authentication is first configured, projectNumber, workloadIdentityPool, and
     /// workloadIdentityProvider must be supplied.
     /// </summary>
-    public partial class GarAuthenticationUpdateProperties : AdditionalAuthenticationUpdateProperties
+    public partial class GoogleArtifactRegistryCacheAuthenticationUpdateProperties : AdditionalAuthenticationUpdateProperties
     {
-        /// <summary> Initializes a new instance of <see cref="GarAuthenticationUpdateProperties"/>. </summary>
-        public GarAuthenticationUpdateProperties() : base(AdditionalAuthenticationType.GoogleArtifactRegistry)
+        /// <summary> Initializes a new instance of <see cref="GoogleArtifactRegistryCacheAuthenticationUpdateProperties"/>. </summary>
+        public GoogleArtifactRegistryCacheAuthenticationUpdateProperties() : base(AdditionalAuthenticationType.GoogleArtifactRegistry)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GarAuthenticationUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleArtifactRegistryCacheAuthenticationUpdateProperties"/>. </summary>
         /// <param name="authenticationType">
         /// The existing authentication type, or the type to configure when no authentication exists.
         /// This discriminator is required, but changing an existing authentication type is not supported.
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <param name="workloadIdentityPool"> The Google Cloud platform workload identity pool used for authentication. </param>
         /// <param name="workloadIdentityProvider"> The Google Cloud Platform workload identity provider used for authentication. </param>
-        internal GarAuthenticationUpdateProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectNumber, string workloadIdentityPool, string workloadIdentityProvider) : base(authenticationType, additionalBinaryDataProperties)
+        internal GoogleArtifactRegistryCacheAuthenticationUpdateProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectNumber, string workloadIdentityPool, string workloadIdentityProvider) : base(authenticationType, additionalBinaryDataProperties)
         {
             ProjectNumber = projectNumber;
             WorkloadIdentityPool = workloadIdentityPool;

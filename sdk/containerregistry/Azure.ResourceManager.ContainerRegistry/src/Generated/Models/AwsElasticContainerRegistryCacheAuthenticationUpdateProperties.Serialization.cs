@@ -17,51 +17,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// Partial Amazon Elastic Container Registry (ECR) authentication configuration.
     /// When authentication is first configured, accountNumber, region, and roleName must be supplied.
     /// </summary>
-    public partial class EcrAuthenticationUpdateProperties : AdditionalAuthenticationUpdateProperties, IJsonModel<EcrAuthenticationUpdateProperties>
+    public partial class AwsElasticContainerRegistryCacheAuthenticationUpdateProperties : AdditionalAuthenticationUpdateProperties, IJsonModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AdditionalAuthenticationUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EcrAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEcrAuthenticationUpdateProperties(document.RootElement, options);
+                        return DeserializeAwsElasticContainerRegistryCacheAuthenticationUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EcrAuthenticationUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsElasticContainerRegistryCacheAuthenticationUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EcrAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EcrAuthenticationUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsElasticContainerRegistryCacheAuthenticationUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EcrAuthenticationUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EcrAuthenticationUpdateProperties IPersistableModel<EcrAuthenticationUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (EcrAuthenticationUpdateProperties)PersistableModelCreateCore(data, options);
+        AwsElasticContainerRegistryCacheAuthenticationUpdateProperties IPersistableModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AwsElasticContainerRegistryCacheAuthenticationUpdateProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EcrAuthenticationUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EcrAuthenticationUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EcrAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EcrAuthenticationUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsElasticContainerRegistryCacheAuthenticationUpdateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AccountNumber))
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EcrAuthenticationUpdateProperties IJsonModel<EcrAuthenticationUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EcrAuthenticationUpdateProperties)JsonModelCreateCore(ref reader, options);
+        AwsElasticContainerRegistryCacheAuthenticationUpdateProperties IJsonModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AwsElasticContainerRegistryCacheAuthenticationUpdateProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AdditionalAuthenticationUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EcrAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsElasticContainerRegistryCacheAuthenticationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EcrAuthenticationUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsElasticContainerRegistryCacheAuthenticationUpdateProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEcrAuthenticationUpdateProperties(document.RootElement, options);
+            return DeserializeAwsElasticContainerRegistryCacheAuthenticationUpdateProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EcrAuthenticationUpdateProperties DeserializeEcrAuthenticationUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AwsElasticContainerRegistryCacheAuthenticationUpdateProperties DeserializeAwsElasticContainerRegistryCacheAuthenticationUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EcrAuthenticationUpdateProperties(
+            return new AwsElasticContainerRegistryCacheAuthenticationUpdateProperties(
                 authenticationType,
                 additionalBinaryDataProperties,
                 accountNumber,
