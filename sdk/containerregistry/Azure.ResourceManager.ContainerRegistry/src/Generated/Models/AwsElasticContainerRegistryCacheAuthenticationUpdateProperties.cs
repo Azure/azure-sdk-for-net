@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// Partial Amazon Elastic Container Registry (ECR) authentication configuration.
     /// When authentication is first configured, accountNumber, region, and roleName must be supplied.
     /// </summary>
-    public partial class EcrAuthenticationUpdateProperties : AdditionalAuthenticationUpdateProperties
+    public partial class AwsElasticContainerRegistryCacheAuthenticationUpdateProperties : AdditionalAuthenticationUpdateProperties
     {
-        /// <summary> Initializes a new instance of <see cref="EcrAuthenticationUpdateProperties"/>. </summary>
-        public EcrAuthenticationUpdateProperties() : base(AdditionalAuthenticationType.AwsElasticContainerRegistry)
+        /// <summary> Initializes a new instance of <see cref="AwsElasticContainerRegistryCacheAuthenticationUpdateProperties"/>. </summary>
+        public AwsElasticContainerRegistryCacheAuthenticationUpdateProperties() : base(AdditionalAuthenticationType.AwsElasticContainerRegistry)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EcrAuthenticationUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsElasticContainerRegistryCacheAuthenticationUpdateProperties"/>. </summary>
         /// <param name="authenticationType">
         /// The existing authentication type, or the type to configure when no authentication exists.
         /// This discriminator is required, but changing an existing authentication type is not supported.
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// path defaults to the root (`/`). When updating an existing authentication configuration,
         /// an omitted path retains its current value.
         /// </param>
-        internal EcrAuthenticationUpdateProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string accountNumber, string region, string roleName, string rolePath) : base(authenticationType, additionalBinaryDataProperties)
+        internal AwsElasticContainerRegistryCacheAuthenticationUpdateProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string accountNumber, string region, string roleName, string rolePath) : base(authenticationType, additionalBinaryDataProperties)
         {
             AccountNumber = accountNumber;
             Region = region;

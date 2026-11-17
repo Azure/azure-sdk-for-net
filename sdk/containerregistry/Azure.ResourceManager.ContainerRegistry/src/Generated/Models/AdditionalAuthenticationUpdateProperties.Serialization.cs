@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// Partial authentication configuration for a cache rule. Omitted fields retain their current
     /// values. When authentication is first configured, all required fields of the selected
     /// authentication type must be supplied. Changing an existing authentication type is not supported.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EcrAuthenticationUpdateProperties"/>, <see cref="EntraFederatedIdentityCredentialAuthenticationUpdateProperties"/>, and <see cref="GarAuthenticationUpdateProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsElasticContainerRegistryCacheAuthenticationUpdateProperties"/>, <see cref="EntraFederatedIdentityCredentialAuthenticationUpdateProperties"/>, and <see cref="GoogleArtifactRegistryCacheAuthenticationUpdateProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAdditionalAuthenticationUpdateProperties))]
     public abstract partial class AdditionalAuthenticationUpdateProperties : IJsonModel<AdditionalAuthenticationUpdateProperties>
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 switch (discriminator.GetString())
                 {
                     case "AwsElasticContainerRegistry":
-                        return EcrAuthenticationUpdateProperties.DeserializeEcrAuthenticationUpdateProperties(element, options);
+                        return AwsElasticContainerRegistryCacheAuthenticationUpdateProperties.DeserializeAwsElasticContainerRegistryCacheAuthenticationUpdateProperties(element, options);
                     case "EntraFederatedIdentityCredential":
                         return EntraFederatedIdentityCredentialAuthenticationUpdateProperties.DeserializeEntraFederatedIdentityCredentialAuthenticationUpdateProperties(element, options);
                     case "GoogleArtifactRegistry":
-                        return GarAuthenticationUpdateProperties.DeserializeGarAuthenticationUpdateProperties(element, options);
+                        return GoogleArtifactRegistryCacheAuthenticationUpdateProperties.DeserializeGoogleArtifactRegistryCacheAuthenticationUpdateProperties(element, options);
                 }
             }
             return UnknownAdditionalAuthenticationUpdateProperties.DeserializeUnknownAdditionalAuthenticationUpdateProperties(element, options);

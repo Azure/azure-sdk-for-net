@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// The credential's subject is the managed identity's principal/object ID, not its client ID.
         /// Its enterprise application (service principal) must exist in `sourceTenantId`.
         /// </param>
-        internal EntraFederatedIdentityCredentialAuthenticationUpdateProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourceTenantId, string federatedApplicationClientId) : base(authenticationType, additionalBinaryDataProperties)
+        internal EntraFederatedIdentityCredentialAuthenticationUpdateProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Guid? sourceTenantId, Guid? federatedApplicationClientId) : base(authenticationType, additionalBinaryDataProperties)
         {
             SourceTenantId = sourceTenantId;
             FederatedApplicationClientId = federatedApplicationClientId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// the application's enterprise application (service principal).
         /// </summary>
         [WirePath("sourceTenantId")]
-        public string SourceTenantId { get; set; }
+        public Guid? SourceTenantId { get; set; }
 
         /// <summary>
         /// The client ID of the multi-tenant application. Its application registration and
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Its enterprise application (service principal) must exist in `sourceTenantId`.
         /// </summary>
         [WirePath("federatedApplicationClientId")]
-        public string FederatedApplicationClientId { get; set; }
+        public Guid? FederatedApplicationClientId { get; set; }
     }
 }

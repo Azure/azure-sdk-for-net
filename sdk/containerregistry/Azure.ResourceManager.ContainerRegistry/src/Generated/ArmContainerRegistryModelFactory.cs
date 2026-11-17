@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Its enterprise application (service principal) must exist in `sourceTenantId`.
         /// </param>
         /// <returns> A new <see cref="Models.EntraFederatedIdentityCredentialCacheAuthentication"/> instance for mocking. </returns>
-        public static EntraFederatedIdentityCredentialCacheAuthentication EntraFederatedIdentityCredentialCacheAuthentication(string sourceTenantId = default, string federatedApplicationClientId = default)
+        public static EntraFederatedIdentityCredentialCacheAuthentication EntraFederatedIdentityCredentialCacheAuthentication(Guid sourceTenantId = default, Guid federatedApplicationClientId = default)
         {
             return new EntraFederatedIdentityCredentialCacheAuthentication(AdditionalAuthenticationType.EntraFederatedIdentityCredential, default, sourceTenantId, federatedApplicationClientId);
         }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Partial authentication configuration for a cache rule. Omitted fields retain their current
         /// values. When authentication is first configured, all required fields of the selected
         /// authentication type must be supplied. Changing an existing authentication type is not supported.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EcrAuthenticationUpdateProperties"/>, <see cref="Models.EntraFederatedIdentityCredentialAuthenticationUpdateProperties"/>, and <see cref="Models.GarAuthenticationUpdateProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AwsElasticContainerRegistryCacheAuthenticationUpdateProperties"/>, <see cref="Models.EntraFederatedIdentityCredentialAuthenticationUpdateProperties"/>, and <see cref="Models.GoogleArtifactRegistryCacheAuthenticationUpdateProperties"/>.
         /// </summary>
         /// <param name="authenticationType">
         /// The existing authentication type, or the type to configure when no authentication exists.
@@ -654,10 +654,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <param name="workloadIdentityPool"> The Google Cloud platform workload identity pool used for authentication. </param>
         /// <param name="workloadIdentityProvider"> The Google Cloud Platform workload identity provider used for authentication. </param>
-        /// <returns> A new <see cref="Models.GarAuthenticationUpdateProperties"/> instance for mocking. </returns>
-        public static GarAuthenticationUpdateProperties GarAuthenticationUpdateProperties(string projectNumber = default, string workloadIdentityPool = default, string workloadIdentityProvider = default)
+        /// <returns> A new <see cref="Models.GoogleArtifactRegistryCacheAuthenticationUpdateProperties"/> instance for mocking. </returns>
+        public static GoogleArtifactRegistryCacheAuthenticationUpdateProperties GoogleArtifactRegistryCacheAuthenticationUpdateProperties(string projectNumber = default, string workloadIdentityPool = default, string workloadIdentityProvider = default)
         {
-            return new GarAuthenticationUpdateProperties(AdditionalAuthenticationType.GoogleArtifactRegistry, default, projectNumber, workloadIdentityPool, workloadIdentityProvider);
+            return new GoogleArtifactRegistryCacheAuthenticationUpdateProperties(AdditionalAuthenticationType.GoogleArtifactRegistry, default, projectNumber, workloadIdentityPool, workloadIdentityProvider);
         }
 
         /// <summary>
@@ -691,10 +691,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// path defaults to the root (`/`). When updating an existing authentication configuration,
         /// an omitted path retains its current value.
         /// </param>
-        /// <returns> A new <see cref="Models.EcrAuthenticationUpdateProperties"/> instance for mocking. </returns>
-        public static EcrAuthenticationUpdateProperties EcrAuthenticationUpdateProperties(string accountNumber = default, string region = default, string roleName = default, string rolePath = default)
+        /// <returns> A new <see cref="Models.AwsElasticContainerRegistryCacheAuthenticationUpdateProperties"/> instance for mocking. </returns>
+        public static AwsElasticContainerRegistryCacheAuthenticationUpdateProperties AwsElasticContainerRegistryCacheAuthenticationUpdateProperties(string accountNumber = default, string region = default, string roleName = default, string rolePath = default)
         {
-            return new EcrAuthenticationUpdateProperties(
+            return new AwsElasticContainerRegistryCacheAuthenticationUpdateProperties(
                 AdditionalAuthenticationType.AwsElasticContainerRegistry,
                 default,
                 accountNumber,
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Its enterprise application (service principal) must exist in `sourceTenantId`.
         /// </param>
         /// <returns> A new <see cref="Models.EntraFederatedIdentityCredentialAuthenticationUpdateProperties"/> instance for mocking. </returns>
-        public static EntraFederatedIdentityCredentialAuthenticationUpdateProperties EntraFederatedIdentityCredentialAuthenticationUpdateProperties(string sourceTenantId = default, string federatedApplicationClientId = default)
+        public static EntraFederatedIdentityCredentialAuthenticationUpdateProperties EntraFederatedIdentityCredentialAuthenticationUpdateProperties(Guid? sourceTenantId = default, Guid? federatedApplicationClientId = default)
         {
             return new EntraFederatedIdentityCredentialAuthenticationUpdateProperties(AdditionalAuthenticationType.EntraFederatedIdentityCredential, default, sourceTenantId, federatedApplicationClientId);
         }
