@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeRetrievalReasoningEffortKind?(string value) => value == null ? null : new KnowledgeRetrievalReasoningEffortKind(value);
+        public static implicit operator KnowledgeRetrievalReasoningEffortKind?(string value) => value == null ? (KnowledgeRetrievalReasoningEffortKind?)null : new KnowledgeRetrievalReasoningEffortKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
