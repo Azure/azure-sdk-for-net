@@ -742,9 +742,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="coverageSummary"> Coverage facts for the accepted result. Scope counts, resource-occurrence counts, warning counts, and returned inventory-row counts are different units and must not be combined. </param>
         /// <param name="warnings"> Confirmed access, missing-resource, or access-indeterminate guidance. System verification failures are reported in errors, not as permission warnings. The returned array may be a subset; use warningsTotalCount and warningsTruncated. </param>
         /// <param name="warningsTotalCount"> The deduplicated number of warning identities before sampling. Identity consists of the expanded scope, affected resource, and reason. Absent means no accepted warning population was recorded, not zero warnings. </param>
-        /// <param name="warningsTruncated"> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </param>
+        /// <param name="isWarningListTruncated"> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </param>
         /// <returns> A new <see cref="Models.WorkspaceDiscoveryProperties"/> instance for mocking. </returns>
-        public static WorkspaceDiscoveryProperties WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, WorkspaceDiscoveryCompleteness? completeness = default, WorkspaceDiscoveryCoverageSummary coverageSummary = default, IEnumerable<WorkspaceDiscoveryWarning> warnings = default, long? warningsTotalCount = default, bool? warningsTruncated = default)
+        public static WorkspaceDiscoveryProperties WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, WorkspaceDiscoveryCompleteness? completeness = default, WorkspaceDiscoveryCoverageSummary coverageSummary = default, IEnumerable<WorkspaceDiscoveryWarning> warnings = default, long? warningsTotalCount = default, bool? isWarningListTruncated = default)
         {
             errors ??= new ChangeTrackingList<ChaosOperationError>();
             warnings ??= new ChangeTrackingList<WorkspaceDiscoveryWarning>();
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 coverageSummary,
                 (warnings ?? new ChangeTrackingList<WorkspaceDiscoveryWarning>()).ToList(),
                 warningsTotalCount,
-                warningsTruncated,
+                isWarningListTruncated,
                 default);
         }
 
@@ -892,13 +892,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="workspaceId"> The workspace ID this evaluation belongs to. </param>
         /// <param name="resourceSnapshotId"> The resource snapshot ID used for this evaluation. </param>
         /// <param name="discoveryResultId"> The canonical Azure resource ID of the retained discovery result that supplied resourceSnapshotId. This reference does not change when the latest discovery changes and never identifies the latest alias or a protected LRO polling handle. </param>
-        /// <param name="numTemplatesToEvaluate"> The number of templates to evaluate. </param>
-        /// <param name="numTemplatesEvaluatedSucceeded"> The number of templates that evaluated successfully. </param>
-        /// <param name="numTemplatesEvaluatedFailed"> The number of templates that failed evaluation. </param>
-        /// <param name="numTemplatesEvaluatedCancelled"> The number of templates that were cancelled during evaluation. </param>
+        /// <param name="templatesToEvaluateCount"> The number of templates to evaluate. </param>
+        /// <param name="templatesEvaluatedSucceededCount"> The number of templates that evaluated successfully. </param>
+        /// <param name="templatesEvaluatedFailedCount"> The number of templates that failed evaluation. </param>
+        /// <param name="templatesEvaluatedCancelledCount"> The number of templates that were cancelled during evaluation. </param>
         /// <param name="results"> Per-template evaluation results. </param>
         /// <returns> A new <see cref="Models.WorkspaceEvaluationProperties"/> instance for mocking. </returns>
-        public static WorkspaceEvaluationProperties WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, ResourceIdentifier discoveryResultId = default, int numTemplatesToEvaluate = default, int numTemplatesEvaluatedSucceeded = default, int numTemplatesEvaluatedFailed = default, int numTemplatesEvaluatedCancelled = default, IEnumerable<TemplateEvaluationResultItem> results = default)
+        public static WorkspaceEvaluationProperties WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, ResourceIdentifier discoveryResultId = default, int templatesToEvaluateCount = default, int templatesEvaluatedSucceededCount = default, int templatesEvaluatedFailedCount = default, int templatesEvaluatedCancelledCount = default, IEnumerable<TemplateEvaluationResultItem> results = default)
         {
             errors ??= new ChangeTrackingList<ChaosOperationError>();
             results ??= new ChangeTrackingList<TemplateEvaluationResultItem>();
@@ -911,10 +911,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 workspaceId,
                 resourceSnapshotId,
                 discoveryResultId,
-                numTemplatesToEvaluate,
-                numTemplatesEvaluatedSucceeded,
-                numTemplatesEvaluatedFailed,
-                numTemplatesEvaluatedCancelled,
+                templatesToEvaluateCount,
+                templatesEvaluatedSucceededCount,
+                templatesEvaluatedFailedCount,
+                templatesEvaluatedCancelledCount,
                 (results ?? new ChangeTrackingList<TemplateEvaluationResultItem>()).ToList(),
                 default);
         }
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </param>
         /// <param name="recommendation"> The recommendation information for this scenario. </param>
         /// <returns> A new <see cref="Models.ScenarioProperties"/> instance for mocking. </returns>
-        public static ScenarioProperties ScenarioProperties(ChaosProvisioningState? provisioningState = default, string createdFrom = default, string version = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, FailureBehavior? failureBehavior = default, ChaosScenarioRecommendation recommendation = default)
+        public static ScenarioProperties ScenarioProperties(ChaosProvisioningState? provisioningState = default, string createdFrom = default, string version = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, ScenarioFailureBehavior? failureBehavior = default, ChaosScenarioRecommendation recommendation = default)
         {
             parameters ??= new ChangeTrackingList<ChaosScenarioParameterInfo>();
             actions ??= new ChangeTrackingList<ScenarioAction>();
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="formatType"> The built-in format the value is validated against. </param>
         /// <param name="examples"> Human-readable examples of values that satisfy the format. </param>
         /// <returns> A new <see cref="Models.ScenarioParameterFormat"/> instance for mocking. </returns>
-        public static ScenarioParameterFormat ScenarioParameterFormat(ParameterFormatType? formatType = default, IEnumerable<string> examples = default)
+        public static ScenarioParameterFormat ScenarioParameterFormat(ScenarioParameterFormatType? formatType = default, IEnumerable<string> examples = default)
         {
             examples ??= new ChangeTrackingList<string>();
 
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// effective behavior is `Stop`.
         /// </param>
         /// <returns> A new <see cref="Models.ScenarioAction"/> instance for mocking. </returns>
-        public static ScenarioAction ScenarioAction(string name = default, string actionId = default, string description = default, string duration = default, IEnumerable<ChaosKeyValuePair> parameters = default, IEnumerable<ScenarioActionSelector> selectors = default, RunAfter runAfter = default, string waitBefore = default, string timeout = default, ResourceIdentifier resourceId = default, FailureBehavior? failureBehavior = default)
+        public static ScenarioAction ScenarioAction(string name = default, string actionId = default, string description = default, string duration = default, IEnumerable<ChaosKeyValuePair> parameters = default, IEnumerable<ScenarioActionSelector> selectors = default, RunAfter runAfter = default, string waitBefore = default, string timeout = default, ResourceIdentifier resourceId = default, ScenarioFailureBehavior? failureBehavior = default)
         {
             parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
             selectors ??= new ChangeTrackingList<ScenarioActionSelector>();
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// run resolves as `Stop`.
         /// </param>
         /// <returns> A new <see cref="Models.ScenarioTemplateProperties"/> instance for mocking. </returns>
-        public static ScenarioTemplateProperties ScenarioTemplateProperties(string latestVersion = default, string displayName = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, FailureBehavior? failureBehavior = default)
+        public static ScenarioTemplateProperties ScenarioTemplateProperties(string latestVersion = default, string displayName = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, ScenarioFailureBehavior? failureBehavior = default)
         {
             parameters ??= new ChangeTrackingList<ChaosScenarioParameterInfo>();
             actions ??= new ChangeTrackingList<ScenarioAction>();
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// run resolves as `Stop`.
         /// </param>
         /// <returns> A new <see cref="Models.ScenarioTemplateVersionProperties"/> instance for mocking. </returns>
-        public static ScenarioTemplateVersionProperties ScenarioTemplateVersionProperties(string displayName = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, FailureBehavior? failureBehavior = default)
+        public static ScenarioTemplateVersionProperties ScenarioTemplateVersionProperties(string displayName = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, ScenarioFailureBehavior? failureBehavior = default)
         {
             parameters ??= new ChangeTrackingList<ChaosScenarioParameterInfo>();
             actions ??= new ChangeTrackingList<ScenarioAction>();
@@ -1558,13 +1558,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="startedOn"> When the action was started. </param>
         /// <param name="completedOn"> When the action was completed. </param>
         /// <param name="error"> Structured information about the action failure. </param>
-        /// <param name="failureSuppressed">
+        /// <param name="isFailureSuppressed">
         /// Whether this action's failure was suppressed by the effective `failureBehavior`
         /// and therefore did not fail the scenario run. Present only for actions in the
         /// `Failed` state; absent otherwise.
         /// </param>
         /// <returns> A new <see cref="Models.ScenarioRunSummaryAction"/> instance for mocking. </returns>
-        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<ScenarioRunResourceSummary> resources = default, string actionUrn = default, ScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, ActionError error = default, bool? failureSuppressed = default)
+        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<ScenarioRunResourceSummary> resources = default, string actionUrn = default, ScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, ScenarioActionError error = default, bool? isFailureSuppressed = default)
         {
             resources ??= new ChangeTrackingList<ScenarioRunResourceSummary>();
 
@@ -1575,7 +1575,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 startedOn,
                 completedOn,
                 error,
-                failureSuppressed,
+                isFailureSuppressed,
                 default);
         }
 
@@ -1605,22 +1605,22 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="code"> The stable code that identifies the action failure. </param>
         /// <param name="message"> The customer-safe description of the action failure. </param>
         /// <param name="details"> Additional customer-safe details about the action failure. </param>
-        /// <returns> A new <see cref="Models.ActionError"/> instance for mocking. </returns>
-        public static ActionError ActionError(string code = default, string message = default, IEnumerable<ActionErrorDetail> details = default)
+        /// <returns> A new <see cref="Models.ScenarioActionError"/> instance for mocking. </returns>
+        public static ScenarioActionError ScenarioActionError(string code = default, string message = default, IEnumerable<ScenarioActionErrorDetail> details = default)
         {
-            details ??= new ChangeTrackingList<ActionErrorDetail>();
+            details ??= new ChangeTrackingList<ScenarioActionErrorDetail>();
 
-            return new ActionError(code, message, (details ?? new ChangeTrackingList<ActionErrorDetail>()).ToList(), default);
+            return new ScenarioActionError(code, message, (details ?? new ChangeTrackingList<ScenarioActionErrorDetail>()).ToList(), default);
         }
 
         /// <summary> Additional information about a scenario action failure. </summary>
         /// <param name="code"> The stable code that identifies the failure detail. </param>
         /// <param name="message"> The customer-safe description of the failure detail. </param>
         /// <param name="target"> The target associated with the failure detail. </param>
-        /// <returns> A new <see cref="Models.ActionErrorDetail"/> instance for mocking. </returns>
-        public static ActionErrorDetail ActionErrorDetail(string code = default, string message = default, string target = default)
+        /// <returns> A new <see cref="Models.ScenarioActionErrorDetail"/> instance for mocking. </returns>
+        public static ScenarioActionErrorDetail ScenarioActionErrorDetail(string code = default, string message = default, string target = default)
         {
-            return new ActionErrorDetail(code, message, target, default);
+            return new ScenarioActionErrorDetail(code, message, target, default);
         }
 
         /// <summary>

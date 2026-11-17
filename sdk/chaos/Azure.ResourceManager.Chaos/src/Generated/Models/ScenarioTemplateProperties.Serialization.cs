@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string description = default;
             IReadOnlyList<ChaosScenarioParameterInfo> parameters = default;
             IReadOnlyList<ScenarioAction> actions = default;
-            FailureBehavior? failureBehavior = default;
+            ScenarioFailureBehavior? failureBehavior = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    failureBehavior = new FailureBehavior(prop.Value.GetString());
+                    failureBehavior = new ScenarioFailureBehavior(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

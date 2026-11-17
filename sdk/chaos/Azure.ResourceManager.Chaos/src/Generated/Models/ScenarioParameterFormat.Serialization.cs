@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            ParameterFormatType? formatType = default;
+            ScenarioParameterFormatType? formatType = default;
             IList<string> examples = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    formatType = new ParameterFormatType(prop.Value.GetString());
+                    formatType = new ScenarioParameterFormatType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("examples"u8))

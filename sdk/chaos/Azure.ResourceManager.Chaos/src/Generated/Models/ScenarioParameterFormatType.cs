@@ -12,7 +12,7 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Enum of the built-in formats a scenario parameter's value can be validated against. </summary>
-    public readonly partial struct ParameterFormatType : IEquatable<ParameterFormatType>
+    public readonly partial struct ScenarioParameterFormatType : IEquatable<ScenarioParameterFormatType>
     {
         private readonly string _value;
         /// <summary> The value must be an Azure resource ID. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> The value must be well-formed JSON. </summary>
         private const string JsonValue = "Json";
 
-        /// <summary> Initializes a new instance of <see cref="ParameterFormatType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScenarioParameterFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ParameterFormatType(string value)
+        public ScenarioParameterFormatType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The value must be an Azure resource ID. </summary>
-        public static ParameterFormatType AzureResourceId { get; } = new ParameterFormatType(AzureResourceIdValue);
+        public static ScenarioParameterFormatType AzureResourceId { get; } = new ScenarioParameterFormatType(AzureResourceIdValue);
 
         /// <summary> The value must be an Azure region name. </summary>
-        public static ParameterFormatType AzureRegion { get; } = new ParameterFormatType(AzureRegionValue);
+        public static ScenarioParameterFormatType AzureRegion { get; } = new ScenarioParameterFormatType(AzureRegionValue);
 
         /// <summary> The value must be an Azure availability zone. </summary>
-        public static ParameterFormatType AzureZone { get; } = new ParameterFormatType(AzureZoneValue);
+        public static ScenarioParameterFormatType AzureZone { get; } = new ScenarioParameterFormatType(AzureZoneValue);
 
         /// <summary> The value must be an ISO 8601 duration. </summary>
-        public static ParameterFormatType Duration { get; } = new ParameterFormatType(DurationValue);
+        public static ScenarioParameterFormatType Duration { get; } = new ScenarioParameterFormatType(DurationValue);
 
         /// <summary> The value must be well-formed JSON. </summary>
-        public static ParameterFormatType Json { get; } = new ParameterFormatType(JsonValue);
+        public static ScenarioParameterFormatType Json { get; } = new ScenarioParameterFormatType(JsonValue);
 
-        /// <summary> Determines if two <see cref="ParameterFormatType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ScenarioParameterFormatType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ParameterFormatType left, ParameterFormatType right) => left.Equals(right);
+        public static bool operator ==(ScenarioParameterFormatType left, ScenarioParameterFormatType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ParameterFormatType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ScenarioParameterFormatType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ParameterFormatType left, ParameterFormatType right) => !left.Equals(right);
+        public static bool operator !=(ScenarioParameterFormatType left, ScenarioParameterFormatType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ParameterFormatType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScenarioParameterFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParameterFormatType(string value) => new ParameterFormatType(value);
+        public static implicit operator ScenarioParameterFormatType(string value) => new ScenarioParameterFormatType(value);
 
-        /// <summary> Converts a string to a <see cref="ParameterFormatType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScenarioParameterFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParameterFormatType?(string value) => value == null ? null : new ParameterFormatType(value);
+        public static implicit operator ScenarioParameterFormatType?(string value) => value == null ? null : new ScenarioParameterFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ParameterFormatType other && Equals(other);
+        public override bool Equals(object obj) => obj is ScenarioParameterFormatType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ParameterFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScenarioParameterFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

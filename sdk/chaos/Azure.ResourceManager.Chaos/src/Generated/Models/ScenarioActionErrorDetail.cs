@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Additional information about a scenario action failure. </summary>
-    public partial class ActionErrorDetail
+    public partial class ScenarioActionErrorDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionErrorDetail"/>. </summary>
-        internal ActionErrorDetail()
+        /// <summary> Initializes a new instance of <see cref="ScenarioActionErrorDetail"/>. </summary>
+        internal ScenarioActionErrorDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionErrorDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScenarioActionErrorDetail"/>. </summary>
         /// <param name="code"> The stable code that identifies the failure detail. </param>
         /// <param name="message"> The customer-safe description of the failure detail. </param>
         /// <param name="target"> The target associated with the failure detail. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionErrorDetail(string code, string message, string target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioActionErrorDetail(string code, string message, string target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

@@ -14,51 +14,51 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Structured information about a scenario action failure. </summary>
-    public partial class ActionError : IJsonModel<ActionError>
+    public partial class ScenarioActionError : IJsonModel<ScenarioActionError>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActionError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScenarioActionError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioActionError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActionError(document.RootElement, options);
+                        return DeserializeScenarioActionError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScenarioActionError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioActionError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActionError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScenarioActionError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActionError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScenarioActionError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionError IPersistableModel<ActionError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScenarioActionError IPersistableModel<ScenarioActionError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActionError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScenarioActionError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActionError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScenarioActionError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioActionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScenarioActionError)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
-                foreach (ActionErrorDetail item in Details)
+                foreach (ScenarioActionErrorDetail item in Details)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionError IJsonModel<ActionError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScenarioActionError IJsonModel<ScenarioActionError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActionError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScenarioActionError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioActionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScenarioActionError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionError(document.RootElement, options);
+            return DeserializeScenarioActionError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActionError DeserializeActionError(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScenarioActionError DeserializeScenarioActionError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             string code = default;
             string message = default;
-            IReadOnlyList<ActionErrorDetail> details = default;
+            IReadOnlyList<ScenarioActionErrorDetail> details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    List<ActionErrorDetail> array = new List<ActionErrorDetail>();
+                    List<ScenarioActionErrorDetail> array = new List<ScenarioActionErrorDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActionErrorDetail.DeserializeActionErrorDetail(item, options));
+                        array.Add(ScenarioActionErrorDetail.DeserializeScenarioActionErrorDetail(item, options));
                     }
                     details = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActionError(code, message, details ?? new ChangeTrackingList<ActionErrorDetail>(), additionalBinaryDataProperties);
+            return new ScenarioActionError(code, message, details ?? new ChangeTrackingList<ScenarioActionErrorDetail>(), additionalBinaryDataProperties);
         }
     }
 }

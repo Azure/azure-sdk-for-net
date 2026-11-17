@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="formatType"> The built-in format the value is validated against. </param>
         /// <param name="examples"> Human-readable examples of values that satisfy the format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioParameterFormat(ParameterFormatType? formatType, IList<string> examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioParameterFormat(ScenarioParameterFormatType? formatType, IList<string> examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FormatType = formatType;
             Examples = examples;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The built-in format the value is validated against. </summary>
-        public ParameterFormatType? FormatType { get; set; }
+        public ScenarioParameterFormatType? FormatType { get; set; }
 
         /// <summary> Human-readable examples of values that satisfy the format. </summary>
         public IList<string> Examples { get; }

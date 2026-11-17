@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="startedOn"> When the action was started. </param>
         /// <param name="completedOn"> When the action was completed. </param>
         /// <param name="error"> Structured information about the action failure. </param>
-        /// <param name="failureSuppressed">
+        /// <param name="isFailureSuppressed">
         /// Whether this action's failure was suppressed by the effective `failureBehavior`
         /// and therefore did not fail the scenario run. Present only for actions in the
         /// `Failed` state; absent otherwise.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioRunSummaryAction(IReadOnlyList<ScenarioRunResourceSummary> resources, string actionUrn, ScenarioSummaryState state, DateTimeOffset? startedOn, DateTimeOffset? completedOn, ActionError error, bool? failureSuppressed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioRunSummaryAction(IReadOnlyList<ScenarioRunResourceSummary> resources, string actionUrn, ScenarioSummaryState state, DateTimeOffset? startedOn, DateTimeOffset? completedOn, ScenarioActionError error, bool? isFailureSuppressed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             ActionUrn = actionUrn;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
             StartedOn = startedOn;
             CompletedOn = completedOn;
             Error = error;
-            FailureSuppressed = failureSuppressed;
+            IsFailureSuppressed = isFailureSuppressed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Chaos.Models
         public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> Structured information about the action failure. </summary>
-        public ActionError Error { get; }
+        public ScenarioActionError Error { get; }
 
         /// <summary>
         /// Whether this action's failure was suppressed by the effective `failureBehavior`
         /// and therefore did not fail the scenario run. Present only for actions in the
         /// `Failed` state; absent otherwise.
         /// </summary>
-        public bool? FailureSuppressed { get; }
+        public bool? IsFailureSuppressed { get; }
     }
 }

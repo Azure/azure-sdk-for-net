@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// run resolves as `Stop`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioTemplateVersionProperties(string displayName, string description, IReadOnlyList<ChaosScenarioParameterInfo> parameters, IReadOnlyList<ScenarioAction> actions, FailureBehavior? failureBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioTemplateVersionProperties(string displayName, string description, IReadOnlyList<ChaosScenarioParameterInfo> parameters, IReadOnlyList<ScenarioAction> actions, ScenarioFailureBehavior? failureBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -111,6 +111,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// published before this policy existed do not carry one and report it as absent, which the
         /// run resolves as `Stop`.
         /// </summary>
-        public FailureBehavior? FailureBehavior { get; }
+        public ScenarioFailureBehavior? FailureBehavior { get; }
     }
 }

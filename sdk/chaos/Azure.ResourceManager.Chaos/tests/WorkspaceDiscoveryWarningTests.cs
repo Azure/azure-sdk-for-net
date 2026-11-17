@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Chaos.Models;
 using NUnit.Framework;
 
@@ -89,6 +90,51 @@ namespace Azure.ResourceManager.Chaos.Tests
             Assert.That(ArmChaosModelFactory.WorkspaceDiscoveryResourceWarning().Reason, Is.EqualTo(WorkspaceDiscoveryWarningReason.TargetNotFound));
             Assert.That(ArmChaosModelFactory.WorkspaceDiscoveryAccessWarning().Reason, Is.EqualTo(WorkspaceDiscoveryWarningReason.AccessIndeterminate));
             Assert.That(ArmChaosModelFactory.WorkspaceDiscoveryWarning(reason: "FutureReason").Reason.ToString(), Is.EqualTo("FutureReason"));
+        }
+
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void WarningTruncationRetainsWireNameAndValue(bool? truncated)
+        {
+            WorkspaceDiscoveryProperties properties = ArmChaosModelFactory.WorkspaceDiscoveryProperties(
+                status: WorkspaceDiscoveryStatus.Succeeded,
+                workspaceId: new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000001"),
+                isWarningListTruncated: truncated);
+            BinaryData data = ModelReaderWriter.Write(properties, new ModelReaderWriterOptions("J"));
+            using JsonDocument document = JsonDocument.Parse(data);
+            bool present = document.RootElement.TryGetProperty("warningsTruncated", out JsonElement value);
+            WorkspaceDiscoveryProperties restored = ModelReaderWriter.Read<WorkspaceDiscoveryProperties>(data, new ModelReaderWriterOptions("J"));
+
+            Assert.That(present, Is.EqualTo(truncated.HasValue));
+            if (truncated.HasValue)
+                Assert.That(value.GetBoolean(), Is.EqualTo(truncated.Value));
+            Assert.That(restored.IsWarningListTruncated, Is.EqualTo(truncated));
+        }
+
+        [Test]
+        public void EvaluationCountsRetainWireNamesAndValues()
+        {
+            WorkspaceEvaluationProperties properties = ArmChaosModelFactory.WorkspaceEvaluationProperties(
+                status: WorkspaceEvaluationStatus.Succeeded,
+                workspaceId: new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000001"),
+                discoveryResultId: new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000001"),
+                templatesToEvaluateCount: 7,
+                templatesEvaluatedSucceededCount: 4,
+                templatesEvaluatedFailedCount: 2,
+                templatesEvaluatedCancelledCount: 1);
+            BinaryData data = ModelReaderWriter.Write(properties, new ModelReaderWriterOptions("J"));
+            using JsonDocument document = JsonDocument.Parse(data);
+            WorkspaceEvaluationProperties restored = ModelReaderWriter.Read<WorkspaceEvaluationProperties>(data, new ModelReaderWriterOptions("J"));
+
+            Assert.That(document.RootElement.GetProperty("numTemplatesToEvaluate").GetInt32(), Is.EqualTo(7));
+            Assert.That(document.RootElement.GetProperty("numTemplatesEvaluatedSucceeded").GetInt32(), Is.EqualTo(4));
+            Assert.That(document.RootElement.GetProperty("numTemplatesEvaluatedFailed").GetInt32(), Is.EqualTo(2));
+            Assert.That(document.RootElement.GetProperty("numTemplatesEvaluatedCancelled").GetInt32(), Is.EqualTo(1));
+            Assert.That(restored.TemplatesToEvaluateCount, Is.EqualTo(7));
+            Assert.That(restored.TemplatesEvaluatedSucceededCount, Is.EqualTo(4));
+            Assert.That(restored.TemplatesEvaluatedFailedCount, Is.EqualTo(2));
+            Assert.That(restored.TemplatesEvaluatedCancelledCount, Is.EqualTo(1));
         }
     }
 }

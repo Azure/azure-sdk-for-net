@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("warningsTotalCount"u8);
                 writer.WriteNumberValue(WarningsTotalCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(WarningsTruncated))
+            if (options.Format != "W" && Optional.IsDefined(IsWarningListTruncated))
             {
                 writer.WritePropertyName("warningsTruncated"u8);
-                writer.WriteBooleanValue(WarningsTruncated.Value);
+                writer.WriteBooleanValue(IsWarningListTruncated.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Chaos.Models
             WorkspaceDiscoveryCoverageSummary coverageSummary = default;
             IReadOnlyList<WorkspaceDiscoveryWarning> warnings = default;
             long? warningsTotalCount = default;
-            bool? warningsTruncated = default;
+            bool? isWarningListTruncated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    warningsTruncated = prop.Value.GetBoolean();
+                    isWarningListTruncated = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 coverageSummary,
                 warnings ?? new ChangeTrackingList<WorkspaceDiscoveryWarning>(),
                 warningsTotalCount,
-                warningsTruncated,
+                isWarningListTruncated,
                 additionalBinaryDataProperties);
         }
     }

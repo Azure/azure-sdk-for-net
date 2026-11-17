@@ -12,23 +12,23 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Structured information about a scenario action failure. </summary>
-    public partial class ActionError
+    public partial class ScenarioActionError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionError"/>. </summary>
-        internal ActionError()
+        /// <summary> Initializes a new instance of <see cref="ScenarioActionError"/>. </summary>
+        internal ScenarioActionError()
         {
-            Details = new ChangeTrackingList<ActionErrorDetail>();
+            Details = new ChangeTrackingList<ScenarioActionErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScenarioActionError"/>. </summary>
         /// <param name="code"> The stable code that identifies the action failure. </param>
         /// <param name="message"> The customer-safe description of the action failure. </param>
         /// <param name="details"> Additional customer-safe details about the action failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionError(string code, string message, IReadOnlyList<ActionErrorDetail> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioActionError(string code, string message, IReadOnlyList<ScenarioActionErrorDetail> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Message { get; }
 
         /// <summary> Additional customer-safe details about the action failure. </summary>
-        public IReadOnlyList<ActionErrorDetail> Details { get; }
+        public IReadOnlyList<ScenarioActionErrorDetail> Details { get; }
     }
 }

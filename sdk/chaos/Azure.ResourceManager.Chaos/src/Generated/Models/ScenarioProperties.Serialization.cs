@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string description = default;
             IList<ChaosScenarioParameterInfo> parameters = default;
             IList<ScenarioAction> actions = default;
-            FailureBehavior? failureBehavior = default;
+            ScenarioFailureBehavior? failureBehavior = default;
             ChaosScenarioRecommendation recommendation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    failureBehavior = new FailureBehavior(prop.Value.GetString());
+                    failureBehavior = new ScenarioFailureBehavior(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("recommendation"u8))

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </param>
         /// <param name="recommendation"> The recommendation information for this scenario. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioProperties(ChaosProvisioningState? provisioningState, string createdFrom, string version, string description, IList<ChaosScenarioParameterInfo> parameters, IList<ScenarioAction> actions, FailureBehavior? failureBehavior, ChaosScenarioRecommendation recommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioProperties(ChaosProvisioningState? provisioningState, string createdFrom, string version, string description, IList<ChaosScenarioParameterInfo> parameters, IList<ScenarioAction> actions, ScenarioFailureBehavior? failureBehavior, ChaosScenarioRecommendation recommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedFrom = createdFrom;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// ignored in that case — on create the referenced template's policy is used, and on update
         /// the policy of the already persisted template is preserved.
         /// </summary>
-        public FailureBehavior? FailureBehavior { get; set; }
+        public ScenarioFailureBehavior? FailureBehavior { get; set; }
 
         /// <summary> The recommendation information for this scenario. </summary>
         public ChaosScenarioRecommendation Recommendation { get; }

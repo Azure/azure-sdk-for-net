@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// effective behavior is `Stop`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioAction(string name, string actionId, string description, string duration, IList<ChaosKeyValuePair> parameters, IList<ScenarioActionSelector> selectors, RunAfter runAfter, string waitBefore, string timeout, ExternalResource externalResource, FailureBehavior? failureBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioAction(string name, string actionId, string description, string duration, IList<ChaosKeyValuePair> parameters, IList<ScenarioActionSelector> selectors, RunAfter runAfter, string waitBefore, string timeout, ExternalResource externalResource, ScenarioFailureBehavior? failureBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ActionId = actionId;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// the action inherits the scenario-level `failureBehavior`; when neither is supplied the
         /// effective behavior is `Stop`.
         /// </summary>
-        public FailureBehavior? FailureBehavior { get; set; }
+        public ScenarioFailureBehavior? FailureBehavior { get; set; }
 
         /// <summary> The resource ID of the external resource. </summary>
         public ResourceIdentifier ResourceId

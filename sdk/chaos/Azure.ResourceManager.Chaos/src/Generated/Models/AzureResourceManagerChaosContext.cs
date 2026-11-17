@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.Chaos
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActionDependency))]
-    [ModelReaderWriterBuildable(typeof(ActionError))]
-    [ModelReaderWriterBuildable(typeof(ActionErrorDetail))]
     [ModelReaderWriterBuildable(typeof(ActionPropertiesParametersSchema))]
     [ModelReaderWriterBuildable(typeof(CapabilityListResult))]
     [ModelReaderWriterBuildable(typeof(CapabilityProperties))]
@@ -112,6 +110,8 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(RoleAssignmentResult))]
     [ModelReaderWriterBuildable(typeof(RunAfter))]
     [ModelReaderWriterBuildable(typeof(ScenarioAction))]
+    [ModelReaderWriterBuildable(typeof(ScenarioActionError))]
+    [ModelReaderWriterBuildable(typeof(ScenarioActionErrorDetail))]
     [ModelReaderWriterBuildable(typeof(ScenarioActionSelector))]
     [ModelReaderWriterBuildable(typeof(ScenarioConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ScenarioErrors))]

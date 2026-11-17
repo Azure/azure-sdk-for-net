@@ -12,7 +12,7 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Enum of how a scenario run reacts when an action fails. </summary>
-    public readonly partial struct FailureBehavior : IEquatable<FailureBehavior>
+    public readonly partial struct ScenarioFailureBehavior : IEquatable<ScenarioFailureBehavior>
     {
         private readonly string _value;
         /// <summary>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </summary>
         private const string ContinueValue = "Continue";
 
-        /// <summary> Initializes a new instance of <see cref="FailureBehavior"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScenarioFailureBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FailureBehavior(string value)
+        public ScenarioFailureBehavior(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The action failure stops the scenario run and drives it to the `Failed` terminal state.
         /// This is the effective behavior when no `failureBehavior` is supplied.
         /// </summary>
-        public static FailureBehavior Stop { get; } = new FailureBehavior(StopValue);
+        public static ScenarioFailureBehavior Stop { get; } = new ScenarioFailureBehavior(StopValue);
 
         /// <summary>
         /// The action failure is suppressed: it does not by itself end the scenario run, and the run
@@ -56,32 +56,32 @@ namespace Azure.ResourceManager.Chaos.Models
         /// `PartiallySucceeded`. Any failure that is not suppressed still drives the run to `Failed`,
         /// and cancellation keeps its existing result.
         /// </summary>
-        public static FailureBehavior Continue { get; } = new FailureBehavior(ContinueValue);
+        public static ScenarioFailureBehavior Continue { get; } = new ScenarioFailureBehavior(ContinueValue);
 
-        /// <summary> Determines if two <see cref="FailureBehavior"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ScenarioFailureBehavior"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(FailureBehavior left, FailureBehavior right) => left.Equals(right);
+        public static bool operator ==(ScenarioFailureBehavior left, ScenarioFailureBehavior right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FailureBehavior"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ScenarioFailureBehavior"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(FailureBehavior left, FailureBehavior right) => !left.Equals(right);
+        public static bool operator !=(ScenarioFailureBehavior left, ScenarioFailureBehavior right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FailureBehavior"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScenarioFailureBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailureBehavior(string value) => new FailureBehavior(value);
+        public static implicit operator ScenarioFailureBehavior(string value) => new ScenarioFailureBehavior(value);
 
-        /// <summary> Converts a string to a <see cref="FailureBehavior"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScenarioFailureBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailureBehavior?(string value) => value == null ? null : new FailureBehavior(value);
+        public static implicit operator ScenarioFailureBehavior?(string value) => value == null ? null : new ScenarioFailureBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FailureBehavior other && Equals(other);
+        public override bool Equals(object obj) => obj is ScenarioFailureBehavior other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(FailureBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScenarioFailureBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

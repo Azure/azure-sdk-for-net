@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailureSuppressed))
+            if (options.Format != "W" && Optional.IsDefined(IsFailureSuppressed))
             {
                 writer.WritePropertyName("failureSuppressed"u8);
-                writer.WriteBooleanValue(FailureSuppressed.Value);
+                writer.WriteBooleanValue(IsFailureSuppressed.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,8 +161,8 @@ namespace Azure.ResourceManager.Chaos.Models
             ScenarioSummaryState state = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? completedOn = default;
-            ActionError error = default;
-            bool? failureSuppressed = default;
+            ScenarioActionError error = default;
+            bool? isFailureSuppressed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    error = ActionError.DeserializeActionError(prop.Value, options);
+                    error = ScenarioActionError.DeserializeScenarioActionError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("failureSuppressed"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    failureSuppressed = prop.Value.GetBoolean();
+                    isFailureSuppressed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 startedOn,
                 completedOn,
                 error,
-                failureSuppressed,
+                isFailureSuppressed,
                 additionalBinaryDataProperties);
         }
     }

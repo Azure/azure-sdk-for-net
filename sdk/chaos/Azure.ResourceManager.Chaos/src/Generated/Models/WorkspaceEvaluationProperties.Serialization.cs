@@ -118,22 +118,22 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesToEvaluate"u8);
-                writer.WriteNumberValue(NumTemplatesToEvaluate);
+                writer.WriteNumberValue(TemplatesToEvaluateCount);
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesEvaluatedSucceeded"u8);
-                writer.WriteNumberValue(NumTemplatesEvaluatedSucceeded);
+                writer.WriteNumberValue(TemplatesEvaluatedSucceededCount);
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesEvaluatedFailed"u8);
-                writer.WriteNumberValue(NumTemplatesEvaluatedFailed);
+                writer.WriteNumberValue(TemplatesEvaluatedFailedCount);
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("numTemplatesEvaluatedCancelled"u8);
-                writer.WriteNumberValue(NumTemplatesEvaluatedCancelled);
+                writer.WriteNumberValue(TemplatesEvaluatedCancelledCount);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Results))
             {
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.Chaos.Models
             ResourceIdentifier workspaceId = default;
             string resourceSnapshotId = default;
             ResourceIdentifier discoveryResultId = default;
-            int numTemplatesToEvaluate = default;
-            int numTemplatesEvaluatedSucceeded = default;
-            int numTemplatesEvaluatedFailed = default;
-            int numTemplatesEvaluatedCancelled = default;
+            int templatesToEvaluateCount = default;
+            int templatesEvaluatedSucceededCount = default;
+            int templatesEvaluatedFailedCount = default;
+            int templatesEvaluatedCancelledCount = default;
             IReadOnlyList<TemplateEvaluationResultItem> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -256,22 +256,22 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("numTemplatesToEvaluate"u8))
                 {
-                    numTemplatesToEvaluate = prop.Value.GetInt32();
+                    templatesToEvaluateCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("numTemplatesEvaluatedSucceeded"u8))
                 {
-                    numTemplatesEvaluatedSucceeded = prop.Value.GetInt32();
+                    templatesEvaluatedSucceededCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("numTemplatesEvaluatedFailed"u8))
                 {
-                    numTemplatesEvaluatedFailed = prop.Value.GetInt32();
+                    templatesEvaluatedFailedCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("numTemplatesEvaluatedCancelled"u8))
                 {
-                    numTemplatesEvaluatedCancelled = prop.Value.GetInt32();
+                    templatesEvaluatedCancelledCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("results"u8))
@@ -301,10 +301,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 workspaceId,
                 resourceSnapshotId,
                 discoveryResultId,
-                numTemplatesToEvaluate,
-                numTemplatesEvaluatedSucceeded,
-                numTemplatesEvaluatedFailed,
-                numTemplatesEvaluatedCancelled,
+                templatesToEvaluateCount,
+                templatesEvaluatedSucceededCount,
+                templatesEvaluatedFailedCount,
+                templatesEvaluatedCancelledCount,
                 results ?? new ChangeTrackingList<TemplateEvaluationResultItem>(),
                 additionalBinaryDataProperties);
         }

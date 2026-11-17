@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="coverageSummary"> Coverage facts for the accepted result. Scope counts, resource-occurrence counts, warning counts, and returned inventory-row counts are different units and must not be combined. </param>
         /// <param name="warnings"> Confirmed access, missing-resource, or access-indeterminate guidance. System verification failures are reported in errors, not as permission warnings. The returned array may be a subset; use warningsTotalCount and warningsTruncated. </param>
         /// <param name="warningsTotalCount"> The deduplicated number of warning identities before sampling. Identity consists of the expanded scope, affected resource, and reason. Absent means no accepted warning population was recorded, not zero warnings. </param>
-        /// <param name="warningsTruncated"> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </param>
+        /// <param name="isWarningListTruncated"> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, WorkspaceDiscoveryCompleteness? completeness, WorkspaceDiscoveryCoverageSummary coverageSummary, IReadOnlyList<WorkspaceDiscoveryWarning> warnings, long? warningsTotalCount, bool? warningsTruncated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, WorkspaceDiscoveryCompleteness? completeness, WorkspaceDiscoveryCoverageSummary coverageSummary, IReadOnlyList<WorkspaceDiscoveryWarning> warnings, long? warningsTotalCount, bool? isWarningListTruncated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartsOn = startsOn;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Chaos.Models
             CoverageSummary = coverageSummary;
             Warnings = warnings;
             WarningsTotalCount = warningsTotalCount;
-            WarningsTruncated = warningsTruncated;
+            IsWarningListTruncated = isWarningListTruncated;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -85,6 +85,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public long? WarningsTotalCount { get; }
 
         /// <summary> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </summary>
-        public bool? WarningsTruncated { get; }
+        public bool? IsWarningListTruncated { get; }
     }
 }
