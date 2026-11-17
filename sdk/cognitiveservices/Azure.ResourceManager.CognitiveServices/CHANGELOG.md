@@ -12,9 +12,6 @@
 
 ### Breaking Changes
 
-- Compared to `1.7.0-beta.1`, removed APIs available only in preview API versions: compute, workbenches, Arc, adapter and managed compute deployments, cost controls, RAI bindings, Rego and ACS policies, deployment policy evaluation, agent capability and hosting settings, Foundry auto-upgrade, and speculative decoding.
-- Compared to `1.7.0-beta.1`, removed the `matchConditions` parameter from `RaiPolicyCollection.CreateOrUpdate` and `RaiPolicyResource.Update`.
-- Compared to `1.7.0-beta.1`, renamed `DeploymentSizeCapacity` to `CognitiveServicesManagedComputeDeploymentSizeCapacity`.
 - Compared to `1.6.0`, the `ArmCognitiveServicesModelFactory.CognitiveServicesAccountProperties` compatibility overload accepting `aiFoundryNetworkInjection` now requires all arguments to avoid ambiguity with other overloads.
 
 ### Bugs Fixed
