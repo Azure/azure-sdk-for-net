@@ -49,6 +49,17 @@ internal static partial class ResponseErrorValidator
                 errors.Add(new ValidationError("$.message", $"Expected string, got {messageProp.ValueKind}"));
         }
 
+        // Optional: misalignment
+        if (element.TryGetProperty("misalignment", out var misalignmentProp))
+        {
+            var misalignmentResult = MisalignmentErrorDetailsResourceValidator.Validate(misalignmentProp);
+            if (!misalignmentResult.IsValid)
+            {
+                foreach (var e in misalignmentResult.Errors)
+                    errors.Add(new ValidationError("$.misalignment" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         ValidateCustom(element, errors);
 
         return errors.Count == 0 ? ValidationResult.Success : ValidationResult.Failure(errors);

@@ -9,11 +9,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Open page action. </summary>
-    public partial class WebSearchActionOpenPage
+    internal partial class WebSearchActionOpenPage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Uri _url;
+        private bool _urlIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionOpenPage"/>. </summary>
         public WebSearchActionOpenPage()
@@ -27,7 +28,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal WebSearchActionOpenPage(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            Url = url;
+            _url = url;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -35,6 +36,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
-        public Uri Url { get; set; }
+        public Uri Url
+        {
+            get
+            {
+                return _url;
+            }
+            set
+            {
+                _url = value;
+                _urlIsDefined = true;
+            }
+        }
     }
 }

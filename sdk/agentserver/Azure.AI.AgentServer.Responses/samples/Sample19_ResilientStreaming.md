@@ -39,8 +39,8 @@ public class ResilientStreamingHandler : ResponseHandler
 {
     private static readonly string[] PhaseOrder = { "analyze", "generate", "refine" };
 
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -98,7 +98,7 @@ public class ResilientStreamingHandler : ResponseHandler
     private static int NextPhaseIndex(ResponseContext context)
     {
         int completedPhases = context.IsRecovery
-            ? context.PersistedResponse?.Output?.Count ?? 0
+            ? context.PersistedResponse?.OutputItems?.Count ?? 0
             : 0;
         return Math.Min(completedPhases, PhaseOrder.Length);
     }

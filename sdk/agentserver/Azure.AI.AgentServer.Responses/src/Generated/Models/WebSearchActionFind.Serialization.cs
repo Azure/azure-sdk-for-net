@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Find action. </summary>
-    public partial class WebSearchActionFind : IJsonModel<WebSearchActionFind>
+    internal partial class WebSearchActionFind : IJsonModel<WebSearchActionFind>
     {
         /// <summary> Initializes a new instance of <see cref="WebSearchActionFind"/> for deserialization. </summary>
         internal WebSearchActionFind()
@@ -149,7 +148,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebSearchActionFind(@type, url, pattern, additionalBinaryDataProperties);

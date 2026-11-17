@@ -14,13 +14,13 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
+using OpenAI.Responses;
 using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Core.Tests
@@ -535,8 +535,8 @@ namespace Azure.AI.AgentServer.Core.Tests
 
             private static readonly ActivitySource s_activitySource = new("AgentServer.Test.StreamingHandler");
 
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -548,15 +548,14 @@ namespace Azure.AI.AgentServer.Core.Tests
                 activity?.SetTag("test.marker", UniqueMarker);
 
                 // Yield response.created
-                var response = new ResponseObject(context.ResponseId, request.Model ?? "test-streaming");
-                yield return new ResponseCreatedEvent(0, response);
+                var stream = new ResponseEventStream(context, request);
+                yield return stream.EmitCreated();
 
                 // Simulate async streaming work
                 await Task.Yield();
 
-                // Mark response as completed and yield response.completed
-                response.Status = ResponseStatus.Completed;
-                yield return new ResponseCompletedEvent(1, response);
+                // Yield response.completed
+                yield return stream.EmitCompleted();
             }
         }
     }

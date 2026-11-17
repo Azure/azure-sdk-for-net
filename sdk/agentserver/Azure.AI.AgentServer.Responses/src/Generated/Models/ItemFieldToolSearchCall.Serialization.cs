@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldToolSearchCall. </summary>
-    public partial class ItemFieldToolSearchCall : ItemField, IJsonModel<ItemFieldToolSearchCall>
+    internal partial class ItemFieldToolSearchCall : ItemField, IJsonModel<ItemFieldToolSearchCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldToolSearchCall"/> for deserialization. </summary>
         internal ItemFieldToolSearchCall()
@@ -172,7 +171,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("arguments"u8))
                 {
-                    arguments = BinaryData.FromString(prop.Value.GetRawText());
+                    arguments = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -187,7 +186,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldToolSearchCall(
