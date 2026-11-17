@@ -9,7 +9,8 @@ param(
     [string]$Repository = 'Azure/azure-sdk-tools',
     [string]$RunDirectory = (Resolve-Path (Join-Path $PSScriptRoot .. .. ..)),
     [switch]$Run,
-    [switch]$UpdateVsCodeConfig,
+    [Alias('UpdateVsCodeConfig')]
+    [switch]$UpdateMcpConfig,
     [switch]$UpdatePathInProfile
 )
 
@@ -69,13 +70,14 @@ function log([object]$message, [switch]$warn, [switch]$err) {
     Write-Host ($messageObject | ConvertTo-Json -Depth 100 -Compress)
 }
 
-if ($UpdateVsCodeConfig) {
-    $vscodeConfigPath = Join-Path $PSScriptRoot ".." ".." ".." ".vscode" "mcp.json"
-    if (Test-Path $vscodeConfigPath) {
-        $vscodeConfig = Get-Content -Raw $vscodeConfigPath | ConvertFrom-Json -AsHashtable
+if ($UpdateMcpConfig) {
+    # Repo-root .mcp.json is read by both Copilot CLI and VS Code
+    $mcpConfigPath = Join-Path $PSScriptRoot ".." ".." ".." ".mcp.json"
+    if (Test-Path $mcpConfigPath) {
+        $mcpConfig = Get-Content -Raw $mcpConfigPath | ConvertFrom-Json -AsHashtable
     }
     else {
-        $vscodeConfig = @{}
+        $mcpConfig = @{}
     }
     $serverKey = "azure-sdk-mcp"
     $serverConfig = @{
@@ -85,17 +87,17 @@ if ($UpdateVsCodeConfig) {
     $orderedServers = [ordered]@{
         $serverKey = $serverConfig
     }
-    if (-not $vscodeConfig.ContainsKey('servers')) {
-        $vscodeConfig['servers'] = @{}
+    if (-not $mcpConfig.ContainsKey('mcpServers')) {
+        $mcpConfig['mcpServers'] = @{}
     }
-    foreach ($key in $vscodeConfig.servers.Keys) {
+    foreach ($key in $mcpConfig.mcpServers.Keys) {
         if ($key -ne $serverKey) {
-            $orderedServers[$key] = $vscodeConfig.servers[$key]
+            $orderedServers[$key] = $mcpConfig.mcpServers[$key]
         }
     }
-    $vscodeConfig.servers = $orderedServers
-    log "Updating vscode mcp config at $vscodeConfigPath"
-    $vscodeConfig | ConvertTo-Json -Depth 10 | Set-Content -Path $vscodeConfigPath -Force
+    $mcpConfig.mcpServers = $orderedServers
+    log "Updating mcp config at $mcpConfigPath"
+    $mcpConfig | ConvertTo-Json -Depth 10 | Set-Content -Path $mcpConfigPath -Force
 }
 
 # Install to a temp directory first so we don't dump out all the other
