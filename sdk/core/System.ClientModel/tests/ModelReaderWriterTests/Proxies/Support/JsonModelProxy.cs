@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
 {
-    internal class JsonModelProxy : IJsonModel<JsonModel>
+    internal class JsonModelProxy : ModelProxy<JsonModel>, IJsonModel<JsonModel>
     {
         JsonModel IJsonModel<JsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
@@ -15,13 +15,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
             return new JsonModel();
         }
 
-        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        public override JsonModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             PassThroughOptionsTracker.AssertOptions(this, options);
             return new JsonModel();
         }
 
-        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             return "J";
         }
@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
             writer.WriteEndObject();
         }
 
-        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options)
+        public override BinaryData Write(ModelReaderWriterOptions options)
         {
             PassThroughOptionsTracker.AssertOptions(this, options);
             return BinaryData.FromString("{}");

@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
 {
-    internal class TrackingModel : IJsonModel<SimpleModel>
+    internal class TrackingModel : ModelProxy<SimpleModel>, IJsonModel<SimpleModel>
     {
         public bool CreateWasCalled { get; private set; }
         public bool WriteWasCalled { get; private set; }
@@ -23,7 +23,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
             CapturedProxiedModelOnWrite = null;
         }
 
-        SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             CreateWasCalled = true;
             CapturedProxiedModelOnBinaryCreate = options.ProxiedModel;
@@ -46,13 +46,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
             writer.WriteEndObject();
         }
 
-        BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+        public override BinaryData Write(ModelReaderWriterOptions options)
         {
             WriteWasCalled = true;
             CapturedProxiedModelOnWrite = options.ProxiedModel;
             return BinaryData.FromString("{}");
         }
 
-        string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

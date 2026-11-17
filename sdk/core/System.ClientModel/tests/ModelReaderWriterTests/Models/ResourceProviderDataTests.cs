@@ -93,7 +93,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void ProxySerialization()
         {
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy(new ResourceProviderDataProxy());
+            options.Proxies.Add(new ResourceProviderDataProxy());
 
             var model = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(WirePayload));
             Assert.NotNull(model);
@@ -116,7 +116,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void ProxyWithStjSerialization()
         {
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy(new ResourceProviderDataProxy());
+            options.Proxies.Add(new ResourceProviderDataProxy());
 
             var stjOptions = new JsonSerializerOptions
             {
@@ -144,7 +144,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var options = new ModelReaderWriterOptions("J");
             //this is a nested type of ResourceProviderData
-            options.AddProxy(new ProviderResourceTypeProxy());
+            options.Proxies.Add(new ProviderResourceTypeProxy());
 
             var model = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(WirePayload));
             Assert.NotNull(model);

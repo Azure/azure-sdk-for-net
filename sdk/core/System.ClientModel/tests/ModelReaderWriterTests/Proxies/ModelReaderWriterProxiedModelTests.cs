@@ -15,7 +15,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new TrackingModel();
-            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
+            options.Proxies.Add(proxy);
 
             var model = new SimpleModel();
             ModelReaderWriter.Write(model, options);
@@ -30,7 +30,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new TrackingModel();
-            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
+            options.Proxies.Add(proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -46,7 +46,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new TrackingModel();
-            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
+            options.Proxies.Add(proxy);
 
             var model = new SimpleModel();
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes("{}");
@@ -79,7 +79,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new TrackingModel();
-            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
+            options.Proxies.Add(proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -93,12 +93,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         [Test]
         public void ProxiedModel_IsCorrectForEachProxy_InChain()
         {
-            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
+            var options = new ModelReaderWriterOptions("J");
             var proxy1 = new ChainProxy(handleRead: true);
             var proxy2 = new ChainProxy(handleRead: false);
 
-            options.AddProxy<SimpleModel>(proxy1);
-            options.AddProxy<SimpleModel>(proxy2);
+            options.Proxies.Add(proxy1);
+            options.Proxies.Add(proxy2);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -114,12 +114,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         [Test]
         public void ProxiedModel_IsCorrectForEachProxy_InChain_ReaderPath()
         {
-            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
+            var options = new ModelReaderWriterOptions("J");
             var proxy1 = new ChainProxy(handleRead: true);
             var proxy2 = new ChainProxy(handleRead: false);
 
-            options.AddProxy<SimpleModel>(proxy1);
-            options.AddProxy<SimpleModel>(proxy2);
+            options.Proxies.Add(proxy1);
+            options.Proxies.Add(proxy2);
 
             var model = new SimpleModel();
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes("{}");
@@ -139,7 +139,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new TrackingModel();
-            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
+            options.Proxies.Add(proxy);
 
             var json = "[{},{},{}]";
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);

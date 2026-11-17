@@ -11,6 +11,8 @@ namespace System.ClientModel.SourceGeneration.Tests
 {
     [ModelReaderWriterBuildable(typeof(ReadOnlyMemory<JsonModel>))]
     [ModelReaderWriterBuildable(typeof(List<BaseModel>))]
+    [ModelReaderWriterBuildable(typeof(ModelY))]
+    [ModelReaderWriterBuildable(typeof(ModelX))]
     [ModelReaderWriterBuildable(typeof(List<SubNamespace.JsonModel>))]
     [ModelReaderWriterBuildable(typeof(Dictionary<string, SubNamespace.JsonModel>))]
     [ModelReaderWriterBuildable(typeof(SubNamespace.JsonModel[]))]

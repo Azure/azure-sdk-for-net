@@ -9,24 +9,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
     /// <summary>
     /// A proxy that can be configured to handle or decline reads.
     /// </summary>
-    internal class ChainProxy : ConditionalModelProxy<SimpleModel>
+    internal class ChainProxy : TrackingModel
     {
         private readonly bool _handleRead;
-        public bool CreateWasCalled => ((TrackingModel)Model).CreateWasCalled;
-        public object? CapturedProxiedModelOnCreate => ((TrackingModel)Model).CapturedProxiedModelOnBinaryCreate ?? ((TrackingModel)Model).CapturedProxiedModelOnReaderCreate;
+        public object? CapturedProxiedModelOnCreate => CapturedProxiedModelOnBinaryCreate ?? CapturedProxiedModelOnReaderCreate;
 
         public ChainProxy(bool handleRead)
-            : base(new TrackingModel())
         {
             _handleRead = handleRead;
         }
 
-        public override bool CanHandle(SimpleModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => true;
+        public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options) => _handleRead;
 
-        public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handleRead;
-
-        public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handleRead;
-
-        public void Reset() => ((TrackingModel)Model).Reset();
+        public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => _handleRead;
     }
 }

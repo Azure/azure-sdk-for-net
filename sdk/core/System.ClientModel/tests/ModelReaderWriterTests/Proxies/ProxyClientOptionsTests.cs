@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
@@ -18,107 +19,112 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         private static TestTool Read(string json, ModelReaderWriterOptions? options)
             => ModelReaderWriter.Read<TestTool>(BinaryData.FromString(json), options)!;
 
-        [Test]
-        public void ClientOptions_AddProxyRejectsNullAndFrozenOptions()
+        // Builds the options a client uses to read and write models from the proxies on its client options.
+        private static ModelReaderWriterOptions CreateModelReaderWriterOptions(ClientPipelineOptions clientOptions)
         {
-            var options = new ClientPipelineOptions
+            var options = new ModelReaderWriterOptions("J");
+            foreach (ModelProxy proxy in clientOptions.ModelProxies)
             {
-                Transport = new MockPipelineTransport("transport", 200)
-            };
-
-            Assert.Throws<ArgumentNullException>(
-                () => options.AddProxy<TestTool>((IPersistableModel<TestTool>)null!));
-            Assert.Throws<ArgumentNullException>(
-                () => options.AddProxy<TestTool>((ConditionalModelProxy<TestTool>)null!));
-
-            ClientPipeline.Create(options);
-
-            Assert.Throws<InvalidOperationException>(
-                () => options.AddProxy<TestTool>(new DerivedTestToolProxy("special")));
+                options.Proxies.Add(proxy);
+            }
+            return options;
         }
 
         [Test]
-        public void ClientOptions_DoNotExposeAModelReaderWriterOptionsSetter()
-        {
-            Assert.That(
-                typeof(ClientPipelineOptions).GetProperty(nameof(ClientPipelineOptions.ModelReaderWriterOptions))!.GetSetMethod(),
-                Is.Null);
-        }
-
-        [Test]
-        public void ClientOptions_AddProxyCreatesModelReaderWriterOptionsThatUseTheProxy()
+        public void ClientOptions_ModelProxiesRejectNull()
         {
             var options = new ClientPipelineOptions();
-            Assert.That(options.ModelReaderWriterOptions, Is.Null);
 
-            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
-
-            Assert.That(options.ModelReaderWriterOptions, Is.Not.Null);
-            Assert.That(Read(SpecialToolJson, options.ModelReaderWriterOptions), Is.InstanceOf<DerivedTestTool>());
-            Assert.That(Read(OtherToolJson, options.ModelReaderWriterOptions).GetType(), Is.EqualTo(typeof(TestTool)));
+            Assert.Throws<ArgumentNullException>(() => options.ModelProxies.Add(null!));
+            Assert.Throws<ArgumentNullException>(() => options.ModelProxies.Insert(0, null!));
+            Assert.That(options.ModelProxies, Is.Empty);
         }
 
         [Test]
-        public void ClientOptions_FreezeFreezesRegisteredProxies()
+        public void ClientOptions_ModelProxiesCreateModelReaderWriterOptionsThatUseTheProxy()
         {
-            var options = new ClientPipelineOptions
-            {
-                Transport = new MockPipelineTransport("transport", 200)
-            };
-            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
-            ModelReaderWriterOptions registrations = options.ModelReaderWriterOptions!;
+            var options = new ClientPipelineOptions();
+            Assert.That(options.ModelProxies, Is.Empty);
+            Assert.IsFalse(options.ModelProxies.IsReadOnly);
 
-            options.Freeze();
+            var proxy = new DerivedTestToolProxy("special");
+            options.ModelProxies.Add(proxy);
 
-            Assert.Throws<InvalidOperationException>(
-                () => registrations.AddProxy<TestTool>(new DerivedTestToolProxy("other")));
+            Assert.That(options.ModelProxies, Is.EqualTo(new ModelProxy[] { proxy }));
+            ModelReaderWriterOptions registrations = CreateModelReaderWriterOptions(options);
             Assert.That(Read(SpecialToolJson, registrations), Is.InstanceOf<DerivedTestTool>());
             Assert.That(Read(OtherToolJson, registrations).GetType(), Is.EqualTo(typeof(TestTool)));
         }
 
-        [Test]
-        public void ClientOptions_CreatingAPipelineFreezesRegisteredProxies()
+        // Creating a pipeline freezes the client options, so both entry points must freeze the registrations.
+        [TestCase(false, TestName = "ClientOptions_FreezeFreezesRegisteredProxies")]
+        [TestCase(true, TestName = "ClientOptions_CreatingAPipelineFreezesRegisteredProxies")]
+        public void ClientOptions_FreezeFreezesRegisteredProxies(bool createPipeline)
         {
             var options = new ClientPipelineOptions
             {
                 Transport = new MockPipelineTransport("transport", 200)
             };
-            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
+            options.ModelProxies.Add(new DerivedTestToolProxy("special"));
+            IList<ModelProxy> registrations = options.ModelProxies;
+            Assert.IsFalse(registrations.IsReadOnly);
+
+            if (createPipeline)
+            {
+                ClientPipeline.Create(options);
+            }
+            else
+            {
+                options.Freeze();
+            }
+
+            Assert.IsTrue(registrations.IsReadOnly);
+            Assert.AreSame(registrations, options.ModelProxies);
+            Assert.Throws<InvalidOperationException>(() => registrations.Add(new DerivedTestToolProxy("other")));
+            Assert.Throws<InvalidOperationException>(() => registrations.Insert(0, new DerivedTestToolProxy("other")));
+            Assert.Throws<InvalidOperationException>(() => registrations[0] = new DerivedTestToolProxy("other"));
+            Assert.Throws<InvalidOperationException>(() => registrations.Remove(registrations[0]));
+            Assert.Throws<InvalidOperationException>(() => registrations.RemoveAt(0));
+            Assert.Throws<InvalidOperationException>(() => registrations.Clear());
+            Assert.AreEqual(1, registrations.Count);
+
+            ModelReaderWriterOptions modelOptions = CreateModelReaderWriterOptions(options);
+            Assert.That(Read(SpecialToolJson, modelOptions), Is.InstanceOf<DerivedTestTool>());
+            Assert.That(Read(OtherToolJson, modelOptions).GetType(), Is.EqualTo(typeof(TestTool)));
+        }
+
+        [Test]
+        public void ClientOptions_ModelProxiesFirstAccessedAfterCreatingAPipelineAreReadOnly()
+        {
+            var options = new ClientPipelineOptions
+            {
+                Transport = new MockPipelineTransport("transport", 200)
+            };
 
             ClientPipeline.Create(options);
 
+            Assert.IsTrue(options.ModelProxies.IsReadOnly);
+            Assert.That(options.ModelProxies, Is.Empty);
             Assert.Throws<InvalidOperationException>(
-                () => options.ModelReaderWriterOptions!.AddProxy<TestTool>(new DerivedTestToolProxy("other")));
+                () => options.ModelProxies.Add(new DerivedTestToolProxy("other")));
         }
 
         [Test]
         public void ClientOptionsClone_OfFrozenOptionsAcceptsNewProxies()
         {
             var options = new ClientPipelineOptions();
-            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
+            var special = new DerivedTestToolProxy("special");
+            options.ModelProxies.Add(special);
             options.Freeze();
 
             ClientPipelineOptions clone = options.Clone();
-            clone.AddProxy<TestTool>(new DerivedTestToolProxy("other"));
+            Assert.IsFalse(clone.ModelProxies.IsReadOnly);
+            Assert.That(clone.ModelProxies, Is.EqualTo(new ModelProxy[] { special }));
+            clone.ModelProxies.Add(new DerivedTestToolProxy("other"));
 
-            Assert.That(Read(OtherToolJson, clone.ModelReaderWriterOptions), Is.InstanceOf<DerivedTestTool>());
-            Assert.That(Read(OtherToolJson, options.ModelReaderWriterOptions).GetType(), Is.EqualTo(typeof(TestTool)));
-        }
-
-        [Test]
-        public void ClientOptionsClone_SeparatesProxyRegistrations()
-        {
-            var options = new ClientPipelineOptions();
-            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
-            ClientPipelineOptions clone = options.Clone();
-            options.ModelReaderWriterOptions!.AddProxy<TestTool>(new DerivedTestToolProxy("other"));
-
-            TestTool special = Read(SpecialToolJson, clone.ModelReaderWriterOptions);
-            TestTool other = Read(OtherToolJson, clone.ModelReaderWriterOptions);
-
-            Assert.That(special, Is.InstanceOf<DerivedTestTool>());
-            Assert.That(other.GetType(), Is.EqualTo(typeof(TestTool)));
-            Assert.That(Read(OtherToolJson, options.ModelReaderWriterOptions), Is.InstanceOf<DerivedTestTool>());
+            Assert.That(Read(OtherToolJson, CreateModelReaderWriterOptions(clone)), Is.InstanceOf<DerivedTestTool>());
+            Assert.That(Read(OtherToolJson, CreateModelReaderWriterOptions(options)).GetType(), Is.EqualTo(typeof(TestTool)));
+            Assert.That(options.ModelProxies, Is.EqualTo(new ModelProxy[] { special }));
         }
     }
 }

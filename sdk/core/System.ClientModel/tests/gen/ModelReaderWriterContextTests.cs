@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -57,22 +56,21 @@ namespace System.ClientModel.SourceGeneration.Tests
         }
 
         // ---- AOT-compatibility: proxies must work through the source-generated ModelReaderWriterContext
-        // (the AOT-safe path — no reflection), and the generated context + options must flow into CanHandle.
+        // (the AOT-safe path — no reflection). Predicates receive options independently of the context.
 
         [Test]
         public void ConditionalProxy_ReadThroughGeneratedContext_IsAotSafe()
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new TrackingJsonModelProxy();
-            options.AddProxy<JsonModel>(proxy);
+            options.Proxies.Add(proxy);
 
             var result = ModelReaderWriter.Read<JsonModel>(BinaryData.FromString("{}"), options, BasicContext.Default);
 
             Assert.IsNotNull(result);
             Assert.IsTrue(proxy.CanHandleCalled, "CanHandle should be consulted on the generated-context path.");
-            Assert.AreSame(BasicContext.Default, proxy.LastContext, "the generated ModelReaderWriterContext should flow into CanHandle.");
             Assert.AreSame(options, proxy.LastOptions, "the caller's options should flow into CanHandle.");
-            Assert.IsTrue(proxy.HeldModelCreateCalled, "the proxy's held model should perform the deserialization.");
+            Assert.IsTrue(proxy.CreateCalled, "the proxy itself should perform the deserialization.");
         }
 
         [Test]
@@ -80,14 +78,14 @@ namespace System.ClientModel.SourceGeneration.Tests
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new TrackingJsonModelProxy();
-            options.AddProxy<JsonModel>(proxy);
+            options.Proxies.Add(proxy);
 
             var data = ModelReaderWriter.Write(new JsonModel(), options, BasicContext.Default);
 
             Assert.IsNotNull(data);
             Assert.IsTrue(proxy.CanHandleCalled, "CanHandle should be consulted on the write path.");
-            Assert.AreSame(BasicContext.Default, proxy.LastContext, "the generated ModelReaderWriterContext should flow into CanHandle.");
             Assert.AreSame(options, proxy.LastOptions, "the caller's options should flow into CanHandle.");
+            Assert.AreEqual("{}", data.ToString());
         }
 
         [Test]
@@ -96,7 +94,7 @@ namespace System.ClientModel.SourceGeneration.Tests
             const string payload = "{\"kind\":\"extension\"}";
             var options = new ModelReaderWriterOptions("J");
             var proxy = new ExtendedBaseModelProxy();
-            options.AddProxy<BaseModel>(proxy);
+            options.Proxies.Add(proxy);
 
             BaseModel? single = ModelReaderWriter.Read<BaseModel>(BinaryData.FromString(payload), options, BasicContext.Default);
             List<BaseModel>? collection = ModelReaderWriter.Read<List<BaseModel>>(
@@ -118,164 +116,160 @@ namespace System.ClientModel.SourceGeneration.Tests
             Assert.IsNotNull(converterCollection);
             Assert.IsInstanceOf<ModelY>(converterCollection![0]);
             Assert.IsInstanceOf<UnknownBaseModel>(withoutProxy);
-            Assert.AreSame(BasicContext.Default, proxy.LastContext);
             Assert.AreSame(options, proxy.LastOptions);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void ConditionalProxy_ConfiguredGeneratedContextSupportsStandaloneWrites(bool requestBody)
+        [Test]
+        public void ConditionalProxy_BaseRegistration_SameInstanceWritesIdenticallyAcrossContracts()
         {
-            var options = new ModelReaderWriterOptions("J", BasicContext.Default);
-            var proxy = new TrackingJsonModelProxy();
-            options.AddProxy<JsonModel>(proxy);
-            var model = new JsonModel();
+            const string payload = "{\"kind\":\"extension\",\"name\":\"ignored\"}";
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new ExtendedBaseModelProxy(modelYOnly: true);
+            options.Proxies.Add(proxy);
 
-            using var stream = new MemoryStream();
-            if (requestBody)
+            ModelY? result = ModelReaderWriter.Read<ModelY>(BinaryData.FromString(payload), options, BasicContext.Default);
+            BaseModel? registeredBase = ModelReaderWriter.Read<BaseModel>(BinaryData.FromString(payload), options, BasicContext.Default);
+            ModelX? declinedPayload = ModelReaderWriter.Read<ModelX>(
+                BinaryData.FromString("{\"kind\":\"X\",\"name\":\"sibling\"}"), options, BasicContext.Default);
+            var jsonOptions = new JsonSerializerOptions
             {
-                using BinaryContent content = BinaryContent.Create(model, options);
-                content.WriteTo(stream);
-                Assert.IsNull(options.ProxiedModel);
-            }
-            else
-            {
-                using var writer = new Utf8JsonWriter(stream);
-                options.ResolveProxy((IJsonModel<JsonModel>)model).Write(writer, options);
-                writer.Flush();
-            }
+                Converters = { new JsonModelConverter(options, BasicContext.Default) }
+            };
+            ModelY? converted = JsonSerializer.Deserialize<ModelY>(payload, jsonOptions);
+            var model = new ModelY { Name = "original" };
+            BinaryData written = ModelReaderWriter.Write(model, options, BasicContext.Default);
+            BinaryData writtenAsBase = ModelReaderWriter.Write<BaseModel>(model, options, BasicContext.Default);
+            BinaryData writtenAsObject = ModelReaderWriter.Write<object>(model, options, BasicContext.Default);
 
-            Assert.AreEqual("{}", BinaryData.FromBytes(stream.ToArray()).ToString());
-            Assert.AreSame(BasicContext.Default, proxy.LastContext);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("from-proxy", result!.Name);
+            Assert.IsInstanceOf<ModelY>(registeredBase);
+            Assert.AreEqual("from-proxy", registeredBase!.Name);
+            Assert.IsNotNull(declinedPayload);
+            Assert.AreEqual("sibling", declinedPayload!.Name);
+            Assert.IsNotNull(converted);
+            Assert.AreEqual("from-proxy", converted!.Name);
+            Assert.AreEqual("{\"kind\":\"Y\"}", written.ToString());
+            Assert.AreEqual(written.ToString(), writtenAsBase.ToString());
+            Assert.AreEqual(written.ToString(), writtenAsObject.ToString());
+            var sibling = new ModelX { Name = "sibling" };
+            Assert.AreEqual(
+                ModelReaderWriter.Write(sibling, ModelReaderWriterOptions.Json, BasicContext.Default).ToString(),
+                ModelReaderWriter.Write(sibling, options, BasicContext.Default).ToString(),
+                "CanHandle must keep the proxy from taking over the sibling ModelX.");
+            Assert.AreEqual(
+                ModelReaderWriter.Write<BaseModel>(sibling, ModelReaderWriterOptions.Json, BasicContext.Default).ToString(),
+                ModelReaderWriter.Write<BaseModel>(sibling, options, BasicContext.Default).ToString());
+            var models = new List<BaseModel> { model, sibling };
+            Assert.AreEqual(
+                $"[{written},{ModelReaderWriter.Write<BaseModel>(sibling, ModelReaderWriterOptions.Json, BasicContext.Default)}]",
+                ModelReaderWriter.Write(models, options, BasicContext.Default).ToString());
             Assert.AreSame(options, proxy.LastOptions);
+            Assert.IsNull(options.ProxiedModel);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void ConditionalProxy_OptionsCopyPreservesGeneratedContext(bool explicitContext)
+        private sealed class ExtendedBaseModelProxy : ModelProxy<BaseModel>, IJsonModel<BaseModel>
         {
-            var original = new ModelReaderWriterOptions("J", BasicContext.Default);
-            var proxy = new TrackingJsonModelProxy();
-            original.AddProxy<JsonModel>(proxy);
-            var copy = explicitContext
-                ? new ModelReaderWriterOptions("J", original, BasicContext.Default)
-                : new ModelReaderWriterOptions("J", original);
+            private readonly bool _modelYOnly;
 
-            using BinaryContent content = BinaryContent.Create(new JsonModel(), copy);
-            using var stream = new MemoryStream();
-            content.WriteTo(stream);
+            public ExtendedBaseModelProxy(bool modelYOnly = false) => _modelYOnly = modelYOnly;
 
-            Assert.AreSame(BasicContext.Default, proxy.LastContext);
-            Assert.AreSame(original, proxy.LastOptions);
-            Assert.IsNull(copy.ProxiedModel);
-            Assert.IsNull(original.ProxiedModel);
-        }
-
-        private sealed class ExtendedBaseModelProxy : ConditionalModelProxy<BaseModel>
-        {
-            public ModelReaderWriterContext? LastContext { get; private set; }
             public ModelReaderWriterOptions? LastOptions { get; private set; }
 
-            public ExtendedBaseModelProxy() : base(new ExtendedBaseModel()) { }
-
-            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            public override bool CanHandle(BaseModel model, ModelReaderWriterOptions options)
             {
-                LastContext = context;
+                LastOptions = options;
+                return !_modelYOnly || model is ModelY;
+            }
+
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options)
+            {
                 LastOptions = options;
                 using JsonDocument doc = JsonDocument.Parse(data);
                 return doc.RootElement.TryGetProperty("kind", out JsonElement kind) && kind.GetString() == "extension";
             }
 
-            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
-                LastContext = context;
                 LastOptions = options;
                 Utf8JsonReader copy = reader;
                 using JsonDocument doc = JsonDocument.ParseValue(ref copy);
                 return doc.RootElement.TryGetProperty("kind", out JsonElement kind) && kind.GetString() == "extension";
             }
 
-            private sealed class ExtendedBaseModel : IJsonModel<BaseModel>
+            BaseModel IJsonModel<BaseModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
-                public BaseModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-                {
-                    using JsonDocument doc = JsonDocument.ParseValue(ref reader);
-                    return new ModelY { Name = "from-proxy" };
-                }
-
-                public BaseModel Create(BinaryData data, ModelReaderWriterOptions options) => new ModelY { Name = "from-proxy" };
-
-                public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-                {
-                    writer.WriteStartObject();
-                    writer.WriteString("kind", "Y");
-                    writer.WriteEndObject();
-                }
-
-                public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.FromString("{\"kind\":\"Y\"}");
-
-                public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+                using JsonDocument doc = JsonDocument.ParseValue(ref reader);
+                return new ModelY { Name = "from-proxy" };
             }
+
+            public override BaseModel Create(BinaryData data, ModelReaderWriterOptions options) => new ModelY { Name = "from-proxy" };
+
+            void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteString("kind", "Y");
+                writer.WriteEndObject();
+            }
+
+            public override BinaryData Write(ModelReaderWriterOptions options) => BinaryData.FromString("{\"kind\":\"Y\"}");
+
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         /// <summary>
         /// A conditional proxy over the generated-context model <see cref="JsonModel"/> that records the
-        /// options and context passed to <c>CanHandle</c> so the AOT-safe path can be verified.
+        /// options passed to <c>CanHandle</c> so the AOT-safe entrypoints can be verified independently.
         /// </summary>
-        private class TrackingJsonModelProxy : ConditionalModelProxy<JsonModel>
+        private class TrackingJsonModelProxy : ModelProxy<JsonModel>, IJsonModel<JsonModel>
         {
             public bool CanHandleCalled { get; private set; }
             public ModelReaderWriterOptions? LastOptions { get; private set; }
-            public ModelReaderWriterContext? LastContext { get; private set; }
-            public bool HeldModelCreateCalled => ((TrackingJsonModel)Model).CreateCalled;
-
-            public TrackingJsonModelProxy() : base(new TrackingJsonModel()) { }
-
-            public override bool CanHandle(JsonModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
-            {
-                Assert.IsNotNull(context.GetTypeBuilder(typeof(JsonModel)));
-                CanHandleCalled = true;
-                LastOptions = options;
-                LastContext = context;
-                return true;
-            }
-
-            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
-            {
-                Assert.IsNotNull(context.GetTypeBuilder(typeof(JsonModel)));
-                CanHandleCalled = true;
-                LastOptions = options;
-                LastContext = context;
-                return true;
-            }
-        }
-
-        private class TrackingJsonModel : IJsonModel<JsonModel>
-        {
             public bool CreateCalled { get; private set; }
 
-            public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            public override bool CanHandle(JsonModel model, ModelReaderWriterOptions options)
+            {
+                CanHandleCalled = true;
+                LastOptions = options;
+                return true;
+            }
+
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options)
+            {
+                CanHandleCalled = true;
+                LastOptions = options;
+                return true;
+            }
+
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                CanHandleCalled = true;
+                LastOptions = options;
+                return true;
+            }
+
+            JsonModel IJsonModel<JsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 CreateCalled = true;
                 using var doc = JsonDocument.ParseValue(ref reader);
                 return new JsonModel();
             }
 
-            public JsonModel Create(BinaryData data, ModelReaderWriterOptions options)
+            public override JsonModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CreateCalled = true;
                 return new JsonModel();
             }
 
-            public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-            public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            void IJsonModel<JsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
                 writer.WriteStartObject();
                 writer.WriteEndObject();
             }
 
-            public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
+            public override BinaryData Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
         }
     }
 }

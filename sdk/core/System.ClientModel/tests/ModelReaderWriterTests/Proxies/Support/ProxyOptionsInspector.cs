@@ -8,9 +8,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
 {
     internal static class ProxyOptionsInspector
     {
-        internal static object? GetProxies(ModelReaderWriterOptions passedInOptions)
+        // Working copies share the lookup index built from the caller's Proxies collection.
+        internal static object? GetProxyIndex(ModelReaderWriterOptions passedInOptions)
         {
-            return typeof(ModelReaderWriterOptions).GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions);
+            return typeof(ModelReaderWriterOptions).GetField("_index", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions);
         }
     }
 }

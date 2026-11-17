@@ -51,7 +51,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
+            options.Proxies.Add(proxy);
             var newOptions = new ModelReaderWriterOptions(options);
             var model = new JsonModel();
             PassThroughOptionsTracker.OptionsMap.Add(proxy, newOptions);
@@ -64,7 +64,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
+            options.Proxies.Add(proxy);
             var model = new JsonModel();
             PassThroughOptionsTracker.OptionsMap.Add(proxy, options);
             ModelReaderWriter.Write(model, options);
@@ -91,7 +91,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
+            options.Proxies.Add(proxy);
             var newOptions = new ModelReaderWriterOptions(options);
             PassThroughOptionsTracker.OptionsMap.Add(proxy, newOptions);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, newOptions);
@@ -103,7 +103,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
+            options.Proxies.Add(proxy);
             PassThroughOptionsTracker.OptionsMap.Add(proxy, options);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, options);
         }
@@ -116,8 +116,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
+            options.Proxies.Add(proxy1);
+            options.Proxies.Add(proxy2);
 
             PassThroughOptionsTracker.OptionsMap.Add(proxy1, options);
             ModelReaderWriter.Write(new JsonModel(), options);
@@ -131,8 +131,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
+            options.Proxies.Add(proxy1);
+            options.Proxies.Add(proxy2);
 
             PassThroughOptionsTracker.OptionsMap.Add(proxy1, options);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, options);

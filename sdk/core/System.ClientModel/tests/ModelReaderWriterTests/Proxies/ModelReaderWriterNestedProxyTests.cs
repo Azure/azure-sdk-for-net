@@ -14,7 +14,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         public void NestedWrite_PreservesOuterProxiedModel()
         {
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)new NestedWriteProxy());
+            options.Proxies.Add(new NestedWriteProxy());
 
             BinaryData result = ModelReaderWriter.Write(new PlainTextModel { Value = "outer" }, options);
 
@@ -31,8 +31,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             var context = new NestedWriteContext();
             var outerProxy = new NestedNodeProxy("outer", childWrite, context);
             var innerProxy = new NestedNodeProxy("inner", childWrite, context);
-            options.AddProxy<NestedNode>(outerProxy);
-            options.AddProxy<NestedNode>(innerProxy);
+            options.Proxies.Add(outerProxy);
+            options.Proxies.Add(innerProxy);
             var model = new NestedNode { Name = "outer", Child = new NestedNode { Name = "inner" } };
 
             BinaryData result = ModelReaderWriter.Write(model, options, context);
@@ -45,23 +45,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             Assert.AreEqual(expectChildProxy ? "inner-proxy" : "model", inner.GetProperty("writer").GetString());
             Assert.AreEqual("inner", inner.GetProperty("name").GetString());
             Assert.AreEqual(JsonValueKind.Null, inner.GetProperty("child").ValueKind);
-            Assert.AreEqual(1, outerProxy.Writer.WriteCount);
-            Assert.AreEqual(expectChildProxy ? 1 : 0, innerProxy.Writer.WriteCount);
+            Assert.AreEqual(1, outerProxy.WriteCount);
+            Assert.AreEqual(expectChildProxy ? 1 : 0, innerProxy.WriteCount);
             Assert.AreSame(options, outerProxy.ObservedOptions);
-            Assert.AreSame(context, outerProxy.ObservedContext);
-            Assert.AreNotSame(options, outerProxy.Writer.WorkingOptions);
+            Assert.AreNotSame(options, outerProxy.WorkingOptions);
             Assert.IsNull(options.ProxiedModel, "Writing must not mutate the caller's proxy execution state.");
 
             if (expectChildProxy)
             {
                 Assert.AreSame(options, innerProxy.ObservedOptions);
-                Assert.AreSame(context, innerProxy.ObservedContext);
-                Assert.AreSame(outerProxy.Writer.WorkingOptions, innerProxy.Writer.WorkingOptions);
+                Assert.AreSame(outerProxy.WorkingOptions, innerProxy.WorkingOptions);
             }
 
             if (childWrite == NestedChildWrite.ModelReaderWriter)
             {
-                Assert.AreSame(model, outerProxy.Writer.ProxiedModelAfterChild,
+                Assert.AreSame(model, outerProxy.ProxiedModelAfterChild,
                     "A recursive ModelReaderWriter.Write must restore the outer proxy's original model.");
             }
         }
@@ -71,7 +69,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new NestedReadProxy();
-            options.AddProxy<PlainTextModel>((IPersistableModel<PlainTextModel>)proxy);
+            options.Proxies.Add(proxy);
 
             PlainTextModel? result = ModelReaderWriter.Read<PlainTextModel>(
                 BinaryData.FromString("{\"value\":\"outer\"}"), options);
@@ -123,20 +121,24 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 => throw new NotSupportedException();
         }
 
-        private sealed class NestedNodeProxy : ConditionalModelProxy<NestedNode>
+        private sealed class NestedNodeProxy : ModelProxy<NestedNode>, IJsonModel<NestedNode>
         {
             private readonly string _name;
-            internal NestedNodeProxyModel Writer => (NestedNodeProxyModel)Model;
+            private readonly NestedChildWrite _childWrite;
+            private readonly ModelReaderWriterContext _context;
             internal ModelReaderWriterOptions? ObservedOptions { get; private set; }
-            internal ModelReaderWriterContext? ObservedContext { get; private set; }
+            internal int WriteCount { get; private set; }
+            internal ModelReaderWriterOptions? WorkingOptions { get; private set; }
+            internal object? ProxiedModelAfterChild { get; private set; }
 
             internal NestedNodeProxy(string name, NestedChildWrite childWrite, ModelReaderWriterContext context)
-                : base(new NestedNodeProxyModel(name, childWrite, context))
             {
                 _name = name;
+                _childWrite = childWrite;
+                _context = context;
             }
 
-            public override bool CanHandle(NestedNode model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            public override bool CanHandle(NestedNode model, ModelReaderWriterOptions options)
             {
                 if (model.Name != _name)
                 {
@@ -144,25 +146,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 }
 
                 ObservedOptions = options;
-                ObservedContext = context;
                 return true;
-            }
-        }
-
-        private sealed class NestedNodeProxyModel : IJsonModel<NestedNode>
-        {
-            private readonly string _name;
-            private readonly NestedChildWrite _childWrite;
-            private readonly ModelReaderWriterContext _context;
-            internal int WriteCount { get; private set; }
-            internal ModelReaderWriterOptions? WorkingOptions { get; private set; }
-            internal object? ProxiedModelAfterChild { get; private set; }
-
-            internal NestedNodeProxyModel(string name, NestedChildWrite childWrite, ModelReaderWriterContext context)
-            {
-                _name = name;
-                _childWrite = childWrite;
-                _context = context;
             }
 
             void IJsonModel<NestedNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -201,24 +185,24 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 writer.WriteEndObject();
             }
 
-            BinaryData IPersistableModel<NestedNode>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
-            string IPersistableModel<NestedNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
             NestedNode IJsonModel<NestedNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
-            NestedNode IPersistableModel<NestedNode>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override NestedNode Create(BinaryData data, ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
         }
 
-        private sealed class NestedReadProxy : IPersistableModel<PlainTextModel>
+        private sealed class NestedReadProxy : ModelProxy<PlainTextModel>
         {
             internal object? BeforeNestedRead { get; private set; }
             internal object? AfterNestedRead { get; private set; }
 
-            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override PlainTextModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 BeforeNestedRead = options.ProxiedModel;
                 ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), options);
@@ -226,13 +210,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 return new PlainTextModel { Value = "outer" };
             }
 
-            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => BinaryData.FromString("{}");
 
-            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
-        private sealed class NestedWriteProxy : IJsonModel<PlainTextModel>
+        private sealed class NestedWriteProxy : ModelProxy<PlainTextModel>, IJsonModel<PlainTextModel>
         {
             PlainTextModel IJsonModel<PlainTextModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
                 => new PlainTextModel();
@@ -245,13 +229,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 writer.WriteEndObject();
             }
 
-            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override PlainTextModel Create(BinaryData data, ModelReaderWriterOptions options)
                 => new PlainTextModel();
 
-            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => BinaryData.FromString("{}");
 
-            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
     }
 }

@@ -8,12 +8,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
 {
     internal static class BinaryContentHelper
     {
-        internal static string WriteBinaryContent(PlainTextModel model, ModelReaderWriterOptions options)
+        internal static BinaryData WriteBinaryContent<T>(T model, ModelReaderWriterOptions options)
+            where T : IPersistableModel<T>
         {
             using BinaryContent content = BinaryContent.Create(model, options);
+            return WriteToBinaryData(content);
+        }
+
+        internal static BinaryData WriteToBinaryData(BinaryContent content)
+        {
             using var stream = new MemoryStream();
             content.WriteTo(stream);
-            return BinaryData.FromBytes(stream.ToArray()).ToString();
+            return BinaryData.FromBytes(stream.ToArray());
         }
     }
 }

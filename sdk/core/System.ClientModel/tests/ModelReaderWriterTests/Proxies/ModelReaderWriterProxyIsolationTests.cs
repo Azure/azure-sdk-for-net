@@ -4,7 +4,6 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support;
 using System.Collections.Concurrent;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,9 +19,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             using var barrier = new Barrier(2);
             var proxy = new ConcurrentReadProxy(barrier);
-            var userOptions = new ModelReaderWriterOptions("J");
-            userOptions.AddProxy<SimpleModel>((IPersistableModel<SimpleModel>)proxy);
-            var wireOptions = new ModelReaderWriterOptions("W", userOptions);
+            var wireOptions = new ModelReaderWriterOptions("W");
+            wireOptions.Proxies.Add(proxy);
 
             Task first = Task.Factory.StartNew(
                 () => ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), wireOptions),
@@ -45,9 +43,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             using var barrier = new Barrier(2);
             var proxy = new ConcurrentWriteProxy(barrier);
-            var userOptions = new ModelReaderWriterOptions("J");
-            userOptions.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)proxy);
-            var wireOptions = new ModelReaderWriterOptions("W", userOptions);
+            var wireOptions = new ModelReaderWriterOptions("W");
+            wireOptions.Proxies.Add(proxy);
 
             Task<string> first = Task.Factory.StartNew(
                 () => ModelReaderWriter.Write(new PlainTextModel { Value = "first" }, wireOptions).ToString(),
@@ -72,10 +69,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             using var barrier = new Barrier(1);
             var proxy = new ConcurrentWriteProxy(barrier);
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)proxy);
+            options.Proxies.Add(proxy);
 
             Assert.AreEqual("{\"value\":\"original\"}",
-                WriteBinaryContent(new PlainTextModel { Value = "original" }, options));
+                WriteBinaryContent(new PlainTextModel { Value = "original" }, options).ToString());
             Assert.IsNull(options.ProxiedModel);
             Assert.AreNotSame(options, proxy.Observed.ToArray()[0]);
         }
@@ -86,13 +83,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             using var barrier = new Barrier(2);
             var proxy = new ConcurrentWriteProxy(barrier);
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)proxy);
+            options.Proxies.Add(proxy);
 
             Task<string> first = Task.Factory.StartNew(
-                () => WriteBinaryContent(new PlainTextModel { Value = "first" }, options),
+                () => WriteBinaryContent(new PlainTextModel { Value = "first" }, options).ToString(),
                 CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
             Task<string> second = Task.Factory.StartNew(
-                () => WriteBinaryContent(new PlainTextModel { Value = "second" }, options),
+                () => WriteBinaryContent(new PlainTextModel { Value = "second" }, options).ToString(),
                 CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
             Task.WaitAll(first, second);
 
@@ -110,8 +107,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         public void BinaryContent_NestedDeferredBodiesDoNotShareProxyState()
         {
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)new DeferredBodiesParentProxy());
-            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)new ProxiedValueProxy());
+            options.Proxies.Add(new DeferredBodiesParentProxy());
+            options.Proxies.Add(new ProxiedValueProxy());
 
             string json = ModelReaderWriter.Write(new SimpleModel(), options).ToString();
 
@@ -120,12 +117,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
 
         // Forwards the received core-owned options to two BinaryContent instances and only
         // serializes them after both exist.
-        private sealed class DeferredBodiesParentProxy : IJsonModel<SimpleModel>
+        private sealed class DeferredBodiesParentProxy : ModelProxy<SimpleModel>, IJsonModel<SimpleModel>
         {
             SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
-            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
             void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,25 +133,23 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 writer.WriteStartArray();
                 foreach (BinaryContent content in new[] { first, second })
                 {
-                    using var stream = new MemoryStream();
-                    content.WriteTo(stream);
-                    writer.WriteRawValue(stream.ToArray());
+                    writer.WriteRawValue(WriteToBinaryData(content).ToMemory().Span);
                 }
                 writer.WriteEndArray();
             }
 
-            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
-            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
-        private sealed class ProxiedValueProxy : IJsonModel<PlainTextModel>
+        private sealed class ProxiedValueProxy : ModelProxy<PlainTextModel>, IJsonModel<PlainTextModel>
         {
             PlainTextModel IJsonModel<PlainTextModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
-            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override PlainTextModel Create(BinaryData data, ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
             void IJsonModel<PlainTextModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -164,13 +159,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 writer.WriteEndObject();
             }
 
-            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
-            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
-        private sealed class ConcurrentWriteProxy : IJsonModel<PlainTextModel>
+        private sealed class ConcurrentWriteProxy : ModelProxy<PlainTextModel>, IJsonModel<PlainTextModel>
         {
             private readonly Barrier _barrier;
             internal ConcurrentBag<ModelReaderWriterOptions> Observed { get; } = new();
@@ -180,7 +175,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             PlainTextModel IJsonModel<PlainTextModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
                 => new PlainTextModel();
 
-            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override PlainTextModel Create(BinaryData data, ModelReaderWriterOptions options)
                 => new PlainTextModel();
 
             void IJsonModel<PlainTextModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,20 +191,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 writer.WriteEndObject();
             }
 
-            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => BinaryData.FromString("{}");
 
-            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
-        private sealed class ConcurrentReadProxy : IPersistableModel<SimpleModel>
+        private sealed class ConcurrentReadProxy : ModelProxy<SimpleModel>
         {
             private readonly Barrier _barrier;
             internal ConcurrentBag<(ModelReaderWriterOptions Options, object? Model)> Observed { get; } = new();
 
             internal ConcurrentReadProxy(Barrier barrier) => _barrier = barrier;
 
-            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 if (!_barrier.SignalAndWait(TimeSpan.FromSeconds(10)))
                 {
@@ -220,10 +215,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 return new SimpleModel();
             }
 
-            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => BinaryData.FromString("{}");
 
-            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
     }
 }

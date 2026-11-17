@@ -34,12 +34,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
                 Assert.IsFalse(ReferenceEquals(passedInOptions, options));
                 Assert.IsTrue(options.IsCoreOwned);
                 Assert.AreEqual(passedInOptions.Format, options.Format);
-                var passedInProxies = ProxyOptionsInspector.GetProxies(passedInOptions);
-                var optionProxies = ProxyOptionsInspector.GetProxies(options);
+                var passedInProxies = ProxyOptionsInspector.GetProxyIndex(passedInOptions);
+                var optionProxies = ProxyOptionsInspector.GetProxyIndex(options);
                 Assert.IsNotNull(passedInProxies);
                 Assert.IsNotNull(optionProxies);
-                // Proxies dictionary is shared by reference between original and copy
+                // The proxy lookup index is shared by reference between original and copy
                 Assert.AreSame(passedInProxies, optionProxies);
+                Assert.AreSame(passedInOptions.Proxies, options.Proxies);
             }
             else
             {

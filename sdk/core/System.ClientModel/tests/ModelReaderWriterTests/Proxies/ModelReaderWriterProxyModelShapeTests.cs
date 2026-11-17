@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support;
-using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
 using static System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support.BinaryContentHelper;
@@ -12,16 +11,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
 {
     public class ModelReaderWriterProxyModelShapeTests
     {
-        // The 999 case is a regression: a conditional proxy over a value-type (struct) model used to throw
-        // InvalidCastException because variance does not apply to value types. After removing
-        // IConditionalProxy / the where T : class constraint, it must route through the proxy.
+        // The 999 case is a regression: a proxy that overrides CanHandle for a value-type (struct) model used to
+        // throw InvalidCastException because variance does not apply to value types. Proxies have no
+        // where T : class constraint, so it must route through the proxy.
         // A handling proxy produces the 999 sentinel; a declining proxy falls through to the struct model itself.
-        [TestCase(true, 1, 999, TestName = "Read_StructModel_ConditionalProxy_Handles")]
-        [TestCase(false, 42, 42, TestName = "Read_StructModel_ConditionalProxy_Declines_FallsToModel")]
-        public void Read_StructModel_ConditionalProxy(bool handle, int input, int expected)
+        [TestCase(true, 1, 999, TestName = "Read_StructModel_Proxy_Handles")]
+        [TestCase(false, 42, 42, TestName = "Read_StructModel_Proxy_Declines_FallsToModel")]
+        public void Read_StructModel_Proxy(bool handle, int input, int expected)
         {
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<StructModel>(new StructConditionalProxy(handle));
+            options.Proxies.Add(new StructModelProxy(handle));
 
             StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString($"{{\"number\":{input}}}"), options);
 
@@ -30,22 +29,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         }
 
         [Test]
-        public void Read_StructModel_DirectProxy_Handles()
+        public void Write_StructModel_Proxy_Handles()
         {
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<StructModel>((IJsonModel<StructModel>)new StructModelProxy());
-
-            StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString("{\"number\":1}"), options);
-
-            Assert.IsTrue(result.HasValue);
-            Assert.AreEqual(999, result!.Value.Number);
-        }
-
-        [Test]
-        public void Write_StructModel_ConditionalProxy_Handles()
-        {
-            var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<StructModel>(new StructConditionalProxy(handle: true));
+            options.Proxies.Add(new StructModelProxy(handle: true));
 
             var model = new StructModel { Number = 1 };
             var data = ModelReaderWriter.Write(model, options);
@@ -59,7 +46,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             // A proxy can take over for a caller-defined, non-JSON format. When the "PT" (plain text)
             // format is chosen, the proxy writes a plain-text representation instead of JSON.
             var options = new ModelReaderWriterOptions("PT");
-            options.AddProxy<PlainTextModel>(new PlainTextFormatProxy());
+            options.Proxies.Add(new PlainTextFormatProxy());
 
             BinaryData data = ModelReaderWriter.Write(new PlainTextModel { Value = "world" }, options);
             PlainTextModel? read = ModelReaderWriter.Read<PlainTextModel>(data, options);
@@ -74,37 +61,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             // The same proxy declines when the format is not "PT", so the base model writes JSON.
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<PlainTextModel>(new PlainTextFormatProxy());
+            options.Proxies.Add(new PlainTextFormatProxy());
 
             BinaryData data = ModelReaderWriter.Write(new PlainTextModel { Value = "hello" }, options);
 
             Assert.AreEqual("{\"value\":\"hello\"}", data.ToString());
         }
 
-        [TestCase("J", false)]
-        [TestCase("J", true)]
-        [TestCase("W", false)]
-        [TestCase("W", true)]
-        public void Write_PersistableOnlyProxyOverridesJsonModel(string format, bool conditional)
+        [TestCase("J")]
+        [TestCase("W")]
+        public void Write_PersistableOnlyProxyOverridesJsonModel(string format)
         {
-            var options = new ModelReaderWriterOptions(format, ModelReaderWriterReflectionContext.Default);
+            var options = new ModelReaderWriterOptions(format);
             var proxy = new PersistableWriteProxy("J");
-            var conditionalProxy = new PersistableWriteConditionalProxy(proxy);
-            if (conditional)
-            {
-                options.AddProxy<PlainTextModel>(conditionalProxy);
-            }
-            else
-            {
-                options.AddProxy<PlainTextModel>(proxy);
-            }
+            options.Proxies.Add(proxy);
             var model = new PlainTextModel { Value = "hello" };
             const string expected = "{\"value\":\"proxied: hello\"}";
 
             Assert.AreEqual(expected, ModelReaderWriter.Write(model, options).ToString());
-            Assert.AreEqual(expected, WriteBinaryContent(model, options));
+            Assert.AreEqual(expected, WriteBinaryContent(model, options).ToString());
             Assert.AreEqual(2, proxy.WriteCount);
-            Assert.AreEqual(conditional ? 2 : 0, conditionalProxy.CanHandleCount);
+            Assert.AreEqual(2, proxy.CanHandleCount);
             Assert.IsNull(options.ProxiedModel);
         }
 
@@ -113,32 +90,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("W");
             var proxy = new PersistableWriteProxy("PT");
-            options.AddProxy<PlainTextModel>(proxy);
+            options.Proxies.Add(proxy);
             var model = new PlainTextModel { Value = "hello" };
 
             Assert.AreEqual("proxied: hello", ModelReaderWriter.Write(model, options).ToString());
             using BinaryContent content = BinaryContent.Create(model, options);
             Assert.IsNull(content.MediaType);
-            using var stream = new MemoryStream();
-            content.WriteTo(stream);
-            Assert.AreEqual("proxied: hello", BinaryData.FromBytes(stream.ToArray()).ToString());
+            Assert.AreEqual("proxied: hello", WriteToBinaryData(content).ToString());
             Assert.AreEqual(2, proxy.WriteCount);
             Assert.IsNull(options.ProxiedModel);
         }
 
-        private sealed class PersistableWriteProxy : IPersistableModel<PlainTextModel>
+        private sealed class PersistableWriteProxy : ModelProxy<PlainTextModel>
         {
             private readonly string _wireFormat;
             internal int WriteCount { get; private set; }
+            internal int CanHandleCount { get; private set; }
 
             internal PersistableWriteProxy(string wireFormat) => _wireFormat = wireFormat;
 
-            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override bool CanHandle(PlainTextModel model, ModelReaderWriterOptions options)
+            {
+                CanHandleCount++;
+                return true;
+            }
+
+            public override PlainTextModel Create(BinaryData data, ModelReaderWriterOptions options)
                 => throw new NotSupportedException();
 
-            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => _wireFormat;
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => _wireFormat;
 
-            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
             {
                 WriteCount++;
                 string value = ((PlainTextModel)options.ProxiedModel!).Value;
@@ -149,49 +131,31 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             }
         }
 
-        private sealed class PersistableWriteConditionalProxy : ConditionalModelProxy<PlainTextModel>
-        {
-            internal int CanHandleCount { get; private set; }
-
-            internal PersistableWriteConditionalProxy(PersistableWriteProxy model) : base(model) { }
-
-            public override bool CanHandle(PlainTextModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
-            {
-                CanHandleCount++;
-                return true;
-            }
-        }
-
         /// <summary>
-        /// A conditional proxy that takes over only when the caller-chosen format is "PT" (plain text),
+        /// A proxy that takes over only when the caller-chosen format is "PT" (plain text),
         /// producing a plain-text representation instead of JSON. The condition reads
         /// <see cref="ModelReaderWriterOptions.Format"/>, proving a proxy can key on the format.
         /// </summary>
-        private class PlainTextFormatProxy : ConditionalModelProxy<PlainTextModel>
+        private class PlainTextFormatProxy : ModelProxy<PlainTextModel>
         {
-            public PlainTextFormatProxy() : base(new PlainTextFormatModel()) { }
+            private const string Prefix = "PlainText: ";
 
-            public override bool CanHandle(PlainTextModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            public override bool CanHandle(PlainTextModel model, ModelReaderWriterOptions options)
                 => options.Format == "PT";
 
-            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options)
                 => options.Format == "PT";
 
-            private class PlainTextFormatModel : IPersistableModel<PlainTextModel>
+            public override PlainTextModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
-                private const string Prefix = "PlainText: ";
-
-                PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-                {
-                    string s = data.ToString();
-                    return new PlainTextModel { Value = s.StartsWith(Prefix, StringComparison.Ordinal) ? s.Substring(Prefix.Length) : s };
-                }
-
-                BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
-                    => BinaryData.FromString($"{Prefix}{((PlainTextModel)options.ProxiedModel!).Value}");
-
-                string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "PT";
+                string s = data.ToString();
+                return new PlainTextModel { Value = s.StartsWith(Prefix, StringComparison.Ordinal) ? s.Substring(Prefix.Length) : s };
             }
+
+            public override BinaryData Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString($"{Prefix}{((PlainTextModel)options.ProxiedModel!).Value}");
+
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "PT";
         }
 
         /// <summary>
@@ -227,20 +191,31 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         }
 
         /// <summary>
-        /// A proxy model for <see cref="StructModel"/> that always produces a sentinel value.
+        /// A proxy over the value-type <see cref="StructModel"/> that produces a sentinel value when it handles the model.
         /// </summary>
-        private class StructModelProxy : IJsonModel<StructModel>
+        private class StructModelProxy : ModelProxy<StructModel>, IJsonModel<StructModel>
         {
+            private readonly bool _handle;
+
+            public StructModelProxy(bool handle)
+            {
+                _handle = handle;
+            }
+
+            public override bool CanHandle(StructModel model, ModelReaderWriterOptions options) => _handle;
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options) => _handle;
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => _handle;
+
             StructModel IJsonModel<StructModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 using var doc = JsonDocument.ParseValue(ref reader);
                 return new StructModel { Number = 999 };
             }
 
-            StructModel IPersistableModel<StructModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            public override StructModel Create(BinaryData data, ModelReaderWriterOptions options)
                 => new StructModel { Number = 999 };
 
-            string IPersistableModel<StructModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
             void IJsonModel<StructModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
@@ -249,25 +224,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 writer.WriteEndObject();
             }
 
-            BinaryData IPersistableModel<StructModel>.Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => BinaryData.FromString("{\"number\":999}");
-        }
-
-        /// <summary>
-        /// A conditional proxy over the value-type <see cref="StructModel"/>.
-        /// </summary>
-        private class StructConditionalProxy : ConditionalModelProxy<StructModel>
-        {
-            private readonly bool _handle;
-
-            public StructConditionalProxy(bool handle) : base(new StructModelProxy())
-            {
-                _handle = handle;
-            }
-
-            public override bool CanHandle(StructModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handle;
-            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handle;
-            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handle;
         }
     }
 }
