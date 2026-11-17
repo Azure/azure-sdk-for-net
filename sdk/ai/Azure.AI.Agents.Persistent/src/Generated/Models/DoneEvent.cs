@@ -46,7 +46,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="DoneEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DoneEvent?(string value) => value == null ? null : new DoneEvent(value);
+        public static implicit operator DoneEvent?(string value) => value == null ? (DoneEvent?)null : new DoneEvent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

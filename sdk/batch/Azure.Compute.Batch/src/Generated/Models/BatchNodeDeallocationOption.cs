@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchNodeDeallocationOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeDeallocationOption?(string value) => value == null ? null : new BatchNodeDeallocationOption(value);
+        public static implicit operator BatchNodeDeallocationOption?(string value) => value == null ? (BatchNodeDeallocationOption?)null : new BatchNodeDeallocationOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

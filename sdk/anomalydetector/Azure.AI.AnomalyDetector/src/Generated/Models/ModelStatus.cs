@@ -61,7 +61,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Converts a string to a <see cref="ModelStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ModelStatus?(string value) => value == null ? null : new ModelStatus(value);
+        public static implicit operator ModelStatus?(string value) => value == null ? (ModelStatus?)null : new ModelStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

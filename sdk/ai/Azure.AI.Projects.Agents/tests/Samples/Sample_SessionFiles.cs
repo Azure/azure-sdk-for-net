@@ -38,7 +38,7 @@ public class Sample_SessionFiles : SamplesBase
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -89,8 +89,8 @@ public class Sample_SessionFiles : SamplesBase
         #endregion
 
         #region Snippet:Sample_DeleteFiles_SessionFiles_Async
-        await sessionClient.DeleteAsync(localPath: "sample_file_for_upload1.txt");
-        await sessionClient.DeleteAsync(localPath: "sample_file_for_upload2.txt");
+        await sessionClient.DeleteAsync(sessionStoragePath: "sample_file_for_upload1.txt");
+        await sessionClient.DeleteAsync(sessionStoragePath: "sample_file_for_upload2.txt");
         await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }
@@ -117,7 +117,7 @@ public class Sample_SessionFiles : SamplesBase
         ProjectAgentSession session = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -169,8 +169,8 @@ public class Sample_SessionFiles : SamplesBase
         #endregion
 
         #region Snippet:Sample_DeleteFiles_SessionFiles_Sync
-        sessionClient.Delete(localPath: "sample_file_for_upload1.txt");
-        sessionClient.Delete(localPath: "sample_file_for_upload2.txt");
+        sessionClient.Delete(sessionStoragePath: "sample_file_for_upload1.txt");
+        sessionClient.Delete(sessionStoragePath: "sample_file_for_upload2.txt");
         agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }

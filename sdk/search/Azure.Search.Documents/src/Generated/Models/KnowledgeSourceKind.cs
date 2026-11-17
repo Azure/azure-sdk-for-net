@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeSourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeSourceKind?(string value) => value == null ? null : new KnowledgeSourceKind(value);
+        public static implicit operator KnowledgeSourceKind?(string value) => value == null ? (KnowledgeSourceKind?)null : new KnowledgeSourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

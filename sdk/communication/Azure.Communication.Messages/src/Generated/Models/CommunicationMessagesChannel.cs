@@ -46,7 +46,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="CommunicationMessagesChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationMessagesChannel?(string value) => value == null ? null : new CommunicationMessagesChannel(value);
+        public static implicit operator CommunicationMessagesChannel?(string value) => value == null ? (CommunicationMessagesChannel?)null : new CommunicationMessagesChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

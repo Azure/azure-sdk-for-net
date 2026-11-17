@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(Model);
             }
             writer.WritePropertyName("avg_latency_ms"u8);
-            writer.WriteNumberValue(Convert.ToInt32(Math.Round(AvgLatencyMs.TotalMilliseconds)));
+            writer.WriteNumberValue(Convert.ToInt32(Math.Round(AvgLatency.TotalMilliseconds)));
             writer.WritePropertyName("call_count"u8);
             writer.WriteNumberValue(CallCount);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -130,7 +130,7 @@ namespace Azure.AI.Projects.Agents
             }
             AgentOptimizationStage stage = default;
             string model = default;
-            TimeSpan avgLatencyMs = default;
+            TimeSpan avgLatency = default;
             long callCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("avg_latency_ms"u8))
                 {
-                    avgLatencyMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    avgLatency = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("call_count"u8))
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentOptimizationJobLatency(stage, model, avgLatencyMs, callCount, additionalBinaryDataProperties);
+            return new AgentOptimizationJobLatency(stage, model, avgLatency, callCount, additionalBinaryDataProperties);
         }
     }
 }

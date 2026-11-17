@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evaluation"> Comparative evaluation summary. Omitted when this candidate was not comparatively evaluated. </param>
         /// <param name="promotion"> Promotion metadata. Omitted if this candidate has not been promoted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationCandidate(string candidateId, string jobId, string name, AgentOptimizationCandidateStatus status, DateTimeOffset startedOn, AgentOptimizationCandidateOutput output, string rationale, string agentVersion, AgentOptimizationCandidateEvaluation evaluation, AgentOptimizationCandidatePromotionInfo promotion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationCandidate(string candidateId, string jobId, string name, AgentOptimizationCandidateStatus status, DateTimeOffset startedOn, AgentOptimizationCandidateOutput output, string rationale, string agentVersion, AgentOptimizationCandidateEvaluation evaluation, AgentOptimizationCandidatePromotion promotion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CandidateId = candidateId;
             JobId = jobId;
@@ -83,6 +83,6 @@ namespace Azure.AI.Projects.Agents
         public AgentOptimizationCandidateEvaluation Evaluation { get; }
 
         /// <summary> Promotion metadata. Omitted if this candidate has not been promoted. </summary>
-        public AgentOptimizationCandidatePromotionInfo Promotion { get; }
+        public AgentOptimizationCandidatePromotion Promotion { get; }
     }
 }

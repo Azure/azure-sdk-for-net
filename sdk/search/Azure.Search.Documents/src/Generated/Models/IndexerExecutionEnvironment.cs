@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="IndexerExecutionEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexerExecutionEnvironment?(string value) => value == null ? null : new IndexerExecutionEnvironment(value);
+        public static implicit operator IndexerExecutionEnvironment?(string value) => value == null ? (IndexerExecutionEnvironment?)null : new IndexerExecutionEnvironment(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

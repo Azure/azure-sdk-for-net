@@ -294,7 +294,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "azure-ai-search",
                 Description = "Test Azure AI search"
             },
-            ToolType.MCP => new MCPToolboxTool(serverLabel: "api-specs")
+            ToolType.MCP => new McpToolboxTool(serverLabel: "api-specs")
             {
                 Name = "mcp-tool",
                 Description = "Test mcp tool",

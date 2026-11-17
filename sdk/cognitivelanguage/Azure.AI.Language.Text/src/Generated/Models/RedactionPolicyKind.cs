@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="RedactionPolicyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedactionPolicyKind?(string value) => value == null ? null : new RedactionPolicyKind(value);
+        public static implicit operator RedactionPolicyKind?(string value) => value == null ? (RedactionPolicyKind?)null : new RedactionPolicyKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

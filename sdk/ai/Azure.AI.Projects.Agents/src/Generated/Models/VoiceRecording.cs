@@ -29,15 +29,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sampleRate"> The sample rate of the recording in Hz, e.g. 24000. </param>
         /// <param name="channels"> The number of audio channels. The merged recording is stereo (`2`). </param>
         /// <param name="channelLayout"> The role assigned to each stereo channel. </param>
-        /// <param name="durationMs"> The total duration of the recording. </param>
-        internal VoiceRecording(string conversationId, VoiceAudioContainerFormat format, int sampleRate, int channels, VoiceRecordingChannelLayout channelLayout, TimeSpan durationMs)
+        /// <param name="duration"> The total duration of the recording. </param>
+        internal VoiceRecording(string conversationId, VoiceAudioContainerFormat format, int sampleRate, int channels, VoiceRecordingChannelLayout channelLayout, TimeSpan duration)
         {
             ConversationId = conversationId;
             Format = format;
             SampleRate = sampleRate;
             Channels = channels;
             ChannelLayout = channelLayout;
-            DurationMs = durationMs;
+            Duration = duration;
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceRecording"/>. </summary>
@@ -46,17 +46,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sampleRate"> The sample rate of the recording in Hz, e.g. 24000. </param>
         /// <param name="channels"> The number of audio channels. The merged recording is stereo (`2`). </param>
         /// <param name="channelLayout"> The role assigned to each stereo channel. </param>
-        /// <param name="durationMs"> The total duration of the recording. </param>
+        /// <param name="duration"> The total duration of the recording. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the `/audio/content` route instead. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceRecording(string conversationId, VoiceAudioContainerFormat format, int sampleRate, int channels, VoiceRecordingChannelLayout channelLayout, TimeSpan durationMs, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceRecording(string conversationId, VoiceAudioContainerFormat format, int sampleRate, int channels, VoiceRecordingChannelLayout channelLayout, TimeSpan duration, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConversationId = conversationId;
             Format = format;
             SampleRate = sampleRate;
             Channels = channels;
             ChannelLayout = channelLayout;
-            DurationMs = durationMs;
+            Duration = duration;
             BlobUri = blobUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects.Agents
         public VoiceRecordingChannelLayout ChannelLayout { get; }
 
         /// <summary> The total duration of the recording. </summary>
-        public TimeSpan DurationMs { get; }
+        public TimeSpan Duration { get; }
 
         /// <summary> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the `/audio/content` route instead. </summary>
         public Uri BlobUri { get; }

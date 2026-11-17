@@ -51,7 +51,7 @@ namespace Azure.Data.AI
 
         /// <summary> Converts a string to a <see cref="EmbeddingOutputDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingOutputDataKind?(string value) => value == null ? null : new EmbeddingOutputDataKind(value);
+        public static implicit operator EmbeddingOutputDataKind?(string value) => value == null ? (EmbeddingOutputDataKind?)null : new EmbeddingOutputDataKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

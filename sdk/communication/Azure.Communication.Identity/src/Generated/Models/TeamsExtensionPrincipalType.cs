@@ -47,7 +47,7 @@ namespace Azure.Communication.Identity
 
         /// <summary> Converts a string to a <see cref="TeamsExtensionPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TeamsExtensionPrincipalType?(string value) => value == null ? null : new TeamsExtensionPrincipalType(value);
+        public static implicit operator TeamsExtensionPrincipalType?(string value) => value == null ? (TeamsExtensionPrincipalType?)null : new TeamsExtensionPrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
