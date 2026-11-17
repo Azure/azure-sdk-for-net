@@ -69,6 +69,9 @@ if ($plan.ContainsKey('identityResolution') -and $plan.identityResolution -cne '
 # A retry must get fresh ownership and state; adopting an earlier attempt could make cleanup target its resources.
 if (Test-Path -LiteralPath $StatePath) { throw 'Deployment state already exists. Do not adopt or overwrite a previous attempt.' }
 Assert-SampleMcpPat
+if ([string]::IsNullOrWhiteSpace($env:PROJ_CONN_OPEN_API_KEY) -or $env:PROJ_CONN_OPEN_API_KEY -match '^\$\(.+\)$') {
+    throw 'Set PROJ_CONN_OPEN_API_KEY as an ADO secret containing the OpenAPI service key; no resources were changed.'
+}
 
 $runnerIdentity = Set-SampleSubscriptionContext -Plan $plan
 $subscription = Get-SampleSubscriptionId

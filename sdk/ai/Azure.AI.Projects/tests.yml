@@ -66,6 +66,21 @@ extends:
       FOUNDRY_PROJECT_ENDPOINT: $(FOUNDRY_PROJECT_ENDPOINT)
       FOUNDRY_MODEL_NAME: $(FOUNDRY_MODEL_NAME)
       FOUNDRY_AGENT_NAME: $(FOUNDRY_AGENT_NAME)
+      MCP_PROJECT_CONNECTION_ID: $(MCP_PROJECT_CONNECTION_ID)
+      MCP_PROJECT_CONNECTION_NAME: $(MCP_PROJECT_CONNECTION_NAME)
+      AI_SEARCH_CONNECTION_NAME: $(AI_SEARCH_CONNECTION_NAME)
+      AI_SEARCH_INDEX_NAME: $(AI_SEARCH_INDEX_NAME)
+      BING_CONNECTION_ID: $(BING_CONNECTION_ID)
+      BING_CONNECTION_NAME: $(BING_CONNECTION_NAME)
+      CUSTOM_BING_CONNECTION_ID: $(CUSTOM_BING_CONNECTION_ID)
+      CUSTOM_BING_CONNECTION_NAME: $(CUSTOM_BING_CONNECTION_NAME)
+      BING_CUSTOM_SEARCH_INSTANCE_NAME: $(BING_CUSTOM_SEARCH_INSTANCE_NAME)
+      PLAYWRIGHT_CONNECTION_ID: $(PLAYWRIGHT_CONNECTION_ID)
+      PLAYWRIGHT_CONNECTION_NAME: $(PLAYWRIGHT_CONNECTION_NAME)
+      BROWSER_AUTOMATION_NAME: $(BROWSER_AUTOMATION_NAME)
+      OPENAPI_PROJECT_CONNECTION_ID: $(OPENAPI_PROJECT_CONNECTION_ID)
+      OPENAPI_PROJECT_CONNECTION_NAME: $(OPENAPI_PROJECT_CONNECTION_NAME)
+      STORAGE_QUEUE_URI: $(STORAGE_QUEUE_URI)
       AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
       AZURE_TENANT_ID: $(AZURE_TENANT_ID)
     MatrixConfigs:
@@ -132,13 +147,13 @@ extends:
           SAMPLE_SELECTION: ${{ parameters.selection }}
           SAMPLE_SLICE_FILTER: $(SampleSliceFilter)
       - task: AzureCLI@2
-        displayName: 'Provision Standard Foundry and model with shared identities'
+        displayName: 'Provision full Foundry sample resource bundle with shared identities'
         inputs:
           azureSubscription: azure-sdk-tests
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: |
-            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/Invoke-StandardProvisioning.ps1' `
+            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/Invoke-BundleProvisioning.ps1' `
               -OutputDirectory $env:STANDARD_FOUNDRY_DIRECTORY `
               -IdentityResourceGroup $env:SAMPLE_IDENTITY_RESOURCE_GROUP -QueueName $env:SAMPLE_QUEUE_NAME `
               -ModelName $env:SAMPLE_MODEL_NAME -ModelVersion $env:SAMPLE_MODEL_VERSION `
@@ -147,6 +162,8 @@ extends:
           STANDARD_FOUNDRY_DIRECTORY: $(Build.ArtifactStagingDirectory)/standard-foundry
           AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
           AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+          MCP_GITHUB_PAT: $(MCP_GITHUB_PAT)
+          PROJ_CONN_OPEN_API_KEY: $(PROJ_CONN_OPEN_API_KEY)
           SAMPLE_QUEUE_NAME: $(SampleQueueName)
           SAMPLE_IDENTITY_RESOURCE_GROUP: ${{ parameters.identityResourceGroup }}
           SAMPLE_MODEL_NAME: ${{ parameters.modelName }}
@@ -155,7 +172,7 @@ extends:
           SAMPLE_MODEL_CAPACITY: ${{ parameters.modelCapacity }}
     PostSteps:
       - task: AzureCLI@2
-        displayName: 'Clean up this worker Standard Foundry resources'
+        displayName: 'Clean up this worker full sample resource bundle'
         condition: always()
         inputs:
           azureSubscription: azure-sdk-tests

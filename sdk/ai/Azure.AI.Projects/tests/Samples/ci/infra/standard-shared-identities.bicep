@@ -108,7 +108,7 @@ resource aiSearch 'Microsoft.Search/searchServices@2024-06-01-preview' = {
     partitionCount: 1
     publicNetworkAccess: 'enabled'
     replicaCount: 1
-    semanticSearch: 'disabled'
+    semanticSearch: 'free'
   }
 }
 
@@ -286,6 +286,7 @@ resource cosmosDataContributor 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAss
 output accountName string = account.name
 output projectName string = project.name
 output storageAccountName string = storage.name
+output searchServiceName string = aiSearch.name
 output projectResourceId string = project.id
 output projectEndpoint string = 'https://${account.name}.services.ai.azure.com/api/projects/${project.name}'
 output projectIdentityResourceId string = sharedProjectIdentityResourceId

@@ -8,8 +8,10 @@ Describe 'Provisioning rejects ineligible regions before mutation' {
         $previousTenant = $env:AZURE_TENANT_ID
         $previousQueue = $env:SAMPLE_QUEUE_NAME
         $previousPat = $env:MCP_GITHUB_PAT
+        $previousOpenApiKey = $env:PROJ_CONN_OPEN_API_KEY
         try {
             $env:MCP_GITHUB_PAT = 'github_pat_' + 'unit_test_placeholder'
+            $env:PROJ_CONN_OPEN_API_KEY = 'unit-test-placeholder'
             $env:AZURE_SUBSCRIPTION_ID = '11111111-1111-1111-1111-111111111111'
             $env:AZURE_TENANT_ID = '22222222-2222-2222-2222-222222222222'
             $env:SAMPLE_QUEUE_NAME = 'q1'
@@ -62,6 +64,7 @@ Describe 'Provisioning rejects ineligible regions before mutation' {
             $env:AZURE_TENANT_ID = $previousTenant
             $env:SAMPLE_QUEUE_NAME = $previousQueue
             $env:MCP_GITHUB_PAT = $previousPat
+            $env:PROJ_CONN_OPEN_API_KEY = $previousOpenApiKey
         }
     }
 }
