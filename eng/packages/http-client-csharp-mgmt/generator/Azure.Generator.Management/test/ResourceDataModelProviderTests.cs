@@ -130,8 +130,11 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(modelProvider.BaseType?.AreNamesEqual(new CSharpType(typeof(TrackedResourceData))), Is.True);
         }
 
-        [Test]
-        public void ResourceDataModelWithTrackedResourceBaseFiltersInheritedPropertiesAndOverridesSerialization()
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public void ResourceDataModelWithTrackedResourceBaseFiltersInheritedPropertiesAndOverridesSerialization(bool isReadOnly, bool renamedOriginalName)
         {
             var trackedResourceModel = InputFactory.Model(
                 "TrackedResource",
@@ -149,11 +152,16 @@ namespace Azure.Generator.Mgmt.Tests
                 .GetSetMethod(true)!
                 .Invoke(trackedResourceModel, ["Azure.ResourceManager.CommonTypes.TrackedResource"]);
 
+            var nameAlias = InputFactory.Property("name0", InputPrimitiveType.String, isReadOnly: isReadOnly, wireName: "name", serializedName: "name");
+            if (renamedOriginalName)
+            {
+                nameAlias.Update(originalName: "name");
+            }
             var resourceModel = InputFactory.Model(
                 "PrivateCloud",
                 properties:
                 [
-                    InputFactory.Property("name0", InputPrimitiveType.String, wireName: "name", serializedName: "name"),
+                    nameAlias,
                     InputFactory.Property("properties", InputPrimitiveType.String),
                 ],
                 baseModel: trackedResourceModel,
@@ -161,7 +169,7 @@ namespace Azure.Generator.Mgmt.Tests
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [trackedResourceModel, resourceModel]);
             var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
-                new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
+                ManagementClientGenerator.Instance.TypeFactory.CreateModel(trackedResourceModel)!;
 
             var resourceDataModel = new ResourceDataModelProvider(resourceModel);
             // Reproduce the real generation ordering where constructors and serialization can be
@@ -190,10 +198,20 @@ namespace Azure.Generator.Mgmt.Tests
 
             var modelContent = new TypeProviderWriter(result).Write().Content;
             Assert.That(modelContent, Does.Contain("Name0"));
+            if (renamedOriginalName)
+            {
+                Assert.That(modelContent, Does.Contain("Name0 => base.Name;"));
+            }
 
             var serializationContent = new TypeProviderWriter(serialization).Write().Content;
             Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
             Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
+            if (renamedOriginalName)
+            {
+                Assert.That(serializationContent, Does.Not.Contain("Name0"));
+                Assert.That(result.Constructors.SelectMany(constructor => constructor.Signature.Parameters).Select(parameter => parameter.Name),
+                    Does.Not.Contain("name0"));
+            }
         }
 
         [Test]
