@@ -187,6 +187,48 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(plugin.Object.TypeFactory.CreateModel(model)!.Name, Is.EqualTo(name));
         }
 
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public void OrdinaryRequestModelPreservesPreviousContractAlongsideContentCustomization(bool rootInputNamespace, bool previousRequest)
+        {
+            var model = InputFactory.Model("WidgetRequest", clientNamespace: rootInputNamespace ? "Samples" : "Samples.Models",
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources: ["namespace Samples.Models { public partial class WidgetContent { public int LegacyValue { get; set; } } }"],
+                lastContractCompilation: () => Helpers.BuildCompilation([
+                    ("Contract.cs", "namespace Samples.Models { public partial class WidgetContent { public int LegacyValue { get; set; } } "
+                        + (previousRequest ? "public partial class WidgetRequest { public string Value { get; set; } }" : "")
+                        + "}")
+                ]));
+
+            var type = plugin.Object.TypeFactory.CreateModel(model)!;
+
+            Assert.That(type.Name, Is.EqualTo(previousRequest ? "WidgetRequest" : "WidgetContent"));
+            if (previousRequest)
+            {
+                Assert.That(type.LastContractView, Is.Not.Null);
+                Assert.That(type.CustomCodeView, Is.Null);
+                Assert.That(type.Properties.Select(property => property.Name), Does.Contain("Value"));
+                Assert.That(type.Properties.Select(property => property.Name), Does.Not.Contain("LegacyValue"));
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void OrdinaryModelSuffixCollisionsRemainDistinct(bool rootInputNamespace)
+        {
+            var modelNamespace = rootInputNamespace ? "Samples" : "Samples.Models";
+            var request = InputFactory.Model("WidgetRequest", clientNamespace: modelNamespace);
+            var content = InputFactory.Model("WidgetContent", clientNamespace: modelNamespace);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [request, content]);
+
+            Assert.That(new[] { request, content }.Select(model => plugin.Object.TypeFactory.CreateModel(model)!.Name),
+                Is.EquivalentTo(new[] { "WidgetRequest", "WidgetContent" }));
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public void StructuralRequestModelNormalizedCustomizationWinsOverPreviousContract(bool sharedBody)
