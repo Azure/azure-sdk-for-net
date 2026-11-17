@@ -15,14 +15,12 @@ namespace Azure.Security.ConfidentialLedger
     internal class PostLedgerEntryResultOperation : Operation<LedgerWriteResult>
     {
         private readonly PostLedgerEntryOperation _operation;
-        private readonly LedgerWriteResult _initialResult;
         private readonly string _requestedCollectionId;
 
         internal PostLedgerEntryResultOperation(PostLedgerEntryOperation operation, string requestedCollectionId)
         {
             _operation = operation;
             _requestedCollectionId = requestedCollectionId;
-            _initialResult = LedgerWriteResult.TryFromResponse(operation.GetRawResponse());
         }
 
         /// <summary> A constructor for mocking. </summary>
@@ -48,12 +46,14 @@ namespace Azure.Security.ConfidentialLedger
                         ? $"The ledger write operation '{Id}' did not complete successfully."
                         : $"The ledger write operation '{Id}' has not completed. Call WaitForCompletion or UpdateStatus until HasCompleted is true.");
 
-                if (_initialResult != null)
+                string collectionId = _operation.CollectionId ?? _requestedCollectionId;
+                LedgerWriteResult initialResult = _operation.InitialResult;
+                if (initialResult != null)
                 {
-                    return _initialResult.With(Id, _initialResult.CollectionId ?? _requestedCollectionId, state);
+                    return initialResult.With(Id, collectionId, state);
                 }
 
-                return ConfidentialLedgerModelFactory.LedgerWriteResult(transactionId: Id, collectionId: _requestedCollectionId, state: state);
+                return ConfidentialLedgerModelFactory.LedgerWriteResult(transactionId: Id, collectionId: collectionId, state: state);
             }
         }
 

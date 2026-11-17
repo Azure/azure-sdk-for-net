@@ -258,26 +258,26 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 }
 
                 requestBody = ReadBody(req);
-                StringAssert.Contains("collectionId=my-collection", req.Uri.Query);
+                StringAssert.DoesNotContain("collectionId", req.Uri.Query);
                 var response = new MockResponse(200);
                 response.AddHeader("x-ms-ccf-transaction-id", transactionId);
+                // The service selects the collection when none is requested.
                 response.SetContent(waitForCommit
-                    ? @"{""collectionId"":""my-collection"",""state"":""Committed""}"
-                    : @"{""collectionId"":""my-collection""}");
+                    ? @"{""collectionId"":""subledger:0"",""state"":""Committed""}"
+                    : @"{""collectionId"":""subledger:0""}");
                 return response;
             });
 
             Operation<LedgerWriteResult> operation = await client.PostLedgerEntryAsync(
                 WaitUntil.Completed,
                 new LedgerEntry("hello"),
-                collectionId: "my-collection",
                 waitForCommit: waitForCommit);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(transactionId, operation.Id);
             Assert.AreEqual(transactionId, operation.Value.TransactionId);
-            Assert.AreEqual("my-collection", operation.Value.CollectionId);
+            Assert.AreEqual("subledger:0", operation.Value.CollectionId);
             Assert.AreEqual(TransactionState.Committed, operation.Value.State);
             Assert.AreEqual("hello", JsonDocument.Parse(requestBody).RootElement.GetProperty("contents").GetString());
         }
