@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        /// <param name="tokenBindingParameters"> Configuration for Token Binding for Entra tokens. </param>
+        /// <param name="tokenBindingConfiguration"> Configuration for Token Binding for Entra tokens. </param>
         /// <param name="enableCrossTenantAccessProtection"> Whether cross-tenant access protection is enabled for this vault. When enabled, the vault tenant ID can only be set or changed to the subscription's home tenant ID. Once enabled, this protection cannot be disabled. If omitted when creating a vault, protection is disabled. If omitted when updating a vault, the existing value is preserved. </param>
         /// <param name="protectionKeysWrappingKey">
         /// Configures an external Managed HSM key used to wrap the vault's protection keys.
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// Omitting this property preserves the existing configuration.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultProperties(Guid tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, KeyVaultCreateMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, KeyVaultProvisioningState? provisioningState, IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess, TokenBindingParameters tokenBindingParameters, bool? enableCrossTenantAccessProtection, WrappingKeyConfiguration protectionKeysWrappingKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultProperties(Guid tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, KeyVaultCreateMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, KeyVaultProvisioningState? provisioningState, IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess, TokenBindingConfiguration tokenBindingConfiguration, bool? enableCrossTenantAccessProtection, WrappingKeyConfiguration protectionKeysWrappingKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
-            TokenBindingParameters = tokenBindingParameters;
+            TokenBindingConfiguration = tokenBindingConfiguration;
             EnableCrossTenantAccessProtection = enableCrossTenantAccessProtection;
             ProtectionKeysWrappingKey = protectionKeysWrappingKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Configuration for Token Binding for Entra tokens. </summary>
         [WirePath("tokenBindingParameters")]
-        public TokenBindingParameters TokenBindingParameters { get; set; }
+        public TokenBindingConfiguration TokenBindingConfiguration { get; set; }
 
         /// <summary> Whether cross-tenant access protection is enabled for this vault. When enabled, the vault tenant ID can only be set or changed to the subscription's home tenant ID. Once enabled, this protection cannot be disabled. If omitted when creating a vault, protection is disabled. If omitted when updating a vault, the existing value is preserved. </summary>
         [WirePath("enableCrossTenantAccessProtection")]

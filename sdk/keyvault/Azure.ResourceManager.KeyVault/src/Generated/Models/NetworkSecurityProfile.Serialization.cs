@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
-                foreach (AccessRule item in AccessRules)
+                foreach (NetworkSecurityPerimeterAccessRule item in AccessRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IList<AccessRule> accessRules = default;
+            IList<NetworkSecurityPerimeterAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<AccessRule> array = new List<AccessRule>();
+                    List<NetworkSecurityPerimeterAccessRule> array = new List<NetworkSecurityPerimeterAccessRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessRule.DeserializeAccessRule(item, options));
+                        array.Add(NetworkSecurityPerimeterAccessRule.DeserializeNetworkSecurityPerimeterAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new NetworkSecurityProfile(
                 name,
                 accessRulesVersion,
-                accessRules ?? new ChangeTrackingList<AccessRule>(),
+                accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>(),
                 diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

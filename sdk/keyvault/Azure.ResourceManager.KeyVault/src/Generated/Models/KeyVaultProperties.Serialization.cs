@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(TokenBindingParameters))
+            if (Optional.IsDefined(TokenBindingConfiguration))
             {
                 writer.WritePropertyName("tokenBindingParameters"u8);
-                writer.WriteObjectValue(TokenBindingParameters, options);
+                writer.WriteObjectValue(TokenBindingConfiguration, options);
             }
             if (Optional.IsDefined(EnableCrossTenantAccessProtection))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             KeyVaultProvisioningState? provisioningState = default;
             IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default;
             string publicNetworkAccess = default;
-            TokenBindingParameters tokenBindingParameters = default;
+            TokenBindingConfiguration tokenBindingConfiguration = default;
             bool? enableCrossTenantAccessProtection = default;
             WrappingKeyConfiguration protectionKeysWrappingKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    tokenBindingParameters = TokenBindingParameters.DeserializeTokenBindingParameters(prop.Value, options);
+                    tokenBindingConfiguration = TokenBindingConfiguration.DeserializeTokenBindingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableCrossTenantAccessProtection"u8))
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>(),
                 publicNetworkAccess,
-                tokenBindingParameters,
+                tokenBindingConfiguration,
                 enableCrossTenantAccessProtection,
                 protectionKeysWrappingKey,
                 additionalBinaryDataProperties);

@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Upgraded the API version to `2026-10-01-preview`.
+- Added network security perimeter configuration operations and models.
+- Added support for managed identities, token binding, cross-tenant access protection, and external protection-key wrapping.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -12,21 +12,21 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Configuration for Token Binding for Entra tokens. </summary>
-    public partial class TokenBindingParameters
+    public partial class TokenBindingConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TokenBindingParameters"/>. </summary>
-        public TokenBindingParameters()
+        /// <summary> Initializes a new instance of <see cref="TokenBindingConfiguration"/>. </summary>
+        public TokenBindingConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TokenBindingParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TokenBindingConfiguration"/>. </summary>
         /// <param name="mode"> This specifies whether token binding is disabled, enabled or enforced. </param>
         /// <param name="minimumTokenBindingStrength"> Must be one of the following values "NoValidation", "Unattested", "AttestedTrustedLaunch", "AttestedConfidential". Strength of the token binding increases with each value in that order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TokenBindingParameters(TokenBindingMode? mode, TokenBindingStrength? minimumTokenBindingStrength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TokenBindingConfiguration(TokenBindingMode? mode, TokenBindingStrength? minimumTokenBindingStrength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             MinimumTokenBindingStrength = minimumTokenBindingStrength;

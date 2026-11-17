@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// The path must be /keys/{key-name} or /keys/{key-name}/{key-version}.
         /// User information, query strings, fragments, and non-default ports are not supported.
         /// </param>
-        /// <param name="kty"> Wrapping key type. Only oct is supported. </param>
+        /// <param name="keyType"> Wrapping key type. Only oct is supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WrappingKeyValue(Uri uri, string kty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WrappingKeyValue(Uri uri, string keyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
-            Kty = kty;
+            KeyType = keyType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Wrapping key type. Only oct is supported. </summary>
         [WirePath("kty")]
-        public string Kty { get; } = "oct";
+        public string KeyType { get; } = "oct";
     }
 }

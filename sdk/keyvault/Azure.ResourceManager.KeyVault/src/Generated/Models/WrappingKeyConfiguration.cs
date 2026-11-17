@@ -27,22 +27,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of <see cref="WrappingKeyConfiguration"/>. </summary>
         /// <param name="keyValue"> Identifies the external wrapping key. </param>
-        /// <param name="keyAuthenticationDataAuthType">
-        /// Authentication mechanism. Only ServiceIdentity is supported.
-        /// A caller-supplied vault managed identity is not required.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValue"/> or <paramref name="keyAuthenticationDataAuthType"/> is null. </exception>
-        public WrappingKeyConfiguration(WrappingKeyValue keyValue, string keyAuthenticationDataAuthType)
-        {
-            Argument.AssertNotNull(keyValue, nameof(keyValue));
-            Argument.AssertNotNull(keyAuthenticationDataAuthType, nameof(keyAuthenticationDataAuthType));
-
-            KeyValue = keyValue;
-            KeyAuthenticationData = new WrappingKeyAuthenticationData();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WrappingKeyConfiguration"/>. </summary>
-        /// <param name="keyValue"> Identifies the external wrapping key. </param>
         /// <param name="keyAuthenticationData"> Specifies how the service authenticates to the external wrapping key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal WrappingKeyConfiguration(WrappingKeyValue keyValue, WrappingKeyAuthenticationData keyAuthenticationData, IDictionary<string, BinaryData> additionalBinaryDataProperties)

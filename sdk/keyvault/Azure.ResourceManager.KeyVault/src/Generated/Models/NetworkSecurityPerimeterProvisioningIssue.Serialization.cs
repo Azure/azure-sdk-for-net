@@ -13,52 +13,52 @@ using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Configuration for Token Binding for Entra tokens. </summary>
-    public partial class TokenBindingParameters : IJsonModel<TokenBindingParameters>
+    /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
+    public partial class NetworkSecurityPerimeterProvisioningIssue : IJsonModel<NetworkSecurityPerimeterProvisioningIssue>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TokenBindingParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TokenBindingParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTokenBindingParameters(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TokenBindingParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TokenBindingParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TokenBindingParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TokenBindingParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TokenBindingParameters IPersistableModel<TokenBindingParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkSecurityPerimeterProvisioningIssue IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TokenBindingParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TokenBindingParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TokenBindingParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TokenBindingParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Mode))
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MinimumTokenBindingStrength))
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("minimumTokenBindingStrength"u8);
-                writer.WriteStringValue(MinimumTokenBindingStrength.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,46 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TokenBindingParameters IJsonModel<TokenBindingParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkSecurityPerimeterProvisioningIssue IJsonModel<NetworkSecurityPerimeterProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TokenBindingParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TokenBindingParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TokenBindingParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTokenBindingParameters(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterProvisioningIssue(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TokenBindingParameters DeserializeTokenBindingParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkSecurityPerimeterProvisioningIssue DeserializeNetworkSecurityPerimeterProvisioningIssue(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TokenBindingMode? mode = default;
-            TokenBindingStrength? minimumTokenBindingStrength = default;
+            string name = default;
+            NetworkSecurityPerimeterProvisioningIssueProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("mode"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new TokenBindingMode(prop.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("minimumTokenBindingStrength"u8))
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minimumTokenBindingStrength = new TokenBindingStrength(prop.Value.GetString());
+                    properties = NetworkSecurityPerimeterProvisioningIssueProperties.DeserializeNetworkSecurityPerimeterProvisioningIssueProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TokenBindingParameters(mode, minimumTokenBindingStrength, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterProvisioningIssue(name, properties, additionalBinaryDataProperties);
         }
     }
 }

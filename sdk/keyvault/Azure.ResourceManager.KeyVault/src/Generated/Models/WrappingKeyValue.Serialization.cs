@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("kty"u8);
-            writer.WriteStringValue(Kty);
+            writer.WriteStringValue(KeyType);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             Uri uri = default;
-            string kty = default;
+            string keyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (prop.NameEquals("kty"u8))
                 {
-                    kty = prop.Value.GetString();
+                    keyType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WrappingKeyValue(uri, kty, additionalBinaryDataProperties);
+            return new WrappingKeyValue(uri, keyType, additionalBinaryDataProperties);
         }
     }
 }

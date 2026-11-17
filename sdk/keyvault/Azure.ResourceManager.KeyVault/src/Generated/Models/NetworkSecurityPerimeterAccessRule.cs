@@ -12,21 +12,21 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-    public partial class AccessRule
+    public partial class NetworkSecurityPerimeterAccessRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        internal AccessRule()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRule"/>. </summary>
+        internal NetworkSecurityPerimeterAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of the access rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRule(string name, AccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterAccessRule(string name, NetworkSecurityPerimeterAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Properties of the access rule. </summary>
         [WirePath("properties")]
-        public AccessRuleProperties Properties { get; }
+        public NetworkSecurityPerimeterAccessRuleProperties Properties { get; }
     }
 }

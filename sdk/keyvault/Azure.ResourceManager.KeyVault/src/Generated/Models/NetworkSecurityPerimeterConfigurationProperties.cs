@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationProperties()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="resourceAssociation"> Information about the resource association. </param>
         /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> List of provisioning issues, if any. </summary>
         [WirePath("provisioningIssues")]
-        public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Information about the network security perimeter (NSP). </summary>
         [WirePath("networkSecurityPerimeter")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Information about the resource association. </summary>
         [WirePath("resourceAssociation")]
-        public ResourceAssociation ResourceAssociation { get; }
+        public NetworkSecurityPerimeterResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Network security perimeter configuration profile. </summary>
         [WirePath("profile")]

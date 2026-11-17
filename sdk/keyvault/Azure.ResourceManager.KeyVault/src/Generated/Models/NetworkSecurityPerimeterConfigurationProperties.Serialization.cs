@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
-                foreach (ProvisioningIssue item in ProvisioningIssues)
+                foreach (NetworkSecurityPerimeterProvisioningIssue item in ProvisioningIssues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
-            IReadOnlyList<ProvisioningIssue> provisioningIssues = default;
+            IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default;
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
-            ResourceAssociation resourceAssociation = default;
+            NetworkSecurityPerimeterResourceAssociation resourceAssociation = default;
             NetworkSecurityProfile profile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                    List<NetworkSecurityPerimeterProvisioningIssue> array = new List<NetworkSecurityPerimeterProvisioningIssue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item, options));
+                        array.Add(NetworkSecurityPerimeterProvisioningIssue.DeserializeNetworkSecurityPerimeterProvisioningIssue(item, options));
                     }
                     provisioningIssues = array;
                     continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(prop.Value, options);
+                    resourceAssociation = NetworkSecurityPerimeterResourceAssociation.DeserializeNetworkSecurityPerimeterResourceAssociation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("profile"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
