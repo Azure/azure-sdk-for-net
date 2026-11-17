@@ -60,7 +60,7 @@ namespace Azure.Communication.Identity
 
         /// <summary> Converts a string to a <see cref="CommunicationTokenScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationTokenScope?(string value) => value == null ? null : new CommunicationTokenScope(value);
+        public static implicit operator CommunicationTokenScope?(string value) => value == null ? (CommunicationTokenScope?)null : new CommunicationTokenScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
