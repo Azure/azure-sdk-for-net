@@ -30,6 +30,12 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample14_IndexCreationForAISearch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample14_IndexCreationForAISearch.md) | Azure AI Search Index creation sample, for usage as an Agent tool. |
 | [Sample11_InferenceImageEmbedding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample11_InferenceImageEmbedding.md) | Sample for `Azure.AI.Inference` Image Embeddings extensions. |
 
+## Voice evaluation
+
+| Sample | Description |
+| ------ | ----------- |
+| [Voice evaluation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample_VoiceEvaluation.md) | Grade existing recorded conversations or simulate and grade a short call against an existing voice agent. |
+
 ## Evaluation data generation
 
 | Sample | Description |
