@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Upgraded API version to `2026-09-01`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated documentation for `MongoClusterStorageProperties.Type`: the service defaults to `PremiumSSDv2` when the storage type is omitted during cluster creation; omitting it during an update leaves the storage type unchanged.
 
 ## 1.2.0-beta.1 (2026-09-20)
 
