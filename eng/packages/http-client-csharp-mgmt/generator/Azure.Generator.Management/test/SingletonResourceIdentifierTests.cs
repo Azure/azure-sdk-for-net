@@ -36,13 +36,21 @@ namespace Azure.Generator.Management.Tests
             Assert.That(client.GetBarSettingsResource(id).Id, Is.EqualTo(id));
         }
 
-        [Test]
-        public void GetLocationSingletonRejectsNonCanonicalLocation()
+        [TestCase("")]
+        [TestCase("/")]
+        public void GetLocationSingletonAcceptsDisplayNameAndPreservesId(string suffix)
         {
-            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
-            var id = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/providers/MgmtTypeSpec/locations/East US/locationSingletons/current");
+            var responseId = $"/subscriptions/{SubscriptionId}/providers/MgmtTypeSpec/locations/eastus/locationSingletons/current";
+            var policy = new ResponsePolicy($$"""{"id":"{{responseId}}","name":"current","type":"MgmtTypeSpec/locations/locationSingletons"}""");
+            var options = new ArmClientOptions();
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId, options);
+            var id = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/providers/MgmtTypeSpec/locations/East US/locationSingletons/current{suffix}");
 
-            Assert.Throws<ArgumentException>(() => client.GetLocationSingletonResource(id));
+            var resource = client.GetLocationSingletonResource(id);
+            Assert.That(resource.Id.ToString(), Is.EqualTo(id.ToString()));
+            resource.Get();
+            Assert.That(policy.Uri!.AbsolutePath, Does.EndWith("/locations/eastus/locationSingletons/current"));
         }
 
         [TestCase("eastus")]
@@ -111,7 +119,9 @@ namespace Azure.Generator.Management.Tests
         }
 
         [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current")]
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current/")]
         [TestCase("/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current")]
+        [TestCase("/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current/")]
         public void GetSingletonResourceRejectsOtherScopesWithSameResourceType(string value)
         {
             var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
@@ -123,12 +133,21 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
-        public void GetSingletonResourceRejectsTrailingSlash()
+        public void GetSingletonResourceAcceptsTrailingSlashAndPreservesId()
         {
             var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
-            var id = BarSettingsResource.CreateResourceIdentifier(SubscriptionId, "group", "foo", "bar");
+            var id = new ResourceIdentifier(BarSettingsResource.CreateResourceIdentifier(SubscriptionId, "group", "foo", "bar") + "/");
 
-            Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(new ResourceIdentifier(id + "/")));
+            Assert.That(client.GetBarSettingsResource(id).Id.ToString(), Is.EqualTo(id.ToString()));
+        }
+
+        [Test]
+        public void GetSingletonResourceRejectsDifferentSingletonWithTrailingSlash()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var id = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/resourceGroups/group/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/other/");
+
+            Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(id));
         }
 
         [Test]

@@ -139,8 +139,13 @@ namespace Azure.Generator.Management.Providers
                 });
 
                 body.Add(Declare("segments", typeof(string[]), idParameter.Invoke("ToString").Invoke("Split", Literal('/')), out var segments));
+                var expectedLength = pattern.Count + 1;
+                // ResourceIdentifier accepts one trailing slash and preserves it in ToString().
+                var invalidLength = segments.Property("Length").NotEqual(Literal(expectedLength))
+                    .And(segments.Property("Length").NotEqual(Literal(expectedLength + 1))
+                        .Or(new IndexerExpression(segments, Literal(expectedLength)).NotEqual(Literal(string.Empty))));
                 var invalid = idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(Static(resource.Type).Property("ResourceType"))
-                    .Or(segments.Property("Length").NotEqual(Literal(pattern.Count + 1)))
+                    .Or(invalidLength)
                     .Or(new IndexerExpression(segments, Literal(0)).NotEqual(Literal(string.Empty)));
 
                 for (var index = 0; index < pattern.Count; index++)
@@ -150,14 +155,6 @@ namespace Azure.Generator.Management.Providers
                     invalid = invalid.Or(segment.IsConstant
                         ? Not(StringSnippets.Equals(value.As<string>(), Literal(segment.Value).As<string>(), StringComparison.OrdinalIgnoreCase))
                         : value.Equal(Literal(string.Empty)));
-
-                    // AzureLocation converts display names such as "East US" to "eastus".
-                    // Reject IDs that would therefore target a different path than their Id.
-                    if (!segment.IsConstant && resource.IsAzureLocationPathParameter(segment.VariableName))
-                    {
-                        var normalizedLocation = New.Instance(typeof(AzureLocation), value).Invoke(nameof(ToString));
-                        invalid = invalid.Or(Not(StringSnippets.Equals(value.As<string>(), normalizedLocation.As<string>(), StringComparison.OrdinalIgnoreCase)));
-                    }
                 }
 
                 body.Add(new IfStatement(invalid)
