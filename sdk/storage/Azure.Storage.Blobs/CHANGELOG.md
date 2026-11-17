@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where `BlobClient.Upload(..., overwrite: false)` with upload checksum validation configured as `StorageChecksumAlgorithm.StorageCrc64` could throw `InvalidDataException` when the blob already existed. The operation now surfaces the expected `RequestFailedException` for `409 *AlreadyExists`.
+
 ### Other Changes
 
 ## 12.30.1 (2026-10-05)
