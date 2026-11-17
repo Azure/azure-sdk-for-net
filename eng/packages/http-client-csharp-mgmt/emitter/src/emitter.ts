@@ -74,6 +74,7 @@ export async function emitManagementCodeModel(
     setHasClientNameOverride(codeModel, sdkContext);
     removeReferenceIdsFromUnknownValues(codeModel);
     removeConstructorRequirednessOverrides(codeModel);
+    removeModelDeprecations(codeModel);
     return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
   }
 }
@@ -91,6 +92,14 @@ export function removeConstructorRequirednessOverrides(
     for (const property of model.properties) {
       delete property.requiredInConstructor;
     }
+  }
+}
+
+export function removeModelDeprecations(codeModel: CodeModel): void {
+  // Temporarily disable model deprecation until management types and generated references handle it consistently.
+  // https://github.com/Azure/azure-sdk-for-net/issues/65020
+  for (const model of codeModel.models) {
+    delete model.deprecation;
   }
 }
 
