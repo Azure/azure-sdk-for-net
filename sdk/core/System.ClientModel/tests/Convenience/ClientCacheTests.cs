@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -234,7 +235,27 @@ public class ClientCacheTests
     }
 }
 
-internal record DummyClientKey(string Key, ClientPipelineOptions? options = null);
+internal class DummyClientKey
+{
+    public DummyClientKey(string key, ClientPipelineOptions? options = null)
+    {
+        Key = key;
+        Options = options;
+    }
+
+    public string Key { get; }
+    public ClientPipelineOptions? Options { get; }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is DummyClientKey other && Key == other.Key && Equals(Options, other.Options);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Key, Options);
+    }
+}
 
 // Helper class to simulate a disposable client
 internal class DisposableClient : IDisposable
