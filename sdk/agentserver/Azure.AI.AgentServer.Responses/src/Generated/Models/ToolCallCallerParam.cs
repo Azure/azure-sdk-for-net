@@ -9,18 +9,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The execution context that produced this tool call.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DirectToolCallCallerParam"/> and <see cref="ProgramToolCallCallerParam"/>.
-    /// </summary>
-    internal abstract partial class ToolCallCallerParam
+    /// <summary> The execution context that produced this tool call. </summary>
+    internal partial class ToolCallCallerParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ToolCallCallerParam"/>. </summary>
         /// <param name="type"></param>
-        private protected ToolCallCallerParam(ToolCallCallerParamType @type)
+        internal ToolCallCallerParam(ToolCallCallerParamType @type)
         {
             Type = @type;
         }

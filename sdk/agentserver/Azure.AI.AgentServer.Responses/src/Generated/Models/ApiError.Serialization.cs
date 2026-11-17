@@ -108,7 +108,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (Optional.IsDefined(Misalignment))
             {
                 writer.WritePropertyName("misalignment"u8);
-                writer.WriteObjectValue(Misalignment, options);
+                writer.WriteObjectValue<object>(Misalignment, options);
             }
             if (Optional.IsCollectionDefined(Details))
             {
@@ -213,7 +213,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             bool paramIsDefined = false;
             string @param = default;
             string @type = default;
-            MisalignmentErrorDetailsResource misalignment = default;
+            object misalignment = default;
             IList<ApiError> details = default;
             IDictionary<string, BinaryData> additionalInfo = default;
             IDictionary<string, BinaryData> debugInfo = default;
@@ -257,7 +257,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    misalignment = MisalignmentErrorDetailsResource.DeserializeMisalignmentErrorDetailsResource(prop.Value, options);
+                    misalignment = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("details"u8))

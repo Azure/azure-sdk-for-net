@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="ProgramToolCallCallerParam"/>. </summary>
         /// <param name="callerId"> The call ID of the program item that produced this tool call. </param>
-        internal ProgramToolCallCallerParam(string callerId) : base(ToolCallCallerParamType.Program)
+        internal ProgramToolCallCallerParam(string callerId) : base("program")
         {
             CallerId = callerId;
         }

@@ -1,5 +1,5 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-agentserver-responses
-commit: 4cc14ca0fc86313ea72475132a843a7a5a64dbc3
+commit: c1b6d2e5cf67145ceeacb65430a73f7b23f6ecd1
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
 entrypointFile: client.tsp
