@@ -337,6 +337,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("aiToolchainOperatorProfile"u8);
                 writer.WriteObjectValue(AiToolchainOperatorProfile, options);
             }
+            if (Optional.IsDefined(AgentSandboxProfile))
+            {
+                writer.WritePropertyName("agentSandboxProfile"u8);
+                writer.WriteObjectValue(AgentSandboxProfile, options);
+            }
+            if (Optional.IsDefined(PodSnapshotProfile))
+            {
+                writer.WritePropertyName("podSnapshotProfile"u8);
+                writer.WriteObjectValue(PodSnapshotProfile, options);
+            }
             if (Optional.IsDefined(SchedulerProfile))
             {
                 writer.WritePropertyName("schedulerProfile"u8);
@@ -457,6 +467,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = default;
             ManagedClusterBootstrapProfile bootstrapProfile = default;
             ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile = default;
+            ManagedClusterAgentSandboxProfile agentSandboxProfile = default;
+            ManagedClusterPodSnapshotProfile podSnapshotProfile = default;
             SchedulerProfile schedulerProfile = default;
             ManagedClusterHostedSystemProfile hostedSystemProfile = default;
             ManagedClusterHealthMonitorProfile healthMonitorProfile = default;
@@ -882,6 +894,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     aiToolchainOperatorProfile = ManagedClusterAIToolchainOperatorProfile.DeserializeManagedClusterAIToolchainOperatorProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agentSandboxProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentSandboxProfile = ManagedClusterAgentSandboxProfile.DeserializeManagedClusterAgentSandboxProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("podSnapshotProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    podSnapshotProfile = ManagedClusterPodSnapshotProfile.DeserializeManagedClusterPodSnapshotProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("schedulerProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -990,6 +1020,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 nodeProvisioningProfile,
                 bootstrapProfile,
                 aiToolchainOperatorProfile,
+                agentSandboxProfile,
+                podSnapshotProfile,
                 schedulerProfile,
                 hostedSystemProfile,
                 healthMonitorProfile,

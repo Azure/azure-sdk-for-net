@@ -10,8 +10,6 @@ This script will do the necessary book keeping work needed to release a package.
 This script will do a number of things when ran:
 
 - It will read the current version from the project and will have you confirm if that is the version you want to ship
-- It will take the package metadata and version and update the DevOps release tracking items with that information.
-  - If there is existing release work item it will update it and if not it will create one.
 - It will validate that the changelog has a entry for the package version that you want to release as well as a timestamp.
 
 For more information see https://aka.ms/azsdk/mark-release-status.
@@ -27,9 +25,6 @@ name under the 'sdk' folder (i.e for the core package which lives under 'sdk\cor
 Optional: Provide a specific date for when you plan to release the package. Should be the date (MM/dd/yyyy) that the given package is going to ship.
 If one isn't provided, then it will compute the next ship date or today's date if past the ship date for the month as the planned date.
 
-.PARAMETER ReleaseTrackingOnly
-Optional: If this switch is passed then the script will only update the release work items and not update the versions in the local repo or validate the changelog.
-
 .PARAMETER GroupId
 Optional: The group ID for the package. For Java packages, if not provided, the script will prompt for input with 'com.azure' as the default.
 
@@ -38,13 +33,6 @@ PS> ./eng/common/scripts/Prepare-Release.ps1 <PackageName>
 
 The most common usage is to call the script passing the package name. Once the script is finished then you will have modified project and change log files.
 You should make any additional changes to the change log to capture the changes and then submit the PR for the final changes before you do a release.
-
-.EXAMPLE
-PS> ./eng/common/scripts/Prepare-Release.ps1 <PackageName> -ReleaseTrackingOnly
-
-If you aren't ready to do the final versioning changes yet but you want to update release tracking information for shiproom pass in the -ReleaseTrackingOnly.
-option. This should not modify or validate anything in the repo but will update the DevOps release tracking items. Once you are ready for the verioning changes
-as well then come back and run the full script again without the -ReleaseTrackingOnly option and give it the same version information you did the first time.
 #>
 [CmdletBinding()]
 param(
@@ -52,14 +40,12 @@ param(
   [string]$PackageName,
   [string]$ServiceDirectory,
   [string]$ReleaseDate, # Pass Date in the form MM/dd/yyyy"
-  [switch]$ReleaseTrackingOnly = $false,
   [string]$GroupId
 )
 Set-StrictMode -Version 3
 
 . ${PSScriptRoot}\common.ps1
 . ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
-. ${PSScriptRoot}\Helpers\DevOps-WorkItem-Helpers.ps1
 
 # Prompt for GroupId if language is Java and GroupId is not provided
 if ($Language -eq 'java' -and [string]::IsNullOrEmpty($GroupId)) {
@@ -156,48 +142,6 @@ if ($null -eq $newVersionParsed)
 {
   Write-Error "Invalid version $newVersion. Version must follow standard SemVer rules, see https://aka.ms/azsdk/engsys/packageversioning"
   exit 1
-}
-
-$result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
-    -packageName $packageProperties.Name `
-    -groupId $packageProperties.Group `
-    -version $newVersion `
-    -plannedDate $releaseDateString `
-    -packageRepoPath $packageProperties.serviceDirectory `
-    -packageType $packageProperties.SDKType `
-    -packageNewLibrary $packageProperties.IsNewSDK
-
-if (-not $result)
-{
-    Write-Error "Update of the Devops Release WorkItem failed."
-    exit 1
-}
-
-# Check API status
-try
-{
-  az account show *> $null
-  if (!$?) {
-    Write-Host 'Running az login...'
-    az login *> $null
-  }
-  $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-  $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-  $fullPackageNameInApiView = Get-FullPackageName -PackageInfo $packageProperties -UseColonSeparator
-  Check-ApiReviewStatus -PackageName $fullPackageNameInApiView -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
-}
-catch
-{
-  Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
-}
-
-if ($releaseTrackingOnly)
-{
-  Write-Host
-  Write-Host "Script is running in release tracking only mode so only updating the release tracker and not updating versions locally."
-  Write-Host "You will need to run this script again once you are ready to update the versions to ensure the projects and changelogs contain the correct version."
-
-  exit 0
 }
 
 if (Test-Path "Function:SetPackageVersion")

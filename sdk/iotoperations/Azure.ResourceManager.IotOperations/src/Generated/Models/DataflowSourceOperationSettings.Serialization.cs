@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 assetRef,
                 serializationFormat,
                 schemaRef,
-                dataSources,
+                dataSources ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadProfileStatesCollection(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadProfileStatesCollection(value ?? new ChangeTrackingList<ContainerAppWorkloadProfileState>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

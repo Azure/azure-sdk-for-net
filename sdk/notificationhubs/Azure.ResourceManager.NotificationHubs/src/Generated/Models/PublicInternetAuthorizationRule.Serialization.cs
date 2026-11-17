@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PublicInternetAuthorizationRule(accessRights, additionalBinaryDataProperties);
+            return new PublicInternetAuthorizationRule(accessRights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>(), additionalBinaryDataProperties);
         }
     }
 }

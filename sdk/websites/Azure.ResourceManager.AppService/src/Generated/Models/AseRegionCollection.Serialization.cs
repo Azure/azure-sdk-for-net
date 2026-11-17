@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AseRegionCollection(value, nextLink, additionalBinaryDataProperties);
+            return new AseRegionCollection(value ?? new ChangeTrackingList<AppServiceAseRegion>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

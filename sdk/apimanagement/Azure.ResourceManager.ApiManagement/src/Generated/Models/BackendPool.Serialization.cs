@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<BackendPoolItem> poolServices = default;
-            BackendFailureResponse failureResponse = default;
+            BackendFailureResult failureResponse = default;
             BackendSessionAffinity sessionAffinity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    failureResponse = BackendFailureResponse.DeserializeBackendFailureResponse(prop.Value, options);
+                    failureResponse = BackendFailureResult.DeserializeBackendFailureResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sessionAffinity"u8))

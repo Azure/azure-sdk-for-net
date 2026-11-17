@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HcpOperatorIdentityRoleSetProperties(controlPlaneOperators, dataPlaneOperators, additionalBinaryDataProperties);
+            return new HcpOperatorIdentityRoleSetProperties(controlPlaneOperators ?? new ChangeTrackingList<OperatorIdentityRoles>(), dataPlaneOperators ?? new ChangeTrackingList<OperatorIdentityRoles>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Defender.Easm
         private const string ContactValue = "contact";
         private const string DomainValue = "domain";
         private const string HostValue = "host";
-        private const string IpBlockValue = "ipBlock";
+        private const string IPBlockValue = "ipBlock";
 
         /// <summary> Initializes a new instance of <see cref="DiscoverySourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,8 +46,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Host. </summary>
         public static DiscoverySourceKind Host { get; } = new DiscoverySourceKind(HostValue);
 
-        /// <summary> Gets the IpBlock. </summary>
-        public static DiscoverySourceKind IpBlock { get; } = new DiscoverySourceKind(IpBlockValue);
+        /// <summary> Gets the IPBlock. </summary>
+        public static DiscoverySourceKind IPBlock { get; } = new DiscoverySourceKind(IPBlockValue);
 
         /// <summary> Determines if two <see cref="DiscoverySourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

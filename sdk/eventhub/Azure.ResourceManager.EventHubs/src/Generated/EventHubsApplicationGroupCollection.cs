@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new ApplicationGroupGetByNamespaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new EventHubsApplicationGroupDataAsyncCollectionResultOfT(
                 _applicationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new ApplicationGroupGetByNamespaceCollectionResultOfT(
+            return new PageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new EventHubsApplicationGroupDataCollectionResultOfT(
                 _applicationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RulestackFirewallListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RulestackFirewallListResult(value ?? new ChangeTrackingList<string>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -119,9 +119,13 @@ namespace Azure.Generator.Management.Visitors
         private static bool IsPublicModelProperty(PropertyProvider property)
         {
             return property.Modifiers.HasFlag(MethodSignatureModifiers.Public)
-                && !IsObsoleteProperty(property)
-                && !IsJsonPatchProperty(property);
+                && IsEffectiveModelProperty(property);
         }
+
+        private static bool IsEffectiveModelProperty(PropertyProvider property)
+            => !IsObsoleteProperty(property)
+                && !IsJsonPatchProperty(property)
+                && !property.Modifiers.HasFlag(MethodSignatureModifiers.Static);
 
 #pragma warning disable SCME0001 // JsonPatch is experimental.
         private static bool IsJsonPatchProperty(PropertyProvider property)
@@ -582,10 +586,13 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
-                    // Only safe flatten a model with one effective public property. JsonPatch is an
-                    // infrastructure property and does not contribute to the model's public data shape.
-                    var publicProperties = innerProperties.Where(IsPublicModelProperty).ToArray();
-                    if (publicProperties.Length != 1 || !IsFlattenableProperty(publicProperties[0]))
+                    // Count independent instance properties, but do not count a backing wrapper
+                    // again when its data is already represented by flattened properties.
+                    var flattenedWrappers = innerProperties.OfType<FlattenedPropertyProvider>()
+                        .Select(p => p.FlattenedProperty).ToHashSet();
+                    var effectiveProperties = innerProperties
+                        .Where(p => IsEffectiveModelProperty(p) && !flattenedWrappers.Contains(p)).ToArray();
+                    if (effectiveProperties.Length != 1 || !IsFlattenableProperty(effectiveProperties[0]))
                     {
                         continue;
                     }
@@ -1139,6 +1146,24 @@ namespace Azure.Generator.Management.Visitors
                                 {
                                     // Type not found in CSharpTypeMap; emit a safe assignment that does not reference the original parameter
                                     updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(Default).Terminate());
+                                }
+                            }
+                            else
+                            {
+                                // No required leaves remain to initialize this wrapper in the public
+                                // constructor. A required getter-only collection wrapper must still
+                                // be usable, so initialize it inline without changing optional wrappers.
+                                foreach (var internalProperty in value.Where(x => x.FlattenedProperty.Type.IsCollection)
+                                    .Select(x => x.InternalProperty).Distinct())
+                                {
+                                    if (internalProperty.WireInfo?.IsRequired == true
+                                        && internalProperty.Body is AutoPropertyBody { HasSetter: false, InitializationExpression: null } autoBody
+                                        && TryGetModelProvider(internalProperty.Type, out var nestedModel)
+                                        && nestedModel.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                                            && c.Signature.Parameters.Count == 0))
+                                    {
+                                        internalProperty.Update(body: autoBody with { InitializationExpression = New.Instance(internalProperty.Type) });
+                                    }
                                 }
                             }
                         }

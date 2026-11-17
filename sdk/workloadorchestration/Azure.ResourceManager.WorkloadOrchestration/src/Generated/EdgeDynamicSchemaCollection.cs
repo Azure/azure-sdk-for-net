@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new EdgeDynamicSchemaDataAsyncCollectionResultOfT(
                 _dynamicSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaCollectionResultOfT(
+            return new PageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new EdgeDynamicSchemaDataCollectionResultOfT(
                 _dynamicSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

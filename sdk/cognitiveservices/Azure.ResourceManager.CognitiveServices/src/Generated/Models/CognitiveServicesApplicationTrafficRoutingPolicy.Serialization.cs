@@ -81,13 +81,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules"u8);
-                writer.WriteStartArray();
-                foreach (CognitiveServicesTrafficRoutingRule item in Rules)
+                if (Rules != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("rules"u8);
+                    writer.WriteStartArray();
+                    foreach (CognitiveServicesTrafficRoutingRule item in Rules)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("rules"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             CognitiveServicesTrafficRoutingProtocol? protocol = default;
-            IList<CognitiveServicesTrafficRoutingRule> rules = default;
+            IList<CognitiveServicesTrafficRoutingRule> rules = new ChangeTrackingList<CognitiveServicesTrafficRoutingRule>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,6 +156,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rules = null;
                         continue;
                     }
                     List<CognitiveServicesTrafficRoutingRule> array = new List<CognitiveServicesTrafficRoutingRule>();
@@ -164,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesApplicationTrafficRoutingPolicy(protocol, rules ?? new ChangeTrackingList<CognitiveServicesTrafficRoutingRule>(), additionalBinaryDataProperties);
+            return new CognitiveServicesApplicationTrafficRoutingPolicy(protocol, rules, additionalBinaryDataProperties);
         }
     }
 }

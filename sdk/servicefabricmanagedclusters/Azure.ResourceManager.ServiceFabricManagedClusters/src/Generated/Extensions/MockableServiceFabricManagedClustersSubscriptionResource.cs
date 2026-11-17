@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 
         private ClientDiagnostics ManagedClustersClientDiagnostics => _managedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ServiceFabric/managedClusters", out string apiVersion) ? apiVersion : "2026-05-01-preview");
 
         private ClientDiagnostics ManagedClusterVersionClientDiagnostics => _managedClusterVersionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetBySubscriptionAsyncCollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterDataAsync0CollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetBySubscriptionCollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterData0CollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesAsyncCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
+            return new ServiceFabricManagedUnsupportedVmSizeAsyncCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
         }
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
+            return new ServiceFabricManagedUnsupportedVmSizeCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
         }
     }
 }

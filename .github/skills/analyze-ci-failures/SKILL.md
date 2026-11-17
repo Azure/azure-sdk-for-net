@@ -15,11 +15,14 @@ Trigger phrases: "analyze CI failures", "fix CI", "why is CI failing", "help wit
 
 The user must provide a **PR number**, **PR URL**, or **pipeline build ID**. If not provided, ask the user.
 
+An automatic caller also supplies the immutable **PR head SHA**, **check run ID**, and **completion timestamp**. Analyze that completion only, not a newer run. Check-run events do not expose `run_attempt`; a changed completion timestamp distinguishes another attempt when the provider reuses its check ID. Follow the caller's safe-output and duplicate-prevention contract instead of posting directly.
+
 ## Workflow
 
 ### 1. Gather information
 
 - Fetch PR details, check statuses, changed files, and workflow runs using GitHub MCP tools.
+- When a caller supplies a completion identity, verify the PR is still open, non-draft, and at that head, and that the check still identifies the same completed failure. Stop without commenting if it is superseded. Retrieve errors from that run/attempt only; other current check statuses are context, not evidence for its diagnosis.
 - Extract **service directory** and **package name** from changed file paths (`sdk/<service>/<package>/`).
 - Identify the CI provider from each failed check URL before fetching logs:
   - For an Azure DevOps URL (`dev.azure.com`), extract the `buildId`. Use `azure-sdk-mcp:azsdk_analyze_pipeline` when available.
@@ -48,7 +51,7 @@ Compose a GitHub comment with:
 - **Per-failure sections**: Specific to THIS PR — include actual error messages, affected files, and concrete fix commands with `<service>`/`<package>` filled in
 - **Quick fix command** at the end if applicable
 
-Before posting, check existing comments for `## 🔍 CI Failure Analysis` to avoid duplicates.
+Before posting, check existing bot comments for the **same PR/head/CI run/completed attempt**, not just the `## 🔍 CI Failure Analysis` header. An older report must not suppress analysis of a new failure. Preserve the caller's exact completion marker when provided; the standalone workflow adds and verifies its marker deterministically at publication.
 
 ## CI Check Name → Failure Mapping
 
@@ -88,6 +91,8 @@ These are exact strings/patterns to search for in CI logs. They are specific to 
 ## New Package Checklist
 
 For PRs that introduce a **new SDK package** (all files are `added`, no prior version exists), also check for these commonly missing scaffolding files:
+
+Use this checklist only to explain a CI failure, not as an independent code review or a source of unrelated findings.
 
 - `CHANGELOG.md`
 - `README.md`

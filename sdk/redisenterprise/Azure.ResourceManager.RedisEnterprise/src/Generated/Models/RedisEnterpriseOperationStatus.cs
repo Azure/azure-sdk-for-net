@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="status"> The current status of the operation. </param>
         /// <param name="errorResponse"> Error response describing why the operation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseOperationStatus(ResourceIdentifier id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ErrorResponse errorResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseOperationStatus(ResourceIdentifier id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ErrorResult errorResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Error response describing why the operation failed. </summary>
         [WirePath("error")]
-        internal ErrorResponse ErrorResponse { get; }
+        internal ErrorResult ErrorResponse { get; }
 
         /// <summary> The error object. </summary>
         [WirePath("error.error")]

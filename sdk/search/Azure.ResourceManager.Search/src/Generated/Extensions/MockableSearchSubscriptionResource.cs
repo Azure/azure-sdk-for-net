@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.Search.Mocking
 
         private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(
+            ServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SearchClientClientDiagnostics => _searchClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -78,7 +84,7 @@ namespace Azure.ResourceManager.Search.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetBySubscriptionAsyncCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), default, context, "MockableSearchSubscriptionResource.GetSearchServices"), data => new SearchServiceResource(Client, data));
+            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new SearchServiceDataAsync0CollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), default, context, "MockableSearchSubscriptionResource.GetSearchServices"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>
@@ -107,7 +113,7 @@ namespace Azure.ResourceManager.Search.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetBySubscriptionCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), default, context, "MockableSearchSubscriptionResource.GetSearchServices"), data => new SearchServiceResource(Client, data));
+            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new SearchServiceData0CollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), default, context, "MockableSearchSubscriptionResource.GetSearchServices"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +343,7 @@ namespace Azure.ResourceManager.Search.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT(
+            return new QuotaUsageResultAsyncCollectionResultOfT(
                 UsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
@@ -373,7 +379,7 @@ namespace Azure.ResourceManager.Search.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesBySubscriptionCollectionResultOfT(
+            return new QuotaUsageResultCollectionResultOfT(
                 UsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,

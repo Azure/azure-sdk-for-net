@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppDaprComponentData, ContainerAppManagedEnvironmentDaprComponentResource>(new ContainerAppManagedEnvironmentDaprComponentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppDaprComponentData, ContainerAppManagedEnvironmentDaprComponentResource>(new ContainerAppDaprComponentDataAsync0CollectionResultOfT(
                 _containerAppManagedEnvironmentDaprComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppDaprComponentData, ContainerAppManagedEnvironmentDaprComponentResource>(new ContainerAppManagedEnvironmentDaprComponentsGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerAppDaprComponentData, ContainerAppManagedEnvironmentDaprComponentResource>(new ContainerAppDaprComponentData0CollectionResultOfT(
                 _containerAppManagedEnvironmentDaprComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

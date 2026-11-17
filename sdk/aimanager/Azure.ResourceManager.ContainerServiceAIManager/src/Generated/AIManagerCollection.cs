@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AIManagerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AIManagerResource.ResourceType, out string aiManagerApiVersion);
             _aiManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager", AIManagerResource.ResourceType.Namespace, Diagnostics);
-            _aiManagersRestClient = new AIManagers(_aiManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiManagerApiVersion ?? "2026-09-02-preview");
+            _aiManagersRestClient = new AIManagers(_aiManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/aiManagers", out string aiManagersApiVersionOverride) ? aiManagersApiVersionOverride : "2026-09-02-preview");
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AIManagerData, AIManagerResource>(new AIManagersGetByResourceGroupAsyncCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
+            return new AsyncPageableWrapper<AIManagerData, AIManagerResource>(new AIManagerDataAsyncCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AIManagerData, AIManagerResource>(new AIManagersGetByResourceGroupCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
+            return new PageableWrapper<AIManagerData, AIManagerResource>(new AIManagerDataCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
         }
 
         /// <summary>

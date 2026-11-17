@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Hci.Mocking
     {
         private ClientDiagnostics _clustersClientDiagnostics;
         private Clusters _clustersRestClient;
+        private ClientDiagnostics _edgeMachinesClientDiagnostics;
+        private EdgeMachines _edgeMachinesRestClient;
 
         /// <summary> Initializes a new instance of MockableHciSubscriptionResource for mocking. </summary>
         protected MockableHciSubscriptionResource()
@@ -37,14 +39,86 @@ namespace Azure.ResourceManager.Hci.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-30");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/clusters", out string apiVersion) ? apiVersion : "2026-10-01");
+
+        private ClientDiagnostics EdgeMachinesClientDiagnostics => _edgeMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EdgeMachines EdgeMachinesRestClient => _edgeMachinesRestClient ??= new EdgeMachines(EdgeMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/edgeMachines", out string apiVersion0) ? apiVersion0 : "2026-10-01");
+
+        /// <summary> Gets a collection of OsImages in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OsImages and their operations over a OsImageResource. </returns>
+        public virtual OsImageCollection GetOsImages(AzureLocation location)
+        {
+            return new OsImageCollection(Client, Id, location);
+        }
+
+        /// <summary>
+        /// Get a os image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/osImages/{osImageName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OsImages_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="osImageName"> The name of the OsImage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="osImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OsImageResource>> GetOsImageAsync(AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(osImageName, nameof(osImageName));
+
+            return await GetOsImages(location).GetAsync(osImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a os image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/osImages/{osImageName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OsImages_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="osImageName"> The name of the OsImage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="osImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OsImageResource> GetOsImage(AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(osImageName, nameof(osImageName));
+
+            return GetOsImages(location).Get(osImageName, cancellationToken);
+        }
 
         /// <summary> Gets a collection of ValidatedSolutionRecipes in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of ValidatedSolutionRecipes and their operations over a ValidatedSolutionRecipeResource. </returns>
         public virtual ValidatedSolutionRecipeCollection GetValidatedSolutionRecipes(AzureLocation location)
         {
-            return GetCachedClient(client => new ValidatedSolutionRecipeCollection(client, Id, location));
+            return new ValidatedSolutionRecipeCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -60,7 +134,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +194,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,7 +206,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new HciClusterDataAsync0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
         }
 
         /// <summary>
@@ -148,7 +222,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,7 +234,63 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
+            return new PageableWrapper<HciClusterData, HciClusterResource>(new HciClusterData0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all edge machines in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/edgeMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeMachineResource> GetEdgeMachinesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachineDataAsync0CollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetEdgeMachines"), data => new EdgeMachineResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all edge machines in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/edgeMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeMachineResource> GetEdgeMachines(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachineData0CollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetEdgeMachines"), data => new EdgeMachineResource(Client, data));
         }
     }
 }

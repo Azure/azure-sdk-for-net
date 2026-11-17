@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LabVhdList(value, nextLink, additionalBinaryDataProperties);
+            return new LabVhdList(value ?? new ChangeTrackingList<DevTestLabVhd>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage.Models
                 format,
                 schedule,
                 objectType,
-                schemaFields,
+                schemaFields ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

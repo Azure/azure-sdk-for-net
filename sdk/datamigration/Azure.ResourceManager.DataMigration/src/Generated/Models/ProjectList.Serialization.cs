@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProjectList(value, nextLink, additionalBinaryDataProperties);
+            return new ProjectList(value ?? new ChangeTrackingList<DataMigrationProjectData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

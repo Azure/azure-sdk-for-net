@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute.Models
                 label,
                 description,
                 additionalBinaryDataProperties,
-                script,
+                script ?? new ChangeTrackingList<string>(),
                 parameters ?? new ChangeTrackingList<RunCommandParameterDefinition>());
         }
     }

@@ -40,11 +40,17 @@ namespace Azure.ResourceManager.Cdn.Mocking
 
         private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(
+            ProfilesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-10-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of Profiles in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Profiles and their operations over a ProfileResource. </returns>
@@ -66,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,71 +115,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             return GetProfiles().Get(profileName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CdnWebAgents in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of CdnWebAgents and their operations over a CdnWebAgentResource. </returns>
-        public virtual CdnWebAgentCollection GetCdnWebAgents()
-        {
-            return GetCachedClient(client => new CdnWebAgentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a web agent with the specified name within a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/webAgents/{webAgentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebAgents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="webAgentName"> The name of the web agent. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="webAgentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="webAgentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CdnWebAgentResource>> GetCdnWebAgentAsync(string webAgentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(webAgentName, nameof(webAgentName));
-
-            return await GetCdnWebAgents().GetAsync(webAgentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a web agent with the specified name within a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/webAgents/{webAgentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebAgents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="webAgentName"> The name of the web agent. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="webAgentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="webAgentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CdnWebAgentResource> GetCdnWebAgent(string webAgentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(webAgentName, nameof(webAgentName));
-
-            return GetCdnWebAgents().Get(webAgentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CdnWebApplicationFirewallPolicies in the <see cref="ResourceGroupResource"/>. </summary>
@@ -196,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +166,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,7 +195,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +243,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,7 +291,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,7 +346,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,7 +401,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,7 +456,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Immutability Settings at vault level. </summary>
-    internal partial class ImmutabilitySettings
+    public partial class ImmutabilitySettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="ImmutabilitySettings"/>. </summary>
         /// <param name="state"> Immutability state. </param>
+        /// <param name="configuration"> Immutability configuration containing type and duration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImmutabilitySettings(BackupVaultImmutabilityState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImmutabilitySettings(BackupVaultImmutabilityState? state, ImmutabilityConfiguration configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
+            Configuration = configuration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Immutability state. </summary>
         public BackupVaultImmutabilityState? State { get; set; }
+
+        /// <summary> Immutability configuration containing type and duration. </summary>
+        public ImmutabilityConfiguration Configuration { get; set; }
     }
 }

@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
+        protected BenefitRecommendationProperties() : this(default)
+        {
+        }
+
         /// <summary> The first usage date used for looking back for computing the recommendations. </summary>
         public DateTimeOffset? FirstConsumptionOn { get; }
 

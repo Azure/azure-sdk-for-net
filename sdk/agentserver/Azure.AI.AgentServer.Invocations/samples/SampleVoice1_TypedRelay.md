@@ -1,16 +1,30 @@
 # Sample Voice 1: Typed Voice relay
 
-This sample implements the Voice Live Bridge Protocol 1.0 as a typed event relay over the existing `/invocations_ws` endpoint. The handler explicitly acknowledges startup, creates every response and output ID, and owns cancellation for its response tasks.
+This sample implements the Voice Live Bridge Protocol 1.0 as a typed event relay
+over `/voice_conversation_engine` and the existing `/invocations_ws` endpoint. The
+handler explicitly acknowledges startup, creates every response and output ID,
+and owns cancellation for its response tasks.
+
+Caller interruptions arrive as `user.barge_in`, dispatched to `OnUserBargeInAsync` with a `VoiceUserBargeInEvent`. Voice Live senders must use the same event contract. Interruption cancellation and the `heard_text` snapshot are unchanged.
 
 ## Prerequisites
 
+This sample requires `Azure.AI.AgentServer.Invocations` version `1.0.0-beta.8`
+or a compatible later version containing `VoiceUserBargeInEvent` and
+`OnUserBargeInAsync`. Older preview packages do not contain these APIs.
+
+Until a release containing these APIs and the CE route is published, use a
+matching local library build, including its companion Core package, from the
+same SDK checkout. An older package selected by `--prerelease` is not sufficient.
+After a matching release is available, install it explicitly:
+
 ```dotnetcli
-dotnet add package Azure.AI.AgentServer.Invocations --prerelease
+dotnet add package Azure.AI.AgentServer.Invocations --version 1.0.0-beta.8
 ```
 
 ## Declare Voice support
 
-Deploy with the declarations in [`voice-agent.manifest.yaml`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/voice-agent.manifest.yaml):
+For legacy WS integration, keep the declarations in [`voice-agent.manifest.yaml`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/voice-agent.manifest.yaml):
 
 ```yaml
 name: contoso-voice-support
@@ -21,6 +35,31 @@ bridgeProtocolVersion: "1.0"
 ```
 
 `bridgeProtocolVersion` selects the exact typed contract. Public Preview supports `1.0`; omitting it preserves the pre-Bridge Voice integration.
+
+### Standalone conversation engine
+
+With a library build containing CE support, keep the same handler and startup
+code, and declare the following in the hosted agent definition instead:
+
+```json
+"protocol_versions": [
+  { "protocol": "voice_conversation_engine", "version": "1.0.0" }
+]
+```
+
+Use `container_protocol_versions` for legacy Agent definitions instead of
+`protocol_versions`. This is a definition fragment, not a replacement for the
+sample manifest. Neither `invocations_ws` nor the legacy Bridge metadata is
+required for CE. If the Agent must also serve legacy WS calls, retain its existing
+WS declaration and metadata.
+
+`AddVoice<THandler>()` and `VoiceServer.Run<THandler>()` expose both container
+routes without a new option. Foundry permits a public protocol invocation only
+when the selected hosted Agent version declares that protocol. The message
+handshake remains `protocol_version="1.0"`; IDs, cancellation, timeouts, history,
+and cleanup remain application-owned. Rebuild the image with the updated library,
+and deploy Foundry CE routing and CE-aware Voice Live before enabling CE. Existing
+legacy deployments can keep their startup code, manifest, and metadata unchanged.
 
 ## Implement the handler
 
@@ -107,9 +146,9 @@ public class VoiceSupportHandler : VoiceHandler
             generation);
     }
 
-    protected override Task OnBargeInAsync(
+    protected override Task OnUserBargeInAsync(
         VoiceSession session,
-        VoiceBargeInEvent bargeIn,
+        VoiceUserBargeInEvent bargeIn,
         CancellationToken cancellationToken)
     {
         CancelGeneration(bargeIn.ResponseId, VoiceTurnOutcome.Cancelled);

@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupPropertiesProperties(
                 provisioningState,
                 secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>(),
-                containers,
+                containers ?? new ChangeTrackingList<ContainerInstanceContainer>(),
                 imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
                 restartPolicy,
                 ipAddress,

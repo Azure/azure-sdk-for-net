@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentDataAsyncCollectionResultOfT(
                 _apiIssueCommentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentDataCollectionResultOfT(
                 _apiIssueCommentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

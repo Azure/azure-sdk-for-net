@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HybridConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HybridConnectionListResult(value ?? new ChangeTrackingList<RelayHybridConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

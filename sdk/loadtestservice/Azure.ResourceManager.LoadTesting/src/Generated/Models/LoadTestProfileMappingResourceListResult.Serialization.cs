@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LoadTestProfileMappingResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LoadTestProfileMappingResourceListResult(value ?? new ChangeTrackingList<LoadTestProfileMappingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

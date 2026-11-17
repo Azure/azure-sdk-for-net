@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdditionalNetworkInterfaceConfiguration(name, enableAcceleratedNetworking, dscpConfiguration, ipConfigurations, additionalBinaryDataProperties);
+            return new AdditionalNetworkInterfaceConfiguration(name, enableAcceleratedNetworking, dscpConfiguration, ipConfigurations ?? new ChangeTrackingList<ServiceFabricManagedClusterIPConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -15,11 +15,6 @@ namespace Azure.Template
     /// <summary> Faked shared model. </summary>
     public partial class FakedSharedModel : IJsonModel<FakedSharedModel>
     {
-        /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/> for deserialization. </summary>
-        internal FakedSharedModel()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FakedSharedModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

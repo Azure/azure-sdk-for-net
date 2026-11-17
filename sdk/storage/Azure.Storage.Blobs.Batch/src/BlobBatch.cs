@@ -247,7 +247,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateDeleteRequest(
                 containerName: blobContainerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 versionId: options?.VersionId,
                 timeout: null,
                 leaseId: options?.Conditions?.LeaseId,
@@ -362,7 +362,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
                 containerName: blobContainerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 accessTier.ToBatchAccessTier().ToString(),
                 versionId: null,
                 timeout: null,

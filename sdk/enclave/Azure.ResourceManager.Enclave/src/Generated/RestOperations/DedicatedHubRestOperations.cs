@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/dedicatedHubs/", false);
             uri.AppendPath(dedicatedHubName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -81,10 +78,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/dedicatedHubs/", false);
             uri.AppendPath(dedicatedHubName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -108,10 +102,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/dedicatedHubs/", false);
             uri.AppendPath(dedicatedHubName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -135,10 +126,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/dedicatedHubs/", false);
             uri.AppendPath(dedicatedHubName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -158,10 +146,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath("/providers/Microsoft.Mission/communities/", false);
             uri.AppendPath(communityName, true);
             uri.AppendPath("/dedicatedHubs", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,10 +167,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -204,10 +186,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath("/providers/Microsoft.Mission/communities/", false);
             uri.AppendPath(communityName, true);
             uri.AppendPath("/dedicatedHubs", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -228,10 +207,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

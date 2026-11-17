@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveCommunityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualEnclaveCommunityResource.ResourceType, out string virtualEnclaveCommunityApiVersion);
             _communityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", VirtualEnclaveCommunityResource.ResourceType.Namespace, Diagnostics);
-            _communityRestClient = new Community(_communityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveCommunityApiVersion ?? "2026-04-01");
+            _communityRestClient = new Community(_communityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Mission/communities", out string communityApiVersionOverride) ? communityApiVersionOverride : "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new CommunityGetByResourceGroupAsyncCollectionResultOfT(_communityRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveCommunityCollection.GetAll"), data => new VirtualEnclaveCommunityResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new VirtualEnclaveCommunityDataAsyncCollectionResultOfT(_communityRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveCommunityCollection.GetAll"), data => new VirtualEnclaveCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new CommunityGetByResourceGroupCollectionResultOfT(_communityRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveCommunityCollection.GetAll"), data => new VirtualEnclaveCommunityResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new VirtualEnclaveCommunityDataCollectionResultOfT(_communityRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveCommunityCollection.GetAll"), data => new VirtualEnclaveCommunityResource(Client, data));
         }
 
         /// <summary>

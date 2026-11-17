@@ -14,6 +14,11 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluator Generation Job resource — a long-running job that generates rubric-based evaluator definitions from source materials. On success, the result is the persisted EvaluatorVersion. </summary>
     public partial class EvaluatorGenerationJob : IJsonModel<EvaluatorGenerationJob>
     {
+        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJob"/> for deserialization. </summary>
+        internal EvaluatorGenerationJob()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluatorGenerationJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -54,16 +59,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EvaluatorGenerationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="evaluatorGenerationJob"> The <see cref="EvaluatorGenerationJob"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(EvaluatorGenerationJob evaluatorGenerationJob)
-        {
-            if (evaluatorGenerationJob == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(evaluatorGenerationJob, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluatorGenerationJob"/> from. </param>
         public static explicit operator EvaluatorGenerationJob(ClientResult result)
         {
@@ -95,11 +90,6 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Inputs))
-            {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
@@ -114,6 +104,27 @@ namespace Azure.AI.Projects.Evaluation
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
+            }
+            writer.WritePropertyName("sources"u8);
+            writer.WriteStartArray();
+            foreach (EvaluatorGenerationJobSource item in Sources)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("model"u8);
+            writer.WriteStringValue(Model);
+            writer.WritePropertyName("evaluator_name"u8);
+            writer.WriteStringValue(EvaluatorName);
+            if (Optional.IsDefined(EvaluatorDisplayName))
+            {
+                writer.WritePropertyName("evaluator_display_name"u8);
+                writer.WriteStringValue(EvaluatorDisplayName);
+            }
+            if (Optional.IsDefined(EvaluatorDescription))
+            {
+                writer.WritePropertyName("evaluator_description"u8);
+                writer.WriteStringValue(EvaluatorDescription);
             }
             if (options.Format != "W")
             {
@@ -183,10 +194,14 @@ namespace Azure.AI.Projects.Evaluation
                 return null;
             }
             string id = default;
-            EvaluatorGenerationInputs inputs = default;
             EvaluatorVersion result = default;
             ProjectsJobStatus status = default;
             FoundryOpenAIError error = default;
+            IList<EvaluatorGenerationJobSource> sources = default;
+            string model = default;
+            string evaluatorName = default;
+            string evaluatorDisplayName = default;
+            string evaluatorDescription = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset? finishedOn = default;
             EvaluatorGenerationTokenUsage usage = default;
@@ -197,15 +212,6 @@ namespace Azure.AI.Projects.Evaluation
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("inputs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    inputs = EvaluatorGenerationInputs.DeserializeEvaluatorGenerationInputs(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("result"u8))
@@ -229,6 +235,36 @@ namespace Azure.AI.Projects.Evaluation
                         continue;
                     }
                     error = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sources"u8))
+                {
+                    List<EvaluatorGenerationJobSource> array = new List<EvaluatorGenerationJobSource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EvaluatorGenerationJobSource.DeserializeEvaluatorGenerationJobSource(item, options));
+                    }
+                    sources = array;
+                    continue;
+                }
+                if (prop.NameEquals("model"u8))
+                {
+                    model = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("evaluator_name"u8))
+                {
+                    evaluatorName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("evaluator_display_name"u8))
+                {
+                    evaluatorDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("evaluator_description"u8))
+                {
+                    evaluatorDescription = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
@@ -275,10 +311,14 @@ namespace Azure.AI.Projects.Evaluation
             }
             return new EvaluatorGenerationJob(
                 id,
-                inputs,
                 result,
                 status,
                 error,
+                sources ?? new ChangeTrackingList<EvaluatorGenerationJobSource>(),
+                model,
+                evaluatorName,
+                evaluatorDisplayName,
+                evaluatorDescription,
                 createdOn,
                 finishedOn,
                 usage,

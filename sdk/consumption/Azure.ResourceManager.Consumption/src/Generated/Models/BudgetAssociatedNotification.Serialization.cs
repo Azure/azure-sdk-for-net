@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 isEnabled,
                 @operator,
                 threshold,
-                contactEmails,
+                contactEmails ?? new ChangeTrackingList<string>(),
                 contactRoles ?? new ChangeTrackingList<string>(),
                 contactGroups ?? new ChangeTrackingList<string>(),
                 thresholdType,

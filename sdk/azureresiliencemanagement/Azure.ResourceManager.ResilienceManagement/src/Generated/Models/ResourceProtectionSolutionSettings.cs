@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="failoverState"> Failover state of the recovery orchestration resource. </param>
         /// <param name="testFailoverState"> TestFailover state of the recovery orchestration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType, ResourceProtectionStatus? protectionStatus, ResourceIdentifier resourceId, AzureLocation? activeLocation, IReadOnlyList<AzureLocation> activeLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryLocations, ResourceReplicationRole? replicationRole, ResourceIdentifier primaryResource, IReadOnlyList<ResourceIdentifier> replicaResources, bool isAutoFailover, FailoverState? failoverState, TestFailoverState? testFailoverState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType, ResourceProtectionStatus? protectionStatus, ResourceIdentifier resourceId, AzureLocation? activeLocation, IReadOnlyList<AzureLocation> activeLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryLocations, ResourceReplicationRole? replicationRole, ResourceIdentifier primaryResource, IReadOnlyList<ResourceIdentifier> replicaResources, bool isAutoFailover, RecoveryResourceFailoverState? failoverState, TestFailoverState? testFailoverState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectionSolutionType = protectionSolutionType;
             ProtectionStatus = protectionStatus;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public bool IsAutoFailover { get; }
 
         /// <summary> Failover state of the recovery orchestration resource. </summary>
-        public FailoverState? FailoverState { get; }
+        public RecoveryResourceFailoverState? FailoverState { get; }
 
         /// <summary> TestFailover state of the recovery orchestration resource. </summary>
         public TestFailoverState? TestFailoverState { get; }

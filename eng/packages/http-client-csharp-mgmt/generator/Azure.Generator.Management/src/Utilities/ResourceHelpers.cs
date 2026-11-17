@@ -77,12 +77,13 @@ namespace Azure.Generator.Management.Utilities
         /// <param name="operationKind">The kind of resource operation to perform (e.g., List, Create).</param>
         /// <param name="resourceName">The name of the resource for which the operation is being performed.</param>
         /// <param name="isAsync">Whether the method should be asynchronous.</param>
+        /// <param name="pluralResourceName">The resolved plural resource name, if applicable.</param>
         /// <returns>The method name to use for the extension operation, or null if no override is needed.</returns>
-        public static string? GetExtensionOperationMethodName(ResourceOperationKind operationKind, string resourceName, bool isAsync)
+        public static string? GetExtensionOperationMethodName(ResourceOperationKind operationKind, string resourceName, bool isAsync, string? pluralResourceName = null)
         {
             return operationKind switch
             {
-                ResourceOperationKind.List => isAsync ? $"Get{resourceName.Pluralize()}Async" : $"Get{resourceName.Pluralize()}",
+                ResourceOperationKind.List => isAsync ? $"Get{pluralResourceName ?? resourceName.Pluralize()}Async" : $"Get{pluralResourceName ?? resourceName.Pluralize()}",
                 ResourceOperationKind.Read => isAsync ? $"Get{resourceName}Async" : $"Get{resourceName}",
                 ResourceOperationKind.Create => isAsync ? $"CreateOrUpdate{resourceName}Async" : $"CreateOrUpdate{resourceName}",
                 ResourceOperationKind.Delete => isAsync ? $"Delete{resourceName}Async" : $"Delete{resourceName}",

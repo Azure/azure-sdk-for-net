@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabNotificationChannelData, DevTestLabNotificationChannelResource>(new NotificationChannelsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabNotificationChannelData, DevTestLabNotificationChannelResource>(new DevTestLabNotificationChannelDataAsyncCollectionResultOfT(
                 _notificationChannelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabNotificationChannelData, DevTestLabNotificationChannelResource>(new NotificationChannelsGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabNotificationChannelData, DevTestLabNotificationChannelResource>(new DevTestLabNotificationChannelDataCollectionResultOfT(
                 _notificationChannelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualNetworkGatewayPolicyGroupProperties(
                 isDefault,
                 priority,
-                policyMembers,
+                policyMembers ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>(),
                 vngClientConnectionConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
                 provisioningState,
                 additionalBinaryDataProperties);

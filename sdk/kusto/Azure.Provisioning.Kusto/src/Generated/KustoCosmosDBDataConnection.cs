@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Kusto
         /// <param name="resourceVersion"> The resource API version. </param>
         public KustoCosmosDBDataConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
-            Kind.Assign(DataConnectionKind.CosmosDb);
+            Kind.Assign(DataConnectionKind.CosmosDB);
         }
 
         /// <summary> Gets or sets the Properties. </summary>

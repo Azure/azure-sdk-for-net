@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string actionGroupApiVersion);
             _actionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion ?? "2024-10-01-preview");
+            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _nspActionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             _nspActionGroupRestClient = new NspActionGroup(_nspActionGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion ?? "2021-10-01");
             ValidateResourceId(id);
@@ -852,7 +853,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspActionGroupGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationDataAsync1CollectionResultOfT(
                 _nspActionGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -890,7 +891,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspActionGroupGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationData1CollectionResultOfT(
                 _nspActionGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1117,10 +1118,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1160,10 +1160,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

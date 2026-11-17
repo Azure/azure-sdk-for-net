@@ -5,14 +5,22 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Data Generation Job resource. </summary>
-    public partial class DataGenerationJob : IJsonModel<DataGenerationJob>
+    /// <summary>
+    /// Data Generation Job resource.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationDataGenerationJob"/>, <see cref="ReinforcementFineTuningDataGenerationJob"/>, and <see cref="SupervisedFineTuningDataGenerationJob"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownDataGenerationJob))]
+    public abstract partial class DataGenerationJob : IJsonModel<DataGenerationJob>
     {
+        /// <summary> Initializes a new instance of <see cref="DataGenerationJob"/> for deserialization. </summary>
+        internal DataGenerationJob()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataGenerationJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -53,16 +61,6 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataGenerationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dataGenerationJob"> The <see cref="DataGenerationJob"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(DataGenerationJob dataGenerationJob)
-        {
-            if (dataGenerationJob == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(dataGenerationJob, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DataGenerationJob"/> from. </param>
         public static explicit operator DataGenerationJob(ClientResult result)
         {
@@ -94,11 +92,6 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Inputs))
-            {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
@@ -114,6 +107,19 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("sources"u8);
+            writer.WriteStartArray();
+            foreach (DataGenerationJobSource item in Sources)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("generation_configuration"u8);
+            writer.WriteObjectValue(GenerationConfiguration, options);
+            writer.WritePropertyName("scenario"u8);
+            writer.WriteStringValue(Scenario.ToString());
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
@@ -166,81 +172,19 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string id = default;
-            DataGenerationJobInputs inputs = default;
-            DataGenerationJobResult result = default;
-            ProjectsJobStatus status = default;
-            FoundryOpenAIError error = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset? finishedOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("scenario"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("id"u8))
+                switch (discriminator.GetString())
                 {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("inputs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    inputs = DataGenerationJobInputs.DeserializeDataGenerationJobInputs(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("result"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result = DataGenerationJobResult.DeserializeDataGenerationJobResult(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = new ProjectsJobStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("created_at"u8))
-                {
-                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("finished_at"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    finishedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    case "evaluation":
+                        return EvaluationDataGenerationJob.DeserializeEvaluationDataGenerationJob(element, options);
+                    case "reinforcement_finetuning_preview":
+                        return ReinforcementFineTuningDataGenerationJob.DeserializeReinforcementFineTuningDataGenerationJob(element, options);
+                    case "supervised_finetuning_preview":
+                        return SupervisedFineTuningDataGenerationJob.DeserializeSupervisedFineTuningDataGenerationJob(element, options);
                 }
             }
-            return new DataGenerationJob(
-                id,
-                inputs,
-                result,
-                status,
-                error,
-                createdOn,
-                finishedOn,
-                additionalBinaryDataProperties);
+            return UnknownDataGenerationJob.DeserializeUnknownDataGenerationJob(element, options);
         }
     }
 }

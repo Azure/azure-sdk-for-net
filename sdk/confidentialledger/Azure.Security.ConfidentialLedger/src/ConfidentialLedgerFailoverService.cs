@@ -69,7 +69,7 @@ namespace Azure.Security.ConfidentialLedger
             }
 
             X509Certificate2 cert = _identityCertResolver(endpoint);
-            _trustStore.Trust(ledgerId, cert);
+            _trustStore.Trust(ledgerId, cert, endpoint);
         }
 
         public HttpPipeline GetEndpointPipeline(Uri endpoint)

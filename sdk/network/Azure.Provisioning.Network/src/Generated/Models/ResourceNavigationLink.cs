@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure;
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -14,9 +15,9 @@ namespace Azure.Provisioning.Network
     public partial class ResourceNavigationLink : NetworkSubResource
     {
         private ResourceNavigationLinkFormat _properties;
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _type;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ResourceNavigationLink. </summary>
         public ResourceNavigationLink()
@@ -34,7 +35,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Id. </summary>
-        public new BicepValue<string> Id
+        public new BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -53,13 +54,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<string> Type
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
         {
             get
             {
                 Initialize();
-                return _type;
+                return _resourceType;
             }
         }
 
@@ -77,9 +78,9 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ResourceNavigationLinkFormat>(nameof(Properties), new string[] { "properties" });
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

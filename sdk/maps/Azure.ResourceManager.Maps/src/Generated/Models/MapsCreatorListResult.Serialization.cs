@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Maps.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MapsCreatorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MapsCreatorListResult(value ?? new ChangeTrackingList<MapsCreatorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

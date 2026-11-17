@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The RealtimeFunctionToolParameters. </summary>
     public partial class RealtimeFunctionToolParameters

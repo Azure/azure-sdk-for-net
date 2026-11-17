@@ -573,14 +573,37 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
 
+            // Build the DFS pipeline from the supplied authentication policy as-is.
+            // For token-credential scenarios, only the inner block blob client gets a
+            // separate pipeline wrapped with SessionAuthenticationPolicy, so DFS endpoint
+            // requests can never route through session auth.
+            HttpPipeline dfsPipeline = options.Build(authentication);
+
+            HttpPipeline blobPipeline = dfsPipeline;
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(options);
+            if (tokenCredential != null)
+            {
+                HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
+                    _blobUri,
+                    CreateBlobClientOptions(options, clientDiagnostics, options.CustomerProvidedKey),
+                    authentication,
+                    dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
+                    tokenCredential,
+                    options.SessionOptions);
+                blobPipeline = options.Build(blobAuthentication);
+            }
+
             _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: options.Build(authentication),
+                pipeline: dfsPipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey);
+                customerProvidedKey: options.CustomerProvidedKey)
+            {
+                BlobPipeline = blobPipeline,
+            };
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
 
@@ -677,11 +700,25 @@ namespace Azure.Storage.Files.DataLake
 
             PathRestClient blobPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
-                pipeline: _clientConfiguration.Pipeline,
+                pipeline: _clientConfiguration.BlobPipeline,
                 endpoint: blobUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             return (dfsPathRestClient, blobPathRestClient);
+        }
+
+        private static BlobClientOptions CreateBlobClientOptions(
+            DataLakeClientOptions clientOptions,
+            ClientDiagnostics clientDiagnostics,
+            Models.DataLakeCustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientOptions options = new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
+            {
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
+                CustomerProvidedKey = customerProvidedKey.ToBlobCustomerProvidedKey(),
+            };
+            clientOptions.TransferValidation.CopyTo(options.TransferValidation);
+            return options;
         }
 
         /// <summary>
@@ -694,16 +731,14 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
-                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                {
-                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                    CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey(),
-                };
-                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
+                BlobClientOptions options = CreateBlobClientOptions(
+                    clientConfiguration.ClientOptions,
+                    clientConfiguration.ClientDiagnostics,
+                    clientConfiguration.CustomerProvidedKey);
                 return BlockBlobClient.CreateClient(
                     uri,
                     options,
-                    clientConfiguration.Pipeline);
+                    clientConfiguration.BlobPipeline);
             }
         }
         #endregion

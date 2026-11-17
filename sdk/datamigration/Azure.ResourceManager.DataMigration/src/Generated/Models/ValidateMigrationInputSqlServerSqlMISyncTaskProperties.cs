@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ValidateMigrationInputSqlServerSqlMISyncTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/>. </summary>
-        public ValidateMigrationInputSqlServerSqlMISyncTaskProperties() : base(DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDbMISyncLRS)
+        public ValidateMigrationInputSqlServerSqlMISyncTaskProperties() : base(DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS)
         {
             Output = new ChangeTrackingList<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>();
         }

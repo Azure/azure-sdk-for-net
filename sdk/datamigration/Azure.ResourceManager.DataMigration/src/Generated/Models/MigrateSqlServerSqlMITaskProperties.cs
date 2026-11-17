@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskProperties"/>. </summary>
-        public MigrateSqlServerSqlMITaskProperties() : base(DataMigrationTaskType.MigrateSqlServerAzureSqlDbMI)
+        public MigrateSqlServerSqlMITaskProperties() : base(DataMigrationTaskType.MigrateSqlServerAzureSqlDBMI)
         {
             Output = new ChangeTrackingList<MigrateSqlServerSqlMITaskOutput>();
         }

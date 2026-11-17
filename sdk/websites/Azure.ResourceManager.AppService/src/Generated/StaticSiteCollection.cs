@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StaticSiteResource.ResourceType, out string staticSiteApiVersion);
             _staticSiteARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteResource.ResourceType.Namespace, Diagnostics);
-            _staticSiteARMResourcesRestClient = new StaticSiteARMResources(_staticSiteARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteApiVersion ?? "2026-03-15");
+            _staticSiteARMResourcesRestClient = new StaticSiteARMResources(_staticSiteARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/staticSites", out string staticSiteARMResourcesApiVersionOverride) ? staticSiteARMResourcesApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteARMResourcesGetStaticSitesByResourceGroupAsyncCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
+            return new AsyncPageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteDataAsyncCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteARMResourcesGetStaticSitesByResourceGroupCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
+            return new PageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteDataCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>

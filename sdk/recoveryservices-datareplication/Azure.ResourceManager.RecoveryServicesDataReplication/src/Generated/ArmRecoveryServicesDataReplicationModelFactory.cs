@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static HyperVToAzStackHciEventCustomProperties HyperVToAzStackHciEventCustomProperties(string eventSourceFriendlyName = default, string protectedItemFriendlyName = default, string sourceApplianceName = default, string targetApplianceName = default, string serverType = default)
         {
             return new HyperVToAzStackHciEventCustomProperties(
-                default,
+                "HyperVToAzStackHCI",
                 default,
                 eventSourceFriendlyName,
                 protectedItemFriendlyName,
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static VMwareToAzStackHciEventCustomProperties VMwareToAzStackHciEventCustomProperties(string eventSourceFriendlyName = default, string protectedItemFriendlyName = default, string sourceApplianceName = default, string targetApplianceName = default, string serverType = default)
         {
             return new VMwareToAzStackHciEventCustomProperties(
-                default,
+                "VMwareToAzStackHCI",
                 default,
                 eventSourceFriendlyName,
                 protectedItemFriendlyName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             applianceName ??= new ChangeTrackingList<string>();
 
             return new AzStackHciFabricCustomProperties(
-                default,
+                "AzStackHCI",
                 default,
                 azStackHciSiteId,
                 (applianceName ?? new ChangeTrackingList<string>()).ToList(),
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static HyperVMigrateFabricCustomProperties HyperVMigrateFabricCustomProperties(ResourceIdentifier hyperVSiteId = default, ResourceIdentifier fabricResourceId = default, ResourceIdentifier fabricContainerId = default, ResourceIdentifier migrationSolutionId = default, Uri migrationHubUri = default)
         {
             return new HyperVMigrateFabricCustomProperties(
-                default,
+                "HyperVMigrate",
                 default,
                 hyperVSiteId,
                 fabricResourceId,
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.VMwareMigrateFabricCustomProperties"/> instance for mocking. </returns>
         public static VMwareMigrateFabricCustomProperties VMwareMigrateFabricCustomProperties(ResourceIdentifier vmwareSiteId = default, ResourceIdentifier migrationSolutionId = default)
         {
-            return new VMwareMigrateFabricCustomProperties(default, default, vmwareSiteId, migrationSolutionId);
+            return new VMwareMigrateFabricCustomProperties("VMwareMigrate", default, vmwareSiteId, migrationSolutionId);
         }
 
         /// <summary> Fabric model update. </summary>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.VMwareFabricAgentCustomProperties"/> instance for mocking. </returns>
         public static VMwareFabricAgentCustomProperties VMwareFabricAgentCustomProperties(string biosId = default, DataReplicationIdentity marsAuthenticationIdentity = default)
         {
-            return new VMwareFabricAgentCustomProperties(default, default, biosId, marsAuthenticationIdentity);
+            return new VMwareFabricAgentCustomProperties("VMware", default, biosId, marsAuthenticationIdentity);
         }
 
         /// <summary> Job model. </summary>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             protectedItemDetails ??= new ChangeTrackingList<FailoverProtectedItemProperties>();
 
-            return new FailoverJobCustomProperties(default, affectedObjectDetails, default, (protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>()).ToList());
+            return new FailoverJobCustomProperties("FailoverJobDetails", affectedObjectDetails, default, (protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>()).ToList());
         }
 
         /// <summary> Failover properties of the protected item. </summary>
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.TestFailoverCleanupJobCustomProperties"/> instance for mocking. </returns>
         public static TestFailoverCleanupJobCustomProperties TestFailoverCleanupJobCustomProperties(AffectedObjectDetails affectedObjectDetails = default, string comments = default)
         {
-            return new TestFailoverCleanupJobCustomProperties(default, affectedObjectDetails, default, comments);
+            return new TestFailoverCleanupJobCustomProperties("TestFailoverCleanupJobDetails", affectedObjectDetails, default, comments);
         }
 
         /// <summary> Test failover job model custom properties. </summary>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             protectedItemDetails ??= new ChangeTrackingList<FailoverProtectedItemProperties>();
 
-            return new TestFailoverJobCustomProperties(default, affectedObjectDetails, default, (protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>()).ToList());
+            return new TestFailoverJobCustomProperties("TestFailoverJobDetails", affectedObjectDetails, default, (protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>()).ToList());
         }
 
         /// <summary> Policy model. </summary>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.HyperVToAzStackHciPolicyCustomProperties"/> instance for mocking. </returns>
         public static HyperVToAzStackHciPolicyCustomProperties HyperVToAzStackHciPolicyCustomProperties(int recoveryPointHistoryInMinutes = default, int crashConsistentFrequencyInMinutes = default, int appConsistentFrequencyInMinutes = default)
         {
-            return new HyperVToAzStackHciPolicyCustomProperties(default, default, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
+            return new HyperVToAzStackHciPolicyCustomProperties("HyperVToAzStackHCI", default, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
         /// <summary> VMware To AzStackHCI Policy model custom properties. </summary>
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.VMwareToAzStackHciPolicyCustomProperties"/> instance for mocking. </returns>
         public static VMwareToAzStackHciPolicyCustomProperties VMwareToAzStackHciPolicyCustomProperties(int recoveryPointHistoryInMinutes = default, int crashConsistentFrequencyInMinutes = default, int appConsistentFrequencyInMinutes = default)
         {
-            return new VMwareToAzStackHciPolicyCustomProperties(default, default, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
+            return new VMwareToAzStackHciPolicyCustomProperties("VMwareToAzStackHCI", default, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
         /// <summary> Represents private endpoint connection. </summary>
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             protectedNics ??= new ChangeTrackingList<HyperVToAzStackHciProtectedNicProperties>();
 
             return new HyperVToAzStackHciProtectedItemCustomProperties(
-                default,
+                "HyperVToAzStackHCI",
                 default,
                 activeLocation,
                 targetHciClusterId,
@@ -1341,7 +1341,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             protectedNics ??= new ChangeTrackingList<VMwareToAzStackHciProtectedNicProperties>();
 
             return new VMwareToAzStackHciProtectedItemCustomProperties(
-                default,
+                "VMwareToAzStackHCI",
                 default,
                 activeLocation,
                 targetHciClusterId,
@@ -1546,7 +1546,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             nicsToInclude ??= new ChangeTrackingList<HyperVToAzStackHciNicInput>();
 
             return new HyperVToAzStackHciProtectedItemCustomPropertiesUpdate(
-                default,
+                "HyperVToAzStackHCI",
                 default,
                 (nicsToInclude ?? new ChangeTrackingList<HyperVToAzStackHciNicInput>()).ToList(),
                 targetCpuCores,
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             nicsToInclude ??= new ChangeTrackingList<VMwareToAzStackHciNicInput>();
 
             return new VMwareToAzStackHciProtectedItemCustomPropertiesUpdate(
-                default,
+                "VMwareToAzStackHCI",
                 default,
                 (nicsToInclude ?? new ChangeTrackingList<VMwareToAzStackHciNicInput>()).ToList(),
                 targetCpuCores,
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.HyperVToAzStackHciPlannedFailoverCustomProperties"/> instance for mocking. </returns>
         public static HyperVToAzStackHciPlannedFailoverCustomProperties HyperVToAzStackHciPlannedFailoverCustomProperties(bool shutdownSourceVm = default)
         {
-            return new HyperVToAzStackHciPlannedFailoverCustomProperties(default, default, shutdownSourceVm);
+            return new HyperVToAzStackHciPlannedFailoverCustomProperties("HyperVToAzStackHCI", default, shutdownSourceVm);
         }
 
         /// <summary> VMware to AzStackHCI planned failover model custom properties. </summary>
@@ -1619,7 +1619,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.VMwareToAzStackHciPlannedFailoverCustomProperties"/> instance for mocking. </returns>
         public static VMwareToAzStackHciPlannedFailoverCustomProperties VMwareToAzStackHciPlannedFailoverCustomProperties(bool shutdownSourceVm = default)
         {
-            return new VMwareToAzStackHciPlannedFailoverCustomProperties(default, default, shutdownSourceVm);
+            return new VMwareToAzStackHciPlannedFailoverCustomProperties("VMwareToAzStackHCI", default, shutdownSourceVm);
         }
 
         /// <summary> Recovery point model. </summary>
@@ -1669,7 +1669,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             diskIds ??= new ChangeTrackingList<string>();
 
-            return new HyperVToAzStackHciRecoveryPointCustomProperties(default, default, (diskIds ?? new ChangeTrackingList<string>()).ToList());
+            return new HyperVToAzStackHciRecoveryPointCustomProperties("HyperVToAzStackHCI", default, (diskIds ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> VMware to AzStackHCI recovery point model custom properties. </summary>
@@ -1679,7 +1679,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             diskIds ??= new ChangeTrackingList<string>();
 
-            return new VMwareToAzStackHciRecoveryPointCustomProperties(default, default, (diskIds ?? new ChangeTrackingList<string>()).ToList());
+            return new VMwareToAzStackHciRecoveryPointCustomProperties("VMwareToAzStackHCIRecoveryPointModelCustomProperties", default, (diskIds ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> Replication extension model. </summary>
@@ -1741,7 +1741,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static HyperVToAzStackHciReplicationExtensionCustomProperties HyperVToAzStackHciReplicationExtensionCustomProperties(ResourceIdentifier hyperVFabricArmId = default, ResourceIdentifier hyperVSiteId = default, ResourceIdentifier azStackHciFabricArmId = default, ResourceIdentifier azStackHciSiteId = default, string storageAccountId = default, string storageAccountSasSecretName = default, Uri asrServiceUri = default, Uri rcmServiceUri = default, Uri gatewayServiceUri = default, string sourceGatewayServiceId = default, string targetGatewayServiceId = default, string sourceStorageContainerName = default, string targetStorageContainerName = default, string resourceLocation = default, string subscriptionId = default, string resourceGroup = default)
         {
             return new HyperVToAzStackHciReplicationExtensionCustomProperties(
-                default,
+                "HyperVToAzStackHCI",
                 default,
                 hyperVFabricArmId,
                 hyperVSiteId,
@@ -1782,7 +1782,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static VMwareToAzStackHciReplicationExtensionCustomProperties VMwareToAzStackHciReplicationExtensionCustomProperties(ResourceIdentifier vmwareFabricArmId = default, ResourceIdentifier vmwareSiteId = default, ResourceIdentifier azStackHciFabricArmId = default, ResourceIdentifier azStackHciSiteId = default, string storageAccountId = default, string storageAccountSasSecretName = default, Uri asrServiceUri = default, Uri rcmServiceUri = default, Uri gatewayServiceUri = default, string sourceGatewayServiceId = default, string targetGatewayServiceId = default, string sourceStorageContainerName = default, string targetStorageContainerName = default, string resourceLocation = default, string subscriptionId = default, string resourceGroup = default)
         {
             return new VMwareToAzStackHciReplicationExtensionCustomProperties(
-                default,
+                "VMwareToAzStackHCI",
                 default,
                 vmwareFabricArmId,
                 vmwareSiteId,

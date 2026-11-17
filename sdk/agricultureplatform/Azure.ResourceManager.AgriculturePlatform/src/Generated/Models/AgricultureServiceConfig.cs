@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="keyVaultResourceId"> Key vault resource Id. </param>
         /// <param name="redisCacheResourceId"> Redis cache resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgricultureServiceConfig(string instanceUri, string version, ResourceIdentifier appServiceResourceId, ResourceIdentifier cosmosDBResourceId, ResourceIdentifier storageAccountResourceId, ResourceIdentifier keyVaultResourceId, ResourceIdentifier redisCacheResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgricultureServiceConfig(Uri instanceUri, string version, ResourceIdentifier appServiceResourceId, ResourceIdentifier cosmosDBResourceId, ResourceIdentifier storageAccountResourceId, ResourceIdentifier keyVaultResourceId, ResourceIdentifier redisCacheResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceUri = instanceUri;
             Version = version;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         }
 
         /// <summary> Instance URI of the AgriService instance. </summary>
-        public string InstanceUri { get; }
+        public Uri InstanceUri { get; }
 
         /// <summary> Version of AgriService instance. </summary>
         public string Version { get; }

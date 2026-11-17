@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> ExpressRouteLagLink properties. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="name"> Name of child link resource that is unique among child link resources of the parent. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ExpressRouteLagLink(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteLagLinkPropertiesFormat properties, string @type, string name, string eTag) : base(id, additionalBinaryDataProperties)
+        internal ExpressRouteLagLink(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteLagLinkPropertiesFormat properties, ResourceType resourceType, string name, string eTag) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
-            Type = @type;
+            ResourceType = resourceType;
             Name = name;
             ETag = eTag;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of the resource. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType ResourceType { get; }
 
         /// <summary> Name of child link resource that is unique among child link resources of the parent. </summary>
         [WirePath("name")]

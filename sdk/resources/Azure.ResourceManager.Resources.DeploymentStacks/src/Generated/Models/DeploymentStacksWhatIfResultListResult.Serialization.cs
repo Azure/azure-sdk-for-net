@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeploymentStacksWhatIfResultListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DeploymentStacksWhatIfResultListResult(value ?? new ChangeTrackingList<DeploymentStackWhatIfResultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

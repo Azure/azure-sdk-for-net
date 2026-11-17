@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 kind,
                 additionalBinaryDataProperties,
                 sku,
-                images,
+                images ?? new ChangeTrackingList<DevOpsPoolVmImage>(),
                 osProfile,
                 storageProfile,
                 networkProfile);

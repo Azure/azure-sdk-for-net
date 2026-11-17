@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     data = array;

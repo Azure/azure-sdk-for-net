@@ -26,6 +26,7 @@ public sealed class TaskDefinitionTests
         Assert.That(await (await definition.StartAsync("started")).Completion, Is.EqualTo("started"));
         Assert.That(await definition.GetActiveRunAsync("task"), Is.Null);
         Assert.That(await definition.GetActiveRunAsync("task", "input"), Is.Null);
+        Assert.That(await definition.GetStatusAsync("task"), Is.EqualTo(TaskRunStatus.Suspended));
 
         await definition.DeleteAsync("deleted-task");
         Assert.That(definition.DeletedTaskId, Is.EqualTo("deleted-task"));
@@ -84,6 +85,24 @@ public sealed class TaskDefinitionTests
     }
 
     [Test]
+    public async Task GetStatusAsyncReturnsPersistedMultiTurnStatus()
+    {
+        using var host = TaskTestHost.Create();
+        TaskDefinition<string, string> def = host.Builder.AddMultiTurnTask<string, string>(
+            "chat", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        TaskRun<string> turn = await def.StartAsync(
+            "hi",
+            new RunOptions { TaskId = "status-chain" });
+        await turn.Completion;
+
+        Assert.That(
+            await def.GetStatusAsync("status-chain"),
+            Is.EqualTo(TaskRunStatus.Suspended));
+        Assert.That(await def.GetStatusAsync("missing-chain"), Is.Null);
+    }
+
+    [Test]
     public async Task DeleteAsyncEndsMultiTurnChain()
     {
         using var host = TaskTestHost.Create();
@@ -138,6 +157,26 @@ public sealed class TaskDefinitionTests
         Assert.That(turn2.InputId, Is.Not.EqualTo(turn1.InputId));
     }
 
+    [Test]
+    public async Task TryStartExistingAsyncDoesNotCreateMissingMultiTurnTask()
+    {
+        using var host = TaskTestHost.Create();
+        TaskDefinition<string, string> def = host.Builder.AddMultiTurnTask<string, string>(
+            "chat", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        TaskRun<string>? run = await def.TryStartExistingAsync(
+            "input",
+            new RunOptions
+            {
+                TaskId = "missing-chain",
+                InputId = "input-1",
+                IfLastInputId = "previous-input",
+            });
+
+        Assert.That(run, Is.Null);
+        Assert.That(await host.Store.GetAsync("missing-chain"), Is.Null);
+    }
+
     private sealed class StubTaskDefinition : TaskDefinition<string, string>
     {
         public string? DeletedTaskId { get; private set; }
@@ -156,6 +195,12 @@ public sealed class TaskDefinitionTests
             CancellationToken cancellationToken = default)
             => Task.FromResult<TaskRun<string>>(new StubTaskRun(input));
 
+        public override Task<TaskRun<string>?> TryStartExistingAsync(
+            string input,
+            RunOptions options,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRun<string>?>(null);
+
         public override Task<TaskRun<string>?> GetActiveRunAsync(
             string taskId,
             CancellationToken cancellationToken = default)
@@ -166,6 +211,11 @@ public sealed class TaskDefinitionTests
             string inputId,
             CancellationToken cancellationToken = default)
             => Task.FromResult<TaskRun<string>?>(null);
+
+        public override Task<TaskRunStatus?> GetStatusAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRunStatus?>(TaskRunStatus.Suspended);
 
         public override Task DeleteAsync(
             string taskId,

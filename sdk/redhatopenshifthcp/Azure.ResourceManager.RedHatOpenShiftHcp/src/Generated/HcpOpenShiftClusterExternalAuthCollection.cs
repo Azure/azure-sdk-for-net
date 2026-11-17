@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         {
             TryGetApiVersion(HcpOpenShiftClusterExternalAuthResource.ResourceType, out string hcpOpenShiftClusterExternalAuthApiVersion);
             _hcpOpenShiftClusterExternalAuthsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShiftHcp", HcpOpenShiftClusterExternalAuthResource.ResourceType.Namespace, Diagnostics);
-            _hcpOpenShiftClusterExternalAuthsRestClient = new HcpOpenShiftClusterExternalAuths(_hcpOpenShiftClusterExternalAuthsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftClusterExternalAuthApiVersion ?? "2026-09-01-preview");
+            _hcpOpenShiftClusterExternalAuthsRestClient = new HcpOpenShiftClusterExternalAuths(_hcpOpenShiftClusterExternalAuthsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftClusterExternalAuthApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthDataAsyncCollectionResultOfT(
                 _hcpOpenShiftClusterExternalAuthsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthsGetByParentCollectionResultOfT(
+            return new PageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthDataCollectionResultOfT(
                 _hcpOpenShiftClusterExternalAuthsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

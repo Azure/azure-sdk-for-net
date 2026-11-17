@@ -76,13 +76,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(AssignedIdentities))
             {
-                writer.WritePropertyName("assignedIdentities"u8);
-                writer.WriteStartArray();
-                foreach (ManagedResourceGroupAssignedIdentities item in AssignedIdentities)
+                if (AssignedIdentities != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("assignedIdentities"u8);
+                    writer.WriteStartArray();
+                    foreach (ManagedResourceGroupAssignedIdentities item in AssignedIdentities)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("assignedIdentities"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<ManagedResourceGroupAssignedIdentities> assignedIdentities = default;
+            IList<ManagedResourceGroupAssignedIdentities> assignedIdentities = new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,6 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        assignedIdentities = null;
                         continue;
                     }
                     List<ManagedResourceGroupAssignedIdentities> array = new List<ManagedResourceGroupAssignedIdentities>();
@@ -149,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedResourceGroupSettings(assignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>(), additionalBinaryDataProperties);
+            return new ManagedResourceGroupSettings(assignedIdentities, additionalBinaryDataProperties);
         }
     }
 }

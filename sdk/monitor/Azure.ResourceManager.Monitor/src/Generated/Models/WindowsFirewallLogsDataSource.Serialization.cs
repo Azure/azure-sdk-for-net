@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WindowsFirewallLogsDataSource(streams, profileFilter ?? new ChangeTrackingList<KnownWindowsFirewallLogsDataSourceProfileFilter>(), name, additionalBinaryDataProperties);
+            return new WindowsFirewallLogsDataSource(streams ?? new ChangeTrackingList<string>(), profileFilter ?? new ChangeTrackingList<KnownWindowsFirewallLogsDataSourceProfileFilter>(), name, additionalBinaryDataProperties);
         }
     }
 }

@@ -251,6 +251,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.AreEqual("value2", result.Data.Tags["key2"]);
         }
         [Test]
+        [Ignore("Re-record tags after the SetTags request change; see #63311.")]
         public async Task RemoveTagAsync()
         {
             await setResourceGroup();

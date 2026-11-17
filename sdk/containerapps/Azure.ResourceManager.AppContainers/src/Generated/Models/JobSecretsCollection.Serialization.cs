@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JobSecretsCollection(value, additionalBinaryDataProperties);
+            return new JobSecretsCollection(value ?? new ChangeTrackingList<ContainerAppWritableSecret>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the express route cross connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteCrossConnectionProperties properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteCrossConnectionProperties properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -94,24 +94,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The ExpressRouteCircuit. </summary>
-        [WirePath("properties.expressRouteCircuit")]
-        public ResourceIdentifier ExpressRouteCircuit
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuit;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteCrossConnectionProperties();
-                }
-                Properties.ExpressRouteCircuit = value;
-            }
-        }
-
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
         [WirePath("properties.serviceProviderProvisioningState")]
         public ServiceProviderProvisioningState? ServiceProviderProvisioningState
@@ -169,6 +151,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new ExpressRouteCrossConnectionProperties();
                 }
                 return Properties.Peerings;
+            }
+        }
+
+        /// <summary> Corresponding Express Route Circuit Id. </summary>
+        [WirePath("properties.expressRouteCircuit.id")]
+        public ResourceIdentifier ExpressRouteCircuitId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitId = value;
             }
         }
     }

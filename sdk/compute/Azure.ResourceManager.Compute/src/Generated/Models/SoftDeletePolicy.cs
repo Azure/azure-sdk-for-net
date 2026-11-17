@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
-    internal partial class SoftDeletePolicy
+    public partial class SoftDeletePolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="SoftDeletePolicy"/>. </summary>
         /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
+        /// <param name="retentionPeriodInDays"> The retention period in days for a soft-deleted resource. After this period elapses, the soft-deleted gallery image version transitions to a simulated hard-deleted state. </param>
+        /// <param name="gracePeriodInDays"> The grace period in days for a simulated hard-deleted resource. During this period the gallery image version is unusable but can still be recovered if required. After this period elapses, the gallery image version is permanently (hard) deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftDeletePolicy(bool? isSoftDeleteEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftDeletePolicy(bool? isSoftDeleteEnabled, int? retentionPeriodInDays, int? gracePeriodInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSoftDeleteEnabled = isSoftDeleteEnabled;
+            RetentionPeriodInDays = retentionPeriodInDays;
+            GracePeriodInDays = gracePeriodInDays;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </summary>
         public bool? IsSoftDeleteEnabled { get; set; }
+
+        /// <summary> The retention period in days for a soft-deleted resource. After this period elapses, the soft-deleted gallery image version transitions to a simulated hard-deleted state. </summary>
+        public int? RetentionPeriodInDays { get; set; }
+
+        /// <summary> The grace period in days for a simulated hard-deleted resource. During this period the gallery image version is unusable but can still be recovered if required. After this period elapses, the gallery image version is permanently (hard) deleted. </summary>
+        public int? GracePeriodInDays { get; set; }
     }
 }

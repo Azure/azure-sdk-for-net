@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPCommunityResource : ArmResource
     {
         private readonly ClientDiagnostics _ipCommunitiesClientDiagnostics;
-        private readonly IpCommunities _ipCommunitiesRestClient;
+        private readonly IPCommunities _ipCommunitiesRestClient;
         private readonly NetworkFabricIPCommunityData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/ipCommunities";
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricIPCommunityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkFabricIPCommunityApiVersion);
             _ipCommunitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _ipCommunitiesRestClient = new IpCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
+            _ipCommunitiesRestClient = new IPCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipCommunities", out string ipCommunitiesApiVersionOverride) ? ipCommunitiesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -515,10 +515,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -558,10 +557,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

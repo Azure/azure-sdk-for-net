@@ -492,6 +492,64 @@ namespace Azure.Storage.Files.Shares
             => GetDirectoryClient("");
 
         /// <summary>
+        /// Create a new <see cref="ShareFileClient"/> object that addresses a
+        /// file by its file ID rather than by its path.  The new
+        /// <see cref="ShareFileClient"/> uses the same request policy pipeline
+        /// as the <see cref="ShareClient"/>.
+        ///
+        /// A file ID can be obtained from the
+        /// <see cref="Models.FileSmbProperties.FileId"/> returned by
+        /// Get Properties, or from a change feed event.
+        ///
+        /// Clients that address a file by its file ID only support a subset of
+        /// the file operations.  Unsupported operations throw
+        /// <see cref="InvalidOperationException"/>.
+        /// </summary>
+        /// <param name="fileId">The file ID of the file.</param>
+        /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
+        public virtual ShareFileClient GetFileClientByFileId(string fileId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(fileId, nameof(fileId));
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+            {
+                DirectoryOrFilePath = null,
+                FileId = fileId
+            };
+            return new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                ClientConfiguration);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="ShareDirectoryClient"/> object that addresses
+        /// a directory by its file ID rather than by its path.  The new
+        /// <see cref="ShareDirectoryClient"/> uses the same request policy
+        /// pipeline as the <see cref="ShareClient"/>.
+        ///
+        /// A file ID can be obtained from the
+        /// <see cref="Models.FileSmbProperties.FileId"/> returned by
+        /// Get Properties, or from a change feed event.
+        ///
+        /// Clients that address a directory by its file ID only support a
+        /// subset of the directory operations.  Unsupported operations throw
+        /// <see cref="InvalidOperationException"/>.
+        /// </summary>
+        /// <param name="fileId">The file ID of the directory.</param>
+        /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
+        public virtual ShareDirectoryClient GetDirectoryClientByFileId(string fileId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(fileId, nameof(fileId));
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+            {
+                DirectoryOrFilePath = null,
+                FileId = fileId
+            };
+            return new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                ClientConfiguration);
+        }
+
+        /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
         private void SetNameFieldsIfNull()
@@ -546,6 +604,8 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
                 //options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken)
@@ -592,6 +652,8 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
                 //options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken)
@@ -643,6 +705,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 async: false,
                 cancellationToken)
@@ -694,6 +758,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 async: true,
                 cancellationToken)
@@ -746,6 +812,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="provisionedMaxBandwidthMibps">
         /// Provisioned max bandwidth MiBps.
         /// </param>
+        /// <param name="enableChangeFeed">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </param>
+        /// <param name="changeFeedRetentionInDays">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -778,6 +852,8 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthMibps,
+            bool? enableChangeFeed,
+            int? changeFeedRetentionInDays,
             //bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken,
@@ -813,6 +889,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
                             //enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -831,6 +909,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
                             //enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken);
                     }
@@ -896,6 +976,8 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
                 //options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -941,6 +1023,8 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
                 //options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -993,6 +1077,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1046,6 +1132,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1097,6 +1185,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="provisionedMaxBandwidthMibps">
         /// Provisioned max bandwidth MiBps.
         /// </param>
+        /// <param name="enableChangeFeed">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </param>
+        /// <param name="changeFeedRetentionInDays">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1126,6 +1222,8 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthMibps,
+            bool? enableChangeFeed,
+            int? changeFeedRetentionInDays,
             //bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken)
@@ -1152,6 +1250,8 @@ namespace Azure.Storage.Files.Shares
                         paidBurstingMaxBandwidthMibps,
                         provisionedMaxIops,
                         provisionedMaxBandwidthMibps,
+                        enableChangeFeed,
+                        changeFeedRetentionInDays,
                         //enableDirectoryLease,
                         async,
                         cancellationToken,
@@ -2159,6 +2259,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableChangeFeed: options?.EnableChangeFeed,
+                changeFeedRetentionInDays: options?.ChangeFeedRetentionInDays,
                 //enableDirectoryLease: options?.EnableDirectoryLease,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
@@ -2203,6 +2305,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableChangeFeed: options?.EnableChangeFeed,
+                changeFeedRetentionInDays: options?.ChangeFeedRetentionInDays,
                 //enableDirectoryLease: options?.EnableDirectoryLease,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
@@ -2254,6 +2358,14 @@ namespace Azure.Storage.Files.Shares
         /// Sets the max provisioned brandwith for a share.  For SSD, min bandwidth is 125 MiB/sec and max is 10,340 MiB/sec.
         /// For HDD, min bandwidth is 60 MiB/sec and max is 5,120 MiB/sec.
         /// </param>
+        /// <param name="enableChangeFeed">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </param>
+        /// <param name="changeFeedRetentionInDays">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on setting the quota.
@@ -2288,6 +2400,8 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthBandwidthMibps,
+            bool? enableChangeFeed,
+            int? changeFeedRetentionInDays,
             //bool? enableDirectoryLease,
             ShareFileRequestConditions conditions,
             string operationName,
@@ -2323,6 +2437,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
                             //enableSmbDirectoryLease: enableDirectoryLease,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
@@ -2340,6 +2456,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
                             //enableSmbDirectoryLease: enableDirectoryLease,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
@@ -2409,6 +2527,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
@@ -2460,6 +2580,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
@@ -2509,6 +2631,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
@@ -2557,6 +2681,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",

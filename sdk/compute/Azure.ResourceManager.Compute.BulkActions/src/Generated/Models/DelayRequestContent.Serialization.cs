@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request body for delaying a scheduled action occurrence. </summary>
+    /// <summary> Request body for delaying a recurring bulk action occurrence. </summary>
     public partial class DelayRequestContent : IJsonModel<DelayRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="DelayRequestContent"/> for deserialization. </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DelayRequestContent(scheduleOn, resourceIds, additionalBinaryDataProperties);
+            return new DelayRequestContent(scheduleOn, resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

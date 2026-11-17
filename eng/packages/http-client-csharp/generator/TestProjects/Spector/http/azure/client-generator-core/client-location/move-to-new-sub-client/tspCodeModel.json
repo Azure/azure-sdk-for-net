@@ -69,7 +69,6 @@
                 "$id": "7",
                 "name": "listProducts",
                 "isExactName": false,
-                "resourceName": "ProductOperations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -160,7 +159,6 @@
                 "$id": "13",
                 "name": "archiveProduct",
                 "isExactName": false,
-                "resourceName": "ProductOperations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

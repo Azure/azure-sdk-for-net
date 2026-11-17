@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Relationships.Samples
             {
                 Properties = new ServiceGroupMemberRelationshipProperties(new ResourceIdentifier("/providers/Microsoft.Management/serviceGroups/sg1"))
                 {
-                    TargetTenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                    SourceTenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
                 },
             };
             ArmOperation<ServiceGroupMemberRelationshipResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);

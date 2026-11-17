@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LegalHold(hasLegalHold, tags, allowProtectedAppendWritesAll, additionalBinaryDataProperties);
+            return new LegalHold(hasLegalHold, tags ?? new ChangeTrackingList<string>(), allowProtectedAppendWritesAll, additionalBinaryDataProperties);
         }
     }
 }

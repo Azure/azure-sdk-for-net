@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("openHubDestinationName"u8))
                 {
-                    openHubDestinationName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    openHubDestinationName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("excludeLastRequest"u8))

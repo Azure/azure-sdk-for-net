@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPolicyDataAsyncCollectionResultOfT(
                 _collectorPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPolicyDataCollectionResultOfT(
                 _collectorPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

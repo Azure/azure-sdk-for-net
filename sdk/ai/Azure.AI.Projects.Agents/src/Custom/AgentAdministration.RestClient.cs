@@ -38,7 +38,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -72,7 +72,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -109,7 +109,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -146,12 +146,90 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
         {
             otelScope?.RecordError(ex);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
+    /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+    /// `x-ms-code-zip-sha256` header for integrity and dedup.
+    /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+    /// Maximum upload size is 250 MB.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName">
+    /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+    /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+    /// </param>
+    /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+    /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
+    {
+        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
+        try
+        {
+            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
+            ClientResult result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
+            return result;
+        }
+        catch (Exception e)
+        {
+            otelScope?.RecordError(e);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
+    /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+    /// `x-ms-code-zip-sha256` header for integrity and dedup.
+    /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+    /// Maximum upload size is 250 MB.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName">
+    /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+    /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+    /// </param>
+    /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+    /// <param name="content"> The content to send as the body of the request. </param>
+    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
+    {
+        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
+        try
+        {
+            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
+            ClientResult result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
+            return result;
+        }
+        catch (Exception e)
+        {
+            otelScope?.RecordError(e);
             throw;
         }
     }
@@ -183,7 +261,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -220,7 +298,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -254,7 +332,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentFromManifestRequest(content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -288,7 +366,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentFromManifestRequest(content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -358,7 +436,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -396,7 +474,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -433,7 +511,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -470,7 +548,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)

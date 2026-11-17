@@ -6,13 +6,16 @@ using System.Collections.Concurrent;
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
+using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Cose;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -1169,5 +1172,149 @@ namespace Azure.Security.CodeTransparency.Tests
                 $"First error: {exceptions.FirstOrDefault()?.Message}");
 #endif
         }
+
+        [Test]
+        public void ValidateServerCertificate_AcceptsNodeCertificateReissuedAfterConstruction()
+        {
+#if NET462
+            Assert.Ignore("X509 CertificateRequest API used to synthesize test certificates was added in .NET Framework 4.7.2.");
+#else
+            // Regression test for the frozen X509ChainPolicy.VerificationTime bug. The validation callback is
+            // created (as it is once per client) while the clock reads the construction time, BEFORE a reissued
+            // node certificate becomes valid. The callback is then invoked at two later points in time through the
+            // exact delegate wired up by CreateTlsCertAndTrustVerifier:
+            //   1. still before the node cert's NotBefore -> must fail (NotTimeValid), confirming the cert really is
+            //      not yet valid at construction time, so this is a genuine "reissued after construction" scenario;
+            //   2. after the node cert's NotBefore -> must succeed, which only holds because VerificationTime is read
+            //      per handshake. A callback that froze VerificationTime at construction time would reject it forever.
+            DateTime constructionTime = DateTime.Now;
+            DateTime clockNow = constructionTime;
+            Func<DateTime> clock = () => clockNow;
+
+            using X509Certificate2 identityCert = CreateCaCertificate("CN=CCF Network", constructionTime.AddDays(-1), constructionTime.AddYears(1));
+            // Node certificate reissued (e.g. ledger pod restart) with a NotBefore 10 minutes after construction.
+            DateTimeOffset nodeNotBefore = constructionTime.AddMinutes(10);
+            using X509Certificate2 nodeCert = CreateNodeCertificate("CN=ccf-node", identityCert, nodeNotBefore, nodeNotBefore.AddDays(90));
+
+            CodeTransparencyCertificateClient certClient = CreateCertificateClientReturning(identityCert);
+
+            // Construct the validation callback while the clock is at construction time (node cert not yet valid).
+            HttpPipelineTransportOptions options = CodeTransparencyClient.CreateTlsCertAndTrustVerifier("serviceName", certClient, clock);
+            Func<ServerCertificateCustomValidationArgs, bool> callback = options.ServerCertificateCustomValidationCallback;
+
+            // (1) Still before NotBefore: the reissued certificate is genuinely not time-valid yet.
+            clockNow = constructionTime.AddMinutes(5);
+            bool resultBeforeValid = callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors));
+            Assert.IsFalse(resultBeforeValid, "Before the reissued node certificate's NotBefore it should be rejected as NotTimeValid.");
+
+            // (2) After NotBefore: accepted only because VerificationTime is evaluated per handshake, not frozen at construction.
+            clockNow = constructionTime.AddMinutes(20);
+            bool resultAfterValid = callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors));
+            Assert.IsTrue(resultAfterValid, "A node certificate reissued after client construction must be accepted; a callback frozen at construction time would reject it.");
+#endif
+        }
+
+        [Test]
+        public void ValidateServerCertificate_IsThreadSafeUnderConcurrentHandshakes()
+        {
+#if NET462
+            Assert.Ignore("X509 CertificateRequest API used to synthesize test certificates was added in .NET Framework 4.7.2.");
+#else
+            // Regression test for the second defect: a single shared X509Chain was mutated and Build() called
+            // concurrently from parallel handshakes, which X509Chain does not support. Building a fresh chain per
+            // call must allow the shared callback to be invoked concurrently without corruption or exceptions.
+            using X509Certificate2 identityCert = CreateCaCertificate("CN=CCF Network", DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(1));
+            using X509Certificate2 nodeCert = CreateNodeCertificate("CN=ccf-node", identityCert, DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddDays(90));
+
+            CodeTransparencyCertificateClient certClient = CreateCertificateClientReturning(identityCert);
+            HttpPipelineTransportOptions options = CodeTransparencyClient.CreateTlsCertAndTrustVerifier("serviceName", certClient, static () => DateTime.Now);
+            Func<ServerCertificateCustomValidationArgs, bool> callback = options.ServerCertificateCustomValidationCallback;
+
+            // Warm the identity cache so all parallel invocations exercise the chain build, not the mock transport.
+            Assert.IsTrue(callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors)));
+
+            var results = new ConcurrentBag<bool>();
+            var exceptions = new ConcurrentQueue<Exception>();
+            Parallel.For(0, 256, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount * 2 }, _ =>
+            {
+                try
+                {
+                    results.Add(callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors)));
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Enqueue(ex);
+                }
+            });
+
+            Assert.IsEmpty(exceptions, "Concurrent handshakes must not throw; a shared non-thread-safe X509Chain would.");
+            Assert.AreEqual(256, results.Count);
+            Assert.IsTrue(results.All(r => r), "Every concurrent validation of a valid node certificate must succeed.");
+#endif
+        }
+
+        [Test]
+        public void ValidateServerCertificate_RejectsCertificateNotRootedInIdentityCertificate()
+        {
+#if NET462
+            Assert.Ignore("X509 CertificateRequest API used to synthesize test certificates was added in .NET Framework 4.7.2.");
+#else
+            using X509Certificate2 identityCert = CreateCaCertificate("CN=CCF Network", DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(1));
+            using X509Certificate2 otherCa = CreateCaCertificate("CN=Other Network", DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(1));
+            using X509Certificate2 foreignNodeCert = CreateNodeCertificate("CN=foreign-node", otherCa, DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddDays(90));
+
+            CodeTransparencyCertificateClient certClient = CreateCertificateClientReturning(identityCert);
+
+            bool result = CodeTransparencyClient.ValidateServerCertificate(certClient, "serviceName", foreignNodeCert);
+
+            Assert.IsFalse(result, "A certificate not rooted in the ledger identity certificate must be rejected.");
+#endif
+        }
+
+#if !NET462
+        private static CodeTransparencyCertificateClient CreateCertificateClientReturning(X509Certificate2 identityCert)
+        {
+            string pem = ExportCertificatePem(identityCert);
+            string content = "{ \"ledgerTlsCertificate\": " + JsonSerializer.Serialize(pem) + " }";
+            var options = new CodeTransparencyClientOptions
+            {
+                // Return a fresh response per request so the mock transport can serve any number of calls,
+                // including concurrent ones, without sharing a single response's content stream.
+                Transport = new MockTransport(_ =>
+                {
+                    var response = new MockResponse(200);
+                    response.SetContent(content);
+                    return response;
+                }),
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
+            };
+            return options.CreateCertificateClient();
+        }
+
+        private static X509Certificate2 CreateCaCertificate(string subjectName, DateTimeOffset notBefore, DateTimeOffset notAfter)
+        {
+            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP384);
+            var request = new CertificateRequest(subjectName, key, HashAlgorithmName.SHA384);
+            request.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, false, 0, true));
+            request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
+            return request.CreateSelfSigned(notBefore, notAfter);
+        }
+
+        private static X509Certificate2 CreateNodeCertificate(string subjectName, X509Certificate2 issuer, DateTimeOffset notBefore, DateTimeOffset notAfter)
+        {
+            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP384);
+            var request = new CertificateRequest(subjectName, key, HashAlgorithmName.SHA384);
+            request.CertificateExtensions.Add(new X509BasicConstraintsExtension(false, false, 0, false));
+            request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
+            byte[] serialNumber = RandomNumberGenerator.GetBytes(16);
+            return request.Create(issuer, notBefore, notAfter, serialNumber);
+        }
+
+        private static string ExportCertificatePem(X509Certificate2 cert)
+        {
+            string base64 = Convert.ToBase64String(cert.RawData, Base64FormattingOptions.InsertLineBreaks);
+            return "-----BEGIN CERTIFICATE-----\n" + base64 + "\n-----END CERTIFICATE-----\n";
+        }
+#endif
     }
 }

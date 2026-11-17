@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <returns> A new <see cref="Models.MongoClusterIdentityProvider"/> instance for mocking. </returns>
         public static MongoClusterIdentityProvider MongoClusterIdentityProvider(string @type = default)
         {
-            return new UnknownMongoClusterIdentityProvider(default, default);
+            return new UnknownMongoClusterIdentityProvider(@type is null ? default : new IdentityProviderType(@type), default);
         }
 
         /// <param name="mongoClusterEntraIdentityProviderPrincipalType"> The principal type of the user. </param>
         /// <returns> A new <see cref="Models.MongoClusterEntraIdentityProvider"/> instance for mocking. </returns>
         public static MongoClusterEntraIdentityProvider MongoClusterEntraIdentityProvider(MongoClusterEntraPrincipalType mongoClusterEntraIdentityProviderPrincipalType = default)
         {
-            return new MongoClusterEntraIdentityProvider(default, default, new MongoClusterEntraIdentityProviderProperties(mongoClusterEntraIdentityProviderPrincipalType, default));
+            return new MongoClusterEntraIdentityProvider(IdentityProviderType.MicrosoftEntraID, default, new MongoClusterEntraIdentityProviderProperties(mongoClusterEntraIdentityProviderPrincipalType, default));
         }
 
         /// <summary> Microsoft Entra ID provider properties. </summary>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityMode? highAvailabilityTargetMode, MongoClusterStorageProperties storage, int? shardingShardCount, string computeTier, string backupEarliestRestoreTime, MongoClusterDataApiMode? dataApiMode, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IEnumerable<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption)
         {
             return new MongoClusterProperties(
                 createMode,

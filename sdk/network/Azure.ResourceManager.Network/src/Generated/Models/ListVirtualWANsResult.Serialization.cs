@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListVirtualWANsResult(value, nextLink, additionalBinaryDataProperties);
+            return new ListVirtualWANsResult(value ?? new ChangeTrackingList<VirtualWanData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -196,7 +196,6 @@
                 "$id": "17",
                 "name": "simple",
                 "isExactName": false,
-                "resourceName": "ExplicitBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -382,7 +381,6 @@
                 "$id": "27",
                 "name": "simple",
                 "isExactName": false,
-                "resourceName": "ImplicitBody",
                 "accessibility": "public",
                 "parameters": [
                   {

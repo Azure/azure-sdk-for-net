@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> An object representing collection of SubscriptionBillingInvoices and their operations over a SubscriptionBillingInvoiceResource. </returns>
         public virtual SubscriptionBillingInvoiceCollection GetSubscriptionBillingInvoices(string subscriptionId)
         {
-            return GetCachedClient(client => new SubscriptionBillingInvoiceCollection(client, Id, subscriptionId));
+            return new SubscriptionBillingInvoiceCollection(Client, Id, subscriptionId);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Billing.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllAsyncCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
+            return new BillingOperationInfoAsyncCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
         }
 
         /// <summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Billing.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
+            return new BillingOperationInfoCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
         }
 
         /// <summary>

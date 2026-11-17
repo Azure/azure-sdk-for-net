@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Ingress profile for the container service cluster. </summary>
-    internal partial class ManagedClusterIngressProfile : ProvisionableConstruct
+    public partial class ManagedClusterIngressProfile : ProvisionableConstruct
     {
         private ManagedClusterIngressProfileWebAppRouting _webAppRouting;
+        private ManagedClusterIngressProfileGatewayConfiguration _gatewayApi;
 
         /// <summary> Creates a new ManagedClusterIngressProfile. </summary>
         public ManagedClusterIngressProfile()
@@ -34,11 +36,44 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the GatewayApi. </summary>
+        internal ManagedClusterIngressProfileGatewayConfiguration GatewayApi
+        {
+            get
+            {
+                Initialize();
+                return _gatewayApi;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _gatewayApi, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Installation. </summary>
+        public BicepValue<ManagedGatewayType> GatewayApiInstallation
+        {
+            get
+            {
+                return GatewayApi is null ? default : GatewayApi.Installation;
+            }
+            set
+            {
+                if (GatewayApi is null)
+                {
+                    GatewayApi = new ManagedClusterIngressProfileGatewayConfiguration();
+                }
+                GatewayApi.Installation = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterIngressProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _webAppRouting = DefineModelProperty<ManagedClusterIngressProfileWebAppRouting>(nameof(WebAppRouting), new string[] { "webAppRouting" });
+            _gatewayApi = DefineModelProperty<ManagedClusterIngressProfileGatewayConfiguration>(nameof(GatewayApi), new string[] { "gatewayAPI" });
             DefineAdditionalProperties();
         }
 

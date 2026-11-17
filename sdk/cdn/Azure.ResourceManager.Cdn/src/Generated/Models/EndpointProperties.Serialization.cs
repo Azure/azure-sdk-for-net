@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 webApplicationFirewallPolicyLink,
                 additionalBinaryDataProperties,
                 hostName,
-                origins,
+                origins ?? new ChangeTrackingList<DeepCreatedOrigin>(),
                 originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(),
                 deepCreatedCustomDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>(),
                 resourceState,

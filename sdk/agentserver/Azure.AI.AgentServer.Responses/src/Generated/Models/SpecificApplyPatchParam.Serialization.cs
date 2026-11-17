@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Specific apply patch tool choice. </summary>
-    public partial class SpecificApplyPatchParam : ToolChoiceParam, IJsonModel<SpecificApplyPatchParam>
+    internal partial class SpecificApplyPatchParam : ToolChoiceParam, IJsonModel<SpecificApplyPatchParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -112,7 +111,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SpecificApplyPatchParam(@type, additionalBinaryDataProperties);

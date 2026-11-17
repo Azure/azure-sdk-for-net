@@ -93,7 +93,7 @@ The file `{PKG}/eng/scripts/Spector-Helper.psm1` defines which specs are include
 Current exclusions fall into three categories:
 
 1. **Standard spec issues**: `type/file`
-2. **Azure specs not yet buildable**: `azure/client-generator-core/alternate-type`, `azure/client-generator-core/deserialize-empty-string-as-null`
+2. **Azure specs not yet buildable**: `azure/client-generator-core/deserialize-empty-string-as-null`
 3. **Delegated to management generator**: All `azure/resource-manager/*` specs (common-properties, non-resource, operation-templates, resources, large-header, method-subscription-id, multi-service variants)
 
 ### Discovering gaps programmatically
@@ -162,7 +162,7 @@ _Type/            (Array, Dictionary, Enum/*, Model/*, Property/*, Scalar, Union
 **Azure spec test directories** (under `Spector.Tests/Http/Azure/`):
 
 ```
-ClientGeneratorCore/  (Access, ApiVersion/*, ClientInitialization/*, ClientLocation/*, HierarchyBuilding, Override, Usage)
+ClientGeneratorCore/  (Access, AlternateType, ApiVersion/*, ClientInitialization/*, ClientLocation/*, HierarchyBuilding, Override, Usage)
 Core/                 (Basic, Lro/Rpc, Lro/Standard, Model, Page, Scalar, Traits)
 Encode/               (Duration)
 Example/              (Basic)

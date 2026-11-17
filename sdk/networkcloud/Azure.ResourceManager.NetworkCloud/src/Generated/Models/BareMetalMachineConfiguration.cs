@@ -60,29 +60,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SerialNumber = serialNumber;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The connection string for the baseboard management controller including IP address and protocol. </summary>
-        public string BmcConnectionString { get; }
-
-        /// <summary> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </summary>
-        public AdministrativeCredentials BmcCredentials { get; set; }
-
-        /// <summary> The MAC address of the BMC for this machine. </summary>
-        public string BmcMacAddress { get; set; }
-
-        /// <summary> The MAC address associated with the PXE NIC card. </summary>
-        public string BootMacAddress { get; set; }
-
-        /// <summary> The free-form additional information about the machine, e.g. an asset tag. </summary>
-        public string MachineDetails { get; set; }
-
-        /// <summary> The user-provided name for the bare metal machine created from this specification. If not provided, the machine name will be generated programmatically. </summary>
-        public string MachineName { get; set; }
-
-        /// <summary> The slot the physical machine is in the rack based on the BOM configuration. </summary>
-        public long RackSlot { get; set; }
-
-        /// <summary> The serial number of the machine. Hardware suppliers may use an alternate value. For example, service tag. </summary>
-        public string SerialNumber { get; set; }
     }
 }

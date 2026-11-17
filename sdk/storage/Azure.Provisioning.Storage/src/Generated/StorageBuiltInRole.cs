@@ -25,6 +25,7 @@ namespace Azure.Provisioning.Storage
         internal const string StorageBlobDelegatorValue = "db58b8e5-c6ad-4a2a-8342-4190687cbf4a";
         internal const string StorageFileDataPrivilegedContributorValue = "69566ab7-960f-475b-8e7c-b3118f30c6bd";
         internal const string StorageFileDataPrivilegedReaderValue = "b8eda974-7b85-4f76-af95-65846b26df6d";
+        internal const string StorageFileDataSmbMIAdminValue = "a235d3ee-5935-4cfb-8cc5-a3303ad5995e";
         internal const string StorageFileDataSmbShareContributorValue = "0c867c2a-1d8c-454a-a3db-ab2ea1bdc8bb";
         internal const string StorageFileDataSmbShareElevatedContributorValue = "a7264617-510b-434b-a828-9731dc254ea7";
         internal const string StorageFileDataSmbShareReaderValue = "aba4ae5f-2193-4029-9191-0cb91df5e314";
@@ -74,6 +75,9 @@ namespace Azure.Provisioning.Storage
         /// <summary> Gets the StorageFileDataPrivilegedReader. </summary>
         public static StorageBuiltInRole StorageFileDataPrivilegedReader => new StorageBuiltInRole(StorageFileDataPrivilegedReaderValue);
 
+        /// <summary> Gets the StorageFileDataSmbMIAdmin. </summary>
+        public static StorageBuiltInRole StorageFileDataSmbMIAdmin => new StorageBuiltInRole(StorageFileDataSmbMIAdminValue);
+
         /// <summary> Gets the StorageFileDataSmbShareContributor. </summary>
         public static StorageBuiltInRole StorageFileDataSmbShareContributor => new StorageBuiltInRole(StorageFileDataSmbShareContributorValue);
 
@@ -118,6 +122,7 @@ namespace Azure.Provisioning.Storage
             StorageBlobDelegatorValue => nameof(StorageBlobDelegator),
             StorageFileDataPrivilegedContributorValue => nameof(StorageFileDataPrivilegedContributor),
             StorageFileDataPrivilegedReaderValue => nameof(StorageFileDataPrivilegedReader),
+            StorageFileDataSmbMIAdminValue => nameof(StorageFileDataSmbMIAdmin),
             StorageFileDataSmbShareContributorValue => nameof(StorageFileDataSmbShareContributor),
             StorageFileDataSmbShareElevatedContributorValue => nameof(StorageFileDataSmbShareElevatedContributor),
             StorageFileDataSmbShareReaderValue => nameof(StorageFileDataSmbShareReader),

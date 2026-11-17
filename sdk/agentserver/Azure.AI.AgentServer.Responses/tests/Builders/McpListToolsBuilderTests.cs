@@ -48,7 +48,7 @@ public class McpListToolsBuilderTests
         var item = XAssert.IsType<OutputItemMcpListTools>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.ServerLabel, Is.EqualTo("my-server"));
-        Assert.That(item.Tools, Is.Empty);
+        Assert.That(item.ToolDefinitions, Is.Empty);
     }
 
     [Test]

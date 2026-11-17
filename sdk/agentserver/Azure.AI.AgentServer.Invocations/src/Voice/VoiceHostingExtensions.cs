@@ -9,6 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 /// <summary>Registration extensions for the typed Voice event relay.</summary>
+/// <remarks>
+/// Typed Voice registration exposes both <c>/voice_conversation_engine</c> and the
+/// existing <c>/invocations_ws</c> route when Invocations routes are mapped.
+/// Hosted agent protocol declarations are configured separately.
+/// </remarks>
 [Experimental("AAAS001")]
 public static class VoiceHostingExtensions
 {

@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsyncCollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
+            return new ResourceHealthEventImpactedResourceDataAsync2CollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdCollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
+            return new ResourceHealthEventImpactedResourceData2CollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
         }
 
         /// <summary> Gets a collection of TenantResourceHealthEventImpactedResources in the <see cref="TenantResourceHealthEventResource"/>. </summary>

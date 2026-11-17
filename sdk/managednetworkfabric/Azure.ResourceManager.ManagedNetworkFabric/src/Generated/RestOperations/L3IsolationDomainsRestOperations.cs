@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +195,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +216,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
             uri.AppendPath("/updateAdministrativeState", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
             uri.AppendPath("/validateConfiguration", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -290,10 +260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
             uri.AppendPath("/commitConfiguration", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

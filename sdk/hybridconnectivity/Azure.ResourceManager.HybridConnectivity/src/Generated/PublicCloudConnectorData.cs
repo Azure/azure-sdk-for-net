@@ -33,14 +33,19 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="kind"> The kind of the public cloud connector. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PublicCloudConnectorProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal PublicCloudConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PublicCloudConnectorProperties properties, PublicCloudHostType? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public PublicCloudConnectorProperties Properties { get; set; }
+
+        /// <summary> The kind of the public cloud connector. </summary>
+        public PublicCloudHostType? Kind { get; }
     }
 }

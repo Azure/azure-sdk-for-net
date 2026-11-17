@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DisconnectedOperationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DisconnectedOperationListResult(value ?? new ChangeTrackingList<DisconnectedOperationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

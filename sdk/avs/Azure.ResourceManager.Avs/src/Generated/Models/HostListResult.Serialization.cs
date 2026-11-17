@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HostListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HostListResult(value ?? new ChangeTrackingList<AvsHostData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

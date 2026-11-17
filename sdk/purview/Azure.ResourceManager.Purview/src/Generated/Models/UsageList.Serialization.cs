@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UsageList(value, nextLink, additionalBinaryDataProperties);
+            return new UsageList(value ?? new ChangeTrackingList<PurviewUsage>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BastionShareableLinkListResult(value, nextLink, additionalBinaryDataProperties);
+            return new BastionShareableLinkListResult(value ?? new ChangeTrackingList<BastionShareableLink>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

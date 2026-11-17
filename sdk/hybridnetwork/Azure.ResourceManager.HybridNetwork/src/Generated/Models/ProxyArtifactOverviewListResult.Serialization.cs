@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProxyArtifactOverviewListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ProxyArtifactOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactListOverview>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

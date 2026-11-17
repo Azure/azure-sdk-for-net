@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepList<ContainerServiceIPTag> _nodePublicIPTags;
         private BicepList<AgentPoolNetworkPortRange> _allowedHostPorts;
         private BicepList<ResourceIdentifier> _applicationSecurityGroups;
+        private DRANETProfile _dranet;
 
         /// <summary> Creates a new AgentPoolNetworkProfile. </summary>
         public AgentPoolNetworkProfile()
@@ -68,6 +69,38 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the Dranet. </summary>
+        internal DRANETProfile Dranet
+        {
+            get
+            {
+                Initialize();
+                return _dranet;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _dranet, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Mode. </summary>
+        public BicepValue<DranetMode> DranetMode
+        {
+            get
+            {
+                return Dranet is null ? default : Dranet.Mode;
+            }
+            set
+            {
+                if (Dranet is null)
+                {
+                    Dranet = new DRANETProfile();
+                }
+                Dranet.Mode = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AgentPoolNetworkProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -75,6 +108,7 @@ namespace Azure.Provisioning.ContainerService
             _nodePublicIPTags = DefineListProperty<ContainerServiceIPTag>(nameof(NodePublicIPTags), new string[] { "nodePublicIPTags" });
             _allowedHostPorts = DefineListProperty<AgentPoolNetworkPortRange>(nameof(AllowedHostPorts), new string[] { "allowedHostPorts" });
             _applicationSecurityGroups = DefineListProperty<ResourceIdentifier>(nameof(ApplicationSecurityGroups), new string[] { "applicationSecurityGroups" });
+            _dranet = DefineModelProperty<DRANETProfile>(nameof(Dranet), new string[] { "dranet" });
             DefineAdditionalProperties();
         }
 

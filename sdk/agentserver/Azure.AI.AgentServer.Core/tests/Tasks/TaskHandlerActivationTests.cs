@@ -337,6 +337,7 @@ public sealed class TaskHandlerActivationTests
             _tempDir = sharedDir
                 ?? Path.Combine(Path.GetTempPath(), "agentserver-di-" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(_tempDir);
+            Services.SetResilientTasksEnabled();
             Services.AddSingleton<ITaskStore>(new LocalTaskStore(_tempDir));
         }
 
@@ -347,6 +348,7 @@ public sealed class TaskHandlerActivationTests
         public Task BuildAsync()
         {
             _provider = Services.BuildServiceProvider();
+            _provider.GetRequiredService<ResilientTaskEnablementState>().MarkReady();
             Engine = _provider.GetRequiredService<TaskEngine>();
             return Task.CompletedTask;
         }
@@ -372,6 +374,7 @@ public sealed class TaskHandlerActivationTests
         {
             if (_provider is not null)
             {
+                _provider.GetRequiredService<ResilientTaskEnablementState>().MarkStopped();
                 await _provider.DisposeAsync();
             }
 

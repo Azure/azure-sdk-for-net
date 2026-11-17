@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SupportTicketDataAsyncCollectionResultOfT(
                 _subscriptionSupportTicketRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllCollectionResultOfT(
+            return new PageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SupportTicketDataCollectionResultOfT(
                 _subscriptionSupportTicketRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,

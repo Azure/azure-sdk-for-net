@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArcGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ArcGatewayResource.ResourceType, out string arcGatewayApiVersion);
             _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ArcGatewayResource.ResourceType.Namespace, Diagnostics);
-            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arcGatewayApiVersion ?? "2026-07-15");
+            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/gateways", out string gatewaysApiVersionOverride) ? gatewaysApiVersionOverride : "2026-07-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetByResourceGroupAsyncCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataAsyncCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetByResourceGroupCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
+            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>

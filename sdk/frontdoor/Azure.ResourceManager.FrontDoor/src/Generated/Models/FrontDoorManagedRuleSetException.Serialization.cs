@@ -224,8 +224,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 selectorMatchOperator,
                 selector,
                 valueMatchOperator,
-                matchValues,
-                scopes,
+                matchValues ?? new ChangeTrackingList<string>(),
+                scopes ?? new ChangeTrackingList<FrontDoorManagedRuleSetScope>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -214,7 +214,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.OpenAPI, "openapi_call"},
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
-        {ToolType.BrowserAutomationGA, "browser_automation_call"},
+        {ToolType.BrowserAutomationGA, "remote_function_call"},
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
         {ToolType.FabricIQ, "mcp_call"},
@@ -628,14 +628,16 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
             // TODO: Uncomment this code when the service will be available and BrowserAutomationTool will be generated.
-            //ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
-            //new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
-            //    new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
-            //)),
+            ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
+            new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
+                new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.BROWSER_AUTOMATION_NAME)
+            )),
+#pragma warning disable CS0618 // Preserve test coverage for the legacy browser automation tool.
             ToolType.BrowserAutomation => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool(
             new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
                 new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
+#pragma warning restore CS0618
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
             ToolType.FabricIQ => GetFabricIQAgentTool(),
             ToolType.A2A => GetA2ATool(false),

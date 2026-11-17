@@ -26,14 +26,28 @@ public class ShutdownSignalTests
     }
 
     [Test]
-    public void Shutdown_Token_IsSignaled_WhenIsShutdownRequestedSet()
+    public void Shutdown_Token_IsSignaled_WhenSignalShutdownCalled()
     {
         var context = new ResponseContext("resp_signal");
 
-        context.IsShutdownRequested = true;
+        context.SignalShutdown();
 
         Assert.That(context.IsShutdownRequested, Is.True);
         Assert.That(context.Shutdown.IsCancellationRequested, Is.True);
+    }
+
+    [Test]
+    public void ConveniencePropertiesUseVirtualCancellationTokens()
+    {
+        using var context = new OverriddenTokenContext();
+
+        context.SignalOverrides();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(context.IsShutdownRequested, Is.True);
+            Assert.That(context.IsClientCancelled, Is.True);
+        });
     }
 
     [Test]
@@ -55,7 +69,7 @@ public class ShutdownSignalTests
             }
         });
 
-        context.IsShutdownRequested = true;
+        context.SignalShutdown();
 
         await woke.Task.WaitAsync(TimeSpan.FromSeconds(5));
         await handler;
@@ -78,5 +92,32 @@ public class ShutdownSignalTests
 
         Assert.That(context.IsShutdownRequested, Is.True);
         Assert.That(context.Shutdown.IsCancellationRequested, Is.True);
+    }
+
+    private sealed class OverriddenTokenContext : ResponseContext, IDisposable
+    {
+        private readonly CancellationTokenSource _shutdown = new();
+        private readonly CancellationTokenSource _clientCancellation = new();
+
+        public OverriddenTokenContext()
+            : base("resp_overridden_tokens")
+        {
+        }
+
+        public override CancellationToken Shutdown => _shutdown.Token;
+
+        public override CancellationToken ClientCancellation => _clientCancellation.Token;
+
+        public void SignalOverrides()
+        {
+            _shutdown.Cancel();
+            _clientCancellation.Cancel();
+        }
+
+        public void Dispose()
+        {
+            _shutdown.Dispose();
+            _clientCancellation.Dispose();
+        }
     }
 }

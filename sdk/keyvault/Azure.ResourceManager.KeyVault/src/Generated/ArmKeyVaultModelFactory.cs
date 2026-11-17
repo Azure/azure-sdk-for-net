@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KeyVaultData KeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, KeyVaultProperties properties = default, IDictionary<string, string> tags = default)
+        public static KeyVaultData KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, KeyVaultProperties properties, IDictionary<string, string> tags)
         {
             return new KeyVaultData(
                 id,
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
         /// <returns> A new <see cref="Models.KeyVaultAccessPolicyParameters"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, AzureLocation? location = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default)
+        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, string name, AzureLocation? location, IEnumerable<KeyVaultAccessPolicy> accessPolicies)
         {
             return new KeyVaultAccessPolicyParameters(
                 id,

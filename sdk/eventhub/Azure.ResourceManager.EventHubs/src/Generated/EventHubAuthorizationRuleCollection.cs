@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubAuthorizationRuleResource>(new EventHubAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubAuthorizationRuleResource>(new EventHubsAuthorizationRuleDataAsync1CollectionResultOfT(
                 _eventHubAuthorizationRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubAuthorizationRuleResource>(new EventHubAuthorizationRuleGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubAuthorizationRuleResource>(new EventHubsAuthorizationRuleData1CollectionResultOfT(
                 _eventHubAuthorizationRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

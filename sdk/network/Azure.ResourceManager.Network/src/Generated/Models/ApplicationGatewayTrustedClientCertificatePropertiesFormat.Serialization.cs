@@ -77,12 +77,26 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteBase64StringValue(Data, "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ValidatedCertData))
             {
                 writer.WritePropertyName("validatedCertData"u8);
-                writer.WriteBase64StringValue(ValidatedCertData, "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(ValidatedCertData);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ValidatedCertData))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ClientCertIssuerDN))
             {
@@ -149,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    data = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("validatedCertData"u8))
@@ -158,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    validatedCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    validatedCertData = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("clientCertIssuerDN"u8))

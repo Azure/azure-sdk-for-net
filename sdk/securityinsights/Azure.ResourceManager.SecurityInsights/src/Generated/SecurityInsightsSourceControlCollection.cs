@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsSourceControlData, SecurityInsightsSourceControlResource>(new SourceControlsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsSourceControlData, SecurityInsightsSourceControlResource>(new SecurityInsightsSourceControlDataAsyncCollectionResultOfT(
                 _sourceControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsSourceControlData, SecurityInsightsSourceControlResource>(new SourceControlsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsSourceControlData, SecurityInsightsSourceControlResource>(new SecurityInsightsSourceControlDataCollectionResultOfT(
                 _sourceControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

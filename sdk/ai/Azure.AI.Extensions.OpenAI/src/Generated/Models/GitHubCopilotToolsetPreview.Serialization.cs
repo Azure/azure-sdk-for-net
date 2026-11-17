@@ -10,7 +10,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> Configuration overrides for GitHub Copilot built-in tools. </summary>
+    /// <summary> The legacy GitHub Copilot toolset retained for compatibility. Use `MicrosoftCopilotToolsetPreview` for new integrations. </summary>
     public partial class GitHubCopilotToolsetPreview : ResponseTool, IJsonModel<GitHubCopilotToolsetPreview>
     {
         /// <param name="data"> The data to parse. </param>

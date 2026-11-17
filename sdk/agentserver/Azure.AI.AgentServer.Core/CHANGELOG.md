@@ -1,9 +1,52 @@
 # Release History
 
-## 1.0.0-beta.30 (Unreleased)
+## 1.0.0-beta.32 (Unreleased)
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.31 (2026-11-04)
+
+### Features Added
+
+- Added the `microsoft.foundry = "True"` string attribute to all collected spans and log records. The default telemetry processors override conflicting marker values without changing `gen_ai.provider.name`.
+- Added protocol-scoped task access for composed hosts and per-task activation
+  checks, stamping the owning protocol on new task records so a disabled
+  protocol cannot start or recover its tasks merely because another protocol
+  enabled the shared runtime. Legacy unmarked application tasks require the
+  explicit Core switch for recovery; existing Invocations chains continue under
+  that opt-in. The new public protocol-scoping helpers and per-task activation
+  option are experimental (`AAAS003`).
+
+### Bugs Fixed
+
+- Prevented a stale steering nudge from canceling a promoted turn after its pending-input queue has drained. Pending-input publication now follows the same turn as the cancellation signal.
+
+## 1.0.0-beta.30 (2026-10-15)
+
+### Features Added
+
+- Added the private `POST /_agent/before-snapshot` and `POST /_agent/after-restore`
+  lifecycle endpoints for memory snapshot capture and restoration, with
+  `POST /_before_snapshot` and `POST /_after_restore` as aliases. Applications can register
+  an `IAgentSnapshotLifecycle` singleton to release and rebuild process state; Core applies
+  session environment overrides first and provides serialized, idempotent retry handling.
+  Consumers acknowledge this experimental contract with the `AAAS002` diagnostic.
+- Added `FoundryEnvironment.SessionInstanceId`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
+  validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
+- Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility
+  probes without activating or reclaiming the task.
+- Added the hidden `TaskDefinition<TInput, TOutput>.TryStartExistingAsync()` compatibility
+  primitive, which starts a multi-turn task only if its record still exists and never enters the
+  create path.
+- Added host-scoped resilient-task opt-in through `SetResilientTasksEnabled()` and
+  `ResilientTaskOptions.Enabled`. Task registration alone no longer initializes task storage or
+  recovery; enabled hosts run startup recovery and the periodic recovery loop.
 - Added constructor-injected resilient task handlers through
   `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
   and asynchronously disposes a fresh dependency-injection scope for every execution
@@ -20,9 +63,11 @@
 - Added `ResilientTaskSettings : ClientSettings` and configuration-bound
   `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
   now accepts its credential and project endpoint from one settings object.
-
 ### Breaking Changes
 
+- Resilient tasks now default to disabled. Applications that start Core tasks directly must call
+  `SetResilientTasksEnabled()` before host startup. Starting a registered task while disabled
+  throws `ResilientTaskException` with `ResilientTaskErrorCode.NotEnabled`.
 - `UseInMemoryReplay()` now defaults to a bounded 10-minute retention window instead of
   retaining closed streams indefinitely.
 - State-store optimistic-concurrency values now use the standard `Azure.ETag` type.
@@ -33,6 +78,12 @@
 
 ### Bugs Fixed
 
+- Recovered handlers and queued turns drained by their recovered chain can invoke other registered
+  task definitions while the cold-start scan is still running. External callers remain gated until
+  startup recovery completes.
+- Graceful shutdown now closes task-start admission and signals the shutdown cause before waiting
+  for the periodic recovery scan to stop, preventing recovered handlers from starting nested work
+  after shutdown begins.
 - Multi-turn suspension now coordinates the empty-queue decision and execution
   retirement with steering admission. Inputs waiting at that boundary are drained
   or resumed with their own identity instead of being accepted and then erased.

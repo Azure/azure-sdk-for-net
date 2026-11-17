@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InsightListResult(value, nextLink, additionalBinaryDataProperties);
+            return new InsightListResult(value ?? new ChangeTrackingList<ImpactInsightData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

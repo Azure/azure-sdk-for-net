@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(
-                selectedDatabases,
+                selectedDatabases ?? new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>(),
                 targetConnectionInfo,
                 sourceConnectionInfo,
                 encryptedKeyForSecureFields,

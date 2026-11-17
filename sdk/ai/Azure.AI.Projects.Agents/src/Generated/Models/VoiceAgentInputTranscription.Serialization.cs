@@ -6,13 +6,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// Asynchronous input-audio transcription configuration. Extends the OpenAI Realtime transcription
-    /// options with the Azure and MAI transcription models, custom speech models, and phrase hints.
+    /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
+    /// and phrase hints.
+    /// When `model` is `azure-speech-streaming`, transcription is supported for cascaded text-model
+    /// conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as
+    /// `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and
+    /// `profanity_filter`.
     /// </summary>
     public partial class VoiceAgentInputTranscription : IJsonModel<VoiceAgentInputTranscription>
     {
@@ -84,6 +87,36 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
+            if (Optional.IsCollectionDefined(Languages))
+            {
+                writer.WritePropertyName("languages"u8);
+                writer.WriteStartArray();
+                foreach (string item in Languages)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Keywords))
+            {
+                writer.WritePropertyName("keywords"u8);
+                writer.WriteStartArray();
+                foreach (string item in Keywords)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Prompt))
             {
                 writer.WritePropertyName("prompt"u8);
@@ -126,6 +159,11 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ProfanityFilter))
+            {
+                writer.WritePropertyName("profanity_filter"u8);
+                writer.WriteStringValue(ProfanityFilter.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -170,17 +208,62 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string language = default;
+            IList<string> languages = default;
+            IList<string> keywords = default;
             string prompt = default;
             VoiceAgentAudioInputConfigTranscriptionDelay? delay = default;
             VoiceAgentInputTranscriptionModel model = default;
             IDictionary<string, string> customSpeech = default;
             IList<string> phraseList = default;
+            VoiceAgentProfanityFilterMode? profanityFilter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("language"u8))
                 {
                     language = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("languages"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    languages = array;
+                    continue;
+                }
+                if (prop.NameEquals("keywords"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    keywords = array;
                     continue;
                 }
                 if (prop.NameEquals("prompt"u8))
@@ -244,6 +327,15 @@ namespace Azure.AI.Projects.Agents
                     phraseList = array;
                     continue;
                 }
+                if (prop.NameEquals("profanity_filter"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    profanityFilter = new VoiceAgentProfanityFilterMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -251,11 +343,14 @@ namespace Azure.AI.Projects.Agents
             }
             return new VoiceAgentInputTranscription(
                 language,
+                languages ?? new ChangeTrackingList<string>(),
+                keywords ?? new ChangeTrackingList<string>(),
                 prompt,
                 delay,
                 model,
                 customSpeech ?? new ChangeTrackingDictionary<string, string>(),
                 phraseList ?? new ChangeTrackingList<string>(),
+                profanityFilter,
                 additionalBinaryDataProperties);
         }
     }

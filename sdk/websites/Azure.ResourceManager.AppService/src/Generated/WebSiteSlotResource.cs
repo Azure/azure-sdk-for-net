@@ -2624,7 +2624,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetPerfMonCountersSlotAsyncCollectionResultOfT(
+            return new PerfMonResponseInfoAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2665,7 +2665,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetPerfMonCountersSlotCollectionResultOfT(
+            return new PerfMonResponseInfoCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3007,7 +3007,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetAllSiteBackupSlotDataAsyncCollectionResultOfT(
+            return new WebAppBackupDataAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3046,7 +3046,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetAllSiteBackupSlotDataCollectionResultOfT(
+            return new WebAppBackupDataCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3185,7 +3185,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSlotDifferencesSlotAsyncCollectionResultOfT(
+            return new SlotDifferenceAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3229,7 +3229,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSlotDifferencesSlotCollectionResultOfT(
+            return new SlotDifferenceCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3269,7 +3269,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSlotSnapshotsFromDRSecondaryAsyncCollectionResultOfT(
+            return new AppSnapshotAsync0CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3308,7 +3308,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSlotSnapshotsFromDRSecondaryCollectionResultOfT(
+            return new AppSnapshot0CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3347,7 +3347,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSlotSnapshotsAsyncCollectionResultOfT(
+            return new AppSnapshotAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3386,7 +3386,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSlotSnapshotsCollectionResultOfT(
+            return new AppSnapshotCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3608,7 +3608,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetUsagesSlotAsyncCollectionResultOfT(
+            return new CsmUsageQuotaAsync0CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3649,7 +3649,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetUsagesSlotCollectionResultOfT(
+            return new CsmUsageQuota0CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

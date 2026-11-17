@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AutoscaleRuleMetricDimension(dimensionName, @operator, values, additionalBinaryDataProperties);
+            return new AutoscaleRuleMetricDimension(dimensionName, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

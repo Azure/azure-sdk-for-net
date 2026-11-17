@@ -12,6 +12,9 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentAzureSemanticVadEnTurnDetection : VoiceAgentTurnDetectionConfig
     {
+        private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
+        private bool _endOfUtteranceDetectionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAzureSemanticVadEnTurnDetection"/>. </summary>
         public VoiceAgentAzureSemanticVadEnTurnDetection() : base(VoiceAgentTurnDetectionType.AzureSemanticVadEn)
         {
@@ -24,19 +27,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
         /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
         /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
-        internal VoiceAgentAzureSemanticVadEnTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPaddingMs, TimeSpan? silenceDurationMs, TimeSpan? idleTimeoutMs, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDurationMs, bool? removeFillerWords, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        internal VoiceAgentAzureSemanticVadEnTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPaddingMs, TimeSpan? silenceDurationMs, TimeSpan? idleTimeout, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDurationMs, bool? removeFillerWords, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
             SilenceDurationMs = silenceDurationMs;
-            IdleTimeoutMs = idleTimeoutMs;
-            EndOfUtteranceDetection = endOfUtteranceDetection;
+            IdleTimeout = idleTimeout;
+            _endOfUtteranceDetection = endOfUtteranceDetection;
             SpeechDurationMs = speechDurationMs;
             RemoveFillerWords = removeFillerWords;
             CreateResponse = createResponse;
@@ -53,10 +56,21 @@ namespace Azure.AI.Projects.Agents
         public TimeSpan? SilenceDurationMs { get; set; }
 
         /// <summary> Maximum idle time before the detector ends the turn, in milliseconds. </summary>
-        public TimeSpan? IdleTimeoutMs { get; set; }
+        public TimeSpan? IdleTimeout { get; set; }
 
         /// <summary> Semantic end-of-utterance detection configuration. Set to null to disable it. </summary>
-        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get; set; }
+        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection
+        {
+            get
+            {
+                return _endOfUtteranceDetection;
+            }
+            set
+            {
+                _endOfUtteranceDetection = value;
+                _endOfUtteranceDetectionIsDefined = true;
+            }
+        }
 
         /// <summary> Minimum speech duration required to trigger detection, in milliseconds. </summary>
         public TimeSpan? SpeechDurationMs { get; set; }

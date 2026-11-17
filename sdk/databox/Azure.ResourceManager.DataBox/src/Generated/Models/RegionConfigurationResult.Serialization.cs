@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            ScheduleAvailabilityResponse scheduleAvailabilityResponse = default;
-            TransportAvailabilityResponse transportAvailabilityResponse = default;
+            ScheduleAvailabilityResult scheduleAvailabilityResponse = default;
+            TransportAvailabilityResult transportAvailabilityResponse = default;
             DataCenterAddressResult dataCenterAddressResponse = default;
-            DeviceCapabilityResponse deviceCapabilityResponse = default;
+            DeviceCapabilityResult deviceCapabilityResponse = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityResponse = ScheduleAvailabilityResponse.DeserializeScheduleAvailabilityResponse(prop.Value, options);
+                    scheduleAvailabilityResponse = ScheduleAvailabilityResult.DeserializeScheduleAvailabilityResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("transportAvailabilityResponse"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityResponse = TransportAvailabilityResponse.DeserializeTransportAvailabilityResponse(prop.Value, options);
+                    transportAvailabilityResponse = TransportAvailabilityResult.DeserializeTransportAvailabilityResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("datacenterAddressResponse"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deviceCapabilityResponse = DeviceCapabilityResponse.DeserializeDeviceCapabilityResponse(prop.Value, options);
+                    deviceCapabilityResponse = DeviceCapabilityResult.DeserializeDeviceCapabilityResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

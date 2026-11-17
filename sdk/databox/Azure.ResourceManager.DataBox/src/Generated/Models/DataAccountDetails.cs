@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataBox.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataAccountDetails"/>. </summary>
+        protected DataAccountDetails() : this(default)
+        {
+        }
+
         /// <summary> Account Type of the data to be transferred. </summary>
         internal DataAccountType DataAccountType { get; set; }
 

@@ -100,7 +100,6 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsUpgradePreferencesProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubsUpgradePreferencesResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsUpgradeStatus))]
-    [ModelReaderWriterBuildable(typeof(FabricShortcutListResult))]
     [ModelReaderWriterBuildable(typeof(FailOverProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageTimestampDescription))]

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AFDOriginGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AFDOriginGroupListResult(value ?? new ChangeTrackingList<FrontDoorOriginGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

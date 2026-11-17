@@ -651,5 +651,42 @@ namespace BasicTypeSpec
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateRoundTripResourceIdentifiersRequest(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resource-identifiers/", false);
+            uri.AppendPath(resourceId.ToString(), true);
+            if (queryId != null)
+            {
+                uri.AppendQuery("queryId", TypeFormatters.ConvertToString(queryId), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if (headerId != null)
+            {
+                request.Headers.SetValue("x-resource-id", TypeFormatters.ConvertToString(headerId));
+            }
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetResourceIdentifiersXmlRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resource-identifiers/xml", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
     }
 }

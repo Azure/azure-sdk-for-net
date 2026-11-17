@@ -76,29 +76,43 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             }
             if (Optional.IsCollectionDefined(Substitute))
             {
-                writer.WritePropertyName("substitute"u8);
-                writer.WriteStartObject();
-                foreach (var item in Substitute)
+                if (Substitute != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("substitute"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Substitute)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("substitute"u8);
+                }
             }
             if (Optional.IsCollectionDefined(SubstituteFrom))
             {
-                writer.WritePropertyName("substituteFrom"u8);
-                writer.WriteStartArray();
-                foreach (FluxSubstitutionPatch item in SubstituteFrom)
+                if (SubstituteFrom != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("substituteFrom"u8);
+                    writer.WriteStartArray();
+                    foreach (FluxSubstitutionPatch item in SubstituteFrom)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("substituteFrom"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,8 +156,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
-            IDictionary<string, string> substitute = default;
-            IList<FluxSubstitutionPatch> substituteFrom = default;
+            IDictionary<string, string> substitute = new ChangeTrackingDictionary<string, string>();
+            IList<FluxSubstitutionPatch> substituteFrom = new ChangeTrackingList<FluxSubstitutionPatch>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,6 +165,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        substitute = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -172,6 +187,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        substituteFrom = null;
                         continue;
                     }
                     List<FluxSubstitutionPatch> array = new List<FluxSubstitutionPatch>();
@@ -187,7 +203,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FluxPostBuildPatch(substitute ?? new ChangeTrackingDictionary<string, string>(), substituteFrom ?? new ChangeTrackingList<FluxSubstitutionPatch>(), additionalBinaryDataProperties);
+            return new FluxPostBuildPatch(substitute, substituteFrom, additionalBinaryDataProperties);
         }
     }
 }

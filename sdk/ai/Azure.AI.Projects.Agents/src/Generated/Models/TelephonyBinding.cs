@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding owned by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensionTelephonyBinding"/> and <see cref="TwilioTelephonyBinding"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="TwilioTelephonyBinding"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class TelephonyBinding

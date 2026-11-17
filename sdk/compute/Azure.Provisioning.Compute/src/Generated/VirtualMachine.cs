@@ -34,7 +34,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new VirtualMachine. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualMachine(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachines", resourceVersion ?? "2026-03-01")
+        public VirtualMachine(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachines", resourceVersion ?? "2026-04-01")
         {
         }
 
@@ -496,6 +496,23 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the CapacityReservation. </summary>
+        public CapacityReservationProfile CapacityReservation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityReservation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.CapacityReservation = value;
+            }
+        }
+
         /// <summary> Gets the TimeCreated. </summary>
         public BicepValue<DateTimeOffset> TimeCreated
         {
@@ -506,6 +523,23 @@ namespace Azure.Provisioning.Compute
                     Properties = new VirtualMachineProperties();
                 }
                 return Properties.TimeCreated;
+            }
+        }
+
+        /// <summary> Gets or sets the PreferredVmSize. </summary>
+        public BicepValue<string> FlexPreferredVmSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlexPreferredVmSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.FlexPreferredVmSize = value;
             }
         }
 
@@ -629,23 +663,6 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> CapacityReservationGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CapacityReservationGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineProperties();
-                }
-                Properties.CapacityReservationGroupId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> InterconnectBlockId
         {
             get
@@ -733,6 +750,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
             /// <summary> API version "2026-03-01". </summary>
             public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2025-11-01". </summary>

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("indexName"u8))
                 {
-                    indexName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    indexName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

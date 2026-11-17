@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.CertificateRegistration": "2024-11-01"
+  }
+}

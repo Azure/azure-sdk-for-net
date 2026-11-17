@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TargetComputeSizeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TargetComputeSizeListResult(value ?? new ChangeTrackingList<TargetComputeSize>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

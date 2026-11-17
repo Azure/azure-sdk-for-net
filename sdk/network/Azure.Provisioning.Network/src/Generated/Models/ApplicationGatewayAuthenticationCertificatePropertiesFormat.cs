@@ -51,7 +51,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _data = DefineProperty<BinaryData>(nameof(Data), new string[] { "data" }, format: "base64");
+            _data = DefineProperty<BinaryData>(nameof(Data), new string[] { "data" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

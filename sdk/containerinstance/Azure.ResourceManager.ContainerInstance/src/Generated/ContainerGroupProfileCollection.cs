@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance
             _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
             _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileApiVersion ?? "2026-07-01");
             _cgProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
-            _cgProfilesRestClient = new CGProfiles(_cgProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileApiVersion ?? "2026-07-01");
+            _cgProfilesRestClient = new CGProfiles(_cgProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerInstance/containerGroupProfiles", out string cgProfilesApiVersionOverride) ? cgProfilesApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupAsyncCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupProfileCollection.GetAll"), data => new ContainerGroupProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfileDataAsync1CollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupProfileCollection.GetAll"), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupProfileCollection.GetAll"), data => new ContainerGroupProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfileData1CollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupProfileCollection.GetAll"), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>

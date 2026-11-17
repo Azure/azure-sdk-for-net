@@ -132,7 +132,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation(), scopeParameter: _scopeParameter),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation(), scopeParameter: _scopeParameter, methodName: _methodName),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

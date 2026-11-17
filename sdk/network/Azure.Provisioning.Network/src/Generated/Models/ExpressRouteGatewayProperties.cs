@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Network
     internal partial class ExpressRouteGatewayProperties : ProvisionableConstruct
     {
         private ExpressRouteGatewayPropertiesAutoScaleConfiguration _autoScaleConfiguration;
-        private BicepList<ExpressRouteConnection> _expressRouteConnections;
+        private BicepList<ExpressRouteConnection> _expressRouteConnectionList;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private VirtualHubId _virtualHub;
         private BicepValue<bool> _allowNonVirtualWanTraffic;
@@ -40,18 +40,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteConnections. </summary>
-        public BicepList<ExpressRouteConnection> ExpressRouteConnections
+        /// <summary> Gets or sets the ExpressRouteConnectionList. </summary>
+        public BicepList<ExpressRouteConnection> ExpressRouteConnectionList
         {
             get
             {
                 Initialize();
-                return _expressRouteConnections;
+                return _expressRouteConnectionList;
             }
             set
             {
                 Initialize();
-                _expressRouteConnections.Assign(value);
+                _expressRouteConnectionList.Assign(value);
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _autoScaleConfiguration = DefineModelProperty<ExpressRouteGatewayPropertiesAutoScaleConfiguration>(nameof(AutoScaleConfiguration), new string[] { "autoScaleConfiguration" });
-            _expressRouteConnections = DefineListProperty<ExpressRouteConnection>(nameof(ExpressRouteConnections), new string[] { "expressRouteConnections" });
+            _expressRouteConnectionList = DefineListProperty<ExpressRouteConnection>(nameof(ExpressRouteConnectionList), new string[] { "expressRouteConnections" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _virtualHub = DefineModelProperty<VirtualHubId>(nameof(VirtualHub), new string[] { "virtualHub" }, isRequired: true);
             _allowNonVirtualWanTraffic = DefineProperty<bool>(nameof(AllowNonVirtualWanTraffic), new string[] { "allowNonVirtualWanTraffic" });

@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeviceCapacityRequestInfoProperties(vmPlacementQuery, vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>(), additionalBinaryDataProperties);
+            return new DeviceCapacityRequestInfoProperties(vmPlacementQuery ?? new ChangeTrackingList<IList<string>>(), vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             return new DataExportProperties(
                 dataExportId,
-                tableNames,
+                tableNames ?? new ChangeTrackingList<string>(),
                 destination,
                 isEnabled,
                 createdOn,

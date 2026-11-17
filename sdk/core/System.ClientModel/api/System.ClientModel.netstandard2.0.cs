@@ -248,7 +248,9 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage(System.Uri uri, string method, System.ClientModel.Primitives.PipelineMessageClassifier? classifier = null) { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
+        public void Send(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class ClientPipelineOptions
     {

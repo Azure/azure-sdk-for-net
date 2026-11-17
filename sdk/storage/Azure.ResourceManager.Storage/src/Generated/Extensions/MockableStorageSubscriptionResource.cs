@@ -46,23 +46,35 @@ namespace Azure.ResourceManager.Storage.Mocking
 
         private ClientDiagnostics StorageAccountsClientDiagnostics => _storageAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageAccounts StorageAccountsRestClient => _storageAccountsRestClient ??= new StorageAccounts(StorageAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private StorageAccounts StorageAccountsRestClient => _storageAccountsRestClient ??= new StorageAccounts(
+            StorageAccountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ContextCachesClientDiagnostics => _contextCachesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContextCaches ContextCachesRestClient => _contextCachesRestClient ??= new ContextCaches(ContextCachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private ContextCaches ContextCachesRestClient => _contextCachesRestClient ??= new ContextCaches(
+            ContextCachesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
 
         /// <summary> Gets a collection of DeletedAccounts in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeletedAccounts and their operations over a DeletedAccountResource. </returns>
@@ -84,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,7 +156,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountsGetAllAsyncCollectionResultOfT(StorageAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetStorageAccounts"), data => new StorageAccountResource(Client, data));
+            return new AsyncPageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountDataAsync0CollectionResultOfT(StorageAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetStorageAccounts"), data => new StorageAccountResource(Client, data));
         }
 
         /// <summary>
@@ -172,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +196,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountsGetAllCollectionResultOfT(StorageAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetStorageAccounts"), data => new StorageAccountResource(Client, data));
+            return new PageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountData0CollectionResultOfT(StorageAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetStorageAccounts"), data => new StorageAccountResource(Client, data));
         }
 
         /// <summary>
@@ -200,7 +212,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +224,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCachesGetBySubscriptionAsyncCollectionResultOfT(ContextCachesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetContextCaches"), data => new ContextCacheResource(Client, data));
+            return new AsyncPageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCacheDataAsync0CollectionResultOfT(ContextCachesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetContextCaches"), data => new ContextCacheResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +240,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,7 +252,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCachesGetBySubscriptionCollectionResultOfT(ContextCachesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetContextCaches"), data => new ContextCacheResource(Client, data));
+            return new PageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCacheData0CollectionResultOfT(ContextCachesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetContextCaches"), data => new ContextCacheResource(Client, data));
         }
 
         /// <summary>
@@ -256,7 +268,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +316,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,31 +352,99 @@ namespace Azure.ResourceManager.Storage.Mocking
         }
 
         /// <summary>
-        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
+        /// Check the availability of a context cache resource name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/contextCacheCheckNameAvailability. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkusOperationGroup_List. </description>
+        /// <description> ContextCaches_CheckNameAvailability. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageSkuInformation> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ContextCacheNameAvailabilityResult>> CheckContextCacheNameAvailabilityAsync(ContextCacheNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ContextCachesClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckContextCacheNameAvailability");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new SkusGetSkusAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetSkus");
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContextCacheNameAvailabilityResult> response = Response.FromValue(ContextCacheNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of a context cache resource name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/contextCacheCheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ContextCaches_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ContextCacheNameAvailabilityResult> CheckContextCacheNameAvailability(ContextCacheNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ContextCachesClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckContextCacheNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContextCacheNameAvailabilityResult> response = Response.FromValue(ContextCacheNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -380,7 +460,35 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageSkuInformation> GetSkusAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new StorageSkuInformationAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetSkus");
+        }
+
+        /// <summary>
+        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SkusOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,7 +500,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetSkusCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetSkus");
+            return new StorageSkuInformationCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSubscriptionResource.GetSkus");
         }
 
         /// <summary>
@@ -408,7 +516,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,7 +529,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesByLocationAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableStorageSubscriptionResource.GetUsagesByLocation");
+            return new StorageUsageAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableStorageSubscriptionResource.GetUsagesByLocation");
         }
 
         /// <summary>
@@ -437,7 +545,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,7 +558,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesByLocationCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableStorageSubscriptionResource.GetUsagesByLocation");
+            return new StorageUsageCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableStorageSubscriptionResource.GetUsagesByLocation");
         }
     }
 }

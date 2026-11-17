@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new LocationsGetAllAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new SecurityCenterLocationDataAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new LocationsGetAllCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
+            return new PageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new SecurityCenterLocationDataCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
         }
 
         /// <summary>

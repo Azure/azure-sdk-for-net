@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadImpactListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadImpactListResult(value ?? new ChangeTrackingList<WorkloadImpactData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

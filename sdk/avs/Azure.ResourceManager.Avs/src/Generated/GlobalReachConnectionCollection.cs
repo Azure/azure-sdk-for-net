@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionDataAsyncCollectionResultOfT(
                 _globalReachConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionDataCollectionResultOfT(
                 _globalReachConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

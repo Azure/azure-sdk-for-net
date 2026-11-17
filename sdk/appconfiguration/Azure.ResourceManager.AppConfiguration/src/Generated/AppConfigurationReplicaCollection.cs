@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppConfigurationReplicaData, AppConfigurationReplicaResource>(new ReplicasGetByConfigurationStoreAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppConfigurationReplicaData, AppConfigurationReplicaResource>(new AppConfigurationReplicaDataAsyncCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppConfigurationReplicaData, AppConfigurationReplicaResource>(new ReplicasGetByConfigurationStoreCollectionResultOfT(
+            return new PageableWrapper<AppConfigurationReplicaData, AppConfigurationReplicaResource>(new AppConfigurationReplicaDataCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 targetDisplayName,
                 configuration,
                 targetLevelConfiguration,
-                specification,
+                specification ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 reviewId,
                 externalValidationId,
                 state,

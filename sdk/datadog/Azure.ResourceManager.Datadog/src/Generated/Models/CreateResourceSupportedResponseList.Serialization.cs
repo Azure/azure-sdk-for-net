@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CreateResourceSupportedResponseList(value, nextLink, additionalBinaryDataProperties);
+            return new CreateResourceSupportedResponseList(value ?? new ChangeTrackingList<DatadogSubscriptionStatusResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

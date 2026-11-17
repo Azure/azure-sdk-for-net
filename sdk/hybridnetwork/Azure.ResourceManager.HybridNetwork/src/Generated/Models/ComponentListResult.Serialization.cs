@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComponentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ComponentListResult(value ?? new ChangeTrackingList<ComponentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

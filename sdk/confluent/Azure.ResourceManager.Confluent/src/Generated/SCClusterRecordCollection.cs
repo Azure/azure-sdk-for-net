@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SCClusterRecordData, SCClusterRecordResource>(new SCClusterRecordsGetClustersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SCClusterRecordData, SCClusterRecordResource>(new SCClusterRecordDataAsyncCollectionResultOfT(
                 _scClusterRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SCClusterRecordData, SCClusterRecordResource>(new SCClusterRecordsGetClustersCollectionResultOfT(
+            return new PageableWrapper<SCClusterRecordData, SCClusterRecordResource>(new SCClusterRecordDataCollectionResultOfT(
                 _scClusterRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

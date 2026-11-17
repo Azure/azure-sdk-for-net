@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string Python3117Value = "Python3_11_7";
         /// <summary> Python3_11_7_DL. </summary>
         private const string Python3117DLValue = "Python3_11_7_DL";
+        private const string Python3_9_12Value = "Python3_9_12";
+        private const string Python3_9_12IncludeDeepLearningValue = "Python3_9_12IncludeDeepLearning";
 
         /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionImageName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -60,6 +62,12 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Python3_11_7_DL. </summary>
         public static KustoLanguageExtensionImageName Python3117DL { get; } = new KustoLanguageExtensionImageName(Python3117DLValue);
+
+        /// <summary> Gets the Python3_9_12. </summary>
+        public static KustoLanguageExtensionImageName Python3_9_12 { get; } = new KustoLanguageExtensionImageName(Python3_9_12Value);
+
+        /// <summary> Gets the Python3_9_12IncludeDeepLearning. </summary>
+        public static KustoLanguageExtensionImageName Python3_9_12IncludeDeepLearning { get; } = new KustoLanguageExtensionImageName(Python3_9_12IncludeDeepLearningValue);
 
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

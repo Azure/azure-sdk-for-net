@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Automation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PackageListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PackageListResult(value ?? new ChangeTrackingList<AutomationPackageData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

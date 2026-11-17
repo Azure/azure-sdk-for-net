@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DevHub
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AdoOAuth))]
-    [ModelReaderWriterBuildable(typeof(AdoOAuthResponseData))]
     [ModelReaderWriterBuildable(typeof(AdoOAuthResponseResource))]
+    [ModelReaderWriterBuildable(typeof(AdoOAuthResultData))]
     [ModelReaderWriterBuildable(typeof(AdoProviderProfile))]
     [ModelReaderWriterBuildable(typeof(AdoRepository))]
     [ModelReaderWriterBuildable(typeof(AzurePipelineProfile))]
@@ -58,23 +57,15 @@ namespace Azure.ResourceManager.DevHub
     [ModelReaderWriterBuildable(typeof(DevHubWorkflowProperties))]
     [ModelReaderWriterBuildable(typeof(DevHubWorkflowResource))]
     [ModelReaderWriterBuildable(typeof(DevHubWorkflowRun))]
-    [ModelReaderWriterBuildable(typeof(GitHubOAuthProperties))]
-    [ModelReaderWriterBuildable(typeof(GitHubOAuthResponseData))]
     [ModelReaderWriterBuildable(typeof(GitHubOAuthResponseResource))]
+    [ModelReaderWriterBuildable(typeof(GitHubOAuthResultData))]
     [ModelReaderWriterBuildable(typeof(GitHubProviderProfile))]
     [ModelReaderWriterBuildable(typeof(GitHubRepository))]
     [ModelReaderWriterBuildable(typeof(GitHubWorkflowProfile))]
     [ModelReaderWriterBuildable(typeof(GitHubWorkflowProfileOidcCredentials))]
-    [ModelReaderWriterBuildable(typeof(IacGitHubProfile))]
     [ModelReaderWriterBuildable(typeof(IacProfileData))]
-    [ModelReaderWriterBuildable(typeof(IacProfileListResult))]
-    [ModelReaderWriterBuildable(typeof(IacProfileProperties))]
     [ModelReaderWriterBuildable(typeof(IacProfileResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(TemplateListResult))]
-    [ModelReaderWriterBuildable(typeof(TerraformProfile))]
-    [ModelReaderWriterBuildable(typeof(VersionedTemplateListResult))]
-    [ModelReaderWriterBuildable(typeof(WorkflowListResult))]
     public partial class AzureResourceManagerDevHubContext : ModelReaderWriterContext
     {
     }

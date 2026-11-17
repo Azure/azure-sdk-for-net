@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticSanSnapshotData, ElasticSanSnapshotResource>(new SnapshotsGetByVolumeGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ElasticSanSnapshotData, ElasticSanSnapshotResource>(new ElasticSanSnapshotDataAsyncCollectionResultOfT(
                 _snapshotsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticSanSnapshotData, ElasticSanSnapshotResource>(new SnapshotsGetByVolumeGroupCollectionResultOfT(
+            return new PageableWrapper<ElasticSanSnapshotData, ElasticSanSnapshotResource>(new ElasticSanSnapshotDataCollectionResultOfT(
                 _snapshotsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

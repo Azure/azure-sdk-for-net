@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             return new ComputeBulkActionsVMAttributes(
                 vCpuCount,
                 memoryInGiB,
-                architectureTypes,
+                architectureTypes ?? new ChangeTrackingList<ComputeBulkActionsArchitectureType>(),
                 memoryInGiBPerVCpu,
                 localStorageSupport,
                 localStorageInGiB,

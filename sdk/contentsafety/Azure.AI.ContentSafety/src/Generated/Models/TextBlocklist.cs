@@ -17,10 +17,8 @@ namespace Azure.AI.ContentSafety
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TextBlocklist"/>. </summary>
-        /// <param name="name"> Text blocklist name. </param>
-        internal TextBlocklist(string name)
+        internal TextBlocklist()
         {
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="TextBlocklist"/>. </summary>

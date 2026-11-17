@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsDataflowProperties(
                 mode,
                 requestDiskPersistence,
-                operations,
+                operations ?? new ChangeTrackingList<DataflowOperationProperties>(),
                 provisioningState,
                 status,
                 healthState,

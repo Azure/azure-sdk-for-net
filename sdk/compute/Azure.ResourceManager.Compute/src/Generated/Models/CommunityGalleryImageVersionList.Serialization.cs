@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommunityGalleryImageVersionList(value, nextLink, additionalBinaryDataProperties);
+            return new CommunityGalleryImageVersionList(value ?? new ChangeTrackingList<CommunityGalleryImageVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

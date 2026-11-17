@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DomainOwnershipIdentifierListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DomainOwnershipIdentifierListResult(value ?? new ChangeTrackingList<DomainOwnershipIdentifierData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

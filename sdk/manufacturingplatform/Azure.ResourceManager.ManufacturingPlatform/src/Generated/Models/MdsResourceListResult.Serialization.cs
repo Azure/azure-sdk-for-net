@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MdsResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MdsResourceListResult(value ?? new ChangeTrackingList<ManufacturingDataServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

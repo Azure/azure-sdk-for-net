@@ -69,7 +69,6 @@
             "$id": "6",
             "name": "headerApiVersion",
             "isExactName": false,
-            "resourceName": "Header",
             "doc": "Header api version parameter.",
             "accessibility": "public",
             "parameters": [

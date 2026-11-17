@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
 
         private ClientDiagnostics MonitorsClientDiagnostics => _monitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01-preview");
+        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Workloads/monitors", out string apiVersion) ? apiVersion : "2024-02-01-preview");
 
         /// <summary>
         /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new MonitorsGetAllAsyncCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
+            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorDataAsync0CollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new MonitorsGetAllCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
+            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorData0CollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
         }
     }
 }

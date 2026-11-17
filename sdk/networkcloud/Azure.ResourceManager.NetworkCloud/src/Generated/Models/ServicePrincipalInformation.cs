@@ -50,17 +50,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             TenantId = tenantId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The application ID, also known as client ID, of the service principal. </summary>
-        public string ApplicationId { get; set; }
-
-        /// <summary> The password of the service principal. </summary>
-        public string Password { get; set; }
-
-        /// <summary> The principal ID, also known as the object ID, of the service principal. </summary>
-        public string PrincipalId { get; set; }
-
-        /// <summary> The tenant ID, also known as the directory ID, of the tenant in which the service principal is created. </summary>
-        public string TenantId { get; set; }
     }
 }

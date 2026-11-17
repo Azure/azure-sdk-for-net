@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataProtectionRetentionRule(name, objectType, additionalBinaryDataProperties, isDefault, lifecycles);
+            return new DataProtectionRetentionRule(name, objectType, additionalBinaryDataProperties, isDefault, lifecycles ?? new ChangeTrackingList<SourceLifeCycle>());
         }
     }
 }

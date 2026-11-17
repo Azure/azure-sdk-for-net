@@ -112,7 +112,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
+            CreateVectorStoreFileBatchContent spreadModel = new CreateVectorStoreFileBatchContent(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
             Response result = CreateVectorStoreFileBatch(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((VectorStoreFileBatch)result, result);
         }
@@ -126,7 +126,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
+            CreateVectorStoreFileBatchContent spreadModel = new CreateVectorStoreFileBatchContent(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
             Response result = await CreateVectorStoreFileBatchAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((VectorStoreFileBatch)result, result);
         }

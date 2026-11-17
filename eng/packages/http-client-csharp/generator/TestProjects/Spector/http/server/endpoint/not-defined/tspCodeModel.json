@@ -24,7 +24,6 @@
             "$id": "3",
             "name": "valid",
             "isExactName": false,
-            "resourceName": "NotDefined",
             "accessibility": "public",
             "parameters": [],
             "responses": [

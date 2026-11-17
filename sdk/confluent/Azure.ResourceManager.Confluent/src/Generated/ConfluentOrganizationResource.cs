@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ResourceType, out string confluentOrganizationApiVersion);
             _confluentOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationApiVersion ?? "2026-06-02-preview");
+            _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Confluent/organizations", out string confluentOrganizationApiVersionOverride) ? confluentOrganizationApiVersionOverride : "2026-06-02-preview");
             _organizationResourceAPIKeyActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
             _organizationResourceAPIKeyActionsRestClient = new OrganizationResourceAPIKeyActions(_organizationResourceAPIKeyActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationApiVersion ?? "2026-06-02-preview");
             _organizationResourceRoleBindingIdActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
@@ -2055,10 +2056,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2098,10 +2098,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

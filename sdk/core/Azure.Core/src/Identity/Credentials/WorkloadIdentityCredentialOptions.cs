@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -46,11 +45,13 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get; set; }
 
         /// <summary>
-        /// Enables Azure Kubernetes token proxy mode to work around Entra's limit on federated identity credentials.
+        /// Enables Azure Kubernetes Service identity binding mode to work around Entra's limit on federated identity credentials.
         /// When enabled and proxy configuration environment variables are set, requests are sent to the AKS proxy instead of directly to Entra ID.
-        /// This feature is not supported when using DefaultAzureCredential.
+        /// This feature is not supported when using <see cref="DefaultAzureCredential"/> or <see cref="ManagedIdentityCredential"/>.
         /// </summary>
-        [Experimental("AZID0002")]
+        /// <remarks>
+        /// Defaults to <c>false</c>. The AKS identity binding and Kubernetes permissions must be configured separately.
+        /// </remarks>
         public bool IsAzureProxyEnabled { get; set; }
 
         /// <summary>

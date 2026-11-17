@@ -238,7 +238,6 @@
             "$id": "20",
             "name": "postValid",
             "isExactName": false,
-            "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
               {
@@ -374,7 +373,6 @@
             "$id": "26",
             "name": "getValid",
             "isExactName": false,
-            "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
               {
@@ -471,7 +469,6 @@
             "$id": "30",
             "name": "putValid",
             "isExactName": false,
-            "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
               {

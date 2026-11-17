@@ -9,11 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The RealtimeMCPError.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPProtocolError"/>, <see cref="RealtimeMCPToolExecutionError"/>, and <see cref="RealtimeMCPHTTPError"/>.
-    /// </summary>
-    public abstract partial class RealtimeMCPError
+    internal abstract partial class RealtimeMCPError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppConfigurationPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AppConfigurationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

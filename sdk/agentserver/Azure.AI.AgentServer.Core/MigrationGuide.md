@@ -88,13 +88,14 @@ public class MyAgent : IAgentInvocation
 
 ```csharp
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 public class MyAgent : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
-        CreateResponse request,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         // Input text extraction is built-in
         string inputText = await context.GetInputTextAsync(cancellationToken: cancellationToken);
@@ -151,10 +152,10 @@ public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(
 **After (beta.21):**
 
 ```csharp
-public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request,
     ResponseContext context,
-    CreateResponse request,
-    CancellationToken cancellationToken = default)
+    CancellationToken cancellationToken)
 {
     var stream = new ResponseEventStream(context, request);
     yield return stream.EmitCreated();

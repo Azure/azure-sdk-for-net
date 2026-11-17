@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StandbyVirtualMachineInstanceCountSummary(zone, standbyVirtualMachineInstanceCountsByState, additionalBinaryDataProperties);
+            return new StandbyVirtualMachineInstanceCountSummary(zone, standbyVirtualMachineInstanceCountsByState ?? new ChangeTrackingList<PoolVirtualMachineStateCount>(), additionalBinaryDataProperties);
         }
     }
 }

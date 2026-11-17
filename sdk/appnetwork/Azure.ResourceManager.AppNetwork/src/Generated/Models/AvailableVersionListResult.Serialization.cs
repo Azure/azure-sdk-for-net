@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvailableVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AvailableVersionListResult(value ?? new ChangeTrackingList<AppLinkAvailableVersion>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -139,7 +139,6 @@
             "$id": "14",
             "name": "requiredExplicit",
             "isExactName": false,
-            "resourceName": "BodyOptionality",
             "accessibility": "public",
             "parameters": [
               {
@@ -275,7 +274,6 @@
             "$id": "20",
             "name": "requiredImplicit",
             "isExactName": false,
-            "resourceName": "BodyOptionality",
             "accessibility": "public",
             "parameters": [
               {
@@ -461,7 +459,6 @@
                 "$id": "31",
                 "name": "set",
                 "isExactName": false,
-                "resourceName": "OptionalExplicit",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -597,7 +594,6 @@
                 "$id": "37",
                 "name": "omit",
                 "isExactName": false,
-                "resourceName": "OptionalExplicit",
                 "accessibility": "public",
                 "parameters": [
                   {

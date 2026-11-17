@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedClusterJwtAuthenticatorIssuer(uri, audiences, additionalBinaryDataProperties);
+            return new ManagedClusterJwtAuthenticatorIssuer(uri, audiences ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

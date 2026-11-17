@@ -1636,10 +1636,13 @@ namespace Azure.Provisioning.MachineLearning
         S3 = 3,
         Snowflake = 4,
         AzureKeyVault = 5,
-        AzureSqlDb = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="AzureSqlDb")]
+        AzureSqlDB = 6,
         AzureSynapseAnalytics = 7,
-        AzureMySqlDb = 8,
-        AzurePostgresDb = 9,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="AzureMySqlDb")]
+        AzureMySqlDB = 8,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="AzurePostgresDb")]
+        AzurePostgresDB = 9,
         ADLSGen2 = 10,
         AzureContainerAppEnvironment = 11,
         Redis = 12,
@@ -1652,10 +1655,13 @@ namespace Azure.Provisioning.MachineLearning
         AzureBlob = 19,
         AzureStorageAccount = 20,
         AzureOneLake = 21,
-        CosmosDb = 22,
-        CosmosDbMongoDbApi = 23,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="CosmosDb")]
+        CosmosDB = 22,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="CosmosDbMongoDbApi")]
+        CosmosDBMongoDBApi = 23,
         AzureDataExplorer = 24,
-        AzureMariaDb = 25,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="AzureMariaDb")]
+        AzureMariaDB = 25,
         AzureDatabricksDeltaLake = 26,
         AzureSqlMi = 27,
         AzureTableStorage = 28,
@@ -1670,7 +1676,8 @@ namespace Azure.Provisioning.MachineLearning
         Hive = 37,
         Impala = 38,
         Informix = 39,
-        MariaDb = 40,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="MariaDb")]
+        MariaDB = 40,
         MicrosoftAccess = 41,
         MySql = 42,
         Netezza = 43,
@@ -1691,8 +1698,10 @@ namespace Azure.Provisioning.MachineLearning
         Databricks = 58,
         Cassandra = 59,
         Couchbase = 60,
-        MongoDbV2 = 61,
-        MongoDbAtlas = 62,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="MongoDbV2")]
+        MongoDBV2 = 61,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="MongoDbAtlas")]
+        MongoDBAtlas = 62,
         AmazonS3Compatible = 63,
         FileServer = 64,
         FtpServer = 65,
@@ -2440,7 +2449,8 @@ namespace Azure.Provisioning.MachineLearning
     }
     public enum MachineLearningLoadBalancerType
     {
-        PublicIp = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="PublicIp")]
+        PublicIP = 0,
         InternalLoadBalancer = 1,
     }
     public enum MachineLearningLogVerbosity

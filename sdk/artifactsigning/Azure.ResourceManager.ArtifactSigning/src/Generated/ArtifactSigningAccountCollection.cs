@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             TryGetApiVersion(ArtifactSigningAccountResource.ResourceType, out string artifactSigningAccountApiVersion);
             _codeSigningAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning", ArtifactSigningAccountResource.ResourceType.Namespace, Diagnostics);
-            _codeSigningAccountsRestClient = new CodeSigningAccounts(_codeSigningAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactSigningAccountApiVersion ?? "2026-05-15-preview");
+            _codeSigningAccountsRestClient = new CodeSigningAccounts(
+                _codeSigningAccountsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                artifactSigningAccountApiVersion ?? "2026-05-15-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
+            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new ArtifactSigningAccountDataAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
+            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new ArtifactSigningAccountDataCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>

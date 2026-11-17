@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionAssessmentMetadataResource"/> and their operations.
     /// Each <see cref="SubscriptionAssessmentMetadataResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="SubscriptionAssessmentMetadataCollection"/> instance call the GetSubscriptionAssessmentMetadatas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionAssessmentMetadataCollection"/> instance call the GetAllSubscriptionAssessmentMetadata method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionAssessmentMetadataCollection : ArmCollection, IEnumerable<SubscriptionAssessmentMetadataResource>, IAsyncEnumerable<SubscriptionAssessmentMetadataResource>
     {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionAsyncCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new SecurityAssessmentMetadataDataAsyncCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new SecurityAssessmentMetadataDataCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>

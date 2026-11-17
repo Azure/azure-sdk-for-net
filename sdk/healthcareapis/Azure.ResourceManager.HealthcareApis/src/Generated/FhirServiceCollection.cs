@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServicesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServiceDataAsyncCollectionResultOfT(
                 _fhirServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServicesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServiceDataCollectionResultOfT(
                 _fhirServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

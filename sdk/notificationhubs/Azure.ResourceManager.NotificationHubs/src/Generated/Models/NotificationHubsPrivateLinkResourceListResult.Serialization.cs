@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NotificationHubsPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NotificationHubsPrivateLinkResourceListResult(value ?? new ChangeTrackingList<NotificationHubsPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -14,8 +15,11 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> Profile of the managed cluster NAT gateway. </summary>
     public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
     {
+        private BicepValue<ManagedClusterNatGatewaySku> _sku;
         private ManagedClusterManagedOutboundIPProfile _managedOutboundIPProfile;
         private BicepList<WritableSubResource> _effectiveOutboundIPs;
+        private ManagedClusterNATGatewayProfileOutboundIPPrefixes _outboundIPPrefixes;
+        private ManagedClusterNATGatewayProfileOutboundIPs _outboundIPs;
         private BicepValue<int> _idleTimeoutInMinutes;
 
         /// <summary> Creates a new ManagedClusterNatGatewayProfile. </summary>
@@ -23,8 +27,23 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
+        /// <summary> Gets or sets the Sku. </summary>
+        public BicepValue<ManagedClusterNatGatewaySku> Sku
+        {
+            get
+            {
+                Initialize();
+                return _sku;
+            }
+            set
+            {
+                Initialize();
+                _sku.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the ManagedOutboundIPProfile. </summary>
-        internal ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile
+        public ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile
         {
             get
             {
@@ -48,6 +67,36 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the OutboundIPPrefixes. </summary>
+        internal ManagedClusterNATGatewayProfileOutboundIPPrefixes OutboundIPPrefixes
+        {
+            get
+            {
+                Initialize();
+                return _outboundIPPrefixes;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _outboundIPPrefixes, value);
+            }
+        }
+
+        /// <summary> Gets or sets the OutboundIPs. </summary>
+        internal ManagedClusterNATGatewayProfileOutboundIPs OutboundIPs
+        {
+            get
+            {
+                Initialize();
+                return _outboundIPs;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _outboundIPs, value);
+            }
+        }
+
         /// <summary> Gets or sets the IdleTimeoutInMinutes. </summary>
         public BicepValue<int> IdleTimeoutInMinutes
         {
@@ -63,20 +112,37 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Count. </summary>
-        public BicepValue<int> ManagedOutboundIPCount
+        /// <summary> Gets or sets the PublicIPPrefixes. </summary>
+        public BicepList<ResourceIdentifier> OutboundPublicIPPrefixes
         {
             get
             {
-                return ManagedOutboundIPProfile is null ? default : ManagedOutboundIPProfile.Count;
+                return OutboundIPPrefixes is null ? default : OutboundIPPrefixes.PublicIPPrefixes;
             }
             set
             {
-                if (ManagedOutboundIPProfile is null)
+                if (OutboundIPPrefixes is null)
                 {
-                    ManagedOutboundIPProfile = new ManagedClusterManagedOutboundIPProfile();
+                    OutboundIPPrefixes = new ManagedClusterNATGatewayProfileOutboundIPPrefixes();
                 }
-                ManagedOutboundIPProfile.Count = value;
+                OutboundIPPrefixes.PublicIPPrefixes = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PublicIPs. </summary>
+        public BicepList<ResourceIdentifier> OutboundPublicIPs
+        {
+            get
+            {
+                return OutboundIPs is null ? default : OutboundIPs.PublicIPs;
+            }
+            set
+            {
+                if (OutboundIPs is null)
+                {
+                    OutboundIPs = new ManagedClusterNATGatewayProfileOutboundIPs();
+                }
+                OutboundIPs.PublicIPs = value;
             }
         }
 
@@ -84,8 +150,11 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _sku = DefineProperty<ManagedClusterNatGatewaySku>(nameof(Sku), new string[] { "sku" });
             _managedOutboundIPProfile = DefineModelProperty<ManagedClusterManagedOutboundIPProfile>(nameof(ManagedOutboundIPProfile), new string[] { "managedOutboundIPProfile" });
             _effectiveOutboundIPs = DefineListProperty<WritableSubResource>(nameof(EffectiveOutboundIPs), new string[] { "effectiveOutboundIPs" }, isOutput: true);
+            _outboundIPPrefixes = DefineModelProperty<ManagedClusterNATGatewayProfileOutboundIPPrefixes>(nameof(OutboundIPPrefixes), new string[] { "outboundIPPrefixes" });
+            _outboundIPs = DefineModelProperty<ManagedClusterNATGatewayProfileOutboundIPs>(nameof(OutboundIPs), new string[] { "outboundIPs" });
             _idleTimeoutInMinutes = DefineProperty<int>(nameof(IdleTimeoutInMinutes), new string[] { "idleTimeoutInMinutes" });
             DefineAdditionalProperties();
         }

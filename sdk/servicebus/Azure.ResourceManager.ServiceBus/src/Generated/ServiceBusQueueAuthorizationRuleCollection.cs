@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusQueueAuthorizationRuleResource>(new QueuesGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusQueueAuthorizationRuleResource>(new ServiceBusAuthorizationRuleDataAsync1CollectionResultOfT(
                 _queuesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusQueueAuthorizationRuleResource>(new QueuesGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusQueueAuthorizationRuleResource>(new ServiceBusAuthorizationRuleData1CollectionResultOfT(
                 _queuesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

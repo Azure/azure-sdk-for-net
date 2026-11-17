@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [Obsolete("EdgeNGramTokenFilter is deprecated. Use EdgeNGramTokenFilterV2 instead.")]
     internal partial class InternalEdgeNGramTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of <see cref="InternalEdgeNGramTokenFilter"/>. </summary>

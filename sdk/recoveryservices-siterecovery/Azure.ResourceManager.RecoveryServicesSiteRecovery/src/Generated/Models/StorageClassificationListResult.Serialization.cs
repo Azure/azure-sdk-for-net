@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageClassificationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StorageClassificationListResult(value ?? new ChangeTrackingList<StorageClassificationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

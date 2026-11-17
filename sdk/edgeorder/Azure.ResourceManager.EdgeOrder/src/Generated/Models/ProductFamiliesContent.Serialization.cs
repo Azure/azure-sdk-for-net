@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProductFamiliesContent(filterableProperties, customerSubscriptionDetails, additionalBinaryDataProperties);
+            return new ProductFamiliesContent(filterableProperties ?? new ChangeTrackingDictionary<string, IList<FilterableProperty>>(), customerSubscriptionDetails, additionalBinaryDataProperties);
         }
     }
 }

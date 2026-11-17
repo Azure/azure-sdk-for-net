@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podSubnetID"u8);
                 writer.WriteStringValue(PodSubnetId);
             }
+            if (Optional.IsDefined(PodIPAllocationMode))
+            {
+                writer.WritePropertyName("podIPAllocationMode"u8);
+                writer.WriteStringValue(PodIPAllocationMode.Value.ToString());
+            }
             if (Optional.IsDefined(IsNodePublicIPEnabled))
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
@@ -160,6 +165,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses = default;
             ResourceIdentifier vnetSubnetId = default;
             ResourceIdentifier podSubnetId = default;
+            PodIPAllocationMode? podIPAllocationMode = default;
             bool? isNodePublicIPEnabled = default;
             ResourceIdentifier nodePublicIPPrefixId = default;
             IList<ContainerServiceIPTag> nodePublicIPTags = default;
@@ -196,6 +202,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     podSubnetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("podIPAllocationMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    podIPAllocationMode = new PodIPAllocationMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableNodePublicIP"u8))
@@ -239,6 +254,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 ipAddresses ?? new ChangeTrackingList<ContainerServiceMachineIPAddress>(),
                 vnetSubnetId,
                 podSubnetId,
+                podIPAllocationMode,
                 isNodePublicIPEnabled,
                 nodePublicIPPrefixId,
                 nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(),

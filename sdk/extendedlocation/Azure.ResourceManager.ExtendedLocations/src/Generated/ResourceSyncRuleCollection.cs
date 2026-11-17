@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceSyncRuleData, ResourceSyncRuleResource>(new ResourceSyncRulesGetByCustomLocationIDAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceSyncRuleData, ResourceSyncRuleResource>(new ResourceSyncRuleDataAsyncCollectionResultOfT(
                 _resourceSyncRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceSyncRuleData, ResourceSyncRuleResource>(new ResourceSyncRulesGetByCustomLocationIDCollectionResultOfT(
+            return new PageableWrapper<ResourceSyncRuleData, ResourceSyncRuleResource>(new ResourceSyncRuleDataCollectionResultOfT(
                 _resourceSyncRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

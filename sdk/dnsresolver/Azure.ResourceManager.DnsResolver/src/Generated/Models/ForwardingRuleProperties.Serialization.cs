@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
             return new ForwardingRuleProperties(
                 domainName,
-                targetDnsServers,
+                targetDnsServers ?? new ChangeTrackingList<TargetDnsServer>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 dnsForwardingRuleState,
                 provisioningState,

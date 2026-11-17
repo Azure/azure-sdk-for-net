@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new UnknownCarbonEmissionQueryFilter(
-                default,
+                reportType is null ? default : new CarbonEmissionQueryReportType(reportType),
                 dateRange,
                 (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
                 (resourceGroupUrlList ?? new ChangeTrackingList<string>()).ToList(),
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new OverallSummaryReportQueryFilter(
-                default,
+                CarbonEmissionQueryReportType.OverallSummaryReport,
                 dateRange,
                 (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
                 (resourceGroupUrlList ?? new ChangeTrackingList<string>()).ToList(),
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new MonthlySummaryReportQueryFilter(
-                default,
+                CarbonEmissionQueryReportType.MonthlySummaryReport,
                 dateRange,
                 (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
                 (resourceGroupUrlList ?? new ChangeTrackingList<string>()).ToList(),
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new TopItemsSummaryReportQueryFilter(
-                default,
+                CarbonEmissionQueryReportType.TopItemsSummaryReport,
                 dateRange,
                 (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
                 (resourceGroupUrlList ?? new ChangeTrackingList<string>()).ToList(),
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new TopItemsMonthlySummaryReportQueryFilter(
-                default,
+                CarbonEmissionQueryReportType.TopItemsMonthlySummaryReport,
                 dateRange,
                 (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
                 (resourceGroupUrlList ?? new ChangeTrackingList<string>()).ToList(),
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new ItemDetailsQueryFilter(
-                default,
+                CarbonEmissionQueryReportType.ItemDetailsReport,
                 dateRange,
                 (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
                 (resourceGroupUrlList ?? new ChangeTrackingList<string>()).ToList(),
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static CarbonEmission CarbonEmission(string dataType = default, double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default)
         {
             return new UnknownCarbonEmission(
-                default,
+                dataType is null ? default : new CarbonEmissionDataType(dataType),
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static CarbonEmissionOverallSummary CarbonEmissionOverallSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default)
         {
             return new CarbonEmissionOverallSummary(
-                default,
+                CarbonEmissionDataType.OverallSummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static CarbonEmissionMonthlySummary CarbonEmissionMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string date = default, double carbonIntensity = default)
         {
             return new CarbonEmissionMonthlySummary(
-                default,
+                CarbonEmissionDataType.MonthlySummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static CarbonEmissionTopItemsSummary CarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default)
         {
             return new CarbonEmissionTopItemsSummary(
-                default,
+                CarbonEmissionDataType.TopItemsSummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static ResourceCarbonEmissionTopItemsSummary ResourceCarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, string resourceGroup = default, ResourceIdentifier resourceId = default)
         {
             return new ResourceCarbonEmissionTopItemsSummary(
-                default,
+                CarbonEmissionDataType.ResourceTopItemsSummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static ResourceGroupCarbonEmissionTopItemsSummary ResourceGroupCarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, ResourceIdentifier resourceGroupId = default)
         {
             return new ResourceGroupCarbonEmissionTopItemsSummary(
-                default,
+                CarbonEmissionDataType.ResourceGroupTopItemsSummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static CarbonEmissionTopItemMonthlySummary CarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string date = default)
         {
             return new CarbonEmissionTopItemMonthlySummary(
-                default,
+                CarbonEmissionDataType.TopItemsMonthlySummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static ResourceCarbonEmissionTopItemMonthlySummary ResourceCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string date = default, string subscriptionId = default, string resourceGroup = default, ResourceIdentifier resourceId = default)
         {
             return new ResourceCarbonEmissionTopItemMonthlySummary(
-                default,
+                CarbonEmissionDataType.ResourceTopItemsMonthlySummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static ResourceGroupCarbonEmissionTopItemMonthlySummary ResourceGroupCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string date = default, string subscriptionId = default, ResourceIdentifier resourceGroupId = default)
         {
             return new ResourceGroupCarbonEmissionTopItemMonthlySummary(
-                default,
+                CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static CarbonEmissionItemDetail CarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default)
         {
             return new CarbonEmissionItemDetail(
-                default,
+                CarbonEmissionDataType.ItemDetailsData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static ResourceCarbonEmissionItemDetail ResourceCarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, string resourceGroup = default, ResourceIdentifier resourceId = default, AzureLocation? location = default, ResourceType? resourceType = default)
         {
             return new ResourceCarbonEmissionItemDetail(
-                default,
+                CarbonEmissionDataType.ResourceItemDetailsData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static ResourceGroupCarbonEmissionItemDetail ResourceGroupCarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, ResourceIdentifier resourceGroupId = default)
         {
             return new ResourceGroupCarbonEmissionItemDetail(
-                default,
+                CarbonEmissionDataType.ResourceGroupItemDetailsData,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,

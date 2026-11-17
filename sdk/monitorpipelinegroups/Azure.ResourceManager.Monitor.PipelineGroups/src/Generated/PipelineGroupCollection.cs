@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PipelineGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PipelineGroupResource.ResourceType, out string pipelineGroupApiVersion);
             _pipelineGroupOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.PipelineGroups", PipelineGroupResource.ResourceType.Namespace, Diagnostics);
-            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pipelineGroupApiVersion ?? "2026-04-01");
+            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/pipelineGroups", out string pipelineGroupOperationsApiVersionOverride) ? pipelineGroupOperationsApiVersionOverride : "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupOperationsGetByResourceGroupAsyncCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
+            return new AsyncPageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupDataAsyncCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupOperationsGetByResourceGroupCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
+            return new PageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupDataCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
         }
 
         /// <summary>

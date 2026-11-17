@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return GetContainerServiceManagedClusters().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceWindows in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of MaintenanceWindows and their operations over a MaintenanceWindowResource. </returns>
-        public virtual MaintenanceWindowCollection GetMaintenanceWindows()
+        /// <summary> Gets a collection of ContainerServiceManagedMaintenanceWindows in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerServiceManagedMaintenanceWindows and their operations over a ContainerServiceManagedMaintenanceWindowResource. </returns>
+        public virtual ContainerServiceManagedMaintenanceWindowCollection GetContainerServiceManagedMaintenanceWindows()
         {
-            return GetCachedClient(client => new MaintenanceWindowCollection(client, Id));
+            return GetCachedClient(client => new ContainerServiceManagedMaintenanceWindowCollection(client, Id));
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceWindowResource>> GetMaintenanceWindowAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceManagedMaintenanceWindowResource>> GetContainerServiceManagedMaintenanceWindowAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceWindowName, nameof(maintenanceWindowName));
 
-            return await GetMaintenanceWindows().GetAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerServiceManagedMaintenanceWindows().GetAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceWindowResource> GetMaintenanceWindow(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceManagedMaintenanceWindowResource> GetContainerServiceManagedMaintenanceWindow(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceWindowName, nameof(maintenanceWindowName));
 
-            return GetMaintenanceWindows().Get(maintenanceWindowName, cancellationToken);
+            return GetContainerServiceManagedMaintenanceWindows().Get(maintenanceWindowName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AgentPoolSnapshots in the <see cref="ResourceGroupResource"/>. </summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

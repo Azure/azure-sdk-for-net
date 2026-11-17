@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new DataReplicationJobDataAsyncCollectionResultOfT(
                 _jobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new DataReplicationJobDataCollectionResultOfT(
                 _jobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

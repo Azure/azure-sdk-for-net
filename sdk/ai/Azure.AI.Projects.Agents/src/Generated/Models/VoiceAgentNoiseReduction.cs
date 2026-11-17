@@ -8,7 +8,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Input audio noise reduction configuration. </summary>
+    /// <summary>
+    /// Input audio noise reduction configuration. `azure_deep_noise_suppression_headset` and
+    /// `azure_personal_noise_suppression` are modes for local voice activity detection that
+    /// enhance detection audio without changing the audio used for recognition.
+    /// </summary>
     [Experimental("AAIP001")]
     public partial class VoiceAgentNoiseReduction
     {
@@ -16,14 +20,30 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentNoiseReduction"/>. </summary>
-        /// <param name="type"> The noise reduction mode. </param>
+        /// <param name="type">
+        /// The noise reduction mode. `azure_deep_noise_suppression_headset` provides
+        /// headset-optimized noise suppression for local voice activity detection, optimized for
+        /// low-sample-rate audio including 8 kHz telephony audio without changing recognition audio (not
+        /// restricted to headset devices). `azure_personal_noise_suppression` starts with headset
+        /// suppression for local voice activity detection and personalizes detection after automatic speaker
+        /// enrollment while keeping recognition audio unchanged and keeping headset suppression active when
+        /// personalization is unavailable.
+        /// </param>
         public VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType @type)
         {
             Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentNoiseReduction"/>. </summary>
-        /// <param name="type"> The noise reduction mode. </param>
+        /// <param name="type">
+        /// The noise reduction mode. `azure_deep_noise_suppression_headset` provides
+        /// headset-optimized noise suppression for local voice activity detection, optimized for
+        /// low-sample-rate audio including 8 kHz telephony audio without changing recognition audio (not
+        /// restricted to headset devices). `azure_personal_noise_suppression` starts with headset
+        /// suppression for local voice activity detection and personalizes detection after automatic speaker
+        /// enrollment while keeping recognition audio unchanged and keeping headset suppression active when
+        /// personalization is unavailable.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -31,7 +51,15 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The noise reduction mode. </summary>
+        /// <summary>
+        /// The noise reduction mode. `azure_deep_noise_suppression_headset` provides
+        /// headset-optimized noise suppression for local voice activity detection, optimized for
+        /// low-sample-rate audio including 8 kHz telephony audio without changing recognition audio (not
+        /// restricted to headset devices). `azure_personal_noise_suppression` starts with headset
+        /// suppression for local voice activity detection and personalizes detection after automatic speaker
+        /// enrollment while keeping recognition audio unchanged and keeping headset suppression active when
+        /// personalization is unavailable.
+        /// </summary>
         public VoiceAgentNoiseReductionType Type { get; set; }
     }
 }

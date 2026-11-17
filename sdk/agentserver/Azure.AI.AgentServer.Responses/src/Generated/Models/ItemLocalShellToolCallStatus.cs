@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum ItemLocalShellToolCallStatus
+    internal enum ItemLocalShellToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

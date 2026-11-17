@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportedDataTypes"/> or <paramref name="endpoint"/> is null. </exception>
-        public OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes, string endpoint, TelemetryTransportProtocol protocol) : base(TelemetryEndpointKind.OTLP, exportedDataTypes)
+        public OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes, Uri endpoint, TelemetryTransportProtocol protocol) : base(TelemetryEndpointKind.OTLP, exportedDataTypes)
         {
             Argument.AssertNotNull(exportedDataTypes, nameof(exportedDataTypes));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -31,14 +31,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
-        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties, string endpoint, TelemetryTransportProtocol protocol) : base(kind, exportedDataTypes, authentication, additionalBinaryDataProperties)
+        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri endpoint, TelemetryTransportProtocol protocol) : base(kind, exportedDataTypes, authentication, additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             Protocol = protocol;
         }
 
         /// <summary> The OTLP collector endpoint URL. </summary>
-        public string Endpoint { get; set; }
+        public Uri Endpoint { get; set; }
 
         /// <summary> The transport protocol for the OTLP endpoint. </summary>
         public TelemetryTransportProtocol Protocol { get; set; }

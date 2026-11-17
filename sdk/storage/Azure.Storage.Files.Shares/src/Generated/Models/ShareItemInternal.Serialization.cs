@@ -129,7 +129,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Properties");
             writer.WriteObjectValue(Properties, options);
             writer.WriteEndElement();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WriteStartElement("Metadata");
                 foreach (var pair in Metadata)

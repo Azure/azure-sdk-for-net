@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkspaceManagerMemberData, WorkspaceManagerMemberResource>(new WorkspaceManagerMembersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkspaceManagerMemberData, WorkspaceManagerMemberResource>(new WorkspaceManagerMemberDataAsyncCollectionResultOfT(
                 _workspaceManagerMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkspaceManagerMemberData, WorkspaceManagerMemberResource>(new WorkspaceManagerMembersGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkspaceManagerMemberData, WorkspaceManagerMemberResource>(new WorkspaceManagerMemberDataCollectionResultOfT(
                 _workspaceManagerMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

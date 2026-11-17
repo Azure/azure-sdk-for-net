@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new WorkspaceLoggerGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new ApiManagementLoggerDataAsyncCollectionResultOfT(
                 _workspaceLoggerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new WorkspaceLoggerGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new ApiManagementLoggerDataCollectionResultOfT(
                 _workspaceLoggerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

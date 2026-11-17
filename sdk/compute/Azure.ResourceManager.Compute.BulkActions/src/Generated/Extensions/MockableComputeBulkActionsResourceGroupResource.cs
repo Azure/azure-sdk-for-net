@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> An object representing collection of LocationBasedBulkCreateCustoms and their operations over a LocationBasedBulkCreateCustomResource. </returns>
         public virtual LocationBasedBulkCreateCustomCollection GetLocationBasedBulkCreateCustoms(AzureLocation location)
         {
-            return GetCachedClient(client => new LocationBasedBulkCreateCustomCollection(client, Id, location));
+            return new LocationBasedBulkCreateCustomCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> An object representing collection of LocationBasedBulkCreates and their operations over a LocationBasedBulkCreateResource. </returns>
         public virtual LocationBasedBulkCreateCollection GetLocationBasedBulkCreates(AzureLocation location)
         {
-            return GetCachedClient(client => new LocationBasedBulkCreateCollection(client, Id, location));
+            return new LocationBasedBulkCreateCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineBulkOperationsBulkListOperationErrorsAsyncCollectionResultOfT(
+            return new ComputeBulkOperationResultAsync1CollectionResultOfT(
                 VirtualMachineBulkOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineBulkOperationsBulkListOperationErrorsCollectionResultOfT(
+            return new ComputeBulkOperationResult1CollectionResultOfT(
                 VirtualMachineBulkOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1001,6 +1001,104 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 lookbackInMinutes,
                 context,
                 "MockableComputeBulkActionsResourceGroupResource.BulkListOperationErrors");
+        }
+
+        /// <summary>
+        /// Acknowledge errors for specified operations in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/acknowledgeBulkOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineBulkOperations_BulkAcknowledgeOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify operations for which errors should be acknowledged. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AcknowledgeBulkOperationErrorsResponseResult>> BulkAcknowledgeOperationErrorsAsync(AzureLocation location, AcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrors");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkAcknowledgeOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, AcknowledgeBulkOperationErrorsRequestContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AcknowledgeBulkOperationErrorsResponseResult> response = Response.FromValue(AcknowledgeBulkOperationErrorsResponseResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Acknowledge errors for specified operations in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/acknowledgeBulkOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineBulkOperations_BulkAcknowledgeOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify operations for which errors should be acknowledged. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AcknowledgeBulkOperationErrorsResponseResult> BulkAcknowledgeOperationErrors(AzureLocation location, AcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrors");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkAcknowledgeOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, AcknowledgeBulkOperationErrorsRequestContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AcknowledgeBulkOperationErrorsResponseResult> response = Response.FromValue(AcknowledgeBulkOperationErrorsResponseResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

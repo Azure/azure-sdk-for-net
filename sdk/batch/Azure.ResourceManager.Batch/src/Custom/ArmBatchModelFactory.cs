@@ -196,19 +196,5 @@ namespace Azure.ResourceManager.Batch.Models
             requiredZoneNames ??= new List<string>();
             return new BatchPrivateLinkResourceData(id, name, resourceType, systemData, new BatchPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), null), etag, tags, null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BatchResourceAssociation"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchResourceAssociation BatchResourceAssociation(string name, ResourceAssociationAccessMode? accessMode)
-        {
-            return new BatchResourceAssociation(name, accessMode, null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeter"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location)
-        {
-            return new NetworkSecurityPerimeter(id, perimeterGuid, location, null);
-        }
     }
 }
