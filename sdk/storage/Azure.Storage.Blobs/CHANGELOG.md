@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed SAS builder/client resource-name validation to use ordinal comparisons in `BlobBaseClient` and `BlobContainerClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
+
 ### Other Changes
 
 ## 12.31.0-beta.1 (2026-11-05)
