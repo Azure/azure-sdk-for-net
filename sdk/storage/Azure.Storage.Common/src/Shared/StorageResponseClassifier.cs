@@ -87,6 +87,9 @@ namespace Azure.Storage
             }
 
             RequestHeaders requestHeaders = message.Request.Headers;
+            // Structured-message uploads rely on StorageRequestValidationPipelinePolicy to validate
+            // response acknowledgement headers. If we suppress 409 AlreadyExists as a non-error here,
+            // that validation path can throw InvalidDataException instead of surfacing RequestFailedException.
             if (requestHeaders.Contains(Constants.StructuredMessage.StructuredMessageHeader))
             {
                 return false;
