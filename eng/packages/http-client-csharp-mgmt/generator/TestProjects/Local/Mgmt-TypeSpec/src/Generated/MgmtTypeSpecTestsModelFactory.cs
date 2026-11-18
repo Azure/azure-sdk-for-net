@@ -2201,5 +2201,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             return new IPv4Address(address, default);
         }
+
+        /// <param name="adminUsername"></param>
+        /// <param name="sshPublicKeys"> Gets the PublicKeys. </param>
+        /// <returns> A new <see cref="Models.CtorBugLinuxProfile"/> instance for mocking. </returns>
+        public static CtorBugLinuxProfile CtorBugLinuxProfile(string adminUsername = default, IEnumerable<CtorBugSshPublicKey> sshPublicKeys = default)
+        {
+            return new CtorBugLinuxProfile(adminUsername, sshPublicKeys is null ? default : new CtorBugSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<CtorBugSshPublicKey>()).ToList(), default), default);
+        }
+
+        /// <summary> The CtorBugSshConfiguration. </summary>
+        /// <param name="publicKeys"></param>
+        /// <returns> A new <see cref="Models.CtorBugSshConfiguration"/> instance for mocking. </returns>
+        public static CtorBugSshConfiguration CtorBugSshConfiguration(IEnumerable<CtorBugSshPublicKey> publicKeys = default)
+        {
+            publicKeys ??= new ChangeTrackingList<CtorBugSshPublicKey>();
+
+            return new CtorBugSshConfiguration((publicKeys ?? new ChangeTrackingList<CtorBugSshPublicKey>()).ToList(), default);
+        }
+
+        /// <summary> The CtorBugSshPublicKey. </summary>
+        /// <param name="keyData"></param>
+        /// <returns> A new <see cref="Models.CtorBugSshPublicKey"/> instance for mocking. </returns>
+        public static CtorBugSshPublicKey CtorBugSshPublicKey(string keyData = default)
+        {
+            return new CtorBugSshPublicKey(keyData, default);
+        }
+
+        /// <param name="adminUsername"></param>
+        /// <param name="sshPublicKeys"> Gets the PublicKeys. </param>
+        /// <returns> A new <see cref="Models.CtorBugLinuxProfileControl"/> instance for mocking. </returns>
+        public static CtorBugLinuxProfileControl CtorBugLinuxProfileControl(string adminUsername = default, IEnumerable<CtorBugSshPublicKey> sshPublicKeys = default)
+        {
+            return new CtorBugLinuxProfileControl(adminUsername, sshPublicKeys is null ? default : new CtorBugSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<CtorBugSshPublicKey>()).ToList(), default), default);
+        }
     }
 }

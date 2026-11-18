@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -935,9 +936,20 @@ namespace Azure.Generator.Management.Visitors
         private void UpdatePublicConstructor(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map)
         {
             var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            var restoreFilteredConstructor = false;
             if (publicConstructor is null)
             {
-                return;
+                // Customization may filter the unflattened initialization constructor before
+                // this visitor changes its signature. Recover only an actual custom collision;
+                // explicit suppression or models without a public constructor stay untouched.
+                var unfiltered = (model as IUnfilteredInitializationConstructorProvider)?.UnfilteredInitializationConstructor;
+                if (unfiltered is null || model.CustomCodeView?.Constructors.Any(custom =>
+                    MethodSignatureBase.SignatureComparer.Equals(custom.Signature, unfiltered.Signature)) != true)
+                {
+                    return;
+                }
+                publicConstructor = unfiltered;
+                restoreFilteredConstructor = true;
             }
 
             var updated = false;
@@ -960,6 +972,11 @@ namespace Azure.Generator.Management.Visitors
                 {
                     updateParameters.Add(parameter);
                 }
+            }
+
+            if (restoreFilteredConstructor && !updated)
+            {
+                return;
             }
 
             UpdatePublicConstructorBody(model, map, publicConstructor);
@@ -989,6 +1006,12 @@ namespace Azure.Generator.Management.Visitors
                 // If this constructor delegates to a base constructor, update the base initializer
                 // arguments to reference the new flattened parameters instead of the old ones.
                 UpdatePublicConstructorBaseInitializer(publicConstructor, map);
+                if (restoreFilteredConstructor)
+                {
+                    // Apply normal customization filtering to the transformed signature, so a
+                    // custom flattened overload still suppresses a duplicate generated member.
+                    model.Update(constructors: [.. model.Constructors, publicConstructor]);
+                }
             }
         }
 

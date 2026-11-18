@@ -368,6 +368,178 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void GeneratedSafeFlattenConstructorCoexistsWithCustomWrapperConstructor()
+        {
+            var modelType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugLinuxProfile);
+            var controlType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugLinuxProfileControl);
+            var sshType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugSshConfiguration);
+            var keyListType = typeof(IList<Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugSshPublicKey>);
+            var control = controlType.GetConstructor([typeof(string), keyListType]);
+            var custom = modelType.GetConstructor([typeof(string), sshType]);
+            var generated = modelType.GetConstructor([typeof(string), keyListType]);
+
+            Assert.That(control, Is.Not.Null, "The model without a custom constructor must expose the flattened overload.");
+            Assert.That(custom, Is.Not.Null, "The custom wrapper overload must remain public.");
+            Assert.That(generated, Is.Not.Null, "The generated flattened overload must coexist with the custom wrapper overload.");
+
+            var keys = new List<Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugSshPublicKey> { new("ssh-key") };
+            var instance = (Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugLinuxProfile)generated!.Invoke(["alice", keys]);
+            Assert.That(instance.AdminUsername, Is.EqualTo("alice"));
+            Assert.That(instance.SshPublicKeys.Single().KeyData, Is.EqualTo("ssh-key"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("ssh").GetProperty("publicKeys")[0].GetProperty("keyData").GetString(), Is.EqualTo("ssh-key"));
+
+            var ssh = new Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugSshConfiguration(keys);
+            var customized = (Azure.Generator.MgmtTypeSpec.Tests.Models.CtorBugLinuxProfile)custom!.Invoke(["bob", ssh]);
+            Assert.That(customized.AdminUsername, Is.EqualTo("bob"));
+            Assert.That(customized.SshPublicKeys.Single().KeyData, Is.EqualTo("ssh-key"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SafeFlattenKeepsGeneratedConstructorWhenCustomWrapperConstructorExists(bool withCustomConstructor)
+        {
+            var key = InputFactory.Model("ContainerServiceSshPublicKey", properties:
+                [InputFactory.Property("keyData", InputPrimitiveType.String, isRequired: true)]);
+            var ssh = InputFactory.Model("ContainerServiceSshConfiguration", properties:
+                [InputFactory.Property("publicKeys", InputFactory.Array(key), isRequired: true)]);
+            var input = InputFactory.Model("ContainerServiceLinuxProfile", properties:
+            [
+                InputFactory.Property("adminUsername", InputPrimitiveType.String, isRequired: true),
+                InputFactory.Property("ssh", ssh, isRequired: true)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, ssh, key],
+                customizationSources: withCustomConstructor ? ["""
+                    namespace Samples.Models
+                    {
+                        public partial class ContainerServiceLinuxProfile
+                        {
+                            public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh) { }
+                        }
+                        public partial class ContainerServiceSshConfiguration { }
+                    }
+                    """] : null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            if (withCustomConstructor)
+            {
+                Assert.That(model.CustomCodeView?.Constructors.Any(c =>
+                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) && c.Signature.Parameters.Count == 2 &&
+                    c.Signature.Parameters[0].Type.Equals(typeof(string)) &&
+                    c.Signature.Parameters[1].Type.Name == "ContainerServiceSshConfiguration" &&
+                    c.Signature.Parameters[1].Type.Namespace == "Samples.Models"), Is.True,
+                    "The public custom (string, ContainerServiceSshConfiguration) overload must be recognized.");
+            }
+            Visit(model);
+
+            Assert.That(model.Properties.Any(p => p.Name == "SshPublicKeys"), Is.True, "The SSH wrapper must be safe-flattened.");
+            var publicConstructors = model.Constructors.Where(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).ToArray();
+            Assert.That(publicConstructors.Any(c => c.Signature.Parameters.Count == 2 &&
+                c.Signature.Parameters[0].Type.Equals(typeof(string)) && c.Signature.Parameters[1].Type.IsList &&
+                c.Signature.Parameters[1].Type.Arguments.Count == 1 &&
+                c.Signature.Parameters[1].Type.Arguments[0].Name == "ContainerServiceSshPublicKey" &&
+                c.Signature.Parameters[1].Type.Arguments[0].Namespace == "Samples.Models"), Is.True,
+                "The generated public (string, IList<ContainerServiceSshPublicKey>) constructor must survive the custom wrapper overload.");
+        }
+
+        [Test]
+        public void SafeFlattenDoesNotDuplicateCustomFlattenedConstructor()
+        {
+            var key = InputFactory.Model("CtorKey", properties: [InputFactory.Property("keyData", InputPrimitiveType.String, isRequired: true)]);
+            var ssh = InputFactory.Model("CtorSsh", properties: [InputFactory.Property("publicKeys", InputFactory.Array(key), isRequired: true)]);
+            var input = InputFactory.Model("CtorProfile", properties:
+            [
+                InputFactory.Property("adminUsername", InputPrimitiveType.String, isRequired: true),
+                InputFactory.Property("ssh", ssh, isRequired: true)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, ssh, key], customizationSources: ["""
+                using System.Collections.Generic;
+                namespace Samples.Models
+                {
+                    public partial class CtorProfile
+                    {
+                        public CtorProfile(string adminUsername, CtorSsh ssh) { }
+                        public CtorProfile(string adminUsername, IList<CtorKey> sshPublicKeys) { }
+                    }
+                    public partial class CtorSsh { }
+                    public partial class CtorKey { }
+                }
+                """]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Assert.That(model.CustomCodeView!.Constructors.Count(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.EqualTo(2));
+            Visit(model);
+            model.Update(constructors: model.Constructors);
+
+            Assert.That(model.Properties.Any(p => p.Name == "SshPublicKeys"), Is.True);
+            Assert.That(model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.False,
+                "A customized flattened overload must suppress the duplicate generated signature.");
+        }
+
+        [Test]
+        public void SafeFlattenDoesNotRestoreExplicitlySuppressedConstructor()
+        {
+            var ssh = InputFactory.Model("CtorSsh", properties: [InputFactory.Property("publicKeys", InputFactory.Array(InputPrimitiveType.String), isRequired: true)]);
+            var input = InputFactory.Model("CtorProfile", properties:
+            [
+                InputFactory.Property("adminUsername", InputPrimitiveType.String, isRequired: true),
+                InputFactory.Property("ssh", ssh, isRequired: true)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, ssh], customizationSources: ["""
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+                    internal sealed class CodeGenSuppressAttribute : System.Attribute
+                    {
+                        public CodeGenSuppressAttribute(string name, params System.Type[] parameters) { }
+                    }
+                }
+                namespace Samples.Models
+                {
+                    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CtorProfile", typeof(string), typeof(CtorSsh))]
+                    public partial class CtorProfile { }
+                    public partial class CtorSsh { }
+                }
+                """]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            Assert.That(model.Properties.Any(p => p.Name == "SshPublicKeys"), Is.True);
+            Assert.That(model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.False,
+                "Explicit suppression without a custom matching constructor must remain effective.");
+        }
+
+        [Test]
+        public void SafeFlattenRestoresResourceDataConstructorSuppressedByCustomWrapper()
+        {
+            var key = InputFactory.Model("CtorKey", properties: [InputFactory.Property("keyData", InputPrimitiveType.String, isRequired: true)]);
+            var ssh = InputFactory.Model("CtorSsh", properties: [InputFactory.Property("publicKeys", InputFactory.Array(key), isRequired: true)]);
+            var (client, models) = InputResourceData.ClientWithResource(isInputModel: true, additionalProperties:
+            [
+                InputFactory.Property("adminUsername", InputPrimitiveType.String, isRequired: true),
+                InputFactory.Property("ssh", ssh, isRequired: true)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [.. models, ssh, key], clients: () => [client], customizationSources: ["""
+                namespace Samples
+                {
+                    public partial class ResponseTypeData
+                    {
+                        public ResponseTypeData(string adminUsername, Models.CtorSsh ssh) { }
+                    }
+                }
+                namespace Samples.Models { public partial class CtorSsh { } }
+                """]);
+            var model = plugin.Object.TypeFactory.CreateModel(models.Single())!;
+            Assert.That(model, Is.InstanceOf<Azure.Generator.Management.Providers.ResourceDataModelProvider>());
+            Assert.That(model.CustomCodeView?.Constructors.Any(c => c.Signature.Parameters.Count == 2), Is.True);
+            Visit(model);
+
+            Assert.That(model.Properties.Any(p => p.Name == "SshPublicKeys"), Is.True);
+            Assert.That(model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                c.Signature.Parameters.Count == 2 && c.Signature.Parameters[1].Type.IsList &&
+                c.Signature.Parameters[1].Type.Arguments[0].Name == "CtorKey"), Is.True,
+                "Resource data models must retain their flattened initialization overload too.");
+        }
+
+        [Test]
         public void SafeFlattenRestoresExactConstructor([Values] bool previouslyNullable, [Values] bool wrapperRequired)
         {
             var oldType = previouslyNullable ? "long?" : "long";

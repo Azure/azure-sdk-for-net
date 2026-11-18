@@ -30,6 +30,7 @@ import "./flatten-with-customized-property.tsp";
 import "./extensionresourcename.tsp";
 import "./delete-final-result.tsp";
 import "./custom-base-type-resource.tsp";
+import "./custom-constructor.tsp";
 import "./testcertificate.tsp";
 import "./sharedmodel.tsp";
 import "./entityresource.tsp";

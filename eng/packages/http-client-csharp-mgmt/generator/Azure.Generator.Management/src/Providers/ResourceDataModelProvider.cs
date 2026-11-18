@@ -3,8 +3,11 @@
 
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -23,8 +26,18 @@ namespace Azure.Generator.Management.Providers
     /// <c>CSharpType._baseType</c>, and no subsequent visitor-driven rename can rewrite it.
     /// </para>
     /// </remarks>
-    internal class ResourceDataModelProvider : ScmModelProvider
+    internal class ResourceDataModelProvider : ScmModelProvider, IUnfilteredInitializationConstructorProvider
     {
+        ConstructorProvider? IUnfilteredInitializationConstructorProvider.UnfilteredInitializationConstructor => _unfilteredInitializationConstructor;
+        private ConstructorProvider? _unfilteredInitializationConstructor;
+
+        protected override ConstructorProvider[] BuildConstructors()
+        {
+            var constructors = base.BuildConstructors();
+            _unfilteredInitializationConstructor = constructors.FirstOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            return constructors;
+        }
+
         public ResourceDataModelProvider(InputModelType inputModel)
             : base(inputModel)
         {
