@@ -6,7 +6,6 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -121,64 +120,29 @@ namespace Azure.Generator.Management.Providers
                 [idParameter]);
 
             var body = new List<MethodBodyStatement>();
-            var pattern = resource.ResourceIdPattern;
-
-            // A scope placeholder can span several segments, and malformed query-suffixed
-            // routes can be misclassified as singletons. Do not treat either as a fixed path.
-            var hasFixedPath = resource.SingletonResourceName is not null &&
-                !resource.IsExtensionResource &&
-                resource.ResourceType.All(segment => segment.IsConstant) &&
-                pattern.SerializedPath.StartsWith('/') &&
-                pattern.All(segment => !segment.IsConstant || segment.Value.IndexOfAny(['{', '}', '?', '#']) < 0);
-
-            if (hasFixedPath)
+            var singletonName = resource.SingletonResourceName;
+            var hasSingletonName = singletonName is not null && singletonName.IndexOfAny(['{', '}', '?', '#']) < 0;
+            if (hasSingletonName)
             {
                 body.Add(new IfStatement(idParameter.Equal(Null))
                 {
                     Throw(New.Instance(typeof(ArgumentNullException), Nameof(idParameter)))
                 });
-
-                body.Add(Declare("segments", typeof(string[]), idParameter.Invoke("ToString").Invoke("Split", Literal('/')), out var segments));
-                var expectedLength = pattern.Count + 1;
-                // ResourceIdentifier accepts one trailing slash and preserves it in ToString().
-                var invalidLength = segments.Property("Length").NotEqual(Literal(expectedLength))
-                    .And(segments.Property("Length").NotEqual(Literal(expectedLength + 1))
-                        .Or(new IndexerExpression(segments, Literal(expectedLength)).NotEqual(Literal(string.Empty))));
-                var invalid = idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(Static(resource.Type).Property("ResourceType"))
-                    .Or(invalidLength)
-                    .Or(new IndexerExpression(segments, Literal(0)).NotEqual(Literal(string.Empty)));
-
-                for (var index = 0; index < pattern.Count; index++)
-                {
-                    var segment = pattern[index];
-                    var value = new IndexerExpression(segments, Literal(index + 1));
-                    invalid = invalid.Or(segment.IsConstant
-                        ? Not(StringSnippets.Equals(value.As<string>(), Literal(segment.Value).As<string>(), StringComparison.OrdinalIgnoreCase))
-                        : value.Equal(Literal(string.Empty)));
-                }
-
-                body.Add(new IfStatement(invalid)
-                {
-                    Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid singleton resource ID {0} expected path {1}"), idParameter, Literal(pattern.SerializedPath)), wrapInNameOf: true))
-                });
             }
 
             body.Add(Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate());
 
-            // Keep the existing name check for singleton extension resources and ambiguous
-            // paths; an extension scope is not necessarily a single path segment.
-            if (!hasFixedPath && resource.SingletonResourceName is { } singletonName && singletonName.IndexOfAny(['{', '}', '?', '#']) < 0)
+            if (hasSingletonName)
             {
                 var nameMatches = StringSnippets.Equals(
                     idParameter.Property(nameof(ResourceIdentifier.Name)).As<string>(),
-                    Literal(singletonName).As<string>(),
+                    Literal(singletonName!).As<string>(),
                     StringComparison.OrdinalIgnoreCase);
                 body.Add(new IfStatement(
-                    idParameter.NotEqual(Null)
-                        .And(idParameter.As<ResourceIdentifier>().ResourceType().Equal(Static(resource.Type).Property("ResourceType")))
+                    idParameter.As<ResourceIdentifier>().ResourceType().Equal(Static(resource.Type).Property("ResourceType"))
                         .And(Not(nameMatches)))
                 {
-                    Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid singleton resource name {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.Name)), Literal(singletonName)), wrapInNameOf: true))
+                    Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid singleton resource name {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.Name)), Literal(singletonName!)), wrapInNameOf: true))
                 });
             }
 

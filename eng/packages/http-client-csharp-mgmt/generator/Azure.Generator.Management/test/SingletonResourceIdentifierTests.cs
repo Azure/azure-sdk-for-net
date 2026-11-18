@@ -110,26 +110,30 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
-        public void GetSingletonResourceRejectsWrongTypeInAllConfigurations()
+        public void SingletonResourceTypeValidationRetainsItsExistingBuildConfigurationPolicy()
         {
             var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
             var otherTypeId = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/resourceGroups/group/providers/MgmtTypeSpec/foos/foo/bars/bar/quotas/other");
 
+#if DEBUG
             Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(otherTypeId));
+#else
+            Assert.That(client.GetBarSettingsResource(otherTypeId).Id, Is.EqualTo(otherTypeId));
+#endif
         }
 
         [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current")]
         [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current/")]
         [TestCase("/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current")]
         [TestCase("/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current/")]
-        public void GetSingletonResourceRejectsOtherScopesWithSameResourceType(string value)
+        public void GetSingletonResourceAcceptsOtherScopesWithSameResourceType(string value)
         {
             var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
             var expectedId = BarSettingsResource.CreateResourceIdentifier(SubscriptionId, "group", "foo", "bar");
             var otherId = new ResourceIdentifier(value);
 
             Assert.That(otherId.ResourceType, Is.EqualTo(expectedId.ResourceType));
-            Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(otherId));
+            Assert.That(client.GetBarSettingsResource(otherId).Id, Is.EqualTo(otherId));
         }
 
         [Test]
