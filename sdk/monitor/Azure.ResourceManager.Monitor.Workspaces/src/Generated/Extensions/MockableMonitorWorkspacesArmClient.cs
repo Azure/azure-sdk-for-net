@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Workspaces;
@@ -76,7 +77,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceContainerResource"/> object. </returns>
         public virtual TraceContainerResource GetTraceContainerResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TraceContainerResource.ValidateResourceId(id);
+            if (id.ResourceType == TraceContainerResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TraceContainerResource(Client, id);
         }
 
@@ -85,7 +94,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
         public virtual TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroupResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TraceAssociationAtResourceGroupResource.ValidateResourceId(id);
+            if (id.ResourceType == TraceAssociationAtResourceGroupResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TraceAssociationAtResourceGroupResource(Client, id);
         }
 
@@ -94,7 +111,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
         public virtual TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscriptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TraceAssociationAtSubscriptionResource.ValidateResourceId(id);
+            if (id.ResourceType == TraceAssociationAtSubscriptionResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TraceAssociationAtSubscriptionResource(Client, id);
         }
 
@@ -103,7 +128,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationResource"/> object. </returns>
         public virtual TraceAssociationResource GetTraceAssociationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TraceAssociationResource.ValidateResourceId(id);
+            if (id.ResourceType == TraceAssociationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TraceAssociationResource(Client, id);
         }
 
