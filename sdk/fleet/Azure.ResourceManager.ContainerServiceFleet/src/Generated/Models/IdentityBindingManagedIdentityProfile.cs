@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="clientId"> The client ID of the managed identity. </param>
         /// <param name="tenantId"> The tenant ID of the managed identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityBindingManagedIdentityProfile(ResourceIdentifier resourceId, string objectId, string clientId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IdentityBindingManagedIdentityProfile(ResourceIdentifier resourceId, Guid? objectId, Guid? clientId, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ObjectId = objectId;
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The object ID of the managed identity. </summary>
-        public string ObjectId { get; }
+        public Guid? ObjectId { get; }
 
         /// <summary> The client ID of the managed identity. </summary>
-        public string ClientId { get; }
+        public Guid? ClientId { get; }
 
         /// <summary> The tenant ID of the managed identity. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
     }
 }

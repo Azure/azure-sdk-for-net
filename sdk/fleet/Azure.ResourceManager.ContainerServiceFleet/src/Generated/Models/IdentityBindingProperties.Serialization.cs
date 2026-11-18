@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("allowedSubjects"u8);
                 writer.WriteStartArray();
-                foreach (AllowedSubject item in AllowedSubjects)
+                foreach (IdentityBindingAllowedSubject item in AllowedSubjects)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             IdentityBindingManagedIdentityProfile managedIdentity = default;
-            IList<AllowedSubject> allowedSubjects = default;
+            IList<IdentityBindingAllowedSubject> allowedSubjects = default;
             IdentityBindingOidcIssuerProfile oidcIssuer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<AllowedSubject> array = new List<AllowedSubject>();
+                    List<IdentityBindingAllowedSubject> array = new List<IdentityBindingAllowedSubject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AllowedSubject.DeserializeAllowedSubject(item, options));
+                        array.Add(IdentityBindingAllowedSubject.DeserializeIdentityBindingAllowedSubject(item, options));
                     }
                     allowedSubjects = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IdentityBindingProperties(managedIdentity, allowedSubjects ?? new ChangeTrackingList<AllowedSubject>(), oidcIssuer, additionalBinaryDataProperties);
+            return new IdentityBindingProperties(managedIdentity, allowedSubjects ?? new ChangeTrackingList<IdentityBindingAllowedSubject>(), oidcIssuer, additionalBinaryDataProperties);
         }
     }
 }

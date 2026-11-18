@@ -609,11 +609,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </param>
         /// <param name="oidcIssuerUri"> The OIDC issuer URL of the identity binding profile. </param>
         /// <returns> A new <see cref="Models.IdentityBindingProperties"/> instance for mocking. </returns>
-        public static IdentityBindingProperties IdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, IEnumerable<AllowedSubject> allowedSubjects = default, Uri oidcIssuerUri = default)
+        public static IdentityBindingProperties IdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, IEnumerable<IdentityBindingAllowedSubject> allowedSubjects = default, Uri oidcIssuerUri = default)
         {
-            allowedSubjects ??= new ChangeTrackingList<AllowedSubject>();
+            allowedSubjects ??= new ChangeTrackingList<IdentityBindingAllowedSubject>();
 
-            return new IdentityBindingProperties(managedIdentity, (allowedSubjects ?? new ChangeTrackingList<AllowedSubject>()).ToList(), oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, default), default);
+            return new IdentityBindingProperties(managedIdentity, (allowedSubjects ?? new ChangeTrackingList<IdentityBindingAllowedSubject>()).ToList(), oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, default), default);
         }
 
         /// <summary> Managed identity profile for the identity binding. </summary>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="clientId"> The client ID of the managed identity. </param>
         /// <param name="tenantId"> The tenant ID of the managed identity. </param>
         /// <returns> A new <see cref="Models.IdentityBindingManagedIdentityProfile"/> instance for mocking. </returns>
-        public static IdentityBindingManagedIdentityProfile IdentityBindingManagedIdentityProfile(ResourceIdentifier resourceId = default, string objectId = default, string clientId = default, string tenantId = default)
+        public static IdentityBindingManagedIdentityProfile IdentityBindingManagedIdentityProfile(ResourceIdentifier resourceId = default, Guid? objectId = default, Guid? clientId = default, Guid? tenantId = default)
         {
             return new IdentityBindingManagedIdentityProfile(resourceId, objectId, clientId, tenantId, default);
         }
@@ -648,10 +648,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// When omitted, all service accounts in matching namespaces are
         /// authorized. When provided, it must be non-empty.
         /// </param>
-        /// <returns> A new <see cref="Models.AllowedSubject"/> instance for mocking. </returns>
-        public static AllowedSubject AllowedSubject(IdentityBindingLabelSelector namespaceSelector = default, IdentityBindingLabelSelector serviceAccountSelector = default)
+        /// <returns> A new <see cref="Models.IdentityBindingAllowedSubject"/> instance for mocking. </returns>
+        public static IdentityBindingAllowedSubject IdentityBindingAllowedSubject(IdentityBindingLabelSelector namespaceSelector = default, IdentityBindingLabelSelector serviceAccountSelector = default)
         {
-            return new AllowedSubject(namespaceSelector, serviceAccountSelector, default);
+            return new IdentityBindingAllowedSubject(namespaceSelector, serviceAccountSelector, default);
         }
 
         /// <summary> A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects. </summary>

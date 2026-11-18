@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            string objectId = default;
-            string clientId = default;
-            string tenantId = default;
+            Guid? objectId = default;
+            Guid? clientId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,17 +153,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (prop.NameEquals("objectId"u8))
                 {
-                    objectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    objectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

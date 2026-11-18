@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(Affinity))]
-    [ModelReaderWriterBuildable(typeof(AllowedSubject))]
     [ModelReaderWriterBuildable(typeof(AutoUpgradeNodeImageSelection))]
     [ModelReaderWriterBuildable(typeof(AutoUpgradeProfileData))]
     [ModelReaderWriterBuildable(typeof(AutoUpgradeProfileGenerateResult))]
@@ -108,6 +107,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(GateListResult))]
     [ModelReaderWriterBuildable(typeof(GatePatchProperties))]
     [ModelReaderWriterBuildable(typeof(GateProperties))]
+    [ModelReaderWriterBuildable(typeof(IdentityBindingAllowedSubject))]
     [ModelReaderWriterBuildable(typeof(IdentityBindingLabelSelector))]
     [ModelReaderWriterBuildable(typeof(IdentityBindingLabelSelectorRequirement))]
     [ModelReaderWriterBuildable(typeof(IdentityBindingManagedIdentityProfile))]

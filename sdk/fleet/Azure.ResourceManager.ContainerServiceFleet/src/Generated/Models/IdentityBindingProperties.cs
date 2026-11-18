@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Argument.AssertNotNull(managedIdentity, nameof(managedIdentity));
 
             ManagedIdentity = managedIdentity;
-            AllowedSubjects = new ChangeTrackingList<AllowedSubject>();
+            AllowedSubjects = new ChangeTrackingList<IdentityBindingAllowedSubject>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IdentityBindingProperties"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </param>
         /// <param name="oidcIssuer"> The OIDC issuer profile of the identity binding profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IList<AllowedSubject> allowedSubjects, IdentityBindingOidcIssuerProfile oidcIssuer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IList<IdentityBindingAllowedSubject> allowedSubjects, IdentityBindingOidcIssuerProfile oidcIssuer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedIdentity = managedIdentity;
             AllowedSubjects = allowedSubjects;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// authorization falls back exclusively to ClusterRole/ClusterRoleBinding
         /// evaluation. Maximum 100 entries.
         /// </summary>
-        public IList<AllowedSubject> AllowedSubjects { get; }
+        public IList<IdentityBindingAllowedSubject> AllowedSubjects { get; }
 
         /// <summary> The OIDC issuer profile of the identity binding profile. </summary>
         internal IdentityBindingOidcIssuerProfile OidcIssuer { get; }
