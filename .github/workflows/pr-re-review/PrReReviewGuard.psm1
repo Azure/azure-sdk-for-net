@@ -237,7 +237,7 @@ function Test-PrReReviewReplayCommit {
     return $Value -cmatch '^[0-9a-f]{7,64}$' -and @($AllowedCommits | Where-Object { $_ -and $_.StartsWith($Value, [StringComparison]::Ordinal) }).Count -gt 0
 }
 
-$script:HeredocPattern = [regex]'\G(?<!<)<<(?!<)(?<dash>-?)[ \t]*(?:''(?<word>[^''\n]*)''|"(?<word>[^"\n]*)"|\\?(?<word>[A-Za-z0-9_]+))'
+$script:HeredocPattern = [regex]'\G(?<!<)<<(?!<)(?<dash>-?)[ \t]*(?:(?<quote>'')(?<word>[^''\n]*)''|(?<quote>")(?<word>[^"\n]*)"|(?<quote>\\)?(?<word>[A-Za-z0-9_]+))'
 
 function Set-PrReReviewShellMask {
     param([char[]]$Mask, [int]$From, [int]$To)
@@ -248,9 +248,13 @@ function Set-PrReReviewShellMask {
 # Masks the quoted text, comments, command substitutions, and heredoc bodies in bash text from $Index to the
 # unquoted $Close character, so that only the separators between commands stay visible. Returns $Close's index.
 function Skip-PrReReviewShellText {
-    param([string]$Text, [char[]]$Mask, [int]$Index, [string]$Close, [AllowNull()][System.Collections.Generic.List[object]]$Substitutions)
+    param(
+        [string]$Text, [char[]]$Mask, [int]$Index, [string]$Close,
+        [AllowNull()][System.Collections.Generic.List[object]]$Substitutions,
+        [AllowNull()][System.Collections.Generic.List[object]]$Heredocs
+    )
 
-    $heredocs = [System.Collections.Generic.List[object]]::new()
+    $pending = [System.Collections.Generic.List[object]]::new()
     $i = $Index
     while ($i -lt $Text.Length) {
         $c = $Text[$i]
@@ -273,22 +277,28 @@ function Skip-PrReReviewShellText {
             Set-PrReReviewShellMask $Mask $i ($end - 1)
             $i = $end
         } elseif ($c -ceq '<' -and ($match = $script:HeredocPattern.Match($Text, $i)).Success) {
-            $heredocs.Add(@{ Delimiter = $match.Groups['word'].Value; StripTabs = $match.Groups['dash'].Value -ceq '-' })
+            $pending.Add(@{ Delimiter = $match.Groups['word'].Value; StripTabs = $match.Groups['dash'].Value -ceq '-'; Quoted = $match.Groups['quote'].Success })
             $i += $match.Length
-        } elseif ($c -ceq "`n" -and $heredocs.Count -gt 0) {
+        } elseif ($c -ceq "`n" -and $pending.Count -gt 0) {
             # The command's heredoc bodies start on the next line; they belong to the command, not after it.
             $end = $i
-            foreach ($heredoc in $heredocs) {
+            foreach ($heredoc in $pending) {
+                $bodyStart = [Math]::Min($end + 1, $Text.Length)
+                $bodyEnd = $Text.Length
                 while ($end -lt $Text.Length) {
                     $lineStart = $end + 1
                     $end = $Text.IndexOf([char]"`n", $lineStart)
                     if ($end -lt 0) { $end = $Text.Length }
                     $line = $Text.Substring($lineStart, $end - $lineStart)
                     if ($heredoc.StripTabs) { $line = $line.TrimStart("`t") }
-                    if ($line -ceq $heredoc.Delimiter) { break }
+                    if ($line -ceq $heredoc.Delimiter) {
+                        $bodyEnd = $lineStart
+                        break
+                    }
                 }
+                if ($null -ne $Heredocs) { $Heredocs.Add([pscustomobject]@{ Start = $bodyStart; End = [Math]::Max($bodyStart, $bodyEnd); Quoted = $heredoc.Quoted }) }
             }
-            $heredocs.Clear()
+            $pending.Clear()
             Set-PrReReviewShellMask $Mask $i ($end - 1)
             $i = $end
         } else {
@@ -305,7 +315,7 @@ function Skip-PrReReviewShellQuote {
 
     $end = $Index + 1
     if ($Text[$Index] -ceq '$') {
-        $end = Skip-PrReReviewShellText $Text $Mask ($Index + 2) ')' $null
+        $end = Skip-PrReReviewShellText $Text $Mask ($Index + 2) ')' $null $null
         if ($null -ne $Substitutions) { $Substitutions.Add([pscustomobject]@{ Start = $Index + 2; End = $end }) }
     } elseif ($Text[$Index] -ceq '`') {
         while ($end -lt $Text.Length -and $Text[$end] -cne '`') { if ($Text[$end] -ceq '\') { $end += 2 } else { $end++ } }
@@ -324,41 +334,105 @@ function Skip-PrReReviewShellQuote {
     return $end
 }
 
-# Splits bash text into its commands, each with its source and the sources of its command substitutions.
+# Splits bash text into its commands, each with its source, the sources of its command substitutions, and the
+# spans of its heredoc bodies within its source.
 function Split-PrReReviewShellCommand {
     param([Parameter(Mandatory)][AllowEmptyString()][string]$Text)
 
     $mask = $Text.ToCharArray()
     $substitutions = [System.Collections.Generic.List[object]]::new()
-    [void](Skip-PrReReviewShellText $Text $mask 0 '' $substitutions)
+    $heredocs = [System.Collections.Generic.List[object]]::new()
+    [void](Skip-PrReReviewShellText $Text $mask 0 '' $substitutions $heredocs)
     $masked = [string]::new($mask)
     $commands = [System.Collections.Generic.List[object]]::new()
     $start = 0
     foreach ($end in @([regex]::Matches($masked, '(?<![<>])&(?!>)|[;|\n()]') | ForEach-Object Index) + $Text.Length) {
         $name = [regex]::Match($masked.Substring($start, $end - $start), '^\s*(?:(?:then|do|else|!)\s+|\w+=\S*\s+)*(?<name>[^\s<>]+)').Groups['name'].Value
         if ($name) {
-            $inner = @($substitutions | Where-Object { $_.Start -ge $start -and $_.Start -lt $end } | ForEach-Object { $Text.Substring($_.Start, $_.End - $_.Start) })
-            $commands.Add([pscustomobject]@{ Name = ($name -split '/')[-1]; Source = $Text.Substring($start, $end - $start); Substitutions = $inner })
+            $within = { $_.Start -ge $start -and $_.Start -lt $end }
+            $commands.Add([pscustomobject]@{
+                Name = ($name -split '/')[-1]
+                Source = $Text.Substring($start, $end - $start)
+                Substitutions = @($substitutions | Where-Object $within | ForEach-Object { $Text.Substring($_.Start, $_.End - $_.Start) })
+                Heredocs = @($heredocs | Where-Object $within | ForEach-Object { [pscustomobject]@{ Start = $_.Start - $start; End = $_.End - $start; Quoted = $_.Quoted } })
+            })
         }
         $start = $end + 1
     }
     return ,$commands.ToArray()
 }
 
-# A safeoutputs command only publishes, so only the commands nested in its arguments can read, and of those,
-# cat reads only a local file or heredoc, such as a review body.
-function Get-PrReReviewShellReadText {
+# Returns the command substitutions in otherwise literal text, such as an unquoted heredoc body.
+function Get-PrReReviewShellExpansion {
     param([Parameter(Mandatory)][AllowEmptyString()][string]$Text)
 
-    $parts = foreach ($command in (Split-PrReReviewShellCommand $Text)) {
-        if ($command.Name -cne 'safeoutputs') {
-            $command.Source
-            continue
+    $found = [System.Collections.Generic.List[object]]::new()
+    $mask = $Text.ToCharArray()
+    for ($i = 0; $i -lt $Text.Length; $i++) {
+        if ($Text[$i] -ceq '\') {
+            $i++
+        } elseif ($Text[$i] -ceq '`' -or ($Text[$i] -ceq '$' -and $i + 1 -lt $Text.Length -and $Text[$i + 1] -ceq '(')) {
+            $i = Skip-PrReReviewShellQuote $Text $mask $i $found
         }
-        foreach ($substitution in $command.Substitutions) {
-            foreach ($nested in (Split-PrReReviewShellCommand $substitution)) {
-                if ($nested.Name -cne 'cat') { Get-PrReReviewShellReadText $nested.Source }
+    }
+    return ,@($found | ForEach-Object { $Text.Substring($_.Start, $_.End - $_.Start) })
+}
+
+# Returns the files a command writes through output redirection and, for tee, through its file arguments.
+function Get-PrReReviewShellTarget {
+    param([Parameter(Mandatory)]$Command)
+
+    $line = if ($Command.Heredocs.Count -gt 0) { $Command.Source.Substring(0, $Command.Heredocs[0].Start) } else { $Command.Source }
+    $line = $line -replace '<<-?\s*(?:''[^'']*''|"[^"]*"|\\?\w+)', ''
+    $targets = @([regex]::Matches($line, '(?<![0-9&])>>?\s*(?<target>"[^"]*"|''[^'']*''|[^\s;&|<>]+)') | ForEach-Object { $_.Groups['target'].Value.Trim('"', "'") })
+    if ($Command.Name -ceq 'tee') {
+        $targets += @(($line -replace '(?<![0-9&])>>?\s*\S+', '').Trim() -split '\s+' | Select-Object -Skip 1 | Where-Object { $_ -and $_ -notmatch '^-' } | ForEach-Object { $_.Trim('"', "'") })
+    }
+    return $targets
+}
+
+# Returns the files that safeoutputs commands publish by reading them with cat, such as a review body written earlier.
+function Get-PrReReviewPublishedFile {
+    param([Parameter(Mandatory)][AllowEmptyCollection()][string[]]$Commands)
+
+    foreach ($text in $Commands) {
+        foreach ($command in (Split-PrReReviewShellCommand $text)) {
+            if ($command.Name -cne 'safeoutputs') { continue }
+            foreach ($substitution in $command.Substitutions) {
+                foreach ($nested in (Split-PrReReviewShellCommand $substitution)) {
+                    if ($nested.Name -cne 'cat') { continue }
+                    $nested.Source.Trim() -split '\s+' | Select-Object -Skip 1 | Where-Object { $_ -and $_ -notmatch '^(?:-|[0-9]*[<>&])' } | ForEach-Object { $_.Trim('"', "'") }
+                }
             }
+        }
+    }
+}
+
+# A safeoutputs command only publishes, so only the commands nested in its arguments can read, and of those,
+# cat reads only a local file or heredoc. A cat or tee heredoc that writes a published file is publication text
+# too, so only the command substitutions that an unquoted delimiter lets it run can read.
+function Get-PrReReviewShellReadText {
+    param([Parameter(Mandatory)][AllowEmptyString()][string]$Text, [AllowEmptyCollection()][string[]]$PublishedFiles = @())
+
+    $parts = foreach ($command in (Split-PrReReviewShellCommand $Text)) {
+        if ($command.Name -ceq 'safeoutputs') {
+            foreach ($substitution in $command.Substitutions) {
+                foreach ($nested in (Split-PrReReviewShellCommand $substitution)) {
+                    if ($nested.Name -cne 'cat') { Get-PrReReviewShellReadText $nested.Source $PublishedFiles }
+                }
+            }
+        } elseif ($command.Name -cin @('cat', 'tee') -and $command.Heredocs.Count -gt 0 -and @(Get-PrReReviewShellTarget $command | Where-Object { $PublishedFiles -ccontains $_ }).Count -gt 0) {
+            $source = $command.Source
+            foreach ($heredoc in @($command.Heredocs | Sort-Object Start -Descending)) {
+                $body = $source.Substring($heredoc.Start, $heredoc.End - $heredoc.Start)
+                $source = $source.Remove($heredoc.Start, $heredoc.End - $heredoc.Start)
+                if (!$heredoc.Quoted) {
+                    foreach ($expansion in (Get-PrReReviewShellExpansion $body)) { Get-PrReReviewShellReadText $expansion $PublishedFiles }
+                }
+            }
+            $source
+        } else {
+            $command.Source
         }
     }
     return (@($parts) -join "`n")
@@ -376,12 +450,14 @@ function Find-PrReReviewReplayContamination {
 
     # The pull request, its history, and its branches have all moved on since the replayed run, so any
     # read that is not pinned to the replayed commits can leak what happened later, such as the fixes.
-    $found = [System.Collections.Generic.List[string]]::new()
-    foreach ($line in [IO.File]::ReadLines($SessionLogPath)) {
+    $events = @(foreach ($line in [IO.File]::ReadLines($SessionLogPath)) {
         if (!$line.Contains('"tool.execution_start"', [StringComparison]::Ordinal)) { continue }
         try { $event = ConvertFrom-PrReReviewJson $line } catch { continue }
-        if ($event -isnot [System.Collections.IDictionary] -or $event.type -cne 'tool.execution_start' -or $event.data -isnot [System.Collections.IDictionary]) { continue }
-        $data = $event.data
+        if ($event -is [System.Collections.IDictionary] -and $event.type -ceq 'tool.execution_start' -and $event.data -is [System.Collections.IDictionary]) { $event.data }
+    })
+    $published = @(Get-PrReReviewPublishedFile @($events | Where-Object { $_.toolName -ceq 'bash' -and $_.arguments -is [System.Collections.IDictionary] } | ForEach-Object { [string]$_.arguments.command }))
+    $found = [System.Collections.Generic.List[string]]::new()
+    foreach ($data in $events) {
         $arguments = if ($data.arguments -is [System.Collections.IDictionary]) { $data.arguments } else { @{} }
         $call = "$($data.toolName) $(ConvertTo-Json -InputObject $data.arguments -Depth 20 -Compress)"
         if ($data.mcpServerName -ceq 'safeoutputs') { continue }
@@ -393,7 +469,7 @@ function Find-PrReReviewReplayContamination {
 
         # Covers the GitHub MCP server mounted as a `github` command and direct requests to GitHub. One command
         # can chain several reads, so each invocation and URL must be pinned on its own.
-        $text = if ($data.toolName -ceq 'bash') { Get-PrReReviewShellReadText ([string]$arguments.command) } else { $call }
+        $text = if ($data.toolName -ceq 'bash') { Get-PrReReviewShellReadText ([string]$arguments.command) $published } else { $call }
         foreach ($invocation in [regex]::Matches($text, '(?:^|[\s;&|(`])github\s+(?<tool>[a-z_]+)(?<args>[^;&|\n`)]*)')) {
             $ref = [regex]::Match($invocation.Groups['args'].Value, '--(?:ref|sha)[=\s]+["'']?(?<commit>[0-9a-f]{7,64})\b')
             if ($invocation.Groups['tool'].Value -cne 'get_file_contents' -or !$ref.Success -or !(Test-PrReReviewReplayCommit $ref.Groups['commit'].Value $AllowedCommits)) {
