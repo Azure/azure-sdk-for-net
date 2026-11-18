@@ -525,9 +525,9 @@ floor customers must satisfy and a node in their restore graph.
   become ordinary package dependencies at pack time; and generator references carrying
   `ReferenceOutputAssembly="false"` with `PackAsAnalyzer="true"`, which bundle a DLL rather
   than declare a dependency
-- **A package must not depend on a package whose ID extends its own** (`Azure.X` →
-  `Azure.X.Y`). A dotted ID tells customers `Azure.X.Y` builds on `Azure.X`, and that is how
-  the repo layers everywhere else (`Azure.Messaging.EventHubs.Processor` →
+- **A shipping `src` project must not depend on a package whose ID extends its own**
+  (`Azure.X` → `Azure.X.Y`). A dotted ID tells customers `Azure.X.Y` builds on `Azure.X`, and
+  that is how the repo layers everywhere else (`Azure.Messaging.EventHubs.Processor` →
   `Azure.Messaging.EventHubs`, `Azure.Provisioning.*` → `Azure.Provisioning`). The reverse
   edge makes the specific package the foundation of the general one. The child can never
   reference the parent without a cycle, so anything the two share gets pushed down into the
