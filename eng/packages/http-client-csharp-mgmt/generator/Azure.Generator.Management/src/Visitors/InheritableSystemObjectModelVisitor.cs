@@ -1,21 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -87,9 +81,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         RestoreMissingFrameworkWireMetadata(model.BaseModelProvider!);
         var basePropertyNames = EnumerateBaseModelProperties(model.BaseModelProvider!);
-        var inheritedResourceType = PropertyHelpers.GetAllProperties(model.BaseModelProvider!)
-            .FirstOrDefault(property => property.Name == "ResourceType" &&
-                property.Type.WithNullable(false).Equals(typeof(ResourceType)));
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
 
@@ -106,15 +97,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             }
             else
             {
-                if (inheritedResourceType is not null && !prop.Body.HasSetter &&
-                    prop.Type.WithNullable(false).Equals(typeof(string)) && prop.WireInfo?.SerializedName == "type")
-                {
-                    // The inherited constructor assigns the semantic property, not MTG's alias backing field.
-                    var resourceType = Base.Property(inheritedResourceType.Name);
-                    prop.Update(body: new ExpressionPropertyBody(inheritedResourceType.Type.IsNullable
-                        ? resourceType.NullConditional().InvokeToString()
-                        : resourceType.InvokeToString()));
-                }
                 remainingProperties.Add(prop);
             }
         }

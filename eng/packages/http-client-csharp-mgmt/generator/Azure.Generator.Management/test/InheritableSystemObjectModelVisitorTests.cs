@@ -22,7 +22,7 @@ namespace Azure.Generator.Mgmt.Tests
     {
         [TestCase(false)]
         [TestCase(true)]
-        public void ResourceTypeStringAliasReadsInheritedSemanticProperty(bool required)
+        public void ResourceTypeStringAliasKeepsItsOriginalBody(bool required)
         {
             var resourceType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
             var baseProperty = InputFactory.Property("resourceType", resourceType, isRequired: required, isReadOnly: true, serializedName: "type");
@@ -32,17 +32,17 @@ namespace Azure.Generator.Mgmt.Tests
             var alias = InputFactory.Property("type", InputPrimitiveType.String, isRequired: required, isReadOnly: true, serializedName: "type");
             var model = InputFactory.Model("ExpressRouteLagData", properties: [alias], baseModel: baseModel,
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, model]);
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, model]);
 
-            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var provider = new ScmModelProvider(model);
             var property = provider.Properties.Single(property => property.Name == "Type");
-            var source = new TypeProviderWriter(provider).Write().Content;
+            var originalBody = property.Body;
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+
+            visitor.InvokePreVisitModel(model, provider);
 
             Assert.That(property.Type.WithNullable(false), Is.EqualTo(new CSharpType(typeof(string))));
-            Assert.That(source, Does.Contain(required
-                ? "Type => base.ResourceType.ToString();"
-                : "Type => base.ResourceType?.ToString();"));
-            Assert.That(source, Does.Not.Contain("this._resourceType"));
+            Assert.That(provider.Properties.Single(property => property.Name == "Type").Body, Is.SameAs(originalBody));
         }
 
         [Test]

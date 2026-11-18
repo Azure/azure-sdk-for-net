@@ -88,7 +88,9 @@ namespace Azure.Generator.Management
         /// </summary>
         protected override void Configure()
         {
-            // MTG's collision prepass constructs base ModelProviders before management namespace overrides apply.
+            // MTG allocates model names during base.Configure, before NameVisitor applies namespace overrides.
+            // Use the final namespace for contract/custom-code lookup so ResourcesHistoryRequest is not
+            // normalized into the separate ResourcesHistoryContent customization before its contract is found.
             var modelNamespace = $"{TypeFactory.PrimaryNamespace}.Models";
             foreach (var model in InputLibrary.InputNamespace.Models)
             {
