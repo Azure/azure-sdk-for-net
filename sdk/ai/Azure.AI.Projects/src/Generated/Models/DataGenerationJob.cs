@@ -77,5 +77,11 @@ namespace Azure.AI.Projects
 
         /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>
         internal DataGenerationJobScenario Scenario { get; set; }
+
+        /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
+        public DateTimeOffset CreatedAt { get; }
+
+        /// <summary> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </summary>
+        public DateTimeOffset? FinishedAt { get; }
     }
 }

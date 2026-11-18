@@ -95,10 +95,10 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("model_deployment_name"u8);
                 writer.WriteStringValue(ModelDeploymentName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextScheduledRunOn))
+            if (options.Format != "W" && Optional.IsDefined(NextScheduledRunAt))
             {
                 writer.WritePropertyName("next_scheduled_run_at"u8);
-                writer.WriteNumberValue(NextScheduledRunOn.Value, "U");
+                writer.WriteNumberValue(NextScheduledRunAt.Value, "U");
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedCost))
             {
@@ -113,7 +113,7 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedOn, "U");
+                writer.WriteNumberValue(UpdatedAt, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -162,10 +162,10 @@ namespace Azure.AI.Projects
             bool enabled = default;
             double runIntervalHours = default;
             string modelDeploymentName = default;
-            DateTimeOffset? nextScheduledRunOn = default;
+            DateTimeOffset? nextScheduledRunAt = default;
             AgentInsightEstimatedCost estimatedCost = default;
             AgentInsightSuspension suspension = default;
-            DateTimeOffset updatedOn = default;
+            DateTimeOffset updatedAt = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,7 +200,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    nextScheduledRunOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    nextScheduledRunAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("estimated_cost"u8))
@@ -224,7 +224,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("updated_at"u8))
                 {
-                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -238,10 +238,10 @@ namespace Azure.AI.Projects
                 enabled,
                 runIntervalHours,
                 modelDeploymentName,
-                nextScheduledRunOn,
+                nextScheduledRunAt,
                 estimatedCost,
                 suspension,
-                updatedOn,
+                updatedAt,
                 additionalBinaryDataProperties);
         }
     }

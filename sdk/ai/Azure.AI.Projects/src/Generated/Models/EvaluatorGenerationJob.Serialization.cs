@@ -131,10 +131,10 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WritePropertyName("created_at"u8);
                 writer.WriteNumberValue(CreatedAt, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletedAt))
+            if (options.Format != "W" && Optional.IsDefined(FinishedAt))
             {
                 writer.WritePropertyName("finished_at"u8);
-                writer.WriteNumberValue(CompletedAt.Value, "U");
+                writer.WriteNumberValue(FinishedAt.Value, "U");
             }
             if (options.Format != "W" && Optional.IsDefined(Usage))
             {
@@ -203,7 +203,7 @@ namespace Azure.AI.Projects.Evaluation
             string evaluatorDisplayName = default;
             string evaluatorDescription = default;
             DateTimeOffset createdAt = default;
-            DateTimeOffset? completedAt = default;
+            DateTimeOffset? finishedAt = default;
             EvaluatorGenerationTokenUsage usage = default;
             IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -278,7 +278,7 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    completedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    finishedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -320,7 +320,7 @@ namespace Azure.AI.Projects.Evaluation
                 evaluatorDisplayName,
                 evaluatorDescription,
                 createdAt,
-                completedAt,
+                finishedAt,
                 usage,
                 inputQualityWarnings ?? new ChangeTrackingList<RubricGenerationInputQualityWarning>(),
                 additionalBinaryDataProperties);

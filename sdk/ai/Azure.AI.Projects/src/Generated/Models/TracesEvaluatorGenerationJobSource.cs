@@ -48,5 +48,11 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </summary>
         public string AgentVersion { get; set; }
+
+        /// <summary> Start of the time window (Unix timestamp in seconds) for fetching traces. </summary>
+        public DateTimeOffset StartAt { get; set; }
+
+        /// <summary> End of the time window (Unix timestamp in seconds). Defaults to current time. </summary>
+        public DateTimeOffset? EndAt { get; set; }
     }
 }

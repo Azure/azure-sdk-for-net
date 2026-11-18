@@ -24,13 +24,13 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
+        /// <param name="nextScheduledRunAt"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
-        /// <param name="updatedOn"> The time when this monitor was last updated. </param>
+        /// <param name="updatedAt"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitorListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunAt = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedAt = default)
         {
             return new AgentInsightMonitorListItem(
                 id,
@@ -38,10 +38,10 @@ namespace Azure.AI.Projects
                 enabled,
                 runIntervalHours,
                 modelDeploymentName,
-                nextScheduledRunOn,
+                nextScheduledRunAt,
                 estimatedCost,
                 suspension,
-                updatedOn,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
@@ -57,15 +57,15 @@ namespace Azure.AI.Projects
         /// <summary> Structured reason why scheduled generation is suspended for a monitor. </summary>
         /// <param name="code"> Stable, machine-readable suspension category. </param>
         /// <param name="message"> Human-readable description of the suspension. </param>
-        /// <param name="occurredOn"> The time when the suspension occurred. </param>
+        /// <param name="occurredAt"> The time when the suspension occurred. </param>
         /// <param name="details"> Additional reason-specific suspension details. </param>
         /// <returns> A new <see cref="Projects.AgentInsightSuspension"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredOn = default, IDictionary<string, BinaryData> details = default)
+        public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredAt = default, IDictionary<string, BinaryData> details = default)
         {
             details ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new AgentInsightSuspension(code, message, occurredOn, details, additionalBinaryDataProperties: null);
+            return new AgentInsightSuspension(code, message, occurredAt, details, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
@@ -86,14 +86,14 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
+        /// <param name="nextScheduledRunAt"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
         /// <param name="overview"> The effective overview, or null before an overview is available. </param>
-        /// <param name="updatedOn"> The time when this monitor was last updated. </param>
+        /// <param name="updatedAt"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitor"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunAt = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedAt = default)
         {
             return new AgentInsightMonitor(
                 id,
@@ -101,23 +101,23 @@ namespace Azure.AI.Projects
                 enabled,
                 runIntervalHours,
                 modelDeploymentName,
-                nextScheduledRunOn,
+                nextScheduledRunAt,
                 estimatedCost,
                 suspension,
                 overview,
-                updatedOn,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> The effective overview for an Agent Insights monitor. </summary>
         /// <param name="content"> The overview content. </param>
         /// <param name="source"> Where the effective overview came from. </param>
-        /// <param name="updatedOn"> The time when this overview was last updated. </param>
+        /// <param name="updatedAt"> The time when this overview was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightsOverview"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedAt = default)
         {
-            return new AgentInsightsOverview(content, source, updatedOn, additionalBinaryDataProperties: null);
+            return new AgentInsightsOverview(content, source, updatedAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Inputs used when creating an agent insight run. </summary>
@@ -172,13 +172,13 @@ namespace Azure.AI.Projects
         /// <param name="category"> An open, service-generated category label for the issue. Clients must accept previously unseen values. </param>
         /// <param name="status"> The lifecycle status of the insight. </param>
         /// <param name="traceCount"> The number of traces that provide evidence for this insight. </param>
-        /// <param name="createdOn"> The time when this insight was created. </param>
-        /// <param name="updatedOn"> The time when this insight was last updated. </param>
+        /// <param name="createdAt"> The time when this insight was created. </param>
+        /// <param name="updatedAt"> The time when this insight was last updated. </param>
         /// <param name="description"> The root-cause diagnosis for the issue. </param>
         /// <param name="details"> Additional insight details. Omitted unless details are requested. </param>
         /// <returns> A new <see cref="Projects.AgentInsight"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, string description = default, AgentInsightDetails details = default)
+        public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string description = default, AgentInsightDetails details = default)
         {
             return new AgentInsight(
                 id,
@@ -190,8 +190,8 @@ namespace Azure.AI.Projects
                 category,
                 status,
                 traceCount,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 description,
                 details,
                 additionalBinaryDataProperties: null);
@@ -2347,11 +2347,11 @@ namespace Azure.AI.Projects
         /// <param name="isEnabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
-        /// <param name="createdOn"> The time when the routine was created. </param>
-        /// <param name="updatedOn"> The time when the routine was last updated. </param>
+        /// <param name="createdAt"> The time when the routine was created. </param>
+        /// <param name="updatedAt"> The time when the routine was last updated. </param>
         /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
+        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdAt = default, DateTimeOffset? updatedAt = default)
         {
             triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
 
@@ -2361,8 +2361,8 @@ namespace Azure.AI.Projects
                 isEnabled,
                 triggers,
                 action,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2379,10 +2379,10 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> The legacy endpoint-scoped agent identifier recorded for the routine attempt. </param>
         /// <param name="conversationId"> The conversation identifier used by a responses API dispatch. </param>
         /// <param name="sessionId"> The hosted-agent session identifier used by an invocations API dispatch. </param>
-        /// <param name="triggeredOn"> The logical trigger time recorded for the routine attempt. </param>
-        /// <param name="scheduledFireOn"> The scheduled fire time recorded for timer and schedule deliveries. </param>
-        /// <param name="startedOn"> The time when the underlying run started. </param>
-        /// <param name="endedOn"> The time when the underlying run reached a terminal state. </param>
+        /// <param name="triggeredAt"> The logical trigger time recorded for the routine attempt. </param>
+        /// <param name="scheduledFireAt"> The scheduled fire time recorded for timer and schedule deliveries. </param>
+        /// <param name="startedAt"> The time when the underlying run started. </param>
+        /// <param name="endedAt"> The time when the underlying run reached a terminal state. </param>
         /// <param name="dispatchId"> The dispatch identifier associated with the routine attempt. </param>
         /// <param name="actionCorrelationId"> The downstream action correlation identifier, when available. </param>
         /// <param name="responseId"> The downstream response or invocation identifier, when available. </param>
@@ -2392,7 +2392,7 @@ namespace Azure.AI.Projects
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredOn = default, DateTimeOffset? scheduledFireOn = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
+        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             triggerEventPayload ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -2409,10 +2409,10 @@ namespace Azure.AI.Projects
                 agentEndpointId,
                 conversationId,
                 sessionId,
-                triggeredOn,
-                scheduledFireOn,
-                startedOn,
-                endedOn,
+                triggeredAt,
+                scheduledFireAt,
+                startedAt,
+                endedAt,
                 dispatchId,
                 actionCorrelationId,
                 responseId,
@@ -2564,11 +2564,11 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startAt = default, DateTimeOffset? endAt = default, IEnumerable<string> traceIds = default)
         {
             traceIds ??= new ChangeTrackingList<string>();
 
@@ -2579,8 +2579,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startsOn,
-                endsOn,
+                startAt,
+                endAt,
                 traceIds.ToList());
         }
 

@@ -89,6 +89,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("RedTeamTargetConfig")] public abstract partial class TargetConfig { }
 [CodeGenType("TaxonomyCategory")] public partial class TaxonomyCategory { }
 [CodeGenType("TaxonomySubCategory")] public partial class TaxonomySubCategory { }
+[CodeGenType("TracesEvaluatorGenerationJobSource")] public partial class TracesEvaluatorGenerationJobSource { }
 [CodeGenType("TriggerType")] internal readonly partial struct TriggerType { }
 [CodeGenType("UnknownEvaluationRuleAction")] internal partial class UnknownEvaluationRuleAction { }
 [CodeGenType("UnknownEvaluationTarget")] internal partial class UnknownEvaluationTarget { }
