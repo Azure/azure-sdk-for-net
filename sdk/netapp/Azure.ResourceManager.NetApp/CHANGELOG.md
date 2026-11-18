@@ -1,14 +1,28 @@
 # Release History
 
-## 1.20.0-beta.2 (Unreleased)
+## 1.20.0 (2026-10-30)
 
 ### Features Added
 
+- Upgraded api-version to `2026-09-01`.
+- Model `SmbSettings` added property `smb_oplocks`
+- Model `VolumePatchProperties` added property `smb_oplocks`
+- Model `VolumeProperties` added property `ldap_server_type`
+- Model `VolumeProperties` added property `smb_oplocks`
+- Added enum `SmbOplocks`
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Deleted or renamed client operation group `NetAppManagementClient.subvolumes`
+- Model `VolumeProperties` deleted or renamed its instance variable `enable_subvolumes`
+- Deleted or renamed model `EnableSubvolumes`
+- Deleted or renamed model `SubvolumeInfo`
+- Deleted or renamed model `SubvolumeModel`
+- Deleted or renamed model `SubvolumeModelProperties`
+- Deleted or renamed model `SubvolumePatchParams`
+- Deleted or renamed model `SubvolumePatchRequest`
+- Deleted or renamed model `SubvolumeProperties`
+- Deleted or renamed model `SubvolumesOperations`
 
 ## 1.20.0-beta.1 (2026-10-30)
 

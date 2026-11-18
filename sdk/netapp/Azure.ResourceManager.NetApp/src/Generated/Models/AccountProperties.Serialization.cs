@@ -7,13 +7,11 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account properties. </summary>
     internal partial class AccountProperties : IJsonModel<AccountProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -65,86 +63,6 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AccountProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AccountProperties)} does not support writing '{format}' format.");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (Optional.IsCollectionDefined(ActiveDirectories))
-            {
-                writer.WritePropertyName("activeDirectories"u8);
-                writer.WriteStartArray();
-                foreach (NetAppAccountActiveDirectory item in ActiveDirectories)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DisableShowmount, _disableShowmountIsDefined))
-            {
-                if (DisableShowmount != null)
-                {
-                    writer.WritePropertyName("disableShowmount"u8);
-                    writer.WriteBooleanValue(DisableShowmount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("disableShowmount"u8);
-                }
-            }
-            if (Optional.IsDefined(NfsV4IdDomain, _nfsV4IdDomainIsDefined))
-            {
-                if (NfsV4IdDomain != null)
-                {
-                    writer.WritePropertyName("nfsV4IDDomain"u8);
-                    writer.WriteStringValue(NfsV4IdDomain);
-                }
-                else
-                {
-                    writer.WriteNull("nfsV4IDDomain"u8);
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(MultiAdStatus))
-            {
-                writer.WritePropertyName("multiAdStatus"u8);
-                writer.WriteStringValue(MultiAdStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(LdapConfiguration))
-            {
-                writer.WritePropertyName("ldapConfiguration"u8);
-                writer.WriteObjectValue(LdapConfiguration, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AccountProperties IJsonModel<AccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
@@ -160,114 +78,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAccountProperties(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccountProperties DeserializeAccountProperties(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string provisioningState = default;
-            IList<NetAppAccountActiveDirectory> activeDirectories = default;
-            NetAppAccountEncryption encryption = default;
-            bool disableShowmountIsDefined = false;
-            bool? disableShowmount = default;
-            bool nfsV4IdDomainIsDefined = false;
-            string nfsV4IdDomain = default;
-            MultiAdStatus? multiAdStatus = default;
-            LdapConfiguration ldapConfiguration = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    provisioningState = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("activeDirectories"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
-                    }
-                    activeDirectories = array;
-                    continue;
-                }
-                if (prop.NameEquals("encryption"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("disableShowmount"u8))
-                {
-                    disableShowmountIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        disableShowmount = null;
-                        continue;
-                    }
-                    disableShowmount = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("nfsV4IDDomain"u8))
-                {
-                    nfsV4IdDomainIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        nfsV4IdDomain = null;
-                        continue;
-                    }
-                    nfsV4IdDomain = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("multiAdStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    multiAdStatus = new MultiAdStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("ldapConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
-            }
-            return new AccountProperties(
-                provisioningState,
-                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
-                encryption,
-                disableShowmount,
-                nfsV4IdDomain,
-                multiAdStatus,
-                ldapConfiguration,
-                additionalBinaryDataProperties)
-            {
-                _disableShowmountIsDefined = disableShowmountIsDefined,
-                _nfsV4IdDomainIsDefined = nfsV4IdDomainIsDefined
-            };
         }
     }
 }
