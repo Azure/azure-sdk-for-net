@@ -113,6 +113,55 @@ namespace Azure.Search.Documents.Tests.Models
 
         [TestCase("J")]
         [TestCase("W")]
+        public void ClearingLegacyConfigurationRemovesRefreshAllAcls(string format)
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    RefreshAllAcls = true
+                }
+            };
+
+            parameters.Configuration.Clear();
+
+            Assert.IsNull(parameters.IndexingParametersConfiguration.RefreshAllAcls);
+            using JsonDocument document = JsonDocument.Parse(
+                ModelReaderWriter.Write(parameters, new ModelReaderWriterOptions(format)));
+            Assert.IsFalse(document.RootElement.TryGetProperty("configuration", out JsonElement configuration) &&
+                configuration.TryGetProperty("refreshAllAcls", out _));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void LegacyConfigurationAccessesAndRemovesRefreshAllAcls(bool initialValue)
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    RefreshAllAcls = initialValue
+                }
+            };
+            IDictionary<string, object> configuration = parameters.Configuration;
+
+            Assert.IsTrue(configuration.ContainsKey("refreshAllAcls"));
+            Assert.AreEqual(initialValue, configuration["refreshAllAcls"]);
+            configuration["refreshAllAcls"] = !initialValue;
+            Assert.AreEqual(!initialValue, parameters.IndexingParametersConfiguration.RefreshAllAcls);
+
+            Assert.IsTrue(configuration.Remove("refreshAllAcls"));
+            Assert.IsNull(parameters.IndexingParametersConfiguration.RefreshAllAcls);
+            Assert.IsFalse(configuration.ContainsKey("refreshAllAcls"));
+
+            configuration["refreshAllAcls"] = initialValue;
+            configuration["refreshAllAcls"] = null;
+            Assert.IsNull(parameters.IndexingParametersConfiguration.RefreshAllAcls);
+            Assert.IsFalse(configuration.TryGetValue("refreshAllAcls", out _));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
         public void DictionaryPropertiesSurviveSerialization(string format)
         {
             IndexingParametersConfiguration configuration = new IndexingParametersConfiguration
