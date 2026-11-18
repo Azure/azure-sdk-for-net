@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dynatrace;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <returns> Returns a <see cref="DynatraceMonitoredSubscriptionResource"/> object. </returns>
         public virtual DynatraceMonitoredSubscriptionResource GetDynatraceMonitoredSubscriptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DynatraceMonitoredSubscriptionResource.ValidateResourceId(id);
+            if (id.ResourceType == DynatraceMonitoredSubscriptionResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DynatraceMonitoredSubscriptionResource(Client, id);
         }
 

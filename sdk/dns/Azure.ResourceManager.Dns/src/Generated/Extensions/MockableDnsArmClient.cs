@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnssecConfigResource"/> object. </returns>
         public virtual DnssecConfigResource GetDnssecConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DnssecConfigResource.ValidateResourceId(id);
+            if (id.ResourceType == DnssecConfigResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DnssecConfigResource(Client, id);
         }
 
