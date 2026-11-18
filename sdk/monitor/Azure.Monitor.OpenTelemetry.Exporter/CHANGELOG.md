@@ -8,6 +8,12 @@
 
 ### Bugs Fixed
 
+- Fixed the envelope `sampleRate` (shown as `itemCount` in Application Insights) for sampled telemetry. ([#59110](https://github.com/Azure/azure-sdk-for-net/issues/59110))
+  - Requests, dependencies, and exceptions recorded on spans now use the `microsoft.sample_rate` value stamped on each span by the sampler, instead of always deriving it from `SamplingRatio`. Previously, with rate-limited sampling (`TracesPerSecond`), `itemCount` was always 1. If `SamplingRatio` was also set, `itemCount` came from `SamplingRatio` even though rate-limited sampling was in effect.
+  - The fixed-rate sampler now also stamps `microsoft.sample_rate` on the spans it keeps when `SamplingRatio` is below 1. The reported value is unchanged, except that ratios below 0.5% are now reported unrounded instead of as 0.
+  - With trace-based log sampling (`EnableTraceBasedLogsSampler`, the default), logs kept because their span was sampled in now carry that span's sample rate. Logs without a span are unchanged.
+  - `microsoft.sample_rate` no longer appears in custom dimensions on requests, dependencies, or logs. It is now sent as the envelope `sampleRate`.
+
 ### Other Changes
 
 ## 1.11.0-beta.1 (2026-11-09)
