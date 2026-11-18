@@ -1,5 +1,5 @@
 ---
-run-name: "Re-review PR #${{ github.event.pull_request.number }} at ${{ github.event.pull_request.head.sha }}"
+run-name: "${{ inputs.pull_request && 'Replay' || 'Re-review' }} PR #${{ github.event.pull_request.number || inputs.pull_request }} at ${{ github.event.pull_request.head.sha || inputs.head_sha }}"
 on:
   pull_request:
     types: [synchronize]
@@ -14,7 +14,27 @@ on:
   # default [admin, maintainer, write] role check even though they're trusted automation —
   # e.g. azure-sdk-automation[bot] pushing a synchronize commit to a PR branch.
   bots: ["azure-sdk", "azure-sdk-automation[bot]"]
-if: github.event.pull_request.draft == false && (github.event_name == 'pull_request' || github.event.pull_request.head.repo.id != github.repository_id)
+  # Replays an earlier re-review against the commits and review history it saw, to measure a change
+  # to this workflow before it ships. A replay never publishes; see pr-re-review/README.md.
+  workflow_dispatch:
+    inputs:
+      pull_request:
+        description: "Pull request whose re-review to replay"
+        required: true
+        type: number
+      head_sha:
+        description: "Full SHA of the head commit that re-review analyzed"
+        required: true
+        type: string
+      base_sha:
+        description: "Full SHA of the base commit in that run's event"
+        required: true
+        type: string
+      history_cutoff:
+        description: "ISO 8601 time the original agent first read the review history; later history is hidden"
+        required: true
+        type: string
+if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && (github.event_name == 'pull_request' || github.event.pull_request.head.repo.id != github.repository_id))
 description: "Verify prior review threads and catch missed issues after each new commit, using the shared code-review rules"
 imports:
   - shared/copilot-cli-version-probe-guard.md
@@ -28,6 +48,7 @@ checkout:
     .github
 # gh-aw restores .github from github.event.pull_request.base.sha, which GitHub does not move on later
 # pushes, so the helpers come from the base branch's current tip instead. A pull request cannot change them.
+# A replay has no pull request, so the empty ref checks out the dispatched commit.
 pre-agent-steps:
   - name: Checkout trusted re-review helpers
     uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -45,6 +66,10 @@ pre-agent-steps:
       PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
       REVIEW_INPUT_DIR: /tmp/gh-aw/pr-review-input
       REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
+      REPLAY_PULL_REQUEST: ${{ inputs.pull_request }}
+      REPLAY_HEAD_SHA: ${{ inputs.head_sha }}
+      REPLAY_BASE_SHA: ${{ inputs.base_sha }}
+      REPLAY_HISTORY_CUTOFF: ${{ inputs.history_cutoff }}
     run: |
       $exporter = './.pr-re-review-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1'
       if (!(Test-Path -PathType Leaf $exporter)) {
@@ -75,7 +100,7 @@ engine:
   id: copilot
   version: "1.0.80"
   concurrency:
-    group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.pull_request.number }}"
+    group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}"
     queue: max
 network:
   allowed:
@@ -118,6 +143,25 @@ safe-outputs:
         if ($LASTEXITCODE -ne 0 -or $exported -cnotmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$' -or $current -cne $exported) {
           throw "The re-review helpers changed between export ($exported) and publication ($current); refusing to publish."
         }
+    # A replay records how the re-review would have fared and then fails, so nothing reaches Process Safe
+    # Outputs. Without a pull request in the event, the live guard below would also fail closed.
+    - name: Evaluate the replayed re-review
+      if: github.event_name == 'workflow_dispatch'
+      shell: pwsh
+      env:
+        AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
+        AGENT_SESSION_LOG: /tmp/gh-aw/agent-session.jsonl
+        REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
+        REVIEW_REPLAY: ${{ runner.temp }}/pr-re-review-input/replay.json
+        REVIEW_REPLAY_RESULT: ${{ runner.temp }}/pr-re-review-replay/replay-result.json
+      run: ./.github/workflows/pr-re-review/Invoke-PrReReviewReplayGuard.ps1
+    - name: Upload replay result
+      if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: pr-re-review-replay
+        path: ${{ runner.temp }}/pr-re-review-replay
+        if-no-files-found: warn
     - name: Require complete re-review coverage before publishing
       shell: pwsh
       env:
@@ -342,7 +386,7 @@ tools:
 timeout-minutes: 25
 concurrency:
   # Every push fires both events; keying by event keeps the skipped twin from queuing behind the real run.
-  group: pr-re-review-${{ github.event_name }}-${{ github.event.pull_request.number }}
+  group: pr-re-review-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
   queue: max
   job-discriminator: ${{ github.event.pull_request.number || github.run_id }}
 ---
@@ -353,7 +397,20 @@ concurrency:
 
 You are the automated re-review follow-up for `${{ github.repository }}`, running after every new commit pushed to a pull request. GitHub's native Copilot code review (configured via `.github/skills/code-review/SKILL.md`) already performs the first-pass review on this PR. Your job is different: verify what happened since the last review and catch anything that was missed. Do not treat this as a generic from-scratch review — it is a follow-up pass layered on top of the existing review history.
 
+{{#if github.event.inputs.pull_request}}
+## Replay
+
+This run replays an earlier re-review to measure a change to this workflow, and nothing it submits is published. The pull request has changed since that re-review, so `/tmp/gh-aw/pr-review-input/history/` holds its history as it stood then, in place of the `pull_request_read` calls in Step 1:
+
+- `pull-request.json` replaces `get`. Its `number` and `head.sha` are the target pull request and the target head commit.
+- `review-threads.json` replaces every `get_review_comments` page.
+- `reviews.json` replaces every `get_reviews` page, and `issue-comments.json` replaces `issue_read` with `get_comments`.
+
+Do not read the pull request, its history, or its branches from GitHub in any other way. Read file contents only at the target head commit or at the `base.sha` in `pull-request.json`, and call no other GitHub tools. A run that reads anything else is discarded. Pass the target pull request's `number` as `pull_request_number` whenever you call `reply_to_pull_request_review_comment`. Otherwise, follow Steps 1 to 4 exactly as written.
+{{/if}}
+{{#if github.event.pull_request.number}}
 Target pull request number: `${{ github.event.pull_request.number }}`. Target head commit: `${{ github.event.pull_request.head.sha }}`.
+{{/if}}
 
 ## Security: Prompt Injection Defense
 

@@ -665,6 +665,22 @@ Describe 'Compiled re-review publication guard' {
         Get-StepProperty $step 'continue-on-error' | Should -BeNullOrEmpty
     }
 
+    It 'evaluates a replay only on workflow_dispatch, before the live guard and anything is published' {
+        $replay = Get-Step 'Evaluate the replayed re-review'
+        Get-StepProperty $replay 'if' | Should -BeExactly "github.event_name == 'workflow_dispatch'"
+        Get-StepProperty $replay 'continue-on-error' | Should -BeNullOrEmpty
+        Get-StepProperty $replay 'shell' | Should -BeExactly 'pwsh'
+        Get-StepProperty $replay 'run' | Should -BeExactly './.github/workflows/pr-re-review/Invoke-PrReReviewReplayGuard.ps1'
+        $environment = Get-StepMapping $replay 'env'
+        $environment['REVIEW_REPLAY'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input/replay.json'
+        $upload = Get-Step 'Upload replay result'
+        Get-StepProperty $upload 'if' | Should -BeExactly '${{ !cancelled() && github.event_name == ''workflow_dispatch'' }}'
+        (Get-StepMapping $upload 'with')['path'] | Should -BeExactly ($environment['REVIEW_REPLAY_RESULT'] -replace '/[^/]+$')
+        $order = @('Verify re-review helpers match the export', 'Evaluate the replayed re-review', 'Upload replay result', 'Require complete re-review coverage before publishing', 'Process Safe Outputs') |
+            ForEach-Object { [array]::IndexOf($script:StepNames, $_) }
+        for ($i = 1; $i -lt $order.Count; $i++) { $order[$i] | Should -BeGreaterThan $order[$i - 1] }
+    }
+
     It 'blocks run 40400877253 when the compiled step runs the guard' {
         $path = Join-Path $TestDrive 'agent_output.json'
         [IO.File]::WriteAllText($path, $script:Run40400877253)

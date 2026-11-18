@@ -236,13 +236,22 @@ Describe 'pr-re-review trigger routing' {
             $pushContext = New-PushContext -EventName $EventName -FromFork $FromFork -Draft $Draft
             Test-WorkflowCondition $condition $pushContext | Should -Be $Runs
         }
+
+        It 'replay dispatched without a pull request runs' {
+            $dispatchContext = @{
+                github = @{ event_name = 'workflow_dispatch'; repository_id = '1000'; event = @{ inputs = @{ pull_request = '1' } } }
+                needs = @{ pre_activation = @{ outputs = @{ activated = 'true' } } }
+            }
+            Test-WorkflowCondition $condition $dispatchContext | Should -BeTrue
+        }
     }
 
     It 'keys workflow concurrency by event so the skipped twin run never queues behind the real run' {
         $group = (Get-YamlSection $LockLines 'concurrency' 0) -cmatch '^  group: '
         $group | Should -HaveCount 1
         $group | Should -Match '\$\{\{\s*github\.event_name\s*\}\}'
-        $group | Should -Match '\$\{\{\s*github\.event\.pull_request\.number\s*\}\}'
+        # A replay has no pull request number, so each one gets its own group instead of queuing behind the others.
+        $group | Should -Match '\$\{\{\s*github\.event\.pull_request\.number\s*\|\|\s*github\.run_id\s*\}\}'
     }
 
     # The pull_request_target path is safe partly because a fork cannot steer the agent through

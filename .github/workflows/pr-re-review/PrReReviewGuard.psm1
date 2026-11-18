@@ -231,4 +231,104 @@ function Assert-PrReReviewReadCoverage {
     return "Read coverage check passed: the agent's tool log contains all $($files.Count) exported patches. This check is not tamper-proof."
 }
 
-Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Get-PrReReviewTotals, Assert-PrReReviewOutput, Assert-PrReReviewReadCoverage
+function Test-PrReReviewReplayCommit {
+    param([AllowEmptyString()][string]$Value, [Parameter(Mandatory)][string[]]$AllowedCommits)
+
+    return $Value -cmatch '^[0-9a-f]{7,64}$' -and @($AllowedCommits | Where-Object { $_ -and $_.StartsWith($Value, [StringComparison]::Ordinal) }).Count -gt 0
+}
+
+function Find-PrReReviewReplayContamination {
+    param(
+        [Parameter(Mandatory)][AllowEmptyString()][string]$SessionLogPath,
+        [Parameter(Mandatory)][string[]]$AllowedCommits
+    )
+
+    if (!$SessionLogPath -or ![IO.File]::Exists($SessionLogPath)) {
+        throw "The guard cannot check the replay for reads of the current pull request without the agent's tool log at '$SessionLogPath'."
+    }
+
+    # The pull request, its history, and its branches have all moved on since the replayed run, so any
+    # read that is not pinned to the replayed commits can leak what happened later, such as the fixes.
+    $found = [System.Collections.Generic.List[string]]::new()
+    foreach ($line in [IO.File]::ReadLines($SessionLogPath)) {
+        if (!$line.Contains('"tool.execution_start"', [StringComparison]::Ordinal)) { continue }
+        try { $event = ConvertFrom-PrReReviewJson $line } catch { continue }
+        if ($event -isnot [System.Collections.IDictionary] -or $event.type -cne 'tool.execution_start' -or $event.data -isnot [System.Collections.IDictionary]) { continue }
+        $data = $event.data
+        $arguments = if ($data.arguments -is [System.Collections.IDictionary]) { $data.arguments } else { @{} }
+        $call = "$($data.toolName) $(ConvertTo-Json -InputObject $data.arguments -Depth 20 -Compress)"
+        if ($data.mcpServerName -ceq 'safeoutputs') { continue }
+        if ($data.mcpServerName -ceq 'github') {
+            $pinned = (Test-PrReReviewReplayCommit "$($arguments.ref)" $AllowedCommits) -or (Test-PrReReviewReplayCommit "$($arguments.sha)" $AllowedCommits)
+            if ($data.mcpToolName -cne 'get_file_contents' -or !$pinned) { $found.Add($call) }
+            continue
+        }
+
+        # Covers the GitHub MCP server mounted as a `github` command and direct requests to GitHub.
+        $text = if ($data.toolName -ceq 'bash') { [string]$arguments.command } else { $call }
+        $tools = @([regex]::Matches($text, '(?:^|[\s;&|(`])github\s+([a-z_]+)') | ForEach-Object { $_.Groups[1].Value })
+        if ($tools.Count -eq 0 -and $text -notmatch '(?i)github\.com|githubusercontent\.com') { continue }
+        $commits = @([regex]::Matches($text, '\b[0-9a-f]{40}\b') | ForEach-Object Value)
+        $pinned = $commits.Count -gt 0 -and @($commits | Where-Object { !(Test-PrReReviewReplayCommit $_ $AllowedCommits) }).Count -eq 0
+        if (@($tools | Where-Object { $_ -cne 'get_file_contents' }).Count -gt 0 -or !$pinned) { $found.Add($call) }
+    }
+    return ,$found.ToArray()
+}
+
+function Get-PrReReviewReplayResult {
+    param(
+        [AllowNull()]$AgentOutput,
+        [Parameter(Mandatory)][System.Collections.IDictionary]$Replay,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$MarkersPath,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$SessionLogPath
+    )
+
+    $expected = @{
+        AnalyzedHeadSha = [string]$Replay.headSha
+        HeadSha = [string]$Replay.headSha
+        ChangedFiles = [int]$Replay.changedFiles
+        ThreadsBefore = [int]$Replay.threads
+        ThreadsNow = [int]$Replay.threads
+    }
+    $checks = [ordered]@{}
+    foreach ($check in @(
+        @{ Name = 'coverage'; Script = { Assert-PrReReviewOutput -AgentOutput $AgentOutput -Expected $expected } }
+        @{ Name = 'readCoverage'; Script = { Assert-PrReReviewReadCoverage -AgentOutput $AgentOutput -MarkersPath $MarkersPath -SessionLogPath $SessionLogPath } }
+    )) {
+        try {
+            $checks[$check.Name] = [ordered]@{ passed = $true; message = [string](& $check.Script) }
+        } catch {
+            $checks[$check.Name] = [ordered]@{ passed = $false; message = $_.Exception.Message }
+        }
+    }
+    try {
+        $contamination = Find-PrReReviewReplayContamination -SessionLogPath $SessionLogPath -AllowedCommits @($Replay.headSha, $Replay.baseSha, $Replay.mergeBaseSha)
+    } catch {
+        $contamination = @("unchecked: $($_.Exception.Message)")
+    }
+
+    $items = if ($AgentOutput -is [System.Collections.IDictionary] -and $AgentOutput.items -is [array]) { $AgentOutput.items } else { @() }
+    $types = @($items | ForEach-Object { $_.type })
+    $incompleteTypes = $script:IncompleteTypes
+    $outcome = if ($types -ccontains 'submit_pull_request_review') {
+        if ($checks.coverage.passed -and $checks.readCoverage.passed) { 'would-publish' } else { 'blocked' }
+    } elseif (@($types | Where-Object { $incompleteTypes -ccontains $_ }).Count -gt 0) {
+        'incomplete'
+    } else {
+        'no-review'
+    }
+    return [ordered]@{
+        pullRequest = $Replay.pullRequest
+        headSha = $Replay.headSha
+        baseSha = $Replay.baseSha
+        historyCutoff = $Replay.historyCutoff
+        outcome = $outcome
+        coverage = $checks.coverage
+        readCoverage = $checks.readCoverage
+        contaminated = $contamination.Count -gt 0
+        contamination = $contamination
+        items = $items
+    }
+}
+
+Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Get-PrReReviewTotals, Assert-PrReReviewOutput, Assert-PrReReviewReadCoverage, Find-PrReReviewReplayContamination, Get-PrReReviewReplayResult

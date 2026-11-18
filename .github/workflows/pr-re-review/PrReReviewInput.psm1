@@ -267,4 +267,151 @@ function Export-PrReReviewInput {
     [IO.File]::WriteAllText($markersFullPath, (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $markers.ToArray() }) -Depth 10))
 }
 
-Export-ModuleMember -Function Invoke-PrReReviewGhApi, Get-PrReReviewPullRequestInput, Assert-PrReReviewCurrentState, Get-PrReReviewHeadContent, Export-PrReReviewInput
+$script:ReplayThreadsQuery = @'
+query($owner: String!, $repo: String!, $number: Int!, $cursor: String) {
+  repository(owner: $owner, name: $repo) {
+    pullRequest(number: $number) {
+      reviewThreads(first: 100, after: $cursor) {
+        pageInfo { hasNextPage endCursor }
+        nodes {
+          id
+          isResolved
+          isOutdated
+          isCollapsed
+          comments(first: 100) {
+            totalCount
+            nodes {
+              author { login }
+              body
+              createdAt
+              publishedAt
+              url
+              path
+              line
+              originalLine
+              pullRequestReview { submittedAt }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'@
+
+function ConvertTo-PrReReviewReplayCutoff {
+    param([Parameter(Mandatory)][AllowEmptyString()][string]$Value)
+
+    if ($Value -cnotmatch '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,7})?(?:Z|[+-]\d{2}:\d{2})$') {
+        throw "The history cutoff '$Value' must be an ISO 8601 time with a UTC offset, such as 2026-11-10T19:43:40Z."
+    }
+    return [DateTimeOffset]::Parse($Value, [Globalization.CultureInfo]::InvariantCulture)
+}
+
+function Get-PrReReviewReplayInput {
+    param(
+        [Parameter(Mandatory)][string]$Repository,
+        [Parameter(Mandatory)][string]$HeadSha,
+        [Parameter(Mandatory)][string]$BaseSha
+    )
+
+    # A pull request's diff is the three-dot comparison of its base and head, so a replay gets the
+    # same files from the commits alone, even after the pull request has moved on.
+    $comparison = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/compare/$BaseSha...${HeadSha}?per_page=1"))
+    $files = @($comparison.files | Where-Object { $_ })
+    if ($files.Count -ge 300) {
+        throw "GitHub listed $($files.Count) changed files for $BaseSha...$HeadSha, the most it lists for a comparison, so the list may be partial. Replays support pull requests with fewer than 300 changed files."
+    }
+    $mergeBaseSha = [string]$comparison.merge_base_commit.sha
+    if ($mergeBaseSha -notmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$') {
+        throw 'GitHub did not return a valid merge-base commit for the replay.'
+    }
+    return [pscustomobject]@{ HeadSha = $HeadSha; MergeBaseSha = $mergeBaseSha; Files = $files }
+}
+
+function Test-PrReReviewVisibleBy {
+    param([AllowNull()][AllowEmptyCollection()][object[]]$Timestamps, [Parameter(Mandatory)][DateTimeOffset]$Cutoff)
+
+    # An item became visible at its latest timestamp; a comment drafted in a pending review stays hidden until the review is submitted.
+    $times = @($Timestamps | Where-Object { $_ } | ForEach-Object { [DateTimeOffset]::Parse([string]$_, [Globalization.CultureInfo]::InvariantCulture) })
+    return $times.Count -gt 0 -and ($times | Sort-Object -Descending | Select-Object -First 1) -le $Cutoff
+}
+
+function Get-PrReReviewReplayPages {
+    param([Parameter(Mandatory)][string]$Path)
+
+    $pages = ConvertFrom-Json -DateKind String -NoEnumerate (Invoke-PrReReviewGhApi @('--paginate', '--slurp', $Path))
+    return ,@(foreach ($page in $pages) { foreach ($item in $page) { $item } })
+}
+
+function Export-PrReReviewHistory {
+    param(
+        [Parameter(Mandatory)][string]$Repository,
+        [Parameter(Mandatory)][int]$Number,
+        [Parameter(Mandatory)][string]$HeadSha,
+        [Parameter(Mandatory)][string]$BaseSha,
+        [Parameter(Mandatory)][AllowEmptyCollection()][object[]]$Files,
+        [Parameter(Mandatory)][DateTimeOffset]$Cutoff,
+        [Parameter(Mandatory)][string]$InputDirectory
+    )
+
+    $owner, $name = $Repository -split '/', 2
+    $threads = [System.Collections.Generic.List[object]]::new()
+    $cursor = $null
+    for ($page = 1; ; $page++) {
+        if ($page -gt 100) { throw "Pull request #$Number has more review-thread pages than a replay reads." }
+        $arguments = @('graphql', '-f', "query=$script:ReplayThreadsQuery", '-F', "owner=$owner", '-F', "repo=$name", '-F', "number=$Number")
+        if ($cursor) { $arguments += @('-f', "cursor=$cursor") }
+        $connection = (ConvertFrom-Json -DateKind String (Invoke-PrReReviewGhApi $arguments)).data.repository.pullRequest.reviewThreads
+        if ($null -eq $connection) { throw "Pull request #$Number was not found in $Repository." }
+        foreach ($thread in $connection.nodes) {
+            $nodes = @($thread.comments.nodes)
+            if ($thread.comments.totalCount -gt $nodes.Count) { throw "Review thread $($thread.id) has more comments than a replay reads." }
+            $comments = @(foreach ($comment in $nodes) {
+                if (Test-PrReReviewVisibleBy @($comment.createdAt, $comment.publishedAt, $comment.pullRequestReview.submittedAt) $Cutoff) {
+                    [ordered]@{ author = $comment.author.login; body = $comment.body; created_at = $comment.createdAt; html_url = $comment.url; path = $comment.path; line = $comment.line; original_line = $comment.originalLine }
+                }
+            })
+            if ($nodes.Count -eq 0 -or $comments.Count -eq 0 -or $comments[0].html_url -cne $nodes[0].url) { continue }
+            $threads.Add([ordered]@{ id = $thread.id; is_resolved = $thread.isResolved; is_outdated = $thread.isOutdated; is_collapsed = $thread.isCollapsed; total_count = $comments.Count; comments = $comments })
+        }
+        if (!$connection.pageInfo.hasNextPage) { break }
+        $cursor = $connection.pageInfo.endCursor
+    }
+
+    $reviews = @(foreach ($review in (Get-PrReReviewReplayPages "repos/$Repository/pulls/$Number/reviews?per_page=100")) {
+        if ($review.state -cne 'PENDING' -and (Test-PrReReviewVisibleBy @($review.submitted_at) $Cutoff)) {
+            [ordered]@{ id = $review.id; user = [ordered]@{ login = $review.user.login }; state = $review.state; body = $review.body; submitted_at = $review.submitted_at; commit_id = $review.commit_id; html_url = $review.html_url }
+        }
+    })
+    $comments = @(foreach ($comment in (Get-PrReReviewReplayPages "repos/$Repository/issues/$Number/comments?per_page=100")) {
+        if (Test-PrReReviewVisibleBy @($comment.created_at) $Cutoff) {
+            [ordered]@{ id = $comment.id; user = [ordered]@{ login = $comment.user.login }; body = $comment.body; created_at = $comment.created_at; html_url = $comment.html_url }
+        }
+    })
+    $pullRequest = ConvertFrom-Json -DateKind String (Invoke-PrReReviewGhApi @("repos/$Repository/pulls/$Number"))
+    $snapshot = [ordered]@{
+        number = $Number
+        title = $pullRequest.title
+        body = $pullRequest.body
+        state = 'open'
+        draft = $false
+        user = [ordered]@{ login = $pullRequest.user.login }
+        html_url = $pullRequest.html_url
+        base = [ordered]@{ ref = $pullRequest.base.ref; sha = $BaseSha }
+        head = [ordered]@{ ref = $pullRequest.head.ref; sha = $HeadSha }
+        changed_files = $Files.Count
+        additions = [int](($Files | Measure-Object -Property additions -Sum).Sum)
+        deletions = [int](($Files | Measure-Object -Property deletions -Sum).Sum)
+    }
+
+    $directory = Join-Path $InputDirectory 'history'
+    [void][IO.Directory]::CreateDirectory($directory)
+    [IO.File]::WriteAllText((Join-Path $directory 'pull-request.json'), (ConvertTo-Json -InputObject $snapshot -Depth 5))
+    [IO.File]::WriteAllText((Join-Path $directory 'review-threads.json'), (ConvertTo-Json -InputObject ([ordered]@{ totalCount = $threads.Count; pageInfo = [ordered]@{ hasNextPage = $false }; review_threads = $threads.ToArray() }) -Depth 10))
+    [IO.File]::WriteAllText((Join-Path $directory 'reviews.json'), (ConvertTo-Json -InputObject $reviews -Depth 5))
+    [IO.File]::WriteAllText((Join-Path $directory 'issue-comments.json'), (ConvertTo-Json -InputObject $comments -Depth 5))
+    return $threads.Count
+}
+
+Export-ModuleMember -Function Invoke-PrReReviewGhApi, Get-PrReReviewPullRequestInput, Assert-PrReReviewCurrentState, Get-PrReReviewHeadContent, Export-PrReReviewInput, ConvertTo-PrReReviewReplayCutoff, Get-PrReReviewReplayInput, Export-PrReReviewHistory
