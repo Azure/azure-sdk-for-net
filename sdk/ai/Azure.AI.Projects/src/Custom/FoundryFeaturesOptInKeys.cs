@@ -4,6 +4,7 @@
 
 namespace Azure.AI.Projects
 {
+    // TODO: Remove this file after the release of a stable version.
     /// <summary></summary>
     public enum FoundryFeaturesOptInKeys
     {
@@ -17,8 +18,6 @@ namespace Azure.AI.Projects
         InsightsV1Preview,
         /// <summary> MemoryStoresV1Preview. </summary>
         MemoryStoresV1Preview,
-        /// <summary> AgentInsightsV1Preview. </summary>
-        AgentInsightsV1Preview,
         /// <summary> RoutinesV2Preview. </summary>
         RoutinesV2Preview,
         /// <summary> SkillsV1Preview. </summary>

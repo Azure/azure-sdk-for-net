@@ -37,12 +37,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
         /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
         /// <param name="evaluatorDescription"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
-        /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
-        /// <param name="finishedOn"> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="completedAt"> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="usage"> Token consumption summary. Populated when the job reaches a terminal state. </param>
         /// <param name="inputQualityWarnings"> Non-fatal input-quality advisories produced by the generation pipeline. Read-only; service-generated; populated only on terminal jobs when advisories fired. Omitted when generation was clean. Cleared when a subsequent `PATCH` to the paired `EvaluatorVersion.definition` invalidates the advisories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationJob(string id, EvaluatorVersion result, ProjectsJobStatus status, FoundryOpenAIError error, IList<EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string evaluatorDescription, DateTimeOffset createdOn, DateTimeOffset? finishedOn, EvaluatorGenerationTokenUsage usage, IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationJob(string id, EvaluatorVersion result, ProjectsJobStatus status, FoundryOpenAIError error, IList<EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string evaluatorDescription, DateTimeOffset createdAt, DateTimeOffset? completedAt, EvaluatorGenerationTokenUsage usage, IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Result = result;
@@ -53,8 +53,8 @@ namespace Azure.AI.Projects.Evaluation
             EvaluatorName = evaluatorName;
             EvaluatorDisplayName = evaluatorDisplayName;
             EvaluatorDescription = evaluatorDescription;
-            CreatedOn = createdOn;
-            FinishedOn = finishedOn;
+            CreatedAt = createdAt;
+            CompletedAt = completedAt;
             Usage = usage;
             InputQualityWarnings = inputQualityWarnings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -83,12 +83,6 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </summary>
         public string EvaluatorDescription { get; }
-
-        /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset CreatedOn { get; }
-
-        /// <summary> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset? FinishedOn { get; }
 
         /// <summary> Token consumption summary. Populated when the job reaches a terminal state. </summary>
         public EvaluatorGenerationTokenUsage Usage { get; }

@@ -6,6 +6,42 @@
 - Uploading of models now can be cancelled.
 
 ### Breaking Changes
+- Added `[Experimental("AAIP001")]` to the following APIs that shipped without the attribute in 2.0.x. Using them now requires suppressing the `AAIP001` diagnostic.
+  - Types in `Azure.AI.Projects`: `ProjectsScheduleTask`, `TreatmentEffectType`.
+  - Types in `Azure.AI.Projects.Evaluation`:
+    `AgentClusterInsightRequest`, `AgentClusterInsightResult`, `AgentTaxonomyInput`, `AttackStrategy`,
+    `AzureOpenAIModelConfiguration`, `ChartCoordinate`, `ClusterInsightResult`, `ClusterTokenUsage`,
+    `CodeBasedEvaluatorDefinition`, `CronTrigger`, `DailyRecurrenceSchedule`, `EvalResult`,
+    `EvalRunResultCompareItem`, `EvalRunResultComparison`, `EvalRunResultSummary`,
+    `EvaluationComparisonInsightRequest`, `EvaluationComparisonInsightResult`, `EvaluationResultSample`,
+    `EvaluationRunClusterInsightRequest`, `EvaluationRunClusterInsightResult`, `EvaluationScheduleTask`,
+    `EvaluationTaxonomies`, `EvaluationTaxonomy`, `EvaluationTaxonomyInput`, `HourlyRecurrenceSchedule`,
+    `InsightCluster`, `InsightModelConfiguration`, `InsightRequest`, `InsightResult`, `InsightSample`,
+    `InsightScheduleTask`, `InsightSummary`, `InsightType`, `InsightsMetadata`, `MonthlyRecurrenceSchedule`,
+    `OneTimeTrigger`, `ProjectsInsight`, `ProjectsSchedule`, `PromptBasedEvaluatorDefinition`,
+    `RecurrenceSchedule`, `RecurrenceTrigger`, `RedTeam`, `RiskCategory`, `ScheduleProvisioningStatus`,
+    `ScheduleRun`, `ScheduleTaskType`, `ScheduleTrigger`, `TargetConfig`, `TaxonomyCategory`,
+    `TaxonomySubCategory`, `WeeklyRecurrenceSchedule`.
+  - Types in `Azure.AI.Projects.Memory`:
+    `ChatSummaryMemoryItem`, `DeleteMemoryStoreResponse`, `MemoryItem`, `MemoryOperation`,
+    `MemoryOperationKind`, `MemorySearchItem`, `MemorySearchOptions`, `MemoryStore`,
+    `MemoryStoreDefaultDefinition`, `MemoryStoreDefaultOptions`, `MemoryStoreDefinition`,
+    `MemoryStoreDeleteScopeResponse`, `MemoryStoreObjectType`, `MemoryStoreOperationUsage`,
+    `MemoryStoreSearchResponse`, `MemoryUpdateResult`, `MemoryUpdateResultDetails`, `UserProfileMemoryItem`.
+  - `AIProjectClient` properties: `Insights`, `MemoryStores`, `RedTeams`, `Schedules`.
+  - `AzureAIProjectsModelFactory` methods:
+    `AgentClusterInsightRequest`, `AgentClusterInsightResult`, `AzureOpenAIModelConfiguration`,
+    `ChartCoordinate`, `ClusterInsightResult`, `ClusterTokenUsage`, `CodeBasedEvaluatorDefinition`,
+    `DeleteMemoryStoreResponse`, `EvalResult`, `EvalRunResultCompareItem`, `EvalRunResultComparison`,
+    `EvalRunResultSummary`, `EvaluationComparisonInsightRequest`, `EvaluationComparisonInsightResult`,
+    `EvaluationRunClusterInsightRequest`, `EvaluationRunClusterInsightResult`, `EvaluationScheduleTask`,
+    `EvaluationTaxonomy`, `HumanEvaluationPreviewRuleAction`, `InsightCluster`, `InsightModelConfiguration`,
+    `InsightRequest`, `InsightResult`, `InsightScheduleTask`, `InsightSummary`, `InsightsMetadata`,
+    `MemoryOperation`, `MemorySearchItem`, `MemoryStore`, `MemoryStoreDefaultOptions`,
+    `MemoryStoreDeleteScopeResponse`, `MemoryStoreSearchResponse`, `MemoryUpdateResultDetails`,
+    `ProjectsInsight`, `ProjectsSchedule`, `ProjectsScheduleTask`, `PromptBasedEvaluatorDefinition`,
+    `RedTeam`, `ScheduleRun`, `TargetConfig`, `TaxonomyCategory`, `TaxonomySubCategory`.
+- `AIProjectClient.GetAIProjectMemoryStoresClient()` also now requires suppression of `AAIP001`. The current `AzureAIProjectsModelFactory.MemoryStoreOperationUsage` overload is experimental as well; its signature differs from the 2.0.x overload.
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
 - The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
 - The `Azure.AI.Projects.Agents` dependency has renamed agent models and members used by project clients. For example, replace `VersionRefIndicator` with `VersionReferenceIndicator` and `VoiceAgentAudioConfig` with `VoiceAgentAudioConfiguration`. See the `Azure.AI.Projects.Agents` changelog for the complete list.

@@ -4,18 +4,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
     public partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="TracesEvaluatorGenerationJobSource"/>. </summary>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        public TracesEvaluatorGenerationJobSource(DateTimeOffset startsOn) : base(EvaluatorGenerationJobSourceType.Traces)
+        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        public TracesEvaluatorGenerationJobSource(DateTimeOffset startAt) : base(EvaluatorGenerationJobSourceType.Traces)
         {
-            StartsOn = startsOn;
+            StartAt = startAt;
         }
 
         /// <summary> Initializes a new instance of <see cref="TracesEvaluatorGenerationJobSource"/>. </summary>
@@ -25,16 +25,16 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        internal TracesEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startsOn, DateTimeOffset? endsOn) : base(@type, additionalBinaryDataProperties)
+        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        internal TracesEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startAt, DateTimeOffset? endAt) : base(@type, additionalBinaryDataProperties)
         {
             Description = description;
             AgentId = agentId;
             AgentName = agentName;
             AgentVersion = agentVersion;
-            StartsOn = startsOn;
-            EndsOn = endsOn;
+            StartAt = startAt;
+            EndAt = endAt;
         }
 
         /// <summary> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </summary>
@@ -48,11 +48,5 @@ namespace Azure.AI.Projects
 
         /// <summary> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </summary>
         public string AgentVersion { get; set; }
-
-        /// <summary> Start of the time window (Unix timestamp in seconds) for fetching traces. </summary>
-        public DateTimeOffset StartsOn { get; set; }
-
-        /// <summary> End of the time window (Unix timestamp in seconds). Defaults to current time. </summary>
-        public DateTimeOffset? EndsOn { get; set; }
     }
 }

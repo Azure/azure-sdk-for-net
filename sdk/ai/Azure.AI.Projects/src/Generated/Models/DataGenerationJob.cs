@@ -39,10 +39,10 @@ namespace Azure.AI.Projects
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
-        /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="finishedAt"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdAt, DateTimeOffset? finishedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Result = result;
@@ -52,8 +52,8 @@ namespace Azure.AI.Projects
             Sources = sources;
             GenerationConfiguration = generationConfiguration;
             Scenario = scenario;
-            CreatedOn = createdOn;
-            FinishedOn = finishedOn;
+            CreatedAt = createdAt;
+            FinishedAt = finishedAt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,11 +77,5 @@ namespace Azure.AI.Projects
 
         /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>
         internal DataGenerationJobScenario Scenario { get; set; }
-
-        /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset CreatedOn { get; }
-
-        /// <summary> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset? FinishedOn { get; }
     }
 }
