@@ -45,7 +45,7 @@ extends:
     # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
     evalGlobs:
       - '*/evals/*.eval.yaml'
-      - 'azsdk-common-typespec-naming/evals/eval.yaml'
+      - 'azure-typespec-sdk-naming/evals/eval.yaml'
       - 'code-review/evals/eval.yaml'
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20

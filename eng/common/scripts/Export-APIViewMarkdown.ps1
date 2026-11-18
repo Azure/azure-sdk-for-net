@@ -36,16 +36,31 @@ param(
 Set-StrictMode -Version 3
 $ErrorActionPreference = 'Stop'
 
+function Get-JsonProperty {
+    param(
+        [System.Collections.IDictionary]$Object,
+        [string]$Name
+    )
+
+    # Schema fields vary in casing between parsers; identifier maps must remain case-insensitive.
+    foreach ($key in $Object.Keys) {
+        if ($key -ieq $Name) {
+            return ,$Object[$key]
+        }
+    }
+    return $null
+}
+
 function Render-Token {
     <#
     .SYNOPSIS
     Renders a single ReviewToken object to a string, applying HasPrefixSpace and HasSuffixSpace.
     #>
-    param([PSCustomObject]$Token)
+    param([System.Collections.IDictionary]$Token)
 
-    $prefix = if ($Token.HasPrefixSpace -eq $true) { " " } else { "" }
-    $suffix = if ($Token.HasSuffixSpace -eq $true) { " " } else { "" }
-    return "$prefix$($Token.Value)$suffix"
+    $prefix = if ((Get-JsonProperty $Token 'HasPrefixSpace') -eq $true) { " " } else { "" }
+    $suffix = if ((Get-JsonProperty $Token 'HasSuffixSpace') -eq $true) { " " } else { "" }
+    return "$prefix$(Get-JsonProperty $Token 'Value')$suffix"
 }
 
 function Render-ReviewLines {
@@ -62,7 +77,7 @@ function Render-ReviewLines {
     $indent = "    " * $IndentLevel
 
     foreach ($line in $ReviewLines) {
-        $tokens = @($line.Tokens)
+        $tokens = Get-JsonProperty $line 'Tokens'
 
         if ($tokens.Count -eq 0) {
             # Blank line
@@ -79,9 +94,9 @@ function Render-ReviewLines {
         }
 
         # Recursively render children with increased indentation
-        $childrenProp = $line.PSObject.Properties.Item('Children')
-        if ($null -ne $childrenProp -and $null -ne $childrenProp.Value -and $childrenProp.Value.Count -gt 0) {
-            $childLines = Render-ReviewLines -ReviewLines $childrenProp.Value -IndentLevel ($IndentLevel + 1)
+        $children = Get-JsonProperty $line 'Children'
+        if ($null -ne $children -and $children.Count -gt 0) {
+            $childLines = Render-ReviewLines -ReviewLines $children -IndentLevel ($IndentLevel + 1)
             foreach ($childLine in $childLines) {
                 $result.Add($childLine)
             }
@@ -98,9 +113,10 @@ if (-not (Test-Path $TokenJsonPath)) {
     exit 1
 }
 
-$tokenJson = Get-Content -Path $TokenJsonPath -Raw | ConvertFrom-Json
+$tokenJson = Get-Content -Path $TokenJsonPath -Raw | ConvertFrom-Json -AsHashtable
 
-if (-not $tokenJson.ReviewLines) {
+$reviewLines = Get-JsonProperty $tokenJson 'ReviewLines'
+if (-not $reviewLines) {
     Write-Error "The token JSON file does not contain a 'ReviewLines' property."
     exit 1
 }
@@ -114,8 +130,9 @@ elseif (-not [System.IO.Path]::HasExtension($OutputPath)) {
 }
 
 # Read language from the token JSON, falling back to empty string
-$language = if ($tokenJson.PSObject.Properties.Item('Language') -and $tokenJson.Language) {
-    $tokenJson.Language.ToLower()
+$jsonLanguage = Get-JsonProperty $tokenJson 'Language'
+$language = if ($jsonLanguage) {
+    $jsonLanguage.ToLower()
 } else {
     ""
 }
@@ -130,7 +147,6 @@ if ($languageAliases.ContainsKey($language)) {
     $language = $languageAliases[$language]
 }
 
-$reviewLines = @($tokenJson.ReviewLines)
 $renderedLines = Render-ReviewLines -ReviewLines $reviewLines
 
 $fenceOpen = "``````$language"
