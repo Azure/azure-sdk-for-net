@@ -4,11 +4,19 @@
 
 ### Features Added
 
+- Added `GitHubActionsCredential`, which authenticates in GitHub Actions workflows by exchanging a GitHub OIDC ID token for a Microsoft Entra access token through a federated identity credential. The credential is configured from the `ACTIONS_ID_TOKEN_REQUEST_URL`, `ACTIONS_ID_TOKEN_REQUEST_TOKEN`, `AZURE_TENANT_ID`, and `AZURE_CLIENT_ID` environment variables, and selects the token audience from the configured authority host.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Azure.Core library better with their contributions to this release:
+
+- Stephan van Rooij _([GitHub](https://github.com/svrooij))_
 
 ## 1.65.0 (2026-11-09)
 
