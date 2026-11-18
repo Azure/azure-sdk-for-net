@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             }
             string uri = default;
             string digest = default;
-            ImagePullPolicy? pullPolicy = default;
+            AgentFabricSandboxImagePullPolicy? pullPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     {
                         continue;
                     }
-                    pullPolicy = new ImagePullPolicy(prop.Value.GetString());
+                    pullPolicy = new AgentFabricSandboxImagePullPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

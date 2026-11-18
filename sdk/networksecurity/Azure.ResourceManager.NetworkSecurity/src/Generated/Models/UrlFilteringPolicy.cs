@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// hosts are not decided by this policy.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="rules"/> is null. </exception>
-        public UrlFilteringPolicy(PolicyAction defaultAction, UrlFilteringSource source, IEnumerable<UrlFilteringRule> rules) : base(NetworkSecurityPolicyType.UrlFiltering)
+        public UrlFilteringPolicy(NetworkSecurityPolicyAction defaultAction, UrlFilteringSource source, IEnumerable<UrlFilteringRule> rules) : base(NetworkSecurityPolicyType.UrlFiltering)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(rules, nameof(rules));
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// a request to a host that a rule names, the policy defaultAction applies. Requests to other
         /// hosts are not decided by this policy.
         /// </param>
-        internal UrlFilteringPolicy(NetworkSecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyAction defaultAction, UrlFilteringSource source, UrlFilteringDestination destination, IList<UrlFilteringRule> rules) : base(@type, additionalBinaryDataProperties)
+        internal UrlFilteringPolicy(NetworkSecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPolicyAction defaultAction, UrlFilteringSource source, UrlFilteringDestination destination, IList<UrlFilteringRule> rules) : base(@type, additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
             Source = source;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// The action for a request to a host that one of the policy's rules names when no rule matches,
         /// and the action of a rule that has none. Requests to other hosts are not decided by this policy.
         /// </summary>
-        public PolicyAction DefaultAction { get; set; }
+        public NetworkSecurityPolicyAction DefaultAction { get; set; }
 
         /// <summary> The source details for the policy. </summary>
         public UrlFilteringSource Source { get; set; }

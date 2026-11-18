@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="destination"> The MCP server(s) that this policy applies to. </param>
         /// <param name="rules"> The list of MCP rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/>, <paramref name="destination"/> or <paramref name="rules"/> is null. </exception>
-        public McpPolicy(PolicyAction defaultAction, McpPolicySource source, McpPolicyDestination destination, IEnumerable<McpRule> rules) : base(NetworkSecurityPolicyType.Mcp)
+        public McpPolicy(NetworkSecurityPolicyAction defaultAction, McpPolicySource source, McpPolicyDestination destination, IEnumerable<McpRule> rules) : base(NetworkSecurityPolicyType.Mcp)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(destination, nameof(destination));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="source"> The source(s) that this policy applies to. </param>
         /// <param name="destination"> The MCP server(s) that this policy applies to. </param>
         /// <param name="rules"> The list of MCP rules. </param>
-        internal McpPolicy(NetworkSecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyAction defaultAction, McpPolicySource source, McpPolicyDestination destination, IList<McpRule> rules) : base(@type, additionalBinaryDataProperties)
+        internal McpPolicy(NetworkSecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPolicyAction defaultAction, McpPolicySource source, McpPolicyDestination destination, IList<McpRule> rules) : base(@type, additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
             Source = source;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         }
 
         /// <summary> The default action to take when no rule in the policy matches. </summary>
-        public PolicyAction DefaultAction { get; set; }
+        public NetworkSecurityPolicyAction DefaultAction { get; set; }
 
         /// <summary> The source(s) that this policy applies to. </summary>
         public McpPolicySource Source { get; set; }

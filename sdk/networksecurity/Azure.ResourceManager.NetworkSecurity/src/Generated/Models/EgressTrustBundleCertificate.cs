@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// </param>
         /// <param name="pem"> The PEM-encoded X.509 public certificate. This never contains private key material. </param>
         /// <param name="thumbprintSha256"> Lowercase hexadecimal SHA-256 fingerprint of the certificate's DER encoding. </param>
-        /// <param name="notBefore"> The time from which the certificate is valid. </param>
-        /// <param name="notAfter"> The time after which the certificate is no longer valid. </param>
+        /// <param name="startsOn"> The time from which the certificate is valid. </param>
+        /// <param name="expiresOn"> The time after which the certificate is no longer valid. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EgressTrustBundleCertificate(string certificateId, string pem, string thumbprintSha256, DateTimeOffset notBefore, DateTimeOffset notAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EgressTrustBundleCertificate(string certificateId, string pem, string thumbprintSha256, DateTimeOffset startsOn, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateId = certificateId;
             Pem = pem;
             ThumbprintSha256 = thumbprintSha256;
-            NotBefore = notBefore;
-            NotAfter = notAfter;
+            StartsOn = startsOn;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public string ThumbprintSha256 { get; }
 
         /// <summary> The time from which the certificate is valid. </summary>
-        public DateTimeOffset NotBefore { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The time after which the certificate is no longer valid. </summary>
-        public DateTimeOffset NotAfter { get; }
+        public DateTimeOffset ExpiresOn { get; }
     }
 }

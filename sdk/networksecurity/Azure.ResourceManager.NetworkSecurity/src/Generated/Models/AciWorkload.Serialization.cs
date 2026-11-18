@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetworkSecurity;
 namespace Azure.ResourceManager.NetworkSecurity.Models
 {
     /// <summary> ACI (Azure Container Instances) sandbox workload configuration. </summary>
-    public partial class AciWorkload : WorkloadBase, IJsonModel<AciWorkload>
+    public partial class AciWorkload : AgentFabricWorkload, IJsonModel<AciWorkload>
     {
         /// <summary> Initializes a new instance of <see cref="AciWorkload"/> for deserialization. </summary>
         internal AciWorkload()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WorkloadBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AgentFabricWorkload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AciWorkload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WorkloadBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AgentFabricWorkload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AciWorkload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

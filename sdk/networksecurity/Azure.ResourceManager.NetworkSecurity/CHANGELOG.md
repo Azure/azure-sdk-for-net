@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for API version `2026-11-03-preview` and Agent Fabric resources, including members, associations, egress trust bundles, workload enrollment, sandboxes, and network security policies and policy groups.
+
 ### Breaking Changes
 
 ### Bugs Fixed

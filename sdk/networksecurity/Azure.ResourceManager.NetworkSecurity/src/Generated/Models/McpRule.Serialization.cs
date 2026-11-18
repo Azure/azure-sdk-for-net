@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             }
             string name = default;
             int? priority = default;
-            PolicyAction? action = default;
+            NetworkSecurityPolicyAction? action = default;
             IList<string> tools = default;
             McpRuleMatchingConditions matchingConditions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     {
                         continue;
                     }
-                    action = new PolicyAction(prop.Value.GetString());
+                    action = new NetworkSecurityPolicyAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))

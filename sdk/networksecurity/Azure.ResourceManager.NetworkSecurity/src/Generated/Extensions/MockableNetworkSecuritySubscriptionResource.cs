@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyGroupResource> GetPolicyGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPolicyGroupResource> GetNetworkSecurityPolicyGroupsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyGroupData, PolicyGroupResource>(new PolicyGroupDataAsync0CollectionResultOfT(PolicyGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetPolicyGroups"), data => new PolicyGroupResource(Client, data));
+            return new AsyncPageableWrapper<NetworkSecurityPolicyGroupData, NetworkSecurityPolicyGroupResource>(new NetworkSecurityPolicyGroupDataAsync0CollectionResultOfT(PolicyGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetNetworkSecurityPolicyGroups"), data => new NetworkSecurityPolicyGroupResource(Client, data));
         }
 
         /// <summary>
@@ -239,14 +239,14 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyGroupResource> GetPolicyGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPolicyGroupResource> GetNetworkSecurityPolicyGroups(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyGroupData, PolicyGroupResource>(new PolicyGroupData0CollectionResultOfT(PolicyGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetPolicyGroups"), data => new PolicyGroupResource(Client, data));
+            return new PageableWrapper<NetworkSecurityPolicyGroupData, NetworkSecurityPolicyGroupResource>(new NetworkSecurityPolicyGroupData0CollectionResultOfT(PolicyGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSecuritySubscriptionResource.GetNetworkSecurityPolicyGroups"), data => new NetworkSecurityPolicyGroupResource(Client, data));
         }
 
         /// <summary>

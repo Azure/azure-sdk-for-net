@@ -13,7 +13,7 @@ using Azure.ResourceManager.NetworkSecurity;
 namespace Azure.ResourceManager.NetworkSecurity.Models
 {
     /// <summary> ACI (Azure Container Instances) sandbox workload configuration. </summary>
-    public partial class AciWorkload : WorkloadBase
+    public partial class AciWorkload : AgentFabricWorkload
     {
         /// <summary> Initializes a new instance of <see cref="AciWorkload"/>. </summary>
         /// <param name="resourceId">

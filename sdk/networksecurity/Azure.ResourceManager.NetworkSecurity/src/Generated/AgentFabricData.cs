@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// clusters associated with the fabric on the customer's behalf.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AgentFabricProperties properties, Models.SystemAssignedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AgentFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AgentFabricProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// The managed service identity assigned to this fabric. The service uses it to reach the
         /// clusters associated with the fabric on the customer's behalf.
         /// </summary>
-        public Models.SystemAssignedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

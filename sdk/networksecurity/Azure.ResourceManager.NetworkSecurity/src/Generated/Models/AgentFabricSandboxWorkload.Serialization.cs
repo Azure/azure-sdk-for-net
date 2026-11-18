@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkSecurity;
 namespace Azure.ResourceManager.NetworkSecurity.Models
 {
     /// <summary> Agent Fabric sandbox workload configuration. </summary>
-    public partial class AgentFabricSandboxWorkload : WorkloadBase, IJsonModel<AgentFabricSandboxWorkload>
+    public partial class AgentFabricSandboxWorkload : AgentFabricWorkload, IJsonModel<AgentFabricSandboxWorkload>
     {
         /// <summary> Initializes a new instance of <see cref="AgentFabricSandboxWorkload"/> for deserialization. </summary>
         internal AgentFabricSandboxWorkload()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WorkloadBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AgentFabricWorkload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentFabricSandboxWorkload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WorkloadBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AgentFabricWorkload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentFabricSandboxWorkload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

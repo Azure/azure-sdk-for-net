@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 return null;
             }
-            string tenantId = default;
+            Guid tenantId = default;
             string agentId = default;
             string blueprintId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agentId"u8))

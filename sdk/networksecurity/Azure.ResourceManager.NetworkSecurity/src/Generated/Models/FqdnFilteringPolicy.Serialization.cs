@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             int? priority = default;
-            PolicyDirection? direction = default;
+            NetworkSecurityPolicyDirection? direction = default;
             IList<int> ports = default;
             FqdnFilteringSource source = default;
             FqdnFilteringDestination destination = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     {
                         continue;
                     }
-                    direction = new PolicyDirection(prop.Value.GetString());
+                    direction = new NetworkSecurityPolicyDirection(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ports"u8))

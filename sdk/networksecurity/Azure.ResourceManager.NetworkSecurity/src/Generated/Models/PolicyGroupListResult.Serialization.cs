@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PolicyGroupData item in Value)
+            foreach (NetworkSecurityPolicyGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 return null;
             }
-            IList<PolicyGroupData> value = default;
+            IList<NetworkSecurityPolicyGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PolicyGroupData> array = new List<PolicyGroupData>();
+                    List<NetworkSecurityPolicyGroupData> array = new List<NetworkSecurityPolicyGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PolicyGroupData.DeserializePolicyGroupData(item, options));
+                        array.Add(NetworkSecurityPolicyGroupData.DeserializeNetworkSecurityPolicyGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PolicyGroupListResult(value ?? new ChangeTrackingList<PolicyGroupData>(), nextLink, additionalBinaryDataProperties);
+            return new PolicyGroupListResult(value ?? new ChangeTrackingList<NetworkSecurityPolicyGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="digest"> The image content digest used to pin an exact image version. </param>
         /// <param name="pullPolicy"> The policy controlling when the image is pulled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentFabricSandboxImage(string uri, string digest, ImagePullPolicy? pullPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentFabricSandboxImage(string uri, string digest, AgentFabricSandboxImagePullPolicy? pullPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Digest = digest;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public string Digest { get; set; }
 
         /// <summary> The policy controlling when the image is pulled. </summary>
-        public ImagePullPolicy? PullPolicy { get; set; }
+        public AgentFabricSandboxImagePullPolicy? PullPolicy { get; set; }
     }
 }

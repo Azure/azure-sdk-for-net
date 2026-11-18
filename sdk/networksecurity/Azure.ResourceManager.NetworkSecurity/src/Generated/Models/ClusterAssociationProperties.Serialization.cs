@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             ClusterAssociationSkuName? sku = default;
             string workloadClusterGatewayIP = default;
             ClusterAssociationStatus status = default;
-            ProvisioningState? provisioningState = default;
+            AgentFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new AgentFabricProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

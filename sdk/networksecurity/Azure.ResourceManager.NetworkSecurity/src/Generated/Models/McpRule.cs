@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="tools"> Deprecated. Legacy MCP tool names retained for compatibility; use matchingConditions.destinations.toolMatching.names for new rules. </param>
         /// <param name="matchingConditions"> The conditions of the rule. A rule without an action uses defaultAction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpRule(string name, int? priority, PolicyAction? action, IList<string> tools, McpRuleMatchingConditions matchingConditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpRule(string name, int? priority, NetworkSecurityPolicyAction? action, IList<string> tools, McpRuleMatchingConditions matchingConditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Priority = priority;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public int? Priority { get; set; }
 
         /// <summary> The action to take for the specified MCP tools. </summary>
-        public PolicyAction? Action { get; set; }
+        public NetworkSecurityPolicyAction? Action { get; set; }
 
         /// <summary> Deprecated. Legacy MCP tool names retained for compatibility; use matchingConditions.destinations.toolMatching.names for new rules. </summary>
         public IList<string> Tools { get; }

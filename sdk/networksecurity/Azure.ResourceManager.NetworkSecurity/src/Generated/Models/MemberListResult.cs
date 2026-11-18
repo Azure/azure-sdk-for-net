@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <summary> Initializes a new instance of <see cref="MemberListResult"/>. </summary>
         /// <param name="value"> The Member items on this page. </param>
-        internal MemberListResult(IEnumerable<MemberData> value)
+        internal MemberListResult(IEnumerable<AgentFabricMemberData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="value"> The Member items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemberListResult(IList<MemberData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemberListResult(IList<AgentFabricMemberData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         }
 
         /// <summary> The Member items on this page. </summary>
-        public IList<MemberData> Value { get; }
+        public IList<AgentFabricMemberData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

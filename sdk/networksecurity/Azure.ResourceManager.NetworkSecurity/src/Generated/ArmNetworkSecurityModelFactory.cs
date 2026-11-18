@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// clusters associated with the fabric on the customer's behalf.
         /// </param>
         /// <returns> A new <see cref="NetworkSecurity.AgentFabricData"/> instance for mocking. </returns>
-        public static AgentFabricData AgentFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgentFabricProperties properties = default, SystemAssignedServiceIdentity identity = default)
+        public static AgentFabricData AgentFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgentFabricProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.AgentFabricProperties"/> instance for mocking. </returns>
-        public static AgentFabricProperties AgentFabricProperties(Guid? resourceGuid = default, IEnumerable<ResourceIdentifier> defaultPolicyGroups = default, ContentInspectionProfile contentInspectionProfile = default, string trustDomain = default, ProvisioningState? provisioningState = default)
+        public static AgentFabricProperties AgentFabricProperties(Guid? resourceGuid = default, IEnumerable<ResourceIdentifier> defaultPolicyGroups = default, ContentInspectionProfile contentInspectionProfile = default, string trustDomain = default, AgentFabricProvisioningState? provisioningState = default)
         {
             defaultPolicyGroups ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -502,21 +502,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             return new ContentInspectionProfile(endpoint, apiKey, default);
         }
 
-        /// <summary> Managed service identity (either system assigned, or none). </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.SystemAssignedServiceIdentity"/> instance for mocking. </returns>
-        public static SystemAssignedServiceIdentity SystemAssignedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, SystemAssignedServiceIdentityType @type = default)
-        {
-            return new SystemAssignedServiceIdentity(principalId, tenantId, @type, default);
-        }
-
         /// <summary> The type used for updating tags in AgentFabric resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identity assigned to this fabric. </param>
         /// <returns> A new <see cref="Models.AgentFabricPatch"/> instance for mocking. </returns>
-        public static AgentFabricPatch AgentFabricPatch(IDictionary<string, string> tags = default, SystemAssignedServiceIdentity identity = default)
+        public static AgentFabricPatch AgentFabricPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -531,12 +521,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NetworkSecurity.MemberData"/> instance for mocking. </returns>
-        public static MemberData MemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MemberProperties properties = default)
+        /// <returns> A new <see cref="NetworkSecurity.AgentFabricMemberData"/> instance for mocking. </returns>
+        public static AgentFabricMemberData AgentFabricMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgentFabricMemberProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MemberData(
+            return new AgentFabricMemberData(
                 id,
                 name,
                 resourceType,
@@ -560,10 +550,10 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// all segments lower-cased to conform to the SPIFFE ID scheme. Read-only.
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.MemberProperties"/> instance for mocking. </returns>
-        public static MemberProperties MemberProperties(string fqdn = default, WorkloadBase workload = default, string spiffeId = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.AgentFabricMemberProperties"/> instance for mocking. </returns>
+        public static AgentFabricMemberProperties AgentFabricMemberProperties(string fqdn = default, AgentFabricWorkload workload = default, string spiffeId = default, AgentFabricProvisioningState? provisioningState = default)
         {
-            return new MemberProperties(fqdn, workload, spiffeId, provisioningState, default);
+            return new AgentFabricMemberProperties(fqdn, workload, spiffeId, provisioningState, default);
         }
 
         /// <summary>
@@ -579,10 +569,10 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// API version `2026-11-02-preview`, the ACI member resource name is this GUID: the service sets
         /// memberGuid from the member name, and a value supplied in the request must match the member name.
         /// </param>
-        /// <returns> A new <see cref="Models.WorkloadBase"/> instance for mocking. </returns>
-        public static WorkloadBase WorkloadBase(string @type = default, Guid? memberGuid = default)
+        /// <returns> A new <see cref="Models.AgentFabricWorkload"/> instance for mocking. </returns>
+        public static AgentFabricWorkload AgentFabricWorkload(string @type = default, Guid? memberGuid = default)
         {
-            return new UnknownWorkloadBase(@type is null ? default : new WorkloadType(@type), memberGuid, default);
+            return new UnknownAgentFabricWorkload(@type is null ? default : new WorkloadType(@type), memberGuid, default);
         }
 
         /// <summary> ACI (Azure Container Instances) sandbox workload configuration. </summary>
@@ -628,7 +618,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// workload.
         /// </param>
         /// <returns> A new <see cref="Models.AgentIdentity"/> instance for mocking. </returns>
-        public static AgentIdentity AgentIdentity(string tenantId = default, string agentId = default, string blueprintId = default)
+        public static AgentIdentity AgentIdentity(Guid tenantId = default, string agentId = default, string blueprintId = default)
         {
             return new AgentIdentity(tenantId, agentId, blueprintId, default);
         }
@@ -725,7 +715,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="digest"> The image content digest used to pin an exact image version. </param>
         /// <param name="pullPolicy"> The policy controlling when the image is pulled. </param>
         /// <returns> A new <see cref="Models.AgentFabricSandboxImage"/> instance for mocking. </returns>
-        public static AgentFabricSandboxImage AgentFabricSandboxImage(string uri = default, string digest = default, ImagePullPolicy? pullPolicy = default)
+        public static AgentFabricSandboxImage AgentFabricSandboxImage(string uri = default, string digest = default, AgentFabricSandboxImagePullPolicy? pullPolicy = default)
         {
             return new AgentFabricSandboxImage(uri, digest, pullPolicy, default);
         }
@@ -752,13 +742,13 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="memberUpdateFqdn"> The customer-provided fully qualified domain name associated with the member. </param>
-        /// <returns> A new <see cref="Models.MemberPatch"/> instance for mocking. </returns>
-        public static MemberPatch MemberPatch(IDictionary<string, string> tags = default, string memberUpdateFqdn = default)
+        /// <param name="fqdn"> The customer-provided fully qualified domain name associated with the member. </param>
+        /// <returns> A new <see cref="Models.AgentFabricMemberPatch"/> instance for mocking. </returns>
+        public static AgentFabricMemberPatch AgentFabricMemberPatch(IDictionary<string, string> tags = default, string fqdn = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MemberPatch(tags ?? new ChangeTrackingDictionary<string, string>(), memberUpdateFqdn is null ? default : new MemberUpdateProperties(memberUpdateFqdn, default), default);
+            return new AgentFabricMemberPatch(tags ?? new ChangeTrackingDictionary<string, string>(), fqdn is null ? default : new AgentFabricMemberUpdateProperties(fqdn, default), default);
         }
 
         /// <summary> PolicyGroup resource. </summary>
@@ -769,12 +759,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NetworkSecurity.PolicyGroupData"/> instance for mocking. </returns>
-        public static PolicyGroupData PolicyGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PolicyGroupProperties properties = default)
+        /// <returns> A new <see cref="NetworkSecurity.NetworkSecurityPolicyGroupData"/> instance for mocking. </returns>
+        public static NetworkSecurityPolicyGroupData NetworkSecurityPolicyGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkSecurityPolicyGroupProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PolicyGroupData(
+            return new NetworkSecurityPolicyGroupData(
                 id,
                 name,
                 resourceType,
@@ -800,12 +790,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// subject to other validation.
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.PolicyGroupProperties"/> instance for mocking. </returns>
-        public static PolicyGroupProperties PolicyGroupProperties(string displayName = default, string description = default, int? priority = default, IEnumerable<NetworkSecurityPolicyBase> networkSecurityPolicies = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.NetworkSecurityPolicyGroupProperties"/> instance for mocking. </returns>
+        public static NetworkSecurityPolicyGroupProperties NetworkSecurityPolicyGroupProperties(string displayName = default, string description = default, int? priority = default, IEnumerable<NetworkSecurityPolicyBase> networkSecurityPolicies = default, AgentFabricProvisioningState? provisioningState = default)
         {
             networkSecurityPolicies ??= new ChangeTrackingList<NetworkSecurityPolicyBase>();
 
-            return new PolicyGroupProperties(
+            return new NetworkSecurityPolicyGroupProperties(
                 displayName,
                 description,
                 priority,
@@ -833,7 +823,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="source"> The source details for the policy. </param>
         /// <param name="destination"> The destination details for the policy. </param>
         /// <returns> A new <see cref="Models.FqdnFilteringPolicy"/> instance for mocking. </returns>
-        public static FqdnFilteringPolicy FqdnFilteringPolicy(string name = default, int? priority = default, PolicyDirection? direction = default, IEnumerable<int> ports = default, FqdnFilteringSource source = default, FqdnFilteringDestination destination = default)
+        public static FqdnFilteringPolicy FqdnFilteringPolicy(string name = default, int? priority = default, NetworkSecurityPolicyDirection? direction = default, IEnumerable<int> ports = default, FqdnFilteringSource source = default, FqdnFilteringDestination destination = default)
         {
             ports ??= new ChangeTrackingList<int>();
 
@@ -916,7 +906,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// hosts are not decided by this policy.
         /// </param>
         /// <returns> A new <see cref="Models.UrlFilteringPolicy"/> instance for mocking. </returns>
-        public static UrlFilteringPolicy UrlFilteringPolicy(PolicyAction defaultAction = default, UrlFilteringSource source = default, UrlFilteringDestination destination = default, IEnumerable<UrlFilteringRule> rules = default)
+        public static UrlFilteringPolicy UrlFilteringPolicy(NetworkSecurityPolicyAction defaultAction = default, UrlFilteringSource source = default, UrlFilteringDestination destination = default, IEnumerable<UrlFilteringRule> rules = default)
         {
             rules ??= new ChangeTrackingList<UrlFilteringRule>();
 
@@ -1012,7 +1002,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="paths"> The URL paths matched by the rule. If omitted, the rule matches any path. </param>
         /// <param name="action"> The action to take when the rule matches. If omitted, the rule uses the policy defaultAction. </param>
         /// <returns> A new <see cref="Models.UrlFilteringRule"/> instance for mocking. </returns>
-        public static UrlFilteringRule UrlFilteringRule(string name = default, int priority = default, string hostname = default, HttpMethod? @method = default, IEnumerable<string> paths = default, PolicyAction? action = default)
+        public static UrlFilteringRule UrlFilteringRule(string name = default, int priority = default, string hostname = default, UrlFilteringHttpMethod? @method = default, IEnumerable<string> paths = default, NetworkSecurityPolicyAction? action = default)
         {
             paths ??= new ChangeTrackingList<string>();
 
@@ -1032,7 +1022,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="destination"> The MCP server(s) that this policy applies to. </param>
         /// <param name="rules"> The list of MCP rules. </param>
         /// <returns> A new <see cref="Models.McpPolicy"/> instance for mocking. </returns>
-        public static McpPolicy McpPolicy(PolicyAction defaultAction = default, McpPolicySource source = default, McpPolicyDestination destination = default, IEnumerable<McpRule> rules = default)
+        public static McpPolicy McpPolicy(NetworkSecurityPolicyAction defaultAction = default, McpPolicySource source = default, McpPolicyDestination destination = default, IEnumerable<McpRule> rules = default)
         {
             rules ??= new ChangeTrackingList<McpRule>();
 
@@ -1133,7 +1123,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="tools"> Deprecated. Legacy MCP tool names retained for compatibility; use matchingConditions.destinations.toolMatching.names for new rules. </param>
         /// <param name="matchingConditionsDestinations"> The servers and requests the rule matches. </param>
         /// <returns> A new <see cref="Models.McpRule"/> instance for mocking. </returns>
-        public static McpRule McpRule(string name = default, int? priority = default, PolicyAction? action = default, IEnumerable<string> tools = default, McpRuleDestinationMatching matchingConditionsDestinations = default)
+        public static McpRule McpRule(string name = default, int? priority = default, NetworkSecurityPolicyAction? action = default, IEnumerable<string> tools = default, McpRuleDestinationMatching matchingConditionsDestinations = default)
         {
             tools ??= new ChangeTrackingList<string>();
 
@@ -1413,12 +1403,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <summary> The type used for updating tags in PolicyGroup resources. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.PolicyGroupPatch"/> instance for mocking. </returns>
-        public static PolicyGroupPatch PolicyGroupPatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.NetworkSecurityPolicyGroupPatch"/> instance for mocking. </returns>
+        public static NetworkSecurityPolicyGroupPatch NetworkSecurityPolicyGroupPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PolicyGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new NetworkSecurityPolicyGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary>
@@ -1475,7 +1465,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ClusterAssociationProperties"/> instance for mocking. </returns>
-        public static ClusterAssociationProperties ClusterAssociationProperties(ResourceIdentifier clusterResourceId = default, ClusterAssociationSkuName? sku = default, string workloadClusterGatewayIP = default, ClusterAssociationStatus status = default, ProvisioningState? provisioningState = default)
+        public static ClusterAssociationProperties ClusterAssociationProperties(ResourceIdentifier clusterResourceId = default, ClusterAssociationSkuName? sku = default, string workloadClusterGatewayIP = default, ClusterAssociationStatus status = default, AgentFabricProvisioningState? provisioningState = default)
         {
             return new ClusterAssociationProperties(
                 clusterResourceId,
@@ -1590,7 +1580,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// provisioned, so a successful read always reports `Succeeded`.
         /// </param>
         /// <returns> A new <see cref="Models.EgressTrustBundleProperties"/> instance for mocking. </returns>
-        public static EgressTrustBundleProperties EgressTrustBundleProperties(IEnumerable<EgressTrustBundleCertificate> certificates = default, string bundleVersion = default, int cacheValiditySeconds = default, DateTimeOffset cacheExpiresOn = default, ProvisioningState? provisioningState = default)
+        public static EgressTrustBundleProperties EgressTrustBundleProperties(IEnumerable<EgressTrustBundleCertificate> certificates = default, string bundleVersion = default, int cacheValiditySeconds = default, DateTimeOffset cacheExpiresOn = default, AgentFabricProvisioningState? provisioningState = default)
         {
             certificates ??= new ChangeTrackingList<EgressTrustBundleCertificate>();
 
@@ -1610,17 +1600,17 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// </param>
         /// <param name="pem"> The PEM-encoded X.509 public certificate. This never contains private key material. </param>
         /// <param name="thumbprintSha256"> Lowercase hexadecimal SHA-256 fingerprint of the certificate's DER encoding. </param>
-        /// <param name="notBefore"> The time from which the certificate is valid. </param>
-        /// <param name="notAfter"> The time after which the certificate is no longer valid. </param>
+        /// <param name="startsOn"> The time from which the certificate is valid. </param>
+        /// <param name="expiresOn"> The time after which the certificate is no longer valid. </param>
         /// <returns> A new <see cref="Models.EgressTrustBundleCertificate"/> instance for mocking. </returns>
-        public static EgressTrustBundleCertificate EgressTrustBundleCertificate(string certificateId = default, string pem = default, string thumbprintSha256 = default, DateTimeOffset notBefore = default, DateTimeOffset notAfter = default)
+        public static EgressTrustBundleCertificate EgressTrustBundleCertificate(string certificateId = default, string pem = default, string thumbprintSha256 = default, DateTimeOffset startsOn = default, DateTimeOffset expiresOn = default)
         {
             return new EgressTrustBundleCertificate(
                 certificateId,
                 pem,
                 thumbprintSha256,
-                notBefore,
-                notAfter,
+                startsOn,
+                expiresOn,
                 default);
         }
     }

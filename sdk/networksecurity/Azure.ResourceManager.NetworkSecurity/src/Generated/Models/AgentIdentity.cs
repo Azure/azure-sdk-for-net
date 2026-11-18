@@ -20,10 +20,9 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <summary> Initializes a new instance of <see cref="AgentIdentity"/>. </summary>
         /// <param name="tenantId"> The Azure tenant ID that owns the agent identity. </param>
         /// <param name="agentId"> The Entra agent ID representing the workload's identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantId"/> or <paramref name="agentId"/> is null. </exception>
-        public AgentIdentity(string tenantId, string agentId)
+        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
+        public AgentIdentity(Guid tenantId, string agentId)
         {
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
             Argument.AssertNotNull(agentId, nameof(agentId));
 
             TenantId = tenantId;
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// workload.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentIdentity(string tenantId, string agentId, string blueprintId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentIdentity(Guid tenantId, string agentId, string blueprintId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             AgentId = agentId;
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         }
 
         /// <summary> The Azure tenant ID that owns the agent identity. </summary>
-        public string TenantId { get; set; }
+        public Guid TenantId { get; set; }
 
         /// <summary> The Entra agent ID representing the workload's identity. </summary>
         public string AgentId { get; set; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkSecurity;
 
 namespace Azure.ResourceManager.NetworkSecurity.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identity assigned to this fabric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentFabricPatch(IDictionary<string, string> tags, SystemAssignedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentFabricPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -38,6 +39,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The managed service identity assigned to this fabric. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

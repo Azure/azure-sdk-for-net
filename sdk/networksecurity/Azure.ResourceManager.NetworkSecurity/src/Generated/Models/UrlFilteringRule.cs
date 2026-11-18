@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="paths"> The URL paths matched by the rule. If omitted, the rule matches any path. </param>
         /// <param name="action"> The action to take when the rule matches. If omitted, the rule uses the policy defaultAction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UrlFilteringRule(string name, int priority, string hostname, HttpMethod? @method, IList<string> paths, PolicyAction? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UrlFilteringRule(string name, int priority, string hostname, UrlFilteringHttpMethod? @method, IList<string> paths, NetworkSecurityPolicyAction? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Priority = priority;
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public string Hostname { get; set; }
 
         /// <summary> The HTTP method matched by the rule. If omitted, the rule matches any method. </summary>
-        public HttpMethod? Method { get; set; }
+        public UrlFilteringHttpMethod? Method { get; set; }
 
         /// <summary> The URL paths matched by the rule. If omitted, the rule matches any path. </summary>
         public IList<string> Paths { get; }
 
         /// <summary> The action to take when the rule matches. If omitted, the rule uses the policy defaultAction. </summary>
-        public PolicyAction? Action { get; set; }
+        public NetworkSecurityPolicyAction? Action { get; set; }
     }
 }

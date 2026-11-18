@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
             return GetAgentFabrics().Get(agentFabricName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PolicyGroups in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PolicyGroups and their operations over a PolicyGroupResource. </returns>
-        public virtual PolicyGroupCollection GetPolicyGroups()
+        /// <summary> Gets a collection of NetworkSecurityPolicyGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPolicyGroups and their operations over a NetworkSecurityPolicyGroupResource. </returns>
+        public virtual NetworkSecurityPolicyGroupCollection GetNetworkSecurityPolicyGroups()
         {
-            return GetCachedClient(client => new PolicyGroupCollection(client, Id));
+            return GetCachedClient(client => new NetworkSecurityPolicyGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="policyGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyGroupResource>> GetPolicyGroupAsync(string policyGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkSecurityPolicyGroupResource>> GetNetworkSecurityPolicyGroupAsync(string policyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyGroupName, nameof(policyGroupName));
 
-            return await GetPolicyGroups().GetAsync(policyGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSecurityPolicyGroups().GetAsync(policyGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="policyGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PolicyGroupResource> GetPolicyGroup(string policyGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkSecurityPolicyGroupResource> GetNetworkSecurityPolicyGroup(string policyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyGroupName, nameof(policyGroupName));
 
-            return GetPolicyGroups().Get(policyGroupName, cancellationToken);
+            return GetNetworkSecurityPolicyGroups().Get(policyGroupName, cancellationToken);
         }
     }
 }

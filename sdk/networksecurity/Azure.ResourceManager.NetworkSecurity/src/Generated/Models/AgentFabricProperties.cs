@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentFabricProperties(Guid? resourceGuid, IList<ResourceIdentifier> defaultPolicyGroups, ContentInspectionProfile contentInspectionProfile, string trustDomain, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentFabricProperties(Guid? resourceGuid, IList<ResourceIdentifier> defaultPolicyGroups, ContentInspectionProfile contentInspectionProfile, string trustDomain, AgentFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceGuid = resourceGuid;
             DefaultPolicyGroups = defaultPolicyGroups;
@@ -128,6 +128,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public string TrustDomain { get; set; }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AgentFabricProvisioningState? ProvisioningState { get; }
     }
 }

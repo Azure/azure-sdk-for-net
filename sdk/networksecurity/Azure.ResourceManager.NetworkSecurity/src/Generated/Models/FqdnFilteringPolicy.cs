@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="ports"> The ports for the policy. </param>
         /// <param name="source"> The source details for the policy. </param>
         /// <param name="destination"> The destination details for the policy. </param>
-        internal FqdnFilteringPolicy(NetworkSecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, int? priority, PolicyDirection? direction, IList<int> ports, FqdnFilteringSource source, FqdnFilteringDestination destination) : base(@type, additionalBinaryDataProperties)
+        internal FqdnFilteringPolicy(NetworkSecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, int? priority, NetworkSecurityPolicyDirection? direction, IList<int> ports, FqdnFilteringSource source, FqdnFilteringDestination destination) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Priority = priority;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public int? Priority { get; set; }
 
         /// <summary> The direction of traffic for the policy. </summary>
-        public PolicyDirection? Direction { get; set; }
+        public NetworkSecurityPolicyDirection? Direction { get; set; }
 
         /// <summary> The ports for the policy. </summary>
         public IList<int> Ports { get; }

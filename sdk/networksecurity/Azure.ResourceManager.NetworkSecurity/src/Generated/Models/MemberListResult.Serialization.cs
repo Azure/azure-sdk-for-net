@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MemberData item in Value)
+            foreach (AgentFabricMemberData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 return null;
             }
-            IList<MemberData> value = default;
+            IList<AgentFabricMemberData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MemberData> array = new List<MemberData>();
+                    List<AgentFabricMemberData> array = new List<AgentFabricMemberData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MemberData.DeserializeMemberData(item, options));
+                        array.Add(AgentFabricMemberData.DeserializeAgentFabricMemberData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MemberListResult(value ?? new ChangeTrackingList<MemberData>(), nextLink, additionalBinaryDataProperties);
+            return new MemberListResult(value ?? new ChangeTrackingList<AgentFabricMemberData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

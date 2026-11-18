@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
     /// AKS workload configuration. The workload already exists in the enrolled
     /// cluster; the service does not create or schedule it.
     /// </summary>
-    public partial class AksWorkload : WorkloadBase
+    public partial class AksWorkload : AgentFabricWorkload
     {
         /// <summary> Initializes a new instance of <see cref="AksWorkload"/>. </summary>
         /// <param name="clusterAssociationId"> The Azure Resource Manager resource ID of the cluster association through which this member's workload is enrolled. </param>

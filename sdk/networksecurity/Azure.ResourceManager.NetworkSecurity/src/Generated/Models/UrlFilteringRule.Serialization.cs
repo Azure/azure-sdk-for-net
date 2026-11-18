@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             string name = default;
             int priority = default;
             string hostname = default;
-            HttpMethod? @method = default;
+            UrlFilteringHttpMethod? @method = default;
             IList<string> paths = default;
-            PolicyAction? action = default;
+            NetworkSecurityPolicyAction? action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     {
                         continue;
                     }
-                    @method = new HttpMethod(prop.Value.GetString());
+                    @method = new UrlFilteringHttpMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("paths"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     {
                         continue;
                     }
-                    action = new PolicyAction(prop.Value.GetString());
+                    action = new NetworkSecurityPolicyAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

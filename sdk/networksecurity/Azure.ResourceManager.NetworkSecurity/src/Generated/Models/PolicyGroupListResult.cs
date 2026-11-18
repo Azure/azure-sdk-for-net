@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <summary> Initializes a new instance of <see cref="PolicyGroupListResult"/>. </summary>
         /// <param name="value"> The PolicyGroup items on this page. </param>
-        internal PolicyGroupListResult(IEnumerable<PolicyGroupData> value)
+        internal PolicyGroupListResult(IEnumerable<NetworkSecurityPolicyGroupData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="value"> The PolicyGroup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyGroupListResult(IList<PolicyGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyGroupListResult(IList<NetworkSecurityPolicyGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         }
 
         /// <summary> The PolicyGroup items on this page. </summary>
-        public IList<PolicyGroupData> Value { get; }
+        public IList<NetworkSecurityPolicyGroupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

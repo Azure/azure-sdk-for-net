@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             }
             NetworkSecurityPolicyType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PolicyAction defaultAction = default;
+            NetworkSecurityPolicyAction defaultAction = default;
             McpPolicySource source = default;
             McpPolicyDestination destination = default;
             IList<McpRule> rules = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                 }
                 if (prop.NameEquals("defaultAction"u8))
                 {
-                    defaultAction = new PolicyAction(prop.Value.GetString());
+                    defaultAction = new NetworkSecurityPolicyAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("source"u8))

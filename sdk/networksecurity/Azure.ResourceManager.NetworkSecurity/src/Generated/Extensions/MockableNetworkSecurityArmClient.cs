@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
             return new AgentFabricResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MemberResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AgentFabricMemberResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MemberResource"/> object. </returns>
-        public virtual MemberResource GetMemberResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgentFabricMemberResource"/> object. </returns>
+        public virtual AgentFabricMemberResource GetAgentFabricMemberResource(ResourceIdentifier id)
         {
-            MemberResource.ValidateResourceId(id);
-            return new MemberResource(Client, id);
+            AgentFabricMemberResource.ValidateResourceId(id);
+            return new AgentFabricMemberResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PolicyGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetworkSecurityPolicyGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyGroupResource"/> object. </returns>
-        public virtual PolicyGroupResource GetPolicyGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkSecurityPolicyGroupResource"/> object. </returns>
+        public virtual NetworkSecurityPolicyGroupResource GetNetworkSecurityPolicyGroupResource(ResourceIdentifier id)
         {
-            PolicyGroupResource.ValidateResourceId(id);
-            return new PolicyGroupResource(Client, id);
+            NetworkSecurityPolicyGroupResource.ValidateResourceId(id);
+            return new NetworkSecurityPolicyGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ClusterAssociationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

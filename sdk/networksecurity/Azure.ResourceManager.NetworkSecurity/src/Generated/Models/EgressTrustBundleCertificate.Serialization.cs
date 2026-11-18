@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("notBefore"u8);
-                writer.WriteStringValue(NotBefore, "O");
+                writer.WriteStringValue(StartsOn, "O");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("notAfter"u8);
-                writer.WriteStringValue(NotAfter, "O");
+                writer.WriteStringValue(ExpiresOn, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             string certificateId = default;
             string pem = default;
             string thumbprintSha256 = default;
-            DateTimeOffset notBefore = default;
-            DateTimeOffset notAfter = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                 }
                 if (prop.NameEquals("notBefore"u8))
                 {
-                    notBefore = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("notAfter"u8))
                 {
-                    notAfter = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                 certificateId,
                 pem,
                 thumbprintSha256,
-                notBefore,
-                notAfter,
+                startsOn,
+                expiresOn,
                 additionalBinaryDataProperties);
         }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
     /// AKS workload configuration. The workload already exists in the enrolled
     /// cluster; the service does not create or schedule it.
     /// </summary>
-    public partial class AksWorkload : WorkloadBase, IJsonModel<AksWorkload>
+    public partial class AksWorkload : AgentFabricWorkload, IJsonModel<AksWorkload>
     {
         /// <summary> Initializes a new instance of <see cref="AksWorkload"/> for deserialization. </summary>
         internal AksWorkload()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WorkloadBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AgentFabricWorkload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AksWorkload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WorkloadBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AgentFabricWorkload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AksWorkload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

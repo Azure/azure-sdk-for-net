@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterAssociationProperties(ResourceIdentifier clusterResourceId, ClusterAssociationSkuName? sku, string workloadClusterGatewayIP, ClusterAssociationStatus status, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterAssociationProperties(ResourceIdentifier clusterResourceId, ClusterAssociationSkuName? sku, string workloadClusterGatewayIP, ClusterAssociationStatus status, AgentFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterResourceId = clusterResourceId;
             Sku = sku;
@@ -100,6 +100,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public ClusterAssociationStatus Status { get; }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AgentFabricProvisioningState? ProvisioningState { get; }
     }
 }

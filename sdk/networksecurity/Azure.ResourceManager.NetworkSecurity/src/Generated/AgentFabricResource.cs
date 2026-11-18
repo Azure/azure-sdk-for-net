@@ -677,11 +677,11 @@ namespace Azure.ResourceManager.NetworkSecurity
             }
         }
 
-        /// <summary> Gets a collection of Members in the <see cref="AgentFabricResource"/>. </summary>
-        /// <returns> An object representing collection of Members and their operations over a MemberResource. </returns>
-        public virtual MemberCollection GetMembers()
+        /// <summary> Gets a collection of AgentFabricMembers in the <see cref="AgentFabricResource"/>. </summary>
+        /// <returns> An object representing collection of AgentFabricMembers and their operations over a AgentFabricMemberResource. </returns>
+        public virtual AgentFabricMemberCollection GetAgentFabricMembers()
         {
-            return GetCachedClient(client => new MemberCollection(client, Id));
+            return GetCachedClient(client => new AgentFabricMemberCollection(client, Id));
         }
 
         /// <summary> Get a Member. </summary>
@@ -690,11 +690,11 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <exception cref="ArgumentNullException"> <paramref name="memberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="memberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MemberResource>> GetMemberAsync(string memberName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentFabricMemberResource>> GetAgentFabricMemberAsync(string memberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(memberName, nameof(memberName));
 
-            return await GetMembers().GetAsync(memberName, cancellationToken).ConfigureAwait(false);
+            return await GetAgentFabricMembers().GetAsync(memberName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Member. </summary>
@@ -703,11 +703,11 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <exception cref="ArgumentNullException"> <paramref name="memberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="memberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MemberResource> GetMember(string memberName, CancellationToken cancellationToken = default)
+        public virtual Response<AgentFabricMemberResource> GetAgentFabricMember(string memberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(memberName, nameof(memberName));
 
-            return GetMembers().Get(memberName, cancellationToken);
+            return GetAgentFabricMembers().Get(memberName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ClusterAssociations in the <see cref="AgentFabricResource"/>. </summary>

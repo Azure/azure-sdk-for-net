@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// provisioned, so a successful read always reports `Succeeded`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EgressTrustBundleProperties(IReadOnlyList<EgressTrustBundleCertificate> certificates, string bundleVersion, int cacheValiditySeconds, DateTimeOffset cacheExpiresOn, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EgressTrustBundleProperties(IReadOnlyList<EgressTrustBundleCertificate> certificates, string bundleVersion, int cacheValiditySeconds, DateTimeOffset cacheExpiresOn, AgentFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Certificates = certificates;
             BundleVersion = bundleVersion;
@@ -99,6 +99,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// The provisioning state of the resource. This resource is computed rather than
         /// provisioned, so a successful read always reports `Succeeded`.
         /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AgentFabricProvisioningState? ProvisioningState { get; }
     }
 }

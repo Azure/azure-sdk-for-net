@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetworkSecurity;
 namespace Azure.ResourceManager.NetworkSecurity.Models
 {
     /// <summary> Agent Fabric sandbox workload configuration. </summary>
-    public partial class AgentFabricSandboxWorkload : WorkloadBase
+    public partial class AgentFabricSandboxWorkload : AgentFabricWorkload
     {
         /// <summary> Initializes a new instance of <see cref="AgentFabricSandboxWorkload"/>. </summary>
         /// <param name="image"> The container image to run for the workload. </param>
