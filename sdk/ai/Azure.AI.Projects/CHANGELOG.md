@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0 (Unreleased)
+## 3.0.0 (2026-11-18)
 
 ### Features Added
 - Uploading of models now can be cancelled.
@@ -45,6 +45,12 @@
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
 - The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
 - The `Azure.AI.Projects.Agents` dependency has renamed agent models and members used by project clients. For example, replace `VersionRefIndicator` with `VersionReferenceIndicator` and `VoiceAgentAudioConfig` with `VoiceAgentAudioConfiguration`. See the `Azure.AI.Projects.Agents` changelog for the complete list.
+- Renamed `Azure.AI.Projects.DatasetReference` to `Azure.AI.Projects.Evaluation.VersionedDatasetReference` and renamed the corresponding model-factory method.
+- Moved `RubricBasedEvaluatorDefinition` and `TracesEvaluatorGenerationJobSource` from `Azure.AI.Projects` to `Azure.AI.Projects.Evaluation`.
+- Renamed timestamp properties and corresponding constructor/model-factory parameters from `*On` to `*At` on routine, data-generation, evaluator-generation, and Agent Insights models.
+- Changed `EvaluationsDimension.Weight` and the corresponding constructor/model-factory parameters from `int` to `int?` to support null weights.
+- Removed `AgentInsightsV1Preview` from `FoundryFeaturesOptInKeys`.
+- The `AzureAIModelTarget` property `SamplingParams` was renamed to `samplingParameters`.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

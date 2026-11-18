@@ -1015,11 +1015,11 @@ namespace Azure.AI.Projects
         /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
         /// </summary>
         /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
-        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
+        /// <param name="samplingParameters"> The parameters used to control the sampling behavior of the model during text generation. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIModelTarget"/> instance for mocking. </returns>
-        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
+        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParameters = default)
         {
-            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParams);
+            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParameters);
         }
 
         /// <summary>
