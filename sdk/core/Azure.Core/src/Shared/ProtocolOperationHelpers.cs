@@ -225,7 +225,7 @@ namespace Azure.Core
             => style switch
             {
                 "label" => @"\.[^/]*",
-                "matrix" => ";[^/]*",
+                "matrix" => ";[^/;]*",
                 "path" => "/[^/]*",
                 "fragment" => "#.*",
                 _ => allowReserved ? ".+?" : "[^/]+"

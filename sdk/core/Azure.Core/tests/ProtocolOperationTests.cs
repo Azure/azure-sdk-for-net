@@ -87,8 +87,10 @@ namespace Azure.Core.Tests
         [TestCase("/primitive.a", "simple", ".a")]
         [TestCase("/primitive.a", "label", "a")]
         [TestCase("/primitive;id=a", "matrix", "a")]
+        [TestCase("/primitive;id=a%3Bb", "matrix", "a;b")]
         [TestCase("/primitive;id", "matrix", "")]
         [TestCase("/primitive;other=a", "matrix", "NOT_SET")]
+        [TestCase("/primitive;id=a;other=b", "matrix", "NOT_SET")]
         [TestCase("/primitive;id=a", "simple", ";id=a")]
         [TestCase("/primitive/a%20b", "path", "a b")]
         [TestCase("/primitive#a", "fragment", "a")]
@@ -99,6 +101,32 @@ namespace Azure.Core.Tests
                 "status", null, "OperationLocation", "https://test" + path, "https://test/resource",
                 RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
             Assert.AreEqual(expected, ProtocolOperationHelpers.GetOperationId(token, null, "/primitive{id}", "id", null, style));
+        }
+
+        [TestCase("/primitive.a", "simple", ".a")]
+        [TestCase("/primitive.a", "label", "a")]
+        [TestCase("/primitive;id=a%2Fb", "matrix", "a/b")]
+        [TestCase("/primitive/a%2Fb", "path", "a/b")]
+        public void RehydrationUsesPathStyleWithoutChangingPollingUri(string path, string style, string expected)
+        {
+            string pollingUri = "https://test/base" + path + "?opaque=retained";
+            using var running = CreateJsonResponse("""{"status":"Running"}""");
+            using var completed = CreateJsonResponse("""{"status":"Succeeded"}""");
+            var transport = new MockTransport(running, completed);
+            var token = new RehydrationToken(
+                "status", null, "OperationLocation", pollingUri, "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            var operation = ProtocolOperationHelpers.RehydrateWithMetadata<BinaryData, Operation<BinaryData>>(
+                new HttpPipeline(transport, default), token, null, "test", response => response.Content,
+                (inner, _) => inner);
+
+            Assert.AreEqual(expected, ProtocolOperationHelpers.GetOperationIdFromOperation(
+                operation, null, "/primitive{id}", "id", null, style));
+            Assert.AreEqual(expected, ProtocolOperationHelpers.GetOperationId(
+                operation.GetRehydrationToken(), null, "/primitive{id}", "id", null, style));
+            operation.UpdateStatus();
+            Assert.AreEqual(pollingUri, transport.Requests[0].Uri.ToUri().AbsoluteUri);
+            Assert.AreEqual(pollingUri, transport.Requests[1].Uri.ToUri().AbsoluteUri);
         }
 
         [Test]
