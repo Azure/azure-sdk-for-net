@@ -17,3 +17,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ImageBuilder
       safeName: AzureResourceManagerImageBuilder
+    - name: Azure.Provisioning.ImageBuilder
+      safeName: AzureProvisioningImageBuilder

@@ -1,0 +1,6 @@
+directory: specification/imagebuilder/resource-manager/Microsoft.VirtualMachineImages/ImageBuilder
+commit: 5ba3afe309aa75a279fbfd6463b7367e0da36035
+repo: cxznmhdcxz/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
