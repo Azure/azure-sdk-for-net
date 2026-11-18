@@ -162,6 +162,8 @@ Describe 'Find-PrReReviewReplayContamination' {
         @{ Label = 'a branch file'; Tool = 'bash'; Arguments = @{ command = 'curl -s https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/src/Client.cs' } }
         @{ Label = 'a branch read chained after a pinned read'; Tool = 'bash'; Arguments = @{ command = "github get_file_contents --path src/A.cs --ref $('a' * 40); github get_file_contents --path src/B.cs --ref main" } }
         @{ Label = 'the pull request API chained after a pinned file'; Tool = 'bash'; Arguments = @{ command = "curl -s https://raw.githubusercontent.com/Azure/azure-sdk-for-net/$('a' * 40)/src/A.cs; curl -s https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/1/comments" } }
+        @{ Label = 'the pull request API chained after a shell publication'; Tool = 'bash'; Arguments = @{ command = 'safeoutputs submit_pull_request_review --event COMMENT --body "See https://github.com/Azure/azure-sdk-for-net/pull/2"; curl -s https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/1/comments' } }
+        @{ Label = 'the pull request API read inside a shell publication'; Tool = 'bash'; Arguments = @{ command = 'safeoutputs submit_pull_request_review --event COMMENT --body "$(curl -s https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/1/comments)"' } }
     ) {
         $log = New-SessionLog @(New-ToolCall $Tool $Arguments)
         $found = Find-PrReReviewReplayContamination -SessionLogPath $log -AllowedCommits @($script:HeadSha, $script:BaseSha, $script:MergeBaseSha)
@@ -178,6 +180,8 @@ Describe 'Find-PrReReviewReplayContamination' {
             (New-ToolCall 'bash' @{ command = 'cat /tmp/gh-aw/pr-review-input/history/review-threads.json' })
             (New-ToolCall 'view' @{ path = '/home/runner/work/azure-sdk-for-net/azure-sdk-for-net/.github/workflows/pr-re-review.md' })
             (New-ToolCall 'safeoutputs-submit_pull_request_review' @{ body = 'See https://github.com/Azure/azure-sdk-for-net/pull/2'; event = 'COMMENT' })
+            (New-ToolCall 'bash' @{ command = 'safeoutputs submit_pull_request_review --event COMMENT --body "Fixed; see https://github.com/Azure/azure-sdk-for-net/pull/2"' })
+            (New-ToolCall 'bash' @{ command = (@('safeoutputs submit_pull_request_review --event COMMENT --body "$(cat <<''EOF''', 'I don''t see a regression (see https://github.com/Azure/azure-sdk-for-net/pull/2); it''s fixed.', 'EOF', ')"') -join "`n") })
         )
         Find-PrReReviewReplayContamination -SessionLogPath $log -AllowedCommits @($script:HeadSha, $script:BaseSha, $script:MergeBaseSha) | Should -BeNullOrEmpty
     }
