@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
         private EventHubsPrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _eventHubNamespace.GetEventHubsPrivateEndpointConnections(); }
         public PrivateEndpointConnectionTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
+            // Network request bodies differ between the packaged and project-referenced Network SDKs.
+            CompareBodies = false;
         }
 
         [SetUp]
