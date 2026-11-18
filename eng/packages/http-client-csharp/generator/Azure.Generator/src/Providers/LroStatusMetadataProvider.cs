@@ -69,12 +69,12 @@ namespace Azure.Generator.Providers
                 return _getMonitorModel;
             }
             var modelType = _monitorModel!.Type;
-            var signature = new MethodSignature("GetMonitorModel", null, MethodSignatureModifiers.Private, modelType, null, []);
+            var response = new ParameterProvider("response", $"The status-monitor response.", typeof(Response));
+            var signature = new MethodSignature("GetMonitorModel", null, MethodSignatureModifiers.Private, modelType, null, [response]);
             var cacheType = _monitorCache!.Type;
             var options = Static(new ModelSerializationExtensionsDefinition().Type).Property("WireOptions");
             var body = new MethodBodyStatement[]
             {
-                Declare("response", typeof(Response), _getResponse.AsValueExpression.Invoke("Invoke"), out var response),
                 new IfStatement(response.Equal(Null)) { Return(Null) },
                 Declare("cache", cacheType, _monitorCache.AsValueExpression, out var cached),
                 new IfStatement(cached.NotEqual(Null).And(Static<object>().Invoke(nameof(ReferenceEquals), cached.Property("Item1"), response)))
@@ -98,18 +98,29 @@ namespace Azure.Generator.Providers
 
         // Reads the value through the cached monitor model when its property type can be exposed as the metadata type;
         // returns null so the caller falls back to reading the selected JSON path otherwise.
-        private PropertyBody? ReadFromMonitorModel(PropertyProvider[] path, CSharpType type)
+        private PropertyBody? ReadFromMonitorModel(PropertyProvider[] path, CSharpType type, InputLroStatusMetadata metadata)
         {
-            ValueExpression value = This.Invoke(GetMonitorModelMethod().Signature);
+            var response = new VariableExpression(typeof(Response), "response");
+            ValueExpression value = This.Invoke(GetMonitorModelMethod().Signature.Name, response);
             foreach (var segment in path)
             {
                 value = value.NullConditional().Property(segment.Name);
             }
             var leaf = path[^1].Type;
             var sameType = leaf.WithNullable(false).Equals(type.WithNullable(false));
+            var present = Static(typeof(ProtocolOperationHelpers)).Invoke("GetStatusMetadata",
+                [
+                    response,
+                    New.Array(typeof(string), metadata.PropertySegments.Select(p => Literal(p.SerializationOptions?.Json?.Name ?? p.SerializedName)).ToArray())
+                ]).Property("HasValue");
             if (!leaf.IsCollection)
             {
-                return sameType ? new ExpressionPropertyBody(value) : null;
+                return sameType ? new MethodPropertyBody(new MethodBodyStatement[]
+                {
+                    Declare(response, _getResponse.AsValueExpression.Invoke("Invoke")),
+                    new IfStatement(present.Equal(False)) { Return(Default) },
+                    Return(value)
+                }) : null;
             }
             if (!sameType && !(leaf.IsList && type.IsList && leaf.ElementType.Equals(type.ElementType)))
             {
@@ -119,6 +130,8 @@ namespace Azure.Generator.Providers
             var collection = new VariableExpression(leaf, "value");
             return new MethodPropertyBody(new MethodBodyStatement[]
             {
+                Declare(response, _getResponse.AsValueExpression.Invoke("Invoke")),
+                new IfStatement(present.Equal(False)) { Return(Default) },
                 Declare(collection, value),
                 Return(new TernaryConditionalExpression(
                     collection.NotEqual(Null).And(Static<OptionalDefinition>().Invoke("IsCollectionDefined", collection).As<bool>()),
@@ -173,10 +186,12 @@ namespace Azure.Generator.Providers
 
         private PropertyProvider BuildProperty(InputLroStatusMetadata metadata)
         {
-            var property = new PropertyProvider(metadata.Property, this);
+            var property = metadata.Property.EnclosingType is null
+                ? new PropertyProvider(metadata.Property, this, isOutputOnly: true)
+                : new PropertyProvider(metadata.Property, this);
             var type = property.Type.OutputType.WithNullable(true);
             if (_monitorModel is not null && ResolvePropertyPath(_monitorModel, metadata.PropertySegments) is { } path &&
-                ReadFromMonitorModel(path, type) is { } typedBody)
+                ReadFromMonitorModel(path, type, metadata) is { } typedBody)
             {
                 property.Update(type: type, modifiers: property.Modifiers | MethodSignatureModifiers.Virtual, body: typedBody);
                 return property;
@@ -190,7 +205,14 @@ namespace Azure.Generator.Providers
                         New.Array(typeof(string), metadata.PropertySegments.Select(p => Literal(p.SerializationOptions?.Json?.Name ?? p.SerializedName)).ToArray())
                     ]), out var element),
                 new IfStatement(element.Property("HasValue").Equal(False)) { Return(Default) },
-                Return(Deserialize(type, element.Property("Value").As<JsonElement>(), property.SerializationFormat))
+                new TryCatchFinallyStatement(
+                    new TryExpression(Return(Deserialize(type, element.Property("Value").As<JsonElement>(), property.SerializationFormat))),
+                    [
+                        new CatchExpression(Static(typeof(JsonException)), Return(Default)),
+                        new CatchExpression(Static(typeof(InvalidOperationException)), Return(Default)),
+                        new CatchExpression(Static(typeof(FormatException)), Return(Default))
+                    ],
+                    null)
             };
             property.Update(type: type, modifiers: property.Modifiers | MethodSignatureModifiers.Virtual,
                 body: new MethodPropertyBody(statements));

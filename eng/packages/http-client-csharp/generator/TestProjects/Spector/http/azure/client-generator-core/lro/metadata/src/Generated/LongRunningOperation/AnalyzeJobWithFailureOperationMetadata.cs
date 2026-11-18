@@ -10,9 +10,9 @@ using System.Collections.Generic;
 
 namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 {
-    public partial class MetadataClientAnalyzeJobOperationMetadata
+    public partial class AnalyzeJobWithFailureOperationMetadata
     {
-        protected MetadataClientAnalyzeJobOperationMetadata() => throw null;
+        protected AnalyzeJobWithFailureOperationMetadata() => throw null;
 
         public virtual string JobId => throw null;
 

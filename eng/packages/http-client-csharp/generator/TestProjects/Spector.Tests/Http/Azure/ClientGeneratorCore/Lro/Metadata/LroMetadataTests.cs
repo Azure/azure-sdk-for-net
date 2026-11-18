@@ -2,8 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using NUnit.Framework;
 using Specs.Azure.ClientGenerator.Core.Lro.Metadata;
 
@@ -11,6 +17,48 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Lro.Metadata
 {
     public class LroMetadataTests : SpectorTestBase
     {
+        [SpectorTest]
+        public Task MalformedAndMissingMetadataReturnsNull() => Test(host =>
+        {
+            foreach (var json in new[] { "not json", """{"jobId":42}""", """{"status":"Running"}""" })
+            {
+                using var response = new MetadataResponse(json);
+                var metadata = (AnalyzeJobOperationMetadata)Activator.CreateInstance(
+                    typeof(AnalyzeJobOperationMetadata), BindingFlags.Instance | BindingFlags.NonPublic,
+                    null, new object[] { (Func<Response>)(() => response) }, null)!;
+                Assert.IsNull(metadata.JobId);
+            }
+            return Task.CompletedTask;
+        });
+
+        [SpectorTest]
+        public Task MetadataReadsOneMonitorResponse() => Test(host =>
+        {
+            using var first = new MetadataResponse("""{"jobId":"first"}""");
+            using var second = new MetadataResponse("""{"jobId":"second"}""");
+            var calls = 0;
+            var metadata = (AnalyzeJobOperationMetadata)Activator.CreateInstance(
+                typeof(AnalyzeJobOperationMetadata), BindingFlags.Instance | BindingFlags.NonPublic,
+                null, new object[] { (Func<Response>)(() => ++calls == 1 ? first : second) }, null)!;
+            Assert.AreEqual("first", metadata.JobId);
+            Assert.AreEqual(1, calls);
+            return Task.CompletedTask;
+        });
+
+        private sealed class MetadataResponse : Response
+        {
+            public MetadataResponse(string content) => ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content));
+            public override int Status => 200;
+            public override string ReasonPhrase => "OK";
+            public override Stream? ContentStream { get; set; }
+            public override string ClientRequestId { get; set; } = string.Empty;
+            public override void Dispose() => ContentStream?.Dispose();
+            protected override bool ContainsHeader(string name) => false;
+            protected override IEnumerable<HttpHeader> EnumerateHeaders() => Array.Empty<HttpHeader>();
+            protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) { value = null; return false; }
+            protected override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) { values = null; return false; }
+        }
+
         [SpectorTest]
         public Task AnalyzeWithUsage() => Test(async host =>
         {
@@ -24,6 +72,23 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Lro.Metadata
             Assert.IsTrue(operation.HasCompleted);
             Assert.AreEqual(4, metadata.Usage.Tokens["output"]);
             Assert.AreEqual("The document contains three sections.", operation.Value.Contents);
+        });
+
+        [SpectorTest]
+        public Task AnalyzeWithUsageProtocolMetadata() => Test(async host =>
+        {
+            var client = new MetadataClient(host, null);
+            Assert.Throws<ArgumentNullException>(() => MetadataClient.GetAnalyzeWithUsageOperationMetadata(null));
+            var operation = await client.AnalyzeWithUsageAsync(WaitUntil.Started, "analyzer-1", new RequestContext());
+            var metadata = MetadataClient.GetAnalyzeWithUsageOperationMetadata(operation);
+            Assert.IsNull(metadata.Usage);
+            var token = operation.GetRehydrationToken() ?? throw new InvalidOperationException("The operation must be resumable.");
+            var rehydrated = MetadataClient.RehydrateAnalyzeWithUsageRawOperation(client.Pipeline, token);
+            var rehydratedMetadata = MetadataClient.GetAnalyzeWithUsageOperationMetadata(rehydrated);
+            Assert.AreEqual(1, rehydratedMetadata.Usage.DocumentPagesBasic);
+            await rehydrated.UpdateStatusAsync();
+            Assert.IsTrue(rehydrated.HasCompleted);
+            Assert.AreEqual(4, rehydratedMetadata.Usage.Tokens["output"]);
         });
 
         [SpectorTest]
@@ -47,7 +112,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Lro.Metadata
             Assert.IsNull(operation.Metadata.Statistics);
             Assert.IsNull(operation.Metadata.Errors);
             var token = operation.GetRehydrationToken() ?? throw new InvalidOperationException("The operation must be resumable.");
-            var rehydrated = MetadataClientAnalyzeJobOperation.FromRehydrationToken(client.Pipeline, token);
+            var rehydrated = AnalyzeJobOperation.FromRehydrationToken(client.Pipeline, token);
             var metadata = rehydrated.Metadata;
             Assert.AreEqual("job-success", metadata.JobId);
             Assert.AreEqual(DateTimeOffset.Parse("2025-01-01T10:00:00Z"), metadata.CreatedOn);

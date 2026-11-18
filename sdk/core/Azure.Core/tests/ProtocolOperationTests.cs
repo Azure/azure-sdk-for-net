@@ -58,11 +58,11 @@ namespace Azure.Core.Tests
             using var response = CreateJsonResponse("""{"progress":25}""");
 
             Assert.AreEqual("first", ProtocolOperationHelpers.GetOperationId(first, response, "/jobs/{jobId}/status", "jobId", null));
-            // The ID derived for a monitor response is reused until a poll produces a new response.
-            Assert.AreEqual("first", ProtocolOperationHelpers.GetOperationId(second, response, "/jobs/{jobId}/status", "jobId", null));
+            Assert.AreEqual("second", ProtocolOperationHelpers.GetOperationId(second, response, "/jobs/{jobId}/status", "jobId", null));
             using var next = CreateJsonResponse("""{"progress":50}""");
             Assert.AreEqual("second", ProtocolOperationHelpers.GetOperationId(second, next, "/jobs/{jobId}/status", "jobId", null));
 
+            Assert.AreEqual(25, ProtocolOperationHelpers.GetStatusMetadata(response, "progress")?.GetInt32());
             response.SetContent("""{"progress":99}""");
             Assert.AreEqual(25, ProtocolOperationHelpers.GetStatusMetadata(response, "progress")?.GetInt32());
         }
@@ -101,6 +101,23 @@ namespace Azure.Core.Tests
             Assert.AreSame(response, operation.GetRawResponse());
         }
 
+        [Test]
+        public void MetadataWrappingAcceptsCustomVoidOperation()
+        {
+            using var response = new MockResponse(200);
+            var source = new Mock<Operation<int>>();
+            source.Setup(operation => operation.GetRawResponse()).Returns(response);
+            Func<Response> monitor = null;
+            var operation = ProtocolOperationHelpers.WrapWithMetadata<Operation>(
+                source.Object, (inner, getMonitor) =>
+                {
+                    monitor = getMonitor;
+                    return inner;
+                });
+            Assert.AreSame(response, monitor());
+            Assert.AreSame(source.Object, operation);
+        }
+
         [TestCase(true, WaitUntil.Started)]
         [TestCase(false, WaitUntil.Started)]
         [TestCase(true, WaitUntil.Completed)]
@@ -136,6 +153,12 @@ namespace Azure.Core.Tests
             Assert.AreEqual(waitUntil == WaitUntil.Completed, operation.HasCompleted);
             Assert.AreEqual(waitUntil == WaitUntil.Completed ? 100 : 1,
                 ProtocolOperationHelpers.GetStatusMetadata(monitor(), "progress")?.GetInt32());
+            Assert.AreEqual(pollingUri, ProtocolOperationHelpers.GetPollingUri(operation).AbsoluteUri);
+            Assert.AreEqual("id", ProtocolOperationHelpers.GetOperationIdFromOperation(
+                operation, monitor(), "/jobs/{jobId}/status", "jobId", null));
+            var converted = ProtocolOperationHelpers.Convert(operation, response => response.Content,
+                diagnostics, "test");
+            Assert.AreEqual(pollingUri, ProtocolOperationHelpers.GetPollingUri(converted).AbsoluteUri);
             Assert.AreEqual(waitUntil == WaitUntil.Completed ? 2 : 1, transport.Requests.Count);
             if (waitUntil == WaitUntil.Completed)
             {

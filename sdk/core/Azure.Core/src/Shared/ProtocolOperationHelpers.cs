@@ -19,6 +19,18 @@ namespace Azure.Core
 {
     internal static class ProtocolOperationHelpers
     {
+        public static Response? GetMonitorResponse(Operation operation)
+            => operation is IStatusMonitorOperation monitor
+                ? monitor.GetStatusMonitorResponse()
+                : operation.GetRawResponse();
+
+        public static TOperation WrapWithMetadata<TOperation>(
+            Operation operation, Func<Operation, Func<Response?>, TOperation> createOperation)
+            where TOperation : Operation
+            => createOperation(operation, operation is IStatusMonitorOperation monitor
+                ? monitor.GetStatusMonitorResponse
+                : operation.GetRawResponse);
+
         public static TOperation ConvertWithMetadata<TFrom, TTo, TOperation>(
             Operation<TFrom> operation, Func<Response, TTo> convertFunc,
             ClientDiagnostics diagnostics, string scopeName,
@@ -115,22 +127,22 @@ namespace Azure.Core
             RehydrationToken? rehydrationToken, Response? monitorResponse,
             string? pollingPath, string? pathParameter, string[]? propertySegments)
         {
-            if (monitorResponse is null)
-            {
-                return ComputeOperationId(rehydrationToken, null, pollingPath, pathParameter, propertySegments);
-            }
-
-            // The rehydration token only changes when a poll produces a new monitor response, so the derived
-            // ID can be cached per response rather than reserializing the token and matching the URI per access.
-            var parsed = GetParsedResponse(monitorResponse);
-            var id = parsed.OperationId;
-            if (id is null)
-            {
-                id = ComputeOperationId(rehydrationToken, monitorResponse, pollingPath, pathParameter, propertySegments);
-                parsed.OperationId = id;
-            }
-            return id;
+            return ComputeOperationId(rehydrationToken, monitorResponse, pollingPath, pathParameter, propertySegments);
         }
+
+        public static string GetOperationIdFromOperation(
+            Operation operation, Response? monitorResponse,
+            string? pollingPath, string? pathParameter, string[]? propertySegments)
+        {
+            if (GetPollingUri(operation) is { } pollingUri)
+            {
+                return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments);
+            }
+            return GetOperationId(operation.GetRehydrationToken(), monitorResponse, pollingPath, pathParameter, propertySegments);
+        }
+
+        public static Uri? GetPollingUri(Operation operation)
+            => (operation as IPollingUriOperation)?.GetPollingUri();
 
         private static ParsedMonitorResponse GetParsedResponse(Response response)
             => s_parsedResponses.GetValue(response, static r => new ParsedMonitorResponse(Parse(r)));
@@ -157,21 +169,30 @@ namespace Azure.Core
             RehydrationToken? rehydrationToken, Response? monitorResponse,
             string? pollingPath, string? pathParameter, string[]? propertySegments)
         {
+            Uri? pollingUri = null;
+            if (rehydrationToken is not null && pollingPath is not null && pathParameter is not null)
+            {
+                var data = ModelReaderWriter.Write(rehydrationToken.Value, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
+                using var document = JsonDocument.Parse(data);
+                var nextUri = document.RootElement.GetProperty("nextRequestUri").GetString();
+                var initialUri = document.RootElement.GetProperty("initialUri").GetString();
+                pollingUri = new Uri(new Uri(initialUri!), nextUri);
+            }
+            return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments);
+        }
+
+        private static string ComputeOperationId(
+            Uri? pollingUri, Response? monitorResponse, string? pollingPath, string? pathParameter, string[]? propertySegments)
+        {
             if (propertySegments is not null &&
                 GetStatusMetadata(monitorResponse, propertySegments) is { ValueKind: JsonValueKind.String } property)
             {
                 return property.GetString() ?? NextLinkOperationImplementation.NotSet;
             }
-            if (rehydrationToken is null || pollingPath is null || pathParameter is null)
+            if (pollingUri is null || pollingPath is null || pathParameter is null)
             {
                 return NextLinkOperationImplementation.NotSet;
             }
-
-            var data = ModelReaderWriter.Write(rehydrationToken.Value, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
-            using var document = JsonDocument.Parse(data);
-            var nextUri = document.RootElement.GetProperty("nextRequestUri").GetString();
-            var initialUri = document.RootElement.GetProperty("initialUri").GetString();
-            var pollingUri = new Uri(new Uri(initialUri!), nextUri);
             string path = pollingPath;
             string parameterName = pathParameter;
             var pattern = s_pollingPathPatterns.GetOrAdd($"{parameterName}\n{path}", _ => CreatePollingPathPattern(path, parameterName));
@@ -203,7 +224,6 @@ namespace Azure.Core
         {
             public ParsedMonitorResponse(JsonElement? root) => Root = root;
             public JsonElement? Root { get; }
-            public string? OperationId { get; set; }
         }
 
         public static Operation<TTo> Convert<TFrom, TTo>(Operation<TFrom> operation, Func<Response, TTo> convertFunc, ClientDiagnostics diagnostics, string scopeName)
@@ -245,7 +265,7 @@ namespace Azure.Core
             return operation;
         }
 
-        private class ConvertOperation<TFrom, TTo> : Operation<TTo>
+        private class ConvertOperation<TFrom, TTo> : Operation<TTo>, IPollingUriOperation
             where TFrom : notnull
             where TTo : notnull
         {
@@ -272,6 +292,7 @@ namespace Azure.Core
             public override bool HasCompleted => _operation.HasCompleted;
             public override RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
             public override Response GetRawResponse() => _operation.GetRawResponse();
+            Uri? IPollingUriOperation.GetPollingUri() => (_operation as IPollingUriOperation)?.GetPollingUri();
 
             public override Response UpdateStatus(CancellationToken cancellationToken = default)
             {
@@ -417,5 +438,10 @@ namespace Azure.Core
     internal interface IStatusMonitorOperation
     {
         Response? GetStatusMonitorResponse();
+    }
+
+    internal interface IPollingUriOperation
+    {
+        Uri? GetPollingUri();
     }
 }

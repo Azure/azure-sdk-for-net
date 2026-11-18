@@ -7,9 +7,9 @@
 
 namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 {
-    public partial class MetadataClientAnalyzeWithUsageOperationMetadata
+    public partial class AnalyzeWithUsageOperationMetadata
     {
-        protected MetadataClientAnalyzeWithUsageOperationMetadata() => throw null;
+        protected AnalyzeWithUsageOperationMetadata() => throw null;
 
         public virtual UsageDetails Usage => throw null;
     }

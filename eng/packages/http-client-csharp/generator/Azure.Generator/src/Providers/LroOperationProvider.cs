@@ -28,6 +28,7 @@ namespace Azure.Generator.Providers
         private readonly LroStatusMetadataProvider? _metadata;
         private readonly FieldProvider _operation;
         private readonly FieldProvider _getResponse;
+        private readonly FieldProvider? _metadataValue;
         private readonly TypeSignatureModifiers _modifiers;
 
         internal LroOperationProvider(InputLongRunningServiceMethod method, ClientProvider client,
@@ -44,6 +45,8 @@ namespace Azure.Generator.Providers
                 "_operation", this);
             _getResponse = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly,
                 typeof(Func<Response>), "_getStatusMonitorResponse", this);
+            _metadataValue = metadata is null ? null : new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly,
+                metadata.Type, "_metadata", this);
         }
 
         internal CSharpType? ResultType { get; }
@@ -53,24 +56,29 @@ namespace Azure.Generator.Providers
         protected override FormattableString BuildDescription() => $"Tracks the long-running {_method.Name} operation and its selected metadata.";
         protected override TypeSignatureModifiers BuildDeclarationModifiers() => _modifiers;
         protected override CSharpType BuildBaseType() => _operation.Type;
-        protected override CSharpType[] BuildImplements() => [typeof(IStatusMonitorOperation)];
-        protected override FieldProvider[] BuildFields() => [_operation, _getResponse];
+        protected override CSharpType[] BuildImplements() => [typeof(IStatusMonitorOperation), typeof(IPollingUriOperation)];
+        protected override FieldProvider[] BuildFields() => _metadataValue is null ? [_operation, _getResponse] : [_operation, _getResponse, _metadataValue];
 
         protected override ConstructorProvider[] BuildConstructors()
         {
             var operation = new ParameterProvider("operation", $"The underlying operation.", _operation.Type);
             var getResponse = new ParameterProvider("getStatusMonitorResponse", $"Gets the latest status-monitor response.", typeof(Func<Response>));
+            var statements = new List<MethodBodyStatement>
+            {
+                _operation.Assign(operation).Terminate(),
+                _getResponse.Assign(getResponse).Terminate()
+            };
+            if (_metadataValue is not null)
+            {
+                statements.Add(_metadataValue.Assign(New.Instance(_metadata!.Type, getResponse)).Terminate());
+            }
             return
             [
                 new ConstructorProvider(
                     new ConstructorSignature(Type, $"Initializes a new instance for mocking.", MethodSignatureModifiers.Protected, []),
                     Array.Empty<MethodBodyStatement>(), this),
                 new ConstructorProvider(new ConstructorSignature(Type, null, MethodSignatureModifiers.Internal, [operation, getResponse]),
-                new MethodBodyStatement[]
-                {
-                    _operation.Assign(operation).Terminate(),
-                    _getResponse.Assign(getResponse).Terminate()
-                }, this)
+                statements.ToArray(), this)
             ];
         }
 
@@ -93,7 +101,7 @@ namespace Azure.Generator.Providers
                 properties.Add(new PropertyProvider(
                     $"Gets auxiliary metadata from the latest monitor response, including failed and canceled responses.",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, _metadata.Type, "Metadata",
-                    new ExpressionPropertyBody(New.Instance(_metadata.Type, _getResponse)), this));
+                    new ExpressionPropertyBody(_metadataValue!), this));
             }
             return properties.ToArray();
         }
@@ -111,9 +119,9 @@ namespace Azure.Generator.Providers
             }
             var path = metadata.OfType<InputLroOperationIdPathMetadata>().SingleOrDefault();
             var body = metadata.OfType<InputLroOperationIdPropertyMetadata>().SingleOrDefault();
-            return Static(typeof(ProtocolOperationHelpers)).Invoke("GetOperationId",
+            return Static(typeof(ProtocolOperationHelpers)).Invoke("GetOperationIdFromOperation",
             [
-                _operation.AsValueExpression.Invoke(nameof(Operation.GetRehydrationToken)),
+                _operation,
                 _getResponse.AsValueExpression.Invoke("Invoke"),
                 path is null ? Null : Literal(path.PollingPath),
                 path is null ? Null : Literal(path.PathParameter.SerializedName),
@@ -121,10 +129,10 @@ namespace Azure.Generator.Providers
             ]);
         }
 
-        internal FuncExpression CreateFactory()
+        internal FuncExpression CreateFactory(bool untyped = false)
         {
             var resultType = ResultType ?? typeof(VoidValue);
-            var operation = new VariableExpression(new CSharpType(typeof(Operation<>), resultType), "operation");
+            var operation = new VariableExpression(untyped ? typeof(Operation) : new CSharpType(typeof(Operation<>), resultType), "operation");
             var monitor = new VariableExpression(typeof(Func<Response>), "monitor");
             return new FuncExpression([operation.Declaration, monitor.Declaration], New.Instance(Type, operation, monitor));
         }
@@ -143,6 +151,34 @@ namespace Azure.Generator.Providers
                 ? Static(ResultType).Invoke("FromLroResponse", response)
                 : new CastExpression(response, ResultType);
         }
+
+        internal MethodProvider CreateRehydrationMethod(ClientProvider client, string name, MethodSignatureModifiers visibility)
+        {
+            var pipeline = new ParameterProvider("pipeline", $"The client pipeline.", typeof(HttpPipeline));
+            var token = new ParameterProvider("rehydrationToken", $"The operation rehydration token.", typeof(RehydrationToken));
+            var options = new ParameterProvider("options", $"The client options.", typeof(ClientOptions), Null);
+            return new MethodProvider(new MethodSignature(name,
+                $"Rehydrates the operation and retrieves its current status.",
+                visibility | MethodSignatureModifiers.Static, _operation.Type, null, [pipeline, token, options]),
+                Static(Type).Invoke("FromRehydrationToken", [pipeline, token, options]), client);
+        }
+
+        internal MethodProvider CreateMetadataAccessor(ClientProvider client, string name, MethodSignatureModifiers visibility)
+        {
+            var operation = new ParameterProvider("operation", $"The long-running operation.", typeof(Operation));
+            var getResponse = new FuncExpression([], Static(typeof(ProtocolOperationHelpers)).Invoke("GetMonitorResponse", operation));
+            var body = new MethodBodyStatement[]
+            {
+                new IfStatement(operation.Equal(Null)) { Throw(New.Instance(typeof(ArgumentNullException), Literal("operation"))) },
+                Return(New.Instance(_metadata!.Type, getResponse))
+            };
+            return new MethodProvider(new MethodSignature(name,
+                $"Gets the latest status-monitor metadata for the operation.",
+                visibility | MethodSignatureModifiers.Static, _metadata!.Type, null, [operation]),
+                body, client);
+        }
+
+        internal string? MetadataName => _metadata?.Name;
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -164,6 +200,9 @@ namespace Azure.Generator.Providers
                 new MethodProvider(new MethodSignature("GetStatusMonitorResponse", null,
                     MethodSignatureModifiers.None, typeof(Response), null, [], ExplicitInterface: typeof(IStatusMonitorOperation)),
                     _getResponse.AsValueExpression.Invoke("Invoke"), this),
+                new MethodProvider(new MethodSignature("GetPollingUri", null,
+                    MethodSignatureModifiers.None, typeof(Uri), null, [], ExplicitInterface: typeof(IPollingUriOperation)),
+                    Static(typeof(ProtocolOperationHelpers)).Invoke("GetPollingUri", _operation), this),
                 new MethodProvider(new MethodSignature("UpdateStatus", null,
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(Response), null, [cancellationToken]),
                     _operation.AsValueExpression.Invoke("UpdateStatus", cancellationToken), this),

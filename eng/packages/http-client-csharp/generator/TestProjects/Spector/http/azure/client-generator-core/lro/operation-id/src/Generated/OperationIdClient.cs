@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.Lro.OperationId
@@ -35,13 +36,13 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.OperationId
 
         public virtual Task<Response<DocumentAnalysisStatus>> GetDocumentAnalysisStatusAsync(string modelId, string resultId, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual OperationIdClientAnalyzeRawOperation Analyze(WaitUntil waitUntil, string modelId, RequestContext context) => throw null;
+        public virtual Operation<BinaryData> Analyze(WaitUntil waitUntil, string modelId, RequestContext context) => throw null;
 
-        public virtual Task<OperationIdClientAnalyzeRawOperation> AnalyzeAsync(WaitUntil waitUntil, string modelId, RequestContext context) => throw null;
+        public virtual Task<Operation<BinaryData>> AnalyzeAsync(WaitUntil waitUntil, string modelId, RequestContext context) => throw null;
 
-        public virtual OperationIdClientAnalyzeOperation Analyze(WaitUntil waitUntil, string modelId, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<DocumentAnalysisResult> Analyze(WaitUntil waitUntil, string modelId, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<OperationIdClientAnalyzeOperation> AnalyzeAsync(WaitUntil waitUntil, string modelId, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Operation<DocumentAnalysisResult>> AnalyzeAsync(WaitUntil waitUntil, string modelId, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetTranslationStatus(RequestContext context) => throw null;
 
@@ -51,13 +52,13 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.OperationId
 
         public virtual Task<Response<TranslationStatus>> GetTranslationStatusAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual OperationIdClientStartTranslationRawOperation StartTranslation(WaitUntil waitUntil, RequestContext context) => throw null;
+        public virtual Operation<BinaryData> StartTranslation(WaitUntil waitUntil, RequestContext context) => throw null;
 
-        public virtual Task<OperationIdClientStartTranslationRawOperation> StartTranslationAsync(WaitUntil waitUntil, RequestContext context) => throw null;
+        public virtual Task<Operation<BinaryData>> StartTranslationAsync(WaitUntil waitUntil, RequestContext context) => throw null;
 
-        public virtual OperationIdClientStartTranslationOperation StartTranslation(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<TranslationResult> StartTranslation(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<OperationIdClientStartTranslationOperation> StartTranslationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Operation<TranslationResult>> StartTranslationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetTranslationWithPathStatus(string operationId, RequestContext context) => throw null;
 
@@ -67,12 +68,24 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.OperationId
 
         public virtual Task<Response<TranslationWithPathStatus>> GetTranslationWithPathStatusAsync(string operationId, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual OperationIdClientStartTranslationWithPathRawOperation StartTranslationWithPath(WaitUntil waitUntil, RequestContext context) => throw null;
+        public virtual Operation<BinaryData> StartTranslationWithPath(WaitUntil waitUntil, RequestContext context) => throw null;
 
-        public virtual Task<OperationIdClientStartTranslationWithPathRawOperation> StartTranslationWithPathAsync(WaitUntil waitUntil, RequestContext context) => throw null;
+        public virtual Task<Operation<BinaryData>> StartTranslationWithPathAsync(WaitUntil waitUntil, RequestContext context) => throw null;
 
-        public virtual OperationIdClientStartTranslationWithPathOperation StartTranslationWithPath(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<TranslationResult> StartTranslationWithPath(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<OperationIdClientStartTranslationWithPathOperation> StartTranslationWithPathAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Operation<TranslationResult>> StartTranslationWithPathAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+
+        public static Operation<DocumentAnalysisResult> RehydrateAnalyzeOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+
+        public static Operation<BinaryData> RehydrateAnalyzeRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+
+        public static Operation<TranslationResult> RehydrateStartTranslationOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+
+        public static Operation<BinaryData> RehydrateStartTranslationRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+
+        public static Operation<TranslationResult> RehydrateStartTranslationWithPathOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+
+        public static Operation<BinaryData> RehydrateStartTranslationWithPathRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
     }
 }

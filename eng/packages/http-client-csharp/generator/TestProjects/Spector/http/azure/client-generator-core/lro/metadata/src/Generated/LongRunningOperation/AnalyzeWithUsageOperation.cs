@@ -14,9 +14,9 @@ using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 {
-    public partial class MetadataClientAnalyzeWithUsageOperation : Operation<ContentAnalysisResult>, IStatusMonitorOperation
+    public partial class AnalyzeWithUsageOperation : Operation<ContentAnalysisResult>, IStatusMonitorOperation, IPollingUriOperation
     {
-        protected MetadataClientAnalyzeWithUsageOperation() => throw null;
+        protected AnalyzeWithUsageOperation() => throw null;
 
         public override bool HasCompleted => throw null;
 
@@ -26,7 +26,7 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 
         public override bool HasValue => throw null;
 
-        public virtual MetadataClientAnalyzeWithUsageOperationMetadata Metadata => throw null;
+        public virtual AnalyzeWithUsageOperationMetadata Metadata => throw null;
 
         public override Response GetRawResponse() => throw null;
 
@@ -34,11 +34,13 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 
         Response IStatusMonitorOperation.GetStatusMonitorResponse() => throw null;
 
+        Uri IPollingUriOperation.GetPollingUri() => throw null;
+
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => throw null;
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public static MetadataClientAnalyzeWithUsageOperation FromRehydrationToken(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+        public static AnalyzeWithUsageOperation FromRehydrationToken(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
 
         public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => throw null;
 

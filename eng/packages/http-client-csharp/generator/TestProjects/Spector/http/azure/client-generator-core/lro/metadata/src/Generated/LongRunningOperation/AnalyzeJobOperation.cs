@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 {
-    public partial class MetadataClientAnalyzeWithUsageRawOperation : Operation<BinaryData>, IStatusMonitorOperation
+    public partial class AnalyzeJobOperation : Operation<LanguageJobResult>, IStatusMonitorOperation, IPollingUriOperation
     {
-        protected MetadataClientAnalyzeWithUsageRawOperation() => throw null;
+        protected AnalyzeJobOperation() => throw null;
 
         public override bool HasCompleted => throw null;
 
         public override string Id => throw null;
 
-        public override BinaryData Value => throw null;
+        public override LanguageJobResult Value => throw null;
 
         public override bool HasValue => throw null;
 
-        public virtual MetadataClientAnalyzeWithUsageOperationMetadata Metadata => throw null;
+        public virtual AnalyzeJobOperationMetadata Metadata => throw null;
 
         public override Response GetRawResponse() => throw null;
 
@@ -34,34 +34,36 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 
         Response IStatusMonitorOperation.GetStatusMonitorResponse() => throw null;
 
+        Uri IPollingUriOperation.GetPollingUri() => throw null;
+
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => throw null;
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public static MetadataClientAnalyzeWithUsageRawOperation FromRehydrationToken(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+        public static AnalyzeJobOperation FromRehydrationToken(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
 
         public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => throw null;
 
         public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public override Response<BinaryData> WaitForCompletion(CancellationToken cancellationToken = default) => throw null;
+        public override Response<LanguageJobResult> WaitForCompletion(CancellationToken cancellationToken = default) => throw null;
 
-        public override ValueTask<Response<BinaryData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => throw null;
+        public override ValueTask<Response<LanguageJobResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => throw null;
 
         public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
 
         public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
 
-        public override Response<BinaryData> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+        public override Response<LanguageJobResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
 
-        public override ValueTask<Response<BinaryData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+        public override ValueTask<Response<LanguageJobResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
 
         public override Response WaitForCompletionResponse(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
 
         public override ValueTask<Response> WaitForCompletionResponseAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
 
-        public override Response<BinaryData> WaitForCompletion(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+        public override Response<LanguageJobResult> WaitForCompletion(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
 
-        public override ValueTask<Response<BinaryData>> WaitForCompletionAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+        public override ValueTask<Response<LanguageJobResult>> WaitForCompletionAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
     }
 }

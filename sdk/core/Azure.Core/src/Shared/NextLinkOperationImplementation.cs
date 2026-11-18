@@ -40,6 +40,17 @@ namespace Azure.Core
         public string OperationId { get; private set; } = NotSet;
         public RequestMethod RequestMethod { get; }
 
+        internal static Uri? GetPollingUri(IOperation operation)
+        {
+            var nextLink = operation switch
+            {
+                NextLinkOperationImplementation pending => pending,
+                CompletedOperation completed => completed._operation,
+                _ => null
+            };
+            return nextLink is null ? null : new Uri(nextLink._startRequestUri, nextLink._nextRequestUri);
+        }
+
         public static IOperation Create(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
@@ -660,7 +671,7 @@ namespace Azure.Core
         {
             private readonly OperationState _operationState;
 
-            private readonly NextLinkOperationImplementation _operation;
+            internal readonly NextLinkOperationImplementation _operation;
 
             public CompletedOperation(OperationState operationState, NextLinkOperationImplementation operation)
             {

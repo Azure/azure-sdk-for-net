@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,6 +18,7 @@ using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -48,11 +53,12 @@ namespace Azure.Generator.Tests.Visitors
                 {
                     returnType = returnType.Arguments[0];
                 }
-                Assert.AreEqual(method.ServiceMethod == selected ? "TestClientSelectedOperation" : "Operation", returnType.Name);
+                Assert.AreEqual(method.ServiceMethod == selected && method.Kind != ScmMethodKind.Protocol
+                    ? "SelectedOperation" : "Operation", returnType.Name);
             }
             var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
             var operation = output.GetLroOperation(selected, client, protocol: false)!;
-            Assert.AreEqual("TestClientSelectedOperationMetadata", operation.Properties.Single(p => p.Name == "Metadata").Type.Name);
+            Assert.AreEqual("SelectedOperationMetadata", operation.Properties.Single(p => p.Name == "Metadata").Type.Name);
             var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
             Assert.AreEqual(access == "public", operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
             Assert.AreEqual(access == "public", metadataType.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
@@ -100,8 +106,11 @@ namespace Azure.Generator.Tests.Visitors
                 return;
             }
 
-            Assert.AreEqual("this.GetMonitorModel()?.Details?.Progress",
-                ((ExpressionPropertyBody)property.Body).Getter.ToDisplayString());
+            var propertyBody = ((MethodPropertyBody)property.Body).Getter!.ToDisplayString();
+            StringAssert.Contains("GetStatusMetadata", propertyBody);
+            StringAssert.Contains("return this.GetMonitorModel(response)?.Details?.Progress;", propertyBody);
+            Assert.AreEqual(1, propertyBody.Split("_getResponse.Invoke()", StringSplitOptions.None).Length - 1);
+            StringAssert.Contains("GetStatusMetadata(response,", propertyBody);
             var cache = metadataType.Fields.Single(f => f.Name == "_monitorCache");
             Assert.AreEqual("JobStatus", cache.Type.Arguments[1].Name);
             var body = metadataType.Methods.Single(m => m.Signature.Name == "GetMonitorModel").BodyStatements!.ToDisplayString();
@@ -110,6 +119,170 @@ namespace Azure.Generator.Tests.Visitors
             StringAssert.Contains("catch (global::System.Text.Json.JsonException)", body);
             StringAssert.Contains("catch (global::System.InvalidOperationException)", body);
             StringAssert.Contains("_monitorCache = new global::System.Tuple<global::Azure.Response, global::Samples.Models.JobStatus>(response, model);", body);
+        }
+
+        [Test]
+        public void ModelValuedMetadataWithoutPollingResponseModel()
+        {
+            var value = InputFactory.Model("Details", properties: [InputFactory.Property("progress", InputPrimitiveType.Int32)]);
+            var details = InputFactory.Property("details", value, isReadOnly: true);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                [new InputLroStatusMetadata(details, [details])], []);
+            var selected = InputFactory.LongRunningServiceMethod("selected", InputFactory.Operation("selected"), longRunningServiceMetadata: metadata);
+            var inputClient = InputFactory.Client("TestClient", methods: [selected]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient], inputModels: () => [value]);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
+            output.GetLroOperation(selected, client, protocol: false);
+            Assert.NotNull(AzureClientGenerator.Instance.TypeFactory.CreateModel(value));
+            Assert.NotNull(AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(value));
+            var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
+            var body = ((MethodPropertyBody)metadataType.Properties.Single().Body).Getter!.ToDisplayString();
+            Assert.IsEmpty(metadataType.Methods);
+            StringAssert.Contains("\"details\"", body);
+            StringAssert.Contains("Details.DeserializeDetails(element.Value", body);
+            Assert.IsTrue(output.TypeProviders.OfType<ModelProvider>().Any(model => model.Name == "Details"));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void OperationIdOnlyPreservesMethodReturnTypes(bool hasResult)
+        {
+            var id = InputFactory.Property("id", InputPrimitiveType.String);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                [], [new InputLroOperationIdPropertyMetadata(id, [id])]);
+            var response = hasResult ? InputFactory.Model("Result") : null;
+            var lro = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"),
+                response: InputFactory.ServiceMethodResponse(response, null), longRunningServiceMetadata: metadata);
+            var inputClient = InputFactory.Client("TestClient", methods: [lro]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            var visitor = new TestLroVisitor();
+            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
+            foreach (var method in client.Methods.OfType<ScmMethodProvider>())
+            {
+                visitor.InvokeVisitMethod(method);
+                var returnType = method.Signature.ReturnType!;
+                if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                {
+                    returnType = returnType.Arguments[0];
+                }
+                Assert.AreEqual("Operation", returnType.Name);
+                if (hasResult)
+                {
+                    Assert.AreEqual(method.Kind == ScmMethodKind.Protocol ? "BinaryData" : "Result", returnType.Arguments[0].Name);
+                }
+                Assert.IsFalse(output.GetLroOperation(lro, client, method.Kind == ScmMethodKind.Protocol)!
+                    .DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            }
+            _ = output.TypeProviders;
+            _ = output.TypeProviders;
+            var rehydrationMethods = client.Methods.Where(m => m.Signature.Name.StartsWith("Rehydrate", StringComparison.Ordinal)).ToArray();
+            Assert.AreEqual(hasResult ? 2 : 1, rehydrationMethods.Length);
+            Assert.AreEqual("Operation", rehydrationMethods[0].Signature.ReturnType!.Name);
+            if (hasResult)
+            {
+                Assert.AreEqual("Result", rehydrationMethods[0].Signature.ReturnType!.Arguments[0].Name);
+            }
+            Assert.IsTrue(rehydrationMethods.All(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static)));
+            Assert.IsTrue(rehydrationMethods.All(m => m.BodyExpression!.ToDisplayString().Contains("FromRehydrationToken")));
+        }
+
+        [Test]
+        public void RehydrationMethodAvoidsExistingClientMethod()
+        {
+            var id = InputFactory.Property("id", InputPrimitiveType.String);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                [], [new InputLroOperationIdPropertyMetadata(id, [id])]);
+            var lro = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
+            var existing = InputFactory.BasicServiceMethod("rehydrateStartOperation", InputFactory.Operation("rehydrateStartOperation"));
+            var inputClient = InputFactory.Client("TestClient", methods: [lro, existing]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
+            var client = output.TypeProviders.OfType<ClientProvider>().Single();
+            Assert.AreEqual(1, client.Methods.Count(m => m.Signature.Name == "RehydrateStartOperation2"));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void VoidLroMetadataWrapsProtocolResult(bool hasStatusMetadata)
+        {
+            var property = InputFactory.Property("id", InputPrimitiveType.String);
+            var monitor = InputFactory.Model("Monitor", properties: [property]);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                hasStatusMetadata ? [new InputLroStatusMetadata(property, [property])] : [],
+                hasStatusMetadata ? [] : [new InputLroOperationIdPropertyMetadata(property, [property])]);
+            var method = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"),
+                longRunningServiceMetadata: metadata);
+            var inputClient = InputFactory.Client("TestClient", methods: [method]);
+            var generator = MockHelpers.LoadMockGenerator(clients: () => [inputClient], inputModels: () => [monitor]);
+            var output = generator.Object.OutputLibrary;
+            new TestLroVisitor().InvokeVisitLibrary(output);
+            var client = output.TypeProviders.OfType<ClientProvider>().Single();
+            foreach (var convenience in client.Methods.OfType<ScmMethodProvider>()
+                         .Where(m => m.Kind != ScmMethodKind.Protocol))
+            {
+                var body = convenience.BodyStatements!.ToDisplayString();
+                StringAssert.Contains("WrapWithMetadata", body);
+                StringAssert.Contains("new global::Samples.StartOperation", body);
+            }
+        }
+
+        [Test]
+        public void MetadataOperationNamesAvoidExistingTypesAndOtherOperations()
+        {
+            var status = InputFactory.Property("progress", InputPrimitiveType.Int32);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                [new InputLroStatusMetadata(status, [status])], []);
+            var first = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
+            var second = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
+            var firstClient = InputFactory.Client("FirstClient", methods: [first]);
+            var secondClient = InputFactory.Client("SecondClient", methods: [second]);
+            var existing = InputFactory.Model("StartOperation");
+            MockHelpers.LoadMockGenerator(clients: () => [firstClient, secondClient], inputModels: () => [existing]);
+            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
+            var firstOperation = output.GetLroOperation(first, AzureClientGenerator.Instance.TypeFactory.CreateClient(firstClient)!, false)!;
+            var secondOperation = output.GetLroOperation(second, AzureClientGenerator.Instance.TypeFactory.CreateClient(secondClient)!, false)!;
+
+            Assert.AreEqual("FirstClientStartOperation", firstOperation.Name);
+            Assert.AreEqual("SecondClientStartOperation", secondOperation.Name);
+            Assert.AreNotEqual(firstOperation.Properties.Single(p => p.Name == "Metadata").Type.Name,
+                secondOperation.Properties.Single(p => p.Name == "Metadata").Type.Name);
+        }
+
+        [TestCase("none")]
+        [TestCase("status")]
+        [TestCase("id")]
+        public void WarnsWhenPagedLroHasSelectedMetadata(string selection)
+        {
+            var property = InputFactory.Property("id", InputPrimitiveType.String);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                selection == "status" ? [new InputLroStatusMetadata(property, [property])] : [],
+                selection == "id" ? [new InputLroOperationIdPropertyMetadata(property, [property])] : []);
+            var paging = new InputLongRunningPagingServiceMethod(
+                "list", "public", [], null, null, InputFactory.Operation("list"), [],
+                InputFactory.ServiceMethodResponse(null, null), null, false, true, true, "Test.list",
+                metadata, InputFactory.PagingMetadata([], null, null));
+            var inputClient = InputFactory.Client("TestClient", methods: [paging]);
+            var generator = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            using var stream = new MemoryStream();
+            using var emitter = (Emitter)Activator.CreateInstance(typeof(Emitter),
+                BindingFlags.Instance | BindingFlags.NonPublic, null, [stream], null)!;
+            generator.SetupGet(g => g.Emitter).Returns(emitter);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+
+            new TestLroVisitor().InvokeVisitServiceMethod(paging, client, null);
+            var output = Encoding.UTF8.GetString(stream.ToArray());
+            if (selection == "none")
+            {
+                Assert.IsEmpty(output);
+            }
+            else
+            {
+                StringAssert.Contains("AZLRO001", output);
+                StringAssert.Contains("Test.list", output);
+                StringAssert.Contains("not supported for paged operation", output);
+            }
         }
 
         [Test]

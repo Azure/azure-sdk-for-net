@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class ProtocolOperation<T> : Operation<T>, IOperation<T> where T : notnull
+    internal class ProtocolOperation<T> : Operation<T>, IOperation<T>, IPollingUriOperation where T : notnull
     {
         private readonly Func<Response, T> _resultSelector;
         private readonly OperationInternal<T> _operation;
@@ -56,6 +56,8 @@ namespace Azure.Core
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.RawResponse;
+
+        Uri? IPollingUriOperation.GetPollingUri() => NextLinkOperationImplementation.GetPollingUri(_nextLinkOperation);
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
