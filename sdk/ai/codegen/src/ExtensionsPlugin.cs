@@ -21,6 +21,7 @@ namespace Extensions.Plugin
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)
         {
+            generator.AddVisitor(new PreserveDatePropertyNamesVisitor());
             generator.AddVisitor(new SerializationOverrideVisitor());
             // ExperimentalAttributeVisitor runs first so our intentional AAIP001 marking (driven by the
             // typespec x-ms-foundry-meta CSV tables) wins for any declaration that is experimental both because
