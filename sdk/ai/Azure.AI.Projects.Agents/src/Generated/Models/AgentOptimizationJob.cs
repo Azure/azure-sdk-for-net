@@ -36,12 +36,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="targetConfiguration"> Foundry agent whose configuration is optimized. Omitted when the workflow does not target a registered Foundry agent. </param>
         /// <param name="optimizationModelConfiguration"> Model used to generate candidate changes. An existing deployment name is also accepted. </param>
         /// <param name="optimizationConfiguration"> Type-specific optimization configuration. </param>
-        /// <param name="runDurationMs"> Duration for which the job has been running, in milliseconds. </param>
+        /// <param name="runDuration"> Duration for which the job has been running, in milliseconds. </param>
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time. </param>
         /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
         /// <param name="warnings"> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJob(string id, AgentOptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, string displayName, AgentOptimizationTargetConfiguration targetConfiguration, AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration, TimeSpan runDurationMs, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJob(string id, AgentOptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, string displayName, AgentOptimizationTargetConfiguration targetConfiguration, AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration, TimeSpan runDuration, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Result = result;
@@ -51,7 +51,7 @@ namespace Azure.AI.Projects.Agents
             TargetConfiguration = targetConfiguration;
             OptimizationModelConfiguration = optimizationModelConfiguration;
             OptimizationConfiguration = optimizationConfiguration;
-            RunDurationMs = runDurationMs;
+            RunDuration = runDuration;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             Warnings = warnings;
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Agents
         public AgentOptimizationConfigurationBase OptimizationConfiguration { get; set; }
 
         /// <summary> Duration for which the job has been running, in milliseconds. </summary>
-        public TimeSpan RunDurationMs { get; }
+        public TimeSpan RunDuration { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time. </summary>
         public DateTimeOffset CreatedOn { get; }

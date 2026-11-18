@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="AuditTrailItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuditTrailItemKind?(string value) => value == null ? null : new AuditTrailItemKind(value);
+        public static implicit operator AuditTrailItemKind?(string value) => value == null ? (AuditTrailItemKind?)null : new AuditTrailItemKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

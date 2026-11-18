@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="AnalyzeOutputOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeOutputOption?(string value) => value == null ? null : new AnalyzeOutputOption(value);
+        public static implicit operator AnalyzeOutputOption?(string value) => value == null ? (AnalyzeOutputOption?)null : new AnalyzeOutputOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

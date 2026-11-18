@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Converts a string to a <see cref="TextAuthoringProjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextAuthoringProjectKind?(string value) => value == null ? null : new TextAuthoringProjectKind(value);
+        public static implicit operator TextAuthoringProjectKind?(string value) => value == null ? (TextAuthoringProjectKind?)null : new TextAuthoringProjectKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentIntelligenceLayoutSkillOutputFormat?(string value) => value == null ? null : new DocumentIntelligenceLayoutSkillOutputFormat(value);
+        public static implicit operator DocumentIntelligenceLayoutSkillOutputFormat?(string value) => value == null ? (DocumentIntelligenceLayoutSkillOutputFormat?)null : new DocumentIntelligenceLayoutSkillOutputFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

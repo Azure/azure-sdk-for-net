@@ -66,7 +66,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="FileValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileValidationStatus?(string value) => value == null ? null : new FileValidationStatus(value);
+        public static implicit operator FileValidationStatus?(string value) => value == null ? (FileValidationStatus?)null : new FileValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -102,7 +102,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="DevBoxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevBoxProvisioningState?(string value) => value == null ? null : new DevBoxProvisioningState(value);
+        public static implicit operator DevBoxProvisioningState?(string value) => value == null ? (DevBoxProvisioningState?)null : new DevBoxProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

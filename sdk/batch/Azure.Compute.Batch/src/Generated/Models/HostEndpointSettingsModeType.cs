@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="HostEndpointSettingsModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostEndpointSettingsModeType?(string value) => value == null ? null : new HostEndpointSettingsModeType(value);
+        public static implicit operator HostEndpointSettingsModeType?(string value) => value == null ? (HostEndpointSettingsModeType?)null : new HostEndpointSettingsModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

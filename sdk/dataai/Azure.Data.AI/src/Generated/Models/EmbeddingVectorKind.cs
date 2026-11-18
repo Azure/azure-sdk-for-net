@@ -62,7 +62,7 @@ namespace Azure.Data.AI
 
         /// <summary> Converts a string to a <see cref="EmbeddingVectorKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingVectorKind?(string value) => value == null ? null : new EmbeddingVectorKind(value);
+        public static implicit operator EmbeddingVectorKind?(string value) => value == null ? (EmbeddingVectorKind?)null : new EmbeddingVectorKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

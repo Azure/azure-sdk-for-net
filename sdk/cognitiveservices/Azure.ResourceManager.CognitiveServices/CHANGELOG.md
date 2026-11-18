@@ -5,6 +5,18 @@
 ### Features Added
 
 - Upgraded API version to 2026-11-01.
+- Added `CognitiveServicesAccountProperties.TrustedCertificateSources` to trust private CA certificate bundles stored in Azure Key Vault.
+- Added RAI policy egress configuration through `RaiPolicyProperties.EgressPolicy`.
+- Added `GetCognitiveServicesManagedComputeCapacities` to list managed compute capacity for a subscription.
+- Added `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId`, `CognitiveServicesAccountProperties.IsA365LoggingEnabled`, and `ServiceAccountUsage.Id` and `Type`.
+
+### Breaking Changes
+
+- Compared to `1.6.0`, the `ArmCognitiveServicesModelFactory.CognitiveServicesAccountProperties` compatibility overload accepting `aiFoundryNetworkInjection` now requires all arguments to avoid ambiguity with other overloads.
+
+### Bugs Fixed
+
+- Preserved optional parameters on 13 `ArmCognitiveServicesModelFactory` compatibility overloads so parameterless and partial named-argument calls supported in `1.6.0` continue to work.
 
 ## 1.7.0-beta.1 (2026-10-26)
 

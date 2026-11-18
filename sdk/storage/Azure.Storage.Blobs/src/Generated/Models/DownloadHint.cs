@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Converts a string to a <see cref="DownloadHint"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DownloadHint?(string value) => value == null ? null : new DownloadHint(value);
+        public static implicit operator DownloadHint?(string value) => value == null ? (DownloadHint?)null : new DownloadHint(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="PoolHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PoolHealthStatus?(string value) => value == null ? null : new PoolHealthStatus(value);
+        public static implicit operator PoolHealthStatus?(string value) => value == null ? (PoolHealthStatus?)null : new PoolHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

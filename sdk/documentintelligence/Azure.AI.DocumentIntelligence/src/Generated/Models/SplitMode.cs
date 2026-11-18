@@ -56,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="SplitMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SplitMode?(string value) => value == null ? null : new SplitMode(value);
+        public static implicit operator SplitMode?(string value) => value == null ? (SplitMode?)null : new SplitMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
