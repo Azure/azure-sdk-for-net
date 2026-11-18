@@ -750,6 +750,139 @@ namespace Azure.Generator.Mgmt.Tests
                 "The generator cannot invent a mapping when the wire shape changes.");
         }
 
+        [Test]
+        public void GeneratedFactoryPreservesNestedFlattenedValuesAndOmission()
+        {
+            var model = Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.IssueTestResourcePatch(
+                displayName: "outer", innerValue: "nested", innerFlag: true, status: "ready");
+            Assert.That(model.DisplayName, Is.EqualTo("outer"));
+            Assert.That(model.InnerValue, Is.EqualTo("nested"));
+            Assert.That(model.InnerFlag, Is.True);
+            Assert.That(model.Status, Is.EqualTo("ready"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("J")));
+            var properties = json.RootElement.GetProperty("properties");
+            Assert.That(properties.GetProperty("displayName").GetString(), Is.EqualTo("outer"));
+            Assert.That(properties.GetProperty("status").GetString(), Is.EqualTo("ready"));
+            Assert.That(properties.GetProperty("nestedConfig").GetProperty("innerValue").GetString(), Is.EqualTo("nested"));
+            Assert.That(properties.GetProperty("nestedConfig").GetProperty("innerFlag").GetBoolean(), Is.True);
+
+            var falseFlag = Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.IssueTestResourcePatch(innerFlag: false);
+            Assert.That(falseFlag.InnerFlag, Is.False);
+            using var falseFlagJson = JsonDocument.Parse(ModelReaderWriter.Write(falseFlag, new ModelReaderWriterOptions("J")));
+            Assert.That(falseFlagJson.RootElement.GetProperty("properties").GetProperty("nestedConfig").GetProperty("innerFlag").GetBoolean(), Is.False);
+
+            var outerOnly = Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.IssueTestResourcePatch(displayName: "outer");
+            using var outerJson = JsonDocument.Parse(ModelReaderWriter.Write(outerOnly, new ModelReaderWriterOptions("J")));
+            Assert.That(outerJson.RootElement.GetProperty("properties").TryGetProperty("nestedConfig", out _), Is.False);
+            var omitted = Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.IssueTestResourcePatch();
+            using var omittedJson = JsonDocument.Parse(ModelReaderWriter.Write(omitted, new ModelReaderWriterOptions("J")));
+            Assert.That(omittedJson.RootElement.TryGetProperty("properties", out _), Is.False);
+        }
+
+        [Test]
+        public void GeneratedRedisStyleFactoryPreservesFlattenedValues()
+        {
+            var encryption = Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.CustomerManagedKeyEncryption(
+                keyEncryptionKeyUri: "https://example.test/keys/key");
+            var model = Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.ClusterData(
+                location: AzureLocation.WestUS,
+                highAvailability: Azure.Generator.MgmtTypeSpec.Tests.Models.HighAvailability.Enabled,
+                hostName: "cache.example.test", redisVersion: "7.2", customerManagedKeyEncryption: encryption);
+
+            Assert.That(model.HighAvailability, Is.EqualTo(Azure.Generator.MgmtTypeSpec.Tests.Models.HighAvailability.Enabled));
+            Assert.That(model.HostName, Is.EqualTo("cache.example.test"));
+            Assert.That(model.RedisVersion, Is.EqualTo("7.2"));
+            Assert.That(model.CustomerManagedKeyEncryption, Is.SameAs(encryption));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("J")));
+            var properties = json.RootElement.GetProperty("properties");
+            Assert.That(properties.GetProperty("highAvailability").GetString(), Is.EqualTo("Enabled"));
+            Assert.That(properties.GetProperty("hostName").GetString(), Is.EqualTo("cache.example.test"));
+            Assert.That(properties.GetProperty("redisVersion").GetString(), Is.EqualTo("7.2"));
+            Assert.That(properties.GetProperty("encryption").GetProperty("customerManagedKeyEncryption").GetProperty("keyEncryptionKeyUrl").GetString(),
+                Is.EqualTo("https://example.test/keys/key"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ResourceFactoryPreservesFlattenedPrivateEndpointValues(bool inputModel)
+        {
+            var resourceId = InputFactory.Primitive.String("armResourceIdentifier", "Azure.Core.armResourceIdentifier");
+            var endpoint = InputFactory.Model("PrivateEndpoint", properties:
+                [InputFactory.Property("id", resourceId)]);
+            var state = InputFactory.Model("PrivateLinkConnectionState", properties:
+            [
+                InputFactory.Property("description", InputPrimitiveType.String),
+                InputFactory.Property("status", InputPrimitiveType.String)
+            ]);
+            var properties = InputFactory.Model("PrivateEndpointConnectionProperties", properties:
+            [
+                InputFactory.Property("privateEndpoint", endpoint),
+                InputFactory.Property("connectionState", state, wireName: "privateLinkServiceConnectionState", serializedName: "privateLinkServiceConnectionState"),
+                InputFactory.Property("provisioningState", InputPrimitiveType.String, isReadOnly: true)
+            ]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var (client, models) = InputResourceData.ClientWithResource(isInputModel: inputModel, additionalProperties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [.. models, properties, endpoint, state],
+                clients: () => [client], configurationJson: """{"package-name":"Samples"}""");
+            var model = plugin.Object.TypeFactory.CreateModel(models.Single())!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+
+            // The context includes the resource client type, which this model-only compilation
+            // does not exercise. Supply a stub for that metadata reference, not for the data model.
+            var assembly = Compile(plugin.Object, includeFactory: true,
+                additionalSources: [("ResourceStub.cs", "namespace Samples { public class ResponseTypeResource { } }")]);
+            var factoryType = assembly.GetType(factory.Type.FullyQualifiedName)!;
+            var factoryMethod = factoryType.GetMethods().Single(m => m.Name == model.Name);
+            var parameters = factoryMethod.GetParameters();
+            Assert.That(parameters.Select(p => p.Name), Does.Contain("privateEndpointId").And.Contain("connectionState").And.Contain("provisioningState"));
+            var id = new ResourceIdentifier("/subscriptions/sub/resourceGroups/rg/providers/Test/privateEndpoints/endpoint");
+            var stateType = assembly.GetType("Samples.Models.PrivateLinkConnectionState")!;
+            var connectionState = Activator.CreateInstance(stateType)!;
+            stateType.GetProperty("Description")!.SetValue(connectionState, "approved");
+
+            foreach (var selected in new[] { "privateEndpointId", "connectionState", "provisioningState", "all" })
+            {
+                var arguments = parameters.Select(parameter => parameter.Name switch
+                {
+                    "privateEndpointId" when selected is "privateEndpointId" or "all" => (object?)id,
+                    "connectionState" when selected is "connectionState" or "all" => connectionState,
+                    "provisioningState" when selected is "provisioningState" or "all" => "Succeeded",
+                    _ => null
+                }).ToArray();
+                var result = factoryMethod.Invoke(null, arguments)!;
+                var resultType = result.GetType();
+                Assert.That(resultType.GetProperty("PrivateEndpointId")!.GetValue(result), Is.EqualTo(selected is "privateEndpointId" or "all" ? id : null), selected);
+                Assert.That(resultType.GetProperty("ConnectionState")!.GetValue(result), Is.EqualTo(selected is "connectionState" or "all" ? connectionState : null), selected);
+                Assert.That(resultType.GetProperty("ProvisioningState")!.GetValue(result), Is.EqualTo(selected is "provisioningState" or "all" ? "Succeeded" : null), selected);
+                using var json = JsonDocument.Parse(ModelReaderWriter.Write(result, new ModelReaderWriterOptions("J")));
+                var wireProperties = json.RootElement.GetProperty("properties");
+                if (selected is "privateEndpointId" or "all")
+                {
+                    Assert.That(wireProperties.GetProperty("privateEndpoint").GetProperty("id").GetString(), Is.EqualTo(id.ToString()));
+                }
+                if (selected is "connectionState" or "all")
+                {
+                    Assert.That(wireProperties.GetProperty("privateLinkServiceConnectionState").GetProperty("description").GetString(), Is.EqualTo("approved"));
+                }
+                if (selected is "provisioningState" or "all")
+                {
+                    Assert.That(wireProperties.GetProperty("provisioningState").GetString(), Is.EqualTo("Succeeded"));
+                }
+            }
+
+            var omitted = factoryMethod.Invoke(null, parameters.Select(_ => (object?)null).ToArray())!;
+            using var omittedJson = JsonDocument.Parse(ModelReaderWriter.Write(omitted, new ModelReaderWriterOptions("J")));
+            Assert.That(omittedJson.RootElement.TryGetProperty("properties", out _), Is.False,
+                "Omitting every flattened value must not create an empty properties envelope.");
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public void FactoryPreservesNestedValuesWithoutGuessingChangedShapes(bool changedToArray)
@@ -1525,7 +1658,8 @@ namespace Azure.Generator.Mgmt.Tests
             return stream;
         }
 
-        private static Assembly Compile(ManagementClientGenerator plugin, bool includeFactory = false)
+        private static Assembly Compile(ManagementClientGenerator plugin, bool includeFactory = false,
+            IEnumerable<(string Name, string Text)>? additionalSources = null)
         {
             var types = plugin.OutputLibrary.TypeProviders.Where(t => t is ModelProvider or EnumProvider
                 || (includeFactory && t is ModelFactoryProvider)
@@ -1542,7 +1676,8 @@ namespace Azure.Generator.Mgmt.Tests
                             public static SamplesContext Default { get; } = new SamplesContext();
                         }
                     }
-                    """));
+                    """))
+                .Concat(additionalSources ?? []);
             var compilation = Helpers.BuildCompilation(documents)
                 .WithAssemblyName("FlattenedCompatibility" + Guid.NewGuid().ToString("N"))
                 .AddReferences(((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")!).Split(Path.PathSeparator)
