@@ -46,6 +46,9 @@ parameters:
     type: number
     default: 40
 
+variables:
+  - group: Foundry SDK Env Vars and Secrets
+
 extends:
   template: /sdk/ai/Azure.AI.Projects/tests/Samples/ci/sample-tests-stages.yml
   parameters:

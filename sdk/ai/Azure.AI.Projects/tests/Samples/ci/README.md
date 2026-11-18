@@ -36,20 +36,26 @@ but is no longer called by this pipeline.
 ## Prerequisites
 
 Authorize the pipeline to use the **azure-sdk-tests** Azure Resource Manager
-service connection and the configured agent pool. Save these normal pipeline
-variables:
+service connection, the configured agent pool, and
+[Library group 163: Foundry SDK Env Vars and Secrets](https://dev.azure.com/azure-sdk/internal/_library?view=VariableGroupView&variableGroupId=163).
+The pipeline imports this shared group at pipeline scope. Maintain these normal
+variables in the Library group, not as duplicate pipeline-level entries:
 
 | Variable | Value |
 | --- | --- |
 | `AZURE_SUBSCRIPTION_ID` | Explicit target subscription GUID. |
 | `AZURE_TENANT_ID` | Explicit target tenant GUID. |
+| `LLM_VALIDATION_PROJECT_ENDPOINT` | Shared validation-project endpoint; not used as the provisioned sample target. |
 
-Also save **secret** pipeline variables `MCP_GITHUB_PAT` (the complete GitHub
+Also maintain **secret** Library variables `MCP_GITHUB_PAT` (the complete GitHub
 PAT, including its prefix) and `PROJ_CONN_OPEN_API_KEY` (the TripAdvisor/OpenAPI
 service key). Both are required for every run. They are passed only into the
 provisioning task and read by the secret-only Bicep parameter file, never
 published as test bindings or written into plans, state or artifacts.
 Do not pass them as run parameters or command-line arguments.
+Remove duplicate pipeline-level entries for these five variables so they do not
+override the shared Library values. Library authorization is per pipeline; do
+not enable access for all pipelines.
 
 Supply `identityResourceGroup` when queueing: the same permanent identity RG
 used by the Python sample pipeline. The existing resolver verifies the four

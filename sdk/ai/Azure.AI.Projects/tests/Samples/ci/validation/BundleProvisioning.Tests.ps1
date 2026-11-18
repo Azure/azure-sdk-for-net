@@ -6,6 +6,13 @@
 . (Join-Path $PSScriptRoot '../DotNetSampleCiHelpers.ps1')
 
 Describe 'Full bundle .NET bindings' {
+    It 'imports the shared Library group without overriding its environment or secrets' {
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $variables = [regex]::Match($pipeline, '(?ms)^variables:\r?\n(?<body>.*?)^extends:').Groups['body'].Value
+        $variables.Trim() | Should BeExactly '- group: Foundry SDK Env Vars and Secrets'
+        $variables | Should Not Match 'AZURE_SUBSCRIPTION_ID|AZURE_TENANT_ID|LLM_VALIDATION_PROJECT_ENDPOINT|MCP_GITHUB_PAT|PROJ_CONN_OPEN_API_KEY'
+    }
+
     BeforeEach {
         $script:environment = @{}
         foreach ($name in @(Get-SampleEnvironmentNames)) { $script:environment[$name] = "https://example.invalid/$name" }
