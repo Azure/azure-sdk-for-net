@@ -809,6 +809,43 @@ Describe 'Re-review prompt' {
         $script:Step4 = [regex]::Match($script:PromptBody, '(?ms)^## Step 4\b.*?(?=^## |\z)').Value
     }
 
+    It 'recovers frozen instructions through bounded forward reads of the original same-session message' {
+        $script:Step0 | Should -Match '(?i)compaction.*not.*reason to stop'
+        $script:Step0 | Should -Match '(?i)current session.*original workflow message'
+        $script:Step0 | Should -Match '(?i)`session_store_sql`.*`source: local`'
+        $script:Step0 | Should -Match 'length\(user_message\)'
+        $script:Step0 | Should -Match 'substr\(user_message, 1, 6000\)'
+        $script:Step0 | Should -Match '(?i)6001, 12001.*until.*entire message'
+        $script:Step0 | Should -Match '(?i)do not retrieve only.*tail'
+        $script:Step0 | Should -Match '(?i)saved.*disk.*read.*complete'
+        $script:Step0 | Should -Match '(?i)do not substitute.*PR checkout.*artifact'
+    }
+
+    It 'retains a navigation checkpoint without inferring review completion' {
+        $script:Step0 | Should -Match '(?i)checkpoint.*session.*message.*next unread.*blockers.*safe-output'
+        $script:Step0 | Should -Match '(?i)retain.*recovery procedure.*compaction summary'
+        $script:Step0 | Should -Match '(?i)checkpoint.*not.*proof.*coverage'
+        $script:Step0 | Should -Match '(?i)finish any unfinished analysis of already-read files'
+        $script:Step4 | Should -Match '(?i)instruction recovery.*failed after.*permitted.*attempts'
+    }
+
+    It 'passes frozen rules and recovery instructions and requires explicit child signal status' {
+        $script:Delegation | Should -Match '(?i)pass the frozen review rules.*safety.*coverage.*context-recovery'
+        $script:Delegation | Should -Match '(?is)owner `Azure`.*repo `azure-sdk`.*`docs/dotnet/introduction\.md`'
+        $script:Delegation | Should -Match '(?is)owner `dotnet`.*repo `runtime`.*`docs/coding-guidelines/breaking-change-rules\.md`'
+        $script:Delegation | Should -Match '(?i)status: complete\|blocked'
+        $script:Delegation | Should -Match '(?i)safe_output_signals: none\|'
+        $script:Step4 | Should -Match '(?i)missing or ambiguous child status.*incomplete'
+        $script:Step4 | Should -Match '(?i)do not discard queued failure signals or bypass the publication guard'
+    }
+
+    It 'defers thread actions until coverage and delegated results are reconciled' {
+        $step2 = [regex]::Match($script:PromptBody, '(?ms)^## Step 2\b.*?(?=^## |\z)').Value
+        $step2 | Should -Match '(?i)record proposed thread actions.*do not call.*until Step 4'
+        $step2 | Should -Not -Match '(?i)if addressed: reply briefly'
+        $script:Step4 | Should -Match '(?i)only after.*reconciliation.*queue.*recorded thread actions'
+    }
+
     It 'passes saved MCP source recovery and MCP-only GitHub reads to every subagent' {
         $script:Delegation | Should -Match '(?i)every subagent task'
         $script:Delegation | Should -Match '(?i)saved.*source.*successful retrieval'
