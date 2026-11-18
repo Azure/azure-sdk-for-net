@@ -28,15 +28,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A list of subgroups of the interconnect group. </summary>
+        // Reading an absent collection must not create the properties wire envelope.
         [WirePath("properties.subgroups")]
-        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups
-        {
-            get
-            {
-                Properties ??= new InterconnectGroupPropertiesFormat(default, new ChangeTrackingList<InterconnectGroupSubgroupData>(), default, default, default, default);
-                return Properties.Subgroups;
-            }
-        }
+        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups =>
+            Properties?.Subgroups ?? Array.Empty<InterconnectGroupSubgroupData>();
 
         /// <summary> The provisioning state of the interconnect group resource. </summary>
         [WirePath("properties.provisioningState")]

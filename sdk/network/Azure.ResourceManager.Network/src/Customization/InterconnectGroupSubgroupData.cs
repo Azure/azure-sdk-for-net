@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -20,8 +21,10 @@ namespace Azure.ResourceManager.Network
         public string InternalSubgroupId => Properties?.InternalSubgroupId;
 
         /// <summary> A list of virtual machine references. </summary>
+        // Reading an absent collection must not create the properties wire envelope.
         [WirePath("properties.virtualMachines")]
-        public IReadOnlyList<NetworkSubResource> VirtualMachines => Properties?.VirtualMachines;
+        public IReadOnlyList<NetworkSubResource> VirtualMachines =>
+            Properties?.VirtualMachines ?? Array.Empty<NetworkSubResource>();
 
         /// <summary> The provisioning state of the subgroup. </summary>
         [WirePath("properties.provisioningState")]
