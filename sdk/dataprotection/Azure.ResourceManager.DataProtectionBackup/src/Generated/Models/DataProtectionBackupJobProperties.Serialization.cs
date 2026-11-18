@@ -322,11 +322,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("duration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    duration = prop.Value.GetTimeSpan("P");
+                    DeserializeDuration(prop, ref duration);
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
