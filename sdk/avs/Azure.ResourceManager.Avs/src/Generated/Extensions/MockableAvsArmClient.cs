@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Avs;
@@ -103,7 +104,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
         public virtual IscsiPathResource GetIscsiPathResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             IscsiPathResource.ValidateResourceId(id);
+            if (id.ResourceType == IscsiPathResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new IscsiPathResource(Client, id);
         }
 
@@ -202,7 +211,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
         public virtual WorkloadNetworkResource GetWorkloadNetworkResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             WorkloadNetworkResource.ValidateResourceId(id);
+            if (id.ResourceType == WorkloadNetworkResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new WorkloadNetworkResource(Client, id);
         }
 
