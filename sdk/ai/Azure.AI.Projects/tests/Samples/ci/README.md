@@ -88,11 +88,13 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
 
 ## Execution and results
 
-- The existing matrix has four disjoint sample slices, one framework
-  (`net10.0`), Debug, and one package-reference configuration. The maximum
-  parallel worker count defaults to four; it does not repeat the samples.
-  The slice filters select the `False` (sync) NUnit fixture, so each sample
-  executes once without editing the samples or adding skipped async variants.
+- A non-billable Plan stage builds the three test projects and uses NUnit's
+  XML discovery (`--list-tests`, `NUnit.DumpXmlTestDiscovery=true`) without
+  executing samples. It selects runnable cases from the `False` (sync) fixture,
+  sorts exact fully qualified IDs using ordinal ordering, then distributes
+  them round-robin across `min(testQueueCount, selected test count)` workers.
+  Each sample executes once, with one framework (`net10.0`), Debug, and one
+  package-reference configuration. No empty worker provisions resources.
 - The default smoke selection runs six distinct samples, two per package:
 
   | Package | Samples |
@@ -101,18 +103,25 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
   | `Azure.AI.Projects.Agents` | `Sample_agents_CRUD.VersionSelection`, `Sample_agents_CRUD.AgentCRUD` |
   | `Azure.AI.Extensions.OpenAI` | `Sample_ResponseBasic.AgentResponseSync`, `Sample_ResponseStreaming.AgentResponseStreamingSync` |
 
-  With the default four-worker limit, q1 runs the two Projects samples,
-  q2 runs the two Agents samples, q3 runs the basic Response sample, and
-  q4 runs the streaming Response sample: a 2 + 2 + 1 + 1 distribution.
-  Each worker provisions and cleans up its own full resource bundle.
+  With the default four-worker limit, six sorted cases give q1 cases 1 and 5,
+  q2 cases 2 and 6, q3 case 3 and q4 case 4: a 2 + 2 + 1 + 1 distribution.
+  Assignments may cross package boundaries. Each worker provisions and cleans
+  up its own full resource bundle.
 
-- `selectionKind`/`selection` restrict the existing slices; they do not add
-  tests outside that matrix. A `test-id` selection is a .NET test-filter
-  expression; semicolon-separated expressions are ORed. Semicolon-separated
-  sample paths select their package's sample namespace.
-- Matrix values are read-only. Each worker reads its `SampleSliceFilter` and
-  combines it with the requested selection into the separate runtime variable
-  `AdditionalTestFilters`; it never overwrites a matrix variable.
+- `test-id` accepts comparisons on `FullyQualifiedName` and `Name` using
+  `=`, `!=`, `~`, `!~`, parentheses, `&` and `|`. Semicolon-separated
+  expressions are ORed. Unsupported or malformed expressions fail planning.
+  `sample-path` accepts exact C# files or folders beneath the three packages'
+  `tests/Samples` directories, selecting only classes in those paths.
+  No fixed sample list limits the discovery selection.
+- The `sample-plan-<job attempt>` artifact contains discovery XML,
+  `queue-matrix.json` and `<queue>/selected-tests.json` with exact IDs and
+  filters. Each worker downloads its manifest from the current run, logs
+  every assigned ID and sets the writable `AdditionalTestFilters` variable.
+  The manifest is also published as `sample-assignment-<queue>-<job attempt>`.
+  Matrix variables remain read-only. Successful test jobs verify their TRX
+  results against the manifest; missing, skipped, duplicate or unassigned cases
+  fail the worker instead of reporting a successful partial run.
 - Each worker uses PowerShell 7.2+ and Azure CLI under the service connection.
   [Invoke-BundleProvisioning.ps1](./Invoke-BundleProvisioning.ps1) creates an
   offline plan, resolves identities, calls the language-neutral provisioner,
@@ -151,7 +160,7 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
   Plans and provisioning/cleanup state are published in each
   worker's `standard-foundry` artifact, including on failure.
 
-The four disjoint matrix slices cover only the selected smoke scenarios: deploying more resources does
+Discovery selects only the requested runnable sync samples: deploying more resources does
 not automatically select every sample or make samples requiring other services
 (for example SharePoint, Fabric or hosted agents) runnable.
 
@@ -203,6 +212,7 @@ Use PowerShell 7.2+ with Pester 4.10.1 from this directory:
 Invoke-Pester -Script @(
   './validation/BundleProvisioning.Tests.ps1',
   './validation/StandardProvisioning.Tests.ps1',
+  './validation/SampleTestPlan.Tests.ps1',
   './validation/SharedProvisioning.Tests.ps1',
   './validation/SampleCiHelpers.Tests.ps1',
   './validation/Invoke-SampleProvisioning.Tests.ps1',

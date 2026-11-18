@@ -47,20 +47,11 @@ parameters:
     default: 40
 
 extends:
-  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /sdk/ai/Azure.AI.Projects/tests/Samples/ci/sample-tests-stages.yml
   parameters:
-    ServiceDirectory: ai
-    SupportedClouds: 'Public'
-    CloudConfig:
-      Public:
-        ServiceConnection: azure-sdk-tests
-        UseAzureCliForTests: true
-    Location: 'East US'
+    SelectionKind: ${{ parameters.selectionKind }}
+    Selection: ${{ parameters.selection }}
     MaxParallel: ${{ parameters.testQueueCount }}
-    TimeoutInMinutes: 120
-    DeployTestResources: false
-    UseFederatedAuth: true
-    IgnoreTestFailures: false
     EnvVars:
       CLIENTMODEL_TEST_MODE: Live
       FOUNDRY_PROJECT_ENDPOINT: $(FOUNDRY_PROJECT_ENDPOINT)
@@ -84,69 +75,7 @@ extends:
       STORAGE_QUEUE_URI: $(STORAGE_QUEUE_URI)
       AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
       AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-    MatrixConfigs:
-      - Name: ai_projects_samples_single_run
-        Path: sdk/ai/Azure.AI.Projects/tests/Samples/ci/sample-slice-matrix.json
-        Selection: sparse
-        GenerateVMJobs: true
-    MatrixFilters:
-      - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
-      - TestTargetFramework=^net10.0$
-      - BuildConfiguration=^Debug$
-      - SampleSliceFilter=^\(\(FullyQualifiedName~Azure\.AI\.(Projects\.Tests\.Samples|Projects\.Agents\.Tests\.Samples|Extensions\.OpenAI\.Tests\.Samples).*$
     PreSteps:
-      - pwsh: |
-          $selectionKind = $env:SAMPLE_SELECTION_KIND
-          $selection = $env:SAMPLE_SELECTION
-
-          if ([string]::IsNullOrWhiteSpace($selection)) {
-            throw 'selection must not be empty.'
-          }
-
-          $items = @($selection -split ';' | ForEach-Object { $_.Trim() } | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
-          if ($items.Count -eq 0) {
-            throw 'selection did not produce any valid value.'
-          }
-
-          if ($selectionKind -eq 'sample-path') {
-            $filters = New-Object System.Collections.Generic.List[string]
-            foreach ($item in $items) {
-              if ($item -like 'Azure.AI.Projects/tests/Samples*') {
-                $filters.Add('FullyQualifiedName~Azure.AI.Projects.Tests.Samples')
-              }
-              elseif ($item -like 'Azure.AI.Projects.Agents/tests/Samples*') {
-                $filters.Add('FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples')
-              }
-              elseif ($item -like 'Azure.AI.Extensions.OpenAI/tests/Samples*') {
-                $filters.Add('FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples')
-              }
-              else {
-                throw "Unsupported sample path selection: $item"
-              }
-            }
-
-            $uniqueFilters = @($filters | Select-Object -Unique)
-            $additionalTestFilters = '(' + ($uniqueFilters -join '|') + ')'
-          }
-          elseif ($selectionKind -eq 'test-id') {
-            $additionalTestFilters = '(' + ($items -join '|') + ')'
-          }
-          else {
-            throw "Unsupported selectionKind: $selectionKind"
-          }
-
-          if ([string]::IsNullOrWhiteSpace($env:SAMPLE_SLICE_FILTER)) {
-            throw 'The worker matrix must provide a sample slice filter.'
-          }
-          $additionalTestFilters = "($additionalTestFilters)&($env:SAMPLE_SLICE_FILTER)"
-
-          Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
-          Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
-        displayName: 'Prepare sample test filter and deployment parameters'
-        env:
-          SAMPLE_SELECTION_KIND: ${{ parameters.selectionKind }}
-          SAMPLE_SELECTION: ${{ parameters.selection }}
-          SAMPLE_SLICE_FILTER: $(SampleSliceFilter)
       - task: AzureCLI@2
         displayName: 'Provision full Foundry sample resource bundle with shared identities'
         inputs:

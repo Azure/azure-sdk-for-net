@@ -80,43 +80,22 @@ Describe 'Standard Foundry provisioning contract' {
 }
 
 Describe 'Pipeline sample selection contract' {
-    It 'selects only the sync fixture without changing sample attributes' {
-        $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
-        $matrix.matrix.SampleSelector.Count | Should Be 4
-        foreach ($slice in $matrix.matrix.SampleSelector.Values) {
-            $slice.SampleSliceFilter | Should Match 'FullyQualifiedName~False'
-        }
-    }
-
-    It 'selects six distinct smoke samples with two per package and no duplicate workers' {
-        $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
-        $expected = @{
-            q1 = @('AgentsBasics', 'DeploymentExample')
-            q2 = @('AgentCRUD', 'VersionSelection')
-            q3 = @('AgentResponseSync')
-            q4 = @('AgentResponseStreamingSync')
-        }
-        $slices = @($matrix.matrix.SampleSelector.Values)
-        (($slices.SampleQueueName | Sort-Object) -join ',') | Should BeExactly 'q1,q2,q3,q4'
-        foreach ($slice in $slices) {
-            $names = @([regex]::Matches($slice.SampleSliceFilter, '\bName=([A-Za-z0-9_]+)') |
-                ForEach-Object { $_.Groups[1].Value } | Sort-Object)
-            ($names -join ',') | Should BeExactly (($expected[$slice.SampleQueueName] | Sort-Object) -join ',')
-        }
+    It 'retains the six-sample default without hardcoded worker assignments' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
         $selectionParameter = [regex]::Match(
             $pipeline, '(?ms)^  - name: selection\r?\n.*?(?=^  - name:|\z)').Value
         $selectionNames = @([regex]::Matches($selectionParameter, '\bName=([A-Za-z0-9_]+)') |
             ForEach-Object { $_.Groups[1].Value } | Sort-Object)
-        ($selectionNames -join ',') | Should BeExactly (($expected.Values | ForEach-Object { $_ } | Sort-Object) -join ',')
+        ($selectionNames -join ',') | Should BeExactly 'AgentCRUD,AgentResponseStreamingSync,AgentResponseSync,AgentsBasics,DeploymentExample,VersionSelection'
+        $pipeline | Should Not Match 'sample-slice-matrix|SampleSliceFilter|MatrixConfigs'
+        $pipeline | Should Match 'sample-tests-stages.yml'
     }
 
     It 'opts into task-scoped CLI authentication while retaining the default test tasks' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
-        $pipeline | Should Match 'UseAzureCliForTests: true'
-        $stages = Get-Content -LiteralPath (
-            Join-Path $PSScriptRoot '../../../../../../../eng/pipelines/templates/stages/archetype-sdk-tests.yml') -Raw
-        $stages | Should Match 'UseAzureCliForTests: \$\{\{ coalesce\(cloud.value.UseAzureCliForTests, false\) \}\}'
+        $stages = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-tests-stages.yml') -Raw
+        $stages | Should Match 'UseAzureCliForTests: true'
+        $stages | Should Match 'ServiceConnection: azure-sdk-tests'
         $template = Get-Content -LiteralPath (
             Join-Path $PSScriptRoot '../../../../../../../eng/pipelines/templates/jobs/live.tests.yml') -Raw
         $cliBranch = [regex]::Match(
@@ -141,38 +120,14 @@ Describe 'Pipeline sample selection contract' {
         $modelVersionParameter | Should Match "(?m)^    default: '2025-04-14'\r?$"
     }
 
-    It 'keeps the writable test filter out of the read-only matrix' {
-        $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
-        $matrix.matrix.ContainsKey('AdditionalTestFilters') | Should Be $false
-        $matrix.matrix.SampleSelector.Count | Should Be 4
-        foreach ($slice in $matrix.matrix.SampleSelector.Values) {
-            $slice.ContainsKey('AdditionalTestFilters') | Should Be $false
-            [string]::IsNullOrWhiteSpace($slice.SampleSliceFilter) | Should Be $false
-        }
-        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
-        $pipeline | Should Match 'SAMPLE_SLICE_FILTER: \$\(SampleSliceFilter\)'
-        $pipeline | Should Match '(?m)^      - SampleSliceFilter='
-    }
-
-    It 'combines the run selection and slice without overwriting the slice' {
-        $originalKind = $env:SAMPLE_SELECTION_KIND
-        $originalSelection = $env:SAMPLE_SELECTION
-        $originalSlice = $env:SAMPLE_SLICE_FILTER
-        try {
-            $env:SAMPLE_SELECTION_KIND = 'test-id'
-            $env:SAMPLE_SELECTION = 'Name=AgentsBasics;Name=AgentResponseSync'
-            $env:SAMPLE_SLICE_FILTER = '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Sample_AIAgents & Name=AgentsBasics))'
-            $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
-            $step = [regex]::Match($pipeline, '(?ms)^      - pwsh: \|\r?\n(?<script>.*?)^        displayName: ''Prepare sample')
-            $step.Success | Should Be $true
-            $output = & ([scriptblock]::Create($step.Groups['script'].Value)) 6>&1 | Out-String
-            $expected = '((Name=AgentsBasics|Name=AgentResponseSync))&(' + $env:SAMPLE_SLICE_FILTER + ')'
-            $output | Should Match ([regex]::Escape("##vso[task.setvariable variable=AdditionalTestFilters]$expected"))
-            $output | Should Not Match 'task.setvariable variable=SampleSliceFilter'
-        } finally {
-            $env:SAMPLE_SELECTION_KIND = $originalKind
-            $env:SAMPLE_SELECTION = $originalSelection
-            $env:SAMPLE_SLICE_FILTER = $originalSlice
-        }
+    It 'plans before provisioning and downloads exact per-worker assignments' {
+        $stages = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-tests-stages.yml') -Raw
+        $stages | Should Match 'dependsOn: Plan'
+        $stages | Should Match "Matrix: stageDependencies.Plan.Plan.outputs\['Discover.WorkerMatrix'\]"
+        $stages | Should Match 'New-SampleTestPlan.ps1'
+        $stages | Should Match 'DownloadPipelineArtifact@2'
+        $stages | Should Match 'buildType: current'
+        $stages | Should Match 'task.setvariable variable=AdditionalTestFilters'
+        $stages | Should Not Match 'task.setvariable variable=SampleSliceFilter'
     }
 }

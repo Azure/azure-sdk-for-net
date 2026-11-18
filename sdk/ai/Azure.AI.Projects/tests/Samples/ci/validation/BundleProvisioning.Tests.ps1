@@ -42,7 +42,7 @@ Describe 'Full bundle .NET bindings' {
 
     It 'publishes the deployed model publisher required by the deployment sample' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
-        $testEnvironment = [regex]::Match($pipeline, '(?ms)^    EnvVars:\r?\n(?<body>.*?)^    MatrixConfigs:').Groups['body'].Value
+        $testEnvironment = [regex]::Match($pipeline, '(?ms)^    EnvVars:\r?\n(?<body>.*?)^    PreSteps:').Groups['body'].Value
         $testEnvironment | Should Match '(?m)^      MODEL_PUBLISHER: OpenAI\r?$'
         foreach ($template in @('sample-resources.bicep', 'standard-model.bicep')) {
             $model = Get-Content -LiteralPath (Join-Path $PSScriptRoot "../infra/$template") -Raw
@@ -56,7 +56,7 @@ Describe 'Full bundle .NET bindings' {
         $pipeline | Should Not Match 'Invoke-StandardProvisioning.ps1'
         $pipeline | Should Match 'MCP_GITHUB_PAT: \$\(MCP_GITHUB_PAT\)'
         $pipeline | Should Match 'PROJ_CONN_OPEN_API_KEY: \$\(PROJ_CONN_OPEN_API_KEY\)'
-        $testEnvironment = [regex]::Match($pipeline, '(?ms)^    EnvVars:\r?\n(?<body>.*?)^    MatrixConfigs:').Groups['body'].Value
+        $testEnvironment = [regex]::Match($pipeline, '(?ms)^    EnvVars:\r?\n(?<body>.*?)^    PreSteps:').Groups['body'].Value
         $testEnvironment | Should Not Match 'MCP_GITHUB_PAT|PROJ_CONN_OPEN_API_KEY'
         $bindings = Get-DotNetSampleEnvironment -Environment $script:environment
         foreach ($name in @('MCP_PROJECT_CONNECTION_NAME', 'AI_SEARCH_CONNECTION_NAME',
