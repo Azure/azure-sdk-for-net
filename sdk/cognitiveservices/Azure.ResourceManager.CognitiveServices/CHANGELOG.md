@@ -7,11 +7,15 @@
 - Upgraded API version to 2026-11-01.
 - Added `CognitiveServicesAccountProperties.TrustedCertificateSources` to trust private CA certificate bundles stored in Azure Key Vault.
 - Added RAI policy egress configuration through `RaiPolicyProperties.EgressPolicy`.
-- Added `GetCognitiveServicesManagedComputeCapacities` to list managed compute capacity for a subscription.
-- Added `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId`, `CognitiveServicesAccountProperties.IsA365LoggingEnabled`, and `ServiceAccountUsage.Id` and `Type`.
+- Added `GetCognitiveServicesManagedComputeCapacities` to list managed compute capacity for a subscription, with `deploymentId` typed as `Azure.Core.ResourceIdentifier` and `location` typed as `Azure.Core.AzureLocation?` for both synchronous and asynchronous calls.
+- Added the extensible `CognitiveServicesManagedComputeCapacityOfferScope` type for `CognitiveServicesManagedComputeCapacityProperties.OfferScope`, with known values `Global` and `DataZone` and support for unknown values.
+- Added `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId` typed as `Azure.Core.ResourceIdentifier`, `CognitiveServicesAccountProperties.IsA365LoggingEnabled`, and `ServiceAccountUsage.Id` and `Type`.
 
 ### Breaking Changes
 
+- Compared to `1.7.0-beta.1`, renamed `RaiEgressHeaderValueRef` to `RaiEgressHeaderValueReference`, `RaiEgressManagedIdentityRef` to `RaiEgressManagedIdentityReference`, and `RaiEgressSecretRef` to `RaiEgressSecretReference`, including the corresponding model-factory methods.
+- Compared to `1.7.0-beta.1`, renamed `RaiEgressHeaderTransform.ValueRef` to `ValueReference`, and renamed `SecretRef` and `ManagedIdentityRef` on the former `RaiEgressHeaderValueRef` type to `RaiEgressHeaderValueReference.SecretReference` and `RaiEgressHeaderValueReference.ManagedIdentityReference`.
+- Compared to `1.7.0-beta.1`, changed `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId` from `string` to `Azure.Core.ResourceIdentifier`.
 - Compared to `1.6.0`, the `ArmCognitiveServicesModelFactory.CognitiveServicesAccountProperties` compatibility overload accepting `aiFoundryNetworkInjection` now requires all arguments to avoid ambiguity with other overloads.
 
 ### Bugs Fixed
