@@ -12,21 +12,21 @@ using Azure.ResourceManager.BillingBenefits;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Request to validate any benefit. </summary>
-    public partial class BenefitValidateRequest
+    public partial class BenefitValidateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BenefitValidateRequest"/>. </summary>
-        public BenefitValidateRequest()
+        /// <summary> Initializes a new instance of <see cref="BenefitValidateContent"/>. </summary>
+        public BenefitValidateContent()
         {
             Benefits = new ChangeTrackingList<BenefitValidateModel>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BenefitValidateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitValidateContent"/>. </summary>
         /// <param name="benefits"> Defines benefits for validation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BenefitValidateRequest(IList<BenefitValidateModel> benefits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BenefitValidateContent(IList<BenefitValidateModel> benefits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Benefits = benefits;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

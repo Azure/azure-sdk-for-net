@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string filter, string orderBy, float? skiptoken, float? take, string selectedState, string refreshSummary, RequestContext context)
+        internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName, string filter, string orderBy, float? skiptoken, float? take, string selectedState, string refreshSummary, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, string filter, string orderBy, float? skiptoken, float? take, string selectedState, string refreshSummary, RequestContext context)
+        internal HttpMessage CreateNextListByBillingAccountRequest(Uri nextPage, string billingAccountName, string filter, string orderBy, float? skiptoken, float? take, string selectedState, string refreshSummary, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

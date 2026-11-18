@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             return message;
         }
 
-        internal HttpMessage CreateGetAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, RequestContext context)
+        internal HttpMessage CreateListAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             return message;
         }
 
-        internal HttpMessage CreateNextGetAppServiceCertificateOrderDetectorResponseRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string certificateOrderName, RequestContext context)
+        internal HttpMessage CreateNextListAppServiceCertificateOrderDetectorResponseRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string certificateOrderName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
