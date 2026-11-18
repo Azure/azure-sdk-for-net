@@ -8,7 +8,7 @@ resources. There is no automatic CI or PR trigger.
 
 ## Resources
 
-[main.bicep](./infra/main.bicep) uses the copied Standard shared-identity template
+[main.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/ci/infra/main.bicep) uses the copied Standard shared-identity template
 and unconditional feature modules to create:
 
 - A Foundry account and project.
@@ -129,7 +129,7 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
   results against the manifest; missing, skipped, duplicate or unassigned cases
   fail the worker instead of reporting a successful partial run.
 - Each worker uses PowerShell 7.2+ and Azure CLI under the service connection.
-  [Invoke-BundleProvisioning.ps1](./Invoke-BundleProvisioning.ps1) creates an
+  [Invoke-BundleProvisioning.ps1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/ci/Invoke-BundleProvisioning.ps1) creates an
   offline plan, resolves identities, calls the language-neutral provisioner,
   and publishes bindings only after the bundle is Ready and the Function
   queue trigger has been indexed. Partial failures retain cleanup state.
@@ -196,7 +196,7 @@ The six basic smoke samples do not depend on those Search or Function contracts.
 The Function host's only remote dependency is `azure-functions`; no dependency
 is added to the .NET SDK.
 
-[DotNetSampleCiHelpers.ps1](./DotNetSampleCiHelpers.ps1) contains only .NET
+[DotNetSampleCiHelpers.ps1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/ci/DotNetSampleCiHelpers.ps1) contains only .NET
 environment aliases. NUnit discovery, test execution and the optional
 standard-only deployment wrappers remain language-specific. The shared planner
 accepts `EnvironmentTemplatePath` for an explicit alternate binding contract;
@@ -215,7 +215,7 @@ test IDs across queues before shared batch admission. The active pipeline uses
 the discovery matrix and `Invoke-BundleProvisioning.ps1`, so empty queues never
 start provisioning.
 The permanent identity bootstrap files under
-[`../shared-identities/infra`](../shared-identities/infra) are identical to the
+[`../shared-identities/infra`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples/shared-identities/infra) are identical to the
 Python and common-resource repository copies. They remain administrator-owned:
 the live-test pipeline never invokes that bootstrap or creates its role grants.
 
