@@ -160,7 +160,6 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             NapsterOrganizationProperties properties = default;
-            string organizationName = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -254,7 +253,6 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                organizationName,
                 identity,
                 additionalBinaryDataProperties);
         }

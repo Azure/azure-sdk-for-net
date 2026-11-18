@@ -409,11 +409,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(EnableSubvolumes))
             {
                 writer.WritePropertyName("enableSubvolumes"u8);
                 writer.WriteStringValue(EnableSubvolumes.Value.ToString());
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             if (options.Format != "W" && Optional.IsDefined(ProvisionedAvailabilityZone, _provisionedAvailabilityZoneIsDefined))
             {
                 if (ProvisionedAvailabilityZone != null)
@@ -504,6 +508,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         internal static VolumeProperties DeserializeVolumeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -1252,5 +1258,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 _inheritedSizeInBytesIsDefined = inheritedSizeInBytesIsDefined
             };
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
     }
 }
