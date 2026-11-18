@@ -17,7 +17,7 @@ using Azure.ResourceManager.Education.Models;
 
 namespace Azure.ResourceManager.Education
 {
-    internal partial class EducationJoinRequestDataAsyncCollectionResultOfT : AsyncPageable<EducationJoinRequestData>
+    internal partial class EducationJoinContentDataAsyncCollectionResultOfT : AsyncPageable<EducationJoinContentData>
     {
         private readonly JoinRequests _client;
         private readonly string _billingAccountName;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Education
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of EducationJoinRequestDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EducationJoinContentDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JoinRequests client used to send requests. </param>
         /// <param name="billingAccountName"> The name of the billing account. </param>
         /// <param name="billingProfileName"> The name of the billing profile. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="includeDenied"> Include denied. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EducationJoinRequestDataAsyncCollectionResultOfT(JoinRequests client, string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeDenied, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EducationJoinContentDataAsyncCollectionResultOfT(JoinRequests client, string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeDenied, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountName = billingAccountName;
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Education
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of EducationJoinRequestDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EducationJoinContentDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EducationJoinRequestDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<EducationJoinRequestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of EducationJoinContentDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<EducationJoinContentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<EducationJoinRequestData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<EducationJoinContentData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Education
                 JoinRequestList result = JoinRequestList.FromResponse(response);
                 string nextPageString = result.NextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
-                yield return Page<EducationJoinRequestData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EducationJoinContentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

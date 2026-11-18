@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _includeAllocatedBudget, _context) : _client.CreateGetAllRequest(_includeAllocatedBudget, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListAllRequest(nextLink, _includeAllocatedBudget, _context) : _client.CreateListAllRequest(_includeAllocatedBudget, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
