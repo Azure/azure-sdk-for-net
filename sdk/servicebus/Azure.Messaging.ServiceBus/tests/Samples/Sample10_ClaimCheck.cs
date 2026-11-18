@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,7 +17,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                Uri accountUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks");
+                string containerName = $"claim-checks-{Guid.NewGuid():N}";
+                Uri accountUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/{containerName}");
                 #region Snippet:CreateBlobContainer
 #if SNIPPET
                 DefaultAzureCredential credential = new();
@@ -25,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 var credential = TestEnvironment.Credential;
 #endif
                 var containerClient = new BlobContainerClient(accountUri, credential);
-                await containerClient.CreateIfNotExistsAsync();
+                await containerClient.CreateAsync();
                 #endregion
 
                 try
@@ -63,12 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                     if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
                     {
-#if SNIPPET
-                        Uri blobUri = new($"https://<storage account name>.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
-#else
-                        Uri blobUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
-#endif
-                        var blobClient = new BlobClient(blobUri, credential);
+                        var blobClient = containerClient.GetBlobClient((string)blobNameReceived);
 
                         BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
                         BinaryData messageBody = downloadResult.Content;

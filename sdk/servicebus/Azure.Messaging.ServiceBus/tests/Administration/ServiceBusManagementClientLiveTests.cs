@@ -49,6 +49,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                     GroupForReplace = "break",
                     Value = "\r\n"
                 });
+            // Preserve existing recordings while live negative probes use unique names.
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"absent-[0-9a-f]{32}") { Value = "NonExistingPath" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"absent-topic-[0-9a-f]{32}") { Value = "NonExistingTopic" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"absent-[0-9a-f]{32}") { Value = "NonExistingPath" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"absent-topic-[0-9a-f]{32}") { Value = "NonExistingTopic" });
             _serviceVersion = serviceVersion;
         }
 
@@ -744,58 +749,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         public async Task ThrowsIfEntityDoesNotExist()
         {
             var client = CreateClient();
+            // Sanitized names must not advance the recording's request-ID sequence.
+            var absentPath = $"absent-{Guid.NewGuid():N}";
+            var absentTopic = $"absent-topic-{Guid.NewGuid():N}";
 
             Assert.That(
                 async () =>
-                await client.GetQueueAsync("NonExistingPath"),
+                await client.GetQueueAsync(absentPath),
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
                     And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
 
             Assert.That(
                 async () =>
-                await client.GetQueueAsync("NonExistingTopic"),
+                await client.GetQueueAsync(absentTopic),
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
                     And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
 
             Assert.That(
                 async () =>
-                await client.GetSubscriptionAsync("NonExistingTopic", "NonExistingPath"),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
-                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
-
-            Assert.That(
-                  async () =>
-                  await client.UpdateQueueAsync(new QueueProperties("NonExistingPath")),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
-                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
-
-            Assert.That(
-                async () =>
-                await client.UpdateTopicAsync(new TopicProperties("NonExistingPath")),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
-                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
-
-            Assert.That(
-                async () =>
-                await client.UpdateSubscriptionAsync(new SubscriptionProperties("NonExistingTopic", "NonExistingPath")),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
-                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
-
-            Assert.That(
-                async () =>
-                await client.DeleteQueueAsync("NonExistingPath"),
+                await client.GetSubscriptionAsync(absentTopic, absentPath),
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
                     And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
 
             Assert.That(
                   async () =>
-                  await client.DeleteTopicAsync("NonExistingPath"),
+                  await client.UpdateQueueAsync(new QueueProperties(absentPath)),
                   Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
                     And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
 
             Assert.That(
                 async () =>
-                await client.DeleteSubscriptionAsync("NonExistingTopic", "NonExistingPath"),
+                await client.UpdateTopicAsync(new TopicProperties(absentPath)),
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
+                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
+
+            Assert.That(
+                async () =>
+                await client.UpdateSubscriptionAsync(new SubscriptionProperties(absentTopic, absentPath)),
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
+                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
+
+            Assert.That(
+                async () =>
+                await client.DeleteQueueAsync(absentPath),
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
+                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
+
+            Assert.That(
+                  async () =>
+                  await client.DeleteTopicAsync(absentPath),
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
+                    And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
+
+            Assert.That(
+                async () =>
+                await client.DeleteSubscriptionAsync(absentTopic, absentPath),
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound).
                     And.Property(nameof(Exception.InnerException)).InstanceOf(typeof(RequestFailedException)));
 
