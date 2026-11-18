@@ -29,6 +29,12 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract bool IsSessionLinkClosed { get; }
 
         /// <summary>
+        /// Completes with the lock-loss exception when an established session receive link is lost.
+        /// Returns <c>null</c> when the transport does not support eager notification.
+        /// </summary>
+        public virtual Task<Exception> SessionLockLostTask => null;
+
+        /// <summary>
         /// The Session Id associated with the receiver.
         /// </summary>
         public abstract string SessionId { get; protected set; }

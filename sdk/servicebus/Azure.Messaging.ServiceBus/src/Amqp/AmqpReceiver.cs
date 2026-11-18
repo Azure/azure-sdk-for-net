@@ -110,6 +110,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
         private readonly Func<RequestResponseAmqpLink, AmqpMessage, TimeSpan, Task<AmqpMessage>> _requestAsync;
+        private readonly TaskCompletionSource<Exception> _sessionLockLostSource;
+
+        public override Task<Exception> SessionLockLostTask => _sessionLockLostSource?.Task;
 
         private const int SizeOfGuidInBytes = 16;
 
@@ -224,6 +227,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isSessionExclusive = isSessionExclusive;
             _sessionLockTokenToPresent = sessionLockToken;
             _isProcessor = isProcessor;
+            if (isSessionReceiver && isProcessor && isSessionExclusive)
+            {
+                _sessionLockLostSource = new TaskCompletionSource<Exception>(TaskCreationOptions.RunContinuationsAsynchronously);
+            }
             _receiveMode = receiveMode;
             _prefetchCount = (int)prefetchCount;
             Identifier = identifier;
@@ -1713,6 +1720,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 _receiveLink?.Dispose();
                 _managementLink?.Dispose();
+                _sessionLockLostSource?.TrySetCanceled();
             }
             catch (Exception)
             {
@@ -1742,6 +1750,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (IsSessionLinkClosed)
             {
+                if (!IsClosed)
+                {
+                    // Never run processor or user callbacks on the AMQP close thread.
+                    _sessionLockLostSource?.TrySetResult(LinkException);
+                }
+
                 // Clean up and dispose the underlying resources. The receive link should already be closed, but management link may need to be
                 // closed as well.
                 _ = CloseAsync(CancellationToken.None);
