@@ -46,6 +46,7 @@ steps:
             --threshold ${{ parameters.threshold }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        AZSDK_COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
         AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/node_modules/.bin/copilot
 
   - ${{ else }}:
@@ -59,4 +60,5 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        AZSDK_COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
         AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/node_modules/.bin/copilot
