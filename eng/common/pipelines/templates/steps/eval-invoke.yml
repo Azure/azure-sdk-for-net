@@ -18,6 +18,8 @@ parameters:
     default: opensource-api-connection
 
 steps:
+  - script: npm install --no-save --package-lock=false @github/copilot@1.0.105 --userconfig "$(Build.SourcesDirectory)/.npmrc"
+    displayName: 'Install Copilot CLI 1.0.105'
   - ${{ if parameters.UseAzSdkAuthentication }}:
     - task: AzureCLI@2
       displayName: 'vally eval $(shardName) (authenticated)'
@@ -27,6 +29,16 @@ steps:
         scriptLocation: inlineScript
         workingDirectory: ${{ parameters.vallyRoot }}
         inlineScript: |
+          set -e
+          mkdir -p "$(Build.SourcesDirectory)/evals/specification"
+          cp -R "$(Build.SourcesDirectory)/evals/fixtures/Microsoft.Widget" "$(Build.SourcesDirectory)/evals/specification/"
+          mkdir -p "$(Build.SourcesDirectory)/evals/eng/common/knowledge"
+          cp "$(Build.SourcesDirectory)/eng/common/knowledge/customizing-client-tsp.md" "$(Build.SourcesDirectory)/evals/eng/common/knowledge/customizing-client-tsp.md"
+
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/check-copilot.ts" \
+            "$(Build.SourcesDirectory)/artifacts/mcp/cli/azsdk.dll" \
+            "$(Build.SourcesDirectory)/evals/specification/Microsoft.Widget/Widget" \
+            "rename 'Employee' to 'staff' for go SDK"
           node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" \
             --eval-args "$(evalArgs)" \
             --shard-name "$(shardName)" \
@@ -34,7 +46,7 @@ steps:
             --threshold ${{ parameters.threshold }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/eng/common/scripts/eval/node_modules/.bin/copilot
+        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/node_modules/.bin/copilot
 
   - ${{ else }}:
     - script: |
@@ -47,4 +59,4 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/eng/common/scripts/eval/node_modules/.bin/copilot
+        AZSDK_COPILOT_CLI_PATH: $(Build.SourcesDirectory)/node_modules/.bin/copilot
