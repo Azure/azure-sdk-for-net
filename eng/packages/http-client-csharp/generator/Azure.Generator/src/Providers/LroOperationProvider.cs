@@ -125,7 +125,8 @@ namespace Azure.Generator.Providers
                 _getResponse.AsValueExpression.Invoke("Invoke"),
                 path is null ? Null : Literal(path.PollingPath),
                 path is null ? Null : Literal(path.PathParameter.SerializedName),
-                body is null ? Null : New.Array(typeof(string), body.PropertySegments.Select(p => Literal(p.SerializationOptions?.Json?.Name ?? p.SerializedName)).ToArray())
+                body is null ? Null : New.Array(typeof(string), body.PropertySegments.Select(p => Literal(p.SerializationOptions?.Json?.Name ?? p.SerializedName)).ToArray()),
+                path is null ? Null : Literal(path.PathParameter.Style.ToString())
             ]);
         }
 

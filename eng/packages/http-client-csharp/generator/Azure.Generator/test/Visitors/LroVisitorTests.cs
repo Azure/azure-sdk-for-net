@@ -188,6 +188,28 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsTrue(rehydrationMethods.All(m => m.BodyExpression!.ToDisplayString().Contains("FromRehydrationToken")));
         }
 
+        [TestCase(InputPathParameterStyle.Unknown)]
+        [TestCase(InputPathParameterStyle.Simple)]
+        [TestCase(InputPathParameterStyle.Label)]
+        [TestCase(InputPathParameterStyle.Matrix)]
+        [TestCase(InputPathParameterStyle.Path)]
+        [TestCase(InputPathParameterStyle.Fragment)]
+        public void OperationIdPathPassesParameterStyle(InputPathParameterStyle style)
+        {
+            var parameter = InputFactory.PathParameter("id", InputPrimitiveType.String, serializedName: "wireId");
+            typeof(InputPathParameter).GetProperty(nameof(InputPathParameter.Style))!.SetValue(parameter, style);
+            var location = new InputOperationLink(InputOperationLinkLocation.ResponseHeader, InputFactory.Property("operationLocation", InputPrimitiveType.String));
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null, [],
+                [new InputLroOperationIdPathMetadata(location, parameter, "/jobs{wireId}/status")]);
+            var method = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
+            var inputClient = InputFactory.Client("TestClient", methods: [method]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            var operation = ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(method, client, protocol: false)!;
+            var id = (ExpressionPropertyBody)operation.Properties.Single(p => p.Name == "Id").Body;
+            StringAssert.Contains($"\"/jobs{{wireId}}/status\", \"wireId\", null, \"{style}\"", id.Getter.ToDisplayString());
+        }
+
         [Test]
         public void RehydrationMethodAvoidsExistingClientMethod()
         {
