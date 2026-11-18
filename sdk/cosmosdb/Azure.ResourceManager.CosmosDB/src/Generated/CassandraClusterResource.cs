@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CassandraClusterCommand"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CassandraClusterCommand> GetCommandAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CassandraClusterCommand> ListCommandAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.CosmosDB
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "CassandraClusterResource.GetCommand");
+                "CassandraClusterResource.ListCommand");
         }
 
         /// <summary>
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CassandraClusterCommand"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CassandraClusterCommand> GetCommand(CancellationToken cancellationToken = default)
+        public virtual Pageable<CassandraClusterCommand> ListCommand(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.CosmosDB
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "CassandraClusterResource.GetCommand");
+                "CassandraClusterResource.ListCommand");
         }
 
         /// <summary>

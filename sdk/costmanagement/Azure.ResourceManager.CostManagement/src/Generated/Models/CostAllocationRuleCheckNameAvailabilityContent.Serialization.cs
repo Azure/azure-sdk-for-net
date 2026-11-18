@@ -15,61 +15,61 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The cost allocation rule check name availability request. </summary>
-    public partial class CostAllocationRuleCheckNameAvailabilityRequest : IJsonModel<CostAllocationRuleCheckNameAvailabilityRequest>
+    public partial class CostAllocationRuleCheckNameAvailabilityContent : IJsonModel<CostAllocationRuleCheckNameAvailabilityContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CostAllocationRuleCheckNameAvailabilityRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CostAllocationRuleCheckNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCostAllocationRuleCheckNameAvailabilityRequest(document.RootElement, options);
+                        return DeserializeCostAllocationRuleCheckNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CostAllocationRuleCheckNameAvailabilityRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CostAllocationRuleCheckNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostAllocationRuleCheckNameAvailabilityRequest IPersistableModel<CostAllocationRuleCheckNameAvailabilityRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CostAllocationRuleCheckNameAvailabilityContent IPersistableModel<CostAllocationRuleCheckNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CostAllocationRuleCheckNameAvailabilityRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CostAllocationRuleCheckNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="costAllocationRuleCheckNameAvailabilityRequest"> The <see cref="CostAllocationRuleCheckNameAvailabilityRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CostAllocationRuleCheckNameAvailabilityRequest costAllocationRuleCheckNameAvailabilityRequest)
+        /// <param name="costAllocationRuleCheckNameAvailabilityContent"> The <see cref="CostAllocationRuleCheckNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CostAllocationRuleCheckNameAvailabilityContent costAllocationRuleCheckNameAvailabilityContent)
         {
-            if (costAllocationRuleCheckNameAvailabilityRequest == null)
+            if (costAllocationRuleCheckNameAvailabilityContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(costAllocationRuleCheckNameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(costAllocationRuleCheckNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CostAllocationRuleCheckNameAvailabilityRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CostAllocationRuleCheckNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -114,24 +114,24 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostAllocationRuleCheckNameAvailabilityRequest IJsonModel<CostAllocationRuleCheckNameAvailabilityRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CostAllocationRuleCheckNameAvailabilityContent IJsonModel<CostAllocationRuleCheckNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CostAllocationRuleCheckNameAvailabilityRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CostAllocationRuleCheckNameAvailabilityContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostAllocationRuleCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CostAllocationRuleCheckNameAvailabilityContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCostAllocationRuleCheckNameAvailabilityRequest(document.RootElement, options);
+            return DeserializeCostAllocationRuleCheckNameAvailabilityContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CostAllocationRuleCheckNameAvailabilityRequest DeserializeCostAllocationRuleCheckNameAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CostAllocationRuleCheckNameAvailabilityContent DeserializeCostAllocationRuleCheckNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostAllocationRuleCheckNameAvailabilityRequest(name, @type, additionalBinaryDataProperties);
+            return new CostAllocationRuleCheckNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
         }
     }
 }

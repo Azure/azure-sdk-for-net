@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The cost allocation rule check name availability request. </summary>
-    public partial class CostAllocationRuleCheckNameAvailabilityRequest
+    public partial class CostAllocationRuleCheckNameAvailabilityContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityRequest"/>. </summary>
-        public CostAllocationRuleCheckNameAvailabilityRequest()
+        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityContent"/>. </summary>
+        public CostAllocationRuleCheckNameAvailabilityContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Rule name. </param>
         /// <param name="type"> Resource type. This is expected to be Microsoft.CostManagement/costAllocationRules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostAllocationRuleCheckNameAvailabilityRequest(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostAllocationRuleCheckNameAvailabilityContent(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
