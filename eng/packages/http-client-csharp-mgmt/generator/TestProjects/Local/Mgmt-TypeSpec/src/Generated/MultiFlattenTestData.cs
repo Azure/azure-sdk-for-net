@@ -109,6 +109,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (Properties is null)
                 {
+                    if (value is null)
+                    {
+                        return;
+                    }
                     Properties = new MultiFlattenProperties();
                 }
                 Properties.InnerSelectionType = value;

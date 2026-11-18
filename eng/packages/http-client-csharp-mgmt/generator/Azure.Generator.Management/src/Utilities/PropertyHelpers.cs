@@ -160,7 +160,28 @@ namespace Azure.Generator.Management.Utilities
             // NOT clear sibling leaves on the same parent. For already-nullable inners
             // and reference types the public type matches the inner type and the value
             // is passed through directly.
-            return BuildLazyCreateAndAssignSetter(innerModel, internalProperty, innerProperty, isPropertyLiftedToNullable);
+            // When the leaf is itself a safe-flattened property whose setter clears an optional
+            // wrapper on null, an absent outer wrapper must not be materialized just to receive
+            // null: the new wrapper could miss its own required members and fail serialization.
+            // Only that nested case skips creation; an existing wrapper still forwards null so
+            // the leaf is cleared while the wrapper and its siblings are preserved.
+            var skipWrapperCreationOnNull = innerProperty is FlattenedPropertyProvider flattened
+                && ClearsOptionalWrapperOnNull(flattened.FlattenedProperty, flattened.OriginalProperty);
+            return BuildLazyCreateAndAssignSetter(innerModel, internalProperty, innerProperty, isPropertyLiftedToNullable, skipWrapperCreationOnNull);
+        }
+
+        // True when the safe-flatten setter for (wrapper, leaf) is emitted as
+        // `Wrapper = value is null ? default : new Wrapper(value)`.
+        private static bool ClearsOptionalWrapperOnNull(PropertyProvider internalProperty, PropertyProvider innerProperty)
+        {
+            var (_, _, includeSetterNullCheck) = GetFlags(internalProperty, innerProperty);
+            return !includeSetterNullCheck
+                && innerProperty is not FlattenedPropertyProvider
+                && internalProperty.WireInfo?.IsRequired == false
+                && innerProperty.WireInfo?.IsRequired == true
+                && !innerProperty.Type.IsNullable
+                && !innerProperty.Type.IsValueType
+                && !innerProperty.Type.IsCollection;
         }
 
         public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable)
@@ -203,7 +224,7 @@ namespace Azure.Generator.Management.Utilities
                     });
                     setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
                 }
-                else if (internalProperty.WireInfo?.IsRequired == false && innerProperty.WireInfo?.IsRequired == true && !innerProperty.Type.IsNullable && !innerProperty.Type.IsValueType && !innerProperty.Type.IsCollection)
+                else if (ClearsOptionalWrapperOnNull(internalProperty, innerProperty))
                 {
                     // Safe-flatten has only one public leaf, so an absent reference value
                     // represents an absent optional wrapper. Avoid constructing a required non-nullable leaf
@@ -227,15 +248,21 @@ namespace Azure.Generator.Management.Utilities
         // inner the body is wrapped in `if (value.HasValue) { ... }` so a null
         // assignment is a no-op (the only safe choice — there's no original value to
         // preserve and assigning default(T) would silently corrupt the inner leaf).
-        private static MethodBodyStatement BuildLazyCreateAndAssignSetter(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable)
+        private static MethodBodyStatement BuildLazyCreateAndAssignSetter(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable, bool skipWrapperCreationOnNull = false)
         {
             var internalPropertyExpression = This.Property(internalProperty.Name);
             var needsUnwrap = isPropertyLiftedToNullable && innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
+            var createWrapper = new List<MethodBodyStatement>();
+            if (skipWrapperCreationOnNull)
+            {
+                createWrapper.Add(new IfStatement(Value.Is(Null)) { Return() });
+            }
+            createWrapper.Add(internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate());
             var lazyCreateAndAssign = new List<MethodBodyStatement>
             {
                 new IfStatement(internalPropertyExpression.Is(Null))
                 {
-                    internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
+                    createWrapper
                 },
                 internalPropertyExpression.Property(innerProperty.Name).Assign(needsUnwrap ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate()
             };
