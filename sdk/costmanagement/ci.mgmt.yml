@@ -17,6 +17,8 @@ extends:
     ServiceDirectory: costmanagement
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.CostManagement.PriceEstimation
+      safeName: AzureResourceManagerCostManagementPriceEstimation
     - name: Azure.Provisioning.CostManagement
       safeName: AzureProvisioningCostManagement
     - name: Azure.ResourceManager.CostManagement
