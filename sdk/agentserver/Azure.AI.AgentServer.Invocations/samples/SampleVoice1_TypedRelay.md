@@ -63,7 +63,7 @@ legacy deployments can keep their startup code, manifest, and metadata unchanged
 
 ## Implement the handler
 
-The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
+The typed Voice relay is experimental and may change or be removed. Its `AAAS001` diagnostic is a compile-time error unless suppressed:
 
 ```C#
 #pragma warning disable AAAS001

@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated the OpenAI dependency used by tests and samples to 2.15.0.
+
 ## 1.0.0-beta.8 (2026-10-28)
 
 ### Features Added
