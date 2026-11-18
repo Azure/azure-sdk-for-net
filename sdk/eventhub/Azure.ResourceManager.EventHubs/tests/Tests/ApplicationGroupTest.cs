@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task CreateApplicationGroupWithParameter()
         {
             string SASKey = await CreateApplicationKeyAsync();
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task GetAllApplicationGroups()
         {
             string SASKey = await CreateApplicationKeyAsync();
@@ -125,6 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         }
 
         [RecordedTest]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task UpdateApplicationGroup()
         {
             string name = Recording.GenerateAssetName("applicationgroup");

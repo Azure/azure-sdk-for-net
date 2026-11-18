@@ -225,9 +225,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
             {
-                KafkaEnabled = true
+                KafkaEnabled = true,
+                DisableLocalAuth = true
             };
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameter)).Value;
             VerifyNamespaceProperties(eventHubNamespace, false);
             Assert.IsTrue(eventHubNamespace.Data.KafkaEnabled);
         }
@@ -245,7 +246,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             // create with dual-stack (IPv4 + IPv6)
             EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
             {
-                IPAddressType = EventHubsIPAddressType.DualStack
+                IPAddressType = EventHubsIPAddressType.DualStack,
+                DisableLocalAuth = true
             };
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameter)).Value;
             VerifyNamespaceProperties(eventHubNamespace, false);
@@ -255,9 +257,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
             Assert.AreEqual(EventHubsIPAddressType.DualStack, eventHubNamespace.Data.IPAddressType);
 
-            // update to IPv4 via the synchronous namespace PATCH and assert the round-trip
+            // update to IPv4 via the long-running namespace PATCH and assert the round-trip
             eventHubNamespace.Data.IPAddressType = EventHubsIPAddressType.IPv4;
-            eventHubNamespace = (await eventHubNamespace.UpdateAsync(eventHubNamespace.Data)).Value;
+            eventHubNamespace = (await eventHubNamespace.UpdateAsync(WaitUntil.Completed, eventHubNamespace.Data)).Value;
             Assert.AreEqual(EventHubsIPAddressType.IPv4, eventHubNamespace.Data.IPAddressType);
 
             await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
@@ -337,12 +339,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation) { DisableLocalAuth = true })).Value;
             Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
             AssertDefaultNamespaceProperties(eventHubNamespace.Data, EventHubsSkuName.Standard);
 
-            //Set Disable Local Auth on the standard namespace
-            eventHubNamespace.Data.DisableLocalAuth = true;
+            //Re-apply the full namespace definition and verify Disable Local Auth is retained
             EventHubsNamespaceResource updatedNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, eventHubNamespace.Data)).Value;
             AssertNamespacePropertiesOnUpdate(eventHubNamespace.Data, updatedNamespace.Data);
 
@@ -371,7 +372,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation)
             {
-                ZoneRedundant = true
+                ZoneRedundant = true,
+                DisableLocalAuth = true
             })).Value;
 
             Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
@@ -388,6 +390,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task PremiumNamespaceCreateOrUpdate()
         {
             //create namespace
@@ -400,7 +403,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 {
                     Tier = EventHubsSkuTier.Premium,
                     Capacity = 1
-                }
+                },
+                DisableLocalAuth = true
             })).Value;
             AssertDefaultNamespaceProperties(eventHubNamespace.Data, EventHubsSkuName.Premium);
 
@@ -559,7 +563,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(EventHubsSkuName.Standard, namespaceData.Sku.Name);
                 Assert.AreEqual(1, namespaceData.Sku.Capacity);
                 Assert.True(namespaceData.ZoneRedundant);
-                Assert.False(namespaceData.DisableLocalAuth);
+                Assert.True(namespaceData.DisableLocalAuth);
                 Assert.False(namespaceData.IsAutoInflateEnabled);
                 Assert.AreEqual(0, namespaceData.MaximumThroughputUnits);
                 Assert.True(namespaceData.KafkaEnabled);
@@ -569,7 +573,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(EventHubsSkuName.Premium, namespaceData.Sku.Name);
                 Assert.AreEqual(1, namespaceData.Sku.Capacity);
                 Assert.True(namespaceData.ZoneRedundant);
-                Assert.False(namespaceData.DisableLocalAuth);
+                Assert.True(namespaceData.DisableLocalAuth);
                 Assert.False(namespaceData.IsAutoInflateEnabled);
                 Assert.AreEqual(0, namespaceData.MaximumThroughputUnits);
                 Assert.True(namespaceData.KafkaEnabled);
@@ -774,11 +778,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Tags = { { "retained", "value" } }
             }));
-            Response<EventHubsNamespaceResource> update = await resource.UpdateAsync(new EventHubsNamespaceData(DefaultLocation)
+            EventHubsNamespaceResource updated = await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, new EventHubsNamespaceData(DefaultLocation)
             {
                 DisableLocalAuth = true
-            });
-            AssertStatus(update.GetRawResponse(), 200);
+            }));
+            Assert.IsTrue(updated.Data.DisableLocalAuth);
             Response<EventHubsNamespaceResource> readBack = await resource.GetAsync();
             AssertStatus(readBack.GetRawResponse(), 200);
             Assert.IsTrue(readBack.Value.Data.DisableLocalAuth);

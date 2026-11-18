@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Test]
         [RecordedTest]
         [Property("NamespaceSku", "Premium")]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task CreateEventhubWithParameter()
         {
             //prepare a storage account
