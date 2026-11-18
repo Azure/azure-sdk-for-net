@@ -264,13 +264,21 @@ function Find-PrReReviewReplayContamination {
             continue
         }
 
-        # Covers the GitHub MCP server mounted as a `github` command and direct requests to GitHub.
+        # Covers the GitHub MCP server mounted as a `github` command and direct requests to GitHub. One command
+        # can chain several reads, so each invocation and URL must be pinned on its own.
         $text = if ($data.toolName -ceq 'bash') { [string]$arguments.command } else { $call }
-        $tools = @([regex]::Matches($text, '(?:^|[\s;&|(`])github\s+([a-z_]+)') | ForEach-Object { $_.Groups[1].Value })
-        if ($tools.Count -eq 0 -and $text -notmatch '(?i)github\.com|githubusercontent\.com') { continue }
-        $commits = @([regex]::Matches($text, '\b[0-9a-f]{40}\b') | ForEach-Object Value)
-        $pinned = $commits.Count -gt 0 -and @($commits | Where-Object { !(Test-PrReReviewReplayCommit $_ $AllowedCommits) }).Count -eq 0
-        if (@($tools | Where-Object { $_ -cne 'get_file_contents' }).Count -gt 0 -or !$pinned) { $found.Add($call) }
+        foreach ($invocation in [regex]::Matches($text, '(?:^|[\s;&|(`])github\s+(?<tool>[a-z_]+)(?<args>[^;&|\n`)]*)')) {
+            $ref = [regex]::Match($invocation.Groups['args'].Value, '--(?:ref|sha)[=\s]+["'']?(?<commit>[0-9a-f]{7,64})\b')
+            if ($invocation.Groups['tool'].Value -cne 'get_file_contents' -or !$ref.Success -or !(Test-PrReReviewReplayCommit $ref.Groups['commit'].Value $AllowedCommits)) {
+                $found.Add("$($data.toolName) $($invocation.Value.Trim())")
+            }
+        }
+        foreach ($url in [regex]::Matches($text, '(?i)(?<![\w.-])(?:https?://)?(?:[a-z0-9-]+\.)*(?:github\.com|githubusercontent\.com)/[^\s''"`<>|;&)]*')) {
+            $content = [regex]::Match($url.Value, '(?i)^(?:https?://)?(?:raw\.githubusercontent\.com/[^/]+/[^/]+/(?<commit>[0-9a-f]{7,64})/|(?:www\.)?github\.com/[^/]+/[^/]+/(?:blob|raw)/(?<commit>[0-9a-f]{7,64})/|api\.github\.com/repos/[^/]+/[^/]+/contents/[^?#]*\?(?:[^#]*&)?ref=(?<commit>[0-9a-f]{7,64})(?:[&#]|$))')
+            if (!$content.Success -or !(Test-PrReReviewReplayCommit $content.Groups['commit'].Value.ToLowerInvariant() $AllowedCommits)) {
+                $found.Add("$($data.toolName) $($url.Value)")
+            }
+        }
     }
     return ,$found.ToArray()
 }

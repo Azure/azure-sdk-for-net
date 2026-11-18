@@ -160,6 +160,8 @@ Describe 'Find-PrReReviewReplayContamination' {
         @{ Label = 'the MCP server run as a command'; Tool = 'bash'; Arguments = @{ command = 'github pull_request_read --method get_reviews --pullNumber 1' } }
         @{ Label = 'the pull request API'; Tool = 'bash'; Arguments = @{ command = 'curl -s https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/1/comments' } }
         @{ Label = 'a branch file'; Tool = 'bash'; Arguments = @{ command = 'curl -s https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/src/Client.cs' } }
+        @{ Label = 'a branch read chained after a pinned read'; Tool = 'bash'; Arguments = @{ command = "github get_file_contents --path src/A.cs --ref $('a' * 40); github get_file_contents --path src/B.cs --ref main" } }
+        @{ Label = 'the pull request API chained after a pinned file'; Tool = 'bash'; Arguments = @{ command = "curl -s https://raw.githubusercontent.com/Azure/azure-sdk-for-net/$('a' * 40)/src/A.cs; curl -s https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/1/comments" } }
     ) {
         $log = New-SessionLog @(New-ToolCall $Tool $Arguments)
         $found = Find-PrReReviewReplayContamination -SessionLogPath $log -AllowedCommits @($script:HeadSha, $script:BaseSha, $script:MergeBaseSha)
