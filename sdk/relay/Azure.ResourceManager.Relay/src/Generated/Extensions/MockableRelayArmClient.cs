@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Relay;
@@ -112,7 +113,15 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayNetworkRuleSetResource"/> object. </returns>
         public virtual RelayNetworkRuleSetResource GetRelayNetworkRuleSetResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             RelayNetworkRuleSetResource.ValidateResourceId(id);
+            if (id.ResourceType == RelayNetworkRuleSetResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new RelayNetworkRuleSetResource(Client, id);
         }
     }
