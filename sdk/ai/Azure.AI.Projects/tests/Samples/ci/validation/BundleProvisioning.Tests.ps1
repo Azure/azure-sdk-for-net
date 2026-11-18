@@ -40,6 +40,16 @@ Describe 'Full bundle .NET bindings' {
         { Get-DotNetSampleEnvironment -Environment $script:environment } | Should Throw 'non-secret environment'
     }
 
+    It 'publishes the deployed model publisher required by the deployment sample' {
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $testEnvironment = [regex]::Match($pipeline, '(?ms)^    EnvVars:\r?\n(?<body>.*?)^    MatrixConfigs:').Groups['body'].Value
+        $testEnvironment | Should Match '(?m)^      MODEL_PUBLISHER: OpenAI\r?$'
+        foreach ($template in @('sample-resources.bicep', 'standard-model.bicep')) {
+            $model = Get-Content -LiteralPath (Join-Path $PSScriptRoot "../infra/$template") -Raw
+            $model | Should Match "(?m)^      format: 'OpenAI'\r?$"
+        }
+    }
+
     It 'deploys the full bundle and exposes aliases to tests, with secrets only in provisioning' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
         $pipeline | Should Match 'Invoke-BundleProvisioning.ps1'

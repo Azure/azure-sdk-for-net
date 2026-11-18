@@ -115,6 +115,8 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
   queue trigger has been indexed. Partial failures retain cleanup state.
 - Model name, version, SKU, and capacity remain run parameters. The default is
   `gpt-4.1` (`2025-04-14`) for both classic Agents and Responses samples.
+  `MODEL_PUBLISHER` is set to `OpenAI`, matching the Bicep model format, for
+  the deployment-listing sample.
   Overrides must support the selected APIs: reasoning models can reject
   sampling defaults used internally by the classic Agents service even when
   the sample does not set sampling parameters.
