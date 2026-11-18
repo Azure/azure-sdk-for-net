@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceBus;
@@ -139,7 +140,15 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource"/> object. </returns>
         public virtual ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSetResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ServiceBusNetworkRuleSetResource.ValidateResourceId(id);
+            if (id.ResourceType == ServiceBusNetworkRuleSetResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ServiceBusNetworkRuleSetResource(Client, id);
         }
 
