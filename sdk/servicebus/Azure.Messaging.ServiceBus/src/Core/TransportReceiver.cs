@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -21,6 +21,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// rather than tracking a copy that a concurrent close could leave stale.
         /// </summary>
         public abstract bool IsClosed { get; }
+
+        /// <summary>
+        /// Indicates whether the transport was closed solely to clean up a lost session, rather than by the caller.
+        /// </summary>
+        public virtual bool IsClosedBySessionLockLoss => false;
 
         /// <summary>
         /// Indicates whether the session link has been closed. This is useful for session receiver scenarios because once the link is closed for a
