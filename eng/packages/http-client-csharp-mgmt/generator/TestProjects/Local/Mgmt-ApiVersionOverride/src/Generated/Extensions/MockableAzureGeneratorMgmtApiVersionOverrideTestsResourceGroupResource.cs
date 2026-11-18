@@ -31,6 +31,73 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         {
         }
 
+        /// <summary> Gets a collection of FilteredExistenceTests in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of FilteredExistenceTests and their operations over a FilteredExistenceTestResource. </returns>
+        public virtual FilteredExistenceTestCollection GetFilteredExistenceTests()
+        {
+            return GetCachedClient(client => new FilteredExistenceTestCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a FilteredExistenceTest
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/filteredExistenceTests/{filteredExistenceTestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FilteredExistenceOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filteredExistenceTestName"> The name of the FilteredExistenceTest. </param>
+        /// <param name="expand"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filteredExistenceTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filteredExistenceTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FilteredExistenceTestResource>> GetFilteredExistenceTestAsync(string filteredExistenceTestName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filteredExistenceTestName, nameof(filteredExistenceTestName));
+
+            return await GetFilteredExistenceTests().GetAsync(filteredExistenceTestName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a FilteredExistenceTest
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/filteredExistenceTests/{filteredExistenceTestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FilteredExistenceOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filteredExistenceTestName"> The name of the FilteredExistenceTest. </param>
+        /// <param name="expand"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filteredExistenceTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filteredExistenceTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FilteredExistenceTestResource> GetFilteredExistenceTest(string filteredExistenceTestName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filteredExistenceTestName, nameof(filteredExistenceTestName));
+
+            return GetFilteredExistenceTests().Get(filteredExistenceTestName, expand, cancellationToken);
+        }
+
         /// <summary> Gets a collection of EscapedWireVersionTests in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of EscapedWireVersionTests and their operations over a EscapedWireVersionTestResource. </returns>
         public virtual EscapedWireVersionTestCollection GetEscapedWireVersionTests()

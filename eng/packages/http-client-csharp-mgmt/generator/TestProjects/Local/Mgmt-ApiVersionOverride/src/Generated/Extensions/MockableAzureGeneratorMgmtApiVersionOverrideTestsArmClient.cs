@@ -26,6 +26,15 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="FilteredExistenceTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FilteredExistenceTestResource"/> object. </returns>
+        public virtual FilteredExistenceTestResource GetFilteredExistenceTestResource(ResourceIdentifier id)
+        {
+            FilteredExistenceTestResource.ValidateResourceId(id);
+            return new FilteredExistenceTestResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="EscapedWireVersionTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EscapedWireVersionTestResource"/> object. </returns>

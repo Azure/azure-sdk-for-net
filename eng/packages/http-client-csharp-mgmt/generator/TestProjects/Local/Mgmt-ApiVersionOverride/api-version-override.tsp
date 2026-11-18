@@ -3,6 +3,7 @@ import "@azure-tools/typespec-azure-resource-manager";
 import "@azure-tools/typespec-client-generator-core";
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
+using TypeSpec.Http;
 using TypeSpec.Rest;
 
 namespace MgmtTypeSpec;
@@ -25,6 +26,11 @@ interface WireVersionReads {
   listByResourceGroup is ArmResourceListByParent<WireVersionTest>;
 }
 
+@Azure.Core.Legacy.overrideApiVersion("opaque-head")
+interface WireVersionExistence {
+  checkExistence is ArmResourceCheckExistence<WireVersionTest>;
+}
+
 @Azure.Core.Legacy.overrideApiVersion("opaque-write")
 interface WireVersionWrites {
   createOrUpdate is ArmResourceCreateOrReplaceSync<WireVersionTest>;
@@ -39,6 +45,23 @@ interface WireVersionActions {
 interface WireVersionProviderActions {
   @autoRoute
   checkWireVersion is ArmProviderActionSync<Request = void, Response = string, Scope = SubscriptionActionScope>;
+}
+
+/** A resource whose GET supports a query parameter that its HEAD cannot carry. */
+model FilteredExistenceTest is TrackedResource<WireVersionTestProperties> {
+  ...ResourceNameParameter<FilteredExistenceTest>;
+}
+
+interface FilteredExistenceOperations {
+  get is ArmResourceRead<FilteredExistenceTest, Parameters = {
+    @query expand?: string;
+    @query partition: "primary";
+    @header("x-ms-partition") partitionHeader: "primary";
+  }>;
+  checkExistence is ArmResourceCheckExistence<FilteredExistenceTest, Parameters = {
+    @query partition: "secondary";
+    @header("x-ms-partition") partitionHeader: "secondary";
+  }>;
 }
 
 /** A resource with ordinary service-version defaults and no override decorators. */
@@ -63,6 +86,7 @@ interface OrdinaryWireVersionProviderActions {
 @@clientLocation(WireVersionReads.get, "WireVersionOperations");
 @@clientLocation(WireVersionReads.listBySubscription, "WireVersionOperations");
 @@clientLocation(WireVersionReads.listByResourceGroup, "WireVersionOperations");
+@@clientLocation(WireVersionExistence.checkExistence, "WireVersionExistenceOperations");
 @@clientLocation(WireVersionWrites.createOrUpdate, "WireVersionOperations");
 @@clientLocation(WireVersionWrites.update, "WireVersionOperations");
 @@clientLocation(WireVersionActions.ping, "WireVersionOperations");
