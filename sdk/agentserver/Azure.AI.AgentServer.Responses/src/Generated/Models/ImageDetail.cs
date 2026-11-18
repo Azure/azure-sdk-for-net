@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ImageDetail
+    internal enum ImageDetail
     {
         /// <summary> Low. </summary>
         Low,

@@ -41,20 +41,54 @@ called end of life (EOL).
   November 2026, so Core packages drop `net8.0` and System.ClientModel drops
   `net9.0` in May 2027.
 - ❌ **DO NOT** add repository-wide package targets when an STS ships.
+- ❌ **DO NOT** use `AllActiveCurrentTargetFrameworks` in a packable project. It
+  holds the test targets, which include STS versions that packages don't
+  target. Use `RequiredTargetFrameworks` or `RequiredRunnableTargetFrameworks`.
 
 ## Test targets
 
-Test, sample, perf, and stress projects run on every .NET version still in
-support, plus the earliest .NET Framework version still in support
-(`NetFxTargetFramework`) on Windows. The CI test matrix covers the same set.
+Every framework a package targets is tested. Test, sample, perf, and stress
+projects under `sdk/` run on every .NET version that is still in support or
+still in a package's targets, plus `NetFxTargetFramework` on Windows: the
+earliest .NET Framework version that is still in support or still in a
+package's targets. Every CI test matrix covers the same set.
 
 - ✅ **DO** add each new .NET version, LTS or STS, to the test targets when it
   ships.
-- ✅ **DO** remove versions that have reached end of support in the same change.
-- ✅ **DO** move `NetFxTargetFramework` to the next .NET Framework version when
-  the current one reaches end of support.
+- ✅ **DO** keep a framework in the test targets until it is out of support and
+  no package targets it. Remove it in the change that removes its last package
+  target, or, if no package targets it, in the change that adds the next .NET
+  version.
+- ✅ **DO** keep `AllActiveCurrentTargetFrameworks` built on
+  `$(RequiredRunnableTargetFrameworks)` so repository-wide package targets are
+  always tested. List any other framework a package still targets, such as
+  System.ClientModel's `net9.0` until May 2027, explicitly.
+- ✅ **DO** move `NetFxTargetFramework` to the next .NET Framework version once
+  the current one is out of support and no package targets it.
+- ✅ **DO** target only the current LTS in standalone samples under `/samples`.
+  They don't import the repository's build properties, so they name the
+  framework directly.
 
-Package targets stay for 6 months after their version leaves the test targets.
+Known gap: Azure.Core targets `net472`, but CI runs .NET Framework tests only on
+`NetFxTargetFramework`. See
+[#64956](https://github.com/Azure/azure-sdk-for-net/issues/64956).
+
+### When tests fail on a new framework
+
+- ✅ **DO** fix the failure in the same change: in the product code when
+  customers on that framework would hit it, or in the test when the behavior
+  correctly differs by framework.
+- ✅ **DO** file an issue when a failure can't be fixed in the change, and skip
+  the test on that framework only, with the issue in the skip reason:
+
+  ```csharp
+  #if NET11_0
+      Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/<number>");
+  #endif
+  ```
+
+- ❌ **DO NOT** skip a test on every framework, delete it, or remove the
+  framework from a test project to get the change passing.
 
 ## Timeline
 
@@ -62,13 +96,14 @@ How targets change over the next four releases:
 
 | Release | Libraries | Core packages | Tests |
 |---------|-----------|---------------|-------|
-| .NET 11 (STS), Nov 2026 | `net10.0`, `net8.0` until May 2027 | `net10.0`, `net8.0` until May 2027 | `net10.0`, `net11.0` |
+| .NET 11 (STS), Nov 2026 | `net10.0`, `net8.0` until May 2027 | `net10.0`, `net8.0` until May 2027 | `net10.0`, `net11.0`, `net8.0` until May 2027 |
 | .NET 12 (LTS), Nov 2027 | `net12.0` | `net12.0`, `net10.0` | `net10.0`, `net11.0`, `net12.0` |
-| .NET 13 (STS), Nov 2028 | `net12.0` | `net12.0`, `net10.0` until May 2029 | `net12.0`, `net13.0` |
+| .NET 13 (STS), Nov 2028 | `net12.0` | `net12.0`, `net10.0` until May 2029 | `net12.0`, `net13.0`, `net10.0` until May 2029 |
 | .NET 14 (LTS), Nov 2029 | `net14.0` | `net14.0`, `net12.0` | `net12.0`, `net13.0`, `net14.0` |
 
 Libraries and Core packages also target `netstandard2.0`, and tests also run on
-.NET Framework on Windows. Optional targets are not shown.
+.NET Framework on Windows. Package-specific targets are not shown; tests cover
+them for as long as they ship.
 
 ## global.json
 
@@ -76,6 +111,10 @@ Libraries and Core packages also target `netstandard2.0`, and tests also run on
   same change that adds a framework to package or test targets. An SDK can't
   build a framework newer than itself, so this happens for every release, STS
   included.
+- ✅ **DO** update the SDK version in `CONTRIBUTING.md` and `AGENTS.md` in the
+  same change.
+- ❌ **DO NOT** restate the SDK version that builds this repository in other
+  docs. Link to `global.json` instead.
 
 ## CI agent images
 
@@ -83,44 +122,93 @@ Libraries and Core packages also target `netstandard2.0`, and tests also run on
   new SDK until the CI agent images include that SDK. These are the
   `azsdk-pool` Ubuntu and Windows images and the hosted macOS image, set in
   `eng/pipelines/templates/variables/image.yml`.
-- ✅ **DO** make the change promptly once the images include the SDK.
+- ✅ **DO** merge the change promptly once the images include the SDK.
+- ✅ **DO** open the pull request as a draft when an agent prepares the change,
+  and note in the description that a person still needs to confirm the images.
 
 ## Checklist
 
-Once the agent images include the new SDK:
+When a new .NET version ships:
 
-1. `global.json`: move `sdk.version` to the new SDK.
-2. `eng/Directory.Build.Common.props`: update `AllActiveCurrentTargetFrameworks`
-   for the test targets. For an LTS, also update `LtsTargetFramework`, keep the
-   outgoing LTS for packages that target every supported LTS, and update
+1. `global.json`: move `sdk.version` to the new SDK, and update the SDK version
+   in `CONTRIBUTING.md` and `AGENTS.md`.
+2. `eng/Directory.Build.Common.props`: add the new version to
+   `AllActiveCurrentTargetFrameworks`, and remove versions that leave the test
+   targets. For an LTS, also update `LtsTargetFramework`, keep the outgoing LTS
+   for packages that target every supported LTS, and update
    `ApiCompatRunnableTargetFramework`, which must be a framework that
    already-released packages contain.
-3. `eng/pipelines/templates/stages/platform-matrix.json`: add and remove
-   `TestTargetFramework` entries for every OS. For an LTS, move the
-   `Coverage_Record` entry to it.
-4. `eng/pipelines/templates/steps/install-dotnet.yml`: install an SDK for each
+3. Check each project that uses a property you changed. For each packable one,
+   confirm that `dotnet msbuild <project> -getProperty:TargetFrameworks` still
+   matches [Package targets](#package-targets).
+
+   ```
+   git grep -n -E 'AllActiveCurrentTargetFrameworks|RequiredRunnableTargetFrameworks|LtsTargetFramework|NetFxTargetFramework' -- '*.csproj' '*.props' '*.targets'
+   ```
+
+4. `eng/pipelines/templates/stages/platform-matrix.json`: add a
+   `TestTargetFramework` entry for the new version on every OS, and remove
+   entries for versions that leave the test targets. For an LTS, move the
+   `Coverage_Record` entry to it. Update the service-specific matrices
+   (`git grep -l TestTargetFramework -- sdk`) the same way, unless a matrix
+   deliberately runs fewer frameworks, such as the LTS-only
+   `sdk/tools/platform-generator-matrix.json`.
+5. `eng/pipelines/templates/steps/install-dotnet.yml`: install an SDK for each
    test framework older than the `global.json` SDK.
-5. `eng/centralpackagemanagement/`: update package versions conditioned on a
-   framework, such as `Microsoft.AspNetCore.Mvc.Testing`.
-6. Search the repo for the removed test frameworks and old SDKs (for example
-   `net8.0` and `8.0.x`) to catch scripts, samples, and tools that hard-code
-   them.
-7. Update API listings (`api/<Package>.<framework>.cs`) for packages whose
+6. `eng/centralpackagemanagement/`: add and remove versions conditioned on a
+   test framework, such as `Microsoft.AspNetCore.Mvc.Testing`. Leave versions
+   conditioned on a package target, such as
+   `Microsoft.AspNetCore.DataProtection` for `net8.0`, until that target is
+   removed.
+7. For each framework that leaves the test targets, find what else hard-codes
+   it (see [Finding hard-coded frameworks](#finding-hard-coded-frameworks)).
+   For an LTS, also search for the outgoing LTS and move standalone samples,
+   and scripts, tools, and Dockerfiles that use a single framework, to the new
+   LTS. Its package and test targets stay.
+8. Update API listings (`api/<Package>.<framework>.cs`) for packages whose
    targets changed. `eng/scripts/Export-API.ps1` generates listings for added
    frameworks but leaves listings for removed frameworks in place, so delete
    those. For .NET 10, the new listings were added in follow-up PRs:
    [#54412](https://github.com/Azure/azure-sdk-for-net/pull/54412) for Core and
    [#54952](https://github.com/Azure/azure-sdk-for-net/pull/54952) for all
    libraries.
-8. When the BCL package versions move to the new major, move the framework in
+9. When the BCL package versions move to the new major, move the framework in
    the built-in package removal in `eng/Directory.Build.Common.targets` to
    match.
+10. Run the tests on the new framework, and handle failures as described in
+    [When tests fail on a new framework](#when-tests-fail-on-a-new-framework).
 
 Six months after a version reaches end of support:
 
 1. Remove its package targets: the retired LTS in
    `eng/Directory.Build.Common.props`, and package-specific targets such as
    System.ClientModel's `net9.0`.
-2. Delete the API listings for the removed framework.
-3. Search the repo for the framework to catch anything else that still targets
-   it.
+2. In the same change, remove it from the test targets by following steps 2
+   through 6 above. For a .NET Framework version, move `NetFxTargetFramework`.
+3. Delete the API listings for the removed framework.
+4. Find what else hard-codes it (see
+   [Finding hard-coded frameworks](#finding-hard-coded-frameworks)).
+
+## Finding hard-coded frameworks
+
+Search for the framework and its SDK, replacing `8` with the version. For a
+.NET Framework version, search for its moniker, such as `net462`.
+
+```
+git grep -n -E 'net8\.0|8\.0\.x|/(sdk|aspnet|runtime):8\.0|\.NET 8(\.0)? SDK' -- . ':!**/api/*.cs' ':!**/CHANGELOG.md' ':!**/SessionRecords/**'
+```
+
+For each hit:
+
+- Leave package targets, and conditions on a framework that packages still
+  target.
+- For a framework that left the test targets, update test, sample, perf, and
+  stress projects, CI matrices, scripts, Dockerfiles, and docs. Scripts and
+  tools that need a single framework use the current LTS.
+- For the outgoing LTS, update only standalone samples, and the scripts, tools,
+  and Dockerfiles that use a single framework.
+- Reword comments that list frameworks so they don't name versions, for example
+  "the LTS framework", instead of updating the numbers.
+- Make changes to files under `eng/common` in
+  [Azure/azure-sdk-tools](https://github.com/Azure/azure-sdk-tools), which that
+  directory is synced from.

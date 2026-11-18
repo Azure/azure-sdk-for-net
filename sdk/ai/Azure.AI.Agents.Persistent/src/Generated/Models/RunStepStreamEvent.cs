@@ -76,7 +76,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="RunStepStreamEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunStepStreamEvent?(string value) => value == null ? null : new RunStepStreamEvent(value);
+        public static implicit operator RunStepStreamEvent?(string value) => value == null ? (RunStepStreamEvent?)null : new RunStepStreamEvent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

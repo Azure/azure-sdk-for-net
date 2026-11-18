@@ -6,12 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call output content. </summary>
-    public partial class FunctionShellCallOutputContent
+    internal partial class FunctionShellCallOutputContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,13 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="stdout"> The standard output that was captured. </param>
         /// <param name="stderr"> The standard error output that was captured. </param>
         /// <param name="outcome"> Represents either an exit outcome (with an exit code) or a timeout outcome for a shell call output chunk. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stdout"/>, <paramref name="stderr"/> or <paramref name="outcome"/> is null. </exception>
         public FunctionShellCallOutputContent(string stdout, string stderr, FunctionShellCallOutputOutcome outcome)
         {
-            Argument.AssertNotNull(stdout, nameof(stdout));
-            Argument.AssertNotNull(stderr, nameof(stderr));
-            Argument.AssertNotNull(outcome, nameof(outcome));
-
             Stdout = stdout;
             Stderr = stderr;
             Outcome = outcome;

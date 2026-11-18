@@ -3999,7 +3999,7 @@ namespace Azure.Storage.Files.DataLake
             builder.FileSystemName ??= Name;
 
             // Validate that builder is properly set
-            if (!builder.FileSystemName.Equals(Name, StringComparison.InvariantCulture))
+            if (!builder.FileSystemName.Equals(Name, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.FileSystemName),

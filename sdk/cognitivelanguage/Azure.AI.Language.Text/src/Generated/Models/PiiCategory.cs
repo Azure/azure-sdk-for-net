@@ -1036,7 +1036,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="PiiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PiiCategory?(string value) => value == null ? null : new PiiCategory(value);
+        public static implicit operator PiiCategory?(string value) => value == null ? (PiiCategory?)null : new PiiCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,13 +11,13 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The network bypass mode for the Mongo cluster. </summary>
+    /// <summary> The network bypass mode for the DocumentDB cluster. </summary>
     public readonly partial struct MongoClusterNetworkBypassMode : IEquatable<MongoClusterNetworkBypassMode>
     {
         private readonly string _value;
         /// <summary> No network bypass is enabled. </summary>
         private const string NoneValue = "None";
-        /// <summary> Allows Azure Cosmos DB service to bypass network restrictions. </summary>
+        /// <summary> Allows the Azure Cosmos DB service to bypass network restrictions. </summary>
         private const string AzureCosmosDBValue = "AzureCosmosDB";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterNetworkBypassMode"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> No network bypass is enabled. </summary>
         public static MongoClusterNetworkBypassMode None { get; } = new MongoClusterNetworkBypassMode(NoneValue);
 
-        /// <summary> Allows Azure Cosmos DB service to bypass network restrictions. </summary>
+        /// <summary> Allows the Azure Cosmos DB service to bypass network restrictions. </summary>
         public static MongoClusterNetworkBypassMode AzureCosmosDB { get; } = new MongoClusterNetworkBypassMode(AzureCosmosDBValue);
 
         /// <summary> Determines if two <see cref="MongoClusterNetworkBypassMode"/> values are the same. </summary>

@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchNodeFillType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeFillType?(string value) => value == null ? null : new BatchNodeFillType(value);
+        public static implicit operator BatchNodeFillType?(string value) => value == null ? (BatchNodeFillType?)null : new BatchNodeFillType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

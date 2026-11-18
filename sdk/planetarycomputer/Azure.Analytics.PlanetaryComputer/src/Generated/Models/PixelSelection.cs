@@ -91,7 +91,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="PixelSelection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PixelSelection?(string value) => value == null ? null : new PixelSelection(value);
+        public static implicit operator PixelSelection?(string value) => value == null ? (PixelSelection?)null : new PixelSelection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

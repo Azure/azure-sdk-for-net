@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ContextManagementParam. </summary>
-    public partial class ContextManagementParam : IJsonModel<ContextManagementParam>
+    internal partial class ContextManagementParam : IJsonModel<ContextManagementParam>
     {
         /// <summary> Initializes a new instance of <see cref="ContextManagementParam"/> for deserialization. </summary>
         internal ContextManagementParam()
@@ -80,10 +79,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(CompactThreshold))
+            if (Optional.IsDefined(CompactThreshold, _compactThresholdIsDefined))
             {
-                writer.WritePropertyName("compact_threshold"u8);
-                writer.WriteNumberValue(CompactThreshold.Value);
+                if (CompactThreshold != null)
+                {
+                    writer.WritePropertyName("compact_threshold"u8);
+                    writer.WriteNumberValue(CompactThreshold.Value);
+                }
+                else
+                {
+                    writer.WriteNull("compact_threshold"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,6 +134,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string @type = default;
+            bool compactThresholdIsDefined = false;
             long? compactThreshold = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -139,6 +146,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("compact_threshold"u8))
                 {
+                    compactThresholdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         compactThreshold = null;
@@ -149,10 +157,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContextManagementParam(@type, compactThreshold, additionalBinaryDataProperties);
+            return new ContextManagementParam(@type, compactThreshold, additionalBinaryDataProperties)
+            {
+                _compactThresholdIsDefined = compactThresholdIsDefined
+            };
         }
     }
 }

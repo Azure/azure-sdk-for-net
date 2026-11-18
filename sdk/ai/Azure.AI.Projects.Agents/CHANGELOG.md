@@ -1,19 +1,80 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
-
-### Features Added
+## 3.0.0 (2026-11-12)
 
 ### Breaking Changes
 - `AzureFunctionDefinitionFunction` was removed, please use the same class from `Azure.AI.Extensions.OpenAI`.
 - Renamed `GenerateVoiceAgentRequest` to `GenerateVoiceAgentContent` and `UpdateToolboxRequest` to `UpdateToolboxContent`.
 - Removed the `AgentCard(string, IEnumerable<AgentCardSkill>)` and `VersionSelector(IEnumerable<VersionSelectionRule>)` constructors. Use the parameterless constructors and set `Version`/`Skills` and `VersionSelectionRules` with initializers.
 - `TelephonyTransferTarget` constructor no longer takes `name`; set the `Name` property instead.
+- `AgentReference` class was removed, please use class `AgentReference` from `Azure.AI.Extensions.OpenAI` package.
+- `MCPToolboxTool` was renamed to `McpToolboxTool`.
+- `PSTNTelephonyTransferDestination` was renamed to `PstnTelephonyTransferDestination`.
+- The order of `GetAgentVersionsAsync` and `GetAgentVersions` arguments was changed. Now it is `string agentName, bool? includeDrafts, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default`.
+- The `DownloadAgentCode` and `DownloadAgentCodeAsync` methods of `AgentAdministrationClient` are now returning `ClientResult<BinaryData>` and `Task<ClientResult<BinaryData>>` respectively.
+- The `Download` and `DownloadAsync` methods of `AgentSessionFiles` are now returning  returning `ClientResult<BinaryData>` and `Task<ClientResult<BinaryData>>` respectively.
+- Renamed the following models and their `ProjectsAgentsModelFactory` methods:
+
+  | Previous | Replacement |
+  | --- | --- |
+  | `AgentOptimizationCandidatePromotionInfo` | `AgentOptimizationCandidatePromotion` |
+  | `HeaderTelemetryEndpointAuth` | `HeaderTelemetryEndpointAuthentication` |
+  | `InlineSkillParam` | `InlineSkill` |
+  | `InlineSkillSourceParam` | `InlineSkillSource` |
+  | `SkillReference` | `AgentSkillReference` |
+  | `SkillReferenceParam` | `SkillReference` |
+  | `TelemetryConfig` | `TelemetryConfiguration` |
+  | `VersionRefIndicator` | `VersionReferenceIndicator` |
+  | `VoiceAgentAudioConfig` | `VoiceAgentAudioConfiguration` |
+  | `VoiceAgentAudioInputConfig` | `VoiceAgentAudioInputConfiguration` |
+  | `VoiceAgentAudioOutputConfig` | `VoiceAgentAudioOutputConfiguration` |
+  | `VoiceAgentAvatarConfig` | `VoiceAgentAvatarConfiguration` |
+  | `VoiceAgentAvatarVideoParams` | `VoiceAgentAvatarVideoParameters` |
+  | `VoiceAgentGreetingConfig` | `VoiceAgentGreetingConfiguration` |
+  | `VoiceAgentInterimResponseConfig` | `VoiceAgentInterimResponseConfiguration` |
+  | `VoiceAgentLlmGeneratedGreetingConfig` | `VoiceAgentLlmGeneratedGreetingConfiguration` |
+  | `VoiceAgentLlmInterimResponseConfig` | `VoiceAgentLlmInterimResponseConfiguration` |
+  | `VoiceAgentPostCallConfig` | `VoiceAgentPostCallConfiguration` |
+  | `VoiceAgentSoundscapeConfig` | `VoiceAgentSoundscapeConfiguration` |
+  | `VoiceAgentSoundscapeSourceConfig` | `VoiceAgentSoundscapeSourceConfiguration` |
+  | `VoiceAgentSoundscapeTrackConfig` | `VoiceAgentSoundscapeTrackConfiguration` |
+  | `VoiceAgentSoundscapeWorkingTrackConfig` | `VoiceAgentSoundscapeWorkingTrackConfiguration` |
+  | `VoiceAgentStaticInterimResponseConfig` | `VoiceAgentStaticInterimResponseConfiguration` |
+  | `VoiceAgentSubagentConfig` | `VoiceAgentSubagentConfiguration` |
+  | `VoiceAgentTemplateGreetingConfig` | `VoiceAgentTemplateGreetingConfiguration` |
+  | `VoiceAgentTurnDetectionConfig` | `VoiceAgentTurnDetectionConfiguration` |
+
+- `SkillReference` and `ProjectsAgentsModelFactory.SkillReference` now refer to the former `SkillReferenceParam` container skill. Use `AgentSkillReference` and `ProjectsAgentsModelFactory.AgentSkillReference` for the previous agent skill reference.
+- Renamed the following properties and their corresponding model-factory parameters where present. Type names in the table reflect the renamed models above.
+
+  | Type | Previous | Replacement |
+  | --- | --- | --- |
+  | `A2AToolboxTool`, `A2APreviewToolboxTool` | `BaseUrl` | `BaseUri` |
+  | `TelephonyBinding`, `TelephonyBindingListItem` | `IncomingCallUrl` | `IncomingCallUri` |
+  | `VoiceAgentAudioOutputConfiguration` | `CustomLexiconUrl`, `CustomTextNormalizationUrl` | `CustomLexiconUri`, `CustomTextNormalizationUri` |
+  | `VoiceAgentAvatarVideoBackground` | `ImageUrl` | `ImageUri` |
+  | `VoiceAgentMcpTool` | `ServerUrl` | `ServerUri` |
+  | `TelephonyCallRecord`, `TelephonyCallSummary`, `VoiceAudioItem`, `VoiceGeneratedAudioItem`, `VoiceRecording` | `DurationMs` | `Duration` |
+  | `VoiceAudioItem`, `VoiceGeneratedAudioItem` | `StartOffsetMs` | `StartOffset` |
+  | `AgentOptimizationJob` | `RunDurationMs` | `RunDuration` |
+  | `AgentOptimizationCandidateEvaluation`, `AgentOptimizationJobLatency` | `AvgLatencyMs` | `AvgLatency` |
+  | `SessionConfiguration` | `IdleTimeoutSeconds` | `IdleTimeout` |
+  | `VoiceAgentEndOfUtteranceDetection` | `TimeoutMs` | `Timeout` |
+  | `VoiceAgentInterimResponseConfiguration` | `LatencyThresholdMs` | `LatencyThreshold` |
+  | `FileSearchToolboxTool` | `MaxNumResults` | `MaxResultCount` |
+  | `UserConversationSimulationConfiguration` | `DesiredNumTurns`, `MaxNumTurns` | `DesiredTurnCount`, `MaxTurnCount` |
+  | `ToolboxPolicies` | `RaiConfig` | `ContentFilterConfiguration` |
+
+- On `VoiceAgentServerVadTurnDetection`, `VoiceAgentAzureSemanticVadTurnDetection`, `VoiceAgentAzureSemanticVadEnTurnDetection`, and `VoiceAgentAzureSemanticVadMultilingualTurnDetection`, renamed `PrefixPaddingMs`, `SilenceDurationMs`, and `SpeechDurationMs` to `PrefixPadding`, `SilenceDuration`, and `SpeechDuration`. On `VoiceAgentServerVadTurnDetection`, `IdleTimeoutMs` was also renamed to `IdleTimeout`, and `IdleTimeout`, `PrefixPadding`, and `SilenceDuration` changed from `long?` to `TimeSpan?`. Convert millisecond values with `TimeSpan.FromMilliseconds`. The corresponding model-factory parameters changed as well.
+- On those four turn-detection types and `VoiceAgentSemanticVadTurnDetection`, renamed `CreateResponse` and `InterruptResponse` to `CreateResponseEnabled` and `InterruptResponseEnabled`, including the corresponding model-factory parameters.
+- `CallableToolAllowedCaller`, `VoiceAgentAudioInputConfigTranscriptionDelay`, `VoiceAgentAudioTimestampType`, `VoiceAgentEchoCancellationReferenceSource`, and `VoiceAgentSessionIncludeOption` changed from enums to extensible structs. Replace enum-specific casts and constant `switch` cases with comparisons against their static values.
+- `AllowedCallers` is now get-only on `CodeInterpreterToolboxTool`, `McpToolboxTool`, and `VoiceAgentMcpTool`; add items to the collection instead of replacing it. The `ShellToolboxTool.AllowedCallers` setter was also removed.
+- Renamed `AgentAdministrationClient.GetAgentOptimizationJobCandidatesClient` to `GetAgentOptimizationJobCandidates`.
+- `AgentAdministrationClient.GetSessionLogStream` and `GetSessionLogStreamAsync` are now experimental and require the `AAIP001` diagnostic to be suppressed on supported target frameworks.
+- Renamed the `internalMaxOutputTokens` named parameter of `ProjectsAgentsModelFactory.VoiceAgentDefinition` to `maxOutputTokens`.
 
 ### Bugs Fixed
 - Fixed the cancellation of `ToolboxRecord` update.
-
-### Other Changes
 
 ## 3.0.0-beta.6 (2026-10-30)
 

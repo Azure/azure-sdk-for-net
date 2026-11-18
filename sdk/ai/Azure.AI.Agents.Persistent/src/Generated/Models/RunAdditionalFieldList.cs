@@ -46,7 +46,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="RunAdditionalFieldList"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunAdditionalFieldList?(string value) => value == null ? null : new RunAdditionalFieldList(value);
+        public static implicit operator RunAdditionalFieldList?(string value) => value == null ? (RunAdditionalFieldList?)null : new RunAdditionalFieldList(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

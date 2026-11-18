@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call exit outcome. </summary>
-    public partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
+    internal partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcome"/>. </summary>
         /// <param name="exitCode"> Exit code from the shell process. </param>

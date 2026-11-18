@@ -167,7 +167,7 @@ namespace Azure.AI.Projects.Agents
             ContainerConfiguration containerConfiguration = default;
             IList<ProtocolVersionRecord> versions = default;
             CodeConfiguration codeConfiguration = default;
-            TelemetryConfig telemetryConfig = default;
+            TelemetryConfiguration telemetryConfig = default;
             SessionConfiguration sessionConfiguration = default;
             bool? enableMemorySnapshot = default;
             foreach (var prop in element.EnumerateObject())
@@ -255,7 +255,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
+                    telemetryConfig = TelemetryConfiguration.DeserializeTelemetryConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("session_configuration"u8))

@@ -69,7 +69,7 @@ namespace BasicTypeSpec
 
         /// <summary> Converts a string to a <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaysOfWeekExtensibleEnum?(string value) => value == null ? null : new DaysOfWeekExtensibleEnum(value);
+        public static implicit operator DaysOfWeekExtensibleEnum?(string value) => value == null ? (DaysOfWeekExtensibleEnum?)null : new DaysOfWeekExtensibleEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

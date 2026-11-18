@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="CardinalityValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CardinalityValue?(string value) => value == null ? null : new CardinalityValue(value);
+        public static implicit operator CardinalityValue?(string value) => value == null ? (CardinalityValue?)null : new CardinalityValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

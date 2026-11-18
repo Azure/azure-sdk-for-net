@@ -39,13 +39,13 @@ namespace Azure.Data.AI.Tests
             Assert.That(client, Is.Not.Null);
         }
 
-        [TestCase(false, false)]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        [TestCase(true, true)]
-        public async Task RerankingUsesGaApiVersion(bool explicitVersion, bool isAsync)
+        [TestCase(false, false, "2026-11-01-preview")]
+        [TestCase(false, true, "2026-11-01-preview")]
+        [TestCase(true, false, "2026-10-30")]
+        [TestCase(true, true, "2026-10-30")]
+        public async Task RerankingUsesExpectedApiVersion(bool explicitVersion, bool isAsync, string expectedVersion)
         {
-            using var handler = new ApiVersionHandler("2026-10-30");
+            using var handler = new ApiVersionHandler(expectedVersion);
             using var httpClient = new HttpClient(handler);
             var options = explicitVersion
                 ? new InferenceClientOptions(InferenceClientOptions.ServiceVersion.V2026_10_30)
@@ -71,7 +71,7 @@ namespace Azure.Data.AI.Tests
         // InferenceClientSettings and the settings-based constructor are gated behind
         // the SCME0002 experimental diagnostic while the configuration binding API stabilizes.
 #pragma warning disable SCME0002
-        [TestCase(null, "2026-10-30")]
+        [TestCase(null, "2026-11-01-preview")]
         [TestCase("2026-10-30", "2026-10-30")]
         [TestCase("custom-version", "custom-version")]
         public async Task ConfiguredRerankingUsesExpectedApiVersion(string configuredVersion, string expectedVersion)

@@ -1,8 +1,6 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
-
-### Features Added
+## 3.0.0 (2026-11-12)
 
 ### Breaking Changes
 - Removed the synchronous `ProjectResponsesClient.CreateResponseStreaming` overloads. Use `CreateResponseStreamingAsync` and asynchronous enumeration.
@@ -12,8 +10,8 @@
   before enumerating updates.
 - The `ProjectConversationsClient` constructor now accepts `ConversationClientOptions` instead of `OpenAIClientOptions`.
 - `ProjectResponsesClient.GetResponseStreamingAsync` now yields strongly typed response items.
-
-### Bugs Fixed
+- `ProjectResponsesClient`'s experimental diagnostic changed from `OPENAI001` to `AAIP002`.
+- Applications using this library with `Azure.AI.Projects.Agents` must update affected agent model references, including `VersionRefIndicator` to `VersionReferenceIndicator` and `ToolboxPolicies.RaiConfig` to `ToolboxPolicies.ContentFilterConfiguration`. These changes are in the Agents library and do not alter this package's public API. See the `Azure.AI.Projects.Agents` changelog for the complete list.
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.15.0`. See the [OpenAI 2.15.0 release notes](https://github.com/openai/openai-dotnet/blob/OpenAI_2.15.0/CHANGELOG.md#2150-2026-11-04) for the upstream breaking changes to experimental APIs, including the async-only streaming methods that `ProjectResponsesClient` inherits.

@@ -82,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Converts a string to a <see cref="MonitorDomainKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorDomainKind?(string value) => value == null ? null : new MonitorDomainKind(value);
+        public static implicit operator MonitorDomainKind?(string value) => value == null ? (MonitorDomainKind?)null : new MonitorDomainKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
