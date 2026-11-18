@@ -214,10 +214,11 @@ manifest emitted by `New-SampleTestPlan.ps1`; it does not scan Python samples.
 test IDs across queues before shared batch admission. The active pipeline uses
 the discovery matrix and `Invoke-BundleProvisioning.ps1`, so empty queues never
 start provisioning.
-The permanent identity bootstrap files under
-[`../shared-identities/infra`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples/shared-identities/infra) are identical to the
-Python and common-resource repository copies. They remain administrator-owned:
-the live-test pipeline never invokes that bootstrap or creates its role grants.
+The permanent identity bootstrap is maintained only in
+[foundry-sdk-test-resources](https://dev.azure.com/msdata/Vienna/_git/foundry-sdk-test-resources?path=/shared-identities/infra).
+Neither SDK contains a copy. Administrators provision identities from that
+repository and pass the existing group to the SDK pipelines; the live-test
+pipeline never invokes that bootstrap or creates its role grants.
 
 ## Cleanup safety
 
@@ -237,7 +238,7 @@ Use PowerShell 7.2+ with Pester 4.10.1 from this directory:
 ```powershell
 Import-Module Pester -RequiredVersion 4.10.1
 Invoke-Pester -Script ./validation -EnableExit
-./validation/Test-BicepTemplates.ps1 -IdentityInfrastructurePath ../shared-identities/infra
+./validation/Test-BicepTemplates.ps1
 python -m pytest ./test_search_indexing.py
 python -m unittest discover -s ./validation -p test_bundle_assets.py
 ```
@@ -245,8 +246,8 @@ python -m unittest discover -s ./validation -p test_bundle_assets.py
 The Bicep checker compiles the complete bundle and inspects nested resources,
 secret parameters, module dependencies and non-secret outputs. No deployment
 is performed. Permanent identity bootstrap validation is separate: supply
-`-IdentityInfrastructurePath ../shared-identities/infra` to include grant checks
-using this checkout's synchronized bootstrap.
+`-IdentityInfrastructurePath C:\repo\foundry-sdk-test-resources\shared-identities\infra`
+to include grant checks from a separate reviewed common-resource checkout.
 Offline checks do not establish live RBAC, regional feature
 availability or that live samples pass. Queue the existing pipeline only after
 reviewing its new billable footprint and setting both secret variables.
