@@ -1,0 +1,9 @@
+Historic Harbor Hotel is a fictional hotel in Seattle, Washington.
+Contoso Hospitality operates Historic Harbor Hotel.
+Historic Harbor Hotel was founded in 1984 and has a waterfront spa.
+
+Mountain View Inn is a fictional hotel in Denver, Colorado.
+Alpine Hospitality operates Mountain View Inn.
+Mountain View Inn was founded in 2002.
+
+The hotels, organizations, and operational details in this file are synthetic test data.
