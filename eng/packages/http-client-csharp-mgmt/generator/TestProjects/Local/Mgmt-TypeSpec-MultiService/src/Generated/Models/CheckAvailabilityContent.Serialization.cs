@@ -10,66 +10,71 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.OperationTemplates;
+using Azure.Generator.MgmtTypeSpec.MultiService.Tests;
 
-namespace Azure.ResourceManager.OperationTemplates.Models
+namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
 {
-    /// <summary> The LogStatusRequest. </summary>
-    public partial class LogStatusRequest : IJsonModel<LogStatusRequest>
+    /// <summary> The CheckAvailabilityContent. </summary>
+    public partial class CheckAvailabilityContent : IJsonModel<CheckAvailabilityContent>
     {
+        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityContent"/> for deserialization. </summary>
+        internal CheckAvailabilityContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LogStatusRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CheckAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLogStatusRequest(document.RootElement, options);
+                        return DeserializeCheckAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogStatusRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecMultiServiceTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LogStatusRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogStatusRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CheckAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogStatusRequest IPersistableModel<LogStatusRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CheckAvailabilityContent IPersistableModel<CheckAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogStatusRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CheckAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="logStatusRequest"> The <see cref="LogStatusRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LogStatusRequest logStatusRequest)
+        /// <param name="checkAvailabilityContent"> The <see cref="CheckAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CheckAvailabilityContent checkAvailabilityContent)
         {
-            if (logStatusRequest == null)
+            if (checkAvailabilityContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(logStatusRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(checkAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LogStatusRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CheckAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,16 +85,13 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogStatusRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckAvailabilityContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteStringValue(Filter);
-            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -109,36 +111,36 @@ namespace Azure.ResourceManager.OperationTemplates.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogStatusRequest IJsonModel<LogStatusRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CheckAvailabilityContent IJsonModel<CheckAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LogStatusRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CheckAvailabilityContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogStatusRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckAvailabilityContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogStatusRequest(document.RootElement, options);
+            return DeserializeCheckAvailabilityContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LogStatusRequest DeserializeLogStatusRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CheckAvailabilityContent DeserializeCheckAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string filter = default;
+            string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("filter"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    filter = prop.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogStatusRequest(filter, additionalBinaryDataProperties);
+            return new CheckAvailabilityContent(name, additionalBinaryDataProperties);
         }
     }
 }

@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.CommonProperties
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string armResourceIdentifierResourceName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string armResourceIdentifierResourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/", false);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.CommonProperties
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string armResourceIdentifierResourceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrReplaceRequest(Guid subscriptionId, string resourceGroupName, string armResourceIdentifierResourceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/", false);

@@ -22,19 +22,29 @@ internal class SerializationVisitor : ScmLibraryVisitor
     /// <inheritdoc/>
     protected override TypeProvider? VisitType(TypeProvider type)
     {
+        UpdateSerializationMethods(type);
+        return base.VisitType(type);
+    }
+
+    internal static void UpdateSerializationMethods(TypeProvider type)
+    {
         if (type is MrwSerializationTypeDefinition serializationType)
         {
             foreach (var method in serializationType.Methods)
             {
-                TryUpdateExplicitCreateMethod(method);
+                UpdateSerializationMethod(method);
             }
         }
-
-        return base.VisitType(type);
     }
 
     /// <inheritdoc/>
     protected override MethodProvider? VisitMethod(MethodProvider method)
+    {
+        UpdateSerializationMethod(method);
+        return base.VisitMethod(method);
+    }
+
+    private static void UpdateSerializationMethod(MethodProvider method)
     {
         TryUpdateExplicitCreateMethod(method);
 
@@ -58,7 +68,6 @@ internal class SerializationVisitor : ScmLibraryVisitor
                 method.Signature.Update(modifiers: modifiers, name: FromResponseMethodName);
             }
         }
-        return base.VisitMethod(method);
     }
 
     private static bool HasBaseFromResponse(MrwSerializationTypeDefinition serializationType)

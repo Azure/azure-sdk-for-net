@@ -12,26 +12,26 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Request for querying network sibling set. </summary>
-    public partial class QueryNetworkSiblingSetRequest
+    public partial class QueryNetworkSiblingSetContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryNetworkSiblingSetRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryNetworkSiblingSetContent"/>. </summary>
         /// <param name="location"> Location to query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public QueryNetworkSiblingSetRequest(string location)
+        public QueryNetworkSiblingSetContent(string location)
         {
             Argument.AssertNotNull(location, nameof(location));
 
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryNetworkSiblingSetRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryNetworkSiblingSetContent"/>. </summary>
         /// <param name="location"> Location to query. </param>
         /// <param name="subscriptionId"> Subscription ID to query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryNetworkSiblingSetRequest(string location, string subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryNetworkSiblingSetContent(string location, string subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             SubscriptionId = subscriptionId;
