@@ -307,7 +307,7 @@ function Get-PrReReviewReplayResult {
         $contamination = @("unchecked: $($_.Exception.Message)")
     }
 
-    $items = if ($AgentOutput -is [System.Collections.IDictionary] -and $AgentOutput.items -is [array]) { $AgentOutput.items } else { @() }
+    $items = @(if ($AgentOutput -is [System.Collections.IDictionary] -and $AgentOutput.items -is [array]) { $AgentOutput.items })
     $types = @($items | ForEach-Object { $_.type })
     $incompleteTypes = $script:IncompleteTypes
     $outcome = if ($types -ccontains 'submit_pull_request_review') {

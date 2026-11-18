@@ -254,6 +254,24 @@ Describe 'pr-re-review trigger routing' {
         $group | Should -Match '\$\{\{\s*github\.event\.pull_request\.number\s*\|\|\s*github\.run_id\s*\}\}'
     }
 
+    It 'adds the replay instructions to the prompt only for a dispatched replay' {
+        $bindings = @($LockLines | ForEach-Object {
+            if ($_ -cmatch '^\s+GH_AW_EXPR_[0-9A-F]+: \$\{\{ (?<expr>.*\bgithub\.event\.inputs\..*) \}\}$') { $Matches['expr'] }
+        } | Select-Object -Unique)
+        $replay = @($bindings | Where-Object { $_.Contains('This run replays', [StringComparison]::Ordinal) })
+        $replay | Should -HaveCount 1
+        $pullRequestContext = @{ github = @{ event_name = 'pull_request'; event = @{ pull_request = @{ number = 1; head = @{ sha = 'a' * 40 } } } } }
+        $dispatchContext = @{ github = @{ event_name = 'workflow_dispatch'; event = @{ inputs = @{ pull_request = '1'; head_sha = 'b' * 40 } } } }
+        Test-WorkflowCondition $replay[0] $pullRequestContext | Should -BeFalse
+        Test-WorkflowCondition $replay[0] $dispatchContext | Should -BeTrue
+        $targets = @($bindings | Where-Object { $_ -cnotin $replay })
+        $targets | Should -HaveCount 2
+        foreach ($target in $targets) {
+            Test-WorkflowCondition $target $pullRequestContext | Should -BeTrue
+            Test-WorkflowCondition $target $dispatchContext | Should -BeTrue
+        }
+    }
+
     # The pull_request_target path is safe partly because a fork cannot steer the agent through
     # its own instruction files: gh-aw must restore them from the base branch after checking out
     # the PR head.

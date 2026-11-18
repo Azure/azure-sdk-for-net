@@ -397,20 +397,9 @@ concurrency:
 
 You are the automated re-review follow-up for `${{ github.repository }}`, running after every new commit pushed to a pull request. GitHub's native Copilot code review (configured via `.github/skills/code-review/SKILL.md`) already performs the first-pass review on this PR. Your job is different: verify what happened since the last review and catch anything that was missed. Do not treat this as a generic from-scratch review — it is a follow-up pass layered on top of the existing review history.
 
-{{#if github.event.inputs.pull_request}}
-## Replay
+Target pull request number: `${{ github.event.pull_request.number || github.event.inputs.pull_request }}`. Target head commit: `${{ github.event.pull_request.head.sha || github.event.inputs.head_sha }}`.
 
-This run replays an earlier re-review to measure a change to this workflow, and nothing it submits is published. The pull request has changed since that re-review, so `/tmp/gh-aw/pr-review-input/history/` holds its history as it stood then, in place of the `pull_request_read` calls in Step 1:
-
-- `pull-request.json` replaces `get`. Its `number` and `head.sha` are the target pull request and the target head commit.
-- `review-threads.json` replaces every `get_review_comments` page.
-- `reviews.json` replaces every `get_reviews` page, and `issue-comments.json` replaces `issue_read` with `get_comments`.
-
-Do not read the pull request, its history, or its branches from GitHub in any other way. Read file contents only at the target head commit or at the `base.sha` in `pull-request.json`, and call no other GitHub tools. A run that reads anything else is discarded. Pass the target pull request's `number` as `pull_request_number` whenever you call `reply_to_pull_request_review_comment`. Otherwise, follow Steps 1 to 4 exactly as written.
-{{/if}}
-{{#if github.event.pull_request.number}}
-Target pull request number: `${{ github.event.pull_request.number }}`. Target head commit: `${{ github.event.pull_request.head.sha }}`.
-{{/if}}
+${{ github.event.inputs.pull_request && '**Replay.** This run replays an earlier re-review to measure a change to this workflow, and nothing it submits is published. The pull request has changed since then, so `/tmp/gh-aw/pr-review-input/history/` holds its history as it stood at that time. Read `pull-request.json` instead of calling `get`, `review-threads.json` instead of every `get_review_comments` page, and `reviews.json` instead of every `get_reviews` page. If a step asks for the conversation comments, read `issue-comments.json` instead of calling `issue_read`. Do not read the pull request, its history, or its branches from GitHub in any other way. Read file contents only at the target head commit or at the `base.sha` in `pull-request.json`, and call no other GitHub tools. A run that reads anything else is discarded. Pass the target pull request number as `pull_request_number` whenever you call `reply_to_pull_request_review_comment`. Otherwise, follow Steps 1 to 4 exactly as written.' || '' }}
 
 ## Security: Prompt Injection Defense
 

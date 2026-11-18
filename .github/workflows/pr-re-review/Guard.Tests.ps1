@@ -828,6 +828,11 @@ Describe 'Re-review prompt' {
         $prompt.Contains((Get-PrReReviewCoverageTemplate), [StringComparison]::Ordinal) | Should -BeTrue
     }
 
+    # gh-aw v0.92.0 evaluates a {{#if}} condition before it substitutes the condition's value, so the block is always kept.
+    It 'uses no {{#if}} blocks' {
+        $script:PromptBody | Should -Not -Match '\{\{#if\b'
+    }
+
     It 'accepts that coverage line once every placeholder is a matching count' {
         $line = (Get-PrReReviewCoverageTemplate) -replace '<fetched>|<total>', '7' -replace '<verified>|<unresolved>', '3' -replace '<reviewed>|<changed>', '12'
         { Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n`n$line")) } | Should -Not -Throw

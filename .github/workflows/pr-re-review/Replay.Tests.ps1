@@ -217,6 +217,9 @@ Describe 'Invoke-PrReReviewReplayGuard.ps1' {
         $result.coverage.passed | Should -Be ($Outcome -eq 'would-publish')
         $result.readCoverage.passed | Should -BeTrue
         $result.contaminated | Should -BeFalse
+        $items = (Get-Content $env:REVIEW_REPLAY_RESULT -Raw | ConvertFrom-Json -AsHashtable).items
+        $items -is [array] | Should -BeTrue
+        @($items.type) | Should -Be @('submit_pull_request_review')
         Get-Content $env:GITHUB_STEP_SUMMARY -Raw | Should -Match "Outcome: \*\*$Outcome\*\*"
     }
 
@@ -232,6 +235,9 @@ Describe 'Invoke-PrReReviewReplayGuard.ps1' {
     It 'still records a result when the agent produced no output' {
         $env:AGENT_OUTPUT = ''
         { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Throw -ExpectedMessage '*never publishes*no-review*'
-        (Get-Content $env:REVIEW_REPLAY_RESULT -Raw | ConvertFrom-Json).outcome | Should -BeExactly 'no-review'
+        $result = Get-Content $env:REVIEW_REPLAY_RESULT -Raw | ConvertFrom-Json -AsHashtable
+        $result.outcome | Should -BeExactly 'no-review'
+        $result.items -is [array] | Should -BeTrue
+        $result.items.Count | Should -Be 0
     }
 }
