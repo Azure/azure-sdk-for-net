@@ -1745,6 +1745,9 @@
               }
             },
             "resultPath": "result",
+            "pollingResponseModel": {
+              "$ref": "23"
+            },
             "statusMetadata": [
               {
                 "property": {
@@ -2110,6 +2113,9 @@
               }
             },
             "resultPath": "result",
+            "pollingResponseModel": {
+              "$ref": "39"
+            },
             "statusMetadata": [
               {
                 "property": {
@@ -2350,6 +2356,9 @@
               }
             },
             "resultPath": "result",
+            "pollingResponseModel": {
+              "$ref": "39"
+            },
             "statusMetadata": [
               {
                 "property": {

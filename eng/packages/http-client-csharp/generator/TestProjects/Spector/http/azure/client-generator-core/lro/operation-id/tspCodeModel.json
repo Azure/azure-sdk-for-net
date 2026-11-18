@@ -1004,6 +1004,9 @@
               }
             },
             "resultPath": "result",
+            "pollingResponseModel": {
+              "$ref": "17"
+            },
             "operationId": [
               {
                 "$id": "66",
@@ -1043,33 +1046,7 @@
                   }
                 },
                 "pathParameter": {
-                  "$id": "70",
-                  "kind": "path",
-                  "name": "resultId",
-                  "serializedName": "resultId",
-                  "type": {
-                    "$id": "71",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "isApiVersion": false,
-                  "explode": false,
-                  "style": "simple",
-                  "allowReserved": false,
-                  "skipUrlEncoding": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "decorators": [],
-                  "readOnly": false,
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.resultId",
-                  "methodParameterSegments": [
-                    {
-                      "$ref": "45"
-                    }
-                  ],
-                  "isExactName": false
+                  "$ref": "43"
                 },
                 "pollingPath": "/azure/client-generator-core/lro/operation-id/documentModels/{modelId}/analyzeResults/{resultId}"
               }
@@ -1077,7 +1054,7 @@
           }
         },
         {
-          "$id": "72",
+          "$id": "70",
           "kind": "basic",
           "name": "getTranslationStatus",
           "isExactName": false,
@@ -1086,19 +1063,19 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "73",
+            "$id": "71",
             "name": "getTranslationStatus",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "74",
+                "$id": "72",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "75",
+                  "$id": "73",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1108,7 +1085,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "76",
+                    "$id": "74",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1128,7 +1105,7 @@
                 "isExactName": false
               },
               {
-                "$id": "77",
+                "$id": "75",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -1144,7 +1121,7 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "78",
+                    "$id": "76",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1197,7 +1174,7 @@
           },
           "parameters": [
             {
-              "$ref": "78"
+              "$ref": "76"
             }
           ],
           "response": {
@@ -1211,7 +1188,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus"
         },
         {
-          "$id": "79",
+          "$id": "77",
           "kind": "lro",
           "name": "startTranslation",
           "isExactName": false,
@@ -1220,19 +1197,19 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "80",
+            "$id": "78",
             "name": "startTranslation",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "81",
+                "$id": "79",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "82",
+                  "$id": "80",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1242,7 +1219,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "83",
+                    "$id": "81",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1273,12 +1250,12 @@
                     "nameInResponse": "Operation-Location",
                     "doc": "The location for monitoring the operation state.",
                     "type": {
-                      "$id": "84",
+                      "$id": "82",
                       "kind": "url",
                       "name": "ResourceLocation",
                       "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
                       "baseType": {
-                        "$id": "85",
+                        "$id": "83",
                         "kind": "url",
                         "name": "url",
                         "crossLanguageDefinitionId": "TypeSpec.url",
@@ -1326,9 +1303,12 @@
               }
             },
             "resultPath": "result",
+            "pollingResponseModel": {
+              "$ref": "23"
+            },
             "operationId": [
               {
-                "$id": "86",
+                "$id": "84",
                 "kind": "property",
                 "property": {
                   "$ref": "24"
@@ -1343,7 +1323,7 @@
           }
         },
         {
-          "$id": "87",
+          "$id": "85",
           "kind": "basic",
           "name": "getTranslationWithPathStatus",
           "isExactName": false,
@@ -1352,18 +1332,18 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "88",
+            "$id": "86",
             "name": "getTranslationWithPathStatus",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "89",
+                "$id": "87",
                 "kind": "path",
                 "name": "operationId",
                 "serializedName": "operationId",
                 "type": {
-                  "$id": "90",
+                  "$id": "88",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1381,12 +1361,12 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.operationId",
                 "methodParameterSegments": [
                   {
-                    "$id": "91",
+                    "$id": "89",
                     "kind": "method",
                     "name": "operationId",
                     "serializedName": "operationId",
                     "type": {
-                      "$id": "92",
+                      "$id": "90",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1406,13 +1386,13 @@
                 "isExactName": false
               },
               {
-                "$id": "93",
+                "$id": "91",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "94",
+                  "$id": "92",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1422,7 +1402,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "95",
+                    "$id": "93",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1442,7 +1422,7 @@
                 "isExactName": false
               },
               {
-                "$id": "96",
+                "$id": "94",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -1458,7 +1438,7 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "97",
+                    "$id": "95",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1511,10 +1491,10 @@
           },
           "parameters": [
             {
-              "$ref": "91"
+              "$ref": "89"
             },
             {
-              "$ref": "97"
+              "$ref": "95"
             }
           ],
           "response": {
@@ -1528,7 +1508,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus"
         },
         {
-          "$id": "98",
+          "$id": "96",
           "kind": "lro",
           "name": "startTranslationWithPath",
           "isExactName": false,
@@ -1537,19 +1517,19 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "99",
+            "$id": "97",
             "name": "startTranslationWithPath",
             "isExactName": false,
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "100",
+                "$id": "98",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "101",
+                  "$id": "99",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1559,7 +1539,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "102",
+                    "$id": "100",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1590,12 +1570,12 @@
                     "nameInResponse": "Operation-Location",
                     "doc": "The location for monitoring the operation state.",
                     "type": {
-                      "$id": "103",
+                      "$id": "101",
                       "kind": "url",
                       "name": "ResourceLocation",
                       "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
                       "baseType": {
-                        "$id": "104",
+                        "$id": "102",
                         "kind": "url",
                         "name": "url",
                         "crossLanguageDefinitionId": "TypeSpec.url",
@@ -1643,26 +1623,29 @@
               }
             },
             "resultPath": "result",
+            "pollingResponseModel": {
+              "$ref": "31"
+            },
             "operationId": [
               {
-                "$id": "105",
+                "$id": "103",
                 "kind": "path",
                 "source": {
                   "location": "ResponseHeader",
                   "property": {
-                    "$id": "106",
+                    "$id": "104",
                     "kind": "property",
                     "name": "operationLocation",
                     "apiVersions": [],
                     "serializedName": "Operation-Location",
                     "doc": "The location for monitoring the operation state.",
                     "type": {
-                      "$id": "107",
+                      "$id": "105",
                       "kind": "url",
                       "name": "ResourceLocation",
                       "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
                       "baseType": {
-                        "$id": "108",
+                        "$id": "106",
                         "kind": "url",
                         "name": "url",
                         "crossLanguageDefinitionId": "TypeSpec.url",
@@ -1682,38 +1665,12 @@
                   }
                 },
                 "pathParameter": {
-                  "$id": "109",
-                  "kind": "path",
-                  "name": "operationId",
-                  "serializedName": "operationId",
-                  "type": {
-                    "$id": "110",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "isApiVersion": false,
-                  "explode": false,
-                  "style": "simple",
-                  "allowReserved": false,
-                  "skipUrlEncoding": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "decorators": [],
-                  "readOnly": false,
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.operationId",
-                  "methodParameterSegments": [
-                    {
-                      "$ref": "91"
-                    }
-                  ],
-                  "isExactName": false
+                  "$ref": "87"
                 },
                 "pollingPath": "/azure/client-generator-core/lro/operation-id/translations/operations/{operationId}"
               },
               {
-                "$id": "111",
+                "$id": "107",
                 "kind": "property",
                 "property": {
                   "$ref": "32"
@@ -1730,13 +1687,13 @@
       ],
       "parameters": [
         {
-          "$id": "112",
+          "$id": "108",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "113",
+            "$id": "109",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1747,7 +1704,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "114",
+              "$id": "110",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"

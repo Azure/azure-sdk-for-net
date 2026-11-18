@@ -72,6 +72,46 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNull(output.GetLroOperation(ordinary, client, protocol: false));
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void SelectedMetadataReadsCachedPollingResponseModel(bool hasPollingModel)
+        {
+            var progress = InputFactory.Property("progress", InputPrimitiveType.Int32, isRequired: true,
+                wireName: "percent_done", serializedName: "progress");
+            var detailsModel = InputFactory.Model("Details", properties: [progress]);
+            var details = InputFactory.Property("details", detailsModel, wireName: "wire_details");
+            var monitor = InputFactory.Model("JobStatus", properties: [details]);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                [new InputLroStatusMetadata(progress, [details, progress])], [], hasPollingModel ? monitor : null);
+            var selected = InputFactory.LongRunningServiceMethod("selected", InputFactory.Operation("selected"), longRunningServiceMetadata: metadata);
+            var inputClient = InputFactory.Client("TestClient", methods: [selected]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient], inputModels: () => [monitor, detailsModel]);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
+            output.GetLroOperation(selected, client, protocol: false);
+            var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
+            var property = metadataType.Properties.Single();
+
+            if (!hasPollingModel)
+            {
+                Assert.IsEmpty(metadataType.Methods);
+                StringAssert.Contains("\"wire_details\", \"percent_done\"",
+                    ((MethodPropertyBody)property.Body).Getter!.ToDisplayString());
+                return;
+            }
+
+            Assert.AreEqual("this.GetMonitorModel()?.Details?.Progress",
+                ((ExpressionPropertyBody)property.Body).Getter.ToDisplayString());
+            var cache = metadataType.Fields.Single(f => f.Name == "_monitorCache");
+            Assert.AreEqual("JobStatus", cache.Type.Arguments[1].Name);
+            var body = metadataType.Methods.Single(m => m.Signature.Name == "GetMonitorModel").BodyStatements!.ToDisplayString();
+            StringAssert.Contains("object.ReferenceEquals(cache.Item1, response)", body);
+            StringAssert.Contains("ModelReaderWriter.Read<global::Samples.Models.JobStatus>(response.Content", body);
+            StringAssert.Contains("catch (global::System.Text.Json.JsonException)", body);
+            StringAssert.Contains("catch (global::System.InvalidOperationException)", body);
+            StringAssert.Contains("_monitorCache = new global::System.Tuple<global::Azure.Response, global::Samples.Models.JobStatus>(response, model);", body);
+        }
+
         [Test]
         public void UpdatesLroSignatureNoResponseBody()
         {

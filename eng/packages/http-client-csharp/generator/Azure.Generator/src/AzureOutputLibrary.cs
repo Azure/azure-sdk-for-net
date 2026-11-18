@@ -33,7 +33,8 @@ namespace Azure.Generator
                 var modifiers = (client.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && lro.Accessibility != "internal"
                     ? TypeSignatureModifiers.Public : TypeSignatureModifiers.Internal) | TypeSignatureModifiers.Partial;
                 var metadata = lro.LongRunningServiceMetadata.StatusMetadata.Count > 0
-                    ? new LroStatusMetadataProvider($"{name}OperationMetadata", client.Type.Namespace, lro.LongRunningServiceMetadata.StatusMetadata, modifiers)
+                    ? new LroStatusMetadataProvider($"{name}OperationMetadata", client.Type.Namespace, lro.LongRunningServiceMetadata.StatusMetadata, modifiers,
+                        lro.LongRunningServiceMetadata.PollingResponseModel)
                     : null;
                 if (metadata is not null)
                 {

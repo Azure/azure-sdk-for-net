@@ -35,15 +35,43 @@ namespace Azure.Core.Tests
             var token = new RehydrationToken(
                 "status", null, "OperationLocation", pollingUri, "https://test/resource",
                 RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
-            using var response = new MockResponse(200);
-            response.SetContent("""{"details":{"wire_id":"body-id"}}""");
+            using var response = CreateJsonResponse("""{"details":{"wire_id":"body-id"}}""");
             Assert.AreEqual("body-id", ProtocolOperationHelpers.GetOperationId(token, response, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
-            response.SetContent("""{"details":{}}""");
-            Assert.AreEqual("path/id", ProtocolOperationHelpers.GetOperationId(token, response, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
-            response.SetContent("""{"details":{"wire_id":42}}""");
-            Assert.AreEqual("path/id", ProtocolOperationHelpers.GetOperationId(token, response, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
-            Assert.AreEqual("NOT_SET", ProtocolOperationHelpers.GetOperationId(null, response, null, null, ["details", "wire_id"]));
+            using var missing = CreateJsonResponse("""{"details":{}}""");
+            Assert.AreEqual("path/id", ProtocolOperationHelpers.GetOperationId(token, missing, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
+            using var nonString = CreateJsonResponse("""{"details":{"wire_id":42}}""");
+            Assert.AreEqual("path/id", ProtocolOperationHelpers.GetOperationId(token, nonString, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
+            using var noId = CreateJsonResponse("""{"details":{}}""");
+            Assert.AreEqual("NOT_SET", ProtocolOperationHelpers.GetOperationId(null, noId, null, null, ["details", "wire_id"]));
             Assert.AreEqual("NOT_SET", ProtocolOperationHelpers.GetOperationId(token, null, "/other/{jobId}", "jobId", null));
+        }
+
+        [Test]
+        public void MonitorResponseIsParsedOncePerResponse()
+        {
+            var first = new RehydrationToken(
+                "status", null, "OperationLocation", "https://test/jobs/first/status", "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            var second = new RehydrationToken(
+                "status", null, "OperationLocation", "https://test/jobs/second/status", "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            using var response = CreateJsonResponse("""{"progress":25}""");
+
+            Assert.AreEqual("first", ProtocolOperationHelpers.GetOperationId(first, response, "/jobs/{jobId}/status", "jobId", null));
+            // The ID derived for a monitor response is reused until a poll produces a new response.
+            Assert.AreEqual("first", ProtocolOperationHelpers.GetOperationId(second, response, "/jobs/{jobId}/status", "jobId", null));
+            using var next = CreateJsonResponse("""{"progress":50}""");
+            Assert.AreEqual("second", ProtocolOperationHelpers.GetOperationId(second, next, "/jobs/{jobId}/status", "jobId", null));
+
+            response.SetContent("""{"progress":99}""");
+            Assert.AreEqual(25, ProtocolOperationHelpers.GetStatusMetadata(response, "progress")?.GetInt32());
+        }
+
+        private static MockResponse CreateJsonResponse(string content)
+        {
+            var response = new MockResponse(200);
+            response.SetContent(content);
+            return response;
         }
 
         [Test]

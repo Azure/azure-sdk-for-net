@@ -4,6 +4,8 @@
 #nullable enable
 
 using System;
+using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -86,9 +88,56 @@ namespace Azure.Core
             return createOperation(innerOperation, () => monitorResponse);
         }
 
+        // Monitor responses are immutable once received, so parse each one at most once and share the
+        // result across all metadata and operation ID getters instead of reparsing on every access.
+        private static readonly ConditionalWeakTable<Response, ParsedMonitorResponse> s_parsedResponses = new();
+        private static readonly ConcurrentDictionary<string, Regex> s_pollingPathPatterns = new();
+
         public static JsonElement? GetStatusMetadata(Response? response, params string[] propertySegments)
         {
-            if (response?.Content is not { } content || content.ToMemory().IsEmpty)
+            if (response is null || GetParsedResponse(response).Root is not { } root)
+            {
+                return null;
+            }
+
+            var element = root;
+            foreach (var segment in propertySegments)
+            {
+                if (element.ValueKind != JsonValueKind.Object || !element.TryGetProperty(segment, out element))
+                {
+                    return null;
+                }
+            }
+            return element.ValueKind is JsonValueKind.Null ? null : element;
+        }
+
+        public static string GetOperationId(
+            RehydrationToken? rehydrationToken, Response? monitorResponse,
+            string? pollingPath, string? pathParameter, string[]? propertySegments)
+        {
+            if (monitorResponse is null)
+            {
+                return ComputeOperationId(rehydrationToken, null, pollingPath, pathParameter, propertySegments);
+            }
+
+            // The rehydration token only changes when a poll produces a new monitor response, so the derived
+            // ID can be cached per response rather than reserializing the token and matching the URI per access.
+            var parsed = GetParsedResponse(monitorResponse);
+            var id = parsed.OperationId;
+            if (id is null)
+            {
+                id = ComputeOperationId(rehydrationToken, monitorResponse, pollingPath, pathParameter, propertySegments);
+                parsed.OperationId = id;
+            }
+            return id;
+        }
+
+        private static ParsedMonitorResponse GetParsedResponse(Response response)
+            => s_parsedResponses.GetValue(response, static r => new ParsedMonitorResponse(Parse(r)));
+
+        private static JsonElement? Parse(Response response)
+        {
+            if (response.Content is not { } content || content.ToMemory().IsEmpty)
             {
                 return null;
             }
@@ -96,15 +145,7 @@ namespace Azure.Core
             try
             {
                 using var document = JsonDocument.Parse(content);
-                var element = document.RootElement;
-                foreach (var segment in propertySegments)
-                {
-                    if (element.ValueKind != JsonValueKind.Object || !element.TryGetProperty(segment, out element))
-                    {
-                        return null;
-                    }
-                }
-                return element.ValueKind is JsonValueKind.Null ? null : element.Clone();
+                return document.RootElement.Clone();
             }
             catch (JsonException)
             {
@@ -112,7 +153,7 @@ namespace Azure.Core
             }
         }
 
-        public static string GetOperationId(
+        private static string ComputeOperationId(
             RehydrationToken? rehydrationToken, Response? monitorResponse,
             string? pollingPath, string? pathParameter, string[]? propertySegments)
         {
@@ -131,6 +172,17 @@ namespace Azure.Core
             var nextUri = document.RootElement.GetProperty("nextRequestUri").GetString();
             var initialUri = document.RootElement.GetProperty("initialUri").GetString();
             var pollingUri = new Uri(new Uri(initialUri!), nextUri);
+            string path = pollingPath;
+            string parameterName = pathParameter;
+            var pattern = s_pollingPathPatterns.GetOrAdd($"{parameterName}\n{path}", _ => CreatePollingPathPattern(path, parameterName));
+            var match = pattern.Match(pollingUri.AbsolutePath);
+            return match.Success && match.Groups["operationId"].Success
+                ? Uri.UnescapeDataString(match.Groups["operationId"].Value)
+                : NextLinkOperationImplementation.NotSet;
+        }
+
+        private static Regex CreatePollingPathPattern(string pollingPath, string pathParameter)
+        {
             var pattern = new StringBuilder();
             int position = 0;
             foreach (Match parameter in Regex.Matches(pollingPath, @"\{(\+?)([^}]+)\}"))
@@ -144,10 +196,14 @@ namespace Azure.Core
             }
             pattern.Append(Regex.Escape(pollingPath.Substring(position)));
             pattern.Append('$');
-            var match = Regex.Match(pollingUri.AbsolutePath, pattern.ToString());
-            return match.Success && match.Groups["operationId"].Success
-                ? Uri.UnescapeDataString(match.Groups["operationId"].Value)
-                : NextLinkOperationImplementation.NotSet;
+            return new Regex(pattern.ToString(), RegexOptions.CultureInvariant);
+        }
+
+        private sealed class ParsedMonitorResponse
+        {
+            public ParsedMonitorResponse(JsonElement? root) => Root = root;
+            public JsonElement? Root { get; }
+            public string? OperationId { get; set; }
         }
 
         public static Operation<TTo> Convert<TFrom, TTo>(Operation<TFrom> operation, Func<Response, TTo> convertFunc, ClientDiagnostics diagnostics, string scopeName)
