@@ -1407,9 +1407,9 @@ internal sealed partial class TaskEngine : IDisposable
 
                 if (outcome.Kind == TurnOutcomeKind.Deferred)
                 {
-                    // Exit-for-recovery: lease already released, record stays in_progress. Deferral is
-                    // an internal lifecycle handoff — the run handle's Completion is intentionally left
-                    // pending (never faulted) so the durable run can resume in a future process. A
+                    // Exit-for-recovery: record stays in_progress, even if the lease must lapse.
+                    // Deferral is an internal lifecycle handoff — the run handle's Completion is
+                    // intentionally left pending so the durable run can resume in a future process. A
                     // caller that does not want to wait can bail via Completion.WaitAsync(token).
                     _activeRuns.TryRemove(taskId, out _);
                     _serializer.Remove(taskId);
@@ -1668,12 +1668,17 @@ internal sealed partial class TaskEngine : IDisposable
                     "ExitForRecovery may only be called when ctx.Shutdown is signaled.");
             }
 
-            // Graceful shutdown: force-expire the lease (duration 0, status stays in_progress),
-            // and mark the turn for recovery. Queued steering inputs remain
-            // in the persisted state; the next process re-enters the handler with
-            // EntryMode.Recovered. This sets a post-return signal (no throw) that the engine
-            // reconciles once the handler returns — deferral is a lifecycle handoff, not a fault.
-            await _lease.ReleaseAsync(taskId, _owner, ct).ConfigureAwait(false);
+            // If force-expiry fails, keep the task in progress and let the existing lease lapse.
+            // Recovery must not turn a store error into a terminal handler outcome.
+            try
+            {
+                await _lease.ReleaseAsync(taskId, _owner, ct).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LeaseForceExpireFailed(taskId, ex.GetType().Name);
+            }
+
             ctxState.DeferredForRecovery = true;
         };
 
