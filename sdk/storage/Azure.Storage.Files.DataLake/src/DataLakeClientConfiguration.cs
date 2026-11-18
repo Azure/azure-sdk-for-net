@@ -16,6 +16,12 @@ namespace Azure.Storage.Files.DataLake
 
         public virtual TransferValidationOptions TransferValidation { get; } = new();
 
+        /// <summary>
+        /// The priority sent in the x-ms-request-priority header on every request.
+        /// Captured from <see cref="DataLakeClientOptions.RequestPriority"/> when the configuration is created.
+        /// </summary>
+        public int? RequestPriority { get; internal set; }
+
         private HttpPipeline _blobPipeline;
 
         /// <summary>
@@ -48,6 +54,7 @@ namespace Azure.Storage.Files.DataLake
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = clientOptions.TransferValidation;
+            RequestPriority = clientOptions.RequestPriority;
         }
 
         /// <summary>
@@ -64,6 +71,7 @@ namespace Azure.Storage.Files.DataLake
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = clientOptions.TransferValidation;
+            RequestPriority = clientOptions.RequestPriority;
         }
 
         /// <summary>
@@ -80,6 +88,7 @@ namespace Azure.Storage.Files.DataLake
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = clientOptions.TransferValidation;
+            RequestPriority = clientOptions.RequestPriority;
         }
 
         /// <summary>
@@ -96,6 +105,7 @@ namespace Azure.Storage.Files.DataLake
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = clientOptions.TransferValidation;
+            RequestPriority = clientOptions.RequestPriority;
         }
 
         /// <summary>
@@ -108,12 +118,14 @@ namespace Azure.Storage.Files.DataLake
             TokenCredential tokenCredential,
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions clientOptions,
-            DataLakeCustomerProvidedKey? customerProvidedKey)
+            DataLakeCustomerProvidedKey? customerProvidedKey,
+            int? requestPriority)
             : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = clientOptions.TransferValidation;
+            RequestPriority = requestPriority;
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)
@@ -125,7 +137,8 @@ namespace Azure.Storage.Files.DataLake
                 tokenCredential: originalClientConfiguration.TokenCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 clientOptions: originalClientConfiguration.ClientOptions,
-                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
+                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
+                requestPriority: originalClientConfiguration.RequestPriority);
             copy._blobPipeline = originalClientConfiguration._blobPipeline;
             return copy;
         }

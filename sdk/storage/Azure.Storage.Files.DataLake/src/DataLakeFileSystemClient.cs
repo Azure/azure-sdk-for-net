@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
                     _blobUri,
-                    CreateBlobClientOptions(options, clientDiagnostics),
+                    CreateBlobClientOptions(options, clientDiagnostics, options.RequestPriority),
                     authentication,
                     dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
                     tokenCredential,
@@ -462,7 +462,8 @@ namespace Azure.Storage.Files.DataLake
                 tokenCredential: tokenCredential,
                 clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey)
+                customerProvidedKey: options.CustomerProvidedKey,
+                requestPriority: options.RequestPriority)
             {
                 BlobPipeline = blobPipeline,
             };
@@ -532,11 +533,13 @@ namespace Azure.Storage.Files.DataLake
 
         private static BlobClientOptions CreateBlobClientOptions(
             DataLakeClientOptions clientOptions,
-            ClientDiagnostics clientDiagnostics)
+            ClientDiagnostics clientDiagnostics,
+            int? requestPriority)
         {
             BlobClientOptions options = new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
             {
                 Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
+                RequestPriority = requestPriority,
             };
             clientOptions.TransferValidation.CopyTo(options.TransferValidation);
             return options;
@@ -554,7 +557,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 BlobClientOptions options = CreateBlobClientOptions(
                     clientConfiguration.ClientOptions,
-                    clientConfiguration.ClientDiagnostics);
+                    clientConfiguration.ClientDiagnostics,
+                    clientConfiguration.RequestPriority);
                 return BlobContainerClient.CreateClient(
                     uri,
                     options,
@@ -2084,6 +2088,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await FileSystemRestClient.GetPathsAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -2096,6 +2101,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = FileSystemRestClient.GetPaths(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -3763,6 +3769,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await BlobFileSystemRestClient.GetBlobHierarchySegmentAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3776,6 +3783,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = BlobFileSystemRestClient.GetBlobHierarchySegment(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3896,6 +3904,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await pathClient.BlobPathRestClient.UndeleteAsync(
+                            requestPriority: pathClient.ClientConfiguration.RequestPriority,
                             timeout: null,
                             undeleteSource: undeleteSource,
                             cancellationToken: cancellationToken)
@@ -3904,6 +3913,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = pathClient.BlobPathRestClient.Undelete(
+                            requestPriority: pathClient.ClientConfiguration.RequestPriority,
                             timeout: null,
                             undeleteSource: undeleteSource,
                             cancellationToken: cancellationToken);

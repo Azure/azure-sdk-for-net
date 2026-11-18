@@ -53,6 +53,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -75,13 +79,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(IDictionary<string, string> metadata, int? timeout, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        public virtual Response Create(int? requestPriority, IDictionary<string, string> metadata, int? timeout, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -99,6 +103,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -121,13 +129,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(IDictionary<string, string> metadata, int? timeout, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? requestPriority, IDictionary<string, string> metadata, int? timeout, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -138,6 +146,10 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Creates a new append blob. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -159,12 +171,16 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(IDictionary<string, string> metadata = default, int? timeout = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? requestPriority = default, IDictionary<string, string> metadata = default, int? timeout = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
         {
-            return Create(metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
+            return Create(requestPriority, metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new append blob. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -186,9 +202,9 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(IDictionary<string, string> metadata = default, int? timeout = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? requestPriority = default, IDictionary<string, string> metadata = default, int? timeout = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(requestPriority, metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -201,6 +217,10 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
@@ -218,13 +238,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AppendBlock(long contentLength, RequestContent content, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        public virtual Response AppendBlock(long contentLength, RequestContent content, int? requestPriority = default, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.AppendBlock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAppendBlockRequest(contentLength, content, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
+                using HttpMessage message = CreateAppendBlockRequest(contentLength, content, requestPriority, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -244,6 +264,10 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
@@ -261,13 +285,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AppendBlockAsync(long contentLength, RequestContent content, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        public virtual async Task<Response> AppendBlockAsync(long contentLength, RequestContent content, int? requestPriority = default, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.AppendBlock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAppendBlockRequest(contentLength, content, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
+                using HttpMessage message = CreateAppendBlockRequest(contentLength, content, requestPriority, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -280,6 +304,10 @@ namespace Azure.Storage.Blobs
         /// <summary> Uploads a new block of data to the end of an append blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> The body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
@@ -296,14 +324,18 @@ namespace Azure.Storage.Blobs
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AppendBlock(long contentLength, BinaryData body, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
+        public virtual Response AppendBlock(long contentLength, BinaryData body, int? requestPriority = default, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            return AppendBlock(contentLength, RequestContent.Create(body), timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
+            return AppendBlock(contentLength, RequestContent.Create(body), requestPriority, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Uploads a new block of data to the end of an append blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> The body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
@@ -320,9 +352,9 @@ namespace Azure.Storage.Blobs
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AppendBlockAsync(long contentLength, BinaryData body, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AppendBlockAsync(long contentLength, BinaryData body, int? requestPriority = default, int? timeout = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            return await AppendBlockAsync(contentLength, RequestContent.Create(body), timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await AppendBlockAsync(contentLength, RequestContent.Create(body), requestPriority, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -335,6 +367,10 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
@@ -361,13 +397,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AppendBlockFromUri(string sourceUrl, long contentLength, string sourceRange, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, BinaryData transactionalContentMD5, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
+        public virtual Response AppendBlockFromUri(string sourceUrl, long contentLength, int? requestPriority, string sourceRange, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, BinaryData transactionalContentMD5, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.AppendBlockFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, requestPriority, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -387,6 +423,10 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
@@ -413,13 +453,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AppendBlockFromUriAsync(string sourceUrl, long contentLength, string sourceRange, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, BinaryData transactionalContentMD5, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
+        public virtual async Task<Response> AppendBlockFromUriAsync(string sourceUrl, long contentLength, int? requestPriority, string sourceRange, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, BinaryData transactionalContentMD5, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.AppendBlockFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, requestPriority, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -432,6 +472,10 @@ namespace Azure.Storage.Blobs
         /// <summary> Uploads a new block of data from the specified URL to the end of an append blob. </summary>
         /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
@@ -457,14 +501,18 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AppendBlockFromUri(string sourceUrl, long contentLength, string sourceRange = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, BinaryData transactionalContentMD5 = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        public virtual Response AppendBlockFromUri(string sourceUrl, long contentLength, int? requestPriority = default, string sourceRange = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, BinaryData transactionalContentMD5 = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
         {
-            return AppendBlockFromUri(sourceUrl, contentLength, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
+            return AppendBlockFromUri(sourceUrl, contentLength, requestPriority, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Uploads a new block of data from the specified URL to the end of an append blob. </summary>
         /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
@@ -490,9 +538,9 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AppendBlockFromUriAsync(string sourceUrl, long contentLength, string sourceRange = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, BinaryData transactionalContentMD5 = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AppendBlockFromUriAsync(string sourceUrl, long contentLength, int? requestPriority = default, string sourceRange = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, BinaryData transactionalContentMD5 = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
         {
-            return await AppendBlockFromUriAsync(sourceUrl, contentLength, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await AppendBlockFromUriAsync(sourceUrl, contentLength, requestPriority, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -503,6 +551,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
@@ -510,13 +562,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Seal(int? timeout, string leaseId, RequestConditions requestConditions, long? appendPosition, RequestContext context)
+        public virtual Response Seal(int? requestPriority, int? timeout, string leaseId, RequestConditions requestConditions, long? appendPosition, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.Seal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSealRequest(timeout, leaseId, requestConditions, appendPosition, context);
+                using HttpMessage message = CreateSealRequest(requestPriority, timeout, leaseId, requestConditions, appendPosition, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -534,6 +586,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
@@ -541,13 +597,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SealAsync(int? timeout, string leaseId, RequestConditions requestConditions, long? appendPosition, RequestContext context)
+        public virtual async Task<Response> SealAsync(int? requestPriority, int? timeout, string leaseId, RequestConditions requestConditions, long? appendPosition, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AppendBlobRestClient.Seal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSealRequest(timeout, leaseId, requestConditions, appendPosition, context);
+                using HttpMessage message = CreateSealRequest(requestPriority, timeout, leaseId, requestConditions, appendPosition, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -558,27 +614,35 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Seals the append blob to make it read-only. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Seal(int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, long? appendPosition = default, CancellationToken cancellationToken = default)
+        public virtual Response Seal(int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, long? appendPosition = default, CancellationToken cancellationToken = default)
         {
-            return Seal(timeout, leaseId, requestConditions, appendPosition, cancellationToken.ToRequestContext());
+            return Seal(requestPriority, timeout, leaseId, requestConditions, appendPosition, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Seals the append blob to make it read-only. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SealAsync(int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, long? appendPosition = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SealAsync(int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, long? appendPosition = default, CancellationToken cancellationToken = default)
         {
-            return await SealAsync(timeout, leaseId, requestConditions, appendPosition, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SealAsync(requestPriority, timeout, leaseId, requestConditions, appendPosition, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

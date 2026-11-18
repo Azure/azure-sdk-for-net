@@ -52,6 +52,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be "file" or "directory". </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix". </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
@@ -86,13 +90,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(string resource, string mode, string continuation, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, RequestConditions requestConditions, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string owner, string @group, string acl, string proposedLeaseId, long? leaseDuration, string expiryOptions, string expiresOn, string encryptionContext, int? timeout, RequestContext context)
+        public virtual Response Create(int? requestPriority, string resource, string mode, string continuation, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, RequestConditions requestConditions, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string owner, string @group, string acl, string proposedLeaseId, long? leaseDuration, string expiryOptions, string expiresOn, string encryptionContext, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(resource, mode, continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext, timeout, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, resource, mode, continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -110,6 +114,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be "file" or "directory". </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix". </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
@@ -144,13 +152,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(string resource, string mode, string continuation, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, RequestConditions requestConditions, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string owner, string @group, string acl, string proposedLeaseId, long? leaseDuration, string expiryOptions, string expiresOn, string encryptionContext, int? timeout, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? requestPriority, string resource, string mode, string continuation, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, RequestConditions requestConditions, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string owner, string @group, string acl, string proposedLeaseId, long? leaseDuration, string expiryOptions, string expiresOn, string encryptionContext, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(resource, mode, continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext, timeout, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, resource, mode, continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -161,6 +169,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Create or rename a file or directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). To fail if the destination already exists, use a conditional request with If-None-Match: "*". </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be "file" or "directory". </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix". </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
@@ -194,12 +206,16 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(PathResourceType? resource = default, PathRenameMode? mode = default, string continuation = default, string cacheControl = default, string contentEncoding = default, string contentLanguage = default, string contentDisposition = default, string contentType = default, string renameSource = default, string leaseId = default, string sourceLeaseId = default, string properties = default, string permissions = default, string umask = default, RequestConditions requestConditions = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string owner = default, string @group = default, string acl = default, string proposedLeaseId = default, long? leaseDuration = default, PathExpiryOptions? expiryOptions = default, string expiresOn = default, string encryptionContext = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? requestPriority = default, PathResourceType? resource = default, PathRenameMode? mode = default, string continuation = default, string cacheControl = default, string contentEncoding = default, string contentLanguage = default, string contentDisposition = default, string contentType = default, string renameSource = default, string leaseId = default, string sourceLeaseId = default, string properties = default, string permissions = default, string umask = default, RequestConditions requestConditions = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string owner = default, string @group = default, string acl = default, string proposedLeaseId = default, long? leaseDuration = default, PathExpiryOptions? expiryOptions = default, string expiresOn = default, string encryptionContext = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Create(resource?.ToSerialString(), mode?.ToSerialString(), continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions?.ToString(), expiresOn, encryptionContext, timeout, cancellationToken.ToRequestContext());
+            return Create(requestPriority, resource?.ToSerialString(), mode?.ToSerialString(), continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions?.ToString(), expiresOn, encryptionContext, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create or rename a file or directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). To fail if the destination already exists, use a conditional request with If-None-Match: "*". </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be "file" or "directory". </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix". </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
@@ -233,9 +249,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(PathResourceType? resource = default, PathRenameMode? mode = default, string continuation = default, string cacheControl = default, string contentEncoding = default, string contentLanguage = default, string contentDisposition = default, string contentType = default, string renameSource = default, string leaseId = default, string sourceLeaseId = default, string properties = default, string permissions = default, string umask = default, RequestConditions requestConditions = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string owner = default, string @group = default, string acl = default, string proposedLeaseId = default, long? leaseDuration = default, PathExpiryOptions? expiryOptions = default, string expiresOn = default, string encryptionContext = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? requestPriority = default, PathResourceType? resource = default, PathRenameMode? mode = default, string continuation = default, string cacheControl = default, string contentEncoding = default, string contentLanguage = default, string contentDisposition = default, string contentType = default, string renameSource = default, string leaseId = default, string sourceLeaseId = default, string properties = default, string permissions = default, string umask = default, RequestConditions requestConditions = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string owner = default, string @group = default, string acl = default, string proposedLeaseId = default, long? leaseDuration = default, PathExpiryOptions? expiryOptions = default, string expiresOn = default, string encryptionContext = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(resource?.ToSerialString(), mode?.ToSerialString(), continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions?.ToString(), expiresOn, encryptionContext, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(requestPriority, resource?.ToSerialString(), mode?.ToSerialString(), continuation, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, requestConditions, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), owner, @group, acl, proposedLeaseId, leaseDuration, expiryOptions?.ToString(), expiresOn, encryptionContext, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -248,6 +264,10 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="action"> The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control. Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="maxRecords"> Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
         /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAccessControlRecursive operation. </param>
         /// <param name="mode"> Mode for set access control recursive. </param>
@@ -274,13 +294,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Update(string action, RequestContent content, int? maxRecords = default, string continuation = default, string mode = default, bool? forceFlag = default, long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string cacheControl = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, string properties = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
+        public virtual Response Update(string action, RequestContent content, int? requestPriority = default, int? maxRecords = default, string continuation = default, string mode = default, bool? forceFlag = default, long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string cacheControl = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, string properties = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(action, content, maxRecords, continuation, mode, forceFlag, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentDisposition, contentEncoding, contentLanguage, properties, owner, @group, permissions, acl, requestConditions, structuredBodyType, structuredContentLength, timeout, context);
+                using HttpMessage message = CreateUpdateRequest(action, content, requestPriority, maxRecords, continuation, mode, forceFlag, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentDisposition, contentEncoding, contentLanguage, properties, owner, @group, permissions, acl, requestConditions, structuredBodyType, structuredContentLength, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -300,6 +320,10 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="action"> The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control. Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="maxRecords"> Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
         /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAccessControlRecursive operation. </param>
         /// <param name="mode"> Mode for set access control recursive. </param>
@@ -326,13 +350,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAsync(string action, RequestContent content, int? maxRecords = default, string continuation = default, string mode = default, bool? forceFlag = default, long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string cacheControl = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, string properties = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> UpdateAsync(string action, RequestContent content, int? requestPriority = default, int? maxRecords = default, string continuation = default, string mode = default, bool? forceFlag = default, long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string cacheControl = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, string properties = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(action, content, maxRecords, continuation, mode, forceFlag, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentDisposition, contentEncoding, contentLanguage, properties, owner, @group, permissions, acl, requestConditions, structuredBodyType, structuredContentLength, timeout, context);
+                using HttpMessage message = CreateUpdateRequest(action, content, requestPriority, maxRecords, continuation, mode, forceFlag, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentDisposition, contentEncoding, contentLanguage, properties, owner, @group, permissions, acl, requestConditions, structuredBodyType, structuredContentLength, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -351,6 +375,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="leaseAction"> There are five lease actions: "acquire", "break", "change", "renew", and "release". Use "acquire" and specify the "x-ms-proposed-lease-id" and "x-ms-lease-duration" to acquire a new lease. Use "break" to break an existing lease. When a lease is broken, the lease break period is allowed to elapse, during which time no lease operation except break and release can be performed on the file. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired. Use "change" and specify the current lease ID in "x-ms-lease-id" and the new lease ID in "x-ms-proposed-lease-id" to change the lease ID of an active lease. Use "renew" and specify the "x-ms-lease-id" to renew an existing lease. Use "release" and specify the "x-ms-lease-id" to release a lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds. The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="leaseBreakPeriod"> The lease break period duration is optional to break a lease, and specifies the break period of the lease in seconds. The lease break duration must be between 0 and 60 seconds. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -360,13 +388,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Lease(string leaseAction, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
+        public virtual Response Lease(string leaseAction, int? requestPriority = default, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Lease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateLeaseRequest(leaseAction, leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, context);
+                using HttpMessage message = CreateLeaseRequest(leaseAction, requestPriority, leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -385,6 +413,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="leaseAction"> There are five lease actions: "acquire", "break", "change", "renew", and "release". Use "acquire" and specify the "x-ms-proposed-lease-id" and "x-ms-lease-duration" to acquire a new lease. Use "break" to break an existing lease. When a lease is broken, the lease break period is allowed to elapse, during which time no lease operation except break and release can be performed on the file. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired. Use "change" and specify the current lease ID in "x-ms-lease-id" and the new lease ID in "x-ms-proposed-lease-id" to change the lease ID of an active lease. Use "renew" and specify the "x-ms-lease-id" to renew an existing lease. Use "release" and specify the "x-ms-lease-id" to release a lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds. The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="leaseBreakPeriod"> The lease break period duration is optional to break a lease, and specifies the break period of the lease in seconds. The lease break duration must be between 0 and 60 seconds. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -394,13 +426,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> LeaseAsync(string leaseAction, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> LeaseAsync(string leaseAction, int? requestPriority = default, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Lease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateLeaseRequest(leaseAction, leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, context);
+                using HttpMessage message = CreateLeaseRequest(leaseAction, requestPriority, leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -412,6 +444,10 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
         /// <param name="leaseAction"> There are five lease actions: "acquire", "break", "change", "renew", and "release". Use "acquire" and specify the "x-ms-proposed-lease-id" and "x-ms-lease-duration" to acquire a new lease. Use "break" to break an existing lease. When a lease is broken, the lease break period is allowed to elapse, during which time no lease operation except break and release can be performed on the file. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired. Use "change" and specify the current lease ID in "x-ms-lease-id" and the new lease ID in "x-ms-proposed-lease-id" to change the lease ID of an active lease. Use "renew" and specify the "x-ms-lease-id" to renew an existing lease. Use "release" and specify the "x-ms-lease-id" to release a lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds. The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="leaseBreakPeriod"> The lease break period duration is optional to break a lease, and specifies the break period of the lease in seconds. The lease break duration must be between 0 and 60 seconds. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -420,13 +456,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Lease(PathLeaseAction leaseAction, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Lease(PathLeaseAction leaseAction, int? requestPriority = default, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Lease(leaseAction.ToSerialString(), leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, cancellationToken.ToRequestContext());
+            return Lease(leaseAction.ToSerialString(), requestPriority, leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
         /// <param name="leaseAction"> There are five lease actions: "acquire", "break", "change", "renew", and "release". Use "acquire" and specify the "x-ms-proposed-lease-id" and "x-ms-lease-duration" to acquire a new lease. Use "break" to break an existing lease. When a lease is broken, the lease break period is allowed to elapse, during which time no lease operation except break and release can be performed on the file. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired. Use "change" and specify the current lease ID in "x-ms-lease-id" and the new lease ID in "x-ms-proposed-lease-id" to change the lease ID of an active lease. Use "renew" and specify the "x-ms-lease-id" to renew an existing lease. Use "release" and specify the "x-ms-lease-id" to release a lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds. The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="leaseBreakPeriod"> The lease break period duration is optional to break a lease, and specifies the break period of the lease in seconds. The lease break duration must be between 0 and 60 seconds. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -435,9 +475,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> LeaseAsync(PathLeaseAction leaseAction, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> LeaseAsync(PathLeaseAction leaseAction, int? requestPriority = default, int? leaseDuration = default, int? leaseBreakPeriod = default, string leaseId = default, string proposedLeaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await LeaseAsync(leaseAction.ToSerialString(), leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await LeaseAsync(leaseAction.ToSerialString(), requestPriority, leaseDuration, leaseBreakPeriod, leaseId, proposedLeaseId, requestConditions, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -448,6 +488,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="rangeGetContentMD5"> Optional. When this header is set to "true" and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. </param>
@@ -459,13 +503,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Read(string range, string leaseId, bool? rangeGetContentMD5, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
+        public virtual Response Read(int? requestPriority, string range, string leaseId, bool? rangeGetContentMD5, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Read");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReadRequest(range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
+                using HttpMessage message = CreateReadRequest(requestPriority, range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -483,6 +527,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="rangeGetContentMD5"> Optional. When this header is set to "true" and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. </param>
@@ -494,13 +542,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReadAsync(string range, string leaseId, bool? rangeGetContentMD5, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
+        public virtual async Task<Response> ReadAsync(int? requestPriority, string range, string leaseId, bool? rangeGetContentMD5, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Read");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReadRequest(range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
+                using HttpMessage message = CreateReadRequest(requestPriority, range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -511,6 +559,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Read the contents of a file. For read operations, range requests are supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="rangeGetContentMD5"> Optional. When this header is set to "true" and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. </param>
@@ -521,13 +573,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> Read(string range = default, string leaseId = default, bool? rangeGetContentMD5 = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> Read(int? requestPriority = default, string range = default, string leaseId = default, bool? rangeGetContentMD5 = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = Read(range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), timeout, cancellationToken.ToRequestContext());
+            Response result = Read(requestPriority, range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), timeout, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary> Read the contents of a file. For read operations, range requests are supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="rangeGetContentMD5"> Optional. When this header is set to "true" and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. </param>
@@ -538,9 +594,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> ReadAsync(string range = default, string leaseId = default, bool? rangeGetContentMD5 = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> ReadAsync(int? requestPriority = default, string range = default, string leaseId = default, bool? rangeGetContentMD5 = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await ReadAsync(range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await ReadAsync(requestPriority, range, leaseId, rangeGetContentMD5, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -552,6 +608,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="action"> Optional. If the value is "getStatus" only the system defined properties for the path are returned. If the value is "getAccessControl" the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -560,13 +620,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(string action, bool? upn, string leaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
+        public virtual Response GetProperties(int? requestPriority, string action, bool? upn, string leaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(action, upn, leaseId, requestConditions, timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, action, upn, leaseId, requestConditions, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -584,6 +644,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="action"> Optional. If the value is "getStatus" only the system defined properties for the path are returned. If the value is "getAccessControl" the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -592,13 +656,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(string action, bool? upn, string leaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority, string action, bool? upn, string leaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(action, upn, leaseId, requestConditions, timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, action, upn, leaseId, requestConditions, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -609,6 +673,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="action"> Optional. If the value is "getStatus" only the system defined properties for the path are returned. If the value is "getAccessControl" the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -616,12 +684,16 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetProperties(PathGetPropertiesAction? action = default, bool? upn = default, string leaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(int? requestPriority = default, PathGetPropertiesAction? action = default, bool? upn = default, string leaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return GetProperties(action?.ToSerialString(), upn, leaseId, requestConditions, timeout, cancellationToken.ToRequestContext());
+            return GetProperties(requestPriority, action?.ToSerialString(), upn, leaseId, requestConditions, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="action"> Optional. If the value is "getStatus" only the system defined properties for the path are returned. If the value is "getAccessControl" the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -629,9 +701,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetPropertiesAsync(PathGetPropertiesAction? action = default, bool? upn = default, string leaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority = default, PathGetPropertiesAction? action = default, bool? upn = default, string leaseId = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await GetPropertiesAsync(action?.ToSerialString(), upn, leaseId, requestConditions, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetPropertiesAsync(requestPriority, action?.ToSerialString(), upn, leaseId, requestConditions, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -642,6 +714,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -651,13 +727,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(bool? recursive, string continuation, string leaseId, RequestConditions requestConditions, bool? paginated, int? timeout, RequestContext context)
+        public virtual Response Delete(int? requestPriority, bool? recursive, string continuation, string leaseId, RequestConditions requestConditions, bool? paginated, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(recursive, continuation, leaseId, requestConditions, paginated, timeout, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, recursive, continuation, leaseId, requestConditions, paginated, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -675,6 +751,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -684,13 +764,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(bool? recursive, string continuation, string leaseId, RequestConditions requestConditions, bool? paginated, int? timeout, RequestContext context)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority, bool? recursive, string continuation, string leaseId, RequestConditions requestConditions, bool? paginated, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(recursive, continuation, leaseId, requestConditions, paginated, timeout, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, recursive, continuation, leaseId, requestConditions, paginated, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -701,6 +781,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Delete the file or directory. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -709,12 +793,16 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(bool? recursive = default, string continuation = default, string leaseId = default, RequestConditions requestConditions = default, bool? paginated = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(int? requestPriority = default, bool? recursive = default, string continuation = default, string leaseId = default, RequestConditions requestConditions = default, bool? paginated = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Delete(recursive, continuation, leaseId, requestConditions, paginated, timeout, cancellationToken.ToRequestContext());
+            return Delete(requestPriority, recursive, continuation, leaseId, requestConditions, paginated, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete the file or directory. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -723,9 +811,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(bool? recursive = default, string continuation = default, string leaseId = default, RequestConditions requestConditions = default, bool? paginated = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority = default, bool? recursive = default, string continuation = default, string leaseId = default, RequestConditions requestConditions = default, bool? paginated = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(recursive, continuation, leaseId, requestConditions, paginated, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteAsync(requestPriority, recursive, continuation, leaseId, requestConditions, paginated, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -736,6 +824,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
@@ -746,13 +838,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetAccessControl(string leaseId = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
+        public virtual Response SetAccessControl(int? requestPriority = default, string leaseId = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetAccessControl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetAccessControlRequest(leaseId, owner, @group, permissions, acl, requestConditions, timeout, context);
+                using HttpMessage message = CreateSetAccessControlRequest(requestPriority, leaseId, owner, @group, permissions, acl, requestConditions, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -770,6 +862,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
@@ -780,13 +876,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetAccessControlAsync(string leaseId = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SetAccessControlAsync(int? requestPriority = default, string leaseId = default, string owner = default, string @group = default, string permissions = default, string acl = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetAccessControl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetAccessControlRequest(leaseId, owner, @group, permissions, acl, requestConditions, timeout, context);
+                using HttpMessage message = CreateSetAccessControlRequest(requestPriority, leaseId, owner, @group, permissions, acl, requestConditions, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -805,6 +901,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="mode"> Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights that pre-exist on files and directories, "remove" removes one or more POSIX access control rights that were present earlier on files and directories. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="forceFlag"> Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
         /// <param name="maxRecords"> Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
@@ -813,13 +913,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetAccessControlRecursive(string mode, string continuation = default, bool? forceFlag = default, int? maxRecords = default, string acl = default, int? timeout = default, RequestContext context = null)
+        public virtual Response SetAccessControlRecursive(string mode, int? requestPriority = default, string continuation = default, bool? forceFlag = default, int? maxRecords = default, string acl = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetAccessControlRecursive");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetAccessControlRecursiveRequest(mode, continuation, forceFlag, maxRecords, acl, timeout, context);
+                using HttpMessage message = CreateSetAccessControlRecursiveRequest(mode, requestPriority, continuation, forceFlag, maxRecords, acl, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -838,6 +938,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="mode"> Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights that pre-exist on files and directories, "remove" removes one or more POSIX access control rights that were present earlier on files and directories. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="forceFlag"> Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
         /// <param name="maxRecords"> Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
@@ -846,13 +950,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetAccessControlRecursiveAsync(string mode, string continuation = default, bool? forceFlag = default, int? maxRecords = default, string acl = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SetAccessControlRecursiveAsync(string mode, int? requestPriority = default, string continuation = default, bool? forceFlag = default, int? maxRecords = default, string acl = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetAccessControlRecursive");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetAccessControlRecursiveRequest(mode, continuation, forceFlag, maxRecords, acl, timeout, context);
+                using HttpMessage message = CreateSetAccessControlRecursiveRequest(mode, requestPriority, continuation, forceFlag, maxRecords, acl, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -870,6 +974,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file. It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file. The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written, to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="retainUncommittedData"> Valid only for flush operations. If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation. The default is false. Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed. </param>
@@ -892,13 +1000,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response FlushData(long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string cacheControl = default, string contentType = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, int? timeout = default, RequestContext context = null)
+        public virtual Response FlushData(int? requestPriority = default, long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string cacheControl = default, string contentType = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.FlushData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFlushDataRequest(position, retainUncommittedData, close, contentLength, contentMD5, leaseId, leaseAction, leaseDuration, proposedLeaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
+                using HttpMessage message = CreateFlushDataRequest(requestPriority, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, leaseAction, leaseDuration, proposedLeaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -916,6 +1024,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file. It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file. The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written, to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="retainUncommittedData"> Valid only for flush operations. If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation. The default is false. Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed. </param>
@@ -938,13 +1050,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> FlushDataAsync(long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string cacheControl = default, string contentType = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> FlushDataAsync(int? requestPriority = default, long? position = default, bool? retainUncommittedData = default, bool? close = default, long? contentLength = default, BinaryData contentMD5 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string cacheControl = default, string contentType = default, string contentDisposition = default, string contentEncoding = default, string contentLanguage = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.FlushData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFlushDataRequest(position, retainUncommittedData, close, contentLength, contentMD5, leaseId, leaseAction, leaseDuration, proposedLeaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
+                using HttpMessage message = CreateFlushDataRequest(requestPriority, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, leaseAction, leaseDuration, proposedLeaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -963,6 +1075,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file. It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file. The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written, to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="contentLength"> Required for "Append Data" and "Flush Data". Must be 0 for "Flush Data". Must be the length of the request content in bytes for "Append Data". </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
@@ -981,13 +1097,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AppendData(RequestContent content, long? position = default, long? contentLength = default, BinaryData transactionalContentHash = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, bool? flush = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
+        public virtual Response AppendData(RequestContent content, int? requestPriority = default, long? position = default, long? contentLength = default, BinaryData transactionalContentHash = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, bool? flush = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.AppendData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAppendDataRequest(content, position, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, leaseAction, leaseDuration, proposedLeaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush, structuredBodyType, structuredContentLength, timeout, context);
+                using HttpMessage message = CreateAppendDataRequest(content, requestPriority, position, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, leaseAction, leaseDuration, proposedLeaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush, structuredBodyType, structuredContentLength, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1006,6 +1122,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file. It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file. The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written, to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="contentLength"> Required for "Append Data" and "Flush Data". Must be 0 for "Flush Data". Must be the length of the request content in bytes for "Append Data". </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
@@ -1024,13 +1144,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AppendDataAsync(RequestContent content, long? position = default, long? contentLength = default, BinaryData transactionalContentHash = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, bool? flush = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> AppendDataAsync(RequestContent content, int? requestPriority = default, long? position = default, long? contentLength = default, BinaryData transactionalContentHash = default, BinaryData transactionalContentCrc64 = default, string leaseId = default, string leaseAction = default, long? leaseDuration = default, string proposedLeaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, bool? flush = default, string structuredBodyType = default, long? structuredContentLength = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.AppendData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAppendDataRequest(content, position, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, leaseAction, leaseDuration, proposedLeaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush, structuredBodyType, structuredContentLength, timeout, context);
+                using HttpMessage message = CreateAppendDataRequest(content, requestPriority, position, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, leaseAction, leaseDuration, proposedLeaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush, structuredBodyType, structuredContentLength, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1049,18 +1169,22 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetExpiry(string expiryOptions, string expiresOn = default, int? timeout = default, RequestContext context = null)
+        public virtual Response SetExpiry(string expiryOptions, int? requestPriority = default, string expiresOn = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetExpiry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, expiresOn, timeout, context);
+                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, requestPriority, expiresOn, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1079,18 +1203,22 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetExpiryAsync(string expiryOptions, string expiresOn = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SetExpiryAsync(string expiryOptions, int? requestPriority = default, string expiresOn = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetExpiry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, expiresOn, timeout, context);
+                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, requestPriority, expiresOn, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1102,24 +1230,32 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetExpiry(PathExpiryOptions expiryOptions, string expiresOn = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response SetExpiry(PathExpiryOptions expiryOptions, int? requestPriority = default, string expiresOn = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return SetExpiry(expiryOptions.ToString(), expiresOn, timeout, cancellationToken.ToRequestContext());
+            return SetExpiry(expiryOptions.ToString(), requestPriority, expiresOn, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetExpiryAsync(PathExpiryOptions expiryOptions, string expiresOn = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetExpiryAsync(PathExpiryOptions expiryOptions, int? requestPriority = default, string expiresOn = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await SetExpiryAsync(expiryOptions.ToString(), expiresOn, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetExpiryAsync(expiryOptions.ToString(), requestPriority, expiresOn, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1130,18 +1266,22 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Undelete(string undeleteSource, int? timeout, RequestContext context)
+        public virtual Response Undelete(int? requestPriority, string undeleteSource, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Undelete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUndeleteRequest(undeleteSource, timeout, context);
+                using HttpMessage message = CreateUndeleteRequest(requestPriority, undeleteSource, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1159,18 +1299,22 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UndeleteAsync(string undeleteSource, int? timeout, RequestContext context)
+        public virtual async Task<Response> UndeleteAsync(int? requestPriority, string undeleteSource, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.Undelete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUndeleteRequest(undeleteSource, timeout, context);
+                using HttpMessage message = CreateUndeleteRequest(requestPriority, undeleteSource, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1181,23 +1325,31 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Undelete a path that was previously soft deleted. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Undelete(string undeleteSource = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Undelete(int? requestPriority = default, string undeleteSource = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Undelete(undeleteSource, timeout, cancellationToken.ToRequestContext());
+            return Undelete(requestPriority, undeleteSource, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Undelete a path that was previously soft deleted. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UndeleteAsync(string undeleteSource = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UndeleteAsync(int? requestPriority = default, string undeleteSource = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await UndeleteAsync(undeleteSource, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await UndeleteAsync(requestPriority, undeleteSource, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

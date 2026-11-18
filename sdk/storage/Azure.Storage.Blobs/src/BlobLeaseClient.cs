@@ -437,6 +437,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             response = await BlobClient.BlobRestClient.AcquireLeaseAsync(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 duration: serviceDuration,
                                 timeout: default,
                                 proposedLeaseId: LeaseId,
@@ -448,6 +449,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             response = BlobClient.BlobRestClient.AcquireLease(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 duration: serviceDuration,
                                 timeout: default,
                                 proposedLeaseId: LeaseId,
@@ -468,6 +470,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             response = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 duration: serviceDuration,
                                 timeout: default,
                                 proposedLeaseId: LeaseId,
@@ -478,6 +481,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             response = BlobContainerClient.ContainerRestClient.AcquireLease(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 duration: serviceDuration,
                                 timeout: default,
                                 proposedLeaseId: LeaseId,
@@ -656,6 +660,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             blobClientResponse = await BlobClient.BlobRestClient.RenewLeaseAsync(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 ifTags: tagConditions,
@@ -665,6 +670,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             blobClientResponse = BlobClient.BlobRestClient.RenewLease(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 ifTags: tagConditions,
@@ -690,6 +696,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             containerClientResponse = await BlobContainerClient.ContainerRestClient.RenewLeaseAsync(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 cancellationToken: cancellationToken)
@@ -698,6 +705,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             containerClientResponse = BlobContainerClient.ContainerRestClient.RenewLease(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 cancellationToken: cancellationToken);
@@ -881,6 +889,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             response = await BlobClient.BlobRestClient.ReleaseLeaseAsync(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 ifTags: tagConditions,
@@ -890,6 +899,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             response = BlobClient.BlobRestClient.ReleaseLease(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 ifTags: tagConditions,
@@ -915,6 +925,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             containerReleaseResponse = await BlobContainerClient.ContainerRestClient.ReleaseLeaseAsync(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 cancellationToken: cancellationToken)
@@ -923,6 +934,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             containerReleaseResponse = BlobContainerClient.ContainerRestClient.ReleaseLease(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 requestConditions: conditions,
                                 cancellationToken: cancellationToken);
@@ -1105,6 +1117,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             blobClientResponse = await BlobClient.BlobRestClient.ChangeLeaseAsync(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 requestConditions: conditions,
@@ -1115,6 +1128,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             blobClientResponse = BlobClient.BlobRestClient.ChangeLease(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 requestConditions: conditions,
@@ -1142,6 +1156,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             containerClientResponse = await BlobContainerClient.ContainerRestClient.ChangeLeaseAsync(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 requestConditions: conditions,
@@ -1151,6 +1166,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             containerClientResponse = BlobContainerClient.ContainerRestClient.ChangeLease(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 requestConditions: conditions,
@@ -1391,6 +1407,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             response = await BlobClient.BlobRestClient.BreakLeaseAsync(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 breakPeriod: serviceBreakPeriod,
                                 requestConditions: conditions,
                                 ifTags: tagConditions,
@@ -1400,6 +1417,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             response = BlobClient.BlobRestClient.BreakLease(
+                                requestPriority: BlobClient.ClientConfiguration.RequestPriority,
                                 breakPeriod: serviceBreakPeriod,
                                 requestConditions: conditions,
                                 ifTags: tagConditions,
@@ -1424,6 +1442,7 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             containerBreakResponse = await BlobContainerClient.ContainerRestClient.BreakLeaseAsync(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 breakPeriod: serviceBreakPeriod,
                                 requestConditions: conditions,
                                 cancellationToken: cancellationToken)
@@ -1432,6 +1451,7 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             containerBreakResponse = BlobContainerClient.ContainerRestClient.BreakLease(
+                                requestPriority: BlobContainerClient.ClientConfiguration.RequestPriority,
                                 breakPeriod: serviceBreakPeriod,
                                 requestConditions: conditions,
                                 cancellationToken: cancellationToken);

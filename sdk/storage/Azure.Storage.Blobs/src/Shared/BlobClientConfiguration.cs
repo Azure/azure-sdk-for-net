@@ -36,6 +36,11 @@ namespace Azure.Storage.Blobs
         public bool TrimBlobNameSlashes { get; internal set; }
 
         /// <summary>
+        /// The priority sent in the x-ms-request-priority header on every request.
+        /// </summary>
+        public int? RequestPriority { get; internal set; }
+
+        /// <summary>
         /// Create a <see cref="BlobClientConfiguration"/> with token authentication.
         /// </summary>
 
@@ -47,7 +52,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            int? requestPriority)
             : base(pipeline, tokenCredential, clientDiagnostics)
         {
             Version = version;
@@ -55,6 +61,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            RequestPriority = requestPriority;
         }
 
         /// <summary>
@@ -68,7 +75,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            int? requestPriority)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
@@ -76,6 +84,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            RequestPriority = requestPriority;
         }
 
         /// <summary>
@@ -89,7 +98,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            int? requestPriority)
             : base(pipeline, sasCredential, clientDiagnostics)
         {
             Version = version;
@@ -97,6 +107,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            RequestPriority = requestPriority;
         }
 
         /// <summary>
@@ -111,7 +122,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            int? requestPriority)
             : base(pipeline, clientDiagnostics)
         {
             Version = version;
@@ -119,6 +131,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            RequestPriority = requestPriority;
         }
 
         /// <summary>
@@ -134,7 +147,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            int? requestPriority)
             : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
         {
             Version = version;
@@ -142,6 +156,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            RequestPriority = requestPriority;
         }
 
         internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)
@@ -155,6 +170,7 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
                 transferValidation: originalClientConfiguration.TransferValidation,
                 encryptionScope: originalClientConfiguration.EncryptionScope,
-                trimBlobNameSlashes: originalClientConfiguration.TrimBlobNameSlashes);
+                trimBlobNameSlashes: originalClientConfiguration.TrimBlobNameSlashes,
+                requestPriority: originalClientConfiguration.RequestPriority);
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.DataLake
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        internal HttpMessage CreateCreateRequest(string resource, string mode, string continuation, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, RequestConditions requestConditions, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string owner, string @group, string acl, string proposedLeaseId, long? leaseDuration, string expiryOptions, string expiresOn, string encryptionContext, int? timeout, RequestContext context)
+        internal HttpMessage CreateCreateRequest(int? requestPriority, string resource, string mode, string continuation, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, RequestConditions requestConditions, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string owner, string @group, string acl, string proposedLeaseId, long? leaseDuration, string expiryOptions, string expiresOn, string encryptionContext, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,6 +53,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (cacheControl != null)
             {
@@ -165,7 +169,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string action, RequestContent content, int? maxRecords, string continuation, string mode, bool? forceFlag, long? position, bool? retainUncommittedData, bool? close, long? contentLength, BinaryData contentMD5, string leaseId, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, string properties, string owner, string @group, string permissions, string acl, RequestConditions requestConditions, string structuredBodyType, long? structuredContentLength, int? timeout, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string action, RequestContent content, int? requestPriority, int? maxRecords, string continuation, string mode, bool? forceFlag, long? position, bool? retainUncommittedData, bool? close, long? contentLength, BinaryData contentMD5, string leaseId, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, string properties, string owner, string @group, string permissions, string acl, RequestConditions requestConditions, string structuredBodyType, long? structuredContentLength, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -210,6 +214,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (contentLength != null)
             {
@@ -276,7 +284,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateLeaseRequest(string leaseAction, int? leaseDuration, int? leaseBreakPeriod, string leaseId, string proposedLeaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
+        internal HttpMessage CreateLeaseRequest(string leaseAction, int? requestPriority, int? leaseDuration, int? leaseBreakPeriod, string leaseId, string proposedLeaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -291,6 +299,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-lease-action", leaseAction);
             if (leaseDuration != null)
@@ -316,7 +328,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateReadRequest(string range, string leaseId, bool? rangeGetContentMD5, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
+        internal HttpMessage CreateReadRequest(int? requestPriority, string range, string leaseId, bool? rangeGetContentMD5, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -331,6 +343,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (range != null)
             {
@@ -364,7 +380,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string action, bool? upn, string leaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
+        internal HttpMessage CreateGetPropertiesRequest(int? requestPriority, string action, bool? upn, string leaseId, RequestConditions requestConditions, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -388,6 +404,10 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (leaseId != null)
             {
                 request.Headers.SetValue("x-ms-lease-id", leaseId);
@@ -399,7 +419,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(bool? recursive, string continuation, string leaseId, RequestConditions requestConditions, bool? paginated, int? timeout, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(int? requestPriority, bool? recursive, string continuation, string leaseId, RequestConditions requestConditions, bool? paginated, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -427,6 +447,10 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (leaseId != null)
             {
                 request.Headers.SetValue("x-ms-lease-id", leaseId);
@@ -438,7 +462,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateSetAccessControlRequest(string leaseId, string owner, string @group, string permissions, string acl, RequestConditions requestConditions, int? timeout, RequestContext context)
+        internal HttpMessage CreateSetAccessControlRequest(int? requestPriority, string leaseId, string owner, string @group, string permissions, string acl, RequestConditions requestConditions, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -454,6 +478,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (leaseId != null)
             {
@@ -482,7 +510,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateSetAccessControlRecursiveRequest(string mode, string continuation, bool? forceFlag, int? maxRecords, string acl, int? timeout, RequestContext context)
+        internal HttpMessage CreateSetAccessControlRecursiveRequest(string mode, int? requestPriority, string continuation, bool? forceFlag, int? maxRecords, string acl, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -512,6 +540,10 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (acl != null)
             {
                 request.Headers.SetValue("x-ms-acl", acl);
@@ -520,7 +552,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateFlushDataRequest(long? position, bool? retainUncommittedData, bool? close, long? contentLength, BinaryData contentMD5, string leaseId, string leaseAction, long? leaseDuration, string proposedLeaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
+        internal HttpMessage CreateFlushDataRequest(int? requestPriority, long? position, bool? retainUncommittedData, bool? close, long? contentLength, BinaryData contentMD5, string leaseId, string leaseAction, long? leaseDuration, string proposedLeaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -548,6 +580,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (contentLength != null)
             {
@@ -612,7 +648,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateAppendDataRequest(RequestContent content, long? position, long? contentLength, BinaryData transactionalContentHash, BinaryData transactionalContentCrc64, string leaseId, string leaseAction, long? leaseDuration, string proposedLeaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, bool? flush, string structuredBodyType, long? structuredContentLength, int? timeout, RequestContext context)
+        internal HttpMessage CreateAppendDataRequest(RequestContent content, int? requestPriority, long? position, long? contentLength, BinaryData transactionalContentHash, BinaryData transactionalContentCrc64, string leaseId, string leaseAction, long? leaseDuration, string proposedLeaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, bool? flush, string structuredBodyType, long? structuredContentLength, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -636,6 +672,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Content-Type", "application/octet-stream");
             if (contentLength != null)
@@ -690,7 +730,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateSetExpiryRequest(string expiryOptions, string expiresOn, int? timeout, RequestContext context)
+        internal HttpMessage CreateSetExpiryRequest(string expiryOptions, int? requestPriority, string expiresOn, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -707,6 +747,10 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("x-ms-expiry-option", expiryOptions);
             if (expiresOn != null)
             {
@@ -715,7 +759,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateUndeleteRequest(string undeleteSource, int? timeout, RequestContext context)
+        internal HttpMessage CreateUndeleteRequest(int? requestPriority, string undeleteSource, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -731,6 +775,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (undeleteSource != null)
             {

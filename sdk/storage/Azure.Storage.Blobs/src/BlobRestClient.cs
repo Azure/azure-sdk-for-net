@@ -18,13 +18,13 @@ namespace Azure.Storage.Blobs
     // - Maintain optionality of immutabilityPolicyExpiry for back-compatibility.
     // - Maintain behavior of 304 response for Download operation.
     // - Suppress generated Download methods in favor of custom implementations that return Stream.
-    [CodeGenSuppress("Download", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestConditions), typeof(RequestContext))]
-    [CodeGenSuppress("DownloadAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestConditions), typeof(RequestContext))]
-    [CodeGenSuppress("Download", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(EncryptionAlgorithmTypeInternal?), typeof(string), typeof(RequestConditions), typeof(CancellationToken))]
-    [CodeGenSuppress("DownloadAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(EncryptionAlgorithmTypeInternal?), typeof(string), typeof(RequestConditions), typeof(CancellationToken))]
-    [CodeGenSuppress("SetImmutabilityPolicy", typeof(DateTimeOffset), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("SetImmutabilityPolicyAsync", typeof(DateTimeOffset), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateSetImmutabilityPolicyRequest", typeof(DateTimeOffset), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("Download", typeof(int?), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestConditions), typeof(RequestContext))]
+    [CodeGenSuppress("DownloadAsync", typeof(int?), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestConditions), typeof(RequestContext))]
+    [CodeGenSuppress("Download", typeof(int?), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(EncryptionAlgorithmTypeInternal?), typeof(string), typeof(RequestConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("DownloadAsync", typeof(int?), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(EncryptionAlgorithmTypeInternal?), typeof(string), typeof(RequestConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("SetImmutabilityPolicy", typeof(DateTimeOffset), typeof(int?), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("SetImmutabilityPolicyAsync", typeof(DateTimeOffset), typeof(int?), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CreateSetImmutabilityPolicyRequest", typeof(DateTimeOffset), typeof(int?), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     internal partial class BlobRestClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200206304;
@@ -33,6 +33,10 @@ namespace Azure.Storage.Blobs
         /// <summary> The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read a snapshot. </summary>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -47,14 +51,14 @@ namespace Azure.Storage.Blobs
         /// <param name="layoutEndpoint"> Optional.  When set, this request is routed to the given layout endpoint by <see cref="DataLocalityPolicy"/>.  The value is set on this message only, so requests issued while this download is in flight are never rerouted. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Stream> Download(string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, Uri layoutEndpoint = default, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> Download(int? requestPriority = default, string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, Uri layoutEndpoint = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.Download");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMd5, rangeGetContentCrc64, structuredBodyType, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, requestConditions, context);
+                using HttpMessage message = CreateDownloadRequest(requestPriority, snapshot, versionId, timeout, range, leaseId, rangeGetContentMd5, rangeGetContentCrc64, structuredBodyType, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, requestConditions, context);
                 message.BufferResponse = false;
                 if (layoutEndpoint != null)
                 {
@@ -74,6 +78,10 @@ namespace Azure.Storage.Blobs
         /// <summary> The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read a snapshot. </summary>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -88,14 +96,14 @@ namespace Azure.Storage.Blobs
         /// <param name="layoutEndpoint"> Optional.  When set, this request is routed to the given layout endpoint by <see cref="DataLocalityPolicy"/>. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Stream>> DownloadAsync(string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, Uri layoutEndpoint = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> DownloadAsync(int? requestPriority = default, string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, Uri layoutEndpoint = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.Download");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMd5, rangeGetContentCrc64, structuredBodyType, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, requestConditions, context);
+                using HttpMessage message = CreateDownloadRequest(requestPriority, snapshot, versionId, timeout, range, leaseId, rangeGetContentMd5, rangeGetContentCrc64, structuredBodyType, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, requestConditions, context);
                 message.BufferResponse = false;
                 if (layoutEndpoint != null)
                 {
@@ -121,6 +129,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
@@ -129,7 +141,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetImmutabilityPolicy(DateTimeOffset? immutabilityPolicyExpiry, int? timeout, RequestConditions requestConditions, string immutabilityPolicyMode, string snapshot, string versionId, RequestContext context)
+        public virtual Response SetImmutabilityPolicy(DateTimeOffset? immutabilityPolicyExpiry, int? requestPriority, int? timeout, RequestConditions requestConditions, string immutabilityPolicyMode, string snapshot, string versionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.SetImmutabilityPolicy");
             scope.Start();
@@ -148,7 +160,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetImmutabilityPolicyRequest(immutabilityPolicyExpiry, timeout, requestConditions, immutabilityPolicyMode, snapshot, versionId, context);
+                using HttpMessage message = CreateSetImmutabilityPolicyRequest(immutabilityPolicyExpiry, requestPriority, timeout, requestConditions, immutabilityPolicyMode, snapshot, versionId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -167,6 +179,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
@@ -175,7 +191,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetImmutabilityPolicyAsync(DateTimeOffset? immutabilityPolicyExpiry, int? timeout, RequestConditions requestConditions, string immutabilityPolicyMode, string snapshot, string versionId, RequestContext context)
+        public virtual async Task<Response> SetImmutabilityPolicyAsync(DateTimeOffset? immutabilityPolicyExpiry, int? requestPriority, int? timeout, RequestConditions requestConditions, string immutabilityPolicyMode, string snapshot, string versionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.SetImmutabilityPolicy");
             scope.Start();
@@ -194,7 +210,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetImmutabilityPolicyRequest(immutabilityPolicyExpiry, timeout, requestConditions, immutabilityPolicyMode, snapshot, versionId, context);
+                using HttpMessage message = CreateSetImmutabilityPolicyRequest(immutabilityPolicyExpiry, requestPriority, timeout, requestConditions, immutabilityPolicyMode, snapshot, versionId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -204,7 +220,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateDownloadRequest(string snapshot, string versionId, int? timeout, string range, string leaseId, bool? rangeGetContentMd5, bool? rangeGetContentCrc64, string structuredBodyType, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDownloadRequest(int? requestPriority, string snapshot, string versionId, int? timeout, string range, string leaseId, bool? rangeGetContentMd5, bool? rangeGetContentCrc64, string structuredBodyType, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -227,6 +243,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (range != null)
             {
@@ -272,7 +292,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateSetImmutabilityPolicyRequest(DateTimeOffset? immutabilityPolicyExpiry, int? timeout, RequestConditions requestConditions, string immutabilityPolicyMode, string snapshot, string versionId, RequestContext context)
+        internal HttpMessage CreateSetImmutabilityPolicyRequest(DateTimeOffset? immutabilityPolicyExpiry, int? requestPriority, int? timeout, RequestConditions requestConditions, string immutabilityPolicyMode, string snapshot, string versionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -296,6 +316,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (requestConditions != null)
             {
