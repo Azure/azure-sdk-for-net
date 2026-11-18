@@ -9,7 +9,6 @@
 
 import child_process from "node:child_process";
 import { dirname, join } from "node:path";
-import { createInterface } from "node:readline";
 import { promisify } from "node:util";
 
 const execFileImpl = promisify(child_process.execFile);
@@ -23,11 +22,7 @@ export interface ILogger {
 export interface ExecOptions {
   /** Current working directory. Default: process.cwd(). */
   cwd?: string;
-  env?: NodeJS.ProcessEnv;
   logger?: ILogger;
-  /** Receives complete lines, including a final line without a newline. */
-  onStdoutLine?: (line: string) => void;
-  onStderrLine?: (line: string) => void;
   /** Max bytes allowed on stdout or stderr. Default: 16 * 1024 * 1024. */
   maxBuffer?: number;
 }
@@ -68,10 +63,7 @@ export async function execFile(
 ): Promise<ExecResult> {
   const {
     cwd,
-    env,
     logger,
-    onStdoutLine,
-    onStderrLine,
     // Node default is 1024 * 1024, which is too small for some git commands returning many
     // entities or large file content. To support "git show", should be larger than the largest
     // swagger file in the repo (2.5 MB as of 2/28/2025).
@@ -83,18 +75,10 @@ export async function execFile(
   try {
     // execFile(file, args) is more secure than exec(cmd), since the latter is vulnerable to
     // shell injection.
-    const execution = execFileImpl(file, args, {
+    const result = await execFileImpl(file, args, {
       cwd,
-      env,
       maxBuffer,
     });
-    if (onStdoutLine && execution.child.stdout) {
-      createInterface({ input: execution.child.stdout, crlfDelay: Infinity }).on("line", onStdoutLine);
-    }
-    if (onStderrLine && execution.child.stderr) {
-      createInterface({ input: execution.child.stderr, crlfDelay: Infinity }).on("line", onStderrLine);
-    }
-    const result = await execution;
 
     logger?.debug(`stdout: '${result.stdout}'`);
     logger?.debug(`stderr: '${result.stderr}'`);
