@@ -849,6 +849,28 @@ Describe 'Re-review prompt' {
         $script:Step0 | Should -Match '(?i)if a required guideline source remains unavailable after permitted alternatives, call `report_incomplete`'
     }
 
+    It 'recovers the original frozen instructions after compaction with bounded forward reads' {
+        $recovery = [regex]::Match($script:Step0, '(?ms)^### Context recovery\b.*?(?=^### |\z)').Value
+        $recovery | Should -Not -BeNullOrEmpty
+        $recovery | Should -Match '(?i)compaction.*not.*reason to stop'
+        $recovery | Should -Match '(?i)current session.*original workflow message'
+        $recovery | Should -Match '(?i)`session_store_sql`.*`source: local`'
+        $recovery | Should -Match 'length\(user_message\)'
+        $recovery | Should -Match 'substr\(user_message, 1, 6000\)'
+        $recovery | Should -Match '(?i)6001, 12001.*until.*entire message'
+        $recovery | Should -Match '(?i)do not retrieve only.*tail'
+        $recovery | Should -Match '(?i)saved.*disk.*read.*complete'
+        $recovery | Should -Match '(?i)do not substitute.*PR checkout.*artifact'
+    }
+
+    It 'retains a recovery checkpoint without treating it as review coverage evidence' {
+        $script:Step0 | Should -Match '(?i)checkpoint.*session.*message.*next unread.*blockers.*safe-output'
+        $script:Step0 | Should -Match '(?i)retain.*recovery procedure.*compaction summary'
+        $script:Step0 | Should -Match '(?i)checkpoint.*not.*proof.*coverage'
+        $script:Step0 | Should -Match '(?i)resume.*next unread.*without skipping'
+        $script:Step4 | Should -Match '(?i)instruction recovery.*failed after.*permitted.*attempts'
+    }
+
     It 'passes a complete read-only delegation contract rather than assuming children inherit the workflow prompt' {
         $contract = [regex]::Match($script:Step0, '(?s)<!-- BEGIN DELEGATED REVIEW CONTRACT -->(.*?)<!-- END DELEGATED REVIEW CONTRACT -->').Groups[1].Value
         $contract | Should -Not -BeNullOrEmpty
