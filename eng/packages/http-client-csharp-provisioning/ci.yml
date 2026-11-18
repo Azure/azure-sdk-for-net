@@ -18,6 +18,8 @@ pr:
       - eng/packages/http-client-csharp-provisioning
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/scripts/typespec
+      # The provisioning generator consumes the shared Azure.Generator pin.
+      - eng/centralpackagemanagement/Directory.Generation.Packages.props
 
 parameters:
   - name: UseTypeSpecNext

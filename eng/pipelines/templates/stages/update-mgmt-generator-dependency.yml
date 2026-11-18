@@ -129,6 +129,22 @@ stages:
               MGMT_GENERATE_SCRIPT: $(Build.SourcesDirectory)/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1
               npm_config_userconfig: $(mgmtNpmrcPath)
 
+          # The branded descriptor is updated by a separate SDK regeneration PR.
+          # Keep this update draft until the currently approved version permits it.
+          - pwsh: |
+              $PSNativeCommandUseErrorActionPreference = $false
+              & pwsh -NoLogo -NoProfile -Command '$ErrorActionPreference = "Stop"; $global:LASTEXITCODE = 0; & $env:MGMT_APPROVAL_SCRIPT -RepoRoot $env:MGMT_APPROVAL_REPO -ValidateOnly; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }'
+              if ($LASTEXITCODE -ne 0) {
+                Write-Warning 'Management dependency approval validation failed.'
+                Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true'
+                $global:LASTEXITCODE = 0
+              }
+            displayName: Validate approved management versions
+            condition: and(succeeded(), eq(variables['MgmtDependencyFailed'], 'false'), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
+            env:
+              MGMT_APPROVAL_SCRIPT: $(Build.SourcesDirectory)/doc/GeneratorVersions/Emitter_Version_Dashboard.ps1
+              MGMT_APPROVAL_REPO: $(Build.SourcesDirectory)
+
           # Mint the short-lived token only after the potentially long regeneration.
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
@@ -167,7 +183,7 @@ stages:
               $run = "$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
               $body = "Update the management generator to branded C# emitter $(emitterVersion) and its matching unbranded emitter.`n`nPipeline run: $run"
               if ('${{ parameters.HasNugetPackages }}' -ne 'true') { $body += "`n`nMatching NuGet package was not published by this run." }
-              if ($failed) { $body += "`n`nThis draft requires manual repair and full regeneration before it can be merged." }
+              if ($failed) { $body += "`n`nThis draft requires review of the run logs before it can be merged. If the branded version exceeds the approved emitter descriptor, wait for that descriptor update, update this branch from main, and rerun validation. If installation or regeneration failed, repair it and run full local management regeneration." }
               $global:LASTEXITCODE = 0
               . ./eng/common/scripts/common.ps1
               $head = 'Azure:$(dependencyBranch)'

@@ -21,6 +21,8 @@ pr:
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/scripts/Prepare-RegenerationHistory.ps1
       - eng/scripts/typespec
+      # The management generator consumes shared generator version pins.
+      - eng/centralpackagemanagement/Directory.Generation.Packages.props
 
 parameters:
   - name: UseTypeSpecNext

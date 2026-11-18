@@ -12,6 +12,7 @@ trigger:
     include:
       - eng/scripts/*
       - eng/packages/http-client-csharp-mgmt/ci.yml
+      - eng/packages/http-client-csharp-provisioning/ci.yml
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
       - .github/workflows/close-stale-generator-upgrade-prs.yml
@@ -29,9 +30,13 @@ pr:
     include:
       - eng/scripts/*
       - eng/packages/http-client-csharp-mgmt/ci.yml
+      - eng/packages/http-client-csharp-provisioning/ci.yml
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
       - .github/workflows/close-stale-generator-upgrade-prs.yml
+      - eng/centralpackagemanagement/Directory.Generation.Packages.props
+      - eng/azure-typespec-http-client-csharp-emitter-package.json
+      - doc/GeneratorVersions/Emitter_Version_Dashboard.ps1
     exclude:
       - eng/scripts/typespec
 
@@ -44,6 +49,8 @@ extends:
     # the dependency-automation regressions (the shared step does not fail on Pester errors).
     CustomTestSteps:
       - pwsh: |
+          $ErrorActionPreference = 'Stop'
+          & '$(Build.SourcesDirectory)/doc/GeneratorVersions/Emitter_Version_Dashboard.ps1' -RepoRoot '$(Build.SourcesDirectory)' -ValidateOnly
           Import-Module Pester -MinimumVersion 5.7.1 -ErrorAction Stop
           $config = New-PesterConfiguration
           $config.CodeCoverage.Enabled = $true

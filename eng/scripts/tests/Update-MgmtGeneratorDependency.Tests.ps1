@@ -7,6 +7,9 @@ Install-ModuleIfNotInstalled 'Pester' '5.3.3' | Import-Module
 BeforeAll {
     $scriptPath = Join-Path $PSScriptRoot '..' 'typespec' 'Update-MgmtGeneratorDependency.ps1'
     $pushScript = Join-Path $PSScriptRoot '..' 'typespec' 'Push-MgmtDependencyBranch.ps1'
+    # Windows resolves npm to npm.ps1; Pester otherwise mocks that script under
+    # its suffixed name and the updater's extensionless npm call bypasses it.
+    function npm { throw 'Unexpected real npm call in a mocked test.' }
 }
 
 Describe 'Management generator dependency update' -Tag 'UnitTest' {
@@ -42,6 +45,15 @@ Describe 'Management generator dependency update' -Tag 'UnitTest' {
         $manifest = Get-Content (Join-Path $mgmt 'package.json') -Raw | ConvertFrom-Json -AsHashtable
         $manifest.dependencies['@azure-typespec/http-client-csharp'] | Should -BeExactly '1.0.0-alpha.20261117.1'
         $manifest.dependencies['@typespec/http-client-csharp'] | Should -BeExactly '1.0.0-alpha.20261116.2'
+    }
+
+    It 'can align only the central pin when the management npm pins are already current' {
+        $manifestPath = Join-Path $mgmt 'package.json'
+        $manifest = (Get-Content $manifestPath -Raw).Replace('20261023.4', '20261117.1').Replace('20261023.3', '20261116.2')
+        Set-Content -Path $manifestPath -Value $manifest -NoNewline
+        & $scriptPath -RepoRoot $repo -PublishedPackageJson $published -Version '1.0.0-alpha.20261117.1'
+        (Get-Content $manifestPath -Raw) | Should -BeExactly $manifest
+        (Get-Content $props -Raw) | Should -Match '<AzureGeneratorVersion>1\.0\.0-alpha\.20261117\.1</AzureGeneratorVersion>'
     }
 
     It 'does not downgrade when a newer branded generator is already on main' {
