@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float fallbackSampleRate)
         {
             // One item per Activity plus the optional resource envelope. Activity events add more, so
             // this is a floor rather than an exact size, but it removes the seven intermediate arrays
@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     try
                     {
-                        telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                        telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, fallbackSampleRate);
 
                         // Check for Exceptions events
                         if (activity.Events.Any())
@@ -102,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// stamped with. An Activity whose routing tags are missing or invalid is dropped rather
         /// than sent under the exporter's own connection string.
         /// </summary>
-        internal static void OtelToAzureMonitorTraceMultiEndpoint(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorTraceMultiEndpoint(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float fallbackSampleRate, EndpointRouteBatch routeBatch)
         {
             var collected = 0;
             var rejected = 0;
@@ -128,7 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
                         // process and would be filed as the destination's own application.
                         var cloudRole = EndpointRouting.GetCloudRole(ref activityTagsProcessor.MappedTags);
-                        var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                        var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, fallbackSampleRate);
                         telemetryItem.SetCloudRole(cloudRole);
 
                         if (activity.Events.Any())

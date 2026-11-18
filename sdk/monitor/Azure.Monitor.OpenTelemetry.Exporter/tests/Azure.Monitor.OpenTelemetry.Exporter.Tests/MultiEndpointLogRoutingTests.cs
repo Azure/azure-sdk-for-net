@@ -635,6 +635,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-traceless", routed);
         }
 
+        [Fact]
+        public void RoutedLogsCarryTheirSampleRate()
+        {
+            var routeBatch = new EndpointRouteBatch();
+            WithLiveBatch(
+                batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource: null, routeBatch, applySampleRate: true),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), SampleRate(25f)),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)));
+            var telemetryItems = routeBatch[0].TelemetryItems;
+
+            Assert.Equal(25f, telemetryItems[0].SampleRate);
+            Assert.Null(telemetryItems[1].SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((MessageData)telemetryItems[0].Data.BaseData).Properties.Keys);
+        }
+
+        /// <summary>
+        /// Availability attributes are read in a second pass that rebuilds the log context, so the
+        /// sample rate must survive it.
+        /// </summary>
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void AvailabilityLogsCarryTheirSampleRateOnlyWhenApplied(bool applySampleRate)
+        {
+            List<TelemetryItem> telemetryItems = new();
+            WithLiveBatch(
+                batch => telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, resource: null, "ikey-a", applySampleRate).TelemetryItems,
+                Emit(AvailabilityMarkers().Concat(new[] { SampleRate(25f) }).ToArray()));
+            var telemetryItem = Assert.Single(telemetryItems);
+
+            Assert.Equal("Availability", telemetryItem.Name);
+            Assert.Equal(applySampleRate ? 25f : null, telemetryItem.SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((AvailabilityData)telemetryItem.Data.BaseData).Properties.Keys);
+        }
+
         /// <summary>
         /// On a persist-only shutdown a routed log still goes through the multi-endpoint
         /// <see cref="IMultiEndpointTransmitter.Track"/> path (not <c>TrackAsync</c>), exercising the
@@ -751,6 +786,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static KeyValuePair<string, object?> CloudRole(object? value)
             => new(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, value);
+
+        private static KeyValuePair<string, object?> SampleRate(object? value)
+            => new(SemanticConventions.AttributeMicrosoftSampleRate, value);
 
         private static AzureMonitorResource CreateResource()
             => ResourceBuilder.CreateDefault()
