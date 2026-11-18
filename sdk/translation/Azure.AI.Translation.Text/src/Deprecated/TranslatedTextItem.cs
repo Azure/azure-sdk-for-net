@@ -16,7 +16,7 @@ namespace Azure.AI.Translation.Text
         /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
         /// converted into Arab script.
         /// </summary>
-        [Obsolete("SourceText is deprecated and will be removed in a future release.")]
+        [Obsolete("SourceText is deprecated and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SourceText SourceText { get; }
     }

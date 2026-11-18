@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Deprecated members that were removed from the client and now throw `NotSupportedException` at runtime are now marked with `[Obsolete(..., error: true)]`, so that usage of these members results in a build error instead of a build warning. This includes the deprecated overloads of `TranslateAsync`/`Translate`, `TransliterateAsync`/`Transliterate`, `FindSentenceBoundariesAsync`/`FindSentenceBoundaries`, `LookupDictionaryEntriesAsync`/`LookupDictionaryEntries`, and `LookupDictionaryExamplesAsync`/`LookupDictionaryExamples`, as well as the associated deprecated model types and members.
+
 ### Bugs Fixed
 
 ### Other Changes
