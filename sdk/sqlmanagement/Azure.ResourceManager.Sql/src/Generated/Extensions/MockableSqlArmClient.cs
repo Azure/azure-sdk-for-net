@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
@@ -985,7 +986,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource"/> object. </returns>
         public virtual SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuningResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SqlDatabaseAutomaticTuningResource.ValidateResourceId(id);
+            if (id.ResourceType == SqlDatabaseAutomaticTuningResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new SqlDatabaseAutomaticTuningResource(Client, id);
         }
 
@@ -1057,7 +1066,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="MaintenanceWindowOptionResource"/> object. </returns>
         public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MaintenanceWindowOptionResource.ValidateResourceId(id);
+            if (id.ResourceType == MaintenanceWindowOptionResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new MaintenanceWindowOptionResource(Client, id);
         }
 
@@ -1066,7 +1083,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="MaintenanceWindowsResource"/> object. </returns>
         public virtual MaintenanceWindowsResource GetMaintenanceWindowsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MaintenanceWindowsResource.ValidateResourceId(id);
+            if (id.ResourceType == MaintenanceWindowsResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new MaintenanceWindowsResource(Client, id);
         }
 
@@ -1147,7 +1172,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerAutomaticTuningResource"/> object. </returns>
         public virtual SqlServerAutomaticTuningResource GetSqlServerAutomaticTuningResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SqlServerAutomaticTuningResource.ValidateResourceId(id);
+            if (id.ResourceType == SqlServerAutomaticTuningResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new SqlServerAutomaticTuningResource(Client, id);
         }
 
@@ -1156,7 +1189,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlAgentConfigurationResource"/> object. </returns>
         public virtual SqlAgentConfigurationResource GetSqlAgentConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SqlAgentConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == SqlAgentConfigurationResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new SqlAgentConfigurationResource(Client, id);
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Storage;
@@ -40,7 +41,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource"/> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ImmutabilityPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == ImmutabilityPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ImmutabilityPolicyResource(Client, id);
         }
 
@@ -49,7 +58,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
         public virtual BlobServiceResource GetBlobServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BlobServiceResource.ValidateResourceId(id);
+            if (id.ResourceType == BlobServiceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BlobServiceResource(Client, id);
         }
 
@@ -85,7 +102,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
         public virtual FileServiceResource GetFileServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             FileServiceResource.ValidateResourceId(id);
+            if (id.ResourceType == FileServiceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new FileServiceResource(Client, id);
         }
 
@@ -94,7 +119,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
         public virtual FileServiceUsageResource GetFileServiceUsageResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             FileServiceUsageResource.ValidateResourceId(id);
+            if (id.ResourceType == FileServiceUsageResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new FileServiceUsageResource(Client, id);
         }
 
@@ -103,7 +136,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
         public virtual QueueServiceResource GetQueueServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             QueueServiceResource.ValidateResourceId(id);
+            if (id.ResourceType == QueueServiceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new QueueServiceResource(Client, id);
         }
 
@@ -121,7 +162,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             StorageAccountManagementPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == StorageAccountManagementPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new StorageAccountManagementPolicyResource(Client, id);
         }
 
@@ -130,7 +179,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
         public virtual BlobInventoryPolicyResource GetBlobInventoryPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BlobInventoryPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == BlobInventoryPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BlobInventoryPolicyResource(Client, id);
         }
 
@@ -157,7 +214,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="TableServiceResource"/> object. </returns>
         public virtual TableServiceResource GetTableServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TableServiceResource.ValidateResourceId(id);
+            if (id.ResourceType == TableServiceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TableServiceResource(Client, id);
         }
 
