@@ -83,6 +83,24 @@ namespace Azure.Core.Tests
             Assert.AreEqual("a/b/c", ProtocolOperationHelpers.GetOperationId(token, null, "/jobs/{+jobId}/status", "jobId", null));
         }
 
+        [TestCase("/primitive.a", null, ".a")]
+        [TestCase("/primitive.a", "simple", ".a")]
+        [TestCase("/primitive.a", "label", "a")]
+        [TestCase("/primitive;id=a", "matrix", "a")]
+        [TestCase("/primitive;id", "matrix", "")]
+        [TestCase("/primitive;other=a", "matrix", "NOT_SET")]
+        [TestCase("/primitive;id=a", "simple", ";id=a")]
+        [TestCase("/primitive/a%20b", "path", "a b")]
+        [TestCase("/primitive#a", "fragment", "a")]
+        [TestCase("/primitivea", "label", "NOT_SET")]
+        public void OperationIdUsesPathParameterStyle(string path, string style, string expected)
+        {
+            var token = new RehydrationToken(
+                "status", null, "OperationLocation", "https://test" + path, "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            Assert.AreEqual(expected, ProtocolOperationHelpers.GetOperationId(token, null, "/primitive{id}", "id", null, style));
+        }
+
         [Test]
         public void MetadataConversionAcceptsCustomOperation()
         {

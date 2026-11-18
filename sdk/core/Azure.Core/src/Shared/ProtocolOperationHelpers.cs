@@ -125,20 +125,20 @@ namespace Azure.Core
 
         public static string GetOperationId(
             RehydrationToken? rehydrationToken, Response? monitorResponse,
-            string? pollingPath, string? pathParameter, string[]? propertySegments)
+            string? pollingPath, string? pathParameter, string[]? propertySegments, string? pathStyle = null)
         {
-            return ComputeOperationId(rehydrationToken, monitorResponse, pollingPath, pathParameter, propertySegments);
+            return ComputeOperationId(rehydrationToken, monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
         }
 
         public static string GetOperationIdFromOperation(
             Operation operation, Response? monitorResponse,
-            string? pollingPath, string? pathParameter, string[]? propertySegments)
+            string? pollingPath, string? pathParameter, string[]? propertySegments, string? pathStyle = null)
         {
             if (GetPollingUri(operation) is { } pollingUri)
             {
-                return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments);
+                return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
             }
-            return GetOperationId(operation.GetRehydrationToken(), monitorResponse, pollingPath, pathParameter, propertySegments);
+            return GetOperationId(operation.GetRehydrationToken(), monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
         }
 
         public static Uri? GetPollingUri(Operation operation)
@@ -167,7 +167,7 @@ namespace Azure.Core
 
         private static string ComputeOperationId(
             RehydrationToken? rehydrationToken, Response? monitorResponse,
-            string? pollingPath, string? pathParameter, string[]? propertySegments)
+            string? pollingPath, string? pathParameter, string[]? propertySegments, string? pathStyle)
         {
             Uri? pollingUri = null;
             if (rehydrationToken is not null && pollingPath is not null && pathParameter is not null)
@@ -178,11 +178,12 @@ namespace Azure.Core
                 var initialUri = document.RootElement.GetProperty("initialUri").GetString();
                 pollingUri = new Uri(new Uri(initialUri!), nextUri);
             }
-            return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments);
+            return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
         }
 
         private static string ComputeOperationId(
-            Uri? pollingUri, Response? monitorResponse, string? pollingPath, string? pathParameter, string[]? propertySegments)
+            Uri? pollingUri, Response? monitorResponse, string? pollingPath, string? pathParameter, string[]? propertySegments,
+            string? pathStyle)
         {
             if (propertySegments is not null &&
                 GetStatusMetadata(monitorResponse, propertySegments) is { ValueKind: JsonValueKind.String } property)
@@ -195,14 +196,66 @@ namespace Azure.Core
             }
             string path = pollingPath;
             string parameterName = pathParameter;
-            var pattern = s_pollingPathPatterns.GetOrAdd($"{parameterName}\n{path}", _ => CreatePollingPathPattern(path, parameterName));
-            var match = pattern.Match(pollingUri.AbsolutePath);
-            return match.Success && match.Groups["operationId"].Success
-                ? Uri.UnescapeDataString(match.Groups["operationId"].Value)
+            var style = NormalizePathStyle(pathStyle);
+            var pattern = s_pollingPathPatterns.GetOrAdd($"{style}\n{parameterName}\n{path}", _ => CreatePollingPathPattern(path, parameterName, style));
+            var target = style == "fragment" ? pollingUri.AbsolutePath + pollingUri.Fragment : pollingUri.AbsolutePath;
+            var match = pattern.Match(target);
+            if (!match.Success || !match.Groups["operationId"].Success)
+            {
+                return NextLinkOperationImplementation.NotSet;
+            }
+            return ExpandedValue(match.Groups["operationId"].Value, parameterName, style) is { } value
+                ? Uri.UnescapeDataString(value)
                 : NextLinkOperationImplementation.NotSet;
         }
 
-        private static Regex CreatePollingPathPattern(string pollingPath, string pathParameter)
+        // PollingPath normalizes RFC 6570 operators away (for example `{.id}` and `{;id}` both become `{id}`),
+        // so the path parameter's expansion style determines the prefix that precedes the captured value.
+        private static string NormalizePathStyle(string? pathStyle)
+            => pathStyle?.ToLowerInvariant() switch
+            {
+                "label" => "label",
+                "matrix" => "matrix",
+                "fragment" => "fragment",
+                "path" => "path",
+                _ => "simple"
+            };
+
+        private static string StyleCapturePattern(string style, bool allowReserved)
+            => style switch
+            {
+                "label" => @"\.[^/]*",
+                "matrix" => ";[^/]*",
+                "path" => "/[^/]*",
+                "fragment" => "#.*",
+                _ => allowReserved ? ".+?" : "[^/]+"
+            };
+
+        private static string? ExpandedValue(string captured, string parameterName, string style)
+        {
+            switch (style)
+            {
+                case "label":
+                case "path":
+                case "fragment":
+                    return captured.Substring(1);
+                case "matrix":
+                    var name = ";" + parameterName;
+                    if (!captured.StartsWith(name, StringComparison.Ordinal))
+                    {
+                        return null;
+                    }
+                    if (captured.Length == name.Length)
+                    {
+                        return string.Empty;
+                    }
+                    return captured[name.Length] == '=' ? captured.Substring(name.Length + 1) : null;
+                default:
+                    return captured;
+            }
+        }
+
+        private static Regex CreatePollingPathPattern(string pollingPath, string pathParameter, string style)
         {
             var pattern = new StringBuilder();
             int position = 0;
@@ -210,8 +263,9 @@ namespace Azure.Core
             {
                 pattern.Append(Regex.Escape(pollingPath.Substring(position, parameter.Index - position)));
                 var capture = parameter.Groups[2].Value == pathParameter;
+                var allowReserved = parameter.Groups[1].Success && parameter.Groups[1].Length > 0;
                 pattern.Append(capture ? "(?<operationId>" : "(?:");
-                pattern.Append(parameter.Groups[1].Success && parameter.Groups[1].Length > 0 ? ".+?" : "[^/]+");
+                pattern.Append(capture ? StyleCapturePattern(style, allowReserved) : allowReserved ? ".+?" : "[^/]+");
                 pattern.Append(')');
                 position = parameter.Index + parameter.Length;
             }
