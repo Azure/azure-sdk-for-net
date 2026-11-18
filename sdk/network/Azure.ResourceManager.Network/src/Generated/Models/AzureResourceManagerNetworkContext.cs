@@ -686,6 +686,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(NetworkVirtualApplianceInstanceId))]
     [ModelReaderWriterBuildable(typeof(NetworkVirtualApplianceInstanceIds))]
     [ModelReaderWriterBuildable(typeof(NetworkVirtualApplianceListResult))]
+    [ModelReaderWriterBuildable(typeof(NetworkVirtualApplianceLoadBalancerConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkVirtualApplianceMigrationStatus))]
     [ModelReaderWriterBuildable(typeof(NetworkVirtualAppliancePrepareMigrationContent))]
     [ModelReaderWriterBuildable(typeof(NetworkVirtualAppliancePrepareMigrationProperties))]

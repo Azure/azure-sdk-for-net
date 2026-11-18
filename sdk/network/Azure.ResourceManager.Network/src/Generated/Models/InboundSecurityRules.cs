@@ -31,8 +31,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPortRange"> NVA port ranges to be opened up. One needs to provide specific ports. </param>
         /// <param name="destinationPortRanges"> NVA port ranges to be opened up. One can provide a range of ports. Allowed port value between 0 and 65535. </param>
         /// <param name="appliesOn"> Public IP name in case of Permanent Rule type &amp; Interface Name in case of Auto Expire Rule type. </param>
+        /// <param name="loadBalancerConfiguration"> Configuration of the Internet Ingress load-balancing rule for a managed Network Virtual Appliance. Supported only when the enclosing ruleType is Permanent; supplying this configuration for AutoExpire rules is rejected with HTTP 400 Bad Request. When omitted on create or update, Default distribution and a 5-minute idle timeout are used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InboundSecurityRules(string name, InboundSecurityRulesProtocol? protocol, string sourceAddressPrefix, int? destinationPortRange, IList<string> destinationPortRanges, IList<string> appliesOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundSecurityRules(string name, InboundSecurityRulesProtocol? protocol, string sourceAddressPrefix, int? destinationPortRange, IList<string> destinationPortRanges, IList<string> appliesOn, NetworkVirtualApplianceLoadBalancerConfiguration loadBalancerConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationPortRange = destinationPortRange;
             DestinationPortRanges = destinationPortRanges;
             AppliesOn = appliesOn;
+            LoadBalancerConfiguration = loadBalancerConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,5 +68,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Public IP name in case of Permanent Rule type &amp; Interface Name in case of Auto Expire Rule type. </summary>
         [WirePath("appliesOn")]
         public IList<string> AppliesOn { get; }
+
+        /// <summary> Configuration of the Internet Ingress load-balancing rule for a managed Network Virtual Appliance. Supported only when the enclosing ruleType is Permanent; supplying this configuration for AutoExpire rules is rejected with HTTP 400 Bad Request. When omitted on create or update, Default distribution and a 5-minute idle timeout are used. </summary>
+        [WirePath("loadBalancerConfiguration")]
+        public NetworkVirtualApplianceLoadBalancerConfiguration LoadBalancerConfiguration { get; set; }
     }
 }
