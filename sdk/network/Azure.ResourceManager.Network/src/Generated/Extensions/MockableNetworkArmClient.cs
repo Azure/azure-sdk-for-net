@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -43,7 +44,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> object. </returns>
         public virtual ApplicationGatewayAvailableSslOptionsInfoResource GetApplicationGatewayAvailableSslOptionsInfoResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ApplicationGatewayAvailableSslOptionsInfoResource.ValidateResourceId(id);
+            if (id.ResourceType == ApplicationGatewayAvailableSslOptionsInfoResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ApplicationGatewayAvailableSslOptionsInfoResource(Client, id);
         }
 
@@ -268,7 +277,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource"/> object. </returns>
         public virtual PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdpsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             PolicySignaturesOverridesForIdpsResource.ValidateResourceId(id);
+            if (id.ResourceType == PolicySignaturesOverridesForIdpsResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new PolicySignaturesOverridesForIdpsResource(Client, id);
         }
 
@@ -277,7 +294,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyDraftResource"/> object. </returns>
         public virtual FirewallPolicyDraftResource GetFirewallPolicyDraftResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             FirewallPolicyDraftResource.ValidateResourceId(id);
+            if (id.ResourceType == FirewallPolicyDraftResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new FirewallPolicyDraftResource(Client, id);
         }
 
@@ -286,7 +311,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroupDraftResource"/> object. </returns>
         public virtual FirewallPolicyRuleCollectionGroupDraftResource GetFirewallPolicyRuleCollectionGroupDraftResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             FirewallPolicyRuleCollectionGroupDraftResource.ValidateResourceId(id);
+            if (id.ResourceType == FirewallPolicyRuleCollectionGroupDraftResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new FirewallPolicyRuleCollectionGroupDraftResource(Client, id);
         }
 
@@ -1006,7 +1039,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResource"/> object. </returns>
         public virtual ApplicationGatewayWafDynamicManifestResource GetApplicationGatewayWafDynamicManifestResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ApplicationGatewayWafDynamicManifestResource.ValidateResourceId(id);
+            if (id.ResourceType == ApplicationGatewayWafDynamicManifestResource.ResourceType && !string.Equals(id.Name, "dafault", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "dafault"), nameof(id));
+            }
             return new ApplicationGatewayWafDynamicManifestResource(Client, id);
         }
 
@@ -1302,7 +1343,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnLinkConnectionSharedKeyResource"/> object. </returns>
         public virtual VpnLinkConnectionSharedKeyResource GetVpnLinkConnectionSharedKeyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             VpnLinkConnectionSharedKeyResource.ValidateResourceId(id);
+            if (id.ResourceType == VpnLinkConnectionSharedKeyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new VpnLinkConnectionSharedKeyResource(Client, id);
         }
 
