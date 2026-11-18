@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a `FormatException` when deserializing a service group whose `criticality` is returned as a decimal number such as `2.0`.
+
 ### Other Changes
 
 ## 1.0.0 (2026-09-03)
