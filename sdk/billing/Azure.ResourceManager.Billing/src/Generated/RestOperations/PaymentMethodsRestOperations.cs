@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, RequestContext context)
+        internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, RequestContext context)
+        internal HttpMessage CreateNextListByBillingAccountRequest(Uri nextPage, string billingAccountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, RequestContext context)
+        internal HttpMessage CreateListByBillingProfileRequest(string billingAccountName, string billingProfileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, RequestContext context)
+        internal HttpMessage CreateNextListByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByUserRequest(RequestContext context)
+        internal HttpMessage CreateListByUserRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByUserRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextListByUserRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetHealthDetailsRequest(Guid subscriptionId, string resourceGroupName, string networkConnectionName, int? top, RequestContext context)
+        internal HttpMessage CreateListHealthDetailsRequest(Guid subscriptionId, string resourceGroupName, string networkConnectionName, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetHealthDetailsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkConnectionName, int? top, RequestContext context)
+        internal HttpMessage CreateNextListHealthDetailsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkConnectionName, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

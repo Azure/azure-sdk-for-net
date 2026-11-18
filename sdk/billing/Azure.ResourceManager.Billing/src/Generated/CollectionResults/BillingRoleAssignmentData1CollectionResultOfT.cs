@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByInvoiceSectionRequest(nextLink, _billingAccountName, _billingProfileName, _invoiceSectionName, _filter, _maxCount, _skip, _context) : _client.CreateGetByInvoiceSectionRequest(_billingAccountName, _billingProfileName, _invoiceSectionName, _filter, _maxCount, _skip, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByInvoiceSectionRequest(nextLink, _billingAccountName, _billingProfileName, _invoiceSectionName, _filter, _maxCount, _skip, _context) : _client.CreateListByInvoiceSectionRequest(_billingAccountName, _billingProfileName, _invoiceSectionName, _filter, _maxCount, _skip, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

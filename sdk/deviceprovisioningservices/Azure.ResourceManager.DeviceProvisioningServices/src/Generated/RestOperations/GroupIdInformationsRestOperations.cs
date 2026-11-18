@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return message;
         }
 
-        internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateListPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

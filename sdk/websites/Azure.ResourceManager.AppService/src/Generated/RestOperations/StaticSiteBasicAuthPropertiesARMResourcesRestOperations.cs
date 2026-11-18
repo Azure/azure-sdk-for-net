@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetBasicAuthRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateListBasicAuthRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetBasicAuthRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateNextListBasicAuthRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for charging shortfall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MaccResource>> ChargeShortfallAsync(WaitUntil waitUntil, ChargeShortfallRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaccResource>> ChargeShortfallAsync(WaitUntil waitUntil, ChargeShortfallContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
+                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for charging shortfall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MaccResource> ChargeShortfall(WaitUntil waitUntil, ChargeShortfallRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaccResource> ChargeShortfall(WaitUntil waitUntil, ChargeShortfallContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
+                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),

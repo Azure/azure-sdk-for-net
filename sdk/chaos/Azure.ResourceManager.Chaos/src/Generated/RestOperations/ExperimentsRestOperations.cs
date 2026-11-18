@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, bool? running, string continuationToken, RequestContext context)
+        internal HttpMessage CreateListRequest(Guid subscriptionId, string resourceGroupName, bool? running, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, bool? running, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextListRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, bool? running, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
+        internal HttpMessage CreateListAllRequest(Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextListAllRequest(Uri nextPage, Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

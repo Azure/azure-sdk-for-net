@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="imageCleaner"> Image Cleaner settings for the security profile. </param>
         /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
         /// <returns> A new <see cref="Models.ManagedClusterSecurityProfile"/> instance for mocking. </returns>
-        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, KubernetesResourceObjectInfrastructureEncryption? infrastructureEncryption, bool? isWorkloadIdentityEnabled, ManagedClusterSecurityProfileImageCleaner imageCleaner, IEnumerable<byte[]> customCATrustCertificates)
+        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender = default, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default, KubernetesResourceObjectInfrastructureEncryption? infrastructureEncryption = default, bool? isWorkloadIdentityEnabled = default, ManagedClusterSecurityProfileImageCleaner imageCleaner = default, IEnumerable<byte[]> customCATrustCertificates = default)
         {
             customCATrustCertificates ??= new ChangeTrackingList<byte[]>();
 

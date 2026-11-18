@@ -139,6 +139,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
         /// <param name="geoNamespaceProperties"> Geographic namespace properties for this volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         internal VolumeProperties(Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, NetAppVolumeExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, SmbOplocks? smbOplocks, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, NetAppLdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, AsyncDirectoryDelete asyncDirectoryDelete, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, BreakthroughMode? breakthroughMode, VolumeNamespaceProperties geoNamespaceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileSystemId = fileSystemId;
@@ -208,6 +210,8 @@ namespace Azure.ResourceManager.NetApp.Models
             GeoNamespaceProperties = geoNamespaceProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary> Unique FileSystem Identifier. </summary>
         public Guid? FileSystemId { get; }
@@ -428,11 +432,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Application specific placement rules for the particular volume. </summary>
         public IList<NetAppVolumePlacementRule> PlacementRules { get; } = new ChangeTrackingList<NetAppVolumePlacementRule>();
 
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         /// <summary>
         /// Flag indicating whether subvolume operations are enabled on the volume
         /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
         /// </summary>
         public EnableNetAppSubvolume? EnableSubvolumes { get; set; }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </summary>
         public string ProvisionedAvailabilityZone

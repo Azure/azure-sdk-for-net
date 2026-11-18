@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDhcpRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _context) : _client.CreateGetDhcpRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListDhcpRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _context) : _client.CreateListDhcpRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

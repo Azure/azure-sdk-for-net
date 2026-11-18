@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByScopeRequest(string scope, RequestContext context)
+        internal HttpMessage CreateListByScopeRequest(string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CostManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByScopeRequest(Uri nextPage, string scope, RequestContext context)
+        internal HttpMessage CreateNextListByScopeRequest(Uri nextPage, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

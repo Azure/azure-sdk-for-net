@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Input;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -35,10 +40,24 @@ namespace Azure.Generator.Management.Providers
         // from input-capable request models after the provider has been converted to a C# type.
         internal InputModelType InputModel { get; }
 
+        protected override IReadOnlyList<ConstructorProvider> BuildConstructorsForBackCompatibility(IEnumerable<ConstructorProvider> originalConstructors)
+        {
+            var original = originalConstructors.ToArray();
+            return ConstructorProviderHelpers.RestoreValueTypeNullabilityOverloads(
+                this, original, base.BuildConstructorsForBackCompatibility(original));
+        }
+
         protected override string BuildName()
         {
-            var name = base.BuildName();
-            return name.EndsWith("Data", StringComparison.Ordinal) ? name : $"{name}Data";
+            var name = InputModel.IsExactName ? InputModel.Name : InputModel.Name.ToIdentifierName();
+            name = name.EndsWith("Data", StringComparison.Ordinal) ? name : $"{name}Data";
+
+            // Look up the final data-class name before treating its unsuffixed model name as a new contract.
+            return NormalizeTypeNameForNewContract(name, BuildNamespace(), null, _ =>
+            {
+                var normalizedName = base.BuildName();
+                return normalizedName.EndsWith("Data", StringComparison.Ordinal) ? normalizedName : $"{normalizedName}Data";
+            });
         }
 
         protected override string BuildNamespace()

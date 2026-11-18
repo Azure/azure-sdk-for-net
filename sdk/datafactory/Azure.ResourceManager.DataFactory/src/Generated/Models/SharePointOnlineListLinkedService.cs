@@ -50,8 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="servicePrincipalKey"/> is null. </exception>
         public SharePointOnlineListLinkedService(DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey) : this(siteUri, tenantId, servicePrincipalId)
         {
+            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
+
             ServicePrincipalKey = servicePrincipalKey;
         }
 

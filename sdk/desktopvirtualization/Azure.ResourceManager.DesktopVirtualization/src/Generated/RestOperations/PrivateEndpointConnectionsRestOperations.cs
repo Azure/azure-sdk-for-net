@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateGetByHostPoolRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateListByHostPoolRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateNextGetByHostPoolRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateNextListByHostPoolRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateGetByWorkspaceRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
+        internal HttpMessage CreateListByWorkspaceRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateNextGetByWorkspaceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
+        internal HttpMessage CreateNextListByWorkspaceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

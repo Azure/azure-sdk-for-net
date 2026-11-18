@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByAzureApiManagementServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _context) : _client.CreateGetByAzureApiManagementServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByAzureApiManagementServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _context) : _client.CreateListByAzureApiManagementServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

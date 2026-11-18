@@ -155,7 +155,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             SqlVirtualMachineGroupProperties properties = default;
-            string sqlVmGroupName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,7 +238,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                sqlVmGroupName,
                 additionalBinaryDataProperties);
         }
     }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByInvoiceSectionRequest(nextLink, _billingAccountName, _billingProfileName, _invoiceSectionName, _context) : _client.CreateGetByInvoiceSectionRequest(_billingAccountName, _billingProfileName, _invoiceSectionName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByInvoiceSectionRequest(nextLink, _billingAccountName, _billingProfileName, _invoiceSectionName, _context) : _client.CreateListByInvoiceSectionRequest(_billingAccountName, _billingProfileName, _invoiceSectionName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
