@@ -186,9 +186,7 @@ namespace Azure.Generator.Providers
 
         private PropertyProvider BuildProperty(InputLroStatusMetadata metadata)
         {
-            var property = metadata.Property.EnclosingType is null
-                ? new PropertyProvider(metadata.Property, this, isOutputOnly: true)
-                : new PropertyProvider(metadata.Property, this);
+            var property = new PropertyProvider(metadata.Property, this, isOutputOnly: true);
             var type = property.Type.OutputType.WithNullable(true);
             if (_monitorModel is not null && ResolvePropertyPath(_monitorModel, metadata.PropertySegments) is { } path &&
                 ReadFromMonitorModel(path, type, metadata) is { } typedBody)

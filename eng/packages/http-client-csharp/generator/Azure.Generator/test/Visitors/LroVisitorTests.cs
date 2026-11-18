@@ -30,13 +30,16 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class LroVisitorTests
     {
-        [TestCase("public")]
-        [TestCase("internal")]
-        public void SelectedMetadataChangesOnlyAnnotatedOperationAndUsesWireSegments(string access)
+        [TestCase("public", true)]
+        [TestCase("public", false)]
+        [TestCase("internal", true)]
+        [TestCase("internal", false)]
+        public void SelectedMetadataChangesOnlyAnnotatedOperationAndUsesWireSegments(string access, bool hasEnclosingModel)
         {
             var progress = InputFactory.Property("progress", InputPrimitiveType.Int32, isRequired: true,
-                wireName: "percent_done", serializedName: "progress");
-            var details = InputFactory.Property("details", InputFactory.Model("Details", properties: [progress]), wireName: "wire_details");
+                wireName: "percent_done", serializedName: "progress", access: access);
+            var details = InputFactory.Property("details", InputFactory.Model("Details", properties: hasEnclosingModel ? [progress] : []), wireName: "wire_details");
+            Assert.AreEqual(hasEnclosingModel, progress.EnclosingType is not null);
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
                 [new InputLroStatusMetadata(progress, [details, progress])], []);
             var selected = InputFactory.LongRunningServiceMethod("selected", InputFactory.Operation("selected"), access: access, longRunningServiceMetadata: metadata);
@@ -72,6 +75,8 @@ namespace Azure.Generator.Tests.Visitors
                 }
             }
             var property = metadataType.Properties.Single();
+            Assert.AreEqual(access == "public", property.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.AreEqual(access == "internal", property.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
             Assert.AreEqual(new CSharpType(typeof(int), isNullable: true), property.Type);
             var body = ((MethodPropertyBody)property.Body).Getter!.ToDisplayString();
             StringAssert.Contains("\"wire_details\", \"percent_done\"", body);

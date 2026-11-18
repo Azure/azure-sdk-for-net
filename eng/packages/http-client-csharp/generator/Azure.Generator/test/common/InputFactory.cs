@@ -157,6 +157,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="summary"></param>
         /// <param name="serializedName"></param>
         /// <param name="doc"></param>
+        /// <param name="access"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -170,7 +171,8 @@ namespace Azure.Generator.Tests.Common
             string? wireName = null,
             string? summary = null,
             string? serializedName = null,
-            string? doc = null)
+            string? doc = null,
+            string? access = null)
         {
             return new InputModelProperty(
                 name: name,
@@ -182,7 +184,7 @@ namespace Azure.Generator.Tests.Common
                 isApiVersion: isApiVersion,
                 defaultValue: defaultValue,
                 isHttpMetadata: isHttpMetadata,
-                access: null,
+                access: access,
                 isDiscriminator: isDiscriminator,
                 serializedName: serializedName ?? wireName ?? name.ToVariableName(),
                 serializationOptions: new(json: new(wireName ?? name.ToVariableName())));
