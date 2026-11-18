@@ -194,7 +194,6 @@ Not all credentials require this configuration. Credentials that authenticate th
 |-|-|-|
 |[`AzurePipelinesCredential`][ref_AzurePipelinesCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://aka.ms/azsdk/net/identity/azurepipelinescredential/usage)|
 |[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion.||
-|[`GitHubActionsCredential`][ref_GitHubActionsCredential]|Supports [workload identity federation](https://docs.github.com/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-azure) in GitHub Actions workflows.||
 |[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)|
 |[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)|
 
@@ -352,7 +351,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_AzureCliCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet
 [ref_AzureDeveloperCliCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azuredeveloperclicredential?view=azure-dotnet
 [ref_AzurePipelinesCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azurepipelinescredential?view=azure-dotnet
-[ref_GitHubActionsCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.githubactionscredential?view=azure-dotnet
 [ref_AzurePowerShellCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azurepowershellcredential?view=azure-dotnet
 [ref_ChainedTokenCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.chainedtokencredential?view=azure-dotnet
 [ref_ClientAssertionCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.clientassertioncredential?view=azure-dotnet
