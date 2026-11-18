@@ -16,7 +16,7 @@ namespace Azure.AI.ContentUnderstanding
     /// <remarks>
     /// The operation ID is needed for GetResultFile and DeleteResult APIs. By wrapping the protocol
     /// operation at this level, the Id property is preserved through
-    /// <see cref="Azure.Core.ProtocolOperationHelpers.Convert{TFrom, TTo}"/> which delegates Id to the inner operation.
+    /// <see cref="Azure.Core.ProtocolOperationHelpers.Convert"/> which delegates Id to the inner operation.
     /// </remarks>
     internal class OperationWithId : Operation<BinaryData>
     {

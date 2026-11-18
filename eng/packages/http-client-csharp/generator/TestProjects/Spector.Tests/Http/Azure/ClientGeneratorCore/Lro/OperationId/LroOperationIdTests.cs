@@ -21,10 +21,19 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Lro.Operatio
             var rehydrated = OperationIdClientAnalyzeOperation.FromRehydrationToken(client.Pipeline, token);
             Assert.AreEqual("analysis-123", rehydrated.Id);
             await rehydrated.UpdateStatusAsync();
-            await rehydrated.UpdateStatusAsync();
             Assert.IsTrue(rehydrated.HasCompleted);
             Assert.AreEqual("analysis-123", rehydrated.Id);
             Assert.IsNotEmpty(rehydrated.Value.Summary);
+        });
+
+        [SpectorTest]
+        public Task AnalyzeSynchronouslyToCompletion() => Test(host =>
+        {
+            var operation = new OperationIdClient(host, null).Analyze(WaitUntil.Completed, "document-1");
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.AreEqual("analysis-123", operation.Id);
+            Assert.IsNotEmpty(operation.Value.Summary);
+            return Task.CompletedTask;
         });
 
         [SpectorTest]

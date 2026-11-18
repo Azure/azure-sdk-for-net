@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -16,6 +17,8 @@ namespace Azure.Core.Tests
         [TestCase("""{"wire_name":{"progress":25}}""", 25)]
         [TestCase("""{"wire_name":{}}""", null)]
         [TestCase("""{"wire_name":{"progress":null}}""", null)]
+        [TestCase("""{"wire_name":42}""", null)]
+        [TestCase("not json", null)]
         public void ReadsSelectedMetadataPath(string json, int? expected)
         {
             using var response = new MockResponse(200);
@@ -37,13 +40,84 @@ namespace Azure.Core.Tests
             Assert.AreEqual("body-id", ProtocolOperationHelpers.GetOperationId(token, response, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
             response.SetContent("""{"details":{}}""");
             Assert.AreEqual("path/id", ProtocolOperationHelpers.GetOperationId(token, response, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
+            response.SetContent("""{"details":{"wire_id":42}}""");
+            Assert.AreEqual("path/id", ProtocolOperationHelpers.GetOperationId(token, response, "/jobs/{jobId}/status", "jobId", ["details", "wire_id"]));
             Assert.AreEqual("NOT_SET", ProtocolOperationHelpers.GetOperationId(null, response, null, null, ["details", "wire_id"]));
             Assert.AreEqual("NOT_SET", ProtocolOperationHelpers.GetOperationId(token, null, "/other/{jobId}", "jobId", null));
         }
 
+        [Test]
+        public void OperationIdSupportsReservedPathExpansion()
+        {
+            var token = new RehydrationToken(
+                "status", null, "OperationLocation", "https://test/jobs/a/b%2Fc/status?opaque=retained", "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            Assert.AreEqual("a/b/c", ProtocolOperationHelpers.GetOperationId(token, null, "/jobs/{+jobId}/status", "jobId", null));
+        }
+
+        [Test]
+        public void MetadataConversionAcceptsCustomOperation()
+        {
+            using var response = new MockResponse(200);
+            var source = new TestOperation<int>("test", TimeSpan.Zero, 1, response);
+            source.UpdateStatus();
+            Func<Response> monitor = null;
+            var operation = ProtocolOperationHelpers.ConvertWithMetadata<int, int, Operation<int>>(
+                source, _ => 1, new ClientDiagnostics(ClientOptions.Default), "test",
+                (inner, getMonitor) =>
+                {
+                    monitor = getMonitor;
+                    return inner;
+                });
+            Assert.AreSame(response, monitor());
+            Assert.AreSame(response, operation.GetRawResponse());
+        }
+
+        [TestCase(true, WaitUntil.Started)]
+        [TestCase(false, WaitUntil.Started)]
+        [TestCase(true, WaitUntil.Completed)]
+        [TestCase(false, WaitUntil.Completed)]
+        public async Task ProcessesMetadataOperation(bool isAsync, WaitUntil waitUntil)
+        {
+            const string pollingUri = "https://test/jobs/id/status?opaque=retained";
+            using var initial = new MockResponse(202);
+            initial.AddHeader("Operation-Location", pollingUri);
+            initial.SetContent("""{"progress":1}""");
+            using var completed = new MockResponse(200);
+            completed.SetContent("""{"status":"Succeeded","progress":100}""");
+            var transport = new MockTransport(initial, completed);
+            var pipeline = new HttpPipeline(transport, default);
+            using var message = pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Post;
+            message.Request.Uri.Reset(new Uri("https://test/jobs"));
+            Func<Response> monitor = null;
+            Func<Operation<BinaryData>, Func<Response>, Operation<BinaryData>> createOperation = (inner, getMonitor) =>
+            {
+                monitor = getMonitor;
+                return inner;
+            };
+            var diagnostics = new ClientDiagnostics(ClientOptions.Default);
+            var operation = isAsync
+                ? await ProtocolOperationHelpers.ProcessMessageWithMetadataAsync(
+                    pipeline, message, diagnostics, "test", OperationFinalStateVia.OperationLocation, null,
+                    waitUntil, response => response.Content, createOperation)
+                : ProtocolOperationHelpers.ProcessMessageWithMetadata(
+                    pipeline, message, diagnostics, "test", OperationFinalStateVia.OperationLocation, null,
+                    waitUntil, response => response.Content, createOperation);
+
+            Assert.AreEqual(waitUntil == WaitUntil.Completed, operation.HasCompleted);
+            Assert.AreEqual(waitUntil == WaitUntil.Completed ? 100 : 1,
+                ProtocolOperationHelpers.GetStatusMetadata(monitor(), "progress")?.GetInt32());
+            Assert.AreEqual(waitUntil == WaitUntil.Completed ? 2 : 1, transport.Requests.Count);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                Assert.AreEqual(pollingUri, transport.Requests[1].Uri.ToUri().AbsoluteUri);
+            }
+        }
+
         [TestCase(true)]
         [TestCase(false)]
-        public async Task RehydratedMetadataStartsAbsentAndTracksLatestMonitor(bool isAsync)
+        public async Task RehydratedMetadataPollsAndTracksLatestMonitor(bool isAsync)
         {
             const string pollingUri = "https://test/jobs/job-123/status?api-version=1&opaque=retained";
             var running = new MockResponse(200);
@@ -56,16 +130,16 @@ namespace Azure.Core.Tests
                 "job-123", null, "OperationLocation", pollingUri, "https://test/resource",
                 RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
             Func<Response> getMonitorResponse = null;
-            var operation = ProtocolOperationHelpers.Rehydrate<BinaryData, Operation<BinaryData>>(
+            var operation = ProtocolOperationHelpers.RehydrateWithMetadata<BinaryData, Operation<BinaryData>>(
                 pipeline, token, null, "Test.Rehydrate", response => response.Content,
                 (inner, monitor) =>
                 {
                     getMonitorResponse = monitor;
                     return inner;
                 });
-            Assert.IsEmpty(transport.Requests);
-            Assert.IsNull(getMonitorResponse());
-            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
+            Assert.AreEqual(1, transport.Requests.Count);
+            Assert.AreSame(running, operation.GetRawResponse());
+            Assert.AreEqual(25, ProtocolOperationHelpers.GetStatusMetadata(getMonitorResponse(), "progress")?.GetInt32());
             Assert.AreEqual("job-123", ProtocolOperationHelpers.GetOperationId(operation.GetRehydrationToken(), null, "/jobs/{jobId}/status", "jobId", null));
 
             if (isAsync)
@@ -76,17 +150,64 @@ namespace Azure.Core.Tests
             {
                 operation.UpdateStatus();
             }
-            Assert.AreEqual(25, ProtocolOperationHelpers.GetStatusMetadata(getMonitorResponse(), "progress")?.GetInt32());
             Assert.AreEqual(pollingUri, transport.Requests[0].Uri.ToUri().AbsoluteUri);
-            if (isAsync)
-            {
-                await operation.UpdateStatusAsync();
-            }
-            else
-            {
-                operation.UpdateStatus();
-            }
+            Assert.AreEqual(pollingUri, transport.Requests[1].Uri.ToUri().AbsoluteUri);
             Assert.IsNull(ProtocolOperationHelpers.GetStatusMetadata(getMonitorResponse(), "progress"));
+        }
+
+        [TestCase("Succeeded", true)]
+        [TestCase("Failed", false)]
+        [TestCase("Canceled", false)]
+        public void RehydrationRetainsTerminalState(string status, bool succeeded)
+        {
+            const string pollingUri = "https://test/jobs/job-123/status";
+            using var response = new MockResponse(200);
+            response.SetContent($$"""{"status":"{{status}}","progress":100}""");
+            var transport = new MockTransport(response);
+            var token = new RehydrationToken(
+                "job-123", null, "OperationLocation", pollingUri, "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            Func<Response> monitor = null;
+            var operation = ProtocolOperationHelpers.RehydrateWithMetadata<BinaryData, Operation<BinaryData>>(
+                new HttpPipeline(transport, default), token, null, "test", raw => raw.Content,
+                (inner, getMonitor) =>
+                {
+                    monitor = getMonitor;
+                    return inner;
+                });
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.AreEqual(succeeded, operation.HasValue);
+            Assert.AreSame(response, operation.GetRawResponse());
+            Assert.AreEqual(100, ProtocolOperationHelpers.GetStatusMetadata(monitor(), "progress")?.GetInt32());
+            if (!succeeded)
+            {
+                Assert.Throws<RequestFailedException>(() => _ = operation.Value);
+            }
+        }
+
+        [Test]
+        public void FailedHttpPollPreservesLastMonitorMetadata()
+        {
+            const string pollingUri = "https://test/jobs/job-123/status";
+            using var running = new MockResponse(200);
+            running.SetContent("""{"status":"Running","progress":25}""");
+            using var failed = new MockResponse(400);
+            failed.SetContent("""{"progress":99}""");
+            var token = new RehydrationToken(
+                "job-123", null, "OperationLocation", pollingUri, "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            Func<Response> monitor = null;
+            var operation = ProtocolOperationHelpers.RehydrateWithMetadata<BinaryData, Operation<BinaryData>>(
+                new HttpPipeline(new MockTransport(running, failed), default), token, null, "test", raw => raw.Content,
+                (inner, getMonitor) =>
+                {
+                    monitor = getMonitor;
+                    return inner;
+                });
+
+            Assert.Throws<RequestFailedException>(() => operation.UpdateStatus());
+            Assert.AreEqual(25, ProtocolOperationHelpers.GetStatusMetadata(monitor(), "progress")?.GetInt32());
         }
 
         [Test]

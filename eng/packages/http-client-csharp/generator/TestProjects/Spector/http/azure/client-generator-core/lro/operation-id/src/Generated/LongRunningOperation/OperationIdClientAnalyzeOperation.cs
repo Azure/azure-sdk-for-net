@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -36,5 +37,29 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.OperationId
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => throw null;
 
         public static OperationIdClientAnalyzeOperation FromRehydrationToken(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public override Response<DocumentAnalysisResult> WaitForCompletion(CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response<DocumentAnalysisResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override Response<DocumentAnalysisResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response<DocumentAnalysisResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override Response WaitForCompletionResponse(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response> WaitForCompletionResponseAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+
+        public override Response<DocumentAnalysisResult> WaitForCompletion(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response<DocumentAnalysisResult>> WaitForCompletionAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
     }
 }

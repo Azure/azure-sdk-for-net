@@ -27,6 +27,16 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Lro.Metadata
         });
 
         [SpectorTest]
+        public Task AnalyzeJobSynchronouslyToCompletion() => Test(host =>
+        {
+            var operation = new MetadataClient(host, null).AnalyzeJob(WaitUntil.Completed);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.AreEqual(3, operation.Metadata.Statistics.Succeeded);
+            Assert.AreEqual(3, operation.Value.Documents.Count);
+            return Task.CompletedTask;
+        });
+
+        [SpectorTest]
         public Task AnalyzeJob() => Test(async host =>
         {
             var client = new MetadataClient(host, null);
@@ -39,9 +49,8 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Lro.Metadata
             var token = operation.GetRehydrationToken() ?? throw new InvalidOperationException("The operation must be resumable.");
             var rehydrated = MetadataClientAnalyzeJobOperation.FromRehydrationToken(client.Pipeline, token);
             var metadata = rehydrated.Metadata;
-            Assert.IsNull(metadata.JobId);
-            Assert.IsNull(metadata.CreatedOn);
-            await rehydrated.UpdateStatusAsync();
+            Assert.AreEqual("job-success", metadata.JobId);
+            Assert.AreEqual(DateTimeOffset.Parse("2025-01-01T10:00:00Z"), metadata.CreatedOn);
             Assert.AreEqual(1, metadata.Statistics.Succeeded);
             Assert.AreEqual(DateTimeOffset.Parse("2025-01-01T10:01:00Z"), metadata.LastUpdatedOn);
             await rehydrated.UpdateStatusAsync();

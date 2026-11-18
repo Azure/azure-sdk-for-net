@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -38,5 +39,29 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => throw null;
 
         public static MetadataClientAnalyzeJobWithFailureOperation FromRehydrationToken(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
+
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public override Response<LanguageJobResult> WaitForCompletion(CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response<LanguageJobResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override Response<LanguageJobResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response<LanguageJobResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => throw null;
+
+        public override Response WaitForCompletionResponse(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response> WaitForCompletionResponseAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+
+        public override Response<LanguageJobResult> WaitForCompletion(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
+
+        public override ValueTask<Response<LanguageJobResult>> WaitForCompletionAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default) => throw null;
     }
 }

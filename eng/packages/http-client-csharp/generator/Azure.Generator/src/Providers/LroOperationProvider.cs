@@ -91,7 +91,7 @@ namespace Azure.Generator.Providers
             if (_metadata is not null)
             {
                 properties.Add(new PropertyProvider(
-                    $"Gets auxiliary metadata from the latest monitor response, including failed and canceled responses. Values are repopulated by polling after rehydration.",
+                    $"Gets auxiliary metadata from the latest monitor response, including failed and canceled responses.",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, _metadata.Type, "Metadata",
                     new ExpressionPropertyBody(New.Instance(_metadata.Type, _getResponse)), this));
             }
@@ -151,8 +151,10 @@ namespace Azure.Generator.Providers
             var pipeline = new ParameterProvider("pipeline", $"The client pipeline.", typeof(HttpPipeline));
             var token = new ParameterProvider("rehydrationToken", $"The operation rehydration token.", typeof(RehydrationToken));
             var options = new ParameterProvider("options", $"The client options.", typeof(ClientOptions), Null);
-            return
-            [
+            var pollingInterval = new ParameterProvider("pollingInterval", $"The polling interval.", typeof(TimeSpan));
+            var delayStrategy = new ParameterProvider("delayStrategy", $"The polling delay strategy.", typeof(DelayStrategy));
+            var methods = new List<MethodProvider>
+            {
                 new MethodProvider(new MethodSignature("GetRawResponse", null,
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(Response), null, []),
                     _operation.AsValueExpression.Invoke("GetRawResponse"), this),
@@ -169,15 +171,32 @@ namespace Azure.Generator.Providers
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(ValueTask<Response>), null, [cancellationToken]),
                     _operation.AsValueExpression.Invoke("UpdateStatusAsync", cancellationToken), this),
                 new MethodProvider(new MethodSignature("FromRehydrationToken",
-                    $"Rehydrates the operation without polling. Metadata is populated by the next status update.",
+                    $"Rehydrates the operation and retrieves its current status.",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, Type, null, [pipeline, token, options]),
-                    Static(typeof(ProtocolOperationHelpers)).Invoke("Rehydrate",
+                    Static(typeof(ProtocolOperationHelpers)).Invoke("RehydrateWithMetadata",
                     [
                         pipeline, token, options, Literal($"{_client.Name}.{_method.Name}"),
                         new FuncExpression([response.Declaration], CreateResultSelector(response)),
                         CreateFactory()
                     ], [ResultType ?? typeof(VoidValue), Type], false), this)
-            ];
+            };
+            foreach (var parameters in new ParameterProvider[][] { [cancellationToken], [pollingInterval, cancellationToken], [delayStrategy, cancellationToken] })
+            {
+                methods.Add(DelegateWait("WaitForCompletionResponse", typeof(Response), parameters));
+                methods.Add(DelegateWait("WaitForCompletionResponseAsync", typeof(ValueTask<Response>), parameters));
+                if (ResultType is not null)
+                {
+                    var responseType = new CSharpType(typeof(Response<>), ResultType);
+                    methods.Add(DelegateWait("WaitForCompletion", responseType, parameters));
+                    methods.Add(DelegateWait("WaitForCompletionAsync", new CSharpType(typeof(ValueTask<>), responseType), parameters));
+                }
+            }
+            return methods.ToArray();
         }
+
+        private MethodProvider DelegateWait(string name, CSharpType returnType, ParameterProvider[] parameters) =>
+            new(new MethodSignature(name, null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                returnType, null, parameters),
+                _operation.AsValueExpression.Invoke(name, parameters.Select(parameter => (ValueExpression)parameter).ToArray()), this);
     }
 }

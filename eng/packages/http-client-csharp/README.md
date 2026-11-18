@@ -25,7 +25,7 @@ Select auxiliary status-monitor properties with TCGC `@lroStatusMetadata` to gen
 
 Select the polling operation's ID path parameter or a monitor-body property with `@lroOperationId` to expose it as `operation.Id`. A body ID takes precedence once present; a selected URI ID is available before polling and after rehydration. An unavailable ID is `NOT_SET`. Polling always uses the complete polling URL, including its query string, not the extracted ID.
 
-Use the generated operation's `FromRehydrationToken(client.Pipeline, token)` method to resume it without an immediate network request. URI IDs remain available, but monitor-body metadata and IDs are repopulated by the next status update. For example, the metadata Spector client's generated `MetadataClientAnalyzeJobOperation` exposes `operation.Metadata.Statistics?.Succeeded` and `operation.Metadata.LastUpdatedOn`. A saved metadata view continues to reflect subsequent polls.
+Use the generated operation's `FromRehydrationToken(client.Pipeline, token)` method to resume it. Rehydration immediately polls the service, repopulating monitor-body metadata and IDs. For example, the metadata Spector client's generated `MetadataClientAnalyzeJobOperation` exposes `operation.Metadata.Statistics?.Succeeded` and `operation.Metadata.LastUpdatedOn`. A saved metadata view continues to reflect subsequent polls.
 
 Only annotated LROs receive these operation types. Existing unannotated operations retain their APIs. These annotations do not define custom terminal states, result projection, or paged LRO results.
 

@@ -56,6 +56,15 @@ namespace Azure.Generator.Tests.Visitors
             var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
             Assert.AreEqual(access == "public", operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
             Assert.AreEqual(access == "public", metadataType.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            foreach (var name in new[] { "WaitForCompletionResponse", "WaitForCompletionResponseAsync" })
+            {
+                var waits = operation.Methods.Where(m => m.Signature.Name == name).ToArray();
+                Assert.AreEqual(3, waits.Length);
+                foreach (var wait in waits)
+                {
+                    StringAssert.Contains($"_operation.{name}(", wait.BodyExpression!.ToDisplayString());
+                }
+            }
             var property = metadataType.Properties.Single();
             Assert.AreEqual(new CSharpType(typeof(int), isNullable: true), property.Type);
             var body = ((MethodPropertyBody)property.Body).Getter!.ToDisplayString();

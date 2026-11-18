@@ -17,7 +17,7 @@ namespace Azure.Core
 {
     internal static class ProtocolOperationHelpers
     {
-        public static TOperation Convert<TFrom, TTo, TOperation>(
+        public static TOperation ConvertWithMetadata<TFrom, TTo, TOperation>(
             Operation<TFrom> operation, Func<Response, TTo> convertFunc,
             ClientDiagnostics diagnostics, string scopeName,
             Func<Operation<TTo>, Func<Response?>, TOperation> createOperation)
@@ -26,9 +26,11 @@ namespace Azure.Core
             where TOperation : Operation
             => createOperation(
                 Convert(operation, convertFunc, diagnostics, scopeName),
-                ((IStatusMonitorOperation)operation).GetStatusMonitorResponse);
+                operation is IStatusMonitorOperation monitor
+                    ? monitor.GetStatusMonitorResponse
+                    : operation.GetRawResponse);
 
-        public static async ValueTask<TOperation> ProcessMessageAsync<T, TOperation>(
+        public static async ValueTask<TOperation> ProcessMessageWithMetadataAsync<T, TOperation>(
             HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics,
             string scopeName, OperationFinalStateVia finalStateVia, RequestContext? requestContext,
             WaitUntil waitUntil, Func<Response, T> resultSelector,
@@ -49,7 +51,7 @@ namespace Azure.Core
             return operation;
         }
 
-        public static TOperation ProcessMessage<T, TOperation>(
+        public static TOperation ProcessMessageWithMetadata<T, TOperation>(
             HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics,
             string scopeName, OperationFinalStateVia finalStateVia, RequestContext? requestContext,
             WaitUntil waitUntil, Func<Response, T> resultSelector,
@@ -70,7 +72,7 @@ namespace Azure.Core
             return operation;
         }
 
-        public static TOperation Rehydrate<T, TOperation>(
+        public static TOperation RehydrateWithMetadata<T, TOperation>(
             HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options,
             string scopeName, Func<Response, T> resultSelector,
             Func<Operation<T>, Func<Response?>, TOperation> createOperation)
@@ -91,16 +93,23 @@ namespace Azure.Core
                 return null;
             }
 
-            using var document = JsonDocument.Parse(content);
-            var element = document.RootElement;
-            foreach (var segment in propertySegments)
+            try
             {
-                if (element.ValueKind == JsonValueKind.Null || !element.TryGetProperty(segment, out element))
+                using var document = JsonDocument.Parse(content);
+                var element = document.RootElement;
+                foreach (var segment in propertySegments)
                 {
-                    return null;
+                    if (element.ValueKind != JsonValueKind.Object || !element.TryGetProperty(segment, out element))
+                    {
+                        return null;
+                    }
                 }
+                return element.ValueKind is JsonValueKind.Null ? null : element.Clone();
             }
-            return element.ValueKind is JsonValueKind.Null ? null : element.Clone();
+            catch (JsonException)
+            {
+                return null;
+            }
         }
 
         public static string GetOperationId(
@@ -108,7 +117,7 @@ namespace Azure.Core
             string? pollingPath, string? pathParameter, string[]? propertySegments)
         {
             if (propertySegments is not null &&
-                GetStatusMetadata(monitorResponse, propertySegments) is { } property)
+                GetStatusMetadata(monitorResponse, propertySegments) is { ValueKind: JsonValueKind.String } property)
             {
                 return property.GetString() ?? NextLinkOperationImplementation.NotSet;
             }

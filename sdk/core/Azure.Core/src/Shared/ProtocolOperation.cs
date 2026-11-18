@@ -27,8 +27,10 @@ namespace Azure.Core
         {
             _resultSelector = resultSelector;
             _nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, rehydrationToken, statusMonitorResponseReceived);
-            // OperationInternal documents null for an operation resumed before its first response.
-            _operation = new OperationInternal<T>(this, clientDiagnostics, rawResponse: null!, operationTypeName: scopeName);
+            var state = ((IOperation<T>)this).UpdateStateAsync(async: false, default).EnsureCompleted();
+            _operation = state.HasCompleted
+                ? new OperationInternal<T>(state)
+                : new OperationInternal<T>(this, clientDiagnostics, state.RawResponse, scopeName);
         }
 
 #pragma warning disable CA1822
@@ -53,8 +55,7 @@ namespace Azure.Core
         public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.RawResponse ??
-            throw new InvalidOperationException("No response has been received. Call UpdateStatus to poll the rehydrated operation.");
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

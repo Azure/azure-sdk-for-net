@@ -322,7 +322,8 @@ namespace Azure.Generator.Visitors
         {
             if (GetLroOperation(method) is { } operation)
             {
-                conversion.Update(arguments: [.. conversion.Arguments, operation.CreateFactory()],
+                conversion.Update(methodName: "ConvertWithMetadata",
+                    arguments: [.. conversion.Arguments, operation.CreateFactory()],
                     typeArguments: [typeof(BinaryData), operation.ResultType!, operation.Type]);
             }
         }
@@ -370,7 +371,7 @@ namespace Azure.Generator.Visitors
                 {
                     var response = new VariableExpression(typeof(Response), "response");
                     expression.Update(
-                        methodName: expression.CallAsAsync ? "ProcessMessageAsync" : "ProcessMessage",
+                        methodName: expression.CallAsAsync ? "ProcessMessageWithMetadataAsync" : "ProcessMessageWithMetadata",
                         arguments:
                         [
                             .. expression.Arguments,

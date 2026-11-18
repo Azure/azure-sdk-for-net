@@ -248,7 +248,10 @@ namespace Azure.Core
                 ? await GetResponseAsync(_nextRequestUri, cancellationToken).ConfigureAwait(false)
                 : GetResponse(_nextRequestUri, cancellationToken);
 
-            _statusMonitorResponseReceived?.Invoke(response);
+            if (response.Status is >= 200 and < 300)
+            {
+                _statusMonitorResponseReceived?.Invoke(response);
+            }
             var hasCompleted = IsFinalState(response, _headerSource, out var failureState, out var resourceLocation);
             if (failureState != null)
             {
