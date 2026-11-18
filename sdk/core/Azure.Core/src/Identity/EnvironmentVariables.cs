@@ -23,8 +23,8 @@ namespace Azure.Identity
 
         public static string IdentityEndpoint => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT"));
         public static string IdentityHeader => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("IDENTITY_HEADER"));
-        public static string GitHubActionsRequestToken => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable(GitHubActionsTokenCredentialOptions.ActionsRequestTokenKey));
-        public static string GitHubActionsRequestUrl => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable(GitHubActionsTokenCredentialOptions.ActionsRequestUrlKey));
+        public static string GitHubActionsRequestToken => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN"));
+        public static string GitHubActionsRequestUrl => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL"));
         public static string PodIdentityEndpoint => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_POD_IDENTITY_AUTHORITY_HOST"));
 
         public static string Path => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("PATH"));
