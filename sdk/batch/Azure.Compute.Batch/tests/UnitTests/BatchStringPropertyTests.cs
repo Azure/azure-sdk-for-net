@@ -57,6 +57,22 @@ namespace Azure.Compute.Batch.Tests.UnitTests
         }
 
         [Test]
+        public void NullableEnumConversionsPreserveNull()
+        {
+            string value = null;
+            VirtualMachineSkuAllocationStrategy? strategy = value;
+            ZonePlacementPolicyType? placement = value;
+
+            Assert.IsNull(strategy);
+            Assert.IsNull(placement);
+
+            strategy = "prioritized";
+            placement = "Auto";
+            Assert.AreEqual("prioritized", strategy.Value.ToString());
+            Assert.AreEqual("Auto", placement.Value.ToString());
+        }
+
+        [Test]
         public void PublicPropertiesUseStrings()
         {
             Assert.AreEqual(typeof(string), typeof(ContainerRegistryReference).GetProperty(nameof(ContainerRegistryReference.RegistryServerUri)).PropertyType);

@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="ZonePlacementPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZonePlacementPolicyType?(string value) => value == null ? null : new ZonePlacementPolicyType(value);
+        public static implicit operator ZonePlacementPolicyType?(string value) => value == null ? (ZonePlacementPolicyType?)null : new ZonePlacementPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

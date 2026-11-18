@@ -1260,4 +1260,4 @@ with the configured Disk Encryption Set in the user-subscription account; it doe
 require confidential-VM capacity. These tests verify pool configuration, not successful
 node allocation.
 Review sanitized recordings before publishing them and updating `assets.json` as described
-in the [recording instructions](../../core/Azure.Core.TestFramework/README.md#recording).
+in the [recording instructions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md#recording).

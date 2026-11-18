@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="VirtualMachineSkuAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineSkuAllocationStrategy?(string value) => value == null ? null : new VirtualMachineSkuAllocationStrategy(value);
+        public static implicit operator VirtualMachineSkuAllocationStrategy?(string value) => value == null ? (VirtualMachineSkuAllocationStrategy?)null : new VirtualMachineSkuAllocationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
