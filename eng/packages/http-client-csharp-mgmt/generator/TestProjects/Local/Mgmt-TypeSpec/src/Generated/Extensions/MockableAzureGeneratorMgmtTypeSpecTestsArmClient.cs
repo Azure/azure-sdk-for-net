@@ -785,6 +785,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetPolyDevices(scope).GetAsync(deviceName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="InternalFactoryAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InternalFactoryAccountResource"/> object. </returns>
+        public virtual InternalFactoryAccountResource GetInternalFactoryAccountResource(ResourceIdentifier id)
+        {
+            InternalFactoryAccountResource.ValidateResourceId(id);
+            return new InternalFactoryAccountResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CycleTestStoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CycleTestStoreResource"/> object. </returns>

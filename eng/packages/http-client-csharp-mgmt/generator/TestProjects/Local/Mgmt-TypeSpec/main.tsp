@@ -36,6 +36,8 @@ import "./entityresource.tsp";
 import "./sharedparamrepro.tsp";
 import "./discriminatedextensionresource.tsp";
 import "./inherited-flatten-grandparent.tsp";
+import "./explicit-inherited-factory.tsp";
+import "./suppressed-internal-factory.tsp";
 import "./basetype-cycle-proxy-resource.tsp";
 import "./routedoperations.tsp";
 import "./solutions.tsp";

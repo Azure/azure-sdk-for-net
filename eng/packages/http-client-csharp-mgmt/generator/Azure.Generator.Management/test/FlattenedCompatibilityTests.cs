@@ -750,6 +750,225 @@ namespace Azure.Generator.Mgmt.Tests
                 "The generator cannot invent a mapping when the wire shape changes.");
         }
 
+        [Test]
+        public void InheritedFlattenedFactoryUsesPublicOptionalParameter()
+        {
+            var factoryType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory);
+            var method = factoryType.GetMethods().Single(m => m.Name == "GrandparentFlattenLeaf");
+            var identifier = method.GetParameters().Single(p => p.Name == "identifierUniqueId");
+            Assert.That(identifier.ParameterType, Is.EqualTo(typeof(string)));
+            Assert.That(identifier.HasDefaultValue, Is.True);
+            Assert.That(method.GetParameters().Any(p => p.ParameterType.Name == "GrandparentFlattenIdentifier"), Is.False);
+
+            var model = Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.GrandparentFlattenLeaf(
+                identifierUniqueId: "gallery-id", grandparentFlattenLeafDisclaimer: "notice");
+            Assert.That(model.IdentifierUniqueId, Is.EqualTo("gallery-id"));
+            Assert.That(model.GrandparentFlattenLeafDisclaimer, Is.EqualTo("notice"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("identifier").GetProperty("uniqueId").GetString(), Is.EqualTo("gallery-id"));
+        }
+
+        [Test]
+        public void ExplicitlyFlattenedInheritedFactoryHasPublicOptionalParameters()
+        {
+            var factoryType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory);
+            Assert.That(typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.ExplicitGalleryIdentifier).IsPublic, Is.True,
+                "The explicit public access override must be honored.");
+            foreach (var methodName in new[] { "ExplicitGalleryBase", "ExplicitGalleryProxyExplicitGalleryLeafProperties", "ExplicitGalleryLeaf" })
+            {
+                var method = factoryType.GetMethods().Single(m => m.Name == methodName);
+                Assert.That(method.GetParameters().Any(p => p.ParameterType.Name == "ExplicitGalleryIdentifier"), Is.False);
+                foreach (var name in new[] { "uniqueId", "tenantId" })
+                {
+                    var parameter = method.GetParameters().Single(p => p.Name == name);
+                    Assert.That(parameter.ParameterType, Is.EqualTo(typeof(string)));
+                    Assert.That(parameter.HasDefaultValue, Is.True);
+                }
+                var arguments = method.GetParameters().Select(parameter => parameter.Name switch
+                {
+                    "uniqueId" => (object?)"gallery-id",
+                    "tenantId" => "tenant-id",
+                    _ => null
+                }).ToArray();
+                var model = method.Invoke(null, arguments)!;
+                Assert.That(model.GetType().GetProperty("UniqueId")!.GetValue(model), Is.EqualTo("gallery-id"));
+                Assert.That(model.GetType().GetProperty("TenantId")!.GetValue(model), Is.EqualTo("tenant-id"));
+                using var json = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("J")));
+                var identifier = json.RootElement.GetProperty("identifier");
+                Assert.That(identifier.GetProperty("uniqueId").GetString(), Is.EqualTo("gallery-id"));
+                Assert.That(identifier.GetProperty("tenantId").GetString(), Is.EqualTo("tenant-id"));
+            }
+        }
+
+        [Test]
+        public void GeneratedFactoryDoesNotExposeSuppressedInternalPropertiesType()
+        {
+            var resourceType = typeof(Azure.Generator.MgmtTypeSpec.Tests.InternalFactoryAccountData);
+            var properties = resourceType.GetProperty("Properties", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties!.GetMethod!.IsAssembly, Is.True);
+            Assert.That(properties.PropertyType.IsVisible, Is.False);
+            Assert.That(resourceType.GetProperty("OrganizationId"), Is.Not.Null);
+            Assert.That(resourceType.GetProperty("AccountId"), Is.Not.Null);
+
+            var factoryType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory);
+            Assert.That(factoryType.GetMethod("GrandparentFlattenLeaf"), Is.Not.Null,
+                "The fixture must exercise an emitted factory.");
+            var methods = factoryType.GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .Where(m => m.ReturnType == resourceType).ToArray();
+            foreach (var method in methods)
+            {
+                Assert.That(method.GetParameters().All(p => p.ParameterType.IsVisible), Is.True,
+                    "A public factory cannot expose an internal parameter type.");
+                if (method.GetCustomAttribute<EditorBrowsableAttribute>()?.State != EditorBrowsableState.Never)
+                {
+                    AssertFlattenedFactoryValues(method, "organizationId", "accountId", "OrganizationId", "AccountId");
+                }
+            }
+        }
+
+        [Test]
+        public void EmittedFlattenedFactoryPreservesBothOptionalValues()
+        {
+            var factoryType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory);
+            var method = factoryType.GetMethods().Single(m => m.Name == "ExplicitGalleryLeaf");
+            AssertFlattenedFactoryValues(method, "uniqueId", "tenantId", "UniqueId", "TenantId");
+        }
+
+        private static void AssertFlattenedFactoryValues(MethodInfo method, string firstParameter, string secondParameter,
+            string firstProperty, string secondProperty)
+        {
+            var parameters = method.GetParameters();
+            foreach (var name in new[] { firstParameter, secondParameter })
+            {
+                var parameter = parameters.SingleOrDefault(p => p.Name == name);
+                Assert.That(parameter, Is.Not.Null, $"The emitted factory must include {name}.");
+                Assert.That(parameter!.HasDefaultValue, Is.True, $"The emitted factory parameter {name} must be optional.");
+            }
+            var arguments = parameters.Select(parameter => parameter.Name == firstParameter ? (object?)"first-value"
+                : parameter.Name == secondParameter ? "second-value" : null).ToArray();
+            var model = method.Invoke(null, arguments)!;
+            Assert.That(model.GetType().GetProperty(firstProperty)!.GetValue(model), Is.EqualTo("first-value"));
+            Assert.That(model.GetType().GetProperty(secondProperty)!.GetValue(model), Is.EqualTo("second-value"));
+        }
+
+        [Test]
+        public void ResourceFactoryDoesNotExposeSuppressedInternalPropertiesType()
+        {
+            var account = InputFactory.Model("AccountProperties", access: "internal", properties:
+            [
+                InputFactory.Property("organizationId", InputPrimitiveType.String, isReadOnly: true),
+                InputFactory.Property("accountId", InputPrimitiveType.String, isReadOnly: true)
+            ]);
+            var properties = InputFactory.Property("properties", account);
+            Flatten(properties);
+            var (client, models) = InputResourceData.ClientWithResource(additionalProperties:
+                [properties, InputFactory.Property("status", InputPrimitiveType.String, isReadOnly: true)]);
+            var control = InputFactory.Model("PublicFactoryControl", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String, isReadOnly: true)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [.. models, account, control], clients: () => [client],
+                configurationJson: """{"package-name":"Samples","enable-wire-path-attribute":true}""",
+                customizationSources: ["""
+                    namespace Microsoft.TypeSpec.Generator.Customizations
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+                        internal sealed class CodeGenSuppressAttribute : System.Attribute
+                        {
+                            public CodeGenSuppressAttribute(string name, params System.Type[] parameters) { }
+                        }
+                    }
+                    namespace Samples
+                    {
+                        [System.AttributeUsage(System.AttributeTargets.Property)]
+                        internal sealed class WirePathAttribute : System.Attribute
+                        {
+                            public WirePathAttribute(string path) { }
+                        }
+                        [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Properties")]
+                        public partial class ResponseTypeData
+                        {
+                            [WirePath("properties")]
+                            internal Models.AccountProperties Properties { get; set; }
+                        }
+                    }
+                    namespace Samples.Models { internal partial class AccountProperties { } }
+                    """]);
+            var model = plugin.Object.TypeFactory.CreateModel(models.Single())!;
+            var accountProvider = plugin.Object.TypeFactory.CreateModel(account)!;
+            Assert.That(accountProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public), Is.False);
+            Assert.That(model.CustomCodeView?.Attributes.Any(a => a.Type.Name == "CodeGenSuppressAttribute"), Is.True);
+            Assert.That(model.CustomCodeView?.Properties.Any(p => p.Name == "Properties" && p.Modifiers.HasFlag(MethodSignatureModifiers.Internal)), Is.True);
+            Assert.That(model.Properties.Any(p => p.Name == "Properties"), Is.False, "The generated property must actually be suppressed.");
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            _ = plugin.Object.GetWriter(factory).Write();
+            Assert.That(factory.Methods.Any(m => m.Signature.Name == "PublicFactoryControl"), Is.True,
+                "The fixture must exercise an emitted factory, rather than passing because no factory exists.");
+            var methods = factory.Methods.Where(m => m.Signature.Name == model.Name &&
+                m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).ToArray();
+            Assert.That(methods.SelectMany(m => m.Signature.Parameters).Any(p => !p.Type.IsPublic), Is.False,
+                "Every public factory parameter must be publicly accessible.");
+            Assert.That(methods.SelectMany(m => m.Signature.Parameters).Any(p => p.Type.Name == "AccountProperties"), Is.False,
+                "A public factory method must not expose the internal properties type.");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ResourceFactoryFlattensExplicitlyFlattenedGrandparentIdentifier(bool multipleIdentifierProperties)
+        {
+            var identifierProperties = new List<InputModelProperty> { InputFactory.Property("uniqueId", InputPrimitiveType.String) };
+            if (multipleIdentifierProperties)
+            {
+                identifierProperties.Add(InputFactory.Property("tenantId", InputPrimitiveType.String));
+            }
+            var identifier = InputFactory.Model("CommunityGalleryIdentifier", access: "internal", properties: identifierProperties);
+            var identifierProperty = InputFactory.Property("identifier", identifier);
+            Flatten(identifierProperty);
+            var grandparent = InputFactory.Model("GalleryBase", properties: [identifierProperty]);
+            var parent = InputFactory.Model("GalleryIntermediate", baseModel: grandparent, properties: []);
+            var (client, models) = InputResourceData.ClientWithResource(baseModel: parent, additionalProperties:
+                [InputFactory.Property("status", InputPrimitiveType.String, isReadOnly: true)]);
+            var resource = models.First();
+            var control = InputFactory.Model("PublicFactoryControl", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String, isReadOnly: true)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [.. models, grandparent, identifier, control], clients: () => [client],
+                configurationJson: """{"package-name":"Samples"}""");
+            var model = plugin.Object.TypeFactory.CreateModel(resource)!;
+            Assert.That(plugin.Object.TypeFactory.CreateModel(identifier)!.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public), Is.False);
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            _ = plugin.Object.GetWriter(factory).Write();
+            var methods = factory.Methods.Where(m => m.Signature.Name == model.Name &&
+                m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).ToArray();
+            Assert.That(factory.Methods.Any(m => m.Signature.Name == "PublicFactoryControl"), Is.True,
+                "The fixture must exercise an emitted factory.");
+            Assert.That(methods.SelectMany(m => m.Signature.Parameters).Any(p => !p.Type.IsPublic), Is.False,
+                "A public factory must not expose inaccessible parameter types.");
+            Assert.That(methods.SelectMany(m => m.Signature.Parameters).Any(p => p.Type.Name == "CommunityGalleryIdentifier"), Is.False,
+                "A public factory must not expose the internal inherited identifier type.");
+            if (methods.Length == 0)
+            {
+                // Omitting the resource factory is permitted when the identifier is inaccessible.
+                return;
+            }
+            var flattened = methods.Single(m => m.Signature.Parameters.Any(p => p.Name == "uniqueId"));
+            Assert.That(flattened.Signature.Parameters.Single(p => p.Name == "uniqueId").DefaultValue, Is.Not.Null);
+            if (multipleIdentifierProperties)
+            {
+                Assert.That(flattened.Signature.Parameters.Single(p => p.Name == "tenantId").DefaultValue, Is.Not.Null);
+            }
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public void FactoryPreservesNestedValuesWithoutGuessingChangedShapes(bool changedToArray)

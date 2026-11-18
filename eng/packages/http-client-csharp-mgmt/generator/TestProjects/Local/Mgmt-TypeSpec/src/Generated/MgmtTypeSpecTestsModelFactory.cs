@@ -1956,6 +1956,84 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
+        /// <summary> Paged collection of ExplicitGalleryLeaf items. </summary>
+        /// <param name="value"> The ExplicitGalleryLeaf items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ExplicitGalleryLeafListResult"/> instance for mocking. </returns>
+        public static ExplicitGalleryLeafListResult ExplicitGalleryLeafListResult(IEnumerable<ExplicitGalleryLeaf> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ExplicitGalleryLeaf>();
+
+            return new ExplicitGalleryLeafListResult((value ?? new ChangeTrackingList<ExplicitGalleryLeaf>()).ToList(), nextLink, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="uniqueId"> Gets the UniqueId. </param>
+        /// <param name="tenantId"> Gets the TenantId. </param>
+        /// <param name="explicitGalleryLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <returns> A new <see cref="Models.ExplicitGalleryLeaf"/> instance for mocking. </returns>
+        public static ExplicitGalleryLeaf ExplicitGalleryLeaf(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uniqueId = default, string tenantId = default, string explicitGalleryLeafDisclaimer = default)
+        {
+            return new ExplicitGalleryLeaf(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uniqueId is null && tenantId is null ? default : new ExplicitGalleryIdentifier(uniqueId, tenantId, default),
+                default,
+                explicitGalleryLeafDisclaimer is null ? default : new ExplicitGalleryLeafProperties(explicitGalleryLeafDisclaimer, default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="uniqueId"> Gets the UniqueId. </param>
+        /// <param name="tenantId"> Gets the TenantId. </param>
+        /// <param name="explicitGalleryLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <returns> A new <see cref="Models.ExplicitGalleryProxyExplicitGalleryLeafProperties"/> instance for mocking. </returns>
+        public static ExplicitGalleryProxyExplicitGalleryLeafProperties ExplicitGalleryProxyExplicitGalleryLeafProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uniqueId = default, string tenantId = default, string explicitGalleryLeafDisclaimer = default)
+        {
+            return new ExplicitGalleryProxyExplicitGalleryLeafProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uniqueId is null && tenantId is null ? default : new ExplicitGalleryIdentifier(uniqueId, tenantId, default),
+                default,
+                explicitGalleryLeafDisclaimer is null ? default : new ExplicitGalleryLeafProperties(explicitGalleryLeafDisclaimer, default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="uniqueId"> Gets the UniqueId. </param>
+        /// <param name="tenantId"> Gets the TenantId. </param>
+        /// <returns> A new <see cref="Models.ExplicitGalleryBase"/> instance for mocking. </returns>
+        public static ExplicitGalleryBase ExplicitGalleryBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uniqueId = default, string tenantId = default)
+        {
+            return new ExplicitGalleryBase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uniqueId is null && tenantId is null ? default : new ExplicitGalleryIdentifier(uniqueId, tenantId, default),
+                default);
+        }
+
+        /// <summary> A multi-property identifier exposed through explicit flattening. </summary>
+        /// <param name="uniqueId"></param>
+        /// <param name="tenantId"></param>
+        /// <returns> A new <see cref="Models.ExplicitGalleryIdentifier"/> instance for mocking. </returns>
+        public static ExplicitGalleryIdentifier ExplicitGalleryIdentifier(string uniqueId = default, string tenantId = default)
+        {
+            return new ExplicitGalleryIdentifier(uniqueId, tenantId, default);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

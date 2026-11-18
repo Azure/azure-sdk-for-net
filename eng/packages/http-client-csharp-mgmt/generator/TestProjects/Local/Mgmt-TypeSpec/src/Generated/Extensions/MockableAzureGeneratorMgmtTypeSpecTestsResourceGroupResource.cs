@@ -1174,6 +1174,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetSharedConfigs().Get(configName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of InternalFactoryAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of InternalFactoryAccounts and their operations over a InternalFactoryAccountResource. </returns>
+        public virtual InternalFactoryAccountCollection GetInternalFactoryAccounts()
+        {
+            return GetCachedClient(client => new InternalFactoryAccountCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a InternalFactoryAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/internalFactoryAccounts/{internalFactoryAccountName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InternalFactoryAccounts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internalFactoryAccountName"> The name of the InternalFactoryAccount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="internalFactoryAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalFactoryAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InternalFactoryAccountResource>> GetInternalFactoryAccountAsync(string internalFactoryAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internalFactoryAccountName, nameof(internalFactoryAccountName));
+
+            return await GetInternalFactoryAccounts().GetAsync(internalFactoryAccountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a InternalFactoryAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/internalFactoryAccounts/{internalFactoryAccountName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InternalFactoryAccounts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internalFactoryAccountName"> The name of the InternalFactoryAccount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="internalFactoryAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalFactoryAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<InternalFactoryAccountResource> GetInternalFactoryAccount(string internalFactoryAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internalFactoryAccountName, nameof(internalFactoryAccountName));
+
+            return GetInternalFactoryAccounts().Get(internalFactoryAccountName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CycleTestStores in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of CycleTestStores and their operations over a CycleTestStoreResource. </returns>
         public virtual CycleTestStoreCollection GetCycleTestStores()
