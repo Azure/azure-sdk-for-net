@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("linkedHierarchies"u8);
                 writer.WriteStartArray();
-                foreach (HierarchyMetadata item in LinkedHierarchies)
+                foreach (EdgeConfigTemplateHierarchyMetadata item in LinkedHierarchies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("unLinkedHierarchies"u8);
                 writer.WriteStartArray();
-                foreach (HierarchyMetadata item in UnLinkedHierarchies)
+                foreach (EdgeConfigTemplateHierarchyMetadata item in UnLinkedHierarchies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 return null;
             }
             ResourceIdentifier contextId = default;
-            IList<HierarchyMetadata> linkedHierarchies = default;
-            IList<HierarchyMetadata> unLinkedHierarchies = default;
+            IList<EdgeConfigTemplateHierarchyMetadata> linkedHierarchies = default;
+            IList<EdgeConfigTemplateHierarchyMetadata> unLinkedHierarchies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    List<HierarchyMetadata> array = new List<HierarchyMetadata>();
+                    List<EdgeConfigTemplateHierarchyMetadata> array = new List<EdgeConfigTemplateHierarchyMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HierarchyMetadata.DeserializeHierarchyMetadata(item, options));
+                        array.Add(EdgeConfigTemplateHierarchyMetadata.DeserializeEdgeConfigTemplateHierarchyMetadata(item, options));
                     }
                     linkedHierarchies = array;
                     continue;
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    List<HierarchyMetadata> array = new List<HierarchyMetadata>();
+                    List<EdgeConfigTemplateHierarchyMetadata> array = new List<EdgeConfigTemplateHierarchyMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HierarchyMetadata.DeserializeHierarchyMetadata(item, options));
+                        array.Add(EdgeConfigTemplateHierarchyMetadata.DeserializeEdgeConfigTemplateHierarchyMetadata(item, options));
                     }
                     unLinkedHierarchies = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConfigTemplateMetadataUpdateProperties(contextId, linkedHierarchies ?? new ChangeTrackingList<HierarchyMetadata>(), unLinkedHierarchies ?? new ChangeTrackingList<HierarchyMetadata>(), additionalBinaryDataProperties);
+            return new ConfigTemplateMetadataUpdateProperties(contextId, linkedHierarchies ?? new ChangeTrackingList<EdgeConfigTemplateHierarchyMetadata>(), unLinkedHierarchies ?? new ChangeTrackingList<EdgeConfigTemplateHierarchyMetadata>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -14,51 +14,51 @@ using Azure.ResourceManager.WorkloadOrchestration;
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Solution Template Details for update operations. </summary>
-    public partial class SolutionTemplateMetadataUpdate : IJsonModel<SolutionTemplateMetadataUpdate>
+    public partial class SolutionTemplateMetadataPatch : IJsonModel<SolutionTemplateMetadataPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SolutionTemplateMetadataUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SolutionTemplateMetadataPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSolutionTemplateMetadataUpdate(document.RootElement, options);
+                        return DeserializeSolutionTemplateMetadataPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SolutionTemplateMetadataUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionTemplateMetadataPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SolutionTemplateMetadataUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionTemplateMetadataPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SolutionTemplateMetadataUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SolutionTemplateMetadataPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SolutionTemplateMetadataUpdate IPersistableModel<SolutionTemplateMetadataUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SolutionTemplateMetadataPatch IPersistableModel<SolutionTemplateMetadataPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SolutionTemplateMetadataUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SolutionTemplateMetadataPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SolutionTemplateMetadataUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SolutionTemplateMetadataPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionTemplateMetadataUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionTemplateMetadataPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SolutionTemplateMetadataUpdate IJsonModel<SolutionTemplateMetadataUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SolutionTemplateMetadataPatch IJsonModel<SolutionTemplateMetadataPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SolutionTemplateMetadataUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SolutionTemplateMetadataPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateMetadataPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionTemplateMetadataUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionTemplateMetadataPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSolutionTemplateMetadataUpdate(document.RootElement, options);
+            return DeserializeSolutionTemplateMetadataPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SolutionTemplateMetadataUpdate DeserializeSolutionTemplateMetadataUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static SolutionTemplateMetadataPatch DeserializeSolutionTemplateMetadataPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SolutionTemplateMetadataUpdate(subscriptionId, resourceGroupName, name, version, additionalBinaryDataProperties);
+            return new SolutionTemplateMetadataPatch(subscriptionId, resourceGroupName, name, version, additionalBinaryDataProperties);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionTemplateProperties"> Target properties. </param>
         /// <param name="targetProperties"> Target properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateProperties"/> or <paramref name="targetProperties"/> is null. </exception>
-        public SolutionDeploymentProperties(SolutionTemplateMetadata solutionTemplateProperties, TargetMetadata targetProperties)
+        public SolutionDeploymentProperties(SolutionTemplateMetadata solutionTemplateProperties, SolutionDeploymentTargetMetadata targetProperties)
         {
             Argument.AssertNotNull(solutionTemplateProperties, nameof(solutionTemplateProperties));
             Argument.AssertNotNull(targetProperties, nameof(targetProperties));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="targetProperties"> Target properties. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionDeploymentProperties(SolutionTemplateMetadata solutionTemplateProperties, IDictionary<string, BinaryData> input, IReadOnlyDictionary<string, BinaryData> output, TargetMetadata targetProperties, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionDeploymentProperties(SolutionTemplateMetadata solutionTemplateProperties, IDictionary<string, BinaryData> input, IReadOnlyDictionary<string, BinaryData> output, SolutionDeploymentTargetMetadata targetProperties, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionTemplateProperties = solutionTemplateProperties;
             Input = input;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public IReadOnlyDictionary<string, BinaryData> Output { get; }
 
         /// <summary> Target properties. </summary>
-        public TargetMetadata TargetProperties { get; set; }
+        public SolutionDeploymentTargetMetadata TargetProperties { get; set; }
 
         /// <summary> Provisioning state of resource. </summary>
         public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }

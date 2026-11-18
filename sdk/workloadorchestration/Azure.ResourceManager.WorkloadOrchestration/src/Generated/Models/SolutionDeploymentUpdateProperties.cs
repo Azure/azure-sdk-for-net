@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="input"> Input field. </param>
         /// <param name="targetProperties"> Target properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionDeploymentUpdateProperties(SolutionTemplateMetadataUpdate solutionTemplateProperties, IDictionary<string, BinaryData> input, TargetMetadata targetProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionDeploymentUpdateProperties(SolutionTemplateMetadataPatch solutionTemplateProperties, IDictionary<string, BinaryData> input, SolutionDeploymentTargetMetadata targetProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionTemplateProperties = solutionTemplateProperties;
             Input = input;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Target properties. </summary>
-        public SolutionTemplateMetadataUpdate SolutionTemplateProperties { get; set; }
+        public SolutionTemplateMetadataPatch SolutionTemplateProperties { get; set; }
 
         /// <summary>
         /// Input field
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public IDictionary<string, BinaryData> Input { get; }
 
         /// <summary> Target properties. </summary>
-        public TargetMetadata TargetProperties { get; set; }
+        public SolutionDeploymentTargetMetadata TargetProperties { get; set; }
     }
 }

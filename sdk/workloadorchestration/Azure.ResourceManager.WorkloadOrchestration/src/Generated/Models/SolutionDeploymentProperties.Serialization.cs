@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             SolutionTemplateMetadata solutionTemplateProperties = default;
             IDictionary<string, BinaryData> input = default;
             IReadOnlyDictionary<string, BinaryData> output = default;
-            TargetMetadata targetProperties = default;
+            SolutionDeploymentTargetMetadata targetProperties = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (prop.NameEquals("targetProperties"u8))
                 {
-                    targetProperties = TargetMetadata.DeserializeTargetMetadata(prop.Value, options);
+                    targetProperties = SolutionDeploymentTargetMetadata.DeserializeSolutionDeploymentTargetMetadata(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

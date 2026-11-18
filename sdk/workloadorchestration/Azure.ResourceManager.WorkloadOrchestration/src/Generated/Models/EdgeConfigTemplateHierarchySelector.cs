@@ -13,27 +13,37 @@ using Azure.ResourceManager.WorkloadOrchestration;
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Hierarchy Ids With Level for applying config Template which will further generate ARG objects. </summary>
-    public partial class HierarchyMetadata
+    public partial class EdgeConfigTemplateHierarchySelector
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HierarchyMetadata"/>. </summary>
-        public HierarchyMetadata()
+        /// <summary> Initializes a new instance of <see cref="EdgeConfigTemplateHierarchySelector"/>. </summary>
+        /// <param name="contextId"> Context Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contextId"/> is null. </exception>
+        public EdgeConfigTemplateHierarchySelector(ResourceIdentifier contextId)
         {
+            Argument.AssertNotNull(contextId, nameof(contextId));
+
+            ContextId = contextId;
             HierarchyIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HierarchyMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeConfigTemplateHierarchySelector"/>. </summary>
+        /// <param name="contextId"> Context Id. </param>
         /// <param name="hierarchyIds"> Hierarchy Ids. </param>
         /// <param name="level"> Hierarchy Level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HierarchyMetadata(IList<ResourceIdentifier> hierarchyIds, string level, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeConfigTemplateHierarchySelector(ResourceIdentifier contextId, IList<ResourceIdentifier> hierarchyIds, string level, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            ContextId = contextId;
             HierarchyIds = hierarchyIds;
             Level = level;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Context Id. </summary>
+        public ResourceIdentifier ContextId { get; }
 
         /// <summary> Hierarchy Ids. </summary>
         public IList<ResourceIdentifier> HierarchyIds { get; }

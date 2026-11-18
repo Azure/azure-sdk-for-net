@@ -13,23 +13,23 @@ using Azure.ResourceManager.WorkloadOrchestration;
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Solution Deployment Target Details. </summary>
-    public partial class TargetMetadata
+    public partial class SolutionDeploymentTargetMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TargetMetadata"/>. </summary>
-        public TargetMetadata()
+        /// <summary> Initializes a new instance of <see cref="SolutionDeploymentTargetMetadata"/>. </summary>
+        public SolutionDeploymentTargetMetadata()
         {
             Capabilities = new ChangeTrackingList<string>();
             TargetIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionDeploymentTargetMetadata"/>. </summary>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="targetIds"> ARM resource IDs of the Targets resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetMetadata(IList<string> capabilities, IList<ResourceIdentifier> targetIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionDeploymentTargetMetadata(IList<string> capabilities, IList<ResourceIdentifier> targetIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capabilities = capabilities;
             TargetIds = targetIds;

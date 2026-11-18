@@ -14,67 +14,52 @@ using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Hierarchy Ids With Level for applying config Template which will further generate ARG objects. </summary>
-    public partial class HierarchySelector : IJsonModel<HierarchySelector>
+    /// <summary> Solution Deployment Target Details. </summary>
+    public partial class SolutionDeploymentTargetMetadata : IJsonModel<SolutionDeploymentTargetMetadata>
     {
-        /// <summary> Initializes a new instance of <see cref="HierarchySelector"/> for deserialization. </summary>
-        internal HierarchySelector()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HierarchySelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SolutionDeploymentTargetMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionDeploymentTargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHierarchySelector(document.RootElement, options);
+                        return DeserializeSolutionDeploymentTargetMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HierarchySelector)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionDeploymentTargetMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionDeploymentTargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HierarchySelector)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionDeploymentTargetMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HierarchySelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SolutionDeploymentTargetMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HierarchySelector IPersistableModel<HierarchySelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SolutionDeploymentTargetMetadata IPersistableModel<SolutionDeploymentTargetMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HierarchySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="hierarchySelector"> The <see cref="HierarchySelector"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HierarchySelector hierarchySelector)
-        {
-            if (hierarchySelector == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(hierarchySelector, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<SolutionDeploymentTargetMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HierarchySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SolutionDeploymentTargetMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,18 +70,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionDeploymentTargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HierarchySelector)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionDeploymentTargetMetadata)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("contextId"u8);
-            writer.WriteStringValue(ContextId);
-            if (Optional.IsCollectionDefined(HierarchyIds))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
-                writer.WritePropertyName("hierarchyIds"u8);
+                writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in HierarchyIds)
+                foreach (string item in Capabilities)
                 {
                     if (item == null)
                     {
@@ -107,10 +90,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Level))
+            if (Optional.IsCollectionDefined(TargetIds))
             {
-                writer.WritePropertyName("level"u8);
-                writer.WriteStringValue(Level);
+                writer.WritePropertyName("targetIds"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in TargetIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,41 +124,56 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HierarchySelector IJsonModel<HierarchySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SolutionDeploymentTargetMetadata IJsonModel<SolutionDeploymentTargetMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HierarchySelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SolutionDeploymentTargetMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionDeploymentTargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HierarchySelector)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionDeploymentTargetMetadata)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHierarchySelector(document.RootElement, options);
+            return DeserializeSolutionDeploymentTargetMetadata(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HierarchySelector DeserializeHierarchySelector(JsonElement element, ModelReaderWriterOptions options)
+        internal static SolutionDeploymentTargetMetadata DeserializeSolutionDeploymentTargetMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier contextId = default;
-            IList<ResourceIdentifier> hierarchyIds = default;
-            string level = default;
+            IList<string> capabilities = default;
+            IList<ResourceIdentifier> targetIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("contextId"u8))
+                if (prop.NameEquals("capabilities"u8))
                 {
-                    contextId = new ResourceIdentifier(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    capabilities = array;
                     continue;
                 }
-                if (prop.NameEquals("hierarchyIds"u8))
+                if (prop.NameEquals("targetIds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,12 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                             array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
-                    hierarchyIds = array;
-                    continue;
-                }
-                if (prop.NameEquals("level"u8))
-                {
-                    level = prop.Value.GetString();
+                    targetIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,7 +199,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HierarchySelector(contextId, hierarchyIds ?? new ChangeTrackingList<ResourceIdentifier>(), level, additionalBinaryDataProperties);
+            return new SolutionDeploymentTargetMetadata(capabilities ?? new ChangeTrackingList<string>(), targetIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

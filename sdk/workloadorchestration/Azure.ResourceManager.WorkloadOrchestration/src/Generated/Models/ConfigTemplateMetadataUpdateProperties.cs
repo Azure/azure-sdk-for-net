@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="ConfigTemplateMetadataUpdateProperties"/>. </summary>
         public ConfigTemplateMetadataUpdateProperties()
         {
-            LinkedHierarchies = new ChangeTrackingList<HierarchyMetadata>();
-            UnLinkedHierarchies = new ChangeTrackingList<HierarchyMetadata>();
+            LinkedHierarchies = new ChangeTrackingList<EdgeConfigTemplateHierarchyMetadata>();
+            UnLinkedHierarchies = new ChangeTrackingList<EdgeConfigTemplateHierarchyMetadata>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigTemplateMetadataUpdateProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="linkedHierarchies"> Hierarchy ARM Ids. </param>
         /// <param name="unLinkedHierarchies"> Hierarchy ARM Ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigTemplateMetadataUpdateProperties(ResourceIdentifier contextId, IList<HierarchyMetadata> linkedHierarchies, IList<HierarchyMetadata> unLinkedHierarchies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigTemplateMetadataUpdateProperties(ResourceIdentifier contextId, IList<EdgeConfigTemplateHierarchyMetadata> linkedHierarchies, IList<EdgeConfigTemplateHierarchyMetadata> unLinkedHierarchies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContextId = contextId;
             LinkedHierarchies = linkedHierarchies;
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public ResourceIdentifier ContextId { get; set; }
 
         /// <summary> Hierarchy ARM Ids. </summary>
-        public IList<HierarchyMetadata> LinkedHierarchies { get; }
+        public IList<EdgeConfigTemplateHierarchyMetadata> LinkedHierarchies { get; }
 
         /// <summary> Hierarchy ARM Ids. </summary>
-        public IList<HierarchyMetadata> UnLinkedHierarchies { get; }
+        public IList<EdgeConfigTemplateHierarchyMetadata> UnLinkedHierarchies { get; }
     }
 }

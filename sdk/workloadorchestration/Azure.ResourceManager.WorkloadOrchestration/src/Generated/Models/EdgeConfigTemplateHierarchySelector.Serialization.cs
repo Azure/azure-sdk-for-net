@@ -14,52 +14,67 @@ using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Solution Deployment Target Details. </summary>
-    public partial class TargetMetadata : IJsonModel<TargetMetadata>
+    /// <summary> Hierarchy Ids With Level for applying config Template which will further generate ARG objects. </summary>
+    public partial class EdgeConfigTemplateHierarchySelector : IJsonModel<EdgeConfigTemplateHierarchySelector>
     {
+        /// <summary> Initializes a new instance of <see cref="EdgeConfigTemplateHierarchySelector"/> for deserialization. </summary>
+        internal EdgeConfigTemplateHierarchySelector()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TargetMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeConfigTemplateHierarchySelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeConfigTemplateHierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTargetMetadata(document.RootElement, options);
+                        return DeserializeEdgeConfigTemplateHierarchySelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetMetadata)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeConfigTemplateHierarchySelector)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeConfigTemplateHierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TargetMetadata)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeConfigTemplateHierarchySelector)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TargetMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeConfigTemplateHierarchySelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TargetMetadata IPersistableModel<TargetMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeConfigTemplateHierarchySelector IPersistableModel<EdgeConfigTemplateHierarchySelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TargetMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeConfigTemplateHierarchySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="edgeConfigTemplateHierarchySelector"> The <see cref="EdgeConfigTemplateHierarchySelector"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EdgeConfigTemplateHierarchySelector edgeConfigTemplateHierarchySelector)
+        {
+            if (edgeConfigTemplateHierarchySelector == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(edgeConfigTemplateHierarchySelector, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TargetMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeConfigTemplateHierarchySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,16 +85,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeConfigTemplateHierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetMetadata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeConfigTemplateHierarchySelector)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            writer.WritePropertyName("contextId"u8);
+            writer.WriteStringValue(ContextId);
+            if (Optional.IsCollectionDefined(HierarchyIds))
             {
-                writer.WritePropertyName("capabilities"u8);
+                writer.WritePropertyName("hierarchyIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in Capabilities)
+                foreach (ResourceIdentifier item in HierarchyIds)
                 {
                     if (item == null)
                     {
@@ -90,20 +107,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TargetIds))
+            if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("targetIds"u8);
-                writer.WriteStartArray();
-                foreach (ResourceIdentifier item in TargetIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("level"u8);
+                writer.WriteStringValue(Level);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -124,56 +131,41 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TargetMetadata IJsonModel<TargetMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeConfigTemplateHierarchySelector IJsonModel<EdgeConfigTemplateHierarchySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TargetMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeConfigTemplateHierarchySelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeConfigTemplateHierarchySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetMetadata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeConfigTemplateHierarchySelector)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTargetMetadata(document.RootElement, options);
+            return DeserializeEdgeConfigTemplateHierarchySelector(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TargetMetadata DeserializeTargetMetadata(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeConfigTemplateHierarchySelector DeserializeEdgeConfigTemplateHierarchySelector(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> capabilities = default;
-            IList<ResourceIdentifier> targetIds = default;
+            ResourceIdentifier contextId = default;
+            IList<ResourceIdentifier> hierarchyIds = default;
+            string level = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("capabilities"u8))
+                if (prop.NameEquals("contextId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    capabilities = array;
+                    contextId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("targetIds"u8))
+                if (prop.NameEquals("hierarchyIds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -191,7 +183,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                             array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
-                    targetIds = array;
+                    hierarchyIds = array;
+                    continue;
+                }
+                if (prop.NameEquals("level"u8))
+                {
+                    level = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,7 +196,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TargetMetadata(capabilities ?? new ChangeTrackingList<string>(), targetIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new EdgeConfigTemplateHierarchySelector(contextId, hierarchyIds ?? new ChangeTrackingList<ResourceIdentifier>(), level, additionalBinaryDataProperties);
         }
     }
 }

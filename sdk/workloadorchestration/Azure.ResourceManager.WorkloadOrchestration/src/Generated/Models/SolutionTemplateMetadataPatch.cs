@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Solution Template Details for update operations. </summary>
-    public partial class SolutionTemplateMetadataUpdate
+    public partial class SolutionTemplateMetadataPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SolutionTemplateMetadataUpdate"/>. </summary>
-        public SolutionTemplateMetadataUpdate()
+        /// <summary> Initializes a new instance of <see cref="SolutionTemplateMetadataPatch"/>. </summary>
+        public SolutionTemplateMetadataPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SolutionTemplateMetadataUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionTemplateMetadataPatch"/>. </summary>
         /// <param name="subscriptionId"> Solution template subscription. </param>
         /// <param name="resourceGroupName"> Solution template resource group. </param>
         /// <param name="name"> Solution template name. </param>
         /// <param name="version"> Solution template version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionTemplateMetadataUpdate(string subscriptionId, string resourceGroupName, string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionTemplateMetadataPatch(string subscriptionId, string resourceGroupName, string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;

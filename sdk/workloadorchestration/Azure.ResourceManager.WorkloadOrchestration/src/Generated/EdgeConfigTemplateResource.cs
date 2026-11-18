@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> LinkToHierarchiesAsync(WaitUntil waitUntil, HierarchySelector body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> LinkToHierarchiesAsync(WaitUntil waitUntil, EdgeConfigTemplateHierarchySelector body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configTemplatesRestClient.CreateLinkToHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HierarchySelector.ToRequestContent(body), context);
+                HttpMessage message = _configTemplatesRestClient.CreateLinkToHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeConfigTemplateHierarchySelector.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_configTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation LinkToHierarchies(WaitUntil waitUntil, HierarchySelector body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation LinkToHierarchies(WaitUntil waitUntil, EdgeConfigTemplateHierarchySelector body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configTemplatesRestClient.CreateLinkToHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HierarchySelector.ToRequestContent(body), context);
+                HttpMessage message = _configTemplatesRestClient.CreateLinkToHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeConfigTemplateHierarchySelector.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_configTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> UnLinkFromHierarchiesAsync(WaitUntil waitUntil, HierarchySelector body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UnLinkFromHierarchiesAsync(WaitUntil waitUntil, EdgeConfigTemplateHierarchySelector body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configTemplatesRestClient.CreateUnLinkFromHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HierarchySelector.ToRequestContent(body), context);
+                HttpMessage message = _configTemplatesRestClient.CreateUnLinkFromHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeConfigTemplateHierarchySelector.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_configTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation UnLinkFromHierarchies(WaitUntil waitUntil, HierarchySelector body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UnLinkFromHierarchies(WaitUntil waitUntil, EdgeConfigTemplateHierarchySelector body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configTemplatesRestClient.CreateUnLinkFromHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HierarchySelector.ToRequestContent(body), context);
+                HttpMessage message = _configTemplatesRestClient.CreateUnLinkFromHierarchiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeConfigTemplateHierarchySelector.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_configTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            SolutionTemplateMetadataUpdate solutionTemplateProperties = default;
+            SolutionTemplateMetadataPatch solutionTemplateProperties = default;
             IDictionary<string, BinaryData> input = default;
-            TargetMetadata targetProperties = default;
+            SolutionDeploymentTargetMetadata targetProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    solutionTemplateProperties = SolutionTemplateMetadataUpdate.DeserializeSolutionTemplateMetadataUpdate(prop.Value, options);
+                    solutionTemplateProperties = SolutionTemplateMetadataPatch.DeserializeSolutionTemplateMetadataPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("input"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    targetProperties = TargetMetadata.DeserializeTargetMetadata(prop.Value, options);
+                    targetProperties = SolutionDeploymentTargetMetadata.DeserializeSolutionDeploymentTargetMetadata(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
