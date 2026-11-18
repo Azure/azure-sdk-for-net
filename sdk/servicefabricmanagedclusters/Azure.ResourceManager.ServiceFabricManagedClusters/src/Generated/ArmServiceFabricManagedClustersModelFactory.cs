@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
-        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vmSize)
+        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vmSize = default)
         {
             return new ServiceFabricManagedUnsupportedVmSize(
                 id,
