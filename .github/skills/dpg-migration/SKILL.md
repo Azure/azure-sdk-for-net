@@ -26,10 +26,10 @@ The local spec repo path (`localSpecsPath`) is **always required** — ask the u
 
 ### MCP Server (Generator Agent)
 
-The MCP server provides deterministic fix tools for the build-fix cycle. Configure in `.vscode/mcp.json`:
+The MCP server provides deterministic fix tools for the build-fix cycle. Configure in the repo-root `.mcp.json`:
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "generator-agent": {
       "command": "dotnet",
       "args": ["run", "--project", "sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj", "--framework", "net10.0"]
