@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- `ArmQuotaModelFactory.QuotaAllocationRequestBase` now omits optional nested properties when their inputs are null, aligning serialization with the management generator.
+
 ## 1.2.1 (2026-06-28)
 
 ### Other Changes
