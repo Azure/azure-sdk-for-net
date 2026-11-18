@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Core.Tests.TestFramework;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -87,11 +87,11 @@ namespace Azure.Core.Tests
         public void MetadataConversionAcceptsCustomOperation()
         {
             using var response = new MockResponse(200);
-            var source = new TestOperation<int>("test", TimeSpan.Zero, 1, response);
-            source.UpdateStatus();
+            var source = new Mock<Operation<int>>();
+            source.Setup(operation => operation.GetRawResponse()).Returns(response);
             Func<Response> monitor = null;
             var operation = ProtocolOperationHelpers.ConvertWithMetadata<int, int, Operation<int>>(
-                source, _ => 1, new ClientDiagnostics(ClientOptions.Default), "test",
+                source.Object, _ => 1, new ClientDiagnostics(ClientOptions.Default), "test",
                 (inner, getMonitor) =>
                 {
                     monitor = getMonitor;
