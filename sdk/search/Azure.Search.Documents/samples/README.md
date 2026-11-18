@@ -22,5 +22,8 @@ description: Samples for the Azure.Search.Documents client library
 - Learn how to [set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md) using agentic retrieval.
 - Learn how to perform [knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample11_KnowledgeSourceOperations.md).
 - Learn how to perform [knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample12_KnowledgeBaseOperations.md).
-- Learn how to [stream typed knowledge base retrieval events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample22_KnowledgeBaseRetrievalStreaming.md).
+- Learn how to [configure a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample13_KnowledgeBaseConfiguration.md).
+- Learn how to [inspect retrieval responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample14_KnowledgeRetrievalResponse.md).
+- Learn how to [upload and manage files in a knowledge source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample15_FileKnowledgeSource.md).
+- Learn how to [stream typed knowledge base retrieval events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample16_KnowledgeBaseRetrievalStreaming.md).
 - Explore the [November preview end-to-end samples](Sample23_NovemberPreview.md), including Topic Graph, graph extraction and retrieval, agentic search, file ingestion operations, compatible providers, and chat completion skills.

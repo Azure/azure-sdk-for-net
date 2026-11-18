@@ -515,6 +515,10 @@ Use `KnowledgeBaseRetrievalClient` to retrieve grounded responses from a knowled
 - [Set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
 - [Knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample11_KnowledgeSourceOperations.md)
 - [Knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample12_KnowledgeBaseOperations.md)
+- [Configure a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample13_KnowledgeBaseConfiguration.md)
+- [Inspect retrieval responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample14_KnowledgeRetrievalResponse.md)
+- [Upload and manage files in a knowledge source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample15_FileKnowledgeSource.md)
+- [Stream typed knowledge base retrieval events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample16_KnowledgeBaseRetrievalStreaming.md)
 - [Preview graph queries, topic-graph vectors, facet filter hints, and random scoring](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md)
 
 ### Authenticate in a National Cloud
