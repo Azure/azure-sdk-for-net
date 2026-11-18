@@ -8,7 +8,9 @@
 
 - `FoundryStateStore` and the `FoundryStorage*Exception` types are now experimental
   (`AAAS004`), and `AgentRestoreContext` joins the experimental snapshot lifecycle
-  contract (`AAAS002`). Callers must suppress the corresponding diagnostic.
+  contract (`AAAS002`). Existing code that uses these types fails to compile until the
+  corresponding diagnostic is suppressed (for example, `#pragma warning disable AAAS004`
+  or `<NoWarn>$(NoWarn);AAAS004</NoWarn>`).
 
 ### Bugs Fixed
 

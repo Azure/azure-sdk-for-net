@@ -183,7 +183,8 @@ app.Run();
 Core always registers the private platform endpoints `POST /_agent/before-snapshot` and `POST /_agent/after-restore`, with `POST /_before_snapshot` and `POST /_after_restore` as aliases. They are no-ops by default. Implement `IAgentSnapshotLifecycle` when your process owns connections, streams, or other in-memory state that must be released before capture and rebuilt after restoration:
 
 The snapshot lifecycle contract, including `AgentRestoreContext`, is experimental and may
-change or be removed. To implement it, suppress the `AAAS002` warning:
+change or be removed. Using it without suppressing
+the `AAAS002` diagnostic is a compile error:
 
 ```C#
 #pragma warning disable AAAS002
@@ -225,7 +226,7 @@ The library provides durable **task** and resumable **streaming** primitives for
 ### Durable state store
 
 The state store API is experimental and may change or be removed. To use it, suppress the
-`AAAS004` warning:
+`AAAS004` diagnostic; otherwise it is a compile error:
 
 ```C#
 #pragma warning disable AAAS004
