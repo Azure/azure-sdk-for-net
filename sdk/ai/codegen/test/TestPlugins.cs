@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Reflection;
+using System.ComponentModel.Composition.Hosting;
+using System.Runtime.CompilerServices;
 using Extensions.Plugin.Visitors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -16,11 +17,11 @@ namespace Test.Extensions.Plugin;
 [NonParallelizable]
 public class TestPlugins
 {
+    private const string TestNamespace = "TestLibrary";
+    private const string WireName = "wire_name";
+
     private static readonly InputDateTimeType s_utcDateTime =
         new(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
-
-    private static readonly FieldInfo s_generatorInstance =
-        typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic)!;
 
     private static IEnumerable<TestCaseData> DatePropertyCases()
     {
@@ -42,7 +43,7 @@ public class TestPlugins
 
         Assert.That(property.Name, Is.EqualTo(propertyName));
         Assert.That(property.AsParameter.Name, Is.EqualTo(parameterName));
-        Assert.That(property.WireInfo!.SerializedName, Is.EqualTo("wire_name"));
+        Assert.That(property.WireInfo!.SerializedName, Is.EqualTo(WireName));
     }
 
     [Test]
@@ -59,41 +60,42 @@ public class TestPlugins
 
     private static PropertyProvider CreateProperty(string name, InputType type, string modelName, Compilation? lastContract = null)
     {
-        var context = (GeneratorContext)Activator.CreateInstance(typeof(GeneratorContext),
-            BindingFlags.Instance | BindingFlags.NonPublic, binder: null,
-            args: [new Configuration(AppContext.BaseDirectory, [], "TestLibrary", false, default, null)], culture: null)!;
-        var generator = new TestGenerator(context, new SourceInputModel(null, lastContract));
-        var previousInstance = s_generatorInstance.GetValue(null);
-        s_generatorInstance.SetValue(null, generator);
+        var input = InputFactory.Property(name, type, isRequired: true, wireName: WireName);
+        var model = InputFactory.Model(modelName, clientNamespace: TestNamespace, properties: [input]);
+        var generator = new TestGenerator(new SourceInputModel(null, lastContract));
+
+        using var catalog = new AssemblyCatalog(typeof(ExperimentalAttributeVisitor).Assembly);
+        using var container = new CompositionContainer(catalog);
+
+        ref var instance = ref GetGeneratorInstance(null);
+        var previousInstance = instance;
+        instance = generator;
         try
         {
-            var pluginType = typeof(ExperimentalAttributeVisitor).Assembly.GetTypes().Single(t => t.IsSubclassOf(typeof(GeneratorPlugin)));
-            ((GeneratorPlugin)Activator.CreateInstance(pluginType)!).Apply(generator);
-
-            var input = new InputModelProperty(name, null, null, type, isRequired: true, isReadOnly: false, access: null,
-                isDiscriminator: false, serializedName: "wire_name", isHttpMetadata: false, isApiVersion: false,
-                defaultValue: null, serializationOptions: new InputSerializationOptions());
-            var model = new InputModelType(modelName, "TestLibrary", $"TestLibrary.{modelName}", access: null,
-                deprecation: null, summary: null, doc: null, usage: InputModelTypeUsage.Input | InputModelTypeUsage.Output,
-                properties: [input], baseModel: null, derivedModels: [], discriminatorValue: null, discriminatorProperty: null,
-                discriminatedSubtypes: new Dictionary<string, InputModelType>(), additionalProperties: null, modelAsStruct: false,
-                serializationOptions: new InputSerializationOptions(), isDynamicModel: false);
+            container.GetExportedValue<GeneratorPlugin>()!.Apply(generator);
             return generator.TypeFactory.CreateProperty(input, new ModelProvider(model))!;
         }
         finally
         {
-            s_generatorInstance.SetValue(null, previousInstance);
+            instance = previousInstance;
         }
     }
 
-    private sealed class TestGenerator(GeneratorContext context, SourceInputModel sourceInputModel) : CodeModelGenerator(context)
+    // The generator host normally initializes this singleton when it loads the plugin.
+    [UnsafeAccessor(UnsafeAccessorKind.StaticField, Name = "_instance")]
+    private static extern ref CodeModelGenerator? GetGeneratorInstance(CodeModelGenerator? _);
+
+    private sealed class TestGenerator(SourceInputModel sourceInputModel) : CodeModelGenerator
     {
         public override InputLibrary InputLibrary { get; } = new EmptyInputLibrary();
+        public override TypeFactory TypeFactory { get; } = new TestTypeFactory();
         public override SourceInputModel SourceInputModel => sourceInputModel;
     }
 
+    private sealed class TestTypeFactory : TypeFactory;
+
     private sealed class EmptyInputLibrary : InputLibrary
     {
-        public override InputNamespace InputNamespace { get; } = new("TestLibrary", [], [], [], [], [], null);
+        public override InputNamespace InputNamespace { get; } = new(TestNamespace, [], [], [], [], [], null);
     }
 }
