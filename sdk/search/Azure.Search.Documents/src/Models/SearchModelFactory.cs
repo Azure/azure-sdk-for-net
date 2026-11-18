@@ -19,6 +19,7 @@ namespace Azure.Search.Documents.Models
     [CodeGenType("DocumentsModelFactory")]
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     [CodeGenSuppress(nameof(ScoringFunction), typeof(ScoringFunctionInterpolation?), typeof(string))]
+    [CodeGenSuppress(nameof(KnowledgeBaseAgenticReasoningActivityRecord), typeof(int), typeof(int?), typeof(KnowledgeBaseErrorDetail), typeof(int?), typeof(KnowledgeRetrievalReasoningEffort))]
     public static partial class SearchModelFactory
     {
         /// <summary> Initializes a new instance of ScoringFunction. </summary>
@@ -357,6 +358,24 @@ namespace Azure.Search.Documents.Models
             string queryPlusText) =>
             new AutocompleteItem(text, queryPlusText, additionalBinaryDataProperties: null);
 
+        // GA's optional legacy overloads overlap with the preview metrics overload; preserve existing short calls.
+        /// <summary> Initializes an empty FacetResult for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FacetResult FacetResult() =>
+            FacetResult(count: null, additionalProperties: (IReadOnlyDictionary<string, object>)null);
+
+        /// <summary> Initializes a new instance of FacetResult for mocking. </summary>
+        /// <param name="count"> The approximate count of documents in the bucket. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FacetResult FacetResult(long? count) =>
+            FacetResult(count: count, additionalProperties: (IReadOnlyDictionary<string, object>)null);
+
+        /// <summary> Initializes a new instance of FacetResult for mocking. </summary>
+        /// <param name="additionalProperties"> Additional properties of the facet. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FacetResult FacetResult(IReadOnlyDictionary<string, object> additionalProperties) =>
+            FacetResult(count: null, additionalProperties: additionalProperties);
+
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="avg"> The resulting total avg for the facet when an avg metric is requested. </param>
@@ -403,7 +422,7 @@ namespace Azure.Search.Documents.Models
         /// </example>
         /// <remarks> For more details please refer <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/search-documents#query-parameters"/></remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FacetResult FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
+        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
@@ -587,7 +606,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FacetResult FacetResult(long? count, IDictionary<string, BinaryData> additionalProperties)
+        public static FacetResult FacetResult(long? count = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 

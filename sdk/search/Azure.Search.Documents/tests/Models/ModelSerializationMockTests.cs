@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Models
@@ -348,6 +349,217 @@ namespace Azure.Search.Documents.Tests.Models
                 @"{""knowledgeSourceName"":""idx-ks"",""kind"":""searchIndex"",""failOnError"":true,""maxOutputDocuments"":25,""enableImageServing"":true}")
                 .SetName("Roundtrip_KnowledgeSourceParams_NewProperties");
 #endif
+        }
+
+        [Test]
+        public void AgenticReasoningFactorySupportsGaOptionalArguments()
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord();
+            Assert.AreEqual(0, record.Id);
+            Assert.IsNull(record.ElapsedMs);
+            Assert.IsNull(record.Error);
+            Assert.IsNull(record.ReasoningTokens);
+            Assert.IsNull(record.RetrievalReasoningEffort);
+
+            Assert.AreEqual(1, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1).Id);
+            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100).ElapsedMs);
+            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(elapsedMs: 100).ElapsedMs);
+            Assert.AreEqual(12, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(reasoningTokens: 12).ReasoningTokens);
+
+            KnowledgeBaseErrorDetail error = SearchModelFactory.KnowledgeBaseErrorDetail("test", "message");
+            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100, error, 12);
+            Assert.AreEqual(100, record.ElapsedMs);
+            Assert.AreSame(error, record.Error);
+            Assert.AreEqual(12, record.ReasoningTokens);
+        }
+
+        [Test]
+        public void AgenticReasoningFactorySupportsGaNullArguments()
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord[] records =
+            {
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null, null)
+            };
+
+            foreach (KnowledgeBaseAgenticReasoningActivityRecord record in records)
+            {
+                Assert.AreEqual(1, record.Id);
+                Assert.IsNull(record.ElapsedMs);
+                Assert.IsNull(record.Error);
+                Assert.IsNull(record.ReasoningTokens);
+                Assert.IsNull(record.RetrievalReasoningEffort);
+            }
+        }
+
+        [Test]
+        public void AgenticReasoningFactoryPreservesGaAndPreviewFields()
+        {
+            var effort = new KnowledgeRetrievalMinimalReasoningEffort();
+            var record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, 12, effort);
+            Assert.AreSame(effort, record.RetrievalReasoningEffort);
+            Assert.AreSame(effort, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(retrievalReasoningEffort: effort).RetrievalReasoningEffort);
+            using (JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions)))
+            {
+                Assert.AreEqual("minimal", serialized.RootElement.GetProperty("retrievalReasoningEffort").GetProperty("kind").GetString());
+                Assert.AreEqual(12, serialized.RootElement.GetProperty("reasoningTokens").GetInt32());
+            }
+
+            DateTimeOffset startedOn = new DateTimeOffset(2026, 10, 1, 1, 0, 0, TimeSpan.Zero);
+            DateTimeOffset completedOn = startedOn.AddMilliseconds(100);
+            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, startedOn, completedOn, 100, null, "warning", 12);
+            Assert.AreEqual(startedOn, record.StartedOn);
+            Assert.AreEqual(completedOn, record.CompletedOn);
+            Assert.AreEqual(100, record.ElapsedMs);
+            Assert.AreEqual("warning", record.Warning);
+            Assert.AreEqual(12, record.ReasoningTokens);
+
+            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, startedOn, completedOn, 100, null, "warning", 12, effort, effort);
+            Assert.AreSame(effort, record.RetrievalReasoningEffort);
+            Assert.AreSame(effort, record.LogicalReasoningEffort);
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("future-value")]
+        public void NullableEnumConversionsPreserveNullAndUnknownValues(string value)
+        {
+            AzureOpenAIModelName? modelName = value;
+            KnowledgeSourceResultsProcessing? resultsProcessing = value;
+
+            Assert.AreEqual(value, modelName?.ToString());
+            Assert.AreEqual(value, resultsProcessing?.ToString());
+        }
+
+        [Test]
+        public void VectorQueryFactorySupportsOmittedAndNamedArguments()
+        {
+            VectorQuery query = SearchModelFactory.VectorQuery(kNearestNeighborsCount: 3, fieldsRaw: "vector", kind: "vector");
+
+            Assert.AreEqual(3, query.KNearestNeighborsCount);
+            CollectionAssert.AreEqual(new[] { "vector" }, query.Fields);
+            Assert.IsNull(query.Exhaustive);
+            Assert.IsNull(query.Weight);
+        }
+
+        [Test]
+        public void KnowledgeSourceFactorySupportsOmittedAndNamedArguments()
+        {
+            KnowledgeSource source = SearchModelFactory.KnowledgeSource(name: "hotels-ks", kind: "searchIndex");
+
+            Assert.AreEqual("hotels-ks", source.Name);
+            Assert.IsNull(source.Description);
+            Assert.IsNull(source.EncryptionKey);
+        }
+
+        [Test]
+        public void FacetResultFactoriesSupportOmittedCount()
+        {
+            FacetResult objectFacet = SearchModelFactory.FacetResult(
+                additionalProperties: new Dictionary<string, object> { ["value"] = "Luxury" });
+            FacetResult binaryFacet = SearchModelFactory.FacetResult(
+                additionalProperties: new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson("Luxury") });
+
+            foreach (FacetResult facet in new[] { objectFacet, binaryFacet })
+            {
+                Assert.IsNull(facet.Count);
+                Assert.AreEqual("Luxury", facet.Value);
+            }
+        }
+
+        [Test]
+        public void FacetResultFactoryPreservesPreviewShortCallsAndMetrics()
+        {
+            Assert.IsNull(SearchModelFactory.FacetResult().Count);
+            Assert.AreEqual(2, SearchModelFactory.FacetResult(count: 2).Count);
+            FacetResult metrics = SearchModelFactory.FacetResult(avg: 3, min: 1, max: 5);
+            Assert.AreEqual(3, metrics.Avg);
+            Assert.AreEqual(1, metrics.Min);
+            Assert.AreEqual(5, metrics.Max);
+        }
+
+        [Test]
+        public void SearchIndexFactorySupportsEnumerableFieldsWithOmittedArguments()
+        {
+            SearchField field = new SearchField("id", SearchFieldDataType.String) { IsKey = true };
+            IEnumerable<SearchField> fields = new[] { field, null }.Where(f => f != null);
+            ScoringProfile profile = new ScoringProfile("default");
+            IEnumerable<ScoringProfile> profiles = new[] { profile }.Where(p => p != null);
+
+            SearchIndex index = SearchModelFactory.SearchIndex(name: "hotels", fields: fields, scoringProfiles: profiles);
+
+            Assert.AreEqual("hotels", index.Name);
+            CollectionAssert.AreEqual(new[] { field }, index.Fields);
+            Assert.IsNull(index.Description);
+            CollectionAssert.AreEqual(new[] { profile }, index.ScoringProfiles);
+        }
+
+        [Test]
+        public void KnowledgeSourceFactoriesSupportGaPartialPositionalArguments()
+        {
+            ETag eTag = new ETag("etag");
+            KnowledgeSource[] sources =
+            {
+                SearchModelFactory.AzureBlobKnowledgeSource("source", "description", eTag),
+                SearchModelFactory.IndexedOneLakeKnowledgeSource("source", "description", eTag),
+                SearchModelFactory.SearchIndexKnowledgeSource("source", "description", eTag),
+                SearchModelFactory.WebKnowledgeSource("source", "description", eTag)
+            };
+
+            foreach (KnowledgeSource source in sources)
+            {
+                Assert.AreEqual("source", source.Name);
+                Assert.AreEqual("description", source.Description);
+                Assert.AreEqual(eTag, source.ETag);
+                Assert.IsNull(source.ResultsProcessing);
+                Assert.IsNull(source.EncryptionKey);
+            }
+        }
+
+        [Test]
+        public void SynchronizationFactoriesSupportGaPartialPositionalArguments()
+        {
+            DateTimeOffset started = DateTimeOffset.Parse("2026-11-01T00:00:00Z");
+            DateTimeOffset completed = started.AddMinutes(1);
+            SynchronizationState state = SearchModelFactory.SynchronizationState(started, 3);
+            CompletedSynchronizationState completedState = SearchModelFactory.CompletedSynchronizationState(started, completed, 3);
+
+            Assert.AreEqual(started, state.StartTime);
+            Assert.AreEqual(3, state.ItemsUpdatesProcessed);
+            Assert.AreEqual(0, state.ItemsUpdatesFailed);
+            Assert.IsNull(state.GraphStatistics);
+            Assert.AreEqual(started, completedState.StartTime);
+            Assert.AreEqual(completed, completedState.EndTime);
+            Assert.AreEqual(3, completedState.ItemsUpdatesProcessed);
+            Assert.IsNull(completedState.GraphStatistics);
+        }
+
+        [Test]
+        public void ScoringFunctionsSupportGaNamedConstructors()
+        {
+            ScoringFunction[] functions =
+            {
+                new DistanceScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new DistanceScoringParameters("referencePoint", 10)),
+                new FreshnessScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new FreshnessScoringParameters(TimeSpan.FromDays(7))),
+                new MagnitudeScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new MagnitudeScoringParameters(0, 5)),
+                new TagScoringFunction(fieldName: "field", boost: 2.0,
+                    parameters: new TagScoringParameters("preferredTags"))
+            };
+
+            foreach (ScoringFunction function in functions)
+            {
+                BinaryData json = ModelReaderWriter.Write(function, SearchTestHelpers.WireOptions);
+                using JsonDocument document = JsonDocument.Parse(json);
+                Assert.AreEqual("field", document.RootElement.GetProperty("fieldName").GetString());
+                Assert.AreEqual(2.0, document.RootElement.GetProperty("boost").GetDouble());
+                Assert.AreEqual(function.GetType(),
+                    ModelReaderWriter.Read<ScoringFunction>(json, SearchTestHelpers.WireOptions).GetType());
+            }
         }
 
         /// <summary>

@@ -18,10 +18,17 @@
 - Updated preview knowledge source query-hint and retrieval models to match the `2026-11-01-preview` contract.
 - Renamed the preview activity record property `ElapsedInMs` to `ElapsedMs`.
 - Aligned preview knowledge base streaming models, retrieval overloads, and model factories with the October GA SDK contract.
+- Renamed preview multipart file request types to `UploadKnowledgeSourceFileMultipartContent` and `UpdateKnowledgeSourceFileContent` to match the October GA SDK.
 
 ### Bugs Fixed
 
+- Fixed converting null strings to nullable extensible enum values to return null instead of throwing, matching the latest October GA SDK.
+- Fixed ambiguous API key and configuration-based client registration extension calls while retaining the legacy static registration methods.
+- Restored the October GA optional and partial positional arguments on vector query, knowledge source, synchronization state, facet result, and enumerable-based search index model factories.
 - Preserved October GA model factory signatures, defaults, and scoring values while exposing preview-only response properties through additional factory overloads. Corrected selected-index listing forwarding, indexing configuration serialization, semantic and vector option roundtripping, and culture-sensitive numeric conversions.
+- Preserved named-argument calls to October GA scoring function constructors.
+- Fixed the source-name and file-ID argument order in the file knowledge source update and delete samples.
+- Carried forward the latest October GA reasoning factory's optional, positional, and null argument behavior while retaining November reasoning effort fields.
 
 ## 12.1.0-beta.3 (2026-09-14)
 

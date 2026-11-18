@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="GraphQueryDiagnosticSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GraphQueryDiagnosticSeverity?(string value) => value == null ? null : new GraphQueryDiagnosticSeverity(value);
+        public static implicit operator GraphQueryDiagnosticSeverity?(string value) => value == null ? (GraphQueryDiagnosticSeverity?)null : new GraphQueryDiagnosticSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

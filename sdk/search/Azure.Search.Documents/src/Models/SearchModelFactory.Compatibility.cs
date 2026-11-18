@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
@@ -13,6 +14,109 @@ namespace Azure.Search.Documents.Models
     public static partial class SearchModelFactory
     {
         // Preserve GA signatures and defaults; expanded response factories require every argument to avoid overload ambiguity.
+        /// <summary> Initializes a new instance of VectorQuery for mocking. </summary>
+        /// <param name="kNearestNeighborsCount"> The number of nearest neighbors to return. </param>
+        /// <param name="fieldsRaw"> The vector fields to search. </param>
+        /// <param name="exhaustive"> Whether to use exhaustive nearest-neighbor search. </param>
+        /// <param name="oversampling"> The oversampling factor. </param>
+        /// <param name="weight"> The relative weight of the vector query. </param>
+        /// <param name="kind"> The kind of vector query. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string kind = default) =>
+            VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, topicGraph: default, kind: kind);
+
+        /// <summary> Initializes a new instance of KnowledgeSource for mocking. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> The description of the knowledge source. </param>
+        /// <param name="kind"> The kind of knowledge source. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> The encryption key for the knowledge source. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSource KnowledgeSource(string name = default, string description = default, string kind = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default) =>
+            KnowledgeSource(name: name, description: description, kind: kind, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey);
+
+        /// <summary> Initializes a new instance of AzureBlobKnowledgeSource for mocking. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> The description of the knowledge source. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> The encryption key for the knowledge source. </param>
+        /// <param name="azureBlobParameters"> The Azure Blob parameters. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name = null, string description = null, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = null, AzureBlobKnowledgeSourceParameters azureBlobParameters = null) =>
+            AzureBlobKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, azureBlobParameters: azureBlobParameters);
+
+        /// <summary> Initializes a new instance of IndexedOneLakeKnowledgeSource for mocking. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> The description of the knowledge source. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> The encryption key for the knowledge source. </param>
+        /// <param name="indexedOneLakeParameters"> The OneLake parameters. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name = null, string description = null, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = null, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters = null) =>
+            IndexedOneLakeKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, indexedOneLakeParameters: indexedOneLakeParameters);
+
+        /// <summary> Initializes a new instance of SearchIndexKnowledgeSource for mocking. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> The description of the knowledge source. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> The encryption key for the knowledge source. </param>
+        /// <param name="searchIndexParameters"> The search index parameters. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name = null, string description = null, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = null, SearchIndexKnowledgeSourceParameters searchIndexParameters = null) =>
+            SearchIndexKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, searchIndexParameters: searchIndexParameters);
+
+        /// <summary> Initializes a new instance of WebKnowledgeSource for mocking. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> The description of the knowledge source. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> The encryption key for the knowledge source. </param>
+        /// <param name="webParameters"> The web parameters. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WebKnowledgeSource WebKnowledgeSource(string name = null, string description = null, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = null, WebKnowledgeSourceParameters webParameters = null) =>
+            WebKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, webParameters: webParameters);
+
+        /// <summary> Initializes a new instance of SynchronizationState for mocking. </summary>
+        /// <param name="startTime"> The start time of synchronization. </param>
+        /// <param name="itemsUpdatesProcessed"> The number of processed updates. </param>
+        /// <param name="itemsUpdatesFailed"> The number of failed updates. </param>
+        /// <param name="itemsSkipped"> The number of skipped items. </param>
+        /// <param name="errors"> The synchronization errors. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SynchronizationState SynchronizationState(DateTimeOffset startTime = default, int itemsUpdatesProcessed = 0, int itemsUpdatesFailed = 0, int itemsSkipped = 0, IEnumerable<KnowledgeSourceSynchronizationError> errors = null) =>
+            SynchronizationState(graphStatistics: default, startTime: startTime, itemsUpdatesProcessed: itemsUpdatesProcessed, itemsUpdatesFailed: itemsUpdatesFailed, itemsSkipped: itemsSkipped, errors: errors);
+
+        /// <summary> Initializes a new instance of CompletedSynchronizationState for mocking. </summary>
+        /// <param name="startTime"> The start time of synchronization. </param>
+        /// <param name="endTime"> The end time of synchronization. </param>
+        /// <param name="itemsUpdatesProcessed"> The number of processed updates. </param>
+        /// <param name="itemsUpdatesFailed"> The number of failed updates. </param>
+        /// <param name="itemsSkipped"> The number of skipped items. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CompletedSynchronizationState CompletedSynchronizationState(DateTimeOffset startTime = default, DateTimeOffset endTime = default, int itemsUpdatesProcessed = 0, int itemsUpdatesFailed = 0, int itemsSkipped = 0) =>
+            CompletedSynchronizationState(graphStatistics: default, startTime: startTime, endTime: endTime, itemsUpdatesProcessed: itemsUpdatesProcessed, itemsUpdatesFailed: itemsUpdatesFailed, itemsSkipped: itemsSkipped);
+
+        /// <summary> Initializes a new instance of SearchIndex for mocking. </summary>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="description"> The description of the index. </param>
+        /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
+        /// <param name="defaultScoringProfile"> The default scoring profile. </param>
+        /// <param name="corsOptions"> The cross-origin resource sharing options. </param>
+        /// <param name="suggesters"> The suggesters for the index. </param>
+        /// <param name="analyzers"> The analyzers for the index. </param>
+        /// <param name="tokenizers"> The tokenizers for the index. </param>
+        /// <param name="tokenFilters"> The token filters for the index. </param>
+        /// <param name="charFilters"> The character filters for the index. </param>
+        /// <param name="normalizers"> The normalizers for the index. </param>
+        /// <param name="encryptionKey"> The encryption key for the index. </param>
+        /// <param name="similarity"> The similarity algorithm. </param>
+        /// <param name="semanticSearch"> The semantic search configuration. </param>
+        /// <param name="vectorSearch"> The vector search configuration. </param>
+        /// <param name="fields"> The fields of the index. </param>
+        /// <param name="etag"> The ETag of the index. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndex SearchIndex(string name = null, string description = null, IEnumerable<ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, CorsOptions corsOptions = null, IEnumerable<SearchSuggester> suggesters = null, IEnumerable<LexicalAnalyzer> analyzers = null, IEnumerable<LexicalTokenizer> tokenizers = null, IEnumerable<TokenFilter> tokenFilters = null, IEnumerable<CharFilter> charFilters = null, IEnumerable<LexicalNormalizer> normalizers = null, SearchResourceEncryptionKey encryptionKey = null, SimilarityAlgorithm similarity = null, SemanticSearch semanticSearch = null, VectorSearch vectorSearch = null, IEnumerable<SearchField> fields = null, string etag = null) =>
+            SearchIndex(name: name, description: description, scoringProfiles: scoringProfiles, defaultScoringProfile: defaultScoringProfile, corsOptions: corsOptions, suggesters: suggesters, analyzers: analyzers, tokenizers: tokenizers, tokenFilters: tokenFilters, charFilters: charFilters, normalizers: normalizers, encryptionKey: encryptionKey, similarity: similarity, semanticSearch: semanticSearch, vectorSearch: vectorSearch, permissionFilterOption: default, sharePointConnectorAppRegistration: default, fields: fields, etag: etag);
+
         /// <summary> Specifies runtime parameters for a azure blob knowledge source. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
@@ -506,6 +610,31 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents an agentic reasoning activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. </param>
+        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
+        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(
+            int id = 0,
+            int? elapsedMs = default,
+            KnowledgeBaseErrorDetail error = null,
+            int? reasoningTokens = default,
+            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = null) =>
+            KnowledgeBaseAgenticReasoningActivityRecord(
+                id: id,
+                startedOn: default,
+                completedOn: default,
+                elapsedMs: elapsedMs,
+                error: error,
+                warning: default,
+                reasoningTokens: reasoningTokens,
+                retrievalReasoningEffort: retrievalReasoningEffort,
+                logicalReasoningEffort: default);
+
+        /// <summary> Represents an agentic reasoning activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
         /// <param name="startedOn"> The time at which the activity started. </param>
         /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
@@ -514,13 +643,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(
-            int id = 0,
-            DateTimeOffset? startedOn = default(DateTimeOffset?),
-            DateTimeOffset? completedOn = default(DateTimeOffset?),
-            int? elapsedMs = default(int?),
-            KnowledgeBaseErrorDetail error = null,
-            string warning = null,
-            int? reasoningTokens = default(int?)) =>
+            int id,
+            DateTimeOffset? startedOn,
+            DateTimeOffset? completedOn,
+            int? elapsedMs,
+            KnowledgeBaseErrorDetail error,
+            string warning,
+            int? reasoningTokens) =>
             KnowledgeBaseAgenticReasoningActivityRecord(
                 id: id,
                 startedOn: startedOn,

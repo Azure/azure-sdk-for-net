@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="GraphProfileKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GraphProfileKind?(string value) => value == null ? null : new GraphProfileKind(value);
+        public static implicit operator GraphProfileKind?(string value) => value == null ? (GraphProfileKind?)null : new GraphProfileKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

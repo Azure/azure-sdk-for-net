@@ -589,10 +589,8 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguous overload
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
             CancellationToken cancellationToken = default)
-#pragma warning restore AZC0002
         {
             return GetAllSynonymMaps(cancellationToken: cancellationToken).ToBufferedList();
         }
@@ -604,10 +602,8 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguous overload
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
             CancellationToken cancellationToken = default)
-#pragma warning restore AZC0002
         {
             return await GetAllSynonymMapsAsync(cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }

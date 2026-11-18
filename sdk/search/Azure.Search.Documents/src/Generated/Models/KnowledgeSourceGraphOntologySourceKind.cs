@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeSourceGraphOntologySourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeSourceGraphOntologySourceKind?(string value) => value == null ? null : new KnowledgeSourceGraphOntologySourceKind(value);
+        public static implicit operator KnowledgeSourceGraphOntologySourceKind?(string value) => value == null ? (KnowledgeSourceGraphOntologySourceKind?)null : new KnowledgeSourceGraphOntologySourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

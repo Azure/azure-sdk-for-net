@@ -129,21 +129,15 @@ SearchClient client = new SearchClient(endpoint, indexName, credential);
 
 ### ASP.NET Core
 To inject Azure AI Search clients as dependencies in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`.
-Then register the clients in your service registration code (for example, in `Program.cs` with `WebApplicationBuilder`, or in `Startup.ConfigureServices` for earlier hosting patterns):
+Then register the clients inside the callback passed to `services.AddAzureClients(builder => { ... })`
+(for example, in `Program.cs` with `WebApplicationBuilder`, or in `Startup.ConfigureServices` for earlier hosting patterns).
+Here, `configuration` is your application's `IConfiguration`:
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddAzureClients(builder =>
-    {
-        builder.AddSearchClient(Configuration.GetSection("SearchClient"));
-        builder.AddSearchIndexClient(Configuration.GetSection("SearchIndexClient"));
-        builder.AddSearchIndexerClient(Configuration.GetSection("SearchIndexerClient"));
-        builder.AddKnowledgeBaseRetrievalClient(Configuration.GetSection("KnowledgeBaseRetrievalClient"));
-    });
-
-    services.AddControllers();
-}
+```C# Snippet:Azure_Search_Readme_RegisterClients
+builder.AddSearchClient(configuration.GetSection("SearchClient"));
+builder.AddSearchIndexClient(configuration.GetSection("SearchIndexClient"));
+builder.AddSearchIndexerClient(configuration.GetSection("SearchIndexerClient"));
+builder.AddKnowledgeBaseRetrievalClient(configuration.GetSection("KnowledgeBaseRetrievalClient"));
 ```
 To use the preceding code, add this to your configuration:
 

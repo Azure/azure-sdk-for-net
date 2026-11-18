@@ -12,10 +12,10 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary></summary>
-    public partial class UpdateKnowledgeSourceFileRequest
+    public partial class UpdateKnowledgeSourceFileContent
     {
-        /// <summary> Initializes a new instance of <see cref="UpdateKnowledgeSourceFileRequest"/> for deserialization. </summary>
-        internal UpdateKnowledgeSourceFileRequest()
+        /// <summary> Initializes a new instance of <see cref="UpdateKnowledgeSourceFileContent"/> for deserialization. </summary>
+        internal UpdateKnowledgeSourceFileContent()
         {
         }
 

@@ -14,67 +14,67 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The GraphRequest. </summary>
-    internal partial class GraphRequest : IJsonModel<GraphRequest>
+    /// <summary> The GraphContent. </summary>
+    internal partial class GraphContent : IJsonModel<GraphContent>
     {
-        /// <summary> Initializes a new instance of <see cref="GraphRequest"/> for deserialization. </summary>
-        internal GraphRequest()
+        /// <summary> Initializes a new instance of <see cref="GraphContent"/> for deserialization. </summary>
+        internal GraphContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GraphRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GraphContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GraphRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GraphContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGraphRequest(document.RootElement, options);
+                        return DeserializeGraphContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GraphRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GraphRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GraphContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GraphRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GraphRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GraphContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GraphRequest IPersistableModel<GraphRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GraphContent IPersistableModel<GraphContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GraphRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GraphContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="graphRequest"> The <see cref="GraphRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(GraphRequest graphRequest)
+        /// <param name="graphContent"> The <see cref="GraphContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(GraphContent graphContent)
         {
-            if (graphRequest == null)
+            if (graphContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(graphRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(graphContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GraphRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GraphContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GraphRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GraphContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("gql"u8);
             writer.WriteStringValue(Gql);
@@ -161,24 +161,24 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GraphRequest IJsonModel<GraphRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GraphContent IJsonModel<GraphContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GraphRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GraphContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GraphRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GraphContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGraphRequest(document.RootElement, options);
+            return DeserializeGraphContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GraphRequest DeserializeGraphRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static GraphContent DeserializeGraphContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -280,7 +280,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GraphRequest(
+            return new GraphContent(
                 gql,
                 search,
                 filter,

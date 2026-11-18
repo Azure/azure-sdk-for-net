@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="HybridCountAndFacetMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridCountAndFacetMode?(string value) => value == null ? null : new HybridCountAndFacetMode(value);
+        public static implicit operator HybridCountAndFacetMode?(string value) => value == null ? (HybridCountAndFacetMode?)null : new HybridCountAndFacetMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

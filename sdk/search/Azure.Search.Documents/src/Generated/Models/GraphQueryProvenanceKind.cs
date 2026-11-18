@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="GraphQueryProvenanceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GraphQueryProvenanceKind?(string value) => value == null ? null : new GraphQueryProvenanceKind(value);
+        public static implicit operator GraphQueryProvenanceKind?(string value) => value == null ? (GraphQueryProvenanceKind?)null : new GraphQueryProvenanceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

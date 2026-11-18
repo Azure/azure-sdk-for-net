@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="topicGraph"> Topic graph vector search options. </param>
         /// <param name="kind"> Type of query. </param>
         /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, VectorQueryTopicGraph topicGraph = default, string kind = default)
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit = default, VectorQueryTopicGraph topicGraph = default, string kind = default)
         {
             return new UnknownVectorQuery(
                 kNearestNeighborsCount,
@@ -2053,7 +2053,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeSource"/> instance for mocking. </returns>
-        public static KnowledgeSource KnowledgeSource(string name = default, string description = default, string kind = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default)
+        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, KnowledgeSourceResultsProcessing? resultsProcessing, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
         {
             return new UnknownKnowledgeSource(
                 name,
@@ -2073,7 +2073,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="searchIndexParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSource"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexKnowledgeSourceParameters searchIndexParameters = default)
+        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name, string description, KnowledgeSourceResultsProcessing? resultsProcessing, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexKnowledgeSourceParameters searchIndexParameters)
         {
             return new SearchIndexKnowledgeSource(
                 name,
@@ -2179,7 +2179,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSource"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, AzureBlobKnowledgeSourceParameters azureBlobParameters = default)
+        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name, string description, KnowledgeSourceResultsProcessing? resultsProcessing, ETag? eTag, SearchResourceEncryptionKey encryptionKey, AzureBlobKnowledgeSourceParameters azureBlobParameters)
         {
             return new AzureBlobKnowledgeSource(
                 name,
@@ -2363,7 +2363,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="indexedOneLakeParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/> instance for mocking. </returns>
-        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters = default)
+        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name, string description, KnowledgeSourceResultsProcessing? resultsProcessing, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters)
         {
             return new IndexedOneLakeKnowledgeSource(
                 name,
@@ -2455,7 +2455,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="webParameters"> The parameters for the web knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSource"/> instance for mocking. </returns>
-        public static WebKnowledgeSource WebKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, WebKnowledgeSourceParameters webParameters = default)
+        public static WebKnowledgeSource WebKnowledgeSource(string name, string description, KnowledgeSourceResultsProcessing? resultsProcessing, ETag? eTag, SearchResourceEncryptionKey encryptionKey, WebKnowledgeSourceParameters webParameters)
         {
             return new WebKnowledgeSource(
                 name,
@@ -2834,7 +2834,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="itemsSkipped"> The number of items skipped in the current synchronization. </param>
         /// <param name="errors"> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.SynchronizationState"/> instance for mocking. </returns>
-        public static SynchronizationState SynchronizationState(KnowledgeSourceGraphStatistics graphStatistics = default, DateTimeOffset startTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default, IEnumerable<KnowledgeSourceSynchronizationError> errors = default)
+        public static SynchronizationState SynchronizationState(KnowledgeSourceGraphStatistics graphStatistics, DateTimeOffset startTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default, IEnumerable<KnowledgeSourceSynchronizationError> errors = default)
         {
             errors ??= new ChangeTrackingList<KnowledgeSourceSynchronizationError>();
 
@@ -2885,7 +2885,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the last synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the last synchronization. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.CompletedSynchronizationState"/> instance for mocking. </returns>
-        public static CompletedSynchronizationState CompletedSynchronizationState(KnowledgeSourceGraphStatistics graphStatistics = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default)
+        public static CompletedSynchronizationState CompletedSynchronizationState(KnowledgeSourceGraphStatistics graphStatistics, DateTimeOffset startTime = default, DateTimeOffset endTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default)
         {
             return new CompletedSynchronizationState(
                 graphStatistics,
@@ -2950,11 +2950,11 @@ namespace Azure.Search.Documents.Models
         /// <summary> Multipart request for uploading a file to a File knowledge source. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The raw file content. </param>
-        /// <returns> A new <see cref="Indexes.Models.UploadKnowledgeSourceFileMultipartRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.UploadKnowledgeSourceFileMultipartContent"/> instance for mocking. </returns>
         [Experimental("SCME0004")]
-        public static UploadKnowledgeSourceFileMultipartRequest UploadKnowledgeSourceFileMultipartRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
+        public static UploadKnowledgeSourceFileMultipartContent UploadKnowledgeSourceFileMultipartContent(FileUploadMetadata metadata = default, FileBinaryContent content = default)
         {
-            return new UploadKnowledgeSourceFileMultipartRequest(metadata, content);
+            return new UploadKnowledgeSourceFileMultipartContent(metadata, content);
         }
 
         /// <summary> The JSON 'metadata' part of a multipart/form-data file upload: the full file name/path and custom key/value metadata. The parsing mode and extraction mode are both chosen by the service and are not supplied by the caller. </summary>
@@ -2997,11 +2997,11 @@ namespace Azure.Search.Documents.Models
         /// <summary> Multipart request for updating a file in a File knowledge source. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The raw file content. </param>
-        /// <returns> A new <see cref="Indexes.Models.UpdateKnowledgeSourceFileRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.UpdateKnowledgeSourceFileContent"/> instance for mocking. </returns>
         [Experimental("SCME0004")]
-        public static UpdateKnowledgeSourceFileRequest UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
+        public static UpdateKnowledgeSourceFileContent UpdateKnowledgeSourceFileContent(FileUploadMetadata metadata = default, FileBinaryContent content = default)
         {
-            return new UpdateKnowledgeSourceFileRequest(metadata, content);
+            return new UpdateKnowledgeSourceFileContent(metadata, content);
         }
 
         /// <summary> Response from a get service statistics request. If successful, it includes service level counters and limits. </summary>
@@ -5519,23 +5519,6 @@ namespace Azure.Search.Documents.Models
             return SearchOptions(includeTotalCount: includeTotalCount, facets: facets, filter: filter, highlightFieldsRaw: highlightFieldsRaw, highlightPostTag: highlightPostTag, highlightPreTag: highlightPreTag, minimumCoverage: minimumCoverage, moreLikeThis: default, orderByRaw: orderByRaw, queryType: queryType, scoringStatistics: default, sessionId: sessionId, scoringParameters: scoringParameters, scoringProfile: scoringProfile, debug: default, searchText: searchText, searchFieldsRaw: searchFieldsRaw, searchMode: default, selectRaw: selectRaw, skip: skip, size: size, semanticConfigurationName: semanticConfigurationName, semanticErrorMode: default, semanticMaxWaitInMilliseconds: semanticMaxWaitInMilliseconds, semanticQuery: semanticQuery, queryAnswerRaw: queryAnswerRaw, queryCaptionRaw: queryCaptionRaw, vectorQueries: vectorQueries, filterMode: default);
         }
 
-        /// <summary>
-        /// The query parameters for vector and hybrid search queries.
-        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizedQuery"/>, <see cref="Models.VectorizableTextQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, and <see cref="Models.VectorizableImageBinaryQuery"/>.
-        /// </summary>
-        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
-        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
-        /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
-        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
-        /// <param name="kind"> Type of query. </param>
-        /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
-        {
-            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, topicGraph: default, kind: kind);
-        }
-
         /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
@@ -5599,31 +5582,6 @@ namespace Azure.Search.Documents.Models
         public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId)
         {
             return SearchIndexerDataUserAssignedIdentity(resourceId: resourceId, federatedIdentityClientId: default);
-        }
-
-        /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
-        /// <param name="name"> The name of the index. </param>
-        /// <param name="description"> The description of the index. </param>
-        /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
-        /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
-        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the index. </param>
-        /// <param name="suggesters"> The suggesters for the index. </param>
-        /// <param name="analyzers"> The analyzers for the index. </param>
-        /// <param name="tokenizers"> The tokenizers for the index. </param>
-        /// <param name="tokenFilters"> The token filters for the index. </param>
-        /// <param name="charFilters"> The character filters for the index. </param>
-        /// <param name="normalizers"> The normalizers for the index. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="similarity"> The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used. </param>
-        /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
-        /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
-        /// <param name="fields"> The fields of the index. </param>
-        /// <param name="etag"> The ETag of the index. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchIndex"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndex SearchIndex(string name, string description, IEnumerable<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IEnumerable<SearchSuggester> suggesters, IEnumerable<LexicalAnalyzer> analyzers, IEnumerable<LexicalTokenizer> tokenizers, IEnumerable<TokenFilter> tokenFilters, IEnumerable<CharFilter> charFilters, IEnumerable<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, IEnumerable<SearchField> fields, string etag)
-        {
-            return SearchIndex(name: name, description: description, scoringProfiles: default, defaultScoringProfile: defaultScoringProfile, corsOptions: default, suggesters: suggesters, analyzers: analyzers, tokenizers: tokenizers, tokenFilters: tokenFilters, charFilters: charFilters, normalizers: normalizers, encryptionKey: encryptionKey, similarity: default, semanticSearch: default, vectorSearch: default, permissionFilterOption: default, sharePointConnectorAppRegistration: default, fields: fields, etag: etag);
         }
 
         /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
@@ -5841,35 +5799,6 @@ namespace Azure.Search.Documents.Models
             return KnowledgeSourceReference(name: name, enableImageServing: default, enableFreshness: default);
         }
 
-        /// <summary>
-        /// Represents a knowledge source definition.
-        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.SearchIndexKnowledgeSource"/>, <see cref="Indexes.Models.AzureBlobKnowledgeSource"/>, <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/>, and <see cref="Indexes.Models.WebKnowledgeSource"/>.
-        /// </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="eTag"> The ETag of the knowledge source. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <returns> A new <see cref="Indexes.Models.KnowledgeSource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
-        {
-            return KnowledgeSource(name: name, description: description, kind: kind, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey);
-        }
-
-        /// <summary> Knowledge Source targeting a search index. </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="eTag"> The ETag of the knowledge source. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="searchIndexParameters"> The parameters for the knowledge source. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexKnowledgeSourceParameters searchIndexParameters)
-        {
-            return SearchIndexKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, searchIndexParameters: searchIndexParameters);
-        }
-
         /// <summary> Parameters for search index knowledge source. </summary>
         /// <param name="searchIndexName"> The name of the Search index. </param>
         /// <param name="sourceDataFields"> Used to request additional fields for referenced source data. </param>
@@ -5891,19 +5820,6 @@ namespace Azure.Search.Documents.Models
                 default,
                 default,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Configuration for Azure Blob Storage knowledge source. </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="eTag"> The ETag of the knowledge source. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
-        /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, AzureBlobKnowledgeSourceParameters azureBlobParameters)
-        {
-            return AzureBlobKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, azureBlobParameters: azureBlobParameters);
         }
 
         /// <summary> Parameters for Azure Blob Storage knowledge source. </summary>
@@ -5948,32 +5864,6 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Configuration for OneLake knowledge source. </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="eTag"> The ETag of the knowledge source. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="indexedOneLakeParameters"> The parameters for the knowledge source. </param>
-        /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters)
-        {
-            return IndexedOneLakeKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, indexedOneLakeParameters: indexedOneLakeParameters);
-        }
-
-        /// <summary> Knowledge Source targeting web results. </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="eTag"> The ETag of the knowledge source. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="webParameters"> The parameters for the web knowledge source. </param>
-        /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebKnowledgeSource WebKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, WebKnowledgeSourceParameters webParameters)
-        {
-            return WebKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, webParameters: webParameters);
-        }
-
         /// <summary> Parameters for web knowledge source. </summary>
         /// <param name="domains"> Domain allow/block configuration for web results. </param>
         /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSourceParameters"/> instance for mocking. </returns>
@@ -5995,32 +5885,6 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeSourceStatus KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics)
         {
             return KnowledgeSourceStatus(kind: kind, synchronizationStatus: synchronizationStatus, synchronizationInterval: synchronizationInterval, currentSynchronizationState: currentSynchronizationState, lastSynchronizationState: lastSynchronizationState, statistics: statistics, fileCapacity: default);
-        }
-
-        /// <summary> Represents the current state of an ongoing synchronization that spans multiple indexer runs. </summary>
-        /// <param name="startTime"> The start time of the current synchronization. </param>
-        /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the current synchronization. </param>
-        /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the current synchronization. </param>
-        /// <param name="itemsSkipped"> The number of items skipped in the current synchronization. </param>
-        /// <param name="errors"> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.SynchronizationState"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SynchronizationState SynchronizationState(DateTimeOffset startTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IEnumerable<KnowledgeSourceSynchronizationError> errors)
-        {
-            return SynchronizationState(graphStatistics: default, startTime: startTime, itemsUpdatesProcessed: itemsUpdatesProcessed, itemsUpdatesFailed: itemsUpdatesFailed, itemsSkipped: itemsSkipped, errors: errors);
-        }
-
-        /// <summary> Represents the completed state of the last synchronization. </summary>
-        /// <param name="startTime"> The start time of the last completed synchronization. </param>
-        /// <param name="endTime"> The end time of the last completed synchronization. </param>
-        /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the last synchronization. </param>
-        /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the last synchronization. </param>
-        /// <param name="itemsSkipped"> The number of items skipped in the last synchronization. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.CompletedSynchronizationState"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CompletedSynchronizationState CompletedSynchronizationState(DateTimeOffset startTime, DateTimeOffset endTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped)
-        {
-            return CompletedSynchronizationState(graphStatistics: default, startTime: startTime, endTime: endTime, itemsUpdatesProcessed: itemsUpdatesProcessed, itemsUpdatesFailed: itemsUpdatesFailed, itemsSkipped: itemsSkipped);
         }
 
         /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
@@ -6308,30 +6172,6 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? inputTokensCount, int? outputTokensCount)
         {
             return KnowledgeBaseModelWebSummarizationActivityRecord(id: id, startedOn: default, completedOn: default, elapsedMs: elapsedMs, error: error, warning: default, inputTokensCount: inputTokensCount, outputTokensCount: outputTokensCount, model: default);
-        }
-
-        /// <summary> Represents an agentic reasoning activity record. </summary>
-        /// <param name="id"> The ID of the activity record. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
-        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort)
-        {
-            return new KnowledgeBaseAgenticReasoningActivityRecord(
-                id,
-                KnowledgeBaseActivityRecordType.AgenticReasoning,
-                default,
-                default,
-                elapsedMs,
-                error,
-                default,
-                additionalBinaryDataProperties: null,
-                reasoningTokens,
-                retrievalReasoningEffort,
-                default);
         }
 
         /// <summary> Represents an Azure Search document reference. </summary>

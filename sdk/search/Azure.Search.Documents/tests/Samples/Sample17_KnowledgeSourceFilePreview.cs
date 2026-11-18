@@ -119,7 +119,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 };
 
 #pragma warning disable SCME0004 // Multipart file request types are experimental.
-                UploadKnowledgeSourceFileMultipartRequest uploadRequest = new UploadKnowledgeSourceFileMultipartRequest(
+                UploadKnowledgeSourceFileMultipartContent uploadRequest = new UploadKnowledgeSourceFileMultipartContent(
                     uploadMetadata,
                     fileData);
                 Response<KnowledgeSourceFile> uploadResponse = await indexClient.UploadKnowledgeSourceFileMultipartAsync(
@@ -144,13 +144,13 @@ namespace Azure.Search.Documents.Tests.Samples
                     }
                 };
 #pragma warning disable SCME0004 // Multipart file request types are experimental.
-                UpdateKnowledgeSourceFileRequest updateRequest = new UpdateKnowledgeSourceFileRequest(
+                UpdateKnowledgeSourceFileContent updateRequest = new UpdateKnowledgeSourceFileContent(
                     updatedMetadata,
                     fileData);
                 KnowledgeSourceFile updatedFile = await indexClient.UpdateKnowledgeSourceFileAsync(
-                    uploadedFile.FileId,
-                    knowledgeSourceName,
-                    updateRequest);
+                    sourceName: knowledgeSourceName,
+                    fileId: uploadedFile.FileId,
+                    body: updateRequest);
 #pragma warning restore SCME0004
                 Console.WriteLine($"Updated file metadata category: {updatedFile.Metadata["category"]}");
 
@@ -276,7 +276,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 #region Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_DeleteFile
                 // Delete the uploaded file after retrieval is complete.
-                await indexClient.DeleteKnowledgeSourceFileAsync(uploadedFile.FileId, knowledgeSourceName);
+                await indexClient.DeleteKnowledgeSourceFileAsync(sourceName: knowledgeSourceName, fileId: uploadedFile.FileId);
                 Console.WriteLine($"Deleted file '{uploadedFile.FileName}'");
                 #endregion Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_DeleteFile
             }

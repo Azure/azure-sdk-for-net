@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    // Keep named arguments unambiguous with the GA constructor's parameter order.
+    [CodeGenSuppress(nameof(DistanceScoringFunction), typeof(double), typeof(string), typeof(DistanceScoringParameters))]
     public partial class DistanceScoringFunction
     {
         /// <summary> Gets or sets the input field name. </summary>

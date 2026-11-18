@@ -3,9 +3,12 @@
 
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    // Keep named arguments unambiguous with the GA constructor's parameter order.
+    [CodeGenSuppress(nameof(TagScoringFunction), typeof(double), typeof(string), typeof(TagScoringParameters))]
     public partial class TagScoringFunction
     {
         /// <summary> Gets or sets the input field name. </summary>

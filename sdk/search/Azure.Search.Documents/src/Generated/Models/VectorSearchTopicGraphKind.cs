@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="VectorSearchTopicGraphKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorSearchTopicGraphKind?(string value) => value == null ? null : new VectorSearchTopicGraphKind(value);
+        public static implicit operator VectorSearchTopicGraphKind?(string value) => value == null ? (VectorSearchTopicGraphKind?)null : new VectorSearchTopicGraphKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

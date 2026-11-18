@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="GraphQueryDiagnosticPhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GraphQueryDiagnosticPhase?(string value) => value == null ? null : new GraphQueryDiagnosticPhase(value);
+        public static implicit operator GraphQueryDiagnosticPhase?(string value) => value == null ? (GraphQueryDiagnosticPhase?)null : new GraphQueryDiagnosticPhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

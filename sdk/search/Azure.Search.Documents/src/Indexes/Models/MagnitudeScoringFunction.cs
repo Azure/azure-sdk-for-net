@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    // Keep named arguments unambiguous with the GA constructor's parameter order.
+    [CodeGenSuppress(nameof(MagnitudeScoringFunction), typeof(double), typeof(string), typeof(MagnitudeScoringParameters))]
     public partial class MagnitudeScoringFunction
     {
         /// <summary> Gets or sets the input field name. </summary>

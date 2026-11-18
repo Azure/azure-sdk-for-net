@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeBaseReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeBaseReferenceType?(string value) => value == null ? null : new KnowledgeBaseReferenceType(value);
+        public static implicit operator KnowledgeBaseReferenceType?(string value) => value == null ? (KnowledgeBaseReferenceType?)null : new KnowledgeBaseReferenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

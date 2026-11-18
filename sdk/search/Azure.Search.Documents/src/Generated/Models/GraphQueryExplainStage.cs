@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="GraphQueryExplainStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GraphQueryExplainStage?(string value) => value == null ? null : new GraphQueryExplainStage(value);
+        public static implicit operator GraphQueryExplainStage?(string value) => value == null ? (GraphQueryExplainStage?)null : new GraphQueryExplainStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

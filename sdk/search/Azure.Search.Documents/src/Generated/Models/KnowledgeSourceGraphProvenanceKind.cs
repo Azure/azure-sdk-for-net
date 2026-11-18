@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Converts a string to a <see cref="KnowledgeSourceGraphProvenanceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeSourceGraphProvenanceKind?(string value) => value == null ? null : new KnowledgeSourceGraphProvenanceKind(value);
+        public static implicit operator KnowledgeSourceGraphProvenanceKind?(string value) => value == null ? (KnowledgeSourceGraphProvenanceKind?)null : new KnowledgeSourceGraphProvenanceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

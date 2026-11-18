@@ -11,22 +11,22 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The GraphRequest. </summary>
-    internal partial class GraphRequest
+    /// <summary> The GraphContent. </summary>
+    internal partial class GraphContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GraphRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphContent"/>. </summary>
         /// <param name="gql"> The nonempty GQL query to bind and execute. </param>
-        internal GraphRequest(string gql)
+        internal GraphContent(string gql)
         {
             Gql = gql;
             VectorQueries = new ChangeTrackingList<VectorQuery>();
             Explain = new ChangeTrackingList<GraphQueryExplainStage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GraphRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphContent"/>. </summary>
         /// <param name="gql"> The nonempty GQL query to bind and execute. </param>
         /// <param name="search"> Full-text search text used to constrain graph backend requests. </param>
         /// <param name="filter"> An OData filter over graph-index fields applied throughout graph execution. </param>
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeDiagnostics"> Whether to include informational diagnostics. Errors and warnings are returned regardless of this setting. </param>
         /// <param name="provenance"> Controls bounded assertion evidence and optional source-document hydration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GraphRequest(string gql, string search, string filter, IList<VectorQuery> vectorQueries, GraphQueryExecutionMode? executionMode, IList<GraphQueryExplainStage> explain, bool? includeStatistics, bool? includeDiagnostics, GraphQueryProvenanceParameters provenance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GraphContent(string gql, string search, string filter, IList<VectorQuery> vectorQueries, GraphQueryExecutionMode? executionMode, IList<GraphQueryExplainStage> explain, bool? includeStatistics, bool? includeDiagnostics, GraphQueryProvenanceParameters provenance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Gql = gql;
             Search = search;

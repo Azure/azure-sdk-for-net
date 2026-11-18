@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="GraphQueryExecutionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GraphQueryExecutionMode?(string value) => value == null ? null : new GraphQueryExecutionMode(value);
+        public static implicit operator GraphQueryExecutionMode?(string value) => value == null ? (GraphQueryExecutionMode?)null : new GraphQueryExecutionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

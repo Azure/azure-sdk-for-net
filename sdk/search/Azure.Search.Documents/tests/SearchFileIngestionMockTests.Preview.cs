@@ -53,8 +53,8 @@ namespace Azure.Search.Documents.Tests
             var metadata = new FileUploadMetadata { FileName = "reports/document.txt", Metadata = { ["category"] = "company" } };
             BinaryData content = BinaryData.FromString("Test document content");
             return replace
-                ? await client.IngestKnowledgeSourceFileReplacementAsync(waitUntil, "files", "file-1", new UpdateKnowledgeSourceFileRequest(metadata, content))
-                : await client.IngestKnowledgeSourceFileMultipartAsync(waitUntil, "files", new UploadKnowledgeSourceFileMultipartRequest(metadata, content));
+                ? await client.IngestKnowledgeSourceFileReplacementAsync(waitUntil, "files", "file-1", new UpdateKnowledgeSourceFileContent(metadata, content))
+                : await client.IngestKnowledgeSourceFileMultipartAsync(waitUntil, "files", new UploadKnowledgeSourceFileMultipartContent(metadata, content));
         }
 
         [TestCase(false, WaitUntil.Started)]

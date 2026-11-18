@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="AgenticSearchTerminationReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgenticSearchTerminationReason?(string value) => value == null ? null : new AgenticSearchTerminationReason(value);
+        public static implicit operator AgenticSearchTerminationReason?(string value) => value == null ? (AgenticSearchTerminationReason?)null : new AgenticSearchTerminationReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
