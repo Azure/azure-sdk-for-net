@@ -55,8 +55,6 @@ module functions './function-app.bicep' = {
     functionAppName: 'func-${substring(ownerToken, 0, 20)}'
     storageAccountName: standard.outputs.storageAccountName
     sharedFunctionIdentityResourceId: sharedFunctionIdentityResourceId
-    inputQueueName: 'azure-function-foo-input'
-    outputQueueName: 'azure-function-tool-output'
   }
 }
 

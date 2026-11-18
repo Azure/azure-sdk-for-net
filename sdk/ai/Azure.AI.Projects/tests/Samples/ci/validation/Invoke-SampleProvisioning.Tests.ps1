@@ -2,8 +2,15 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
-Describe 'Provisioning rejects ineligible regions before mutation' {
-    It 'creates neither deployment state nor resources when Search S1 is unavailable' {
+Describe 'Provisioning rejects missing secrets and ineligible regions before mutation' {
+    It 'creates neither deployment state nor resources: <Label>' -TestCases @(
+        @{ Label = 'missing OpenAPI key'; OpenApiKey = $null },
+        @{ Label = 'empty OpenAPI key'; OpenApiKey = '' },
+        @{ Label = 'whitespace OpenAPI key'; OpenApiKey = '   ' },
+        @{ Label = 'unexpanded OpenAPI secret'; OpenApiKey = '$(PROJ_CONN_OPEN_API_KEY)' },
+        @{ Label = 'Search S1 unavailable'; OpenApiKey = 'unit-test-openapi-key' }
+    ) {
+        param($Label, $OpenApiKey)
         $previousSubscription = $env:AZURE_SUBSCRIPTION_ID
         $previousTenant = $env:AZURE_TENANT_ID
         $previousQueue = $env:SAMPLE_QUEUE_NAME
@@ -11,7 +18,7 @@ Describe 'Provisioning rejects ineligible regions before mutation' {
         $previousOpenApiKey = $env:PROJ_CONN_OPEN_API_KEY
         try {
             $env:MCP_GITHUB_PAT = 'github_pat_' + 'unit_test_placeholder'
-            $env:PROJ_CONN_OPEN_API_KEY = 'unit-test-placeholder'
+            $env:PROJ_CONN_OPEN_API_KEY = $OpenApiKey
             $env:AZURE_SUBSCRIPTION_ID = '11111111-1111-1111-1111-111111111111'
             $env:AZURE_TENANT_ID = '22222222-2222-2222-2222-222222222222'
             $env:SAMPLE_QUEUE_NAME = 'q1'
@@ -55,7 +62,12 @@ Describe 'Provisioning rejects ineligible regions before mutation' {
                     & $provisioningScript -PlanPath $planPath -StatePath $statePath -QueueName q1 -ConfirmProvisioning
                 } catch { $_.Exception.Message }
             }
-            $failure | Should Match 'AI Search S1 is not offered'
+            if ($Label -eq 'Search S1 unavailable') {
+                $failure | Should Match 'AI Search S1 is not offered'
+            } else {
+                $failure | Should Match 'Set PROJ_CONN_OPEN_API_KEY as an ADO secret'
+                $calls.Count | Should Be 0
+            }
             Test-Path -LiteralPath $statePath | Should Be $false
             @($calls | Where-Object { $_ -match '\b(create|delete|set|register)\b' }).Count | Should Be 0
             @($calls | Where-Object { $_ -match '^provider |Microsoft.Authorization/roleAssignments' }).Count | Should Be 0

@@ -16,7 +16,7 @@ param(
     [Parameter(Mandatory)] [string] $OutputDirectory,
     [Parameter(Mandatory)] [ValidateSet('q1', 'q2', 'q3', 'q4')] [string] $QueueName,
     [Parameter(Mandatory)] [AllowEmptyString()] [string] $IdentityResourceGroup,
-    [switch] $StandardOnly,
+    [ValidateNotNullOrEmpty()] [string] $EnvironmentTemplatePath,
     [ValidatePattern('^[A-Za-z0-9._-]+$')] [string] $ModelName = 'gpt-5.2',
     [ValidatePattern('^[A-Za-z0-9._-]+$')] [string] $ModelVersion = '2025-12-11',
     [ValidateSet('GlobalStandard', 'Standard')] [string] $ModelSku = 'GlobalStandard',
@@ -53,8 +53,8 @@ $plan = @{
     sampleModel = @{ name = $ModelName; version = $ModelVersion; sku = $ModelSku; capacity = $ModelCapacity }
     environmentBindings = @(Get-SampleEnvironmentNames)
 }
-if ($StandardOnly) {
-    $plan.environmentBindings = @(@(Get-SampleBicepEnvironmentNames -BicepPath (Join-Path $PSScriptRoot 'infra/standard-with-model.bicep')) +
+if ($EnvironmentTemplatePath) {
+    $plan.environmentBindings = @(@(Get-SampleBicepEnvironmentNames -BicepPath $EnvironmentTemplatePath) +
         @('AZURE_SUBSCRIPTION_ID', 'AZURE_TENANT_ID', 'AZURE_RESOURCE_GROUP') | Sort-Object -Unique)
 }
 Assert-SampleRunPlan -Plan $plan -QueueName $QueueName

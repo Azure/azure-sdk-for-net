@@ -11,7 +11,6 @@ import types
 import unittest
 from unittest.mock import ANY, Mock, patch
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -23,7 +22,7 @@ def load_module(name, path):
 
 
 class BundleAssetTests(unittest.TestCase):
-    def test_function_implements_dotnet_foo_queue_contract(self):
+    def test_function_implements_shared_weather_queue_contract(self):
         class FunctionApp:
             def __init__(self):
                 self.bindings = {}
@@ -43,25 +42,44 @@ class BundleAssetTests(unittest.TestCase):
         functions.Out = list
         azure.functions = functions
         with patch.dict(sys.modules, {"azure": azure, "azure.functions": functions}):
-            module = load_module("bundle_function", ROOT / "function_app" / "function_app.py")
+            module = load_module(
+                "bundle_function", ROOT / "function_app" / "function_app.py"
+            )
         message = types.SimpleNamespace(
             get_body=lambda: json.dumps(
-                {"function_args": {"query": "What would foo say?"}, "CorrelationId": "unit-correlation"}
+                {
+                    "function_args": {"location": "Seattle"},
+                    "CorrelationId": "unit-correlation",
+                }
             ).encode()
         )
         responses = []
         module.queue_trigger(message, types.SimpleNamespace(set=responses.append))
         self.assertEqual(
             json.loads(responses[0]),
-            {"Value": "Foo received the question: What would foo say?", "CorrelationId": "unit-correlation"},
+            {
+                "Value": "Weather is 7 degrees and sunny in Seattle",
+                "CorrelationId": "unit-correlation",
+            },
         )
-        self.assertEqual(module.app.bindings["input"]["queue_name"], "%STORAGE_INPUT_QUEUE_NAME%")
-        self.assertEqual(module.app.bindings["output"]["queue_name"], "%STORAGE_OUTPUT_QUEUE_NAME%")
+        self.assertEqual(
+            module.app.bindings["input"]["queue_name"], "%STORAGE_INPUT_QUEUE_NAME%"
+        )
+        self.assertEqual(
+            module.app.bindings["output"]["queue_name"], "%STORAGE_OUTPUT_QUEUE_NAME%"
+        )
         root = (ROOT / "infra" / "main.bicep").read_text()
-        self.assertIn("inputQueueName: 'azure-function-foo-input'", root)
-        self.assertIn("outputQueueName: 'azure-function-tool-output'", root)
+        self.assertNotIn("inputQueueName:", root)
+        self.assertNotIn("outputQueueName:", root)
+        function_template = (ROOT / "infra" / "function-app.bicep").read_text()
+        self.assertIn(
+            "param inputQueueName string = 'weather-input-queue'", function_template
+        )
+        self.assertIn(
+            "param outputQueueName string = 'weather-output-queue'", function_template
+        )
 
-    def test_search_documents_and_index_match_dotnet_samples(self):
+    def test_search_provisions_shared_documents_without_rerunning_indexers(self):
         module = load_module("bundle_search", ROOT / "infra" / "search-indexing.py")
         calls = []
 
@@ -69,14 +87,21 @@ class BundleAssetTests(unittest.TestCase):
             def request(self, method, url, audience, body=None, headers=None):
                 calls.append((method, url, audience, body, headers))
                 if "/docs/search?" in url:
-                    return {"value": [{"chunk": "CozyNights sleeping bag"}]}
+                    return {"value": [{"chunk": "Contoso SmartView Glasses"}]}
 
         configuration = {
             "searchEndpoint": "https://unit.search.windows.net",
             "storageEndpoint": "https://unit.blob.core.windows.net/",
             "containerName": "documents",
-            "blobs": [{"name": "product_info.md", "content": (ROOT / "search_documents" / "product_info.md").read_text()}],
-            "index": {"name": "sample_index"},
+            "blobs": [
+                {
+                    "name": "product_info.md",
+                    "content": (
+                        ROOT / "search_documents" / "product_info.md"
+                    ).read_text(),
+                }
+            ],
+            "index": {"name": "index-sample"},
             "datasource": {"name": "datasource"},
             "skillset": {"name": "skillset"},
             "indexers": [{"name": "indexer"}],
@@ -85,15 +110,14 @@ class BundleAssetTests(unittest.TestCase):
             module.provision(configuration, Client())
         wait.assert_called_once_with(ANY, configuration["searchEndpoint"], "indexer")
         upload = calls[0]
-        self.assertEqual(upload[4]["x-ms-meta-category"], "sleeping bag")
-        self.assertIn(b"20 degrees Fahrenheit", upload[3])
+        self.assertIn(b"SmartView Glasses", upload[3])
         indexer_calls = [call for call in calls if "/indexers/" in call[1]]
         self.assertEqual(len(indexer_calls), 1)
         self.assertEqual(indexer_calls[0][0], "PUT")
         template = (ROOT / "infra" / "ai-search.bicep").read_text()
-        self.assertIn("param indexName string = 'sample_index'", template)
-        self.assertIn("{ name: 'category', type: 'Edm.String', filterable: true", template)
-        self.assertIn("{ name: 'category', source: '/document/category' }", template)
+        self.assertIn("param indexName string = 'index-sample'", template)
+        self.assertIn("What features do Contoso SmartView Glasses offer?", template)
+        self.assertNotIn("name: 'category'", template)
 
     def test_search_waits_for_automatic_initial_indexer_run(self):
         module = load_module("bundle_search", ROOT / "infra" / "search-indexing.py")
@@ -104,11 +128,15 @@ class BundleAssetTests(unittest.TestCase):
             {"lastResult": {"status": "success", "itemsProcessed": 1}},
         ]
         with patch.object(module.time, "sleep") as sleep:
-            module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+            module.wait_for_indexer(
+                client, "https://unit.search.windows.net", "indexer"
+            )
         self.assertEqual(client.request.call_count, 3)
         client.request.assert_called_with(
             "GET",
-            module.search_url("https://unit.search.windows.net", "indexers/indexer/status"),
+            module.search_url(
+                "https://unit.search.windows.net", "indexers/indexer/status"
+            ),
             module.SEARCH_AUDIENCE,
         )
         self.assertEqual(sleep.call_count, 2)
@@ -116,9 +144,13 @@ class BundleAssetTests(unittest.TestCase):
     def test_search_accepts_initial_run_completed_before_first_poll(self):
         module = load_module("bundle_search", ROOT / "infra" / "search-indexing.py")
         client = Mock()
-        client.request.return_value = {"lastResult": {"status": "success", "itemsProcessed": 1}}
+        client.request.return_value = {
+            "lastResult": {"status": "success", "itemsProcessed": 1}
+        }
         with patch.object(module.time, "sleep") as sleep:
-            module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+            module.wait_for_indexer(
+                client, "https://unit.search.windows.net", "indexer"
+            )
         client.request.assert_called_once()
         sleep.assert_not_called()
 
@@ -127,8 +159,16 @@ class BundleAssetTests(unittest.TestCase):
         for result in (
             {"status": "success", "itemsProcessed": 0},
             {"status": "success", "itemsProcessed": 1, "itemsFailed": 1},
-            {"status": "success", "itemsProcessed": 1, "errors": [{"message": "failure"}]},
-            {"status": "success", "itemsProcessed": 1, "warnings": [{"message": "warning"}]},
+            {
+                "status": "success",
+                "itemsProcessed": 1,
+                "errors": [{"message": "failure"}],
+            },
+            {
+                "status": "success",
+                "itemsProcessed": 1,
+                "warnings": [{"message": "warning"}],
+            },
             {"status": "persistentFailure"},
         ):
             with self.subTest(result=result):
@@ -136,7 +176,9 @@ class BundleAssetTests(unittest.TestCase):
                 client.request.return_value = {"lastResult": result}
                 with patch.object(module.time, "sleep") as sleep:
                     with self.assertRaises(RuntimeError):
-                        module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+                        module.wait_for_indexer(
+                            client, "https://unit.search.windows.net", "indexer"
+                        )
                 sleep.assert_not_called()
 
     def test_search_initial_run_has_bounded_readiness_wait(self):
@@ -146,8 +188,11 @@ class BundleAssetTests(unittest.TestCase):
         with patch.object(module.time, "monotonic", side_effect=[0, 0, 601]):
             with patch.object(module.time, "sleep"):
                 with self.assertRaises(TimeoutError):
-                    module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+                    module.wait_for_indexer(
+                        client, "https://unit.search.windows.net", "indexer"
+                    )
         client.request.assert_called_once()
+
 
 if __name__ == "__main__":
     unittest.main()

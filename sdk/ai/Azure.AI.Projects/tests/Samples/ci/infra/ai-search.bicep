@@ -11,7 +11,7 @@ param sharedSearchIdentityResourceId string
 param ownerToken string
 
 @minLength(1)
-param indexName string = 'sample_index'
+param indexName string = 'index-sample'
 @minLength(3)
 param containerName string = 'documents'
 
@@ -79,7 +79,6 @@ var index = {
     { name: 'parent_id', type: 'Edm.String', filterable: true }
     { name: 'chunk', type: 'Edm.String', searchable: true, retrievable: true }
     { name: 'title', type: 'Edm.String', retrievable: true }
-    { name: 'category', type: 'Edm.String', filterable: true, retrievable: true }
     {
       name: 'text_vector'
       type: 'Collection(Edm.Single)'
@@ -147,7 +146,6 @@ var skillset = {
         { name: 'text_vector', source: '/document/pages/*/text_vector' }
         { name: 'chunk', source: '/document/pages/*' }
         { name: 'title', source: '/document/title' }
-        { name: 'category', source: '/document/category' }
       ]
     }]
     parameters: { projectionMode: 'skipIndexingParentDocuments' }
@@ -161,10 +159,7 @@ var indexers = [for format in [
   dataSourceName: datasourceName
   targetIndexName: indexName
   skillsetName: skillsetName
-  fieldMappings: [
-    { sourceFieldName: 'metadata_storage_name', targetFieldName: 'title' }
-    { sourceFieldName: 'category', targetFieldName: 'category' }
-  ]
+  fieldMappings: [{ sourceFieldName: 'metadata_storage_name', targetFieldName: 'title' }]
   parameters: {
     batchSize: 10
     maxFailedItems: 0
@@ -232,5 +227,5 @@ output environment object = {
   AZURE_AI_EMBED_DEPLOYMENT_NAME: embedding.name
   AZURE_AI_EMBED_DIMENSIONS: string(dimensions)
   AZURE_BLOB_CONTAINER_NAME: documents.name
-  AI_SEARCH_USER_INPUT: 'What is the temperature rating of the cozynights sleeping bag?'
+  AI_SEARCH_USER_INPUT: 'What features do Contoso SmartView Glasses offer?'
 }

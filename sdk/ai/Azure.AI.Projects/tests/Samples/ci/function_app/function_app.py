@@ -9,11 +9,11 @@ app = func.FunctionApp()
 @app.queue_output(arg_name="output_queue", queue_name="%STORAGE_OUTPUT_QUEUE_NAME%", connection="STORAGE_CONNECTION")
 def queue_trigger(msg: func.QueueMessage, output_queue: func.Out[str]) -> None:
     payload = json.loads(msg.get_body().decode("utf-8"))
-    query = payload["function_args"]["query"]
+    location = payload["function_args"]["location"]
     output_queue.set(
         json.dumps(
             {
-                "Value": f"Foo received the question: {query}",
+                "Value": f"Weather is {len(location)} degrees and sunny in {location}",
                 "CorrelationId": payload["CorrelationId"],
             }
         )

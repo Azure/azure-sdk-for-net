@@ -3,6 +3,7 @@
 #Requires -Version 7.2
 
 . (Join-Path $PSScriptRoot '../SampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot '../DotNetSampleCiHelpers.ps1')
 
 Describe 'Full bundle .NET bindings' {
     BeforeEach {
@@ -112,8 +113,9 @@ function Get-SampleEnvironmentNames { @('FOUNDRY_PROJECT_ENDPOINT') }
 function Assert-SampleEnvironment { param($Environment, $Names)
     if ($Environment.Count -ne 1 -or -not $Environment.Contains('FOUNDRY_PROJECT_ENDPOINT')) { throw 'Unexpected environment.' }
 }
-function Get-DotNetSampleEnvironment { param($Environment) $Environment }
 '@ | Set-Content -LiteralPath (Join-Path $fixture 'SampleCiHelpers.ps1')
+        'function Get-DotNetSampleEnvironment { param($Environment) $Environment }' |
+            Set-Content -LiteralPath (Join-Path $fixture 'DotNetSampleCiHelpers.ps1')
         @'
 param($OutputDirectory, $IdentityResourceGroup, $QueueName, $ModelName, $ModelVersion, $ModelSku, $ModelCapacity)
 $null = New-Item -ItemType Directory -Path $OutputDirectory

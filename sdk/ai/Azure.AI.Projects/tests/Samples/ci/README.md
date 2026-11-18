@@ -180,12 +180,22 @@ aliases, consumed by the existing .NET test environments:
 | `STORAGE_QUEUE_URI` | `STORAGE_QUEUE_SERVICE_ENDPOINT`, without a trailing slash |
 
 OpenAPI connection ID/name and the custom Bing instance name already match.
-The copied Search module uses the .NET `sample_index` name, a filterable
-`category` field and synthetic sleeping-bag documents to match the .NET sample
-query. The Function host is still Python (as in the shared bundle), but uses
-the .NET `foo` request's `query` argument and the `azure-function-foo-input` /
-`azure-function-tool-output` queues. Its only remote dependency is
-`azure-functions`; no dependency is added to the .NET SDK.
+The shared provisioning PowerShell and ten full-bundle Bicep modules are
+identical to the Python package's copies. Embedded Search code and documents,
+the Function handler, and shared validation scripts are synchronized too.
+Search retains the `index-sample` default and SmartView Glasses documents;
+the Function handler uses the weather contract and `weather-input-queue` /
+`weather-output-queue`. These defaults are not customized for .NET samples.
+The six basic smoke samples do not depend on those Search or Function contracts.
+The Function host's only remote dependency is `azure-functions`; no dependency
+is added to the .NET SDK.
+
+[DotNetSampleCiHelpers.ps1](./DotNetSampleCiHelpers.ps1) contains only .NET
+environment aliases. NUnit discovery, test execution and the optional
+standard-only deployment wrappers remain language-specific. The shared planner
+accepts `EnvironmentTemplatePath` for an explicit alternate binding contract;
+its default still discovers the full bundle. Resource changes belong in the
+shared files and must be synchronized in both repositories.
 Data-source, skillset and indexer names replace index-name underscores with
 hyphens because Azure Search permits underscores only in the index name.
 Each worker creates a fresh Search service and waits for each indexer's
@@ -226,6 +236,9 @@ python -m unittest discover -s ./validation -p test_bundle_assets.py
 
 The Bicep checker compiles the complete bundle and inspects nested resources,
 secret parameters, module dependencies and non-secret outputs. No deployment
-is performed. Offline checks do not establish live RBAC, regional feature
+is performed. Permanent identity bootstrap validation is separate: supply
+`-IdentityInfrastructurePath` pointing to the Python checkout's
+`tests/samples/shared-identities/infra` directory to include its grant checks.
+Offline checks do not establish live RBAC, regional feature
 availability or that live samples pass. Queue the existing pipeline only after
 reviewing its new billable footprint and setting both secret variables.

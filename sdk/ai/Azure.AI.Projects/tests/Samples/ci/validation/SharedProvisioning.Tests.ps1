@@ -49,6 +49,33 @@ Describe 'Language-neutral infrastructure contract' {
         }
     }
 
+    It 'plans bindings from an explicit resource template without changing the full-bundle default' {
+        $previousSubscription = $env:AZURE_SUBSCRIPTION_ID
+        $previousTenant = $env:AZURE_TENANT_ID
+        try {
+            $env:AZURE_SUBSCRIPTION_ID = '11111111-1111-1111-1111-111111111111'
+            $env:AZURE_TENANT_ID = '22222222-2222-2222-2222-222222222222'
+            $template = Join-Path $TestDrive 'resource.bicep'
+            "output environment object = {`n  RESOURCE_ENDPOINT: 'https://example.invalid'`n}" |
+                Set-Content -LiteralPath $template
+            $outputDirectory = Join-Path $TestDrive 'resource-plan'
+            & {
+                function az { throw 'Offline planning must not invoke Azure CLI.' }
+                & (Join-Path $PSScriptRoot '../New-ResourceDeploymentPlan.ps1') `
+                    -OutputDirectory $outputDirectory -QueueName q1 -IdentityResourceGroup 'shared-identities' `
+                    -EnvironmentTemplatePath $template -DefinitionId 8392 -BuildId 12345 -JobAttempt 1
+            }
+            $plan = Get-Content -LiteralPath (Join-Path $outputDirectory 'deployment-plan.json') -Raw |
+                ConvertFrom-Json -AsHashtable
+            ($plan.environmentBindings -join ',') | Should BeExactly (
+                'AZURE_RESOURCE_GROUP,AZURE_SUBSCRIPTION_ID,AZURE_TENANT_ID,RESOURCE_ENDPOINT')
+            $plan.environmentBindings -contains 'FUNCTION_APP_NAME' | Should Be $false
+        } finally {
+            $env:AZURE_SUBSCRIPTION_ID = $previousSubscription
+            $env:AZURE_TENANT_ID = $previousTenant
+        }
+    }
+
     It 'discovers a future binding solely from an explicit Bicep output' {
         $path = Join-Path $TestDrive 'future.bicep'
         @'

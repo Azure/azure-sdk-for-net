@@ -16,6 +16,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'SampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot 'DotNetSampleCiHelpers.ps1')
 if (-not $ConfirmProvisioning) { throw 'Supply -ConfirmProvisioning to create the billable full sample resource bundle.' }
 if (Test-Path -LiteralPath $OutputDirectory) { throw 'Provisioning output already exists; refusing to adopt an earlier attempt.' }
 

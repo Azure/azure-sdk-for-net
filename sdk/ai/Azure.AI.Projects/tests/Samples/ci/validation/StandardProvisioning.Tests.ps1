@@ -41,7 +41,8 @@ Describe 'Standard Foundry provisioning contract' {
     It 'plans only Standard and model environment bindings without Azure or a PAT' {
         & {
             function az { throw 'Offline planning must not contact Azure.' }
-            & (Join-Path $PSScriptRoot '../New-ResourceDeploymentPlan.ps1') @script:planArguments -StandardOnly
+            & (Join-Path $PSScriptRoot '../New-ResourceDeploymentPlan.ps1') @script:planArguments `
+                -EnvironmentTemplatePath (Join-Path $PSScriptRoot '../infra/standard-with-model.bicep')
         }
         $plan = Get-Content -LiteralPath (Join-Path $script:outputDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
         ($plan.environmentBindings -join ',') | Should BeExactly (

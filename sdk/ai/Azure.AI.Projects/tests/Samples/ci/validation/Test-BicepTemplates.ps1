@@ -3,7 +3,10 @@
 #Requires -Version 7.2
 
 [CmdletBinding()]
-param([ValidateNotNullOrEmpty()] [string] $StandardTemplatePath)
+param(
+    [ValidateNotNullOrEmpty()] [string] $StandardTemplatePath,
+    [ValidateNotNullOrEmpty()] [string] $IdentityInfrastructurePath
+)
 
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../SampleCiHelpers.ps1')
@@ -272,16 +275,18 @@ Write-Host 'Standalone Function App template compiled; reference defaults, share
 $searchTemplate = Invoke-BicepCompilation -Path (Join-Path $infra 'ai-search.bicep')
 $searchResources = @(Get-ArmResources -Template $searchTemplate)
 Assert-NoArmRoleAssignments -Resources $searchResources
-if ($searchTemplate['parameters']['indexName']['defaultValue'] -cne 'sample_index' -or
+if ($searchTemplate['parameters']['indexName']['defaultValue'] -cne 'index-sample' -or
     $searchTemplate['variables']['indexingPrefix'] -cne "[replace(parameters('indexName'), '_', '-')]" -or
     $searchTemplate['variables']['datasourceName'] -cne "[format('{0}-datasource', variables('indexingPrefix'))]" -or
-    $searchTemplate['variables']['skillsetName'] -cne "[format('{0}-skillset', variables('indexingPrefix'))]") {
-    throw 'Keep the .NET index name, but replace underscores in data-source and skillset names.'
+    $searchTemplate['variables']['skillsetName'] -cne "[format('{0}-skillset', variables('indexingPrefix'))]" -or
+    $searchTemplate['variables']['index']['name'] -cne "[parameters('indexName')]") {
+    throw 'Preserve the index name and default, but replace underscores in data-source and skillset names.'
 }
 $indexerCopy = @($searchTemplate['variables']['copy'] | Where-Object name -ceq 'indexers')
 if ($indexerCopy.Count -ne 1 -or
-    $indexerCopy[0]['input']['name'] -cnotmatch [regex]::Escape("variables('indexingPrefix')")) {
-    throw 'Indexer names must use the hyphenated indexing prefix, not the underscore-containing index name.'
+    $indexerCopy[0]['input']['name'] -cnotmatch [regex]::Escape("variables('indexingPrefix')") -or
+    $indexerCopy[0]['input']['targetIndexName'] -cne "[parameters('indexName')]") {
+    throw 'Indexer names must use the hyphenated indexing prefix without changing the target index name.'
 }
 $expectedSearchTypes = @('Microsoft.Storage/storageAccounts/blobServices/containers',
     'Microsoft.CognitiveServices/accounts/deployments', 'Microsoft.Resources/deploymentScripts')
@@ -330,7 +335,27 @@ if (($searchOutputNames -join ',') -cne ($expectedSearchNames -join ',') -or
     throw 'Search must expose only its discoverable, non-secret sample bindings.'
 }
 
-# The permanent identities and grants remain owned by the Python bootstrap.
+$identityConfiguration = $null
+if ($IdentityInfrastructurePath) {
+$identityConfiguration = Get-Content -Raw -LiteralPath (Join-Path $IdentityInfrastructurePath 'IdentityConfiguration.json') |
+    ConvertFrom-Json -AsHashtable
+$searchGrants = @($identityConfiguration['roleAssignments'] | Where-Object target -ceq 'search')
+$expectedRoles = @('7ca78c08-252a-4471-8644-bb5ff32d4ba0', '8ebe5a00-799e-43f5-93ac-243d3dce84a7',
+    'ba92f5b4-2d11-453d-a403-e96b0029c9fe', '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' | Sort-Object)
+if ((@($searchGrants.roleDefinitionId | Sort-Object) -join ',') -cne ($expectedRoles -join ',')) {
+    throw 'Only the four approved Search indexing and outbound data-plane roles belong in bootstrap.'
+}
+$roleUpdate = Invoke-BicepCompilation -Path (Join-Path $IdentityInfrastructurePath 'update-search-roles.bicep')
+$roleUpdateResources = @(Get-ArmResources -Template $roleUpdate)
+if ($roleUpdateResources.Count -ne 1 -or
+    $roleUpdateResources[0].Type -cne 'Microsoft.Authorization/roleAssignments' -or
+    $roleUpdateResources[0].Definition['copy']['count'] -cne "[length(variables('grants'))]") {
+    throw 'The administrator-only update must add exactly the four Search roles and create no identities.'
+}
+Write-Host 'Administrator-owned Search bootstrap roles verified.'
+} else {
+    Write-Host 'Identity bootstrap is outside this resource-bundle check; use -IdentityInfrastructurePath to validate it.'
+}
 Write-Host 'Search module compiled; keyless execution, embedding dimensions and non-secret outputs verified.'
 
 $browserTemplate = Invoke-BicepCompilation -Path (Join-Path $infra 'browser-automation.bicep')
@@ -374,6 +399,14 @@ if (($browserOutputNames -join ',') -cne ($expectedBrowserNames -join ',') -or
     ($browserOutputNames -join ',') -cne ($browserPlanNames -join ',') -or
     ($browserTemplate | ConvertTo-Json -Depth 100 -Compress) -match 'listKeys|listAccessTokens|apiKey|sessionId|liveView') {
     throw 'Browser outputs must contain only discoverable ARM IDs and the connection name, never keys or session data.'
+}
+if ($IdentityInfrastructurePath) {
+$browserGrants = @($identityConfiguration['roleAssignments'] |
+    Where-Object { $_.target -ceq 'project' -and $_.roleName -ceq 'Playwright Workspace Contributor' })
+if ($browserGrants.Count -ne 1 -or $browserGrants[0].roleDefinitionId -cne '78cf819f-0969-4ebe-8759-015c6efcd5bf') {
+    throw 'The existing project UAMI needs exactly one Playwright Workspace Contributor bootstrap grant.'
+}
+Write-Host 'Administrator-owned browser bootstrap role verified.'
 }
 Write-Host 'Browser module compiled; native keyless workspace, project connection and non-secret outputs verified.'
 
