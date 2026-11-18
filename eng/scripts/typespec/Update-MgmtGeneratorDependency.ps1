@@ -13,9 +13,8 @@ $published = Get-Content -LiteralPath $PublishedPackageJson -Raw | ConvertFrom-J
 if ($published.name -ne '@azure-typespec/http-client-csharp' -or $published.version -ne $Version) {
     throw 'The published package artifact name or version does not match the branded build.'
 }
+# Keep the unbranded dependency aligned with the published branded release.
 $unbranded = $published.dependencies['@typespec/http-client-csharp']
-# Both versions must be exact versions, not npm ranges. The artifact is the source of
-# truth for the unbranded emitter used by this particular branded build.
 try {
     $newVersion = [System.Management.Automation.SemanticVersion]::Parse($Version)
     [void][System.Management.Automation.SemanticVersion]::Parse($unbranded)

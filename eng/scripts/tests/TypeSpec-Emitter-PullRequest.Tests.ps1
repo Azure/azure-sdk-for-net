@@ -240,7 +240,6 @@ Describe "Stale generator upgrade workflow compatibility" -Tag "UnitTest" {
         }
         # A maintainer can repair an older failed draft without changing its title.
         $pulls += @{ number = $pulls.Count + 1; title = 'Failed: Update management generator branded dependency to 1.0.0-alpha.20260911.1'; user = @{ login = 'azure-sdk-automation[bot]' }; head = @{ sha = 'repaired' } }
-        # Missing head metadata must fail closed rather than close an unverifiable PR.
         $pulls += @{ number = $pulls.Count + 1; title = 'Update management generator branded dependency to 1.0.0-alpha.20260911.1'; user = @{ login = 'azure-sdk-automation[bot]' } }
 
         # Execute the complete checked-in github-script, with only local API fixtures and dry-run enabled.

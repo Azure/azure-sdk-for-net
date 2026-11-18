@@ -157,7 +157,6 @@ stages:
               }
             displayName: Check reused branch
 
-          # Include new generated files as well as tracked changes.
           - pwsh: |
               git add -A -- eng/packages/http-client-csharp-mgmt eng/centralpackagemanagement/Directory.Generation.Packages.props
               if ($LASTEXITCODE -ne 0) { throw 'Failed to stage generated changes.' }
