@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
@@ -1014,10 +1015,11 @@ namespace Azure.AI.Projects
         /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
         /// </summary>
         /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
+        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIModelTarget"/> instance for mocking. </returns>
-        public static AzureAIModelTarget AzureAIModelTarget(string model = default)
+        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
         {
-            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model);
+            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParams);
         }
 
         /// <summary>

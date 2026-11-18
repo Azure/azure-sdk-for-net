@@ -1084,7 +1084,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ArtifactProfile ArtifactProfile(Azure.AI.Projects.FoundryModelArtifactProfileCategory category = default(Azure.AI.Projects.FoundryModelArtifactProfileCategory), System.Collections.Generic.IEnumerable<Azure.AI.Projects.FoundryModelArtifactProfileSignal> signals = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureAIAgentTarget AzureAIAgentTarget(string name = null, string version = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDescription> toolDescriptions = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureAIAgentTarget AzureAIAgentTarget(string name, string version, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDescription> toolDescriptions, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseTool> tools) { throw null; }
-        public static Azure.AI.Projects.Evaluation.AzureAIModelTarget AzureAIModelTarget(string model = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.AzureAIModelTarget AzureAIModelTarget(string model = null, Azure.AI.Projects.Agents.ModelSamplingParams samplingParams = null) { throw null; }
         public static Azure.AI.Projects.AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, Azure.AI.Projects.AIProjectIndexFieldMapping fieldMapping = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = null) { throw null; }
         public static Azure.AI.Projects.BlobReferenceSasCredential BlobReferenceSasCredential(System.Uri sasUri = null) { throw null; }
@@ -2847,6 +2847,7 @@ namespace Azure.AI.Projects.Evaluation
     {
         public AzureAIModelTarget() { }
         public string Model { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.ModelSamplingParams SamplingParams { get { throw null; } set { } }
         protected override Azure.AI.Projects.Evaluation.EvaluationTarget JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Evaluation.EvaluationTarget PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
