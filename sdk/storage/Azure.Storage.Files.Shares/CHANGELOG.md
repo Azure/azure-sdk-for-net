@@ -1,10 +1,6 @@
 # Release History
 
-## 12.29.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.28.1 (2026-11-19)
 
 ### Bugs Fixed
 
@@ -18,8 +14,6 @@
   - `ShareSasBuilder`
 - Fixed SAS builder/client share and path name validation to use ordinal comparisons in `ShareClient`, `ShareDirectoryClient`, and `ShareFileClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
 - Fixed an issue where conditional create/write flows using structured-message upload validation could classify `409 *AlreadyExists` responses as non-errors, potentially resulting in `InvalidDataException` instead of the expected `RequestFailedException`.
-
-### Other Changes
 
 ## 12.28.0 (2026-09-28)
 
