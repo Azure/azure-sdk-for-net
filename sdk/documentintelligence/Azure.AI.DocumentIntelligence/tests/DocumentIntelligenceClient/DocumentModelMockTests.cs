@@ -288,6 +288,26 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
         }
 
+        [Test]
+        public async Task AnalyzeDocumentOperationReturnsRehydrationToken()
+        {
+            var operationId = "3eb2e5b5-b9d3-4b5a-ac31-90d945f4b4e4";
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", $"http://localhost/documentintelligence/documentModels/modelId/analyzeResults/{operationId}?api-version=2024-11-30");
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(clientOptions);
+
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions("modelId", uriSource);
+
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Started, options);
+            var rehydrationToken = operation.GetRehydrationToken();
+
+            Assert.That(rehydrationToken, Is.Not.Null);
+            Assert.That(rehydrationToken.Value.Id, Is.EqualTo(operationId));
+        }
+
         private DocumentIntelligenceClient CreateNonInstrumentedClient(DocumentIntelligenceClientOptions options)
         {
             var fakeEndpoint = new Uri("http://localhost");
