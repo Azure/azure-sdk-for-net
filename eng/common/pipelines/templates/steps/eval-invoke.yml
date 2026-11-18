@@ -35,10 +35,10 @@ steps:
           mkdir -p "$(Build.SourcesDirectory)/evals/eng/common/knowledge"
           cp "$(Build.SourcesDirectory)/eng/common/knowledge/customizing-client-tsp.md" "$(Build.SourcesDirectory)/evals/eng/common/knowledge/customizing-client-tsp.md"
 
-          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/check-copilot.ts" \
-            "$(Build.SourcesDirectory)/artifacts/mcp/cli/azsdk.dll" \
-            "$(Build.SourcesDirectory)/evals/specification/Microsoft.Widget/Widget" \
-            "rename 'Employee' to 'staff' for go SDK"
+          # node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/check-copilot.ts" \
+          #   "$(Build.SourcesDirectory)/artifacts/mcp/cli/azsdk.dll" \
+          #   "$(Build.SourcesDirectory)/evals/specification/Microsoft.Widget/Widget" \
+          #   "rename 'Employee' to 'staff' for go SDK"
           node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" \
             --eval-args "$(evalArgs)" \
             --shard-name "$(shardName)" \
