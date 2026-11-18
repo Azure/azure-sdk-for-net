@@ -29,13 +29,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation)
-            {
-                Sku = new EventHubsSku("Premium")
-                {
-                    Name = "Premium"
-                }
-            })).Value;
+            bool premium = TestContext.CurrentContext.Test.Properties.Get("NamespaceSku") as string == "Premium";
+            EventHubsNamespaceResource eventHubNamespace = await CreateNamespaceAsync(
+                _resourceGroup, namespaceName, premium ? EventHubsSkuName.Premium : EventHubsSkuName.Standard);
             _eventHubCollection = eventHubNamespace.GetEventHubs();
         }
 
@@ -45,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
+            EventHubResource eventHub = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Started, eventhubName, new EventHubData()));
             Assert.NotNull(eventHub);
             Assert.AreEqual(eventHub.Id.Name, eventhubName);
 
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             eventHub = await _eventHubCollection.GetAsync(eventhubName);
 
             //delete eventhub
-            await eventHub.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await eventHub.DeleteAsync(WaitUntil.Started));
 
             //validate
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _eventHubCollection.GetAsync(eventhubName); });
@@ -64,6 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Property("NamespaceSku", "Premium")]
         public async Task CreateEventhubWithParameter()
         {
             //prepare a storage account
@@ -179,14 +176,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create two eventhubs
             string eventhubName1 = Recording.GenerateAssetName("eventhub1");
             string eventhubName2 = Recording.GenerateAssetName("eventhub2");
-            _ = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName1, new EventHubData())).Value;
-            _ = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName2, new EventHubData())).Value;
+            await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Started, eventhubName1, new EventHubData()));
+            await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Started, eventhubName2, new EventHubData()));
 
             //validate
             int count = 0;
             EventHubResource eventHub1 = null;
             EventHubResource eventHub2 = null;
-            await foreach (EventHubResource eventHub in _eventHubCollection.GetAllAsync())
+            foreach (EventHubResource eventHub in await ReadAllAsync(_eventHubCollection.GetAllAsync()))
             {
                 count++;
                 if (eventHub.Id.Name == eventhubName1)
@@ -205,7 +202,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
+            EventHubResource eventHub = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Started, eventhubName, new EventHubData()));
 
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -214,7 +211,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
-            EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            EventHubAuthorizationRuleResource authorizationRule = await CompleteAsync(await ruleCollection.CreateOrUpdateAsync(WaitUntil.Started, ruleName, parameter));
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -225,7 +222,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<EventHubAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<EventHubAuthorizationRuleResource> rules = await ReadAllAsync(ruleCollection.GetAllAsync());
 
             //validate
             Assert.True(rules.Count == 1);
@@ -241,16 +238,16 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //update authorization rule
             parameter.Rights.Add(EventHubsAccessRight.Manage);
-            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            authorizationRule = await CompleteAsync(await authorizationRule.UpdateAsync(WaitUntil.Started, parameter));
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //delete authorization rule
-            await authorizationRule.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await authorizationRule.DeleteAsync(WaitUntil.Started));
 
             //validate if deleted
             Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
-            rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            rules = await ReadAllAsync(ruleCollection.GetAllAsync());
             Assert.True(rules.Count == 0);
         }
 
@@ -260,7 +257,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
+            EventHubResource eventHub = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Started, eventhubName, new EventHubData()));
             EventHubAuthorizationRuleCollection ruleCollection = eventHub.GetEventHubAuthorizationRules();
 
             //create authorization rule
@@ -269,7 +266,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
-            EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            EventHubAuthorizationRuleResource authorizationRule = await CompleteAsync(await ruleCollection.CreateOrUpdateAsync(WaitUntil.Started, ruleName, parameter));
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -318,6 +315,138 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
                 Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
             }
+        }
+
+        [RecordedTest]
+        public async Task UpdateEventHub()
+        {
+            string name = Recording.GenerateAssetName("eventhub");
+            EventHubResource resource = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(
+                WaitUntil.Started, name, new EventHubData { PartitionCount = 2 }));
+            await CompleteAsync(await resource.UpdateAsync(
+                WaitUntil.Started, new EventHubData { PartitionCount = 2, Status = EventHubEntityStatus.SendDisabled }));
+            EventHubData data = null;
+            for (int attempt = 0; attempt < 12; attempt++)
+            {
+                Response<EventHubResource> response = await resource.GetAsync();
+                AssertStatus(response.GetRawResponse(), 200);
+                data = response.Value.Data;
+                if (data.Status == EventHubEntityStatus.SendDisabled)
+                {
+                    break;
+                }
+                if (attempt < 11 && Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+            }
+            Assert.AreEqual(EventHubEntityStatus.SendDisabled, data.Status);
+            Assert.AreEqual(2, data.PartitionCount);
+        }
+
+        [RecordedTest]
+        public async Task MessageRetentionInDaysAppliesOnCreateAndUpdate()
+        {
+            string name = Recording.GenerateAssetName("retention");
+#pragma warning disable CS0618 // The legacy field remains part of the service contract.
+            EventHubResource hub = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(
+                WaitUntil.Started, name, new EventHubData { PartitionCount = 2, MessageRetentionInDays = 2 }));
+            await AssertRetentionReadBackAsync(hub, 2, null);
+            await CompleteAsync(await hub.UpdateAsync(WaitUntil.Started, new EventHubData { PartitionCount = 2, MessageRetentionInDays = 3 }));
+#pragma warning restore CS0618
+            await AssertRetentionReadBackAsync(hub, 3, null);
+        }
+
+        [RecordedTest]
+        public async Task RetentionDescriptionAppliesOnCreateAndUpdate()
+        {
+            string name = Recording.GenerateAssetName("retention");
+            EventHubResource hub = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(
+                WaitUntil.Started, name, new EventHubData
+                {
+                    PartitionCount = 2,
+                    RetentionDescription = new RetentionDescription { CleanupPolicy = CleanupPolicyRetentionDescription.Delete, RetentionTimeInHours = 48 }
+                }));
+            await AssertRetentionReadBackAsync(hub, null, 48);
+            await CompleteAsync(await hub.UpdateAsync(WaitUntil.Started, new EventHubData
+            {
+                PartitionCount = 2,
+                RetentionDescription = new RetentionDescription { CleanupPolicy = CleanupPolicyRetentionDescription.Delete, RetentionTimeInHours = 72 }
+            }));
+            await AssertRetentionReadBackAsync(hub, null, 72);
+        }
+
+        [RecordedTest]
+        public async Task MatchingRetentionFieldsApplyOnCreateAndUpdate()
+        {
+            string name = Recording.GenerateAssetName("retention");
+#pragma warning disable CS0618 // Exercise both public retention fields together.
+            EventHubResource hub = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(
+                WaitUntil.Started, name, new EventHubData
+                {
+                    PartitionCount = 2,
+                    MessageRetentionInDays = 2,
+                    RetentionDescription = new RetentionDescription { CleanupPolicy = CleanupPolicyRetentionDescription.Delete, RetentionTimeInHours = 48 }
+                }));
+            await AssertRetentionReadBackAsync(hub, 2, 48);
+            await CompleteAsync(await hub.UpdateAsync(WaitUntil.Started, new EventHubData
+            {
+                PartitionCount = 2,
+                MessageRetentionInDays = 3,
+                RetentionDescription = new RetentionDescription { CleanupPolicy = CleanupPolicyRetentionDescription.Delete, RetentionTimeInHours = 72 }
+            }));
+#pragma warning restore CS0618
+            await AssertRetentionReadBackAsync(hub, 3, 72);
+        }
+
+        [RecordedTest]
+        public async Task ConflictingRetentionFieldsUseRetentionDescription()
+        {
+            string name = Recording.GenerateAssetName("retention");
+            EventHubResource hub = await CompleteAsync(await _eventHubCollection.CreateOrUpdateAsync(
+                WaitUntil.Started, name, new EventHubData
+                {
+                    PartitionCount = 2,
+                    RetentionDescription = new RetentionDescription { CleanupPolicy = CleanupPolicyRetentionDescription.Delete, RetentionTimeInHours = 48 }
+                }));
+#pragma warning disable CS0618 // Verify modern-field precedence and normalized legacy read-back.
+            await CompleteAsync(await hub.UpdateAsync(WaitUntil.Started, new EventHubData
+            {
+                PartitionCount = 2,
+                MessageRetentionInDays = 3,
+                RetentionDescription = new RetentionDescription { CleanupPolicy = CleanupPolicyRetentionDescription.Delete, RetentionTimeInHours = 96 }
+            }));
+#pragma warning restore CS0618
+            await AssertRetentionReadBackAsync(hub, 4, 96);
+        }
+
+        private async Task AssertRetentionReadBackAsync(EventHubResource hub, long? days, long? hours)
+        {
+            EventHubData data = null;
+            for (int attempt = 0; attempt < 12; attempt++)
+            {
+                Response<EventHubResource> response = await hub.GetAsync();
+                AssertStatus(response.GetRawResponse(), 200);
+                data = response.Value.Data;
+#pragma warning disable CS0618 // Read the legacy value or its canonical replacement.
+                bool daysApplied = !days.HasValue || (data.MessageRetentionInDays.HasValue
+                    ? data.MessageRetentionInDays == days
+                    : data.RetentionDescription?.RetentionTimeInHours == days * 24);
+#pragma warning restore CS0618
+                bool hoursApplied = !hours.HasValue || (data.RetentionDescription?.RetentionTimeInHours == hours &&
+                    data.RetentionDescription?.CleanupPolicy == CleanupPolicyRetentionDescription.Delete);
+                if (daysApplied && hoursApplied)
+                {
+                    return;
+                }
+                if (attempt < 11 && Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+            }
+#pragma warning disable CS0618
+            Assert.Fail($"Retention did not apply. Expected days={days}, hours={hours}; actual days={data.MessageRetentionInDays}, hours={data.RetentionDescription?.RetentionTimeInHours}.");
+#pragma warning restore CS0618
         }
     }
 }

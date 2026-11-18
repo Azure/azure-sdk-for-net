@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added long-running namespace update overloads accepting `WaitUntil` for API version `2026-07-01-preview`. Existing `Update` and `UpdateAsync` overloads remain supported and wait for completion.
+
 ### Breaking Changes
 
 ### Bugs Fixed
