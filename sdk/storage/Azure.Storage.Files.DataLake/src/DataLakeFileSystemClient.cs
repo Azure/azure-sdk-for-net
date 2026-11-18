@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
                     _blobUri,
-                    CreateBlobClientOptions(options, clientDiagnostics),
+                    CreateBlobClientOptions(options, clientDiagnostics, options.RequestPriority),
                     authentication,
                     dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
                     tokenCredential,
@@ -462,7 +462,8 @@ namespace Azure.Storage.Files.DataLake
                 tokenCredential: tokenCredential,
                 clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey)
+                customerProvidedKey: options.CustomerProvidedKey,
+                requestPriority: options.RequestPriority)
             {
                 BlobPipeline = blobPipeline,
             };
@@ -532,12 +533,13 @@ namespace Azure.Storage.Files.DataLake
 
         private static BlobClientOptions CreateBlobClientOptions(
             DataLakeClientOptions clientOptions,
-            ClientDiagnostics clientDiagnostics)
+            ClientDiagnostics clientDiagnostics,
+            int? requestPriority)
         {
             BlobClientOptions options = new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
             {
                 Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
-                RequestPriority = clientOptions.RequestPriority,
+                RequestPriority = requestPriority,
             };
             clientOptions.TransferValidation.CopyTo(options.TransferValidation);
             return options;
@@ -555,7 +557,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 BlobClientOptions options = CreateBlobClientOptions(
                     clientConfiguration.ClientOptions,
-                    clientConfiguration.ClientDiagnostics);
+                    clientConfiguration.ClientDiagnostics,
+                    clientConfiguration.RequestPriority);
                 return BlobContainerClient.CreateClient(
                     uri,
                     options,
