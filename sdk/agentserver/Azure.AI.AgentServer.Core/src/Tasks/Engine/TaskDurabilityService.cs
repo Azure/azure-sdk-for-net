@@ -31,8 +31,15 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
     private readonly TimeSpan _shutdownGrace;
     private readonly ILogger _logger;
     private readonly ResilientTaskEnablementState _enablement;
+    private readonly SemaphoreSlim _activationGate = new(1, 1);
+    private readonly SemaphoreSlim _scanGate = new(1, 1);
     private CancellationTokenSource _stopCts = new();
     private Task? _loop;
+    private string? _completedRestoreId;
+    private string? _preparedRestoreId;
+    private int _disposed;
+
+    internal bool IsStarted => _loop is not null;
 
     public TaskDurabilityService(
         RecoveryScanner scanner,
@@ -58,46 +65,113 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
     /// before any HTTP route goes live (SOT §49: "The cold-start scan blocks startup until done").
     /// Safe to call again after <see cref="StopAsync"/>.
     /// </summary>
-    public async Task StartAsync(CancellationToken cancellationToken = default)
+    public Task StartAsync(CancellationToken cancellationToken = default)
+        => ActivateAsync(
+            restoreId: null,
+            cancellationToken);
+
+    internal Task ActivateAfterRestoreAsync(
+        string restoreId,
+        CancellationToken cancellationToken = default)
+        => ActivateAsync(
+            restoreId,
+            cancellationToken);
+
+    internal async Task PrepareAfterRestoreAsync(
+        string restoreId,
+        CancellationToken cancellationToken = default)
     {
-        if (_loop is not null)
-        {
-            return;
-        }
-
-        if (_stopCts.IsCancellationRequested)
-        {
-            _stopCts.Dispose();
-            _stopCts = new CancellationTokenSource();
-        }
-
-        // Emit the operator-facing startup marker once per process boot, carrying the stable lease
-        // instance id (worker-<pid>-<hex>-<epoch>). A cross-process restart therefore surfaces as a
-        // NEW instance in the logs — parity with Python's "TaskManager starting (owner, instance,
-        // hosted)" line and the signal the hosted crash-recovery verifier greps to prove a restart.
-        _logger.TaskManagerStarting(_engine.Owner, _engine.InstanceId, Azure.AI.AgentServer.Core.FoundryEnvironment.IsHosted);
-
-        // Cold-start scan blocks startup (SOT §49). Reaching this service means the application
-        // explicitly opted in to durability, so initialization failure must fail host startup
-        // rather than silently run with a durability guarantee that is not active.
+        await _activationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            await ScanOnceAsync(cancellationToken).ConfigureAwait(false);
-        }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-        {
-            _enablement.MarkStopped();
-            return;
-        }
-        catch (Exception ex)
-        {
-            _enablement.MarkStopped();
-            _logger.RecoveryScanFailed(ex.GetType().Name);
-            throw;
-        }
+            if (_completedRestoreId is not null
+                && !string.Equals(
+                    _completedRestoreId,
+                    restoreId,
+                    StringComparison.Ordinal)
+                && !string.Equals(
+                    _preparedRestoreId,
+                    restoreId,
+                    StringComparison.Ordinal))
+            {
+                await _scanGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    _engine.RotateLeaseInstanceIfIdle();
+                }
+                finally
+                {
+                    _scanGate.Release();
+                }
+            }
 
-        _loop = Task.Run(() => RunLoopAsync(_stopCts.Token), CancellationToken.None);
-        _enablement.MarkReady();
+            _preparedRestoreId = restoreId;
+        }
+        finally
+        {
+            _activationGate.Release();
+        }
+    }
+
+    private async Task ActivateAsync(
+        string? restoreId,
+        CancellationToken cancellationToken)
+    {
+        await _activationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            if (_loop is not null
+                && (restoreId is null
+                    || string.Equals(
+                        _completedRestoreId,
+                        restoreId,
+                        StringComparison.Ordinal)))
+            {
+                return;
+            }
+
+            if (_stopCts.IsCancellationRequested)
+            {
+                _stopCts.Dispose();
+                _stopCts = new CancellationTokenSource();
+            }
+
+            _logger.TaskManagerStarting(
+                _engine.Owner,
+                _engine.InstanceId,
+                Azure.AI.AgentServer.Core.FoundryEnvironment.IsHosted);
+
+            using CancellationTokenSource startupCts =
+                CancellationTokenSource.CreateLinkedTokenSource(
+                    cancellationToken,
+                    _stopCts.Token);
+            try
+            {
+                await ScanOnceAsync(startupCts.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) when (startupCts.IsCancellationRequested)
+            {
+                _enablement.MarkStopped();
+                return;
+            }
+            catch (Exception ex)
+            {
+                _enablement.MarkStopped();
+                _logger.RecoveryScanFailed(ex.GetType().Name);
+                throw;
+            }
+
+            _loop ??= Task.Run(
+                () => RunLoopAsync(_stopCts.Token),
+                CancellationToken.None);
+            _completedRestoreId = restoreId;
+            _preparedRestoreId = restoreId;
+            _enablement.MarkReady();
+        }
+        finally
+        {
+            _activationGate.Release();
+        }
     }
 
     /// <summary>
@@ -108,8 +182,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
     /// </summary>
     public async Task StopAsync(CancellationToken cancellationToken = default)
     {
-        _enablement.MarkStopped();
-        _ = _engine.BeginShutdown();
+        SignalStop();
         if (_loop is not null)
         {
             _stopCts.Cancel();
@@ -131,12 +204,76 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
         await _engine.ShutdownAsync(_shutdownGrace, cancellationToken).ConfigureAwait(false);
     }
 
+    internal async Task RollbackAsync()
+    {
+        SignalStop();
+        if (_loop is not null)
+        {
+            try
+            {
+                await _loop.ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            finally
+            {
+                _loop = null;
+            }
+        }
+
+        await _engine.ShutdownForRollbackAsync().ConfigureAwait(false);
+    }
+
+    internal void SignalStop()
+    {
+        if (Volatile.Read(ref _disposed) != 0)
+        {
+            return;
+        }
+
+        _enablement.MarkStopped();
+        _ = _engine.BeginShutdown();
+        _stopCts.Cancel();
+    }
+
+    internal void SignalRollbackStop()
+    {
+        if (Volatile.Read(ref _disposed) != 0)
+        {
+            return;
+        }
+
+        _enablement.MarkStopped();
+        _ = _engine.BeginRollbackShutdown();
+        _stopCts.Cancel();
+    }
+
+    internal void DisposeAfterShutdown()
+    {
+        if (Interlocked.Exchange(ref _disposed, 1) == 0)
+        {
+            _stopCts.Dispose();
+        }
+    }
+
     /// <summary>
     /// Runs a single recovery sweep on demand. Exposed for deterministic testing and reused by the
     /// loop so both paths share identical reclaim semantics.
     /// </summary>
-    internal Task<int> ScanOnceAsync(CancellationToken cancellationToken = default)
-        => _scanner.ScanAsync(cancellationToken);
+    internal async Task<int> ScanOnceAsync(
+        CancellationToken cancellationToken = default)
+    {
+        await _scanGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await _scanner.ScanAsync(cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _scanGate.Release();
+        }
+    }
 
     private async Task RunLoopAsync(CancellationToken stopToken)
     {
@@ -171,7 +308,12 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
+        if (Volatile.Read(ref _disposed) != 0)
+        {
+            return;
+        }
+
         await StopAsync().ConfigureAwait(false);
-        _stopCts.Dispose();
+        DisposeAfterShutdown();
     }
 }

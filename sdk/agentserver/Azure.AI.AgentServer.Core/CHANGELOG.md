@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added memory-snapshot activation for resilient tasks. When
+  `FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, enabled task definitions remain registered
+  during capture without constructing task storage or recovery workers. Restore
+  prepares the session-bound runtime before the application callback, then starts
+  automatic recovery after the callback completes.
+
 ### Breaking Changes
 
 ### Bugs Fixed
