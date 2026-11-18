@@ -234,6 +234,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 
             if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(denyFilter))
             {
+                if (rooms != null && rooms.Count > 1)
+                {
+                    // In OData filter syntax, 'and' has higher precedence than 'or', so wrap OR-joined rooms in parentheses to ensure exclusions apply to all target rooms.
+                    filter = $"({filter})";
+                }
                 return $"{filter} and {denyFilter}";
             }
             else if (!string.IsNullOrEmpty(filter))
