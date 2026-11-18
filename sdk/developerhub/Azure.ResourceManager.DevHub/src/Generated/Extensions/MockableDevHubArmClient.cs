@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevHub;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="GitHubOAuthResponseResource"/> object. </returns>
         public virtual GitHubOAuthResponseResource GetGitHubOAuthResponseResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             GitHubOAuthResponseResource.ValidateResourceId(id);
+            if (id.ResourceType == GitHubOAuthResponseResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new GitHubOAuthResponseResource(Client, id);
         }
 
@@ -58,7 +67,15 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="AdoOAuthResponseResource"/> object. </returns>
         public virtual AdoOAuthResponseResource GetAdoOAuthResponseResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             AdoOAuthResponseResource.ValidateResourceId(id);
+            if (id.ResourceType == AdoOAuthResponseResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new AdoOAuthResponseResource(Client, id);
         }
 
