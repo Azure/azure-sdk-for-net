@@ -19,7 +19,7 @@ function Invoke-PrReReviewGhApi {
 }
 
 function Read-PrReReviewNativeOutput {
-    param([Parameter(Mandatory)][string]$Command, [Parameter(Mandatory)][string[]]$Arguments)
+    param([Parameter(Mandatory)][string]$Command, [Parameter(Mandatory)][string[]]$Arguments, [switch]$AllowBinary)
 
     # Capturing a native command's stdout splits it into lines and drops the final newline;
     # PowerShell 7.4+ keeps the exact bytes when the output is redirected to a file.
@@ -36,11 +36,25 @@ function Read-PrReReviewNativeOutput {
         try {
             return [Text.UTF8Encoding]::new($false, $true).GetString($bytes)
         } catch [Text.DecoderFallbackException] {
+            if ($AllowBinary) { return $null }
             throw "Cannot decode $Command output as UTF-8; refusing to review lossy text."
         }
     } finally {
         Remove-Item -LiteralPath $path -Force -ErrorAction SilentlyContinue
     }
+}
+
+function Get-PrReReviewGitBlobText {
+    param([string]$GitDirectory, [string]$Commit, [string]$Path)
+
+    # Use a literal pathspec and request only object metadata, so unusual path names cannot
+    # change the Git command or corrupt the output. Gitlinks are not readable file blobs.
+    $entry = (Read-PrReReviewNativeOutput -Command 'git' -Arguments @('-C', $GitDirectory, 'ls-tree', '--full-tree', '--format=%(objecttype) %(objectname)', $Commit, '--', ":(literal)$Path")).Trim()
+    if ($entry -cnotmatch '^(blob|commit) ([0-9a-f]{40}|[0-9a-f]{64})$') {
+        throw "Git could not resolve the expected tree entry for '$Path'."
+    }
+    if ($Matches[1] -ceq 'commit') { return $null }
+    return Read-PrReReviewNativeOutput -Command 'git' -Arguments @('-C', $GitDirectory, 'cat-file', 'blob', $Matches[2]) -AllowBinary
 }
 
 function Get-PrReReviewPullRequestInput {
@@ -170,10 +184,30 @@ function Get-PrReReviewGitInput {
             $start = $headers[$headerIndex].Index
             $headerIndex += if ($files[$i].typeChange) { 2 } else { 1 }
             $end = if ($headerIndex -lt $headers.Count) { $headers[$headerIndex].Index } else { $diff.Length }
-            $patch = $diff.Substring($start, $end - $start)
+            $gitPatch = $diff.Substring($start, $end - $start)
+            $patch = $gitPatch
+            if ($patch -cmatch '(?m)^GIT binary patch\r?$') {
+                # Git attributes can encode ordinary source as binary, and a binary transition
+                # can hide readable content on either side. Preserve the binary patch and add
+                # any losslessly decoded blob text to the guarded review input.
+                $oldText = $null
+                $newText = $null
+                if ($files[$i].status -cne 'added') {
+                    $oldPath = if ($files[$i].previous_filename) { $files[$i].previous_filename } else { $files[$i].filename }
+                    $oldText = Get-PrReReviewGitBlobText -GitDirectory $GitDirectory -Commit $mergeBase -Path $oldPath
+                }
+                if ($files[$i].status -cne 'removed') {
+                    $newText = Get-PrReReviewGitBlobText -GitDirectory $GitDirectory -Commit $ExpectedHeadSha -Path $files[$i].filename
+                }
+                if ($null -ne $oldText -or $null -ne $newText) {
+                    $oldContent = if ($null -eq $oldText) { '[No readable text at the merge base.]' } else { $oldText }
+                    $newContent = if ($null -eq $newText) { '[No readable text at the head commit.]' } else { $newText }
+                    $patch += "`nFull readable content at the merge base:`n$oldContent`nFull readable content at the head commit:`n$newContent`n"
+                }
+            }
             $files[$i].patch = $patch
             $inHunk = $false
-            foreach ($line in $patch -split "`n") {
+            foreach ($line in $gitPatch -split "`n") {
                 if ($line.StartsWith('diff --git ', [StringComparison]::Ordinal)) { $inHunk = $false; continue }
                 if ($line.StartsWith('@@ ', [StringComparison]::Ordinal)) { $inHunk = $true; continue }
                 if ($inHunk -and $line.StartsWith('+', [StringComparison]::Ordinal)) { $files[$i].additions++ }

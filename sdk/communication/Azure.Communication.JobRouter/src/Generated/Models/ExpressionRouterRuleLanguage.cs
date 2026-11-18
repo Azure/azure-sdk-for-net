@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="ExpressionRouterRuleLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressionRouterRuleLanguage?(string value) => value == null ? null : new ExpressionRouterRuleLanguage(value);
+        public static implicit operator ExpressionRouterRuleLanguage?(string value) => value == null ? (ExpressionRouterRuleLanguage?)null : new ExpressionRouterRuleLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Shell call outcome
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputTimeoutOutcome"/> and <see cref="FunctionShellCallOutputExitOutcome"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionShellCallOutputOutcome))]
-    public abstract partial class FunctionShellCallOutputOutcome : IJsonModel<FunctionShellCallOutputOutcome>
+    internal abstract partial class FunctionShellCallOutputOutcome : IJsonModel<FunctionShellCallOutputOutcome>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputOutcome"/> for deserialization. </summary>
         internal FunctionShellCallOutputOutcome()
@@ -129,10 +125,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "timeout":
-                        return FunctionShellCallOutputTimeoutOutcome.DeserializeFunctionShellCallOutputTimeoutOutcome(element, options);
                     case "exit":
                         return FunctionShellCallOutputExitOutcome.DeserializeFunctionShellCallOutputExitOutcome(element, options);
+                    case "timeout":
+                        return FunctionShellCallOutputTimeoutOutcome.DeserializeFunctionShellCallOutputTimeoutOutcome(element, options);
                 }
             }
             return UnknownFunctionShellCallOutputOutcome.DeserializeUnknownFunctionShellCallOutputOutcome(element, options);

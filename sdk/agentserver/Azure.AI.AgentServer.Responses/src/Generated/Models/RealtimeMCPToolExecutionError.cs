@@ -6,20 +6,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Realtime MCP tool execution error. </summary>
-    public partial class RealtimeMCPToolExecutionError : RealtimeMCPError
+    internal partial class RealtimeMCPToolExecutionError : RealtimeMCPError
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPToolExecutionError"/>. </summary>
         /// <param name="message"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public RealtimeMCPToolExecutionError(string message) : base(RealtimeMcpErrorType.ToolExecutionError)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Message = message;
         }
 

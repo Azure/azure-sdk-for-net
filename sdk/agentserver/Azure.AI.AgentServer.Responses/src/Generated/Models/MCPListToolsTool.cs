@@ -6,25 +6,23 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP list tools tool. </summary>
-    public partial class MCPListToolsTool
+    internal partial class MCPListToolsTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        private bool _descriptionIsDefined;
+        private MCPListToolsToolAnnotations _annotations;
+        private bool _annotationsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputSchema"/> is null. </exception>
         public MCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputSchema, nameof(inputSchema));
-
             Name = name;
             InputSchema = inputSchema;
         }
@@ -38,9 +36,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal MCPListToolsTool(string name, string description, MCPListToolsToolInputSchema inputSchema, MCPListToolsToolAnnotations annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Description = description;
+            _description = description;
             InputSchema = inputSchema;
-            Annotations = annotations;
+            _annotations = annotations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,12 +46,34 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Name { get; set; }
 
         /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> The JSON schema describing the tool's input. </summary>
         public MCPListToolsToolInputSchema InputSchema { get; set; }
 
         /// <summary> Gets or sets the Annotations. </summary>
-        public MCPListToolsToolAnnotations Annotations { get; set; }
+        public MCPListToolsToolAnnotations Annotations
+        {
+            get
+            {
+                return _annotations;
+            }
+            set
+            {
+                _annotations = value;
+                _annotationsIsDefined = true;
+            }
+        }
     }
 }

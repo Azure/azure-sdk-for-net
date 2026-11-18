@@ -46,17 +46,30 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> The pages of ContainerServicePrivateEndpointConnectionDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ContainerServicePrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
-            ContainerServicePrivateEndpointConnectionListResult result = ContainerServicePrivateEndpointConnectionListResult.FromResponse(response);
-            yield return Page<ContainerServicePrivateEndpointConnectionData>.FromValues((IReadOnlyList<ContainerServicePrivateEndpointConnectionData>)result.Value, null, response);
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
+            while (true)
+            {
+                Response response = GetNextResponse(pageSizeHint, nextPage);
+                if (response is null)
+                {
+                    yield break;
+                }
+                ContainerServicePrivateEndpointConnectionListResult result = ContainerServicePrivateEndpointConnectionListResult.FromResponse(response);
+                nextPage = result.NextLink;
+                yield return Page<ContainerServicePrivateEndpointConnectionData>.FromValues((IReadOnlyList<ContainerServicePrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
+                {
+                    yield break;
+                }
+            }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

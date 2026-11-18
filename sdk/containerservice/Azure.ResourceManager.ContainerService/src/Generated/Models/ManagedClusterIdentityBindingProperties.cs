@@ -25,28 +25,18 @@ namespace Azure.ResourceManager.ContainerService.Models
             Argument.AssertNotNull(managedIdentity, nameof(managedIdentity));
 
             ManagedIdentity = managedIdentity;
-            AllowedSubjects = new ChangeTrackingList<ManagedClusterIdentityBindingAllowedSubject>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingProperties"/>. </summary>
         /// <param name="managedIdentity"> Managed identity profile for the identity binding. </param>
         /// <param name="oidcIssuer"> The OIDC issuer URL of the IdentityBinding. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="allowedSubjects">
-        /// Optional list of subjects authorized to use this identity binding for
-        /// token exchange. Each entry pairs a required namespace label selector
-        /// with an optional service account label selector; selectors within an
-        /// entry are AND'd, and multiple entries are OR'd. When omitted or empty,
-        /// authorization falls back exclusively to ClusterRole/ClusterRoleBinding
-        /// evaluation. Maximum 100 entries.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IdentityBindingOidcIssuerProfile oidcIssuer, ManagedClusterIdentityBindingProvisioningState? provisioningState, IList<ManagedClusterIdentityBindingAllowedSubject> allowedSubjects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IdentityBindingOidcIssuerProfile oidcIssuer, ManagedClusterIdentityBindingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedIdentity = managedIdentity;
             OidcIssuer = oidcIssuer;
             ProvisioningState = provisioningState;
-            AllowedSubjects = allowedSubjects;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,17 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The status of the last operation. </summary>
         [WirePath("provisioningState")]
         public ManagedClusterIdentityBindingProvisioningState? ProvisioningState { get; }
-
-        /// <summary>
-        /// Optional list of subjects authorized to use this identity binding for
-        /// token exchange. Each entry pairs a required namespace label selector
-        /// with an optional service account label selector; selectors within an
-        /// entry are AND'd, and multiple entries are OR'd. When omitted or empty,
-        /// authorization falls back exclusively to ClusterRole/ClusterRoleBinding
-        /// evaluation. Maximum 100 entries.
-        /// </summary>
-        [WirePath("allowedSubjects")]
-        public IList<ManagedClusterIdentityBindingAllowedSubject> AllowedSubjects { get; }
 
         /// <summary> The OIDC issuer URL of the IdentityBinding. </summary>
         [WirePath("oidcIssuer.oidcIssuerUrl")]

@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentBuildMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentBuildMode?(string value) => value == null ? null : new DocumentBuildMode(value);
+        public static implicit operator DocumentBuildMode?(string value) => value == null ? (DocumentBuildMode?)null : new DocumentBuildMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="JobMatchingModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobMatchingModeKind?(string value) => value == null ? null : new JobMatchingModeKind(value);
+        public static implicit operator JobMatchingModeKind?(string value) => value == null ? (JobMatchingModeKind?)null : new JobMatchingModeKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

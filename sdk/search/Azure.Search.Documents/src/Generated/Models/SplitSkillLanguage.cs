@@ -207,7 +207,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="SplitSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SplitSkillLanguage?(string value) => value == null ? null : new SplitSkillLanguage(value);
+        public static implicit operator SplitSkillLanguage?(string value) => value == null ? (SplitSkillLanguage?)null : new SplitSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

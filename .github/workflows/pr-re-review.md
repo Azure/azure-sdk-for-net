@@ -27,8 +27,16 @@ checkout:
   sparse-checkout: |
     .github
   fetch-depth: 0
-# These run after gh-aw restores .github from the base branch, so a pull request cannot change the export script.
+# gh-aw restores .github from github.event.pull_request.base.sha, which GitHub does not move on later
+# pushes, so the helpers come from the base branch's current tip instead. A pull request cannot change them.
 pre-agent-steps:
+  - name: Checkout trusted re-review helpers
+    uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    with:
+      ref: ${{ github.event.pull_request.base.ref }}
+      path: .pr-re-review-helpers
+      persist-credentials: false
+      sparse-checkout: .github/workflows/pr-re-review
   - name: Export changed-file patches for the re-review
     shell: pwsh
     env:
@@ -40,19 +48,24 @@ pre-agent-steps:
       REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
       REVIEW_INPUT_SOURCE: git
     run: |
-      if (!(Test-Path -PathType Leaf './.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1')) {
-        throw 'The trusted base branch does not contain the re-review exporter. Deploy the helpers to the base branch before enabling this workflow; do not run the PR version.'
+      $exporter = './.pr-re-review-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1'
+      if (!(Test-Path -PathType Leaf $exporter)) {
+        throw 'The base branch does not contain the re-review exporter. Deploy the helpers to the base branch before enabling this workflow; do not run the PR version.'
       }
-      $exporter = [IO.File]::ReadAllText('./.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1')
-      if (!$exporter.Contains('REVIEW_INPUT_SOURCE', [StringComparison]::Ordinal)) {
+      if (!([IO.File]::ReadAllText($exporter).Contains('REVIEW_INPUT_SOURCE', [StringComparison]::Ordinal))) {
         throw 'The trusted base branch does not yet support the local Git review exporter.'
       }
-      ./.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1
+      & $exporter
+      $tree = git -C .pr-re-review-helpers rev-parse HEAD:.github/workflows/pr-re-review
+      if ($LASTEXITCODE -ne 0) {
+        throw 'Could not resolve the re-review helpers tree.'
+      }
+      [IO.File]::WriteAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-tree", $tree)
   - name: Upload exported-patch markers
     uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
     with:
       name: pr-re-review-input
-      path: ${{ runner.temp }}/pr-re-review-input/markers.json
+      path: ${{ runner.temp }}/pr-re-review-input
       if-no-files-found: error
   # Each marker should reach the agent only by reading its patch, never all at once from this file.
   - name: Remove exported-patch markers from the runner
@@ -91,17 +104,25 @@ safe-outputs:
   noop:
     report-as-issue: false
   steps:
-    - name: Checkout trusted re-review publication guard
-      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      with:
-        ref: ${{ github.event.pull_request.base.sha }}
-        persist-credentials: false
-        sparse-checkout: .github/workflows/pr-re-review
     - name: Download exported-patch markers
       uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
       with:
         name: pr-re-review-input
         path: ${{ runner.temp }}/pr-re-review-input
+    - name: Checkout trusted re-review publication guard
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        ref: ${{ github.event.pull_request.base.ref }}
+        persist-credentials: false
+        sparse-checkout: .github/workflows/pr-re-review
+    - name: Verify re-review helpers match the export
+      shell: pwsh
+      run: |
+        $exported = [IO.File]::ReadAllText("$env:RUNNER_TEMP/pr-re-review-input/helpers-tree").Trim()
+        $current = git rev-parse HEAD:.github/workflows/pr-re-review
+        if ($LASTEXITCODE -ne 0 -or $exported -cnotmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$' -or $current -cne $exported) {
+          throw "The re-review helpers changed between export ($exported) and publication ($current); refusing to publish."
+        }
     - name: Require complete re-review coverage before publishing
       shell: pwsh
       env:
@@ -324,6 +345,7 @@ tools:
     toolsets: [context, repos, pull_requests, issues]
   bash: true
 timeout-minutes: 25
+max-turns: 1000
 concurrency:
   # Every push fires both events; keying by event keeps the skipped twin from queuing behind the real run.
   group: pr-re-review-${{ github.event_name }}-${{ github.event.pull_request.number }}
@@ -384,7 +406,7 @@ If a retrieval attempt fails, try permitted alternatives before calling `missing
 
 ## Step 1 - Gather review history
 
-Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. The trusted exporter uses `git merge-base --all`, `git diff --name-status -z --find-renames=50% --no-ext-diff --no-textconv`, and `git diff --binary --full-index --no-ext-diff --no-textconv` with the same rename setting to compare event base `${{ github.event.pull_request.base.sha }}` and head `${{ github.event.pull_request.head.sha }}` locally. `files.json` lists every changed file with its status, line counts, and patch file under `patches/`. Read the exported parts as instructed below so the publication guard can verify coverage; do not substitute a separate Git diff. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
+Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. The trusted exporter uses `git merge-base --all`, `git diff --name-status -z --find-renames=50% --no-ext-diff --no-textconv`, and `git diff --binary --full-index --no-ext-diff --no-textconv` with the same rename setting to compare event base `${{ github.event.pull_request.base.sha }}` and head `${{ github.event.pull_request.head.sha }}` locally. When Git encodes a patch as binary, the exporter also includes any readable UTF-8 content from the old and new blobs. `files.json` lists every changed file with its status, line counts, and patch file under `patches/`. Read the exported parts as instructed below so the publication guard can verify coverage; do not substitute a separate Git diff. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
 
 Read GitHub data with the GitHub MCP `pull_request_read` tool. Page every list to its end; a first page is not the full history.
 

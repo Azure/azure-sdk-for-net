@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="ScoringRuleParameterSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScoringRuleParameterSelector?(string value) => value == null ? null : new ScoringRuleParameterSelector(value);
+        public static implicit operator ScoringRuleParameterSelector?(string value) => value == null ? (ScoringRuleParameterSelector?)null : new ScoringRuleParameterSelector(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -295,6 +295,85 @@ Describe 'Full-PR local Git export' {
         } finally { Remove-Variable GitReviewMetadataCalls -Scope Global -ErrorAction SilentlyContinue }
     }
 
+    It 'includes readable old and new content when Git encodes source changes as binary patches' {
+        $root = Join-Path $TestDrive ([guid]::NewGuid().ToString())
+        $null = [IO.Directory]::CreateDirectory($root)
+        & git -C $root init --quiet
+        [IO.File]::WriteAllText((Join-Path $root '.gitattributes'), "*.cs -diff`nto-text.txt -diff`n")
+        [IO.File]::WriteAllText((Join-Path $root 'marked.cs'), "original readable source`n")
+        [IO.File]::WriteAllText((Join-Path $root 'to-binary.txt'), "old readable source`n")
+        [IO.File]::WriteAllBytes((Join-Path $root 'to-text.txt'), [byte[]](255, 254, 253))
+        & git -C $root add --all
+        & git -C $root -c user.name=Fixture -c user.email=fixture@example.invalid commit --quiet -m base
+        if ($LASTEXITCODE -ne 0) { throw 'base commit failed' }
+        $base = (& git -C $root rev-parse HEAD).Trim()
+        [IO.File]::WriteAllText((Join-Path $root 'marked.cs'), "new readable source`n@@ -1 +1 @@`n+not a diff line`n")
+        [IO.File]::WriteAllBytes((Join-Path $root 'to-binary.txt'), [byte[]](0, 4, 5))
+        [IO.File]::WriteAllText((Join-Path $root 'to-text.txt'), "newly readable source`n")
+        & git -C $root add --all
+        & git -C $root -c user.name=Fixture -c user.email=fixture@example.invalid commit --quiet -m head
+        if ($LASTEXITCODE -ne 0) { throw 'head commit failed' }
+        $env:GITHUB_WORKSPACE = $root
+        $env:PR_HEAD_SHA = $global:GitReviewHead = (& git -C $root rev-parse HEAD).Trim()
+        $env:PR_BASE_SHA = $global:GitReviewBase = $base
+        $global:GitReviewExpectedCount = 3
+        & (Join-Path $script:HelperDirectory 'Invoke-PrReReviewInputExport.ps1')
+        $index = Get-Content -LiteralPath (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json
+        $marked = @($index.files | Where-Object path -ceq 'marked.cs')[0]
+        $markedPatch = Get-Content -LiteralPath (Join-Path $env:REVIEW_INPUT_DIR $marked.patchFile) -Raw
+        $markedPatch | Should -Match 'GIT binary patch'
+        $markedPatch | Should -Match 'original readable source'
+        $markedPatch | Should -Match 'new readable source'
+        $markers = Get-Content -LiteralPath $env:REVIEW_INPUT_MARKERS -Raw | ConvertFrom-Json
+        $markedCoverage = @($markers.files | Where-Object path -ceq 'marked.cs')[0]
+        $coverageText = @($markedCoverage.chunks | ForEach-Object content) -join ''
+        $coverageText | Should -Match 'original readable source'
+        $coverageText | Should -Match 'new readable source'
+        $marked.additions | Should -Be 0
+        $marked.deletions | Should -Be 0
+        $toBinary = @($index.files | Where-Object path -ceq 'to-binary.txt')[0]
+        (Get-Content -LiteralPath (Join-Path $env:REVIEW_INPUT_DIR $toBinary.patchFile) -Raw) | Should -Match 'old readable source'
+        $toText = @($index.files | Where-Object path -ceq 'to-text.txt')[0]
+        (Get-Content -LiteralPath (Join-Path $env:REVIEW_INPUT_DIR $toText.patchFile) -Raw) | Should -Match 'newly readable source'
+    }
+
+    It 'uses the previous literal path for a binary-encoded rename and handles added and removed text' {
+        $root = Join-Path $TestDrive ([guid]::NewGuid().ToString())
+        $null = [IO.Directory]::CreateDirectory($root)
+        & git -C $root init --quiet
+        [IO.File]::WriteAllText((Join-Path $root '.gitattributes'), "*.cs -diff`n")
+        $common = (1..80 | ForEach-Object { "unchanged line $_" }) -join "`n"
+        [IO.File]::WriteAllText((Join-Path $root 'old: name.cs'), "$common`nold marker`n")
+        [IO.File]::WriteAllText((Join-Path $root 'removed.cs'), "removed readable text`n")
+        & git -C $root add --all
+        & git -C $root -c user.name=Fixture -c user.email=fixture@example.invalid commit --quiet -m base
+        if ($LASTEXITCODE -ne 0) { throw 'base commit failed' }
+        $base = (& git -C $root rev-parse HEAD).Trim()
+        Move-Item -LiteralPath (Join-Path $root 'old: name.cs') -Destination (Join-Path $root 'new: name.cs')
+        [IO.File]::WriteAllText((Join-Path $root 'new: name.cs'), "$common`nnew marker`n")
+        Remove-Item -LiteralPath (Join-Path $root 'removed.cs')
+        [IO.File]::WriteAllText((Join-Path $root 'added.cs'), "added readable text`n")
+        & git -C $root add --all
+        & git -C $root -c user.name=Fixture -c user.email=fixture@example.invalid commit --quiet -m head
+        if ($LASTEXITCODE -ne 0) { throw 'head commit failed' }
+        $env:GITHUB_WORKSPACE = $root
+        $env:PR_HEAD_SHA = $global:GitReviewHead = (& git -C $root rev-parse HEAD).Trim()
+        $env:PR_BASE_SHA = $global:GitReviewBase = $base
+        $global:GitReviewExpectedCount = 3
+        & (Join-Path $script:HelperDirectory 'Invoke-PrReReviewInputExport.ps1')
+        $index = Get-Content -LiteralPath (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json
+        $renamed = @($index.files | Where-Object path -ceq 'new: name.cs')[0]
+        $renamed.status | Should -BeExactly 'renamed'
+        $renamed.previousPath | Should -BeExactly 'old: name.cs'
+        $patch = Get-Content -LiteralPath (Join-Path $env:REVIEW_INPUT_DIR $renamed.patchFile) -Raw
+        $patch | Should -Match 'old marker'
+        $patch | Should -Match 'new marker'
+        foreach ($case in @(@{Path='added.cs'; Text='added readable text'}, @{Path='removed.cs'; Text='removed readable text'})) {
+            $file = @($index.files | Where-Object path -ceq $case.Path)[0]
+            (Get-Content -LiteralPath (Join-Path $env:REVIEW_INPUT_DIR $file.patchFile) -Raw) | Should -Match $case.Text
+        }
+    }
+
     It 'exports binary, mode, symlink, and submodule changes without omitting records' {
         $root = Join-Path $TestDrive ([guid]::NewGuid().ToString())
         $null = [IO.Directory]::CreateDirectory($root)

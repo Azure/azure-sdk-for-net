@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -25,12 +26,20 @@ namespace Azure.Storage.Tests
             // Act
             policy.OnSendingRequest(message);
             Assert.IsTrue(message.Request.Headers.TryGetValue("x-ms-date", out string firstDate));
-            await Task.Delay(1000);
-            policy.OnSendingRequest(message);
+            string secondDate = firstDate;
+
+            for (int i = 0; i < 20 && firstDate == secondDate; i++)
+            {
+                await Task.Delay(250);
+                policy.OnSendingRequest(message);
+                Assert.IsTrue(message.Request.Headers.TryGetValue("x-ms-date", out secondDate));
+            }
 
             // Assert
-            Assert.IsTrue(message.Request.Headers.TryGetValue("x-ms-date", out string secondDate));
-            Assert.IsTrue(Convert.ToDateTime(firstDate) < Convert.ToDateTime(secondDate));
+            Assert.AreNotEqual(firstDate, secondDate);
+            Assert.IsTrue(
+                DateTimeOffset.ParseExact(firstDate, "r", CultureInfo.InvariantCulture) <
+                DateTimeOffset.ParseExact(secondDate, "r", CultureInfo.InvariantCulture));
         }
 
         [Test]

@@ -51,7 +51,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Converts a string to a <see cref="DownloadSecurity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DownloadSecurity?(string value) => value == null ? null : new DownloadSecurity(value);
+        public static implicit operator DownloadSecurity?(string value) => value == null ? (DownloadSecurity?)null : new DownloadSecurity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

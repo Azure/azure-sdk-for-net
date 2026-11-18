@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.ContainerService
         [WirePath("properties.upgradeSettings.overrideSettings")]
         public UpgradeOverrideSettings UpgradeOverrideSettings
         {
-            get => UpgradeSettings?.OverrideSettings;
+            get => Properties?.UpgradeOverrideSettings;
             set
             {
-                UpgradeSettings ??= new ClusterUpgradeSettings();
-                UpgradeSettings.OverrideSettings = value;
+                Properties ??= new ManagedClusterProperties();
+                Properties.UpgradeOverrideSettings = value;
             }
         }
 

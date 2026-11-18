@@ -80,10 +80,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("avg_tokens"u8);
                 writer.WriteNumberValue(AvgTokens.Value);
             }
-            if (Optional.IsDefined(AvgLatencyMs))
+            if (Optional.IsDefined(AvgLatency))
             {
                 writer.WritePropertyName("avg_latency_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(AvgLatencyMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(AvgLatency.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(EvalId))
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Agents
             }
             double? score = default;
             double? avgTokens = default;
-            TimeSpan? avgLatencyMs = default;
+            TimeSpan? avgLatency = default;
             string evalId = default;
             string evalRunId = default;
             DateTimeOffset? completedOn = default;
@@ -175,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    avgLatencyMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    avgLatency = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("eval_id"u8))
@@ -205,7 +205,7 @@ namespace Azure.AI.Projects.Agents
             return new AgentOptimizationCandidateEvaluation(
                 score,
                 avgTokens,
-                avgLatencyMs,
+                avgLatency,
                 evalId,
                 evalRunId,
                 completedOn,

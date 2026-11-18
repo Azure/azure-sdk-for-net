@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="StampKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StampKind?(string value) => value == null ? null : new StampKind(value);
+        public static implicit operator StampKind?(string value) => value == null ? (StampKind?)null : new StampKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

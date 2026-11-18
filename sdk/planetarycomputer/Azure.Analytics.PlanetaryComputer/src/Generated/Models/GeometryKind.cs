@@ -71,7 +71,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="GeometryKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GeometryKind?(string value) => value == null ? null : new GeometryKind(value);
+        public static implicit operator GeometryKind?(string value) => value == null ? (GeometryKind?)null : new GeometryKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

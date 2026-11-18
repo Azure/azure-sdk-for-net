@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Apply patch operation
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApplyPatchCreateFileOperation"/>, <see cref="ApplyPatchDeleteFileOperation"/>, and <see cref="ApplyPatchUpdateFileOperation"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownApplyPatchFileOperation))]
-    public abstract partial class ApplyPatchFileOperation : IJsonModel<ApplyPatchFileOperation>
+    internal abstract partial class ApplyPatchFileOperation : IJsonModel<ApplyPatchFileOperation>
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchFileOperation"/> for deserialization. </summary>
         internal ApplyPatchFileOperation()

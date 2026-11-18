@@ -45,7 +45,7 @@ namespace BasicTypeSpec
 
         /// <summary> Converts a string to a <see cref="ThingModelOptionalLiteralString"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThingModelOptionalLiteralString?(string value) => value == null ? null : new ThingModelOptionalLiteralString(value);
+        public static implicit operator ThingModelOptionalLiteralString?(string value) => value == null ? (ThingModelOptionalLiteralString?)null : new ThingModelOptionalLiteralString(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

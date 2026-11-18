@@ -21,16 +21,12 @@ public class TypeSpecModelConverterFactoryTests
         return options;
     }
 
-    private static Models.ResponseObject CreateTestResponse(
+    private static ResponseObject CreateTestResponse(
         string id = "resp_test123",
         string model = "gpt-4o",
         ResponseStatus status = ResponseStatus.Completed)
     {
-        return new Models.ResponseObject(id, model)
-        {
-            Status = status,
-            CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
-        };
+        return new ResponseObject { Id = id, Object = "response", Model = model, Status = status, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
     }
 
     // --- CanConvert ---
@@ -39,7 +35,7 @@ public class TypeSpecModelConverterFactoryTests
     public void CanConvert_Response_ReturnsTrue()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.That(factory.CanConvert(typeof(Models.ResponseObject)), Is.True);
+        Assert.That(factory.CanConvert(typeof(ResponseObject)), Is.True);
     }
 
     [Test]
@@ -119,7 +115,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Serialize_ResponseError_ProducesCorrectStructure()
     {
         var options = CreateOptions();
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "Something went wrong");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Something went wrong");
 
         var json = JsonSerializer.Serialize(error, options);
         using var doc = JsonDocument.Parse(json);
@@ -147,7 +143,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Serialize_NullValue_WritesJsonNull()
     {
         var options = CreateOptions();
-        Models.ResponseObject? nullResponse = null;
+        ResponseObject? nullResponse = null;
 
         var json = JsonSerializer.Serialize(nullResponse, options);
 
@@ -163,7 +159,7 @@ public class TypeSpecModelConverterFactoryTests
         var response = CreateTestResponse();
 
         var json = JsonSerializer.Serialize(response, options);
-        var deserialized = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
+        var deserialized = JsonSerializer.Deserialize<ResponseObject>(json, options);
 
         Assert.That(deserialized, Is.Not.Null);
         Assert.That(deserialized!.Id, Is.EqualTo("resp_test123"));
@@ -175,10 +171,10 @@ public class TypeSpecModelConverterFactoryTests
     public void Deserialize_ResponseError_PreservesCodeAndMessage()
     {
         var options = CreateOptions();
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test error");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test error");
 
         var json = JsonSerializer.Serialize(error, options);
-        var deserialized = JsonSerializer.Deserialize<Models.ResponseErrorInfo>(json, options);
+        var deserialized = JsonSerializer.Deserialize<ResponseErrorInfo>(json, options);
 
         Assert.That(deserialized, Is.Not.Null);
         Assert.That(deserialized!.Code, Is.EqualTo(ResponseErrorCode.ServerError));
@@ -189,7 +185,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Deserialize_NullJsonToken_ReturnsNull()
     {
         var options = CreateOptions();
-        var result = JsonSerializer.Deserialize<Models.ResponseObject>("null", options);
+        var result = JsonSerializer.Deserialize<ResponseObject>("null", options);
         Assert.That(result, Is.Null);
     }
 
@@ -205,7 +201,7 @@ public class TypeSpecModelConverterFactoryTests
             }
             """;
 
-        var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
+        var request = JsonSerializer.Deserialize<CreateResponse>(OpenAIJson.Normalize(json), options);
 
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
@@ -219,7 +215,7 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var evt = new ResponseCreatedEvent(42, response);
+        var evt = new ResponseCreatedEvent { SequenceNumber = (int)(42), Response = response };
 
         var json = JsonSerializer.Serialize<ResponseStreamEvent>(evt, options);
         var deserialized = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
@@ -236,7 +232,7 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var evt = new ResponseCompletedEvent(99, response);
+        var evt = new ResponseCompletedEvent { SequenceNumber = (int)(99), Response = response };
 
         var json = JsonSerializer.Serialize<ResponseStreamEvent>(evt, options);
         var deserialized = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
@@ -253,15 +249,10 @@ public class TypeSpecModelConverterFactoryTests
     public void RoundTrip_Response_PreservesAllSetFields()
     {
         var options = CreateOptions();
-        var original = new Models.ResponseObject("resp_roundtrip", "gpt-4o-mini")
-        {
-            Status = ResponseStatus.Failed,
-            Error = new Models.ResponseErrorInfo(ResponseErrorCode.InvalidPrompt, "bad prompt"),
-            CreatedAt = new DateTimeOffset(2026, 1, 15, 8, 30, 0, TimeSpan.Zero),
-        };
+        var original = new ResponseObject { Id = "resp_roundtrip", Model = "gpt-4o-mini", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.InvalidPrompt.ToString(), "bad prompt"), CreatedAt = new DateTimeOffset(2026, 1, 15, 8, 30, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(original, options);
-        var restored = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
+        var restored = JsonSerializer.Deserialize<ResponseObject>(json, options);
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Id, Is.EqualTo(original.Id));
@@ -276,7 +267,7 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var original = new ResponseCreatedEvent(7, response);
+        var original = new ResponseCreatedEvent { SequenceNumber = (int)(7), Response = response };
 
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseCreatedEvent>(json, options);
@@ -309,8 +300,8 @@ public class TypeSpecModelConverterFactoryTests
         // Verify that multiple CanConvert calls for the same type are consistent
         var factory = new TypeSpecModelConverterFactory();
 
-        var first = factory.CanConvert(typeof(Models.ResponseObject));
-        var second = factory.CanConvert(typeof(Models.ResponseObject));
+        var first = factory.CanConvert(typeof(ResponseObject));
+        var second = factory.CanConvert(typeof(ResponseObject));
 
         Assert.That(second, Is.EqualTo(first));
         Assert.That(first, Is.True);

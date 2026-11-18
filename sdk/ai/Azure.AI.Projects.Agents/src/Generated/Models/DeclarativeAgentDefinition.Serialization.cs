@@ -100,7 +100,7 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("skills"u8);
                 writer.WriteStartArray();
-                foreach (SkillReference item in Skills)
+                foreach (AgentSkillReference item in Skills)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -207,7 +207,7 @@ namespace Azure.AI.Projects.Agents
             string model = default;
             bool instructionsIsDefined = false;
             string instructions = default;
-            IList<SkillReference> skills = default;
+            IList<AgentSkillReference> skills = default;
             bool temperatureIsDefined = false;
             float? temperature = default;
             bool topPIsDefined = false;
@@ -264,10 +264,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<SkillReference> array = new List<SkillReference>();
+                    List<AgentSkillReference> array = new List<AgentSkillReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SkillReference.DeserializeSkillReference(item, options));
+                        array.Add(AgentSkillReference.DeserializeAgentSkillReference(item, options));
                     }
                     skills = array;
                     continue;
@@ -344,7 +344,7 @@ namespace Azure.AI.Projects.Agents
                 harness,
                 model,
                 instructions,
-                skills ?? new ChangeTrackingList<SkillReference>(),
+                skills ?? new ChangeTrackingList<AgentSkillReference>(),
                 temperature,
                 topP,
                 reasoningOptions,

@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="RouterRuleKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouterRuleKind?(string value) => value == null ? null : new RouterRuleKind(value);
+        public static implicit operator RouterRuleKind?(string value) => value == null ? (RouterRuleKind?)null : new RouterRuleKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

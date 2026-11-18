@@ -64,7 +64,8 @@ public class ResponsesServerSettings : ClientSettings
     /// <see cref="ResponsesServerOptions.ResponseAcceptor"/>. Not configuration-bindable; set it
     /// via the <c>configureSettings</c> callback.
     /// </summary>
-    public Func<Models.CreateResponse, ResponseContext, Models.ResponseObject>? ResponseAcceptor { get; set; }
+    [Experimental("OPENAI001")]
+    public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 
     /// <summary>
     /// Binds the configuration values above from the given section. The inherited credential

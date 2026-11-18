@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="EntityCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityCategory?(string value) => value == null ? null : new EntityCategory(value);
+        public static implicit operator EntityCategory?(string value) => value == null ? (EntityCategory?)null : new EntityCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

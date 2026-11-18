@@ -1026,7 +1026,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="PiiCategoriesExclude"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PiiCategoriesExclude?(string value) => value == null ? null : new PiiCategoriesExclude(value);
+        public static implicit operator PiiCategoriesExclude?(string value) => value == null ? (PiiCategoriesExclude?)null : new PiiCategoriesExclude(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -49,7 +49,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="VectorStoreChunkingStrategyResponseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreChunkingStrategyResponseType?(string value) => value == null ? null : new VectorStoreChunkingStrategyResponseType(value);
+        public static implicit operator VectorStoreChunkingStrategyResponseType?(string value) => value == null ? (VectorStoreChunkingStrategyResponseType?)null : new VectorStoreChunkingStrategyResponseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

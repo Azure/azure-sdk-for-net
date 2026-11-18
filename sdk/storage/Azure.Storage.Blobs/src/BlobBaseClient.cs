@@ -7756,27 +7756,27 @@ namespace Azure.Storage.Blobs.Specialized
             builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
 
             // Validate that builder is properly set
-            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
+            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.BlobContainerName),
                     nameof(BlobSasBuilder),
                     nameof(BlobContainerName));
             }
-            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
+            if (!builder.BlobName.Equals(Name, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.BlobName),
                     nameof(BlobSasBuilder),
                     nameof(Name));
             }
-            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
+            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.Ordinal) != 0)
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.Snapshot),
                     nameof(BlobSasBuilder));
             }
-            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
+            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.Ordinal) != 0)
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.BlobVersionId),
