@@ -100,6 +100,72 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: report-parent-package-referencing-child-named-package
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic csproj diff and
+      return findings only. The shipping library `Azure.Widgets`, at version `1.3.0-beta.1`, adds
+      a `ProjectReference` to `..\..\Azure.Widgets.Gadgets\src\Azure.Widgets.Gadgets.csproj` so
+      that `WidgetsClient` can return the `GadgetsClient` defined in the shipping library
+      `Azure.Widgets.Gadgets`, version `1.0.0-beta.1`, which lives in the same `sdk/widgets/`
+      directory. Both libraries' API listings, tests, and CHANGELOG entries are correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:Azure\.Widgets\.Gadgets|extends)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:Azure\.Widgets\.Gadgets|extends))'
+      - type: output-matches
+        config:
+          pattern: '(?i)invert|revers|direction|layer|builds on|extends|parent|child'
+
+  - name: report-new-metapackage-bundling-child-named-packages
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It adds the new package `Azure.Widgets.Extensions`, version `1.0.0-beta.1`,
+      so customers can install the existing shipping libraries `Azure.Widgets.Extensions.Blobs`
+      and `Azure.Widgets.Extensions.Queues` with one reference. Its csproj sets
+      `IncludeBuildOutput` to `false` and contains only `ProjectReference` items to those two
+      libraries, which live in the same `sdk/widgets/` directory, so it ships no code of its own.
+      Its Description, README, and CHANGELOG are complete and correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends))'
+      - type: output-matches
+        config:
+          pattern: '(?i)invert|revers|direction|layer|builds on|extends|parent|child'
+
+  - name: allow-existing-parent-to-child-reference-on-version-bump
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. Azure.Widgets 1.3.0-beta.1 shipped yesterday. On `main`, its csproj already
+      has a `ProjectReference` to the shipping library `Azure.Widgets.Gadgets` in the same
+      `sdk/widgets/` directory. This automated post-release PR changes only that csproj's
+      `Version` from `1.3.0-beta.1` to `1.3.0-beta.2` and adds a new
+      `## 1.3.0-beta.2 (Unreleased)` entry at the top of CHANGELOG.md with empty
+      `### Features Added`, `### Breaking Changes`, `### Bugs Fixed`, and `### Other Changes`
+      headings. The reference is unchanged. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
   - name: same-type-different-concept-parameters-are-not-flagged
     prompt: >-
       First invoke the code-review skill. Then use it to review this synthetic new
