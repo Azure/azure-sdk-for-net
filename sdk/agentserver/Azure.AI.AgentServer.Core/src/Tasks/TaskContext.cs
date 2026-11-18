@@ -71,11 +71,12 @@ public class TaskContext<TInput>
     public virtual CancellationToken Shutdown => State.Shutdown;
 
     /// <summary>
-    /// Exits the current turn for later recovery: releases the lease without a terminal status
-    /// and signals the engine to park the task <c>in_progress</c> so it can be
+    /// Exits the current turn for later recovery: attempts to release the lease without a terminal
+    /// status and signals the engine to park the task <c>in_progress</c> so it can be
     /// resumed elsewhere. This does <b>not</b> throw — after calling it the handler should return
     /// (any returned value is ignored). Only valid while <see cref="Shutdown"/> is signaled;
     /// calling it otherwise throws <see cref="System.InvalidOperationException"/>.
+    /// If the lease cannot be released, it remains in place until reclaimed or expired.
     /// </summary>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>A task that completes once the deferral has been signaled.</returns>

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Preserve tasks for recovery when releasing their leases during graceful shutdown fails or is canceled.
+
 ### Other Changes
 
 ## 1.0.0-beta.31 (2026-11-04)
