@@ -127,6 +127,7 @@ namespace Azure.Core.Tests.Identity
         [TestCase(RequestUrl, RequestToken, TestTenantId, null, "AZURE_CLIENT_ID")]
         [TestCase("not-a-url", RequestToken, TestTenantId, TestClientId, "ACTIONS_ID_TOKEN_REQUEST_URL")]
         [TestCase("http://token.actions.githubusercontent.com", RequestToken, TestTenantId, TestClientId, "HTTPS")]
+        [TestCase("https://user:secret@token.actions.githubusercontent.com", RequestToken, TestTenantId, TestClientId, "user information")]
         public void GetTokenThrowsCredentialUnavailableWhenMisconfigured(string requestUrl, string requestToken, string tenantId, string clientId, string expectedMessage)
         {
             var transport = new MockTransport(_ => throw new InvalidOperationException("No requests expected"));
@@ -165,6 +166,7 @@ namespace Azure.Core.Tests.Identity
         [TestCase("https://login.sovcloud-identity.fr/", "api://AzureADTokenExchangeFrance")]
         [TestCase("https://login.sovcloud-identity.de/", "api://AzureADTokenExchangeGermany")]
         [TestCase("https://login.sovcloud-identity.sg/", "api://AzureADTokenExchangeGovSG")]
+        [TestCase("https://LOGIN.MICROSOFTONLINE.COM/", "api://AzureADTokenExchange")]
         public async Task IdTokenRequestUsesAudienceForAuthorityHost(string authorityHost, string expectedAudience)
         {
             var transport = CreateTransport();
@@ -181,6 +183,7 @@ namespace Azure.Core.Tests.Identity
         [Test]
         [TestCase("https://token.actions.githubusercontent.com/oidc", "?audience=api%3A%2F%2FAzureADTokenExchange")]
         [TestCase("https://token.actions.githubusercontent.com/oidc?api-version=2.0", "?api-version=2.0&audience=api%3A%2F%2FAzureADTokenExchange")]
+        [TestCase("https://token.actions.githubusercontent.com/oidc?audience=old&api-version=2.0&audience=other", "?api-version=2.0&audience=api%3A%2F%2FAzureADTokenExchange")]
         public async Task IdTokenRequestAppendsAudienceAndSendsRequestToken(string requestUrl, string expectedQuery)
         {
             var transport = CreateTransport();
@@ -209,7 +212,8 @@ namespace Azure.Core.Tests.Identity
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await GetTokenAsync(credential));
 
             Assert.That(ex.Message, Does.Contain("401"));
-            Assert.That(ex.Message, Does.Contain("unauthorized details"));
+            Assert.That(ex.Message, Does.Not.Contain("unauthorized details"));
+            Assert.That(ex.Message, Does.Not.Contain(RequestToken));
             Assert.That(ex.Message, Does.Contain(GitHubActionsCredential.Troubleshooting));
         }
 
@@ -219,6 +223,7 @@ namespace Azure.Core.Tests.Identity
         [TestCase("[]")]
         [TestCase("{}")]
         [TestCase("{\"value\": \"\"}")]
+        [TestCase("{\"value\": \" \\n\"}")]
         [TestCase("{\"value\": 123}")]
         [TestCase("{\"value\": null}")]
         [TestCase("{\"nested\": {\"value\": \"token\"}}")]
@@ -231,6 +236,21 @@ namespace Azure.Core.Tests.Identity
 
             Assert.That(ex.Message, Does.Contain("\"value\""));
             Assert.That(ex.Message, Does.Not.Contain(content));
+        }
+
+        [Test]
+        public async Task IdTokenIsRequestedOnlyWhenAccessTokenIsNotCached()
+        {
+            var transport = CreateTransport();
+            var credential = new GitHubActionsCredential(CreateOptions(transport: transport));
+
+            await GetTokenAsync(credential);
+            await GetTokenAsync(credential);
+            Assert.AreEqual(1, transport.Requests.Count(r => r.Uri.Host == "token.actions.githubusercontent.com"));
+
+            await GetTokenAsync(credential, new TokenRequestContext(new[] { DefaultScope }, claims: """{"access_token":{"nbf":{"essential":true,"value":"1"}}}"""));
+            Assert.AreEqual(2, transport.Requests.Count(r => r.Uri.Host == "token.actions.githubusercontent.com"));
+            Assert.That(_lastEntraRequestBody, Does.Contain("claims="));
         }
 
         [Test]
@@ -304,9 +324,11 @@ namespace Azure.Core.Tests.Identity
             });
         }
 
-        private async ValueTask<AccessToken> GetTokenAsync(TokenCredential credential)
+        private const string DefaultScope = "https://management.azure.com/.default";
+
+        private async ValueTask<AccessToken> GetTokenAsync(TokenCredential credential, TokenRequestContext? requestContext = null)
         {
-            var context = new TokenRequestContext(new[] { "https://management.azure.com/.default" });
+            TokenRequestContext context = requestContext ?? new TokenRequestContext(new[] { DefaultScope });
             return IsAsync ? await credential.GetTokenAsync(context, CancellationToken.None) : credential.GetToken(context, CancellationToken.None);
         }
 

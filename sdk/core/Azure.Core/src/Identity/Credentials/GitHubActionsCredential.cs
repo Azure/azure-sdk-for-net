@@ -165,7 +165,8 @@ namespace Azure.Identity
         {
             if (response.Status != 200)
             {
-                throw new AuthenticationFailedException($"{CredentialName} authentication failed. The GitHub OIDC token request returned status code {response.Status}. Response: {response.Content}. {Troubleshooting}");
+                // The response body isn't included because it may contain sensitive data.
+                throw new AuthenticationFailedException($"{CredentialName} authentication failed. The GitHub OIDC token request returned status code {response.Status}. {Troubleshooting}");
             }
 
             try
@@ -176,7 +177,7 @@ namespace Azure.Identity
                     value.ValueKind == JsonValueKind.String)
                 {
                     string idToken = value.GetString();
-                    if (!string.IsNullOrEmpty(idToken))
+                    if (!string.IsNullOrWhiteSpace(idToken))
                     {
                         return idToken;
                     }
@@ -184,7 +185,7 @@ namespace Azure.Identity
             }
             catch (JsonException)
             {
-                // Handled below so that the response body, which may contain sensitive data, isn't included in the exception.
+                // Handled below so that the response body isn't included in the exception.
             }
 
             throw new AuthenticationFailedException($"{CredentialName} authentication failed. The GitHub OIDC token response didn't contain a valid \"value\" field. {Troubleshooting}");
@@ -227,9 +228,9 @@ namespace Azure.Identity
                 return $"{CredentialName} authentication unavailable. Set the following environment variable(s) to identify the Microsoft Entra application: {string.Join(", ", missingAzureVariables)}. {Troubleshooting}";
             }
 
-            if (!Uri.TryCreate(options.RequestUrl, UriKind.Absolute, out Uri requestUrl) || requestUrl.Scheme != Uri.UriSchemeHttps)
+            if (!Uri.TryCreate(options.RequestUrl, UriKind.Absolute, out Uri requestUrl) || requestUrl.Scheme != Uri.UriSchemeHttps || !string.IsNullOrEmpty(requestUrl.UserInfo))
             {
-                return $"{CredentialName} authentication unavailable. The environment variable {RequestUrlEnvironmentVariable} must be an absolute HTTPS URL. {Troubleshooting}";
+                return $"{CredentialName} authentication unavailable. The environment variable {RequestUrlEnvironmentVariable} must be an absolute HTTPS URL without user information. {Troubleshooting}";
             }
 
             Uri authorityHost = options.AuthorityHost;
@@ -246,11 +247,18 @@ namespace Azure.Identity
         private static Uri BuildRequestUri(Uri requestUrl, string audience)
         {
             var builder = new UriBuilder(requestUrl);
-            string audienceQuery = $"audience={Uri.EscapeDataString(audience)}";
-            string query = builder.Query;
-            builder.Query = string.IsNullOrEmpty(query) || query == "?"
-                ? audienceQuery
-                : $"{query.TrimStart('?')}&{audienceQuery}";
+            List<string> parameters = new();
+            foreach (string parameter in builder.Query.TrimStart('?').Split('&'))
+            {
+                // Replace any existing audience so that the request contains exactly one.
+                string name = parameter.Split('=')[0];
+                if (parameter.Length > 0 && !string.Equals(name, "audience", StringComparison.Ordinal))
+                {
+                    parameters.Add(parameter);
+                }
+            }
+            parameters.Add($"audience={Uri.EscapeDataString(audience)}");
+            builder.Query = string.Join("&", parameters);
             return builder.Uri;
         }
     }

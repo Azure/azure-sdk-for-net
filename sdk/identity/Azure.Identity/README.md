@@ -194,7 +194,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |-|-|-|
 |[`AzurePipelinesCredential`][ref_AzurePipelinesCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://aka.ms/azsdk/net/identity/azurepipelinescredential/usage)|
 |[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion.||
-|[`GitHubActionsCredential`][ref_GitHubActionsCredential]|Supports [workload identity federation](https://docs.github.com/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-azure) in GitHub Actions workflows.||
+|[`GitHubActionsCredential`][ref_GitHubActionsCredential]|Supports [workload identity federation](https://docs.github.com/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-azure) in GitHub Actions workflows.||
 |[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)|
 |[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)|
 
