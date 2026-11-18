@@ -143,7 +143,15 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> Returns a <see cref="MaxMonthlyVirtualUserHoursResource"/> object. </returns>
         public virtual MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHoursResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MaxMonthlyVirtualUserHoursResource.ValidateResourceId(id);
+            if (id.ResourceType == MaxMonthlyVirtualUserHoursResource.ResourceType && !string.Equals(id.Name, "maxMonthlyVirtualUserHours", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "maxMonthlyVirtualUserHours"), nameof(id));
+            }
             return new MaxMonthlyVirtualUserHoursResource(Client, id);
         }
     }
