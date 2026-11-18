@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.HybridCompute;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -23,9 +22,5 @@ namespace Azure.ResourceManager.HybridCompute.Models
             LicenseStatus = licenseStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The current status of the license profile key. </summary>
-        [WirePath("licenseStatus")]
-        public int? LicenseStatus { get; }
     }
 }

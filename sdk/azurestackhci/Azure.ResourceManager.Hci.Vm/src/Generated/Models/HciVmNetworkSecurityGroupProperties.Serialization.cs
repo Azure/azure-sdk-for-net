@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciVmNetworkSecurityGroupProperties(networkInterfaces ?? new ChangeTrackingList<HciVmNetworkInterfaceArmReference>(), subnets ?? new ChangeTrackingList<HciVmLogicalNetworkArmReference>(), provisioningState, status, additionalBinaryDataProperties);

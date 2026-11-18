@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedServiceRestartReplicaContent(
                 partitionId,
-                replicaIds,
+                replicaIds ?? new ChangeTrackingList<long>(),
                 restartKind,
                 forceRestart,
                 timeoutInSeconds,

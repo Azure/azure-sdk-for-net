@@ -12,14 +12,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> This is the request to cancel running operations in scheduled actions using the operation ids. </summary>
+    /// <summary> The eligible operations to cancel. </summary>
     public partial class CancelBulkOperationsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsContent"/>. </summary>
-        /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
+        /// <param name="operationIds"> The Bulk Action Operation Ids that identify the operations to cancel. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationIds"/> is null. </exception>
         public CancelBulkOperationsContent(IEnumerable<string> operationIds)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsContent"/>. </summary>
-        /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
+        /// <param name="operationIds"> The Bulk Action Operation Ids that identify the operations to cancel. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CancelBulkOperationsContent(IList<string> operationIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The list of operation ids to cancel operations on. </summary>
+        /// <summary> The Bulk Action Operation Ids that identify the operations to cancel. </summary>
         public IList<string> OperationIds { get; }
     }
 }

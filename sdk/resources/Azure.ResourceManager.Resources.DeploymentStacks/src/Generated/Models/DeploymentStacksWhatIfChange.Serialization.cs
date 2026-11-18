@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeploymentStacksWhatIfChange(resourceChanges, denySettingsChange, deploymentScopeChange, additionalBinaryDataProperties);
+            return new DeploymentStacksWhatIfChange(resourceChanges ?? new ChangeTrackingList<DeploymentStacksWhatIfResourceChange>(), denySettingsChange, deploymentScopeChange, additionalBinaryDataProperties);
         }
     }
 }

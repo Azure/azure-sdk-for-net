@@ -76,7 +76,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="WeekDays"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WeekDays?(string value) => value == null ? null : new WeekDays(value);
+        public static implicit operator WeekDays?(string value) => value == null ? (WeekDays?)null : new WeekDays(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

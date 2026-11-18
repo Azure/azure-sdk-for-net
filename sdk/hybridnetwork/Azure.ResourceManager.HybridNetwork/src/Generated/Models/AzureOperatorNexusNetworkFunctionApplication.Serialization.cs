@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure Operator Distributed Services network function application definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAzureOperatorNexusNetworkFunctionApplication))]
     public abstract partial class AzureOperatorNexusNetworkFunctionApplication : NetworkFunctionApplication, IJsonModel<AzureOperatorNexusNetworkFunctionApplication>
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ImageFile":
-                        return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element, options);
                     case "ArmTemplate":
                         return AzureOperatorNexusNetworkFunctionArmTemplateApplication.DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(element, options);
+                    case "ImageFile":
+                        return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element, options);
                 }
             }
             return UnknownAzureOperatorNexusNetworkFunctionApplication.DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(element, options);

@@ -20,19 +20,26 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="EndpointCertificateProperties"/>. </summary>
         public EndpointCertificateProperties()
         {
+            TrustedRootCertificates = new ChangeTrackingList<EndpointTrustedRootCertificateInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointCertificateProperties"/>. </summary>
         /// <param name="publicBlob"> The certificate public blob. </param>
+        /// <param name="trustedRootCertificates"> Trusted root certificates required to validate the instance certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointCertificateProperties(string publicBlob, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointCertificateProperties(string publicBlob, IReadOnlyList<EndpointTrustedRootCertificateInfo> trustedRootCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicBlob = publicBlob;
+            TrustedRootCertificates = trustedRootCertificates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The certificate public blob. </summary>
         [WirePath("publicBlob")]
         public string PublicBlob { get; set; }
+
+        /// <summary> Trusted root certificates required to validate the instance certificate. </summary>
+        [WirePath("trustedRootCertificates")]
+        public IReadOnlyList<EndpointTrustedRootCertificateInfo> TrustedRootCertificates { get; } = new ChangeTrackingList<EndpointTrustedRootCertificateInfo>();
     }
 }

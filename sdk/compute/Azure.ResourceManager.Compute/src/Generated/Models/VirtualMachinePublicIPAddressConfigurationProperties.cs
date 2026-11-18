@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public PublicIPAllocationMethod? PublicIPAllocationMethod { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier PublicIPPrefixId
+        public virtual ResourceIdentifier PublicIPPrefixId
         {
             get
             {

@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("linkedService"u8))
                 {
-                    linkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    linkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BlobTriggerTypeProperties(folderPath, maxConcurrency, linkedService, additionalBinaryDataProperties);

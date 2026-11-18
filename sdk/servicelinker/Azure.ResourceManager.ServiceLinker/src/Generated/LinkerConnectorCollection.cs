@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerConnectorsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerResourceDataAsyncCollectionResultOfT(
                 _linkerConnectorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerConnectorsGetAllCollectionResultOfT(
+            return new PageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerResourceDataCollectionResultOfT(
                 _linkerConnectorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

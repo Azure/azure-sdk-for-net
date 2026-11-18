@@ -242,7 +242,6 @@
                 "$id": "22",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "AzureCoreEmbeddingVector",
                 "doc": "get an embedding vector",
                 "accessibility": "public",
                 "parameters": [
@@ -343,7 +342,6 @@
                 "$id": "26",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "AzureCoreEmbeddingVector",
                 "doc": "put an embedding vector",
                 "accessibility": "public",
                 "parameters": [
@@ -485,7 +483,6 @@
                 "$id": "32",
                 "name": "post",
                 "isExactName": false,
-                "resourceName": "AzureCoreEmbeddingVector",
                 "doc": "post a model which has an embeddingVector property",
                 "accessibility": "public",
                 "parameters": [

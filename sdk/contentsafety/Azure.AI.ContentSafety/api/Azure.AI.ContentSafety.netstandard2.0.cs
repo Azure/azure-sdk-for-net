@@ -1,5 +1,124 @@
 namespace Azure.AI.ContentSafety
 {
+    public partial class AcsApproval : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsApproval>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsApproval>
+    {
+        internal AcsApproval() { }
+        public string Type { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.AcsApproval JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.AcsApproval PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.AcsApproval System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsApproval>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsApproval>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AcsApproval System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsApproval>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsApproval>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsApproval>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsDecision : System.IEquatable<Azure.AI.ContentSafety.AcsDecision>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsDecision(string value) { throw null; }
+        public static Azure.AI.ContentSafety.AcsDecision Allow { get { throw null; } }
+        public static Azure.AI.ContentSafety.AcsDecision Deny { get { throw null; } }
+        public static Azure.AI.ContentSafety.AcsDecision Transform { get { throw null; } }
+        public bool Equals(Azure.AI.ContentSafety.AcsDecision other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentSafety.AcsDecision left, Azure.AI.ContentSafety.AcsDecision right) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.AcsDecision (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.AcsDecision? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentSafety.AcsDecision left, Azure.AI.ContentSafety.AcsDecision right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AcsEvidence : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsEvidence>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsEvidence>
+    {
+        internal AcsEvidence() { }
+        public string Description { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Type { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.AcsEvidence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.AcsEvidence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.AcsEvidence System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsEvidence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsEvidence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AcsEvidence System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsEvidence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsEvidence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsEvidence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AcsHarmDetail : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsHarmDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmDetail>
+    {
+        internal AcsHarmDetail() { }
+        public bool Detected { get { throw null; } }
+        public string Id { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.AcsHarmDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.AcsHarmDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.AcsHarmDetail System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsHarmDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsHarmDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AcsHarmDetail System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AcsHarmResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsHarmResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmResult>
+    {
+        internal AcsHarmResult() { }
+        public bool Blocked { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.ContentSafety.AcsHarmDetail> Details { get { throw null; } }
+        public bool Detected { get { throw null; } }
+        public string License { get { throw null; } }
+        public string Severity { get { throw null; } }
+        public System.Uri Url { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.AcsHarmResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.AcsHarmResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.AcsHarmResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsHarmResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsHarmResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AcsHarmResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsHarmResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AcsTransform : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsTransform>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsTransform>
+    {
+        internal AcsTransform() { }
+        public string Path { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.AcsTransform JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.AcsTransform PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.AcsTransform System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsTransform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsTransform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AcsTransform System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsTransform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsTransform>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsTransform>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AcsVerdict : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsVerdict>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsVerdict>
+    {
+        internal AcsVerdict() { }
+        public Azure.AI.ContentSafety.AcsApproval Approval { get { throw null; } }
+        public Azure.AI.ContentSafety.AcsDecision Decision { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.ContentSafety.AcsEvidence> Evidence { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.ContentSafety.AcsHarmResult> HarmResults { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public Azure.AI.ContentSafety.AcsTransform Transform { get { throw null; } }
+        public System.Collections.Generic.IList<string> Warnings { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.AcsVerdict JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.AcsVerdict PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.AcsVerdict System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsVerdict>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AcsVerdict>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AcsVerdict System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsVerdict>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsVerdict>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AcsVerdict>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AddOrUpdateTextBlocklistItemsOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsOptions>
     {
         public AddOrUpdateTextBlocklistItemsOptions(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems) { }
@@ -190,6 +309,38 @@ namespace Azure.AI.ContentSafety
         public Azure.AI.ContentSafety.ContentSafetyClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
+    public partial class ContentProvenanceClient
+    {
+        protected ContentProvenanceClient() { }
+        public ContentProvenanceClient(Azure.AI.ContentSafety.ContentProvenanceClientSettings settings) { }
+        public ContentProvenanceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public ContentProvenanceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.ContentSafety.ContentSafetyClientOptions options) { }
+        public ContentProvenanceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ContentProvenanceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.ContentSafety.ContentSafetyClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<Azure.AI.ContentSafety.DetectProvenanceResult> Detect(Azure.WaitUntil waitUntil, Azure.AI.ContentSafety.DetectProvenanceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Detect(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentSafety.DetectProvenanceResult>> DetectAsync(Azure.WaitUntil waitUntil, Azure.AI.ContentSafety.DetectProvenanceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DetectAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetOperationStatus(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentSafety.ProvenanceDetectOperation> GetOperationStatus(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.ProvenanceDetectOperation>> GetOperationStatusAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class ContentProvenanceClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddContentProvenanceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddContentProvenanceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.ContentSafety.ContentProvenanceClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedContentProvenanceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedContentProvenanceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.ContentSafety.ContentProvenanceClientSettings> configureSettings) { throw null; }
+    }
+    public partial class ContentProvenanceClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ContentProvenanceClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.ContentSafety.ContentSafetyClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class ContentSafetyClient
     {
         protected ContentSafetyClient() { }
@@ -221,6 +372,10 @@ namespace Azure.AI.ContentSafety
         public virtual Azure.Response ShieldPrompt(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.ShieldPromptResult>> ShieldPromptAsync(Azure.AI.ContentSafety.ShieldPromptOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ShieldPromptAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentSafety.UnifiedModerateResult> UnifiedModerate(Azure.AI.ContentSafety.UnifiedModerateConfig options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UnifiedModerate(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.UnifiedModerateResult>> UnifiedModerateAsync(Azure.AI.ContentSafety.UnifiedModerateConfig options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UnifiedModerateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public static partial class ContentSafetyClientHostExtensions
     {
@@ -231,11 +386,12 @@ namespace Azure.AI.ContentSafety
     }
     public partial class ContentSafetyClientOptions : Azure.Core.ClientOptions
     {
-        public ContentSafetyClientOptions(Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2024_09_01) { }
+        public ContentSafetyClientOptions(Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2026_09_01_Preview) { }
         public enum ServiceVersion
         {
             V2023_10_01 = 1,
             V2024_09_01 = 2,
+            V2026_09_01_Preview = 3,
         }
     }
     public partial class ContentSafetyClientSettings : System.ClientModel.Primitives.ClientSettings
@@ -262,6 +418,12 @@ namespace Azure.AI.ContentSafety
     }
     public static partial class ContentSafetyModelFactory
     {
+        public static Azure.AI.ContentSafety.AcsApproval AcsApproval(string type = null) { throw null; }
+        public static Azure.AI.ContentSafety.AcsEvidence AcsEvidence(string id = null, string type = null, System.Uri uri = null, string description = null) { throw null; }
+        public static Azure.AI.ContentSafety.AcsHarmDetail AcsHarmDetail(bool detected = false, string id = null) { throw null; }
+        public static Azure.AI.ContentSafety.AcsHarmResult AcsHarmResult(bool blocked = false, bool detected = false, string severity = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.AcsHarmDetail> details = null, System.Uri url = null, string license = null) { throw null; }
+        public static Azure.AI.ContentSafety.AcsTransform AcsTransform(string path = null, string value = null) { throw null; }
+        public static Azure.AI.ContentSafety.AcsVerdict AcsVerdict(Azure.AI.ContentSafety.AcsDecision decision = default(Azure.AI.ContentSafety.AcsDecision), string reason = null, string message = null, System.Collections.Generic.IEnumerable<string> warnings = null, Azure.AI.ContentSafety.AcsApproval approval = null, Azure.AI.ContentSafety.AcsTransform transform = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.AcsEvidence> evidence = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentSafety.AcsHarmResult> harmResults = null) { throw null; }
         public static Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsOptions AddOrUpdateTextBlocklistItemsOptions(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems = null) { throw null; }
         public static Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsResult AddOrUpdateTextBlocklistItemsResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems = null) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeImageOptions AnalyzeImageOptions(Azure.AI.ContentSafety.ContentSafetyImageData image = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.ImageCategory> categories = null, Azure.AI.ContentSafety.AnalyzeImageOutputType? outputType = default(Azure.AI.ContentSafety.AnalyzeImageOutputType?)) { throw null; }
@@ -269,10 +431,15 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.AnalyzeTextOptions AnalyzeTextOptions(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextCategory> categories = null, System.Collections.Generic.IEnumerable<string> blocklistNames = null, bool? haltOnBlocklistHit = default(bool?), Azure.AI.ContentSafety.AnalyzeTextOutputType? outputType = default(Azure.AI.ContentSafety.AnalyzeTextOutputType?)) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeTextResult AnalyzeTextResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistMatch> blocklistsMatch = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextCategoriesAnalysis> categoriesAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.ContentSafetyImageData ContentSafetyImageData(System.BinaryData content = null, System.Uri blobUri = null) { throw null; }
+        public static Azure.AI.ContentSafety.DetectedProvenance DetectedProvenance(Azure.AI.ContentSafety.DetectedProvenanceType? type = default(Azure.AI.ContentSafety.DetectedProvenanceType?), string provider = null, string modelName = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.ContentSafety.DetectProvenanceOptions DetectProvenanceOptions(Azure.AI.ContentSafety.ProvenanceContent content = null) { throw null; }
+        public static Azure.AI.ContentSafety.DetectProvenanceResult DetectProvenanceResult(Azure.AI.ContentSafety.DetectOutcome outcome = default(Azure.AI.ContentSafety.DetectOutcome), System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.DetectedProvenance> results = null) { throw null; }
         public static Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions DetectTextProtectedMaterialOptions(string text = null) { throw null; }
         public static Azure.AI.ContentSafety.DetectTextProtectedMaterialResult DetectTextProtectedMaterialResult(Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult protectedMaterialAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.DocumentInjectionAnalysisResult DocumentInjectionAnalysisResult(bool attackDetected = false) { throw null; }
         public static Azure.AI.ContentSafety.ImageCategoriesAnalysis ImageCategoriesAnalysis(Azure.AI.ContentSafety.ImageCategory category = default(Azure.AI.ContentSafety.ImageCategory), int? severity = default(int?)) { throw null; }
+        public static Azure.AI.ContentSafety.ProvenanceContent ProvenanceContent(System.Uri uri = null) { throw null; }
+        public static Azure.AI.ContentSafety.ProvenanceDetectOperation ProvenanceDetectOperation(string id = null, Azure.AI.ContentSafety.OperationState status = default(Azure.AI.ContentSafety.OperationState), Azure.ResponseError error = null, Azure.AI.ContentSafety.DetectProvenanceResult result = null, Azure.AI.ContentSafety.ProvenanceOperationKind kind = default(Azure.AI.ContentSafety.ProvenanceOperationKind), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions RemoveTextBlocklistItemsOptions(System.Collections.Generic.IEnumerable<string> blocklistItemIds = null) { throw null; }
         public static Azure.AI.ContentSafety.ShieldPromptOptions ShieldPromptOptions(string userPrompt = null, System.Collections.Generic.IEnumerable<string> documents = null) { throw null; }
         public static Azure.AI.ContentSafety.ShieldPromptResult ShieldPromptResult(Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult userPromptAnalysis = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult> documentsAnalysis = null) { throw null; }
@@ -282,7 +449,91 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.TextBlocklistMatch TextBlocklistMatch(string blocklistName = null, string blocklistItemId = null, string blocklistItemText = null) { throw null; }
         public static Azure.AI.ContentSafety.TextCategoriesAnalysis TextCategoriesAnalysis(Azure.AI.ContentSafety.TextCategory category = default(Azure.AI.ContentSafety.TextCategory), int? severity = default(int?)) { throw null; }
         public static Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult TextProtectedMaterialAnalysisResult(bool detected = false) { throw null; }
+        public static Azure.AI.ContentSafety.UnifiedModerateConfig UnifiedModerateConfig(string policyId = null, string targetResourceId = null, Azure.AI.ContentSafety.UnifiedModerateSource source = default(Azure.AI.ContentSafety.UnifiedModerateSource), string content = null, string toolName = null, string toolCallId = null, string toolArguments = null, bool? toolResultIsError = default(bool?), double? toolDurationMs = default(double?), Azure.AI.ContentSafety.UnifiedModerateContext context = null) { throw null; }
+        public static Azure.AI.ContentSafety.UnifiedModerateContext UnifiedModerateContext(string agentId = null, string sessionId = null, long? sequence = default(long?), string correlationId = null, string userId = null, string tenantId = null, string extensions = null) { throw null; }
+        public static Azure.AI.ContentSafety.UnifiedModerateResult UnifiedModerateResult(Azure.AI.ContentSafety.UnifiedModerateVerdict verdict = default(Azure.AI.ContentSafety.UnifiedModerateVerdict), string reason = null, string content = null, Azure.AI.ContentSafety.AcsVerdict acsVerdict = null) { throw null; }
         public static Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult UserPromptInjectionAnalysisResult(bool attackDetected = false) { throw null; }
+    }
+    public partial class DetectedProvenance : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectedProvenance>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectedProvenance>
+    {
+        internal DetectedProvenance() { }
+        public string ModelName { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        public Azure.AI.ContentSafety.DetectedProvenanceType? Type { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.DetectedProvenance JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.DetectedProvenance PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.DetectedProvenance System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectedProvenance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectedProvenance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DetectedProvenance System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectedProvenance>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectedProvenance>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectedProvenance>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DetectedProvenanceType : System.IEquatable<Azure.AI.ContentSafety.DetectedProvenanceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DetectedProvenanceType(string value) { throw null; }
+        public static Azure.AI.ContentSafety.DetectedProvenanceType C2PA { get { throw null; } }
+        public static Azure.AI.ContentSafety.DetectedProvenanceType Watermark { get { throw null; } }
+        public bool Equals(Azure.AI.ContentSafety.DetectedProvenanceType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentSafety.DetectedProvenanceType left, Azure.AI.ContentSafety.DetectedProvenanceType right) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.DetectedProvenanceType (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.DetectedProvenanceType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentSafety.DetectedProvenanceType left, Azure.AI.ContentSafety.DetectedProvenanceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DetectOutcome : System.IEquatable<Azure.AI.ContentSafety.DetectOutcome>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DetectOutcome(string value) { throw null; }
+        public static Azure.AI.ContentSafety.DetectOutcome NoProvenanceDetected { get { throw null; } }
+        public static Azure.AI.ContentSafety.DetectOutcome ProvenanceDetected { get { throw null; } }
+        public bool Equals(Azure.AI.ContentSafety.DetectOutcome other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentSafety.DetectOutcome left, Azure.AI.ContentSafety.DetectOutcome right) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.DetectOutcome (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.DetectOutcome? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentSafety.DetectOutcome left, Azure.AI.ContentSafety.DetectOutcome right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DetectProvenanceOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectProvenanceOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceOptions>
+    {
+        public DetectProvenanceOptions(Azure.AI.ContentSafety.ProvenanceContent content) { }
+        public Azure.AI.ContentSafety.ProvenanceContent Content { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.DetectProvenanceOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.ContentSafety.DetectProvenanceOptions detectProvenanceOptions) { throw null; }
+        protected virtual Azure.AI.ContentSafety.DetectProvenanceOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.DetectProvenanceOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectProvenanceOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectProvenanceOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DetectProvenanceOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DetectProvenanceResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectProvenanceResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceResult>
+    {
+        internal DetectProvenanceResult() { }
+        public Azure.AI.ContentSafety.DetectOutcome Outcome { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.ContentSafety.DetectedProvenance> Results { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.DetectProvenanceResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.DetectProvenanceResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.DetectProvenanceResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectProvenanceResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectProvenanceResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DetectProvenanceResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectProvenanceResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DetectTextProtectedMaterialOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>
     {
@@ -360,6 +611,77 @@ namespace Azure.AI.ContentSafety
         public static implicit operator Azure.AI.ContentSafety.ImageCategory (string value) { throw null; }
         public static implicit operator Azure.AI.ContentSafety.ImageCategory? (string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.ImageCategory left, Azure.AI.ContentSafety.ImageCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationState : System.IEquatable<Azure.AI.ContentSafety.OperationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationState(string value) { throw null; }
+        public static Azure.AI.ContentSafety.OperationState Canceled { get { throw null; } }
+        public static Azure.AI.ContentSafety.OperationState Failed { get { throw null; } }
+        public static Azure.AI.ContentSafety.OperationState NotStarted { get { throw null; } }
+        public static Azure.AI.ContentSafety.OperationState Running { get { throw null; } }
+        public static Azure.AI.ContentSafety.OperationState Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.ContentSafety.OperationState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentSafety.OperationState left, Azure.AI.ContentSafety.OperationState right) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.OperationState (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.OperationState? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentSafety.OperationState left, Azure.AI.ContentSafety.OperationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ProvenanceContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProvenanceContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceContent>
+    {
+        public ProvenanceContent(System.Uri uri) { }
+        public System.Uri Uri { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.ProvenanceContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.ProvenanceContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.ProvenanceContent System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProvenanceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProvenanceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ProvenanceContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProvenanceDetectOperation : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProvenanceDetectOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceDetectOperation>
+    {
+        internal ProvenanceDetectOperation() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.ContentSafety.ProvenanceOperationKind Kind { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public Azure.AI.ContentSafety.DetectProvenanceResult Result { get { throw null; } }
+        public Azure.AI.ContentSafety.OperationState Status { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.ProvenanceDetectOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.ContentSafety.ProvenanceDetectOperation (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.ContentSafety.ProvenanceDetectOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.ProvenanceDetectOperation System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProvenanceDetectOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProvenanceDetectOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ProvenanceDetectOperation System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceDetectOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceDetectOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProvenanceDetectOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvenanceOperationKind : System.IEquatable<Azure.AI.ContentSafety.ProvenanceOperationKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvenanceOperationKind(string value) { throw null; }
+        public static Azure.AI.ContentSafety.ProvenanceOperationKind Detect { get { throw null; } }
+        public bool Equals(Azure.AI.ContentSafety.ProvenanceOperationKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentSafety.ProvenanceOperationKind left, Azure.AI.ContentSafety.ProvenanceOperationKind right) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.ProvenanceOperationKind (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.ProvenanceOperationKind? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentSafety.ProvenanceOperationKind left, Azure.AI.ContentSafety.ProvenanceOperationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RemoveTextBlocklistItemsOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>
@@ -507,6 +829,104 @@ namespace Azure.AI.ContentSafety
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class UnifiedModerateConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateConfig>
+    {
+        public UnifiedModerateConfig(Azure.AI.ContentSafety.UnifiedModerateSource source, string content) { }
+        public string Content { get { throw null; } }
+        public Azure.AI.ContentSafety.UnifiedModerateContext Context { get { throw null; } set { } }
+        public string PolicyId { get { throw null; } set { } }
+        public Azure.AI.ContentSafety.UnifiedModerateSource Source { get { throw null; } }
+        public string TargetResourceId { get { throw null; } set { } }
+        public string ToolArguments { get { throw null; } set { } }
+        public string ToolCallId { get { throw null; } set { } }
+        public double? ToolDurationMs { get { throw null; } set { } }
+        public string ToolName { get { throw null; } set { } }
+        public bool? ToolResultIsError { get { throw null; } set { } }
+        protected virtual Azure.AI.ContentSafety.UnifiedModerateConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.ContentSafety.UnifiedModerateConfig unifiedModerateConfig) { throw null; }
+        protected virtual Azure.AI.ContentSafety.UnifiedModerateConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.UnifiedModerateConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.UnifiedModerateConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UnifiedModerateContext : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateContext>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateContext>
+    {
+        public UnifiedModerateContext() { }
+        public string AgentId { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } set { } }
+        public string Extensions { get { throw null; } set { } }
+        public long? Sequence { get { throw null; } set { } }
+        public string SessionId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public string UserId { get { throw null; } set { } }
+        protected virtual Azure.AI.ContentSafety.UnifiedModerateContext JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentSafety.UnifiedModerateContext PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.UnifiedModerateContext System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateContext>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateContext>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.UnifiedModerateContext System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateContext>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateContext>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateContext>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UnifiedModerateResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateResult>
+    {
+        internal UnifiedModerateResult() { }
+        public Azure.AI.ContentSafety.AcsVerdict AcsVerdict { get { throw null; } }
+        public string Content { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public Azure.AI.ContentSafety.UnifiedModerateVerdict Verdict { get { throw null; } }
+        protected virtual Azure.AI.ContentSafety.UnifiedModerateResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.ContentSafety.UnifiedModerateResult (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.ContentSafety.UnifiedModerateResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentSafety.UnifiedModerateResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UnifiedModerateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.UnifiedModerateResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UnifiedModerateResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UnifiedModerateSource : System.IEquatable<Azure.AI.ContentSafety.UnifiedModerateSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UnifiedModerateSource(string value) { throw null; }
+        public static Azure.AI.ContentSafety.UnifiedModerateSource Input { get { throw null; } }
+        public static Azure.AI.ContentSafety.UnifiedModerateSource Output { get { throw null; } }
+        public static Azure.AI.ContentSafety.UnifiedModerateSource PostToolCall { get { throw null; } }
+        public static Azure.AI.ContentSafety.UnifiedModerateSource PreToolCall { get { throw null; } }
+        public bool Equals(Azure.AI.ContentSafety.UnifiedModerateSource other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentSafety.UnifiedModerateSource left, Azure.AI.ContentSafety.UnifiedModerateSource right) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.UnifiedModerateSource (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.UnifiedModerateSource? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentSafety.UnifiedModerateSource left, Azure.AI.ContentSafety.UnifiedModerateSource right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UnifiedModerateVerdict : System.IEquatable<Azure.AI.ContentSafety.UnifiedModerateVerdict>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UnifiedModerateVerdict(string value) { throw null; }
+        public static Azure.AI.ContentSafety.UnifiedModerateVerdict Allowed { get { throw null; } }
+        public static Azure.AI.ContentSafety.UnifiedModerateVerdict Blocked { get { throw null; } }
+        public bool Equals(Azure.AI.ContentSafety.UnifiedModerateVerdict other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentSafety.UnifiedModerateVerdict left, Azure.AI.ContentSafety.UnifiedModerateVerdict right) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.UnifiedModerateVerdict (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.UnifiedModerateVerdict? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentSafety.UnifiedModerateVerdict left, Azure.AI.ContentSafety.UnifiedModerateVerdict right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class UserPromptInjectionAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>
     {
         internal UserPromptInjectionAnalysisResult() { }
@@ -529,6 +949,9 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.BlocklistClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddBlocklistClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.BlocklistClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddBlocklistClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.BlocklistClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddBlocklistClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentProvenanceClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentProvenanceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentProvenanceClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentProvenanceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentProvenanceClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentProvenanceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentSafetyClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentSafetyClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentSafetyClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentSafetyClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentSafetyClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentSafetyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

@@ -81,10 +81,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("usedSeconds"u8);
             writer.WriteNumberValue(UsedSeconds);
-            if (Optional.IsDefined(RemainingSeconds))
+            if (Optional.IsDefined(RemainingSeconds, _remainingSecondsIsDefined))
             {
-                writer.WritePropertyName("remainingSeconds"u8);
-                writer.WriteNumberValue(RemainingSeconds.Value);
+                if (RemainingSeconds != null)
+                {
+                    writer.WritePropertyName("remainingSeconds"u8);
+                    writer.WriteNumberValue(RemainingSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("remainingSeconds"u8);
+                }
             }
             writer.WritePropertyName("beginningTime"u8);
             writer.WriteStringValue(BeginningOn, "O");
@@ -133,6 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             long usedSeconds = default;
+            bool remainingSecondsIsDefined = false;
             long? remainingSeconds = default;
             DateTimeOffset beginningOn = default;
             DateTimeOffset endingOn = default;
@@ -146,6 +154,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("remainingSeconds"u8))
                 {
+                    remainingSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         remainingSeconds = null;
@@ -166,10 +175,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningOn, endingOn, additionalBinaryDataProperties);
+            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningOn, endingOn, additionalBinaryDataProperties)
+            {
+                _remainingSecondsIsDefined = remainingSecondsIsDefined
+            };
         }
     }
 }

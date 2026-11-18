@@ -7,6 +7,7 @@ using System.Net.ServerSentEvents;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Streaming;
@@ -18,9 +19,19 @@ public sealed class EventStreamRegistryTests
     public async Task OptionsConfiguredAfterRegistrationDetermineBacking()
     {
         var services = new ServiceCollection();
-        services.AddAgentEventStreams();
-        services.Configure<AgentEventStreamOptions>(options =>
-            options.UseInMemoryReplay());
+        services.AddAgentEventStreamsDefault(
+            "test-protocol",
+            serviceProvider =>
+            {
+                var options = new AgentEventStreamOptions();
+                if (serviceProvider.GetRequiredService<IOptions<LateStreamOptions>>().Value.Replay)
+                {
+                    options.UseInMemoryReplay();
+                }
+
+                return options;
+            });
+        services.Configure<LateStreamOptions>(options => options.Replay = true);
 
         await using ServiceProvider provider = services.BuildServiceProvider();
         AgentEventStreamRegistry registry =
@@ -38,6 +49,11 @@ public sealed class EventStreamRegistryTests
 
         Assert.That(retained, Has.Count.EqualTo(1));
         Assert.That(retained[0].Data, Is.EqualTo("retained"));
+    }
+
+    private sealed class LateStreamOptions
+    {
+        public bool Replay { get; set; }
     }
 
     [Test]

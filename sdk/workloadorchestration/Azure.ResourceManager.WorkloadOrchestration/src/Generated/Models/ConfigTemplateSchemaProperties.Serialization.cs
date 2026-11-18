@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    value = BinaryData.FromString(prop.Value.GetRawText());
+                    value = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("templateUniqueIdentifier"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConfigTemplateSchemaProperties(value, templateUniqueIdentifier, provisioningState, additionalBinaryDataProperties);

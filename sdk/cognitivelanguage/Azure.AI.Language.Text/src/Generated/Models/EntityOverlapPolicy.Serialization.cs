@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for entity OverlapPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MatchLongestEntityPolicyType"/> and <see cref="AllowOverlapEntityPolicyType"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AllowOverlapEntityPolicyType"/> and <see cref="MatchLongestEntityPolicyType"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEntityOverlapPolicy))]
     public abstract partial class EntityOverlapPolicy : IJsonModel<EntityOverlapPolicy>
@@ -129,10 +129,10 @@ namespace Azure.AI.Language.Text
             {
                 switch (discriminator.GetString())
                 {
-                    case "matchLongest":
-                        return MatchLongestEntityPolicyType.DeserializeMatchLongestEntityPolicyType(element, options);
                     case "allowOverlap":
                         return AllowOverlapEntityPolicyType.DeserializeAllowOverlapEntityPolicyType(element, options);
+                    case "matchLongest":
+                        return MatchLongestEntityPolicyType.DeserializeMatchLongestEntityPolicyType(element, options);
                 }
             }
             return UnknownEntityOverlapPolicy.DeserializeUnknownEntityOverlapPolicy(element, options);

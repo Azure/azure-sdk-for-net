@@ -15,11 +15,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence is set based on cron expression. </summary>
     public partial class RecurrenceWithCron : LoadTestingRecurrence, IJsonModel<RecurrenceWithCron>
     {
-        /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/> for deserialization. </summary>
-        internal RecurrenceWithCron()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -135,7 +130,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RecurrenceWithCron(frequency, recurrenceEnd, additionalBinaryDataProperties, cronExpression);

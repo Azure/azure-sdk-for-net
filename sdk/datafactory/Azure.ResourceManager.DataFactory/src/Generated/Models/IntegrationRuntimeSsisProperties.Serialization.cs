@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new IntegrationRuntimeSsisProperties(
                 catalogInfo,

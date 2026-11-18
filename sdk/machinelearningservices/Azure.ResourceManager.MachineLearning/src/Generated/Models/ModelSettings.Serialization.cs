@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ModelSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ModelId))
+            if (Optional.IsDefined(ModelId, _modelIdIsDefined))
             {
-                writer.WritePropertyName("modelId"u8);
-                writer.WriteStringValue(ModelId);
+                if (ModelId != null)
+                {
+                    writer.WritePropertyName("modelId"u8);
+                    writer.WriteStringValue(ModelId);
+                }
+                else
+                {
+                    writer.WriteNull("modelId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool modelIdIsDefined = false;
             string modelId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("modelId"u8))
                 {
+                    modelIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelId = null;
@@ -137,10 +146,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ModelSettings(modelId, additionalBinaryDataProperties);
+            return new ModelSettings(modelId, additionalBinaryDataProperties)
+            {
+                _modelIdIsDefined = modelIdIsDefined
+            };
         }
     }
 }

@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CommitProperties(
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 commitType,
                 configurationIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                targetLocations,
+                targetLocations ?? new ChangeTrackingList<string>(),
                 activeLocations ?? new ChangeTrackingList<string>(),
                 forceUpdateTag,
                 additionalBinaryDataProperties);

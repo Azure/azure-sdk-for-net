@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the conversation message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="VideoConversationMessageContent"/>, <see cref="AudioConversationMessageContent"/>, and <see cref="TemplateConversationMessageContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AudioConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="TemplateConversationMessageContent"/>, <see cref="TextConversationMessageContent"/>, and <see cref="VideoConversationMessageContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationMessageContent))]
     public abstract partial class ConversationMessageContent : IJsonModel<ConversationMessageContent>
@@ -129,18 +129,18 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "text":
-                        return TextConversationMessageContent.DeserializeTextConversationMessageContent(element, options);
-                    case "image":
-                        return ImageConversationMessageContent.DeserializeImageConversationMessageContent(element, options);
-                    case "document":
-                        return DocumentConversationMessageContent.DeserializeDocumentConversationMessageContent(element, options);
-                    case "video":
-                        return VideoConversationMessageContent.DeserializeVideoConversationMessageContent(element, options);
                     case "audio":
                         return AudioConversationMessageContent.DeserializeAudioConversationMessageContent(element, options);
+                    case "document":
+                        return DocumentConversationMessageContent.DeserializeDocumentConversationMessageContent(element, options);
+                    case "image":
+                        return ImageConversationMessageContent.DeserializeImageConversationMessageContent(element, options);
                     case "template":
                         return TemplateConversationMessageContent.DeserializeTemplateConversationMessageContent(element, options);
+                    case "text":
+                        return TextConversationMessageContent.DeserializeTextConversationMessageContent(element, options);
+                    case "video":
+                        return VideoConversationMessageContent.DeserializeVideoConversationMessageContent(element, options);
                 }
             }
             return UnknownConversationMessageContent.DeserializeUnknownConversationMessageContent(element, options);

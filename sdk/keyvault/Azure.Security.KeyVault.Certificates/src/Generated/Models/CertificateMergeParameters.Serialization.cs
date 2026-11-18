@@ -219,10 +219,10 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CertificateMergeParameters(x509Certificates, certificateAttributes, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new CertificateMergeParameters(x509Certificates ?? new ChangeTrackingList<BinaryData>(), certificateAttributes, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OperatorApiConnectionProperties(
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 status,
                 isPlanTermsAndConditionsAccepted,
                 planTermsAndConditionsLinks ?? new ChangeTrackingList<string>(),
-                purposes,
+                purposes ?? new ChangeTrackingList<OperatorApiConnectionPurpose>(),
                 purposeReason,
-                dataProcessingList,
+                dataProcessingList ?? new ChangeTrackingList<OperatorApiConnectionDataProcessing>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SolutionMetadataVersionData, SolutionMetadataVersionResource>(new SolutionMetadataVersionsGetByParentAsyncCollectionResultOfT(_solutionMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "SolutionMetadataVersionCollection.GetAll"), data => new SolutionMetadataVersionResource(Client, data));
+            return new AsyncPageableWrapper<SolutionMetadataVersionData, SolutionMetadataVersionResource>(new SolutionMetadataVersionDataAsyncCollectionResultOfT(_solutionMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "SolutionMetadataVersionCollection.GetAll"), data => new SolutionMetadataVersionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SolutionMetadataVersionData, SolutionMetadataVersionResource>(new SolutionMetadataVersionsGetByParentCollectionResultOfT(_solutionMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "SolutionMetadataVersionCollection.GetAll"), data => new SolutionMetadataVersionResource(Client, data));
+            return new PageableWrapper<SolutionMetadataVersionData, SolutionMetadataVersionResource>(new SolutionMetadataVersionDataCollectionResultOfT(_solutionMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "SolutionMetadataVersionCollection.GetAll"), data => new SolutionMetadataVersionResource(Client, data));
         }
 
         /// <summary>

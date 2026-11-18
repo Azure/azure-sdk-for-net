@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="autoFailover"> AutoFailover - whether to pause between Fault and Failover for manual input. </param>
         /// <param name="failoverProperties"> The failover properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverProperties"/> is null. </exception>
-        public DrillRunFailoverContent(AutoFailover autoFailover, ResilienceManagementFailoverContent failoverProperties)
+        public DrillRunFailoverContent(DrillRunAutoFailover autoFailover, ResilienceManagementFailoverContent failoverProperties)
         {
             Argument.AssertNotNull(failoverProperties, nameof(failoverProperties));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="autoFailover"> AutoFailover - whether to pause between Fault and Failover for manual input. </param>
         /// <param name="failoverProperties"> The failover properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillRunFailoverContent(AutoFailover autoFailover, ResilienceManagementFailoverContent failoverProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillRunFailoverContent(DrillRunAutoFailover autoFailover, ResilienceManagementFailoverContent failoverProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoFailover = autoFailover;
             FailoverProperties = failoverProperties;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> AutoFailover - whether to pause between Fault and Failover for manual input. </summary>
-        public AutoFailover AutoFailover { get; }
+        public DrillRunAutoFailover AutoFailover { get; }
 
         /// <summary> The failover properties. </summary>
         public ResilienceManagementFailoverContent FailoverProperties { get; }

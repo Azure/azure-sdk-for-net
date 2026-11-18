@@ -6,32 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    /// <summary> A request to create or update a Teams Phone assignment. </summary>
     internal partial class TeamsUserExchangeTokenRequest
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TeamsUserExchangeTokenRequest"/>. </summary>
         /// <param name="token"> Entra ID access token of a Teams User to acquire a new Communication Identity access token. </param>
         /// <param name="appId"> Client ID of an Entra ID application to be verified against the appid claim in the Entra ID access token. </param>
         /// <param name="userId"> Object ID of an Entra ID user (Teams User) to be verified against the oid claim in the Entra ID access token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
         public TeamsUserExchangeTokenRequest(string token, string appId, string userId)
         {
-            Argument.AssertNotNull(token, nameof(token));
-            Argument.AssertNotNull(appId, nameof(appId));
-            Argument.AssertNotNull(userId, nameof(userId));
-
             Token = token;
             AppId = appId;
             UserId = userId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TeamsUserExchangeTokenRequest"/>. </summary>
+        /// <param name="token"> Entra ID access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <param name="appId"> Client ID of an Entra ID application to be verified against the appid claim in the Entra ID access token. </param>
+        /// <param name="userId"> Object ID of an Entra ID user (Teams User) to be verified against the oid claim in the Entra ID access token. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TeamsUserExchangeTokenRequest(string token, string appId, string userId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Token = token;
+            AppId = appId;
+            UserId = userId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> Entra ID access token of a Teams User to acquire a new Communication Identity access token. </summary>
         public string Token { get; }
+
         /// <summary> Client ID of an Entra ID application to be verified against the appid claim in the Entra ID access token. </summary>
         public string AppId { get; }
+
         /// <summary> Object ID of an Entra ID user (Teams User) to be verified against the oid claim in the Entra ID access token. </summary>
         public string UserId { get; }
     }

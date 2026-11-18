@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new WorkspaceApiSchemaGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new ApiSchemaDataAsyncCollectionResultOfT(
                 _workspaceApiSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new WorkspaceApiSchemaGetByApiCollectionResultOfT(
+            return new PageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new ApiSchemaDataCollectionResultOfT(
                 _workspaceApiSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -30,6 +30,24 @@ ResponsesServer.Run<EchoHandler>();
 
 This starts a Kestrel server with OpenTelemetry, health checks, server version header, inbound request logging, and your handler mapped to the Responses API endpoints. The `Azure.AI.AgentServer.Core` package is included as a transitive dependency.
 
+In a hosted Foundry environment, the one-line and `AgentHostBuilder` APIs bind the Foundry
+credential, project endpoint, and response options from the `ResponsesServer` configuration
+section. Response storage and resilient-task storage use that same bound identity and endpoint.
+
+No configuration is required in a hosted container. When the section has no `Endpoint`, the
+platform's `FOUNDRY_PROJECT_ENDPOINT` is used. When it has no `Credential` section, a
+`DefaultAzureCredential` limited by default to the production credentials (environment, workload
+identity and managed identity) is used. To select the identity explicitly, set
+`ResponsesServer__Credential__CredentialSource` (for example `ManagedIdentityCredential`), or set
+`AZURE_TOKEN_CREDENTIALS` to override the fallback chain. A `Credential` section that does not
+resolve still fails startup instead of falling back.
+
+Durable task execution is opt-in. Setting either `ResponsesServerOptions.ResilientBackground`
+or `SteerableConversations` to `true` enables the Core task runtime automatically.
+Steering without resilience still uses durable tasks but marks interrupted background
+responses failed rather than re-invoking their handlers. With both options off, stored
+responses run in-process even when another protocol calls `SetResilientTasksEnabled()`.
+
 Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Manual
@@ -42,15 +60,15 @@ builder.Build().Run();
 
 ### ResponseHandler
 
-The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE.
+The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<StreamingResponseUpdate>` to clients via SSE.
 
 **`TextResponse` — recommended for text-only responses:**
 
 ```C# Snippet:Responses_ReadMe_EchoHandler
 public class EchoHandler : ResponseHandler
 {
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {
@@ -71,8 +89,8 @@ When `TextResponse` is too simple but the full builder API is more than you need
 ```C# Snippet:Responses_ReadMe_EchoHandler_Convenience
 public class EchoHandlerConvenience : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -96,7 +114,7 @@ Available convenience generators (commonly used):
 | Method | Description |
 |--------|-------------|
 | `OutputItemMessage(string)` | Emits a complete text message output item |
-| `OutputItemMessage(string, IEnumerable<Annotation>)` | Emits a text message with file annotations |
+| `OutputItemMessage(string, IEnumerable<ResponseMessageAnnotation>)` | Emits a text message with file annotations |
 | `OutputItemMessage(IAsyncEnumerable<string>, CancellationToken)` | Streams tokens as `response.output_text.delta` events |
 | `OutputItemFunctionCall(name, callId, arguments)` | Emits a complete function call output item |
 | `OutputItemFunctionCallOutput(callId, output)` | Emits a function call output (no deltas) |
@@ -115,8 +133,8 @@ Use the full builder API only when you need fine-grained control over individual
 ```C# Snippet:Responses_ReadMe_EchoHandler_FullControl
 public class EchoHandlerFullControl : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -145,15 +163,15 @@ public class EchoHandlerFullControl : ResponseHandler
 Injected into every `CreateAsync` call, `ResponseContext` provides access to the client's input, conversation history, and request metadata:
 
 - **`GetInputItemsAsync(resolveReferences, cancellationToken)`** — returns the resolved input items from the request. Item references are resolved to their content by default; pass `resolveReferences: false` to receive them as-is. Computed once and cached.
-- **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `ItemMessage` entries.
-- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
+- **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `MessageResponseItem` entries.
+- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: `-1`, unlimited). Positive values retain only the newest items.
 - **`ResponseId`** — the unique ID for this response, used to construct child item IDs.
 - **`ClientHeaders`** — forwarded HTTP headers from the original client request.
 - **`QueryParameters`** — query parameters from the original request.
 - **`RawBody`** — the raw request body as `BinaryData` for advanced scenarios.
 - **`Isolation`** — isolation context (tenant/session) extracted from request headers.
 
-For collections of `Item` objects, the `GetInputText()` extension method (on `IEnumerable<Item>`) extracts and joins text content without needing a `ResponseContext`.
+For collections of `ResponseItem` objects, the `GetInputText()` extension method (on `IEnumerable<ResponseItem>`) extracts and joins text content without needing a `ResponseContext`.
 
 See the [handler implementation guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#responsecontext) for the full `ResponseContext` API reference.
 
@@ -264,8 +282,8 @@ public class MultiUserHandler : ResponseHandler
     public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
         _httpClientFactory = httpClientFactory;
 
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {
@@ -295,6 +313,29 @@ public class MultiUserHandler : ResponseHandler
 ```
 
 ## Troubleshooting
+
+### Local response storage and upgrades
+
+The built-in local response providers partition response envelopes, items, history, and
+conversation indexes by `PlatformContext.UserIdKey`. Requests without a user ID use a
+separate anonymous partition; a named user (including one named `anonymous`) does not
+share that partition. The per-request call ID does not change the storage partition.
+User IDs must come from the trusted hosting boundary; this partitioning is not a
+replacement for authentication.
+
+File-backed response state is stored under
+`{AGENTSERVER_STATE_ROOT}/responses/partitions-v1` (default root: `~/.agentserver`).
+Named-user directory names and record filenames use deterministic hashes, not raw IDs.
+New partitioned state survives restarts.
+
+**Upgrade compatibility:** the provider starts with a new namespace. Previously persisted
+global responses, items, and history are not visible after upgrade, even to anonymous
+requests or crash recovery. The old files remain untouched. There is no automatic copying,
+deletion, ownership inference, or legacy read fallback. To restore old data, operators must
+perform an explicit migration with independently verified ownership; no migration tool is
+included. Back up legacy state before any operator-controlled migration.
+
+This describes the local response store, not isolation of every process-wide service.
 
 ### Common errors
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary>
     /// Patch body for updating a rule. Polymorphic by `kind` — kind-specific patchable fields live on per-kind subtypes. PATCH cannot change a rule's kind; the discriminator carries the rule's existing kind for routing only.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EduQualificationRulePatchProperties"/> and <see cref="BusinessVerificationRulePatchProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BusinessVerificationRulePatchProperties"/> and <see cref="EduQualificationRulePatchProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRulePatchProperties))]
     public abstract partial class BillingTrustRulePatch : IJsonModel<BillingTrustRulePatch>
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "eduQualification":
-                        return EduQualificationRulePatchProperties.DeserializeEduQualificationRulePatchProperties(element, options);
                     case "businessVerification":
                         return BusinessVerificationRulePatchProperties.DeserializeBusinessVerificationRulePatchProperties(element, options);
+                    case "eduQualification":
+                        return EduQualificationRulePatchProperties.DeserializeEduQualificationRulePatchProperties(element, options);
                 }
             }
             return UnknownRulePatchProperties.DeserializeUnknownRulePatchProperties(element, options);

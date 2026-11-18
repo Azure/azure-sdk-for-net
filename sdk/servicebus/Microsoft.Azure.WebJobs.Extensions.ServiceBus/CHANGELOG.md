@@ -8,6 +8,10 @@
 
 ### Bugs Fixed
 
+- Fixed Functions drain mode to release accepted Service Bus sessions after
+  in-flight handlers complete, allowing other instances to process those
+  sessions without waiting for host shutdown. (#58170)
+
 ### Other Changes
 
 ## 5.18.0 (2026-09-09)

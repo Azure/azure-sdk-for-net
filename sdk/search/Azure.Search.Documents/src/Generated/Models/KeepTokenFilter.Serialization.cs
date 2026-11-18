@@ -169,10 +169,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeepTokenFilter(odataType, name, additionalBinaryDataProperties, keepWords, lowerCaseKeepWords);
+            return new KeepTokenFilter(odataType, name, additionalBinaryDataProperties, keepWords ?? new ChangeTrackingList<string>(), lowerCaseKeepWords);
         }
     }
 }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationTypeVersionResourceList(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationTypeVersionResourceList(value ?? new ChangeTrackingList<ServiceFabricManagedApplicationTypeVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

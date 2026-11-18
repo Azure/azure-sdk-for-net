@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("maxUnavailable"u8);
                 writer.WriteStringValue(MaxUnavailable);
             }
-            if (Optional.IsDefined(MaxBlockedNodes))
-            {
-                writer.WritePropertyName("maxBlockedNodes"u8);
-                writer.WriteStringValue(MaxBlockedNodes);
-            }
             if (Optional.IsDefined(DrainTimeoutInMinutes))
             {
                 writer.WritePropertyName("drainTimeoutInMinutes"u8);
@@ -148,7 +143,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string maxSurge = default;
             string maxUnavailable = default;
-            string maxBlockedNodes = default;
             int? drainTimeoutInMinutes = default;
             int? nodeSoakDurationInMinutes = default;
             UndrainableNodeBehavior? undrainableNodeBehavior = default;
@@ -163,11 +157,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 if (prop.NameEquals("maxUnavailable"u8))
                 {
                     maxUnavailable = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("maxBlockedNodes"u8))
-                {
-                    maxBlockedNodes = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("drainTimeoutInMinutes"u8))
@@ -199,13 +188,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgentPoolUpgradeSettings(
                 maxSurge,
                 maxUnavailable,
-                maxBlockedNodes,
                 drainTimeoutInMinutes,
                 nodeSoakDurationInMinutes,
                 undrainableNodeBehavior,

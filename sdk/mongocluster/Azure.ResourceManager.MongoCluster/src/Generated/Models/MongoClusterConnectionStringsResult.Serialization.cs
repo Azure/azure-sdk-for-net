@@ -14,7 +14,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
+    /// <summary> The connection strings for the given DocumentDB cluster. </summary>
     public partial class MongoClusterConnectionStringsResult : IJsonModel<MongoClusterConnectionStringsResult>
     {
         /// <param name="data"> The data to parse. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MongoClusterConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<MongoClusterConnectionString>(), additionalBinaryDataProperties);

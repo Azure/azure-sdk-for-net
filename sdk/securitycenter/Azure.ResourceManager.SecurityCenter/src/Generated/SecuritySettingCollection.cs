@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecuritySettingData, SecuritySettingResource>(new SettingsGetAllAsyncCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
+            return new AsyncPageableWrapper<SecuritySettingData, SecuritySettingResource>(new SecuritySettingDataAsyncCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecuritySettingData, SecuritySettingResource>(new SettingsGetAllCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
+            return new PageableWrapper<SecuritySettingData, SecuritySettingResource>(new SecuritySettingDataCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
         }
 
         /// <summary>

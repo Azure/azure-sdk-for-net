@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary>
     /// Base properties of a Rule resource. Polymorphic by `kind` — kind-specific writable fields live on derived models.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EduQualificationRuleProperties"/> and <see cref="BusinessVerificationRuleProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BusinessVerificationRuleProperties"/> and <see cref="EduQualificationRuleProperties"/>.
     /// </summary>
     public abstract partial class BillingTrustRuleProperties
     {

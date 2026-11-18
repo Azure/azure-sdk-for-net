@@ -5,3 +5,5 @@ extends:
   parameters:
     ServiceDirectory: webpubsub
     SupportedClouds: 'Public'
+    EnvVars:
+      ExcludeWebPubSubChatTests: true

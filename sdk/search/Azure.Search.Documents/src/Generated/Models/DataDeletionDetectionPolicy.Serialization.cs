@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for data deletion detection policies.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SoftDeleteColumnDeletionDetectionPolicy"/> and <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/> and <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
     /// </summary>
     public partial class DataDeletionDetectionPolicy : IJsonModel<DataDeletionDetectionPolicy>
     {
@@ -129,10 +129,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy":
-                        return SoftDeleteColumnDeletionDetectionPolicy.DeserializeSoftDeleteColumnDeletionDetectionPolicy(element, options);
                     case "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy":
                         return NativeBlobSoftDeleteDeletionDetectionPolicy.DeserializeNativeBlobSoftDeleteDeletionDetectionPolicy(element, options);
+                    case "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy":
+                        return SoftDeleteColumnDeletionDetectionPolicy.DeserializeSoftDeleteColumnDeletionDetectionPolicy(element, options);
                 }
             }
             return UnknownDataDeletionDetectionPolicy.DeserializeUnknownDataDeletionDetectionPolicy(element, options);

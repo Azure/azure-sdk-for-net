@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary>
     /// Describes the offer term.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommerceMonetaryCredit"/>, <see cref="CommerceMonetaryCommitment"/>, and <see cref="CommerceRecurringCharge"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommerceMonetaryCommitment"/>, <see cref="CommerceMonetaryCredit"/>, and <see cref="CommerceRecurringCharge"/>.
     /// </summary>
     public abstract partial class CommerceOfferTermInfo
     {

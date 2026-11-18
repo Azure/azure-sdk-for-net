@@ -1,15 +1,22 @@
 # Release History
 
-## 1.6.1 (2026-07-01)
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
 
 ### Bugs Fixed
 
-- Fixed inbound request signature validation being skipped when the service endpoint was configured with the `WebPubSubServiceEndpoint(Uri, AzureKeyCredential, ...)` constructor. The supplied key is now used to validate `ce-signature`, and credential rotation via `AzureKeyCredential.Update` is honored.
+### Other Changes
 
-## 1.6.0 (2026-02-13)
+## 1.6.0 (2026-10-13)
 
 ### Features Added
 - Support handling group presence events.
+
+### Bugs Fixed
+- Fixed inbound request signature validation being skipped when the service endpoint was configured with the `WebPubSubServiceEndpoint(Uri, AzureKeyCredential, ...)` constructor. The supplied key is now used to validate `ce-signature`, and credential rotation via `AzureKeyCredential.Update` is honored.
 
 ## 1.5.0 (2025-09-23)
 

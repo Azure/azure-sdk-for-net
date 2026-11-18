@@ -74,17 +74,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StackMetaLearnerKWargs))
+            if (Optional.IsDefined(StackMetaLearnerKWargs, _stackMetaLearnerKWargsIsDefined))
             {
-                writer.WritePropertyName("stackMetaLearnerKWargs"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(StackMetaLearnerKWargs);
-#else
-                using (JsonDocument document = JsonDocument.Parse(StackMetaLearnerKWargs))
+                if (StackMetaLearnerKWargs != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName("stackMetaLearnerKWargs"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(StackMetaLearnerKWargs);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(StackMetaLearnerKWargs))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("stackMetaLearnerKWargs"u8);
+                }
             }
             if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
             {
@@ -138,6 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool stackMetaLearnerKWargsIsDefined = false;
             BinaryData stackMetaLearnerKWargs = default;
             double? stackMetaLearnerTrainPercentage = default;
             MachineLearningStackMetaLearnerType? stackMetaLearnerType = default;
@@ -146,12 +154,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("stackMetaLearnerKWargs"u8))
                 {
+                    stackMetaLearnerKWargsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stackMetaLearnerKWargs = null;
                         continue;
                     }
-                    stackMetaLearnerKWargs = BinaryData.FromString(prop.Value.GetRawText());
+                    stackMetaLearnerKWargs = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("stackMetaLearnerTrainPercentage"u8))
@@ -174,10 +183,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs, stackMetaLearnerTrainPercentage, stackMetaLearnerType, additionalBinaryDataProperties);
+            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs, stackMetaLearnerTrainPercentage, stackMetaLearnerType, additionalBinaryDataProperties)
+            {
+                _stackMetaLearnerKWargsIsDefined = stackMetaLearnerKWargsIsDefined
+            };
         }
     }
 }

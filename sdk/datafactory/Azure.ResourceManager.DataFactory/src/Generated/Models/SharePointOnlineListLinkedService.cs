@@ -45,6 +45,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/>. </summary>
+        /// <param name="siteUri"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
+        /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"></param>
+        public SharePointOnlineListLinkedService(DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey) : this(siteUri, tenantId, servicePrincipalId)
+        {
+            ServicePrincipalKey = servicePrincipalKey;
+        }
+
         /// <summary> SharePoint Online List linked service properties. </summary>
         internal SharePointOnlineListLinkedServiceTypeProperties TypeProperties { get; set; }
 

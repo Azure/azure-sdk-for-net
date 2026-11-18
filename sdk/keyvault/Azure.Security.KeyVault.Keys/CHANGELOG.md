@@ -1,6 +1,6 @@
 # Release History
 
-## 4.11.0-beta.4 (Unreleased)
+## 4.11.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,24 @@
 
 ### Bugs Fixed
 
-- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
-- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
+- Improved authentication challenge resource validation.
 
 ### Other Changes
+
+## 4.11.0-beta.4 (2026-09-27)
+
+### Features Added
+
+- Added `IDisposable` to `KeyClient`, `CryptographyClient`, and `KeyResolver` to release internally owned HTTP pipelines and transports. Cryptography clients returned by a key client or resolver borrow its pipeline and do not dispose it; keep the parent alive until all use of those clients has completed. Caller-provided transports are not disposed.
+- Added a narrowly scoped bearer-token fallback for attested managed-identity tenant eligibility denials, with the decision remembered by the Key Vault client for subsequent token acquisitions.
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
+
+### Bugs Fixed
+
+- Fixed intermittent authentication failures by retrying requests rejected because the mTLS Proof-of-Possession certificate did not match the token binding.
+- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
 
 ## 4.11.0-beta.3 (2026-07-16)
 

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call timeout outcome. </summary>
-    public partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome, IJsonModel<FunctionShellCallOutputTimeoutOutcome>
+    internal partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome, IJsonModel<FunctionShellCallOutputTimeoutOutcome>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -112,7 +111,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FunctionShellCallOutputTimeoutOutcome(@type, additionalBinaryDataProperties);

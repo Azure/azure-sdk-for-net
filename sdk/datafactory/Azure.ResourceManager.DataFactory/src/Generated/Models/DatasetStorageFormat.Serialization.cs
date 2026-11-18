@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The format definition of a storage.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetTextFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetAvroFormat"/>, <see cref="DatasetOrcFormat"/>, and <see cref="DatasetParquetFormat"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/>, and <see cref="DatasetTextFormat"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDatasetStorageFormat))]
     public abstract partial class DatasetStorageFormat : IJsonModel<DatasetStorageFormat>
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TextFormat":
-                        return DatasetTextFormat.DeserializeDatasetTextFormat(element, options);
-                    case "JsonFormat":
-                        return DatasetJsonFormat.DeserializeDatasetJsonFormat(element, options);
                     case "AvroFormat":
                         return DatasetAvroFormat.DeserializeDatasetAvroFormat(element, options);
+                    case "JsonFormat":
+                        return DatasetJsonFormat.DeserializeDatasetJsonFormat(element, options);
                     case "OrcFormat":
                         return DatasetOrcFormat.DeserializeDatasetOrcFormat(element, options);
                     case "ParquetFormat":
                         return DatasetParquetFormat.DeserializeDatasetParquetFormat(element, options);
+                    case "TextFormat":
+                        return DatasetTextFormat.DeserializeDatasetTextFormat(element, options);
                 }
             }
             return UnknownDatasetStorageFormat.DeserializeUnknownDatasetStorageFormat(element, options);

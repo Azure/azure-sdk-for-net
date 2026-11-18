@@ -27,9 +27,9 @@ namespace Azure.AI.Projects
         DataGenerationJobsV1Preview,
         /// <summary> ModelsV1Preview. </summary>
         ModelsV1Preview,
-        /// <summary> AgentsOptimizationV2Preview. </summary>
-        AgentsOptimizationV2Preview,
         /// <summary> ModelRouterControlsV1Preview. </summary>
-        ModelRouterControlsV1Preview
+        ModelRouterControlsV1Preview,
+        /// <summary> FinetuningSessionsV1Preview. </summary>
+        FinetuningSessionsV1Preview
     }
 }

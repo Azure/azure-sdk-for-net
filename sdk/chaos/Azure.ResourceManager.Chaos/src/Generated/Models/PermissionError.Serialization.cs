@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PermissionError(
                 resourceId,
-                missingPermissions,
-                requiredPermissions,
-                recommendedRoles,
+                missingPermissions ?? new ChangeTrackingList<string>(),
+                requiredPermissions ?? new ChangeTrackingList<string>(),
+                recommendedRoles ?? new ChangeTrackingList<string>(),
                 identity,
                 errorMessage,
                 additionalBinaryDataProperties);

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapInstanceData, SapInstanceResource>(new SAPInstancesGetBySapDiscoverySiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SapInstanceData, SapInstanceResource>(new SapInstanceDataAsyncCollectionResultOfT(
                 _sapInstancesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapInstanceData, SapInstanceResource>(new SAPInstancesGetBySapDiscoverySiteCollectionResultOfT(
+            return new PageableWrapper<SapInstanceData, SapInstanceResource>(new SapInstanceDataCollectionResultOfT(
                 _sapInstancesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

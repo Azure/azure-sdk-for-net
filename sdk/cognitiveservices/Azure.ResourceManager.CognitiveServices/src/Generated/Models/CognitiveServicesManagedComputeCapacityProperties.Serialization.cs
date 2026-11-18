@@ -79,16 +79,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("acceleratorType"u8);
                 writer.WriteStringValue(AcceleratorType);
             }
+            if (options.Format != "W" && Optional.IsDefined(OfferScope))
+            {
+                writer.WritePropertyName("offerScope"u8);
+                writer.WriteStringValue(OfferScope);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("scopeId"u8);
+                writer.WriteStringValue(ScopeId);
+            }
             if (options.Format != "W" && Optional.IsDefined(AvailableAccelerators))
             {
                 writer.WritePropertyName("availableAccelerators"u8);
                 writer.WriteNumberValue(AvailableAccelerators.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(TotalAvailableAccelerators))
+            {
+                writer.WritePropertyName("totalAvailableAccelerators"u8);
+                writer.WriteNumberValue(TotalAvailableAccelerators.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(DeploymentSizeCapacities))
             {
                 writer.WritePropertyName("deploymentSizeCapacities"u8);
                 writer.WriteStartArray();
-                foreach (DeploymentSizeCapacity item in DeploymentSizeCapacities)
+                foreach (CognitiveServicesManagedComputeDeploymentSizeCapacity item in DeploymentSizeCapacities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -137,14 +152,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string acceleratorType = default;
+            string offerScope = default;
+            string scopeId = default;
             int? availableAccelerators = default;
-            IReadOnlyList<DeploymentSizeCapacity> deploymentSizeCapacities = default;
+            int? totalAvailableAccelerators = default;
+            IReadOnlyList<CognitiveServicesManagedComputeDeploymentSizeCapacity> deploymentSizeCapacities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("acceleratorType"u8))
                 {
                     acceleratorType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("offerScope"u8))
+                {
+                    offerScope = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("scopeId"u8))
+                {
+                    scopeId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("availableAccelerators"u8))
@@ -156,26 +184,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     availableAccelerators = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("totalAvailableAccelerators"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalAvailableAccelerators = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("deploymentSizeCapacities"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<DeploymentSizeCapacity> array = new List<DeploymentSizeCapacity>();
+                    List<CognitiveServicesManagedComputeDeploymentSizeCapacity> array = new List<CognitiveServicesManagedComputeDeploymentSizeCapacity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentSizeCapacity.DeserializeDeploymentSizeCapacity(item, options));
+                        array.Add(CognitiveServicesManagedComputeDeploymentSizeCapacity.DeserializeCognitiveServicesManagedComputeDeploymentSizeCapacity(item, options));
                     }
                     deploymentSizeCapacities = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesManagedComputeCapacityProperties(acceleratorType, availableAccelerators, deploymentSizeCapacities ?? new ChangeTrackingList<DeploymentSizeCapacity>(), additionalBinaryDataProperties);
+            return new CognitiveServicesManagedComputeCapacityProperties(
+                acceleratorType,
+                offerScope,
+                scopeId,
+                availableAccelerators,
+                totalAvailableAccelerators,
+                deploymentSizeCapacities ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentSizeCapacity>(),
+                additionalBinaryDataProperties);
         }
     }
 }

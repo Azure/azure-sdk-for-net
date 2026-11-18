@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="configurationModel"> Type of configuration model. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeDynamicSchemaProperties"/> instance for mocking. </returns>
-        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(string displayName, EdgeSchemaConfigurationType? configurationType, EdgeSchemaConfigurationModelType? configurationModel, WorkloadOrchestrationProvisioningState? provisioningState)
+        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(string displayName = default, EdgeSchemaConfigurationType? configurationType = default, EdgeSchemaConfigurationModelType? configurationModel = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             return new EdgeDynamicSchemaProperties(displayName, configurationType, configurationModel, provisioningState, default);
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="currentVersion"> Current Version of schema. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSchemaPatchProperties"/> instance for mocking. </returns>
-        public static EdgeSchemaPatchProperties EdgeSchemaPatchProperties(string currentVersion, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSchemaPatchProperties EdgeSchemaPatchProperties(string currentVersion = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             return new EdgeSchemaPatchProperties(currentVersion, provisioningState, default);
         }
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionVersionProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, StageMap currentStage, IEnumerable<StageMap> stages, string solutionInstanceName, IEnumerable<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, string latestActionTriggeredBy, EdgeJobType? actionType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = default, int? revision = default, string targetDisplayName = default, string configuration = default, string targetLevelConfiguration = default, IDictionary<string, BinaryData> specification = default, string reviewId = default, string externalValidationId = default, SolutionInstanceState? state = default, SolutionStageMap currentStage = default, IEnumerable<SolutionStageMap> stages = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependency> solutionDependencies = default, ResponseError errorDetails = default, string latestActionTrackingUri = default, string latestActionTriggeredBy = default, EdgeJobType? actionType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             specification ??= new ChangeTrackingDictionary<string, BinaryData>();
-            stages ??= new ChangeTrackingList<StageMap>();
+            stages ??= new ChangeTrackingList<SolutionStageMap>();
             solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependency>();
 
             return new EdgeSolutionVersionProperties(
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 externalValidationId,
                 state,
                 currentStage,
-                (stages ?? new ChangeTrackingList<StageMap>()).ToList(),
+                (stages ?? new ChangeTrackingList<SolutionStageMap>()).ToList(),
                 solutionInstanceName,
                 (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependency>()).ToList(),
                 errorDetails,
@@ -234,18 +234,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="startsOn"> Stage start time. </param>
         /// <param name="endsOn"> Stage end time. </param>
         /// <param name="childStages"> Child stages which represents more granular level stage status if any. </param>
-        /// <returns> A new <see cref="Models.StageMap"/> instance for mocking. </returns>
-        public static StageMap StageMap(string displayState = default, CMStages stage = default, StateCategory status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<StageMap> childStages = default)
+        /// <returns> A new <see cref="Models.SolutionStageMap"/> instance for mocking. </returns>
+        public static SolutionStageMap SolutionStageMap(string displayState = default, WorkloadOrchestrationStage stage = default, SolutionVersionStageState status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<SolutionStageMap> childStages = default)
         {
-            childStages ??= new ChangeTrackingList<StageMap>();
+            childStages ??= new ChangeTrackingList<SolutionStageMap>();
 
-            return new StageMap(
+            return new SolutionStageMap(
                 displayState,
                 stage,
                 status,
                 startsOn,
                 endsOn,
-                (childStages ?? new ChangeTrackingList<StageMap>()).ToList(),
+                (childStages ?? new ChangeTrackingList<SolutionStageMap>()).ToList(),
                 default);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
         /// <param name="additionalDataWorkflowId"> Id of the workflow. </param>
         /// <returns> A new <see cref="Models.EdgeJobProperties"/> instance for mocking. </returns>
-        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IEnumerable<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, string additionalDataWorkflowId)
+        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, EdgeJobStatus status = default, EdgeJobContent jobParameter = default, string correlationId = default, IEnumerable<EdgeJobStep> steps = default, string triggeredBy = default, WorkloadOrchestrationProvisioningState? provisioningState = default, ResponseError errorDetails = default, string additionalDataWorkflowId = default)
         {
             steps ??= new ChangeTrackingList<EdgeJobStep>();
 
@@ -321,20 +321,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary>
         /// Base Job Parameter
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeployJobContent"/>, <see cref="Models.PublishJobParameter"/>, and <see cref="Models.UninstallJobParameter"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeployJobContent"/>, <see cref="Models.PublishJobContent"/>, and <see cref="Models.UninstallJobContent"/>.
         /// </summary>
         /// <param name="jobType"> Job type discriminator value. </param>
         /// <returns> A new <see cref="Models.EdgeJobContent"/> instance for mocking. </returns>
         public static EdgeJobContent EdgeJobContent(string jobType = default)
         {
-            return new UnknownEdgeJobContent(default, default);
+            return new UnknownEdgeJobContent(jobType is null ? default : new EdgeJobType(jobType), default);
         }
 
         /// <param name="parameterSolutionVersionId"> Solution Version ARM Id. </param>
         /// <returns> A new <see cref="Models.DeployJobContent"/> instance for mocking. </returns>
         public static DeployJobContent DeployJobContent(ResourceIdentifier parameterSolutionVersionId = default)
         {
-            return new DeployJobContent(default, default, parameterSolutionVersionId is null ? default : new InstallSolutionContent(parameterSolutionVersionId, default));
+            return new DeployJobContent(EdgeJobType.Deploy, default, parameterSolutionVersionId is null ? default : new InstallSolutionContent(parameterSolutionVersionId, default));
         }
 
         /// <summary> Install Solution Parameter. </summary>
@@ -346,10 +346,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <param name="parameterSolutionVersionId"> Solution Version ARM Id. </param>
-        /// <returns> A new <see cref="Models.PublishJobParameter"/> instance for mocking. </returns>
-        public static PublishJobParameter PublishJobParameter(ResourceIdentifier parameterSolutionVersionId = default)
+        /// <returns> A new <see cref="Models.PublishJobContent"/> instance for mocking. </returns>
+        public static PublishJobContent PublishJobContent(ResourceIdentifier parameterSolutionVersionId = default)
         {
-            return new PublishJobParameter(default, default, parameterSolutionVersionId is null ? default : new EdgeSolutionVersionContent(parameterSolutionVersionId, default));
+            return new PublishJobContent(EdgeJobType.Publish, default, parameterSolutionVersionId is null ? default : new EdgeSolutionVersionContent(parameterSolutionVersionId, default));
         }
 
         /// <summary> Solution Version Parameter. </summary>
@@ -362,10 +362,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Parameters for an Uninstall job. </summary>
         /// <param name="parameter"></param>
-        /// <returns> A new <see cref="Models.UninstallJobParameter"/> instance for mocking. </returns>
-        public static UninstallJobParameter UninstallJobParameter(UninstallSolutionContent parameter = default)
+        /// <returns> A new <see cref="Models.UninstallJobContent"/> instance for mocking. </returns>
+        public static UninstallJobContent UninstallJobContent(UninstallSolutionContent parameter = default)
         {
-            return new UninstallJobParameter(default, default, parameter);
+            return new UninstallJobContent(EdgeJobType.Uninstall, default, parameter);
         }
 
         /// <summary> Uninstall Solution Parameter. </summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.EdgeJobStepStatistics"/> instance for mocking. </returns>
         public static EdgeJobStepStatistics EdgeJobStepStatistics(string statisticsType = default)
         {
-            return new UnknownEdgeJobStepStatistics(default, default);
+            return new UnknownEdgeJobStepStatistics(statisticsType is null ? default : new EdgeJobType(statisticsType), default);
         }
 
         /// <summary> Deploy statistics for a job step, including total, success, and failed counts. </summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.DeployJobStepStatistics"/> instance for mocking. </returns>
         public static DeployJobStepStatistics DeployJobStepStatistics(int? totalCount = default, int? successCount = default, int? failedCount = default)
         {
-            return new DeployJobStepStatistics(default, default, totalCount, successCount, failedCount);
+            return new DeployJobStepStatistics(EdgeJobType.Deploy, default, totalCount, successCount, failedCount);
         }
 
         /// <summary> Publish statistics for a job step, including total, success, and failed counts. </summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.PublishJobStepStatistics"/> instance for mocking. </returns>
         public static PublishJobStepStatistics PublishJobStepStatistics(int? totalCount = default, int? successCount = default, int? failedCount = default)
         {
-            return new PublishJobStepStatistics(default, default, totalCount, successCount, failedCount);
+            return new PublishJobStepStatistics(EdgeJobType.Publish, default, totalCount, successCount, failedCount);
         }
 
         /// <summary> Uninstall statistics for a job step, including total, success, and failed counts. </summary>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.UninstallJobStepStatistics"/> instance for mocking. </returns>
         public static UninstallJobStepStatistics UninstallJobStepStatistics(int? totalCount = default, int? successCount = default, int? failedCount = default)
         {
-            return new UninstallJobStepStatistics(default, default, totalCount, successCount, failedCount);
+            return new UninstallJobStepStatistics(EdgeJobType.Uninstall, default, totalCount, successCount, failedCount);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="availableSolutionTemplateVersions"> List of latest revisions for available solution template versions. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId, string displayName, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions, WorkloadOrchestrationProvisioningState? provisioningState)
+        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId = default, string displayName = default, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             availableSolutionTemplateVersions ??= new ChangeTrackingList<AvailableSolutionTemplateVersion>();
 
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="availableSolutionTemplateVersions"> List of latest revisions for available solution template versions. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionPatchProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionPatchProperties EdgeSolutionPatchProperties(string solutionTemplateId, string displayName = default, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionPatchProperties EdgeSolutionPatchProperties(string solutionTemplateId = default, string displayName = default, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             availableSolutionTemplateVersions ??= new ChangeTrackingList<AvailableSolutionTemplateVersion>();
 
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="dynamicConfigurationVersionId"> Dynamic Configuration Id for the solution template version. </param>
         /// <param name="configurationStatus"> Configuration status of the solution template version. </param>
         /// <returns> A new <see cref="Models.SolutionMetadataVersionProperties"/> instance for mocking. </returns>
-        public static SolutionMetadataVersionProperties SolutionMetadataVersionProperties(string parentDisplayName = default, ResourceIdentifier solutionTemplateVersionId = default, ResourceIdentifier schemaId = default, ResourceIdentifier dynamicConfigurationVersionId = default, ConfigurationState? configurationStatus = default)
+        public static SolutionMetadataVersionProperties SolutionMetadataVersionProperties(string parentDisplayName = default, ResourceIdentifier solutionTemplateVersionId = default, ResourceIdentifier schemaId = default, ResourceIdentifier dynamicConfigurationVersionId = default, SolutionConfigurationState? configurationStatus = default)
         {
             return new SolutionMetadataVersionProperties(
                 parentDisplayName,
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="internalState"> Internal State of resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionTemplateVersionProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification, SolutionVersionOrchestratorType? orchestratorType, InternalState? internalState, WorkloadOrchestrationProvisioningState? provisioningState)
+        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations = default, IDictionary<string, BinaryData> specification = default, SolutionVersionOrchestratorType? orchestratorType = default, SolutionTemplateVersionInternalState? internalState = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             specification ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionDependencies"> Solution dependencies. </param>
         /// <param name="solutionConfiguration"> Configuration of solution. </param>
         /// <returns> A new <see cref="Models.BulkPublishSolutionContent"/> instance for mocking. </returns>
-        public static BulkPublishSolutionContent BulkPublishSolutionContent(IEnumerable<BulkPublishTargetDetails> targets, string solutionInstanceName, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies, string solutionConfiguration)
+        public static BulkPublishSolutionContent BulkPublishSolutionContent(IEnumerable<BulkPublishTargetDetails> targets = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default, string solutionConfiguration = default)
         {
             targets ??= new ChangeTrackingList<BulkPublishTargetDetails>();
             solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionVersionId"> ArmId of Target Solution Version. </param>
         /// <param name="solutionConfiguration"> Configuration of solution. </param>
         /// <returns> A new <see cref="Models.BulkPublishTargetDetails"/> instance for mocking. </returns>
-        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies, string solutionInstanceName, ResourceIdentifier solutionVersionId = default, string solutionConfiguration = default)
+        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default, string solutionInstanceName = default, ResourceIdentifier solutionVersionId = default, string solutionConfiguration = default)
         {
             solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
 
@@ -922,13 +922,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
         /// <param name="solutionDependencies"> Solution dependencies. </param>
         /// <param name="solutionConfiguration"> Configuration of solution. </param>
-        /// <returns> A new <see cref="Models.BulkReviewSolutionParameter"/> instance for mocking. </returns>
-        public static BulkReviewSolutionParameter BulkReviewSolutionParameter(IEnumerable<BulkReviewTargetDetails> targets = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default, string solutionConfiguration = default)
+        /// <returns> A new <see cref="Models.BulkReviewSolutionContent"/> instance for mocking. </returns>
+        public static BulkReviewSolutionContent BulkReviewSolutionContent(IEnumerable<BulkReviewTargetDetails> targets = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default, string solutionConfiguration = default)
         {
             targets ??= new ChangeTrackingList<BulkReviewTargetDetails>();
             solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
 
-            return new BulkReviewSolutionParameter((targets ?? new ChangeTrackingList<BulkReviewTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), solutionConfiguration, default);
+            return new BulkReviewSolutionContent((targets ?? new ChangeTrackingList<BulkReviewTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), solutionConfiguration, default);
         }
 
         /// <summary> Bulk publish target details. </summary>
@@ -1004,6 +1004,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeSolutionTemplatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the SolutionTemplate. </summary>
         /// <param name="description"> Description of Solution template. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="state"> State of resource. </param>
@@ -1013,7 +1014,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
             capabilities ??= new ChangeTrackingList<string>();
 
-            return new EdgeSolutionTemplatePatchProperties(description, (capabilities ?? new ChangeTrackingList<string>()).ToList(), state, default, default);
+            return new EdgeSolutionTemplatePatchProperties(description, (capabilities ?? new ChangeTrackingList<string>()).ToList(), state, isExternalValidationEnabled, default);
         }
 
         /// <summary> Solution Template Version With Update Type. </summary>
@@ -1477,7 +1478,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> The updatable properties of the Diagnostic. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.EdgeDiagnosticPatchProperties"/> instance for mocking. </returns>
-        public static EdgeDiagnosticPatchProperties EdgeDiagnosticPatchProperties(WorkloadOrchestrationProvisioningState? provisioningState)
+        public static EdgeDiagnosticPatchProperties EdgeDiagnosticPatchProperties(WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             return new EdgeDiagnosticPatchProperties(provisioningState, default);
         }
@@ -1512,7 +1513,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="hierarchies"> List of Hierarchies. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeContextProperties"/> instance for mocking. </returns>
-        public static EdgeContextProperties EdgeContextProperties(string uniqueIdentifier, IEnumerable<ContextCapability> capabilities, IEnumerable<ContextHierarchy> hierarchies, WorkloadOrchestrationProvisioningState? provisioningState)
+        public static EdgeContextProperties EdgeContextProperties(string uniqueIdentifier = default, IEnumerable<ContextCapability> capabilities = default, IEnumerable<ContextHierarchy> hierarchies = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             capabilities ??= new ChangeTrackingList<ContextCapability>();
             hierarchies ??= new ChangeTrackingList<ContextHierarchy>();
@@ -1896,7 +1897,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeDynamicSchemaProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(EdgeSchemaConfigurationType? configurationType = default, EdgeSchemaConfigurationModelType? configurationModel = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(EdgeSchemaConfigurationType? configurationType, EdgeSchemaConfigurationModelType? configurationModel, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             return new EdgeDynamicSchemaProperties(default, configurationType, configurationModel, provisioningState, default);
         }
@@ -1927,7 +1928,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionVersionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = default, int? revision = default, string targetDisplayName = default, string configuration = default, string targetLevelConfiguration = default, IDictionary<string, BinaryData> specification = default, string reviewId = default, string externalValidationId = default, SolutionInstanceState? state = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependency> solutionDependencies = default, ResponseError errorDetails = default, string latestActionTrackingUri = default, EdgeJobType? actionType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, string solutionInstanceName, IEnumerable<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, EdgeJobType? actionType, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             return new EdgeSolutionVersionProperties(
                 solutionTemplateVersionId,
@@ -1964,7 +1965,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
         /// <returns> A new <see cref="Models.EdgeJobProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, EdgeJobStatus status = default, EdgeJobContent jobParameter = default, string correlationId = default, IEnumerable<EdgeJobStep> steps = default, string triggeredBy = default, WorkloadOrchestrationProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IEnumerable<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails)
         {
             return new EdgeJobProperties(
                 jobType,
@@ -1987,7 +1988,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId = default, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             return new EdgeSolutionProperties(solutionTemplateId, default, (availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>()).ToList(), provisioningState, default);
         }
@@ -2007,7 +2008,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionTemplateVersionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations = default, IDictionary<string, BinaryData> specification = default, SolutionVersionOrchestratorType? orchestratorType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification, SolutionVersionOrchestratorType? orchestratorType, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             return new EdgeSolutionTemplateVersionProperties(
                 configurations,
@@ -2024,7 +2025,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionDependencies"> Solution dependencies. </param>
         /// <returns> A new <see cref="Models.BulkPublishSolutionContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BulkPublishSolutionContent BulkPublishSolutionContent(IEnumerable<BulkPublishTargetDetails> targets = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default)
+        public static BulkPublishSolutionContent BulkPublishSolutionContent(IEnumerable<BulkPublishTargetDetails> targets, string solutionInstanceName, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies)
         {
             return new BulkPublishSolutionContent((targets ?? new ChangeTrackingList<BulkPublishTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), default, default);
         }
@@ -2034,7 +2035,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
         /// <returns> A new <see cref="Models.BulkPublishTargetDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId = default, string solutionInstanceName = default)
+        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId, string solutionInstanceName)
         {
             return new BulkPublishTargetDetails(
                 targetId,
@@ -2059,7 +2060,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeContextProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EdgeContextProperties EdgeContextProperties(IEnumerable<ContextCapability> capabilities = default, IEnumerable<ContextHierarchy> hierarchies = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeContextProperties EdgeContextProperties(IEnumerable<ContextCapability> capabilities, IEnumerable<ContextHierarchy> hierarchies, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             return new EdgeContextProperties(default, (capabilities ?? new ChangeTrackingList<ContextCapability>()).ToList(), (hierarchies ?? new ChangeTrackingList<ContextHierarchy>()).ToList(), provisioningState, default);
         }

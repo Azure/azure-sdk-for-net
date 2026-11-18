@@ -1,0 +1,92 @@
+parameters:
+  - name: languageRepoResource
+    type: string
+  - name: toolsRef
+    type: string
+  - name: languageToolsRef
+    type: string
+  - name: poolName
+    type: string
+    default: 'azsdk-pool'
+  - name: imageOverride
+    type: string
+    default: 'ubuntu-24.04'
+  - name: stepList
+    type: stepList
+    default: []
+
+jobs:
+  - job: BuildTools
+    displayName: Build API review tools
+    pool:
+      name: ${{ parameters.poolName }}
+      demands: ImageOverride -equals ${{ parameters.imageOverride }}
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - name: ToolsSourceDirectory
+        value: $(Pipeline.Workspace)/tools
+      - name: LanguageToolsSourceDirectory
+        value: $(Build.SourcesDirectory)
+      - name: BinOutputDirectory
+        value: $(Build.ArtifactStagingDirectory)/bin
+    steps:
+      - checkout: self
+        path: tools
+        fetchDepth: 1
+        sparseCheckoutDirectories: eng
+      - checkout: ${{ parameters.languageRepoResource }}
+        path: s
+        fetchDepth: 1
+        sparseCheckoutDirectories: eng
+
+      - bash: |
+          set -Eeuo pipefail
+
+          checkout_ref() {
+            local repository="$1"
+            local name="$2"
+            local ref="$3"
+            if [[ "$ref" != refs/heads/* && "$ref" != refs/tags/* ]]; then
+              echo "$name must be a fully-qualified branch or tag ref." >&2
+              exit 1
+            fi
+            git -C "$repository" fetch --depth=1 origin "$ref"
+            git -C "$repository" checkout --detach FETCH_HEAD
+            git -C "$repository" clean -ffd
+            echo "$name=$ref sourceCommit=$(git -C "$repository" rev-parse HEAD)"
+          }
+
+          checkout_ref "$TOOLS_REPOSITORY" toolsRef "$TOOLS_REF"
+          checkout_ref "$LANGUAGE_REPOSITORY" languageToolsRef "$LANGUAGE_TOOLS_REF"
+        displayName: Resolve API review tool refs
+        env:
+          TOOLS_REF: ${{ parameters.toolsRef }}
+          LANGUAGE_TOOLS_REF: ${{ parameters.languageToolsRef }}
+          TOOLS_REPOSITORY: $(ToolsSourceDirectory)
+          LANGUAGE_REPOSITORY: $(LanguageToolsSourceDirectory)
+
+      - pwsh: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path $env:BIN_OUTPUT_DIRECTORY | Out-Null
+        displayName: Prepare binary output directory
+        env:
+          BIN_OUTPUT_DIRECTORY: $(BinOutputDirectory)
+
+      # Language templates publish every file needed by artifact generation to the bin directory.
+      - ${{ parameters.stepList }}
+
+      - publish: $(BinOutputDirectory)
+        artifact: bin
+        displayName: Publish built tools
+
+      - template: /eng/common/pipelines/templates/steps/apireview-hub-failure-callback.yml
+        parameters:
+          kind: target
+          ref: $(ApiReviewTargetRef)
+          condition: failed()
+
+      - template: /eng/common/pipelines/templates/steps/apireview-hub-failure-callback.yml
+        parameters:
+          kind: base
+          ref: $(ApiReviewBaseRef)
+          condition: and(failed(), ne(variables['ApiReviewBaseRef'], ''))

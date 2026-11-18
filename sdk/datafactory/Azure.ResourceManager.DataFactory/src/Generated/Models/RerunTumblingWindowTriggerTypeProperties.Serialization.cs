@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("parentTrigger"u8))
                 {
-                    parentTrigger = BinaryData.FromString(prop.Value.GetRawText());
+                    parentTrigger = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("requestedStartTime"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RerunTumblingWindowTriggerTypeProperties(parentTrigger, requestedStartsOn, requestedEndsOn, rerunConcurrency, additionalBinaryDataProperties);

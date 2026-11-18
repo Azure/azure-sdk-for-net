@@ -239,15 +239,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConnectionMonitorTestGroup(
                 name,
                 disable,
-                testConfigurations,
-                sources,
-                destinations,
+                testConfigurations ?? new ChangeTrackingList<string>(),
+                sources ?? new ChangeTrackingList<string>(),
+                destinations ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     [ModelReaderWriterBuildable(typeof(ShortAnswerOptions))]
     [ModelReaderWriterBuildable(typeof(TextAnswer))]
     [ModelReaderWriterBuildable(typeof(TextDocument))]
-    [ModelReaderWriterBuildable(typeof(UnknownMatchingPolicy))]
     public partial class AzureAILanguageQuestionAnsweringInferenceContext : ModelReaderWriterContext
     {
     }

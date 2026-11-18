@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="VectorFilterMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorFilterMode?(string value) => value == null ? null : new VectorFilterMode(value);
+        public static implicit operator VectorFilterMode?(string value) => value == null ? (VectorFilterMode?)null : new VectorFilterMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

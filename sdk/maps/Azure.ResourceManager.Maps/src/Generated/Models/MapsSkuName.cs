@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Maps.Models
         private readonly string _value;
         /// <summary> G2. </summary>
         private const string G2Value = "G2";
+        private const string S0Value = "S0";
+        private const string S1Value = "S1";
 
         /// <summary> Initializes a new instance of <see cref="MapsSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,12 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> G2. </summary>
         public static MapsSkuName G2 { get; } = new MapsSkuName(G2Value);
+
+        /// <summary> Gets the S0. </summary>
+        public static MapsSkuName S0 { get; } = new MapsSkuName(S0Value);
+
+        /// <summary> Gets the S1. </summary>
+        public static MapsSkuName S1 { get; } = new MapsSkuName(S1Value);
 
         /// <summary> Determines if two <see cref="MapsSkuName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

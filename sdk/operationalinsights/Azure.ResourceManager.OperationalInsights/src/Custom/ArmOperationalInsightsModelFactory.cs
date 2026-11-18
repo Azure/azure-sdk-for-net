@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         provisioningState.HasValue ? provisioningState.Value : default(OperationalInsightsSummaryLogsProvisioningState?),
                         ruleDefinition,
                         default),
+                default,
                 default);
         }
 

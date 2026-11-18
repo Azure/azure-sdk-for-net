@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ModelDeploymentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ModelDeploymentListResult(value ?? new ChangeTrackingList<ModelDeploymentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

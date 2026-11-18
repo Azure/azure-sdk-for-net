@@ -29,14 +29,16 @@ namespace Azure.Health.Deidentification.Samples
             string storageAccountUrl = TestEnvironment.GetStorageAccountLocation();
 
             #region Snippet:AzHealthDeidSample2Async_CreateJob
+            // Job names must be unique within the service.
+            string jobName = "my-job-" + Guid.NewGuid().ToString("N").Substring(0, 12);
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
-                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/"),
+                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "example_patient_1/"),
+                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/") { Overwrite = true },
                 OperationType = DeidentificationOperationType.Redact,
             };
 
-            job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, "my-job-1", job)).Value;
+            job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job)).Value;
             Console.WriteLine($"Job Status: {job.Status}"); // Job Status: Completed
             #endregion
         }

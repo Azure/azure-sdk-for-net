@@ -77,10 +77,10 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(A2AToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(BaseUrl))
+            if (Optional.IsDefined(BaseUri))
             {
                 writer.WritePropertyName("base_url"u8);
-                writer.WriteStringValue(BaseUrl.AbsoluteUri);
+                writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(AgentCardPath))
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri baseUrl = default;
+            Uri baseUri = default;
             string agentCardPath = default;
             string projectConnectionId = default;
             bool? sendCredentialsForAgentCard = default;
@@ -168,7 +168,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     toolConfigs = dictionary;
@@ -180,7 +180,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    baseUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    baseUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("agent_card_path"u8))
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new A2AToolboxTool(
@@ -218,7 +218,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
-                baseUrl,
+                baseUri,
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard,

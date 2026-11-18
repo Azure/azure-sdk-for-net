@@ -12,7 +12,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The tracking states for afd resources. </summary>
-    public partial class FrontDoorStateProperties
+    internal partial class FrontDoorStateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

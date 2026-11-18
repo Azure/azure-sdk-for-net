@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for skills.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ConditionalSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="OcrSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="ShaperSkill"/>, <see cref="MergeSkill"/>, <see cref="SentimentSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SplitSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureMachineLearningSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="VisionVectorizeSkill"/>, <see cref="ContentUnderstandingSkill"/>, and <see cref="ChatCompletionSkill"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureMachineLearningSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="ChatCompletionSkill"/>, <see cref="ConditionalSkill"/>, <see cref="ContentUnderstandingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="OcrSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="ShaperSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="VisionVectorizeSkill"/>, and <see cref="WebApiSkill"/>.
     /// </summary>
     public partial class SearchIndexerSkill : IJsonModel<SearchIndexerSkill>
     {
@@ -158,50 +158,50 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Skills.Util.ConditionalSkill":
-                        return ConditionalSkill.DeserializeConditionalSkill(element, options);
-                    case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill":
-                        return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element, options);
-                    case "#Microsoft.Skills.Vision.OcrSkill":
-                        return OcrSkill.DeserializeOcrSkill(element, options);
-                    case "#Microsoft.Skills.Vision.ImageAnalysisSkill":
-                        return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element, options);
-                    case "#Microsoft.Skills.Text.LanguageDetectionSkill":
-                        return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element, options);
-                    case "#Microsoft.Skills.Util.ShaperSkill":
-                        return ShaperSkill.DeserializeShaperSkill(element, options);
-                    case "#Microsoft.Skills.Text.MergeSkill":
-                        return MergeSkill.DeserializeMergeSkill(element, options);
-                    case "#Microsoft.Skills.Text.V3.SentimentSkill":
-                        return SentimentSkill.DeserializeSentimentSkill(element, options);
-                    case "#Microsoft.Skills.Text.V3.EntityLinkingSkill":
-                        return EntityLinkingSkill.DeserializeEntityLinkingSkill(element, options);
-                    case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill":
-                        return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element, options);
-                    case "#Microsoft.Skills.Text.PIIDetectionSkill":
-                        return PiiDetectionSkill.DeserializePiiDetectionSkill(element, options);
-                    case "#Microsoft.Skills.Text.SplitSkill":
-                        return SplitSkill.DeserializeSplitSkill(element, options);
-                    case "#Microsoft.Skills.Text.CustomEntityLookupSkill":
-                        return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element, options);
-                    case "#Microsoft.Skills.Text.TranslationSkill":
-                        return TextTranslationSkill.DeserializeTextTranslationSkill(element, options);
-                    case "#Microsoft.Skills.Util.DocumentExtractionSkill":
-                        return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element, options);
-                    case "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill":
-                        return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
-                    case "#Microsoft.Skills.Custom.WebApiSkill":
-                        return WebApiSkill.DeserializeWebApiSkill(element, options);
                     case "#Microsoft.Skills.Custom.AmlSkill":
                         return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill":
                         return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
-                    case "#Microsoft.Skills.Vision.VectorizeSkill":
-                        return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
-                    case "#Microsoft.Skills.Util.ContentUnderstandingSkill":
-                        return ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
                     case "#Microsoft.Skills.Custom.ChatCompletionSkill":
                         return ChatCompletionSkill.DeserializeChatCompletionSkill(element, options);
+                    case "#Microsoft.Skills.Util.ConditionalSkill":
+                        return ConditionalSkill.DeserializeConditionalSkill(element, options);
+                    case "#Microsoft.Skills.Util.ContentUnderstandingSkill":
+                        return ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
+                    case "#Microsoft.Skills.Text.CustomEntityLookupSkill":
+                        return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element, options);
+                    case "#Microsoft.Skills.Util.DocumentExtractionSkill":
+                        return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element, options);
+                    case "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill":
+                        return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
+                    case "#Microsoft.Skills.Text.V3.EntityLinkingSkill":
+                        return EntityLinkingSkill.DeserializeEntityLinkingSkill(element, options);
+                    case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill":
+                        return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element, options);
+                    case "#Microsoft.Skills.Vision.ImageAnalysisSkill":
+                        return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element, options);
+                    case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill":
+                        return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element, options);
+                    case "#Microsoft.Skills.Text.LanguageDetectionSkill":
+                        return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element, options);
+                    case "#Microsoft.Skills.Text.MergeSkill":
+                        return MergeSkill.DeserializeMergeSkill(element, options);
+                    case "#Microsoft.Skills.Vision.OcrSkill":
+                        return OcrSkill.DeserializeOcrSkill(element, options);
+                    case "#Microsoft.Skills.Text.PIIDetectionSkill":
+                        return PiiDetectionSkill.DeserializePiiDetectionSkill(element, options);
+                    case "#Microsoft.Skills.Text.V3.SentimentSkill":
+                        return SentimentSkill.DeserializeSentimentSkill(element, options);
+                    case "#Microsoft.Skills.Util.ShaperSkill":
+                        return ShaperSkill.DeserializeShaperSkill(element, options);
+                    case "#Microsoft.Skills.Text.SplitSkill":
+                        return SplitSkill.DeserializeSplitSkill(element, options);
+                    case "#Microsoft.Skills.Text.TranslationSkill":
+                        return TextTranslationSkill.DeserializeTextTranslationSkill(element, options);
+                    case "#Microsoft.Skills.Vision.VectorizeSkill":
+                        return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
+                    case "#Microsoft.Skills.Custom.WebApiSkill":
+                        return WebApiSkill.DeserializeWebApiSkill(element, options);
                 }
             }
             return UnknownSearchIndexerSkill.DeserializeUnknownSearchIndexerSkill(element, options);

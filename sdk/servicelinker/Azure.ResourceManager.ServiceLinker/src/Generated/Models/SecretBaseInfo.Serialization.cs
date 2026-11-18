@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
     /// The secret info
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RawValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/>, and <see cref="KeyVaultSecretUriSecretInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>, and <see cref="RawValueSecretInfo"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecretInfoBase))]
     public abstract partial class SecretBaseInfo : IJsonModel<SecretBaseInfo>
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "rawValue":
-                        return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
                     case "keyVaultSecretReference":
                         return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element, options);
                     case "keyVaultSecretUri":
                         return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element, options);
+                    case "rawValue":
+                        return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
                 }
             }
             return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element, options);

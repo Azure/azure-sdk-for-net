@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     input = dictionary;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SolutionDeploymentUpdateProperties(solutionTemplateProperties, input ?? new ChangeTrackingDictionary<string, BinaryData>(), targetProperties, additionalBinaryDataProperties);

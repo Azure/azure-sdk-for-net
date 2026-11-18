@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActionGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ActionGroupResource.ResourceType, out string actionGroupApiVersion);
             _actionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActionGroupResource.ResourceType.Namespace, Diagnostics);
-            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion ?? "2024-10-01-preview");
+            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetByResourceGroupAsyncCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
+            return new AsyncPageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupDataAsyncCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetByResourceGroupCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
+            return new PageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupDataCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
         }
 
         /// <summary>

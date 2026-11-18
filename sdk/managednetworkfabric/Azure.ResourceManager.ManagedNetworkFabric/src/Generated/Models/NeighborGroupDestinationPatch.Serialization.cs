@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NeighborGroupDestinationPatch(ipv4Addresses ?? new ChangeTrackingList<IPAddress>(), ipv6Addresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

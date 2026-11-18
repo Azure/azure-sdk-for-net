@@ -119,6 +119,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
+            if (Optional.IsDefined(AsyncDirectoryDelete))
+            {
+                writer.WritePropertyName("asyncDirectoryDelete"u8);
+                writer.WriteObjectValue(AsyncDirectoryDelete, options);
+            }
             if (Optional.IsDefined(DefaultUserQuotaInKiBs))
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
@@ -129,10 +134,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (Optional.IsDefined(UnixPermissions))
+            if (Optional.IsDefined(UnixPermissions, _unixPermissionsIsDefined))
             {
-                writer.WritePropertyName("unixPermissions"u8);
-                writer.WriteStringValue(UnixPermissions);
+                if (UnixPermissions != null)
+                {
+                    writer.WritePropertyName("unixPermissions"u8);
+                    writer.WriteStringValue(UnixPermissions);
+                }
+                else
+                {
+                    writer.WriteNull("unixPermissions"u8);
+                }
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
@@ -159,15 +171,32 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (Optional.IsDefined(SmbAccessBasedEnumeration, _smbAccessBasedEnumerationIsDefined))
             {
-                writer.WritePropertyName("smbAccessBasedEnumeration"u8);
-                writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                if (SmbAccessBasedEnumeration != null)
+                {
+                    writer.WritePropertyName("smbAccessBasedEnumeration"u8);
+                    writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("smbAccessBasedEnumeration"u8);
+                }
             }
             if (Optional.IsDefined(SmbNonBrowsable))
             {
                 writer.WritePropertyName("smbNonBrowsable"u8);
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
+            }
+            if (Optional.IsDefined(SmbOplocks))
+            {
+                writer.WritePropertyName("smbOplocks"u8);
+                writer.WriteStringValue(SmbOplocks.Value.ToString());
+            }
+            if (Optional.IsDefined(GeoNamespaceProperties))
+            {
+                writer.WritePropertyName("geoNamespaceProperties"u8);
+                writer.WriteObjectValue(GeoNamespaceProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -218,16 +247,21 @@ namespace Azure.ResourceManager.NetApp.Models
             float? throughputMibps = default;
             NetAppVolumePatchDataProtection dataProtection = default;
             bool? isDefaultQuotaEnabled = default;
+            AsyncDirectoryDelete asyncDirectoryDelete = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
+            bool unixPermissionsIsDefined = false;
             string unixPermissions = default;
             bool? isCoolAccessEnabled = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
             CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
             bool? isSnapshotDirectoryVisible = default;
+            bool smbAccessBasedEnumerationIsDefined = false;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
+            SmbOplocks? smbOplocks = default;
+            VolumePatchNamespaceProperties geoNamespaceProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -306,6 +340,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     isDefaultQuotaEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("asyncDirectoryDelete"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    asyncDirectoryDelete = AsyncDirectoryDelete.DeserializeAsyncDirectoryDelete(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("defaultUserQuotaInKiBs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -326,6 +369,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("unixPermissions"u8))
                 {
+                    unixPermissionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         unixPermissions = null;
@@ -381,6 +425,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("smbAccessBasedEnumeration"u8))
                 {
+                    smbAccessBasedEnumerationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         smbAccessBasedEnumeration = null;
@@ -398,9 +443,27 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbNonBrowsable = new SmbNonBrowsable(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("smbOplocks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smbOplocks = new SmbOplocks(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("geoNamespaceProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    geoNamespaceProperties = VolumePatchNamespaceProperties.DeserializeVolumePatchNamespaceProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VolumePatchProperties(
@@ -411,6 +474,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 throughputMibps,
                 dataProtection,
                 isDefaultQuotaEnabled,
+                asyncDirectoryDelete,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,
                 unixPermissions,
@@ -421,7 +485,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 isSnapshotDirectoryVisible,
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
-                additionalBinaryDataProperties);
+                smbOplocks,
+                geoNamespaceProperties,
+                additionalBinaryDataProperties)
+            {
+                _unixPermissionsIsDefined = unixPermissionsIsDefined,
+                _smbAccessBasedEnumerationIsDefined = smbAccessBasedEnumerationIsDefined
+            };
         }
     }
 }

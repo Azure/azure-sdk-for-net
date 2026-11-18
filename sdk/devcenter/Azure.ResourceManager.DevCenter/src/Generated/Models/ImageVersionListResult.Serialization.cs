@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImageVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ImageVersionListResult(value ?? new ChangeTrackingList<ImageVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

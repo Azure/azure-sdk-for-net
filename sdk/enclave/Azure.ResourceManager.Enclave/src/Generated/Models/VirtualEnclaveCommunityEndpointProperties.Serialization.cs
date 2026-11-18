@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Enclave.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualEnclaveCommunityEndpointProperties(ruleCollection, resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(), provisioningState, updateMode, additionalBinaryDataProperties);
+            return new VirtualEnclaveCommunityEndpointProperties(ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>(), resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(), provisioningState, updateMode, additionalBinaryDataProperties);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The NFVI object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNfviDetails"/>, <see cref="AzureArcK8SClusterNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownNfviDetails))]
     public abstract partial class NfviDetails : IJsonModel<NfviDetails>
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCore":
-                        return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
                     case "AzureArcKubernetes":
                         return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
+                    case "AzureCore":
+                        return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
                     case "AzureOperatorNexus":
                         return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element, options);
                 }

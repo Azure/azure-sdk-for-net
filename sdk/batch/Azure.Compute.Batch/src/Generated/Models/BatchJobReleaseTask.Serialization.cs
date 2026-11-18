@@ -32,11 +32,6 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchJobReleaseTask : IJsonModel<BatchJobReleaseTask>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchJobReleaseTask"/> for deserialization. </summary>
-        internal BatchJobReleaseTask()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchJobReleaseTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -271,7 +266,7 @@ namespace Azure.Compute.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BatchJobReleaseTask(

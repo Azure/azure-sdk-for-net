@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AuthorizationRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AuthorizationRuleListResult(value ?? new ChangeTrackingList<RelayAuthorizationRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

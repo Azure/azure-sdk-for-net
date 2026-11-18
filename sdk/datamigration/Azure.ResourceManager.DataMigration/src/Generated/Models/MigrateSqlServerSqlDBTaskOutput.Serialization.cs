@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for the task that migrates on-prem SQL Server databases to Azure SQL Database
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/>, and <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>, <see cref="MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>, and <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlDBTaskOutput))]
     public abstract partial class MigrateSqlServerSqlDBTaskOutput : IJsonModel<MigrateSqlServerSqlDBTaskOutput>
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MigrationLevelOutput":
-                        return MigrateSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBTaskOutputMigrationLevel(element, options);
                     case "DatabaseLevelOutput":
                         return MigrateSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
-                    case "TableLevelOutput":
-                        return MigrateSqlServerSqlDBTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBTaskOutputTableLevel(element, options);
-                    case "ErrorOutput":
-                        return MigrateSqlServerSqlDBTaskOutputError.DeserializeMigrateSqlServerSqlDBTaskOutputError(element, options);
-                    case "MigrationValidationOutput":
-                        return MigrateSqlServerSqlDBTaskOutputValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(element, options);
                     case "MigrationDatabaseLevelValidationOutput":
                         return MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(element, options);
+                    case "ErrorOutput":
+                        return MigrateSqlServerSqlDBTaskOutputError.DeserializeMigrateSqlServerSqlDBTaskOutputError(element, options);
+                    case "MigrationLevelOutput":
+                        return MigrateSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBTaskOutputMigrationLevel(element, options);
+                    case "TableLevelOutput":
+                        return MigrateSqlServerSqlDBTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBTaskOutputTableLevel(element, options);
+                    case "MigrationValidationOutput":
+                        return MigrateSqlServerSqlDBTaskOutputValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(element, options);
                 }
             }
             return UnknownMigrateSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBTaskOutput(element, options);

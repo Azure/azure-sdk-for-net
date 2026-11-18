@@ -11,13 +11,14 @@ using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for the non-resilient checkpoint no-op contract (FR-030). When
 /// <see cref="ResponsesServerOptions.ResilientBackground"/> is <c>false</c>, a
-/// <c>yield stream.Checkpoint()</c> is a no-op — it neither persists an extra snapshot nor alters
+/// <c>yield stream.CreateCheckpointEvent()</c> is a no-op — it neither persists an extra snapshot nor alters
 /// the emitted event sequence — so handlers can checkpoint unconditionally and the framework only
 /// pays the persistence cost when resilient background is enabled.
 /// </summary>
@@ -104,7 +105,7 @@ public class CheckpointNoOpProtocolTests : IDisposable
         yield return text.EmitDone();
         yield return message.EmitDone();
 
-        yield return stream.Checkpoint();
+        yield return stream.CreateCheckpointEvent();
 
         await Task.Yield();
         yield return stream.EmitCompleted();
@@ -124,7 +125,7 @@ public class CheckpointNoOpProtocolTests : IDisposable
         public int UpdateCount => Volatile.Read(ref _updateCount);
 
         public override Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
         {
             Interlocked.Increment(ref _createCount);
             return _inner.CreateResponseAsync(request, context, cancellationToken);
@@ -145,7 +146,7 @@ public class CheckpointNoOpProtocolTests : IDisposable
             string responseId, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, context, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(
             string responseId, PlatformContext context, int limit = 20, bool ascending = false,
             string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,6 +17,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
+        /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for windows authentication. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
+        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password)
+        {
+            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(password, nameof(password));
+
+            Domain = domain;
+            UserName = userName;
+            Password = password;
+        }
 
         /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
         /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>

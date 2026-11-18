@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ZoneResolutionInfo(mode, requestedPhysicalZones, subscriptionZoneMappings, additionalBinaryDataProperties);
+            return new ZoneResolutionInfo(mode, requestedPhysicalZones ?? new ChangeTrackingList<string>(), subscriptionZoneMappings ?? new ChangeTrackingList<ZoneResolutionMapping>(), additionalBinaryDataProperties);
         }
     }
 }

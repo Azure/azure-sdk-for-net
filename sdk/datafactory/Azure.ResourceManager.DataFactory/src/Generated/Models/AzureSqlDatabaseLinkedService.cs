@@ -29,11 +29,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Azure SQL Database linked service properties. </param>
-        /// <param name="servicePrincipalKey"></param>
-        internal AzureSqlDatabaseLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureSqlDatabaseLinkedServiceTypeProperties typeProperties, DataFactorySecret servicePrincipalKey) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureSqlDatabaseLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureSqlDatabaseLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
-            ServicePrincipalKey = servicePrincipalKey;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDatabaseLinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        public AzureSqlDatabaseLinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            ConnectionString = connectionString;
         }
 
         /// <summary> Azure SQL Database linked service properties. </summary>
@@ -413,6 +418,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
+        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        public DataFactoryKeyVaultSecret Password
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Password;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSqlDatabaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.Password = value;
+            }
+        }
+
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId
         {
@@ -430,6 +452,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
+        /// <summary> The key of the service principal used to authenticate against Azure SQL Database. </summary>
+        public DataFactorySecret ServicePrincipalKey
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSqlDatabaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalKey = value;
+            }
+        }
+
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalCredentialType
         {
@@ -444,6 +483,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                     TypeProperties = new AzureSqlDatabaseLinkedServiceTypeProperties();
                 }
                 TypeProperties.ServicePrincipalCredentialType = value;
+            }
+        }
+
+        /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
+        public DataFactorySecret ServicePrincipalCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSqlDatabaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalCredential = value;
             }
         }
 

@@ -17,13 +17,8 @@ namespace Azure.Analytics.OnlineExperimentation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObservedEvent"/>. </summary>
-        /// <param name="eventName"> The name of the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
-        public ObservedEvent(string eventName)
+        public ObservedEvent()
         {
-            Argument.AssertNotNull(eventName, nameof(eventName));
-
-            EventName = eventName;
         }
 
         /// <summary> Initializes a new instance of <see cref="ObservedEvent"/>. </summary>

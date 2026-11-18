@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// File Share configuration details, populated with information on storage configuration mounted on the VIS. The createAndMount option is selected in case of missing input.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkipFileShareConfiguration"/>, <see cref="CreateAndMountFileShareConfiguration"/>, and <see cref="MountFileShareConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateAndMountFileShareConfiguration"/>, <see cref="MountFileShareConfiguration"/>, and <see cref="SkipFileShareConfiguration"/>.
     /// </summary>
     public abstract partial class FileShareConfiguration
     {

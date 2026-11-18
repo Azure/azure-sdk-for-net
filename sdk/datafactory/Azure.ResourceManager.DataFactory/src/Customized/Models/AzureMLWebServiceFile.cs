@@ -15,13 +15,5 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AzureMLWebServiceFile(DataFactoryElement<string> filePath, DataFactoryLinkedServiceReference linkedServiceName)
-            : this()
-        {
-            FilePath = filePath;
-            LinkedServiceName = linkedServiceName;
-        }
     }
 }

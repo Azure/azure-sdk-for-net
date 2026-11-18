@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> CosmosDB Vector Store Index Definition. </summary>
     public partial class AIProjectCosmosDBIndex : AIProjectIndex, IJsonModel<AIProjectCosmosDBIndex>
     {
-        /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/> for deserialization. </summary>
-        internal AIProjectCosmosDBIndex()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AIProjectIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -200,7 +195,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AIProjectCosmosDBIndex(

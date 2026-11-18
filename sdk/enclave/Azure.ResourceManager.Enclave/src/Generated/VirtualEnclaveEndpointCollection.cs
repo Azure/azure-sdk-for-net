@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualEnclaveEndpointResource.ResourceType, out string virtualEnclaveEndpointApiVersion);
             _enclaveEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", VirtualEnclaveEndpointResource.ResourceType.Namespace, Diagnostics);
-            _enclaveEndpointsRestClient = new EnclaveEndpoints(_enclaveEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveEndpointApiVersion ?? "2026-04-01");
+            _enclaveEndpointsRestClient = new EnclaveEndpoints(_enclaveEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Mission/virtualEnclaves/enclaveEndpoints", out string enclaveEndpointsApiVersionOverride) ? enclaveEndpointsApiVersionOverride : "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new EnclaveEndpointsGetByEnclaveResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new VirtualEnclaveEndpointDataAsyncCollectionResultOfT(
                 _enclaveEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new EnclaveEndpointsGetByEnclaveResourceCollectionResultOfT(
+            return new PageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new VirtualEnclaveEndpointDataCollectionResultOfT(
                 _enclaveEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

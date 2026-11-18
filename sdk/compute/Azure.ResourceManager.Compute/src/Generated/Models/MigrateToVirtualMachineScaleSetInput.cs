@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeWriteableSubResourceData VirtualMachineScaleSetFlexible { get; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier VirtualMachineScaleSetFlexibleId
+        public virtual ResourceIdentifier VirtualMachineScaleSetFlexibleId
         {
             get
             {

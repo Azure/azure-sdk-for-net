@@ -22,5 +22,11 @@ namespace Azure.AI.AgentServer.Core.Storage
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDeletedStateStore(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+
+        internal static DeletedStateStore FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeletedStateStore(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

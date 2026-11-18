@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     typeProperties = SelfHostedIntegrationRuntimeTypeProperties.DeserializeSelfHostedIntegrationRuntimeTypeProperties(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new SelfHostedIntegrationRuntime(integrationRuntimeType, description, additionalProperties, typeProperties);
         }

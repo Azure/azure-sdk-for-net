@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListExpressRouteProviderPort API service call. </summary>
-    public partial class ExpressRouteProviderPortListResult : IJsonModel<ExpressRouteProviderPortListResult>
+    internal partial class ExpressRouteProviderPortListResult : IJsonModel<ExpressRouteProviderPortListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortListResult"/> for deserialization. </summary>
         internal ExpressRouteProviderPortListResult()
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExpressRouteProviderPortListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExpressRouteProviderPortListResult(value ?? new ChangeTrackingList<ExpressRouteProviderPortData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

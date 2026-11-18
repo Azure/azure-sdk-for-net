@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlVirtualMachineGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SqlVirtualMachineGroupListResult(value ?? new ChangeTrackingList<SqlVmGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

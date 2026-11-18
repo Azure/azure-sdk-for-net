@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary>
     /// Gets or sets the provider specific properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HanaDBProviderInstanceProperties"/>, <see cref="SapNetWeaverProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="DB2ProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, and <see cref="OracleProviderInstanceProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DB2ProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="OracleProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, and <see cref="SapNetWeaverProviderInstanceProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSapProviderInstanceSpecificProperties))]
     public abstract partial class SapProviderInstanceSpecificProperties : IJsonModel<SapProviderInstanceSpecificProperties>
@@ -130,20 +130,20 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SapHana":
-                        return HanaDBProviderInstanceProperties.DeserializeHanaDBProviderInstanceProperties(element, options);
-                    case "SapNetWeaver":
-                        return SapNetWeaverProviderInstanceProperties.DeserializeSapNetWeaverProviderInstanceProperties(element, options);
-                    case "PrometheusOS":
-                        return PrometheusOSProviderInstanceProperties.DeserializePrometheusOSProviderInstanceProperties(element, options);
                     case "Db2":
                         return DB2ProviderInstanceProperties.DeserializeDB2ProviderInstanceProperties(element, options);
-                    case "PrometheusHaCluster":
-                        return PrometheusHAClusterProviderInstanceProperties.DeserializePrometheusHAClusterProviderInstanceProperties(element, options);
+                    case "SapHana":
+                        return HanaDBProviderInstanceProperties.DeserializeHanaDBProviderInstanceProperties(element, options);
                     case "MsSqlServer":
                         return MsSqlServerProviderInstanceProperties.DeserializeMsSqlServerProviderInstanceProperties(element, options);
                     case "Oracle":
                         return OracleProviderInstanceProperties.DeserializeOracleProviderInstanceProperties(element, options);
+                    case "PrometheusHaCluster":
+                        return PrometheusHAClusterProviderInstanceProperties.DeserializePrometheusHAClusterProviderInstanceProperties(element, options);
+                    case "PrometheusOS":
+                        return PrometheusOSProviderInstanceProperties.DeserializePrometheusOSProviderInstanceProperties(element, options);
+                    case "SapNetWeaver":
+                        return SapNetWeaverProviderInstanceProperties.DeserializeSapNetWeaverProviderInstanceProperties(element, options);
                 }
             }
             return UnknownSapProviderInstanceSpecificProperties.DeserializeUnknownSapProviderInstanceSpecificProperties(element, options);

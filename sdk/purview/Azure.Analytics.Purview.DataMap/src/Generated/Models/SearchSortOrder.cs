@@ -51,7 +51,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="SearchSortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchSortOrder?(string value) => value == null ? null : new SearchSortOrder(value);
+        public static implicit operator SearchSortOrder?(string value) => value == null ? (SearchSortOrder?)null : new SearchSortOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

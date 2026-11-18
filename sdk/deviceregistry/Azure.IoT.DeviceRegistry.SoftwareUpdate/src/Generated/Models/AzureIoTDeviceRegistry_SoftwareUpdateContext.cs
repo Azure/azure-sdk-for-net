@@ -16,26 +16,22 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BestCompatibleUpdate))]
     [ModelReaderWriterBuildable(typeof(DeviceClass))]
-    [ModelReaderWriterBuildable(typeof(DeviceClassesList))]
     [ModelReaderWriterBuildable(typeof(DeviceClassProperties))]
     [ModelReaderWriterBuildable(typeof(FileImportMetadata))]
     [ModelReaderWriterBuildable(typeof(ImportManifestMetadata))]
+    [ModelReaderWriterBuildable(typeof(ImportUpdateContent))]
     [ModelReaderWriterBuildable(typeof(ImportUpdateInputItem))]
-    [ModelReaderWriterBuildable(typeof(ImportUpdateRequest))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SoftwareUpdateCompatibility))]
     [ModelReaderWriterBuildable(typeof(SoftwareUpdateInstructions))]
     [ModelReaderWriterBuildable(typeof(SoftwareUpdateStep))]
-    [ModelReaderWriterBuildable(typeof(StringsList))]
     [ModelReaderWriterBuildable(typeof(UpdateContent))]
     [ModelReaderWriterBuildable(typeof(UpdateFile))]
     [ModelReaderWriterBuildable(typeof(UpdateFileBase))]
     [ModelReaderWriterBuildable(typeof(UpdateFileDownloadHandler))]
     [ModelReaderWriterBuildable(typeof(UpdateId))]
     [ModelReaderWriterBuildable(typeof(UpdateInfo))]
-    [ModelReaderWriterBuildable(typeof(UpdateList))]
     [ModelReaderWriterBuildable(typeof(UpdateOperation))]
-    [ModelReaderWriterBuildable(typeof(UpdateOperationsList))]
     public partial class AzureIoTDeviceRegistry_SoftwareUpdateContext : ModelReaderWriterContext
     {
     }

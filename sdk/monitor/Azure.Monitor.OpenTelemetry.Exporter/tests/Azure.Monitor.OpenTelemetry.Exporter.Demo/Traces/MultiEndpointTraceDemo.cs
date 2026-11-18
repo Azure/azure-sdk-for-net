@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         private readonly TracerProvider? _tracerProvider;
         private readonly EndpointRoutingProcessor _routingProcessor;
 
-        public MultiEndpointTraceDemo(string exporterConnectionString, IReadOnlyList<EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
+        public MultiEndpointTraceDemo(string? exporterConnectionString, IReadOnlyList<EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
         {
             _routingProcessor = new EndpointRoutingProcessor(routes, runId);
 
@@ -50,7 +50,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 .AddProcessor(_routingProcessor)
                 .AddAzureMonitorTraceExporter(o =>
                 {
-                    o.ConnectionString = exporterConnectionString;
+                    // Left unset when absent: the exporter has no component of its own and every
+                    // destination comes from the telemetry.
+                    if (!string.IsNullOrWhiteSpace(exporterConnectionString))
+                    {
+                        o.ConnectionString = exporterConnectionString;
+                    }
 
                     // Rate-limited sampling is the default at 5 traces/second and takes precedence
                     // over SamplingRatio, which would drop almost everything this demo generates.

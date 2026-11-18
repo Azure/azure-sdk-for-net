@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// The threshold used for vector queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorSimilarityThreshold"/> and <see cref="SearchScoreThreshold"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
     /// </summary>
     public abstract partial class VectorThreshold
     {

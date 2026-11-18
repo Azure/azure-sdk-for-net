@@ -48,31 +48,31 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
 
         private ClientDiagnostics SchemasClientDiagnostics => _schemasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Schemas SchemasRestClient => _schemasRestClient ??= new Schemas(SchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private Schemas SchemasRestClient => _schemasRestClient ??= new Schemas(SchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/schemas", out string apiVersion) ? apiVersion : "2026-05-01-preview");
 
         private ClientDiagnostics TargetsClientDiagnostics => _targetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Targets TargetsRestClient => _targetsRestClient ??= new Targets(TargetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private Targets TargetsRestClient => _targetsRestClient ??= new Targets(TargetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/targets", out string apiVersion0) ? apiVersion0 : "2026-05-01-preview");
 
         private ClientDiagnostics SolutionTemplatesClientDiagnostics => _solutionTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionTemplates SolutionTemplatesRestClient => _solutionTemplatesRestClient ??= new SolutionTemplates(SolutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private SolutionTemplates SolutionTemplatesRestClient => _solutionTemplatesRestClient ??= new SolutionTemplates(SolutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/solutionTemplates", out string apiVersion1) ? apiVersion1 : "2026-05-01-preview");
 
         private ClientDiagnostics ConfigTemplatesClientDiagnostics => _configTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigTemplates ConfigTemplatesRestClient => _configTemplatesRestClient ??= new ConfigTemplates(ConfigTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private ConfigTemplates ConfigTemplatesRestClient => _configTemplatesRestClient ??= new ConfigTemplates(ConfigTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/configTemplates", out string apiVersion2) ? apiVersion2 : "2026-05-01-preview");
 
         private ClientDiagnostics DiagnosticsClientDiagnostics => _diagnosticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Diagnostics DiagnosticsRestClient => _diagnosticsRestClient ??= new Diagnostics(DiagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private Diagnostics DiagnosticsRestClient => _diagnosticsRestClient ??= new Diagnostics(DiagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/diagnostics", out string apiVersion3) ? apiVersion3 : "2026-05-01-preview");
 
         private ClientDiagnostics ContextsClientDiagnostics => _contextsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Contexts ContextsRestClient => _contextsRestClient ??= new Contexts(ContextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private Contexts ContextsRestClient => _contextsRestClient ??= new Contexts(ContextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/contexts", out string apiVersion4) ? apiVersion4 : "2026-05-01-preview");
 
         private ClientDiagnostics SolutionDeploymentsClientDiagnostics => _solutionDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionDeployments SolutionDeploymentsRestClient => _solutionDeploymentsRestClient ??= new SolutionDeployments(SolutionDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private SolutionDeployments SolutionDeploymentsRestClient => _solutionDeploymentsRestClient ??= new SolutionDeployments(SolutionDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/solutionDeployments", out string apiVersion5) ? apiVersion5 : "2026-05-01-preview");
 
         /// <summary>
         /// List by subscription
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetBySubscriptionAsyncCollectionResultOfT(SchemasRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas"), data => new EdgeSchemaResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new EdgeSchemaDataAsync0CollectionResultOfT(SchemasRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas"), data => new EdgeSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetBySubscriptionCollectionResultOfT(SchemasRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas"), data => new EdgeSchemaResource(Client, data));
+            return new PageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new EdgeSchemaData0CollectionResultOfT(SchemasRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas"), data => new EdgeSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetBySubscriptionAsyncCollectionResultOfT(TargetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets"), data => new EdgeTargetResource(Client, data));
+            return new AsyncPageableWrapper<EdgeTargetData, EdgeTargetResource>(new EdgeTargetDataAsync0CollectionResultOfT(TargetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets"), data => new EdgeTargetResource(Client, data));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetBySubscriptionCollectionResultOfT(TargetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets"), data => new EdgeTargetResource(Client, data));
+            return new PageableWrapper<EdgeTargetData, EdgeTargetResource>(new EdgeTargetData0CollectionResultOfT(TargetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets"), data => new EdgeTargetResource(Client, data));
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSolutionTemplateData, EdgeSolutionTemplateResource>(new SolutionTemplatesGetBySubscriptionAsyncCollectionResultOfT(SolutionTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates"), data => new EdgeSolutionTemplateResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSolutionTemplateData, EdgeSolutionTemplateResource>(new EdgeSolutionTemplateDataAsync0CollectionResultOfT(SolutionTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates"), data => new EdgeSolutionTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSolutionTemplateData, EdgeSolutionTemplateResource>(new SolutionTemplatesGetBySubscriptionCollectionResultOfT(SolutionTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates"), data => new EdgeSolutionTemplateResource(Client, data));
+            return new PageableWrapper<EdgeSolutionTemplateData, EdgeSolutionTemplateResource>(new EdgeSolutionTemplateData0CollectionResultOfT(SolutionTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates"), data => new EdgeSolutionTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetBySubscriptionAsyncCollectionResultOfT(ConfigTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates"), data => new EdgeConfigTemplateResource(Client, data));
+            return new AsyncPageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new EdgeConfigTemplateDataAsync0CollectionResultOfT(ConfigTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates"), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetBySubscriptionCollectionResultOfT(ConfigTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates"), data => new EdgeConfigTemplateResource(Client, data));
+            return new PageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new EdgeConfigTemplateData0CollectionResultOfT(ConfigTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates"), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetBySubscriptionAsyncCollectionResultOfT(DiagnosticsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics"), data => new EdgeDiagnosticResource(Client, data));
+            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new EdgeDiagnosticDataAsync0CollectionResultOfT(DiagnosticsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetBySubscriptionCollectionResultOfT(DiagnosticsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics"), data => new EdgeDiagnosticResource(Client, data));
+            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new EdgeDiagnosticData0CollectionResultOfT(DiagnosticsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetBySubscriptionAsyncCollectionResultOfT(ContextsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts"), data => new EdgeContextResource(Client, data));
+            return new AsyncPageableWrapper<EdgeContextData, EdgeContextResource>(new EdgeContextDataAsync0CollectionResultOfT(ContextsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts"), data => new EdgeContextResource(Client, data));
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetBySubscriptionCollectionResultOfT(ContextsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts"), data => new EdgeContextResource(Client, data));
+            return new PageableWrapper<EdgeContextData, EdgeContextResource>(new EdgeContextData0CollectionResultOfT(ContextsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts"), data => new EdgeContextResource(Client, data));
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentsGetBySubscriptionAsyncCollectionResultOfT(SolutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeployments"), data => new SolutionDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentDataAsync0CollectionResultOfT(SolutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeployments"), data => new SolutionDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentsGetBySubscriptionCollectionResultOfT(SolutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeployments"), data => new SolutionDeploymentResource(Client, data));
+            return new PageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentData0CollectionResultOfT(SolutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeployments"), data => new SolutionDeploymentResource(Client, data));
         }
     }
 }

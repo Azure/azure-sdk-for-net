@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadSqlAvailabilityGroupProtectableItem : VmWorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>. </summary>
-        public VmWorkloadSqlAvailabilityGroupProtectableItem()
+        public VmWorkloadSqlAvailabilityGroupProtectableItem() : base("SQLAvailabilityGroupContainer")
         {
             NodesList = new ChangeTrackingList<DistributedNodesInfo>();
         }

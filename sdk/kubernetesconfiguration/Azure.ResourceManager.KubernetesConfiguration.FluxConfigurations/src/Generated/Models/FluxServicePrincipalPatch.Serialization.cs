@@ -74,30 +74,58 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxServicePrincipalPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId, _clientIdIsDefined))
             {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                if (ClientId != null)
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId);
+                }
+                else
+                {
+                    writer.WriteNull("clientId"u8);
+                }
             }
-            if (Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId, _tenantIdIsDefined))
             {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                if (TenantId != null)
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId);
+                }
+                else
+                {
+                    writer.WriteNull("tenantId"u8);
+                }
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret, _clientSecretIsDefined))
             {
-                writer.WritePropertyName("clientSecret"u8);
-                writer.WriteStringValue(ClientSecret);
+                if (ClientSecret != null)
+                {
+                    writer.WritePropertyName("clientSecret"u8);
+                    writer.WriteStringValue(ClientSecret);
+                }
+                else
+                {
+                    writer.WriteNull("clientSecret"u8);
+                }
             }
             if (Optional.IsDefined(ClientCertificate))
             {
                 writer.WritePropertyName("clientCertificate"u8);
                 writer.WriteStringValue(ClientCertificate);
             }
-            if (Optional.IsDefined(ClientCertificatePassword))
+            if (Optional.IsDefined(ClientCertificatePassword, _clientCertificatePasswordIsDefined))
             {
-                writer.WritePropertyName("clientCertificatePassword"u8);
-                writer.WriteStringValue(ClientCertificatePassword);
+                if (ClientCertificatePassword != null)
+                {
+                    writer.WritePropertyName("clientCertificatePassword"u8);
+                    writer.WriteStringValue(ClientCertificatePassword);
+                }
+                else
+                {
+                    writer.WriteNull("clientCertificatePassword"u8);
+                }
             }
             if (Optional.IsDefined(IsClientCertificateSendChain))
             {
@@ -146,10 +174,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool clientIdIsDefined = false;
             string clientId = default;
+            bool tenantIdIsDefined = false;
             string tenantId = default;
+            bool clientSecretIsDefined = false;
             string clientSecret = default;
             string clientCertificate = default;
+            bool clientCertificatePasswordIsDefined = false;
             string clientCertificatePassword = default;
             bool? isClientCertificateSendChain = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -157,6 +189,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 if (prop.NameEquals("clientId"u8))
                 {
+                    clientIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientId = null;
@@ -167,6 +200,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
+                    tenantIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tenantId = null;
@@ -177,6 +211,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("clientSecret"u8))
                 {
+                    clientSecretIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientSecret = null;
@@ -192,6 +227,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("clientCertificatePassword"u8))
                 {
+                    clientCertificatePasswordIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientCertificatePassword = null;
@@ -211,7 +247,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FluxServicePrincipalPatch(
@@ -221,7 +257,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 clientCertificate,
                 clientCertificatePassword,
                 isClientCertificateSendChain,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _clientIdIsDefined = clientIdIsDefined,
+                _tenantIdIsDefined = tenantIdIsDefined,
+                _clientSecretIsDefined = clientSecretIsDefined,
+                _clientCertificatePasswordIsDefined = clientCertificatePasswordIsDefined
+            };
         }
     }
 }

@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MonitorWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, additionalBinaryDataProperties);

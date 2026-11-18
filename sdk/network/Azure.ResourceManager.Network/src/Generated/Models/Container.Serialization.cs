@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to container resource in remote resource provider. </summary>
-    public partial class Container : NetworkSubResource, IJsonModel<Container>
+    internal partial class Container : NetworkSubResource, IJsonModel<Container>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new Container(id, additionalBinaryDataProperties);

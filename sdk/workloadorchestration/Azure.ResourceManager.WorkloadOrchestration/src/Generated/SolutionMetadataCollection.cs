@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary>
     /// A class representing a collection of <see cref="SolutionMetadataResource"/> and their operations.
     /// Each <see cref="SolutionMetadataResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="SolutionMetadataCollection"/> instance call the GetSolutionMetadatas method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SolutionMetadataCollection"/> instance call the GetAllSolutionMetadata method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SolutionMetadataCollection : ArmCollection, IEnumerable<SolutionMetadataResource>, IAsyncEnumerable<SolutionMetadataResource>
     {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SolutionMetadataData, SolutionMetadataResource>(new SolutionMetadatasGetByParentAsyncCollectionResultOfT(_solutionMetadatasRestClient, Id.ToString(), context, "SolutionMetadataCollection.GetAll"), data => new SolutionMetadataResource(Client, data));
+            return new AsyncPageableWrapper<SolutionMetadataData, SolutionMetadataResource>(new SolutionMetadataDataAsyncCollectionResultOfT(_solutionMetadatasRestClient, Id.ToString(), context, "SolutionMetadataCollection.GetAll"), data => new SolutionMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SolutionMetadataData, SolutionMetadataResource>(new SolutionMetadatasGetByParentCollectionResultOfT(_solutionMetadatasRestClient, Id.ToString(), context, "SolutionMetadataCollection.GetAll"), data => new SolutionMetadataResource(Client, data));
+            return new PageableWrapper<SolutionMetadataData, SolutionMetadataResource>(new SolutionMetadataDataCollectionResultOfT(_solutionMetadatasRestClient, Id.ToString(), context, "SolutionMetadataCollection.GetAll"), data => new SolutionMetadataResource(Client, data));
         }
 
         /// <summary>

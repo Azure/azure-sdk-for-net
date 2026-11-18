@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary>
     /// A class representing a collection of <see cref="HierarchyConfigurationMetadataResource"/> and their operations.
     /// Each <see cref="HierarchyConfigurationMetadataResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="HierarchyConfigurationMetadataCollection"/> instance call the GetHierarchyConfigurationMetadatas method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="HierarchyConfigurationMetadataCollection"/> instance call the GetAllHierarchyConfigurationMetadata method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class HierarchyConfigurationMetadataCollection : ArmCollection, IEnumerable<HierarchyConfigurationMetadataResource>, IAsyncEnumerable<HierarchyConfigurationMetadataResource>
     {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HierarchyConfigurationMetadataData, HierarchyConfigurationMetadataResource>(new HierarchyConfigurationMetadatasGetByParentAsyncCollectionResultOfT(_hierarchyConfigurationMetadatasRestClient, Id.ToString(), context, "HierarchyConfigurationMetadataCollection.GetAll"), data => new HierarchyConfigurationMetadataResource(Client, data));
+            return new AsyncPageableWrapper<HierarchyConfigurationMetadataData, HierarchyConfigurationMetadataResource>(new HierarchyConfigurationMetadataDataAsyncCollectionResultOfT(_hierarchyConfigurationMetadatasRestClient, Id.ToString(), context, "HierarchyConfigurationMetadataCollection.GetAll"), data => new HierarchyConfigurationMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HierarchyConfigurationMetadataData, HierarchyConfigurationMetadataResource>(new HierarchyConfigurationMetadatasGetByParentCollectionResultOfT(_hierarchyConfigurationMetadatasRestClient, Id.ToString(), context, "HierarchyConfigurationMetadataCollection.GetAll"), data => new HierarchyConfigurationMetadataResource(Client, data));
+            return new PageableWrapper<HierarchyConfigurationMetadataData, HierarchyConfigurationMetadataResource>(new HierarchyConfigurationMetadataDataCollectionResultOfT(_hierarchyConfigurationMetadatasRestClient, Id.ToString(), context, "HierarchyConfigurationMetadataCollection.GetAll"), data => new HierarchyConfigurationMetadataResource(Client, data));
         }
 
         /// <summary>

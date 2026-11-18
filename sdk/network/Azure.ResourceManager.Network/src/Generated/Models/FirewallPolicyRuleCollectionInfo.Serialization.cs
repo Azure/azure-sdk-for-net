@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Properties of the rule collection.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FirewallPolicyNatRuleCollectionInfo"/> and <see cref="FirewallPolicyFilterRuleCollectionInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownFirewallPolicyRuleCollectionInfo))]
+    [PersistableModelProxy(typeof(UnknownFirewallPolicyRuleCollection))]
     public abstract partial class FirewallPolicyRuleCollectionInfo : IJsonModel<FirewallPolicyRuleCollectionInfo>
     {
         /// <param name="data"> The data to parse. </param>
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FirewallPolicyNatRuleCollection":
-                        return FirewallPolicyNatRuleCollectionInfo.DeserializeFirewallPolicyNatRuleCollectionInfo(element, options);
                     case "FirewallPolicyFilterRuleCollection":
                         return FirewallPolicyFilterRuleCollectionInfo.DeserializeFirewallPolicyFilterRuleCollectionInfo(element, options);
+                    case "FirewallPolicyNatRuleCollection":
+                        return FirewallPolicyNatRuleCollectionInfo.DeserializeFirewallPolicyNatRuleCollectionInfo(element, options);
                 }
             }
-            return UnknownFirewallPolicyRuleCollectionInfo.DeserializeUnknownFirewallPolicyRuleCollectionInfo(element, options);
+            return UnknownFirewallPolicyRuleCollection.DeserializeUnknownFirewallPolicyRuleCollection(element, options);
         }
     }
 }

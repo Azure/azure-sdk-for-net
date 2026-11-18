@@ -264,15 +264,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkVerifierIPTraffic(
-                sourceIPs,
-                destinationIPs,
-                sourcePorts,
-                destinationPorts,
-                protocols,
+                sourceIPs ?? new ChangeTrackingList<string>(),
+                destinationIPs ?? new ChangeTrackingList<string>(),
+                sourcePorts ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<NetworkProtocol>(),
                 additionalBinaryDataProperties);
         }
     }

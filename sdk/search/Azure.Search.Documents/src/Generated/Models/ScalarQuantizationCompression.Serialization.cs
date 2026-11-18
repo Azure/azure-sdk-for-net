@@ -113,7 +113,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string compressionName = default;
+            bool rescoringOptionsIsDefined = false;
             RescoringOptions rescoringOptions = default;
+            bool truncationDimensionIsDefined = false;
             int? truncationDimension = default;
             VectorSearchCompressionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -127,6 +129,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("rescoringOptions"u8))
                 {
+                    rescoringOptionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         rescoringOptions = null;
@@ -137,6 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("truncationDimension"u8))
                 {
+                    truncationDimensionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         truncationDimension = null;
@@ -161,7 +165,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScalarQuantizationCompression(
@@ -170,7 +174,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 truncationDimension,
                 kind,
                 additionalBinaryDataProperties,
-                parameters);
+                parameters)
+            {
+                _rescoringOptionsIsDefined = rescoringOptionsIsDefined,
+                _truncationDimensionIsDefined = truncationDimensionIsDefined
+            };
         }
     }
 }

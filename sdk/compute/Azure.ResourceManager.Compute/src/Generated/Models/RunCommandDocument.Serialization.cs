@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RunCommandDocument(
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute.Models
                 label,
                 description,
                 additionalBinaryDataProperties,
-                script,
+                script ?? new ChangeTrackingList<string>(),
                 parameters ?? new ChangeTrackingList<RunCommandParameterDefinition>());
         }
     }

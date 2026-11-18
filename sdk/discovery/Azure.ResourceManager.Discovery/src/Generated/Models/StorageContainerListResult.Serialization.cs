@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Discovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageContainerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StorageContainerListResult(value ?? new ChangeTrackingList<DiscoveryStorageContainerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

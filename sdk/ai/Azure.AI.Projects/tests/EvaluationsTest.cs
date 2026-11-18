@@ -946,7 +946,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         AzureAIAgentTarget target = new(name: "TheAgent")
         {
             Version = "42",
-            Tools = {tool}
+            Tools = { tool }
         };
         BinaryData targetJson = ModelReaderWriter.Write(target, ModelReaderWriterOptions.Json);
         AzureAIAgentTarget targetRehydrated = ModelReaderWriter.Read<AzureAIAgentTarget>(targetJson, ModelReaderWriterOptions.Json);

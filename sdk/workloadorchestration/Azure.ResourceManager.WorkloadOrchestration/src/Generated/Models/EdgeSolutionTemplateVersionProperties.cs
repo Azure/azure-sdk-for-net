@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="internalState"> Internal State of resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification, SolutionVersionOrchestratorType? orchestratorType, InternalState? internalState, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification, SolutionVersionOrchestratorType? orchestratorType, SolutionTemplateVersionInternalState? internalState, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Configurations = configurations;
             Specification = specification;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public SolutionVersionOrchestratorType? OrchestratorType { get; set; }
 
         /// <summary> Internal State of resource. </summary>
-        public InternalState? InternalState { get; }
+        public SolutionTemplateVersionInternalState? InternalState { get; }
 
         /// <summary> Provisioning state of resource. </summary>
         public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }

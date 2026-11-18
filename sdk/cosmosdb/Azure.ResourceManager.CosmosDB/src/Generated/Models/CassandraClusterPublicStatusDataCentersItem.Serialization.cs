@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CassandraClusterPublicStatusDataCentersItem(name, seedNodes ?? new ChangeTrackingList<string>(), nodes ?? new ChangeTrackingList<CassandraClusterDataCenterNodeItem>(), additionalBinaryDataProperties);

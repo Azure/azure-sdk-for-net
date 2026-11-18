@@ -34,6 +34,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             TypeProperties = typeProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="OracleLinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </param>
+        public OracleLinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            ConnectionString = connectionString;
+        }
+
         /// <summary> Oracle database linked service properties. </summary>
         internal OracleLinkedServiceTypeProperties TypeProperties { get; set; }
 

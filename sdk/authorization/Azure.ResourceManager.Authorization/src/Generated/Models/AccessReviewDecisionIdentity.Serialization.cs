@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
     /// Target of the decision.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessReviewDecisionUserIdentity"/> and <see cref="AccessReviewDecisionServicePrincipalIdentity"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessReviewDecisionServicePrincipalIdentity"/> and <see cref="AccessReviewDecisionUserIdentity"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAccessReviewDecisionIdentity))]
     public abstract partial class AccessReviewDecisionIdentity : IJsonModel<AccessReviewDecisionIdentity>
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "user":
-                        return AccessReviewDecisionUserIdentity.DeserializeAccessReviewDecisionUserIdentity(element, options);
                     case "servicePrincipal":
                         return AccessReviewDecisionServicePrincipalIdentity.DeserializeAccessReviewDecisionServicePrincipalIdentity(element, options);
+                    case "user":
+                        return AccessReviewDecisionUserIdentity.DeserializeAccessReviewDecisionUserIdentity(element, options);
                 }
             }
             return UnknownAccessReviewDecisionIdentity.DeserializeUnknownAccessReviewDecisionIdentity(element, options);

@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PolicyMetadataCollection(value, nextLink, additionalBinaryDataProperties);
+            return new PolicyMetadataCollection(value ?? new ChangeTrackingList<SlimPolicyMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

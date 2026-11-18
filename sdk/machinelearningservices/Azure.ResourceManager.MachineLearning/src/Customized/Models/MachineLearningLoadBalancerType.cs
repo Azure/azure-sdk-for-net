@@ -11,7 +11,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningLoadBalancerType
     {
         /// <summary> Gets the PublicIP. </summary>
+        public static MachineLearningLoadBalancerType PublicIP { get; } = new MachineLearningLoadBalancerType("PublicIp");
+
+        /// <summary> Gets the PublicIp. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningLoadBalancerType PublicIP => PublicIp;
+        public static MachineLearningLoadBalancerType PublicIp => PublicIP;
     }
 }

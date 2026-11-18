@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <summary> Initializes a new instance of <see cref="DeveloperHubGitHubOAuthListResult"/>. </summary>
         internal DeveloperHubGitHubOAuthListResult()
         {
-            Value = new ChangeTrackingList<GitHubOAuthResponseData>();
+            Value = new ChangeTrackingList<GitHubOAuthResultData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeveloperHubGitHubOAuthListResult"/>. </summary>
         /// <param name="value"> Singleton list response containing one GitHubOAuthResponse response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubGitHubOAuthListResult(IList<GitHubOAuthResponseData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubGitHubOAuthListResult(IList<GitHubOAuthResultData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Singleton list response containing one GitHubOAuthResponse response. </summary>
-        public IList<GitHubOAuthResponseData> Value { get; }
+        public IList<GitHubOAuthResultData> Value { get; }
     }
 }

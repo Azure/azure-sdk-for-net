@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            EntitySignalThresholdRuleV2 degradedRule = default;
-            EntitySignalThresholdRuleV2 unhealthyRule = default;
+            EntitySignalThresholdRule degradedRule = default;
+            EntitySignalThresholdRule unhealthyRule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    degradedRule = EntitySignalThresholdRuleV2.DeserializeEntitySignalThresholdRuleV2(prop.Value, options);
+                    degradedRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("unhealthyRule"u8))
                 {
-                    unhealthyRule = EntitySignalThresholdRuleV2.DeserializeEntitySignalThresholdRuleV2(prop.Value, options);
+                    unhealthyRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HealthReportEvaluationRule(degradedRule, unhealthyRule, additionalBinaryDataProperties);

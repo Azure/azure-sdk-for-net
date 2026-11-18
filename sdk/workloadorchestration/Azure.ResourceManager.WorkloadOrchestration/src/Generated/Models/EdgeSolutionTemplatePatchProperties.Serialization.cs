@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(EnableExternalValidation))
+            if (Optional.IsDefined(IsExternalValidationEnabled))
             {
                 writer.WritePropertyName("enableExternalValidation"u8);
-                writer.WriteBooleanValue(EnableExternalValidation.Value);
+                writer.WriteBooleanValue(IsExternalValidationEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string description = default;
             IList<string> capabilities = default;
             EdgeResourceState? state = default;
-            bool? enableExternalValidation = default;
+            bool? isExternalValidationEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    enableExternalValidation = prop.Value.GetBoolean();
+                    isExternalValidationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeSolutionTemplatePatchProperties(description, capabilities ?? new ChangeTrackingList<string>(), state, enableExternalValidation, additionalBinaryDataProperties);
+            return new EdgeSolutionTemplatePatchProperties(description, capabilities ?? new ChangeTrackingList<string>(), state, isExternalValidationEnabled, additionalBinaryDataProperties);
         }
     }
 }

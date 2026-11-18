@@ -387,7 +387,6 @@
                 "$id": "31",
                 "name": "first",
                 "isExactName": false,
-                "resourceName": "FirstOperations",
                 "doc": "Operation using first namespace Status enum",
                 "accessibility": "public",
                 "parameters": [
@@ -629,7 +628,6 @@
                 "$id": "43",
                 "name": "second",
                 "isExactName": false,
-                "resourceName": "SecondOperations",
                 "doc": "Operation using second namespace Status enum",
                 "accessibility": "public",
                 "parameters": [

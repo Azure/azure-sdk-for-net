@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Relay.Models
     {
         private readonly string _value;
         /// <summary> TLS version 1.2. </summary>
-        private const string _12Value = "1.2";
+        private const string Tls1_2Value = "1.2";
         /// <summary> TLS version 1.3. </summary>
-        private const string _13Value = "1.3";
+        private const string Tls1_3Value = "1.3";
 
         /// <summary> Initializes a new instance of <see cref="RelayTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Relay.Models
         }
 
         /// <summary> TLS version 1.2. </summary>
-        public static RelayTlsVersion _12 { get; } = new RelayTlsVersion(_12Value);
+        public static RelayTlsVersion Tls1_2 { get; } = new RelayTlsVersion(Tls1_2Value);
 
         /// <summary> TLS version 1.3. </summary>
-        public static RelayTlsVersion _13 { get; } = new RelayTlsVersion(_13Value);
+        public static RelayTlsVersion Tls1_3 { get; } = new RelayTlsVersion(Tls1_3Value);
 
         /// <summary> Determines if two <see cref="RelayTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

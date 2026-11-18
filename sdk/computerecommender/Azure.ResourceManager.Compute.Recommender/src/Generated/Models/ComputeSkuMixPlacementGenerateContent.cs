@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="capacityProfile"> All capacity-related properties. </param>
         /// <param name="instanceDescriptionVmSizes"> The list of VM sizes to consider for placement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityProfile"/> or <paramref name="instanceDescriptionVmSizes"/> is null. </exception>
-        public ComputeSkuMixPlacementGenerateContent(SkuMixPlacementCapacityProfile capacityProfile, IList<SkuMixPlacementVMSize> instanceDescriptionVmSizes)
+        public ComputeSkuMixPlacementGenerateContent(SkuMixPlacementCapacityProfile capacityProfile, IList<SkuMixPlacementVmSize> instanceDescriptionVmSizes)
         {
             Argument.AssertNotNull(capacityProfile, nameof(capacityProfile));
             Argument.AssertNotNull(instanceDescriptionVmSizes, nameof(instanceDescriptionVmSizes));
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         internal SkuMixPlacementInstanceDescription InstanceDescription { get; }
 
         /// <summary> The list of VM sizes to consider for placement. </summary>
-        public IList<SkuMixPlacementVMSize> InstanceDescriptionVmSizes
+        public IList<SkuMixPlacementVmSize> InstanceDescriptionVmSizes
         {
             get
             {

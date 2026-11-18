@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> ServiceNow server dataset. </summary>
     public partial class ServiceNowObjectDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceNowObjectDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public ServiceNowObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("ServiceNowObject", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="ServiceNowObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

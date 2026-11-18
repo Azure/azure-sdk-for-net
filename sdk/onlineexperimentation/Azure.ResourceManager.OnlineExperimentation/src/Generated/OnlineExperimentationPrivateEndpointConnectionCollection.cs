@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new OnlineExperimentationPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new OnlineExperimentationPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

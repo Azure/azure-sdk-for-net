@@ -86,7 +86,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="ContentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentFieldType?(string value) => value == null ? null : new ContentFieldType(value);
+        public static implicit operator ContentFieldType?(string value) => value == null ? (ContentFieldType?)null : new ContentFieldType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

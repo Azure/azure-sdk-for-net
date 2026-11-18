@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -19,12 +20,12 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MaintenanceWindowOptionsProperties _properties;
-        private ResourceReference<SqlDatabase> _parent;
+        private ProvisioningResourceReference<SqlDatabase> _parent;
 
         /// <summary> Creates a new MaintenanceWindowOption. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal MaintenanceWindowOption(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/databases/maintenanceWindowOptions", resourceVersion ?? "2025-01-01")
+        internal MaintenanceWindowOption(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/databases/maintenanceWindowOptions", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -38,13 +39,18 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -154,7 +160,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "current");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MaintenanceWindowOptionsProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<SqlDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -174,6 +180,12 @@ namespace Azure.Provisioning.Sql
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2025-08-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_08_01_PREVIEW = "2025-08-01-preview";
+            /// <summary> API version "2025-02-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_02_01_PREVIEW = "2025-02-01-preview";
             /// <summary> API version "2025-01-01". </summary>
             public static readonly string V2025_01_01 = "2025-01-01";
         }

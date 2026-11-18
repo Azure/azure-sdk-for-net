@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// A copy activity sink.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DelimitedTextSink"/>, <see cref="JsonSink"/>, <see cref="OrcSink"/>, <see cref="RestSink"/>, <see cref="TeradataSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="WarehouseSink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureTableSink"/>, <see cref="AvroSink"/>, <see cref="ParquetSink"/>, <see cref="BinarySink"/>, <see cref="IcebergSink"/>, <see cref="DataFactoryBlobSink"/>, <see cref="FileSystemSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="SqlSink"/>, <see cref="SqlServerSink"/>, <see cref="AzureSqlSink"/>, <see cref="SqlMISink"/>, <see cref="SqlDWSink"/>, <see cref="SnowflakeSink"/>, <see cref="SnowflakeV2Sink"/>, <see cref="OracleSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="OdbcSink"/>, <see cref="InformixSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="DynamicsSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="SalesforceSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="LakeHouseTableSink"/>, <see cref="SalesforceV2Sink"/>, and <see cref="SalesforceServiceCloudV2Sink"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvroSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="AzureSqlSink"/>, <see cref="AzureTableSink"/>, <see cref="BinarySink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="DataFactoryBlobSink"/>, <see cref="DelimitedTextSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="DynamicsSink"/>, <see cref="FileSystemSink"/>, <see cref="IcebergSink"/>, <see cref="InformixSink"/>, <see cref="JsonSink"/>, <see cref="LakeHouseTableSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="OdbcSink"/>, <see cref="OracleSink"/>, <see cref="OrcSink"/>, <see cref="ParquetSink"/>, <see cref="RestSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="SalesforceServiceCloudV2Sink"/>, <see cref="SalesforceSink"/>, <see cref="SalesforceV2Sink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="SnowflakeSink"/>, <see cref="SnowflakeV2Sink"/>, <see cref="SqlDWSink"/>, <see cref="SqlMISink"/>, <see cref="SqlServerSink"/>, <see cref="SqlSink"/>, <see cref="TeradataSink"/>, and <see cref="WarehouseSink"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCopySink))]
     public abstract partial class CopySink : IJsonModel<CopySink>
@@ -153,98 +153,98 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DelimitedTextSink":
-                        return DelimitedTextSink.DeserializeDelimitedTextSink(element, options);
-                    case "JsonSink":
-                        return JsonSink.DeserializeJsonSink(element, options);
-                    case "OrcSink":
-                        return OrcSink.DeserializeOrcSink(element, options);
-                    case "RestSink":
-                        return RestSink.DeserializeRestSink(element, options);
-                    case "TeradataSink":
-                        return TeradataSink.DeserializeTeradataSink(element, options);
-                    case "AzurePostgreSqlSink":
-                        return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element, options);
-                    case "AzureMySqlSink":
-                        return AzureMySqlSink.DeserializeAzureMySqlSink(element, options);
-                    case "AzureDatabricksDeltaLakeSink":
-                        return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
-                    case "WarehouseSink":
-                        return WarehouseSink.DeserializeWarehouseSink(element, options);
-                    case "SapCloudForCustomerSink":
-                        return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element, options);
-                    case "AzureQueueSink":
-                        return AzureQueueSink.DeserializeAzureQueueSink(element, options);
-                    case "AzureTableSink":
-                        return AzureTableSink.DeserializeAzureTableSink(element, options);
                     case "AvroSink":
                         return AvroSink.DeserializeAvroSink(element, options);
-                    case "ParquetSink":
-                        return ParquetSink.DeserializeParquetSink(element, options);
-                    case "BinarySink":
-                        return BinarySink.DeserializeBinarySink(element, options);
-                    case "IcebergSink":
-                        return IcebergSink.DeserializeIcebergSink(element, options);
-                    case "BlobSink":
-                        return DataFactoryBlobSink.DeserializeDataFactoryBlobSink(element, options);
-                    case "FileSystemSink":
-                        return FileSystemSink.DeserializeFileSystemSink(element, options);
-                    case "DocumentDbCollectionSink":
-                        return DocumentDBCollectionSink.DeserializeDocumentDBCollectionSink(element, options);
-                    case "CosmosDbSqlApiSink":
-                        return CosmosDBSqlApiSink.DeserializeCosmosDBSqlApiSink(element, options);
-                    case "SqlSink":
-                        return SqlSink.DeserializeSqlSink(element, options);
-                    case "SqlServerSink":
-                        return SqlServerSink.DeserializeSqlServerSink(element, options);
-                    case "AzureSqlSink":
-                        return AzureSqlSink.DeserializeAzureSqlSink(element, options);
-                    case "SqlMISink":
-                        return SqlMISink.DeserializeSqlMISink(element, options);
-                    case "SqlDWSink":
-                        return SqlDWSink.DeserializeSqlDWSink(element, options);
-                    case "SnowflakeSink":
-                        return SnowflakeSink.DeserializeSnowflakeSink(element, options);
-                    case "SnowflakeV2Sink":
-                        return SnowflakeV2Sink.DeserializeSnowflakeV2Sink(element, options);
-                    case "OracleSink":
-                        return OracleSink.DeserializeOracleSink(element, options);
-                    case "AzureDataLakeStoreSink":
-                        return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element, options);
                     case "AzureBlobFSSink":
                         return AzureBlobFSSink.DeserializeAzureBlobFSSink(element, options);
-                    case "AzureSearchIndexSink":
-                        return AzureSearchIndexSink.DeserializeAzureSearchIndexSink(element, options);
-                    case "OdbcSink":
-                        return OdbcSink.DeserializeOdbcSink(element, options);
-                    case "InformixSink":
-                        return InformixSink.DeserializeInformixSink(element, options);
-                    case "MicrosoftAccessSink":
-                        return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element, options);
-                    case "DynamicsSink":
-                        return DynamicsSink.DeserializeDynamicsSink(element, options);
-                    case "DynamicsCrmSink":
-                        return DynamicsCrmSink.DeserializeDynamicsCrmSink(element, options);
-                    case "CommonDataServiceForAppsSink":
-                        return CommonDataServiceForAppsSink.DeserializeCommonDataServiceForAppsSink(element, options);
                     case "AzureDataExplorerSink":
                         return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element, options);
-                    case "SalesforceSink":
-                        return SalesforceSink.DeserializeSalesforceSink(element, options);
-                    case "SalesforceServiceCloudSink":
-                        return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element, options);
+                    case "AzureDataLakeStoreSink":
+                        return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element, options);
+                    case "AzureDatabricksDeltaLakeSink":
+                        return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
+                    case "AzureMySqlSink":
+                        return AzureMySqlSink.DeserializeAzureMySqlSink(element, options);
+                    case "AzurePostgreSqlSink":
+                        return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element, options);
+                    case "AzureQueueSink":
+                        return AzureQueueSink.DeserializeAzureQueueSink(element, options);
+                    case "AzureSearchIndexSink":
+                        return AzureSearchIndexSink.DeserializeAzureSearchIndexSink(element, options);
+                    case "AzureSqlSink":
+                        return AzureSqlSink.DeserializeAzureSqlSink(element, options);
+                    case "AzureTableSink":
+                        return AzureTableSink.DeserializeAzureTableSink(element, options);
+                    case "BinarySink":
+                        return BinarySink.DeserializeBinarySink(element, options);
+                    case "CommonDataServiceForAppsSink":
+                        return CommonDataServiceForAppsSink.DeserializeCommonDataServiceForAppsSink(element, options);
+                    case "CosmosDbMongoDbApiSink":
+                        return CosmosDBMongoDBApiSink.DeserializeCosmosDBMongoDBApiSink(element, options);
+                    case "CosmosDbSqlApiSink":
+                        return CosmosDBSqlApiSink.DeserializeCosmosDBSqlApiSink(element, options);
+                    case "BlobSink":
+                        return DataFactoryBlobSink.DeserializeDataFactoryBlobSink(element, options);
+                    case "DelimitedTextSink":
+                        return DelimitedTextSink.DeserializeDelimitedTextSink(element, options);
+                    case "DocumentDbCollectionSink":
+                        return DocumentDBCollectionSink.DeserializeDocumentDBCollectionSink(element, options);
+                    case "DynamicsCrmSink":
+                        return DynamicsCrmSink.DeserializeDynamicsCrmSink(element, options);
+                    case "DynamicsSink":
+                        return DynamicsSink.DeserializeDynamicsSink(element, options);
+                    case "FileSystemSink":
+                        return FileSystemSink.DeserializeFileSystemSink(element, options);
+                    case "IcebergSink":
+                        return IcebergSink.DeserializeIcebergSink(element, options);
+                    case "InformixSink":
+                        return InformixSink.DeserializeInformixSink(element, options);
+                    case "JsonSink":
+                        return JsonSink.DeserializeJsonSink(element, options);
+                    case "LakeHouseTableSink":
+                        return LakeHouseTableSink.DeserializeLakeHouseTableSink(element, options);
+                    case "MicrosoftAccessSink":
+                        return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element, options);
                     case "MongoDbAtlasSink":
                         return MongoDBAtlasSink.DeserializeMongoDBAtlasSink(element, options);
                     case "MongoDbV2Sink":
                         return MongoDBV2Sink.DeserializeMongoDBV2Sink(element, options);
-                    case "CosmosDbMongoDbApiSink":
-                        return CosmosDBMongoDBApiSink.DeserializeCosmosDBMongoDBApiSink(element, options);
-                    case "LakeHouseTableSink":
-                        return LakeHouseTableSink.DeserializeLakeHouseTableSink(element, options);
-                    case "SalesforceV2Sink":
-                        return SalesforceV2Sink.DeserializeSalesforceV2Sink(element, options);
+                    case "OdbcSink":
+                        return OdbcSink.DeserializeOdbcSink(element, options);
+                    case "OracleSink":
+                        return OracleSink.DeserializeOracleSink(element, options);
+                    case "OrcSink":
+                        return OrcSink.DeserializeOrcSink(element, options);
+                    case "ParquetSink":
+                        return ParquetSink.DeserializeParquetSink(element, options);
+                    case "RestSink":
+                        return RestSink.DeserializeRestSink(element, options);
+                    case "SalesforceServiceCloudSink":
+                        return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element, options);
                     case "SalesforceServiceCloudV2Sink":
                         return SalesforceServiceCloudV2Sink.DeserializeSalesforceServiceCloudV2Sink(element, options);
+                    case "SalesforceSink":
+                        return SalesforceSink.DeserializeSalesforceSink(element, options);
+                    case "SalesforceV2Sink":
+                        return SalesforceV2Sink.DeserializeSalesforceV2Sink(element, options);
+                    case "SapCloudForCustomerSink":
+                        return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element, options);
+                    case "SnowflakeSink":
+                        return SnowflakeSink.DeserializeSnowflakeSink(element, options);
+                    case "SnowflakeV2Sink":
+                        return SnowflakeV2Sink.DeserializeSnowflakeV2Sink(element, options);
+                    case "SqlDWSink":
+                        return SqlDWSink.DeserializeSqlDWSink(element, options);
+                    case "SqlMISink":
+                        return SqlMISink.DeserializeSqlMISink(element, options);
+                    case "SqlServerSink":
+                        return SqlServerSink.DeserializeSqlServerSink(element, options);
+                    case "SqlSink":
+                        return SqlSink.DeserializeSqlSink(element, options);
+                    case "TeradataSink":
+                        return TeradataSink.DeserializeTeradataSink(element, options);
+                    case "WarehouseSink":
+                        return WarehouseSink.DeserializeWarehouseSink(element, options);
                 }
             }
             return UnknownCopySink.DeserializeUnknownCopySink(element, options);

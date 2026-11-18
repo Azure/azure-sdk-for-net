@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.Provisioning;
@@ -533,11 +532,6 @@ namespace Azure.Provisioning.AppContainers
 
         /// <summary> Define additional provisionable properties for ContainerAppManagedEnvironment that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
-
-        /// <summary> Get the requirements for naming this resource. </summary>
-        /// <returns> Naming requirements. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
         /// <summary> Creates a role assignment for a user-assigned identity that grants access to this ContainerAppManagedEnvironment. </summary>
         /// <param name="role"> The role to grant. </param>

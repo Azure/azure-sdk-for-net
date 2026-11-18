@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -23,7 +22,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // disable convvenience overload
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -36,13 +35,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// Gets the name of the knowledge base.
         /// </summary>
         public virtual string KnowledgeBaseName => _knowledgeBaseName;
-
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
-        [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
-        }
 
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
@@ -71,26 +63,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         }
 
         /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Response Retrieve(RequestContent content, RequestContext context) =>
-            Retrieve(content, querySourceAuthorization: null, context: context);
-
-        /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
-            RetrieveAsync(content, querySourceAuthorization: null, context: context);
-
-        /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
         /// server-sent events on the same connection as they become available, instead of waiting for the
         /// full retrieval to complete.
@@ -109,22 +81,20 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </returns>
 #pragma warning disable AZC0004 // Streaming APIs are async-only.
 #pragma warning disable AZC0015 // IAsyncEnumerable<T> is the temporary streaming convenience shape.
-    [ForwardsClientCalls(true)]
+        [ForwardsClientCalls(true)]
         public virtual async IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(
-            KnowledgeBaseRetrievalRequest retrievalRequest,
-            string querySourceAuthorization = default,
-            string queryWorkIQSourceAuthorization = default,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+                KnowledgeBaseRetrievalRequest retrievalRequest,
+                string querySourceAuthorization = default,
+                string queryWorkIQSourceAuthorization = default,
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-            AsyncStreamingClientResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
+            AsyncStreamingResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
                 retrievalRequest,
                 querySourceAuthorization,
                 queryWorkIQSourceAuthorization,
                 cancellationToken.ToRequestContext()).ConfigureAwait(false);
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
             await using (((IAsyncDisposable)result).ConfigureAwait(false))
             {

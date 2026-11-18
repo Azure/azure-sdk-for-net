@@ -38,10 +38,16 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
 
         private ClientDiagnostics MongoClustersClientDiagnostics => _mongoClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MongoCluster.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MongoClusters MongoClustersRestClient => _mongoClustersRestClient ??= new MongoClusters(MongoClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private MongoClusters MongoClustersRestClient => _mongoClustersRestClient ??= new MongoClusters(
+            MongoClustersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -65,11 +71,11 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllAsyncCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClusterDataAsync0CollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -81,7 +87,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,11 +99,11 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
+            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClusterData0CollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -109,7 +115,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -158,7 +164,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>

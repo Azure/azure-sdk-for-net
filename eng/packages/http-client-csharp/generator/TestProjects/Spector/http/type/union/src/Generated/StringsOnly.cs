@@ -26,9 +26,9 @@ namespace _Type.Union
 
         public virtual Task<Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<GetResponse> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<GetResult> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<GetResponse>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<GetResult>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Send(RequestContent content, RequestContext context = null) => throw null;
 

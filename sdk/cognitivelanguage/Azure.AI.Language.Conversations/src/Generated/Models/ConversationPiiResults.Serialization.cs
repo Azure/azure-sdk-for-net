@@ -185,10 +185,10 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConversationPiiResults(errors, statistics, modelVersion, conversations, additionalBinaryDataProperties);
+            return new ConversationPiiResults(errors ?? new ChangeTrackingList<DocumentError>(), statistics, modelVersion, conversations ?? new ChangeTrackingList<ConversationalPiiResult>(), additionalBinaryDataProperties);
         }
     }
 }

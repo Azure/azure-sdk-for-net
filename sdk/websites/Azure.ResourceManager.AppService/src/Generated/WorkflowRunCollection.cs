@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowRunData, WorkflowRunResource>(new WorkflowRunsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowRunData, WorkflowRunResource>(new WorkflowRunDataAsyncCollectionResultOfT(
                 _workflowRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowRunData, WorkflowRunResource>(new WorkflowRunsGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkflowRunData, WorkflowRunResource>(new WorkflowRunDataCollectionResultOfT(
                 _workflowRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

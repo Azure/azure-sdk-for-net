@@ -156,5 +156,22 @@ namespace Azure.ResourceManager.Relay.Models
                 Properties.MinimumTlsVersion = value;
             }
         }
+
+        /// <summary> Cluster ARM ID of the Namespace. </summary>
+        public ResourceIdentifier ClusterArmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterArmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayNamespaceProperties();
+                }
+                Properties.ClusterArmId = value;
+            }
+        }
     }
 }

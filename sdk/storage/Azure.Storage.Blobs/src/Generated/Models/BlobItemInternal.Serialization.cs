@@ -129,7 +129,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Properties");
             writer.WriteObjectValue(Properties, options);
             writer.WriteEndElement();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WriteStartElement("Metadata");
                 foreach (var pair in Metadata)
@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteObjectValue(BlobTags, options);
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(OrMetadata))
+            if (OrMetadata != null && Optional.IsCollectionDefined(OrMetadata))
             {
                 writer.WriteStartElement("OrMetadata");
                 foreach (var pair in OrMetadata)

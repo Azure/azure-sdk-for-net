@@ -1,5 +1,5 @@
 directory: specification/mongocluster/resource-manager/Microsoft.DocumentDB/MongoCluster
-commit: ac5f7d96bc313f0d1df718dffe02a85a5ddff6b8
+commit: 558212363d83aa75b12cdd02d1a1f1ca212e4c52
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

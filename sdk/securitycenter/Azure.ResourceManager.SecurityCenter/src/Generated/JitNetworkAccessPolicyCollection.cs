@@ -45,7 +45,13 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(JitNetworkAccessPolicyResource.ResourceType, out string jitNetworkAccessPolicyApiVersion);
             _ascLocation = ascLocation;
             _jitNetworkAccessPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
-            _jitNetworkAccessPoliciesRestClient = new JitNetworkAccessPolicies(_jitNetworkAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, jitNetworkAccessPolicyApiVersion ?? "2020-01-01");
+            _jitNetworkAccessPoliciesRestClient = new JitNetworkAccessPolicies(
+                _jitNetworkAccessPoliciesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                jitNetworkAccessPolicyApiVersion ?? "2020-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -292,7 +298,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetByResourceGroupAndRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyDataAsyncCollectionResultOfT(
                 _jitNetworkAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -326,7 +332,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetByResourceGroupAndRegionCollectionResultOfT(
+            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyDataCollectionResultOfT(
                 _jitNetworkAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

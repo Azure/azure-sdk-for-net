@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesTrafficRoutingRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RuleId))
+            if (Optional.IsDefined(RuleId, _ruleIdIsDefined))
             {
-                writer.WritePropertyName("ruleId"u8);
-                writer.WriteStringValue(RuleId);
+                if (RuleId != null)
+                {
+                    writer.WritePropertyName("ruleId"u8);
+                    writer.WriteStringValue(RuleId);
+                }
+                else
+                {
+                    writer.WriteNull("ruleId"u8);
+                }
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
-            if (Optional.IsDefined(DeploymentId))
+            if (Optional.IsDefined(DeploymentId, _deploymentIdIsDefined))
             {
-                writer.WritePropertyName("deploymentId"u8);
-                writer.WriteStringValue(DeploymentId);
+                if (DeploymentId != null)
+                {
+                    writer.WritePropertyName("deploymentId"u8);
+                    writer.WriteStringValue(DeploymentId);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentId"u8);
+                }
             }
             if (Optional.IsDefined(TrafficPercentage))
             {
@@ -136,8 +157,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool ruleIdIsDefined = false;
             string ruleId = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool deploymentIdIsDefined = false;
             string deploymentId = default;
             int? trafficPercentage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,6 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("ruleId"u8))
                 {
+                    ruleIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         ruleId = null;
@@ -155,6 +180,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -165,6 +191,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("deploymentId"u8))
                 {
+                    deploymentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         deploymentId = null;
@@ -184,10 +211,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesTrafficRoutingRule(ruleId, description, deploymentId, trafficPercentage, additionalBinaryDataProperties);
+            return new CognitiveServicesTrafficRoutingRule(ruleId, description, deploymentId, trafficPercentage, additionalBinaryDataProperties)
+            {
+                _ruleIdIsDefined = ruleIdIsDefined,
+                _descriptionIsDefined = descriptionIsDefined,
+                _deploymentIdIsDefined = deploymentIdIsDefined
+            };
         }
     }
 }

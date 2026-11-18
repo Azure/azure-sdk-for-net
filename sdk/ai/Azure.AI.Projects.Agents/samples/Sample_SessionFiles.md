@@ -26,7 +26,7 @@ string sessionId = Guid.NewGuid().ToString();
 ProjectAgentSession session = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -45,7 +45,7 @@ string sessionId = Guid.NewGuid().ToString("N");
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
 );
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -64,7 +64,7 @@ File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 
-SessionFileWriteResponse writeResponse = sessionClient.Upload(
+SessionFileWriteResult writeResponse = sessionClient.Upload(
     sessionStoragePath: filePath,
     localPath: filePath
 );
@@ -88,7 +88,7 @@ string filePath = "sample_file_for_upload1.txt";
 File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-SessionFileWriteResponse writeResponse = await sessionClient.UploadAsync(
+SessionFileWriteResult writeResponse = await sessionClient.UploadAsync(
         sessionStoragePath: filePath,
         localPath: filePath
     );
@@ -156,14 +156,14 @@ File.Delete(filePath);
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Sync
-sessionClient.Delete(localPath: "sample_file_for_upload1.txt");
-sessionClient.Delete(localPath: "sample_file_for_upload2.txt");
+sessionClient.Delete(sessionStoragePath: "sample_file_for_upload1.txt");
+sessionClient.Delete(sessionStoragePath: "sample_file_for_upload2.txt");
 agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Async
-await sessionClient.DeleteAsync(localPath: "sample_file_for_upload1.txt");
-await sessionClient.DeleteAsync(localPath: "sample_file_for_upload2.txt");
+await sessionClient.DeleteAsync(sessionStoragePath: "sample_file_for_upload1.txt");
+await sessionClient.DeleteAsync(sessionStoragePath: "sample_file_for_upload2.txt");
 await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 ```

@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Storage.Models
         // operators/conversions partial, breaking the build. Re-declare the missing members
         // here. Remove once the upstream fix lands in a new mgmt-emitter alpha.
         private readonly string _value;
-        private const string KerbValue = "kerb";
 
         /// <summary> Initializes a new instance of <see cref="ListKeysRequestExpand"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -31,9 +30,6 @@ namespace Azure.ResourceManager.Storage.Models
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
-
-        /// <summary> Kerb. </summary>
-        public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

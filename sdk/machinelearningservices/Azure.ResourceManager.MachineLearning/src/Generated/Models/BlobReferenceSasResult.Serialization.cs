@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(BlobReferenceSasResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BlobReferenceForConsumption))
+            if (Optional.IsDefined(BlobReferenceForConsumption, _blobReferenceForConsumptionIsDefined))
             {
-                writer.WritePropertyName("blobReferenceForConsumption"u8);
-                writer.WriteObjectValue(BlobReferenceForConsumption, options);
+                if (BlobReferenceForConsumption != null)
+                {
+                    writer.WritePropertyName("blobReferenceForConsumption"u8);
+                    writer.WriteObjectValue(BlobReferenceForConsumption, options);
+                }
+                else
+                {
+                    writer.WriteNull("blobReferenceForConsumption"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,12 +136,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool blobReferenceForConsumptionIsDefined = false;
             GetBlobReferenceForConsumptionDto blobReferenceForConsumption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("blobReferenceForConsumption"u8))
                 {
+                    blobReferenceForConsumptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         blobReferenceForConsumption = null;
@@ -145,10 +154,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BlobReferenceSasResult(blobReferenceForConsumption, additionalBinaryDataProperties);
+            return new BlobReferenceSasResult(blobReferenceForConsumption, additionalBinaryDataProperties)
+            {
+                _blobReferenceForConsumptionIsDefined = blobReferenceForConsumptionIsDefined
+            };
         }
     }
 }

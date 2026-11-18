@@ -87,7 +87,7 @@ namespace Azure.AI.Translation.Document
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient from a <see cref="SingleDocumentTranslationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for SingleDocumentTranslationClient. </param>
         [Experimental("SCME0002")]
-        public SingleDocumentTranslationClient(SingleDocumentTranslationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public SingleDocumentTranslationClient(SingleDocumentTranslationClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
         {
         }
 

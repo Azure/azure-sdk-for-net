@@ -14,11 +14,6 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluator Definition. </summary>
     public partial class EvaluatorVersion : IJsonModel<EvaluatorVersion>
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluatorVersion"/> for deserialization. </summary>
-        internal EvaluatorVersion()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluatorVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -416,14 +411,14 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EvaluatorVersion(
                 displayName,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 evaluatorType,
-                categories,
+                categories ?? new ChangeTrackingList<EvaluatorCategory>(),
                 supportedEvaluationLevels ?? new ChangeTrackingList<ProjectsEvaluationLevel>(),
                 definition,
                 generationArtifacts,

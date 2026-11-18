@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary>
     /// A class representing a collection of <see cref="LoadTestingQuotaResource"/> and their operations.
     /// Each <see cref="LoadTestingQuotaResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="LoadTestingQuotaCollection"/> instance call the GetLoadTestingQuotas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="LoadTestingQuotaCollection"/> instance call the GetAllLoadTestingQuota method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class LoadTestingQuotaCollection : ArmCollection, IEnumerable<LoadTestingQuotaResource>, IAsyncEnumerable<LoadTestingQuotaResource>
     {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllAsyncCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new LoadTestingQuotaDataAsyncCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
+            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new LoadTestingQuotaDataCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>

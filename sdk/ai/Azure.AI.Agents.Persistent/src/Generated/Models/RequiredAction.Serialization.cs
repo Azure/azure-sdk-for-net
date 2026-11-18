@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a required action for an agent thread run to continue.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolOutputsAction"/> and <see cref="SubmitToolApprovalAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolApprovalAction"/> and <see cref="SubmitToolOutputsAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRequiredAction))]
     public abstract partial class RequiredAction : IJsonModel<RequiredAction>
@@ -124,10 +124,10 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "submit_tool_outputs":
-                        return SubmitToolOutputsAction.DeserializeSubmitToolOutputsAction(element, options);
                     case "submit_tool_approval":
                         return SubmitToolApprovalAction.DeserializeSubmitToolApprovalAction(element, options);
+                    case "submit_tool_outputs":
+                        return SubmitToolOutputsAction.DeserializeSubmitToolOutputsAction(element, options);
                 }
             }
             return UnknownRequiredAction.DeserializeUnknownRequiredAction(element, options);

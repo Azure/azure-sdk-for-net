@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceProperties(provisioningState, communicationEndpoint, scopes, additionalBinaryDataProperties);
+            return new WorkspaceProperties(provisioningState, communicationEndpoint, scopes ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

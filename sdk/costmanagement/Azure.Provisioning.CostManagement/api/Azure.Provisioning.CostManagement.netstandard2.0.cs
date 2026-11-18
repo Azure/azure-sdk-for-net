@@ -227,6 +227,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ModifiedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertSource> Source { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> StatusModificationUserName { get { throw null; } }
@@ -611,6 +612,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ValidTill { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -629,6 +631,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartTime { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ReportOperationStatusType> StatusValue { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

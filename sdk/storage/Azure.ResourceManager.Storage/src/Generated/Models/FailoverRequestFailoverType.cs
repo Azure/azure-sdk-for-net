@@ -12,6 +12,11 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary></summary>
     public readonly partial struct FailoverRequestFailoverType : IEquatable<FailoverRequestFailoverType>
     {
+        private const string PlannedValue = "Planned";
+
+        /// <summary> Gets the Planned. </summary>
+        public static FailoverRequestFailoverType Planned { get; } = new FailoverRequestFailoverType(PlannedValue);
+
         /// <summary> Determines if two <see cref="FailoverRequestFailoverType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

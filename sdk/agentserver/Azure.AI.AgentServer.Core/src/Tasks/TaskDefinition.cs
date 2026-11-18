@@ -52,12 +52,43 @@ public class TaskDefinition<TInput, TOutput>
         => Engine.RunAsync<TInput, TOutput>(Name, input, options, cancellationToken);
 
     /// <summary>Starts the task and returns an awaitable handle once the creation round-trip succeeds.</summary>
+    /// <remarks>
+    /// Concurrent starts for the same task id within one task engine coordinate initial creation.
+    /// Once started, a steerable multi-turn task queues each accepted input with its own handle;
+    /// a one-shot task converges on the existing run. Creation conflicts with another task engine
+    /// are not automatically converted into steering.
+    /// If a multi-turn execution suspends before accepting an input that was waiting to append,
+    /// the start is re-evaluated with the same input id, precondition, and cancellation token.
+    /// </remarks>
     /// <param name="input">The typed input.</param>
     /// <param name="options">Optional per-invocation options.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>An awaitable <see cref="TaskRun{TOutput}"/> handle.</returns>
     public virtual Task<TaskRun<TOutput>> StartAsync(TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
         => Engine.StartAsync<TInput, TOutput>(Name, input, options, cancellationToken);
+
+    /// <summary>
+    /// Starts an existing multi-turn task without creating a record when the task ID is absent.
+    /// </summary>
+    /// <remarks>
+    /// This compatibility primitive is intended for protocol libraries migrating physical task
+    /// identifiers. It returns <see langword="null"/> if the existing record disappears before
+    /// the start boundary.
+    /// </remarks>
+    /// <param name="input">The typed input.</param>
+    /// <param name="options">Invocation options containing an explicit task ID.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>The existing task run, or <see langword="null"/> when the record is absent.</returns>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public virtual Task<TaskRun<TOutput>?> TryStartExistingAsync(
+        TInput input,
+        RunOptions options,
+        CancellationToken cancellationToken = default)
+        => Engine.TryStartExistingAsync<TInput, TOutput>(
+            Name,
+            input,
+            options,
+            cancellationToken);
 
     /// <summary>
     /// Returns the in-flight run for a one-shot task keyed by <paramref name="taskId"/>, or
@@ -81,9 +112,28 @@ public class TaskDefinition<TInput, TOutput>
         => Engine.GetActiveRunAsync<TOutput>(Name, taskId, inputId, cancellationToken);
 
     /// <summary>
+    /// Returns the persisted status of the task keyed by <paramref name="taskId"/>, or
+    /// <see langword="null"/> when no task owned by this definition exists.
+    /// </summary>
+    /// <param name="taskId">The task id.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>The persisted task status, or <see langword="null"/>.</returns>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public virtual Task<TaskRunStatus?> GetStatusAsync(
+        string taskId,
+        CancellationToken cancellationToken = default)
+        => Engine.GetStatusAsync(Name, taskId, cancellationToken);
+
+    /// <summary>
     /// Ends a multi-turn chain: cancels any in-flight turn, resolves queued callers as cancelled,
     /// and removes the record. Idempotent — a no-op when the chain is absent.
     /// </summary>
+    /// <remarks>
+    /// Cancellation is requested before storage deletion. A storage failure does not undo
+    /// cancellation and does not authorize stream closure. Task-bound streams close after
+    /// deletion is confirmed and their producer has unwound. This method does not wait for
+    /// an in-flight handler to finish; that handler's completion may remain pending.
+    /// </remarks>
     /// <param name="taskId">The chain id.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>A task that completes when the chain has been removed.</returns>

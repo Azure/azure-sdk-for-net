@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary>
     /// Channel definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlexaChannel"/>, <see cref="FacebookChannel"/>, <see cref="EmailChannel"/>, <see cref="OutlookChannel"/>, <see cref="MsTeamsChannel"/>, <see cref="SkypeChannel"/>, <see cref="KikChannel"/>, <see cref="WebChatChannel"/>, <see cref="DirectLineChannel"/>, <see cref="TelegramChannel"/>, <see cref="SmsChannel"/>, <see cref="SlackChannel"/>, <see cref="LineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="Dynamics365OmnichannelChannel"/>, <see cref="TelephonyChannel"/>, <see cref="AcsChatChannel"/>, <see cref="SearchAssistant"/>, and <see cref="M365Extensions"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AcsChatChannel"/>, <see cref="AlexaChannel"/>, <see cref="DirectLineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="Dynamics365OmnichannelChannel"/>, <see cref="EmailChannel"/>, <see cref="FacebookChannel"/>, <see cref="KikChannel"/>, <see cref="LineChannel"/>, <see cref="M365Extensions"/>, <see cref="MsTeamsChannel"/>, <see cref="OutlookChannel"/>, <see cref="SearchAssistant"/>, <see cref="SkypeChannel"/>, <see cref="SlackChannel"/>, <see cref="SmsChannel"/>, <see cref="TelegramChannel"/>, <see cref="TelephonyChannel"/>, and <see cref="WebChatChannel"/>.
     /// </summary>
     public abstract partial class BotChannelProperties
     {
@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.BotService.Models
             ProvisioningState = provisioningState;
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
+        protected BotChannelProperties() : this(default)
+        {
         }
 
         /// <summary> The channel name. </summary>

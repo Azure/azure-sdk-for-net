@@ -19,16 +19,25 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNull(creationData, nameof(creationData));
 
-            CreationData = creationData;
+            Properties = new SnapshotProperties(creationData, default, default, default, default, default, null);
         }
 
-        /// <summary> Data used when creating a volume snapshot. </summary>
-        internal SnapshotCreationInfo CreationData { get; set; }
         /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>
         public ResourceIdentifier CreationDataSourceId
         {
-            get => CreationData is null ? default : CreationData.SourceId;
-            set => CreationData = new SnapshotCreationInfo(value);
+            get => Properties is null ? default : Properties.CreationDataSourceId;
+            set
+            {
+                if (Properties is null)
+                {
+                    Argument.AssertNotNull(value, nameof(value));
+                    Properties = new SnapshotProperties(value);
+                }
+                else
+                {
+                    Properties.CreationDataSourceId = value;
+                }
+            }
         }
     }
 }

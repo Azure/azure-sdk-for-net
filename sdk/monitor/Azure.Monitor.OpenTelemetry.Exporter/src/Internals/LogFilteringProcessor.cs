@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public override void OnEnd(LogRecord logRecord)
         {
-            if (logRecord.SpanId == default || logRecord.TraceFlags == ActivityTraceFlags.Recorded)
+            if (logRecord.SpanId == default || (logRecord.TraceFlags & ActivityTraceFlags.Recorded) != 0)
             {
                 base.OnEnd(logRecord);
             }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             Argument.AssertNotNull(specification, nameof(specification));
 
             Specification = specification;
-            Stages = new ChangeTrackingList<StageMap>();
+            Stages = new ChangeTrackingList<SolutionStageMap>();
             SolutionDependencies = new ChangeTrackingList<EdgeSolutionDependency>();
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, StageMap currentStage, IReadOnlyList<StageMap> stages, string solutionInstanceName, IReadOnlyList<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, string latestActionTriggeredBy, EdgeJobType? actionType, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, SolutionStageMap currentStage, IReadOnlyList<SolutionStageMap> stages, string solutionInstanceName, IReadOnlyList<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, string latestActionTriggeredBy, EdgeJobType? actionType, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionTemplateVersionId = solutionTemplateVersionId;
             Revision = revision;
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public SolutionInstanceState? State { get; }
 
         /// <summary> Current Stage of revision. </summary>
-        public StageMap CurrentStage { get; }
+        public SolutionStageMap CurrentStage { get; }
 
         /// <summary> Stages of revision. </summary>
-        public IReadOnlyList<StageMap> Stages { get; }
+        public IReadOnlyList<SolutionStageMap> Stages { get; }
 
         /// <summary> Solution instance name. </summary>
         public string SolutionInstanceName { get; }

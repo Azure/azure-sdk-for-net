@@ -398,32 +398,6 @@ namespace Azure.Search.Documents.Indexes
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
-        public virtual Pageable<SearchIndex> GetIndexes(
-            CancellationToken cancellationToken) =>
-            GetIndexes(search: null, pageSize: null, searchType: default, cancellationToken: cancellationToken);
-#pragma warning restore AZC0002
-
-        /// <summary>
-        /// Gets a list of all indexes.
-        /// </summary>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
-        public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
-            CancellationToken cancellationToken) =>
-            GetIndexesAsync(search: null, pageSize: null, searchType: default, cancellationToken: cancellationToken);
-#pragma warning restore AZC0002
-
-        /// <summary>
-        /// Gets a list of all indexes.
-        /// </summary>
         /// <param name="context">The request context.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
         [ForwardsClientCalls]

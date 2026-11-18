@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for entity OverlapPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MatchLongestEntityPolicyType"/> and <see cref="AllowOverlapEntityPolicyType"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AllowOverlapEntityPolicyType"/> and <see cref="MatchLongestEntityPolicyType"/>.
     /// </summary>
     public abstract partial class EntityOverlapPolicy
     {

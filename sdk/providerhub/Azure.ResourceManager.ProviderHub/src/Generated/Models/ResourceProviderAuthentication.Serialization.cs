@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences, additionalBinaryDataProperties);
+            return new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

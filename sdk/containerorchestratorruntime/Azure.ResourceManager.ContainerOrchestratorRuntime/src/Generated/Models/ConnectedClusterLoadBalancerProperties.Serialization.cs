@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConnectedClusterLoadBalancerProperties(
-                addresses,
+                addresses ?? new ChangeTrackingList<string>(),
                 serviceSelector ?? new ChangeTrackingDictionary<string, string>(),
                 advertiseMode,
                 bgpPeers ?? new ChangeTrackingList<string>(),

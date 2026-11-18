@@ -11,19 +11,19 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The kind of bulk operation that can be performed on resources using Bulkactions API. </summary>
+    /// <summary> The type of operation performed by Bulk Actions. </summary>
     public readonly partial struct ComputeBulkOperationKind : IEquatable<ComputeBulkOperationKind>
     {
         private readonly string _value;
-        /// <summary> Start operations on the resources. </summary>
+        /// <summary> Starts the specified virtual machines. </summary>
         private const string StartValue = "Start";
-        /// <summary> Deallocate operations on the resources. </summary>
+        /// <summary> Deallocates the specified virtual machines. </summary>
         private const string DeallocateValue = "Deallocate";
-        /// <summary> Hibernate operations on the resources. </summary>
+        /// <summary> Hibernates the specified virtual machines. </summary>
         private const string HibernateValue = "Hibernate";
-        /// <summary> Create operations on the resources. </summary>
+        /// <summary> Creates the specified virtual machines. </summary>
         private const string CreateValue = "Create";
-        /// <summary> Delete operations on the resources. </summary>
+        /// <summary> Deletes the specified virtual machines. </summary>
         private const string DeleteValue = "Delete";
         private const string UnknownValue = "Unknown";
 
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Start operations on the resources. </summary>
+        /// <summary> Starts the specified virtual machines. </summary>
         public static ComputeBulkOperationKind Start { get; } = new ComputeBulkOperationKind(StartValue);
 
-        /// <summary> Deallocate operations on the resources. </summary>
+        /// <summary> Deallocates the specified virtual machines. </summary>
         public static ComputeBulkOperationKind Deallocate { get; } = new ComputeBulkOperationKind(DeallocateValue);
 
-        /// <summary> Hibernate operations on the resources. </summary>
+        /// <summary> Hibernates the specified virtual machines. </summary>
         public static ComputeBulkOperationKind Hibernate { get; } = new ComputeBulkOperationKind(HibernateValue);
 
-        /// <summary> Create operations on the resources. </summary>
+        /// <summary> Creates the specified virtual machines. </summary>
         public static ComputeBulkOperationKind Create { get; } = new ComputeBulkOperationKind(CreateValue);
 
-        /// <summary> Delete operations on the resources. </summary>
+        /// <summary> Deletes the specified virtual machines. </summary>
         public static ComputeBulkOperationKind Delete { get; } = new ComputeBulkOperationKind(DeleteValue);
 
         /// <summary> Gets the Unknown. </summary>

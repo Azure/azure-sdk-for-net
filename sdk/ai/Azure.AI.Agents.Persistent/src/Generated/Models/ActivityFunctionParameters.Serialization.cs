@@ -197,10 +197,10 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActivityFunctionParameters(@type, properties, @required, additionalProperties, additionalBinaryDataProperties);
+            return new ActivityFunctionParameters(@type, properties ?? new ChangeTrackingDictionary<string, FunctionArgument>(), @required ?? new ChangeTrackingList<string>(), additionalProperties, additionalBinaryDataProperties);
         }
     }
 }

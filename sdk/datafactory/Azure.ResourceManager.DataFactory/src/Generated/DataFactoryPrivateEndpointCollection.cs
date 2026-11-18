@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryPrivateEndpointData, DataFactoryPrivateEndpointResource>(new ManagedPrivateEndpointsGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryPrivateEndpointData, DataFactoryPrivateEndpointResource>(new DataFactoryPrivateEndpointDataAsyncCollectionResultOfT(
                 _managedPrivateEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryPrivateEndpointData, DataFactoryPrivateEndpointResource>(new ManagedPrivateEndpointsGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryPrivateEndpointData, DataFactoryPrivateEndpointResource>(new DataFactoryPrivateEndpointDataCollectionResultOfT(
                 _managedPrivateEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

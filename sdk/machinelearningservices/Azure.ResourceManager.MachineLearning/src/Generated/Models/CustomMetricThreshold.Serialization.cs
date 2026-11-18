@@ -81,10 +81,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("metric"u8);
             writer.WriteStringValue(Metric);
-            if (Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(Threshold, _thresholdIsDefined))
             {
-                writer.WritePropertyName("threshold"u8);
-                writer.WriteObjectValue(Threshold, options);
+                if (Threshold != null)
+                {
+                    writer.WritePropertyName("threshold"u8);
+                    writer.WriteObjectValue(Threshold, options);
+                }
+                else
+                {
+                    writer.WriteNull("threshold"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,6 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string metric = default;
+            bool thresholdIsDefined = false;
             MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,6 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("threshold"u8))
                 {
+                    thresholdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         threshold = null;
@@ -150,10 +159,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomMetricThreshold(metric, threshold, additionalBinaryDataProperties);
+            return new CustomMetricThreshold(metric, threshold, additionalBinaryDataProperties)
+            {
+                _thresholdIsDefined = thresholdIsDefined
+            };
         }
     }
 }

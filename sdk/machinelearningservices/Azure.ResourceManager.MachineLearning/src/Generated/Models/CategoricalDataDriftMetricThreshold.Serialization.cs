@@ -110,6 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MonitoringFeatureDataType dataType = default;
+            bool thresholdIsDefined = false;
             MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CategoricalDataDriftMetric metric = default;
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("threshold"u8))
                 {
+                    thresholdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         threshold = null;
@@ -137,10 +139,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CategoricalDataDriftMetricThreshold(dataType, threshold, additionalBinaryDataProperties, metric);
+            return new CategoricalDataDriftMetricThreshold(dataType, threshold, additionalBinaryDataProperties, metric)
+            {
+                _thresholdIsDefined = thresholdIsDefined
+            };
         }
     }
 }

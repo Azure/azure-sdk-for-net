@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    authorizationEndpointQueryParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    authorizationEndpointQueryParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("redirectionEndpoint"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    tokenEndpointHeaders = BinaryData.FromString(prop.Value.GetRawText());
+                    tokenEndpointHeaders = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("tokenEndpointQueryParameters"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    tokenEndpointQueryParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    tokenEndpointQueryParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("isClientSecretInHeader"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CodelessConnectorPollingAuthProperties(

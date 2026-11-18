@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TenantAlertRuleList(value, nextLink, additionalBinaryDataProperties);
+            return new TenantAlertRuleList(value ?? new ChangeTrackingList<TenantActivityLogAlertData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

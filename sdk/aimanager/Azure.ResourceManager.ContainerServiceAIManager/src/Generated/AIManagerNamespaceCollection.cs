@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AIManagerNamespaceData, AIManagerNamespaceResource>(new AIManagerNamespacesGetByAIManagerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AIManagerNamespaceData, AIManagerNamespaceResource>(new AIManagerNamespaceDataAsyncCollectionResultOfT(
                 _aiManagerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AIManagerNamespaceData, AIManagerNamespaceResource>(new AIManagerNamespacesGetByAIManagerCollectionResultOfT(
+            return new PageableWrapper<AIManagerNamespaceData, AIManagerNamespaceResource>(new AIManagerNamespaceDataCollectionResultOfT(
                 _aiManagerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

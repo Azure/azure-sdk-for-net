@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Fabric
     [ModelReaderWriterBuildable(typeof(FabricSku))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForExistingCapacity))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForNewCapacity))]
-    [ModelReaderWriterBuildable(typeof(PagedQuota))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForExistingResourceResult))]
     [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForNewResourceResult))]

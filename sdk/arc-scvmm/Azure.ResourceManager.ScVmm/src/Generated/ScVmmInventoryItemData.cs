@@ -39,6 +39,13 @@ namespace Azure.ResourceManager.ScVmm
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScVmmInventoryItemData"/>. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        public ScVmmInventoryItemData(ScVmmInventoryItemProperties properties) : this()
+        {
+            Properties = properties;
+        }
+
         /// <summary> The resource-specific properties for this resource. </summary>
         public ScVmmInventoryItemProperties Properties { get; set; }
 

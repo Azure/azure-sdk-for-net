@@ -632,13 +632,13 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary>
         /// An abstract representation of storage store kind.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureStorageBlobStore"/> and <see cref="Models.AzureNetAppFilesStore"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureNetAppFilesStore"/> and <see cref="Models.AzureStorageBlobStore"/>.
         /// </summary>
         /// <param name="kind"> The storage store kind. </param>
         /// <returns> A new <see cref="Models.DiscoveryStorageStore"/> instance for mocking. </returns>
         public static DiscoveryStorageStore DiscoveryStorageStore(string kind = default)
         {
-            return new UnknownDiscoveryStorageStore(default, default);
+            return new UnknownDiscoveryStorageStore(kind is null ? default : new StorageStoreType(kind), default);
         }
 
         /// <summary> The Azure storage blob properties. </summary>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <returns> A new <see cref="Models.AzureStorageBlobStore"/> instance for mocking. </returns>
         public static AzureStorageBlobStore AzureStorageBlobStore(BlobStorageMountProtocol? mountProtocol = default, ResourceIdentifier storageAccountId = default)
         {
-            return new AzureStorageBlobStore(default, default, mountProtocol, storageAccountId);
+            return new AzureStorageBlobStore(StorageStoreType.AzureStorageBlob, default, mountProtocol, storageAccountId);
         }
 
         /// <summary> The Azure NetApp Files properties. </summary>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <returns> A new <see cref="Models.AzureNetAppFilesStore"/> instance for mocking. </returns>
         public static AzureNetAppFilesStore AzureNetAppFilesStore(NetAppMountProtocol? mountProtocol = default, ResourceIdentifier netAppVolumeId = default)
         {
-            return new AzureNetAppFilesStore(default, default, mountProtocol, netAppVolumeId);
+            return new AzureNetAppFilesStore(StorageStoreType.AzureNetAppFiles, default, mountProtocol, netAppVolumeId);
         }
     }
 }

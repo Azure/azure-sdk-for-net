@@ -46,7 +46,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Converts a string to a <see cref="SourceContentStructureKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceContentStructureKind?(string value) => value == null ? null : new SourceContentStructureKind(value);
+        public static implicit operator SourceContentStructureKind?(string value) => value == null ? (SourceContentStructureKind?)null : new SourceContentStructureKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

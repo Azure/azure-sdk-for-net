@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary>
     /// A class representing a collection of <see cref="ConfigTemplateMetadataResource"/> and their operations.
     /// Each <see cref="ConfigTemplateMetadataResource"/> in the collection will belong to the same instance of <see cref="EdgeConfigTemplateResource"/>.
-    /// To get a <see cref="ConfigTemplateMetadataCollection"/> instance call the GetConfigTemplateMetadatas method from an instance of <see cref="EdgeConfigTemplateResource"/>.
+    /// To get a <see cref="ConfigTemplateMetadataCollection"/> instance call the GetAllConfigTemplateMetadata method from an instance of <see cref="EdgeConfigTemplateResource"/>.
     /// </summary>
     public partial class ConfigTemplateMetadataCollection : ArmCollection, IEnumerable<ConfigTemplateMetadataResource>, IAsyncEnumerable<ConfigTemplateMetadataResource>
     {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfigTemplateMetadataData, ConfigTemplateMetadataResource>(new ConfigTemplateMetadatasGetByConfigTemplateAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfigTemplateMetadataData, ConfigTemplateMetadataResource>(new ConfigTemplateMetadataDataAsyncCollectionResultOfT(
                 _configTemplateMetadatasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfigTemplateMetadataData, ConfigTemplateMetadataResource>(new ConfigTemplateMetadatasGetByConfigTemplateCollectionResultOfT(
+            return new PageableWrapper<ConfigTemplateMetadataData, ConfigTemplateMetadataResource>(new ConfigTemplateMetadataDataCollectionResultOfT(
                 _configTemplateMetadatasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

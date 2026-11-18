@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for reasoning effort.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/>, and <see cref="KnowledgeRetrievalAutoReasoningEffort"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalAutoReasoningEffort"/>, <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/>, and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeRetrievalReasoningEffort))]
     public abstract partial class KnowledgeRetrievalReasoningEffort : IJsonModel<KnowledgeRetrievalReasoningEffort>
@@ -130,14 +130,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "minimal":
-                        return KnowledgeRetrievalMinimalReasoningEffort.DeserializeKnowledgeRetrievalMinimalReasoningEffort(element, options);
+                    case "auto":
+                        return KnowledgeRetrievalAutoReasoningEffort.DeserializeKnowledgeRetrievalAutoReasoningEffort(element, options);
                     case "low":
                         return KnowledgeRetrievalLowReasoningEffort.DeserializeKnowledgeRetrievalLowReasoningEffort(element, options);
                     case "medium":
                         return KnowledgeRetrievalMediumReasoningEffort.DeserializeKnowledgeRetrievalMediumReasoningEffort(element, options);
-                    case "auto":
-                        return KnowledgeRetrievalAutoReasoningEffort.DeserializeKnowledgeRetrievalAutoReasoningEffort(element, options);
+                    case "minimal":
+                        return KnowledgeRetrievalMinimalReasoningEffort.DeserializeKnowledgeRetrievalMinimalReasoningEffort(element, options);
                 }
             }
             return UnknownKnowledgeRetrievalReasoningEffort.DeserializeUnknownKnowledgeRetrievalReasoningEffort(element, options);

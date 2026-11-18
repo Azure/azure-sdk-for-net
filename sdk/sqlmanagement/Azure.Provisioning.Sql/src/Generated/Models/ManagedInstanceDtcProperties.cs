@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Sql
         private ManagedInstanceDtcSecuritySettings _securitySettings;
         private BicepList<string> _externalDnsSuffixSearchList;
         private BicepValue<string> _dtcHostNameDnsSuffix;
+        private BicepValue<bool> _isFqdnEnabled;
         private BicepValue<JobExecutionProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ManagedInstanceDtcProperties. </summary>
@@ -79,6 +80,21 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets or sets the IsFqdnEnabled. </summary>
+        public BicepValue<bool> IsFqdnEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isFqdnEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isFqdnEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<JobExecutionProvisioningState> ProvisioningState
         {
@@ -97,6 +113,7 @@ namespace Azure.Provisioning.Sql
             _securitySettings = DefineModelProperty<ManagedInstanceDtcSecuritySettings>(nameof(SecuritySettings), new string[] { "securitySettings" });
             _externalDnsSuffixSearchList = DefineListProperty<string>(nameof(ExternalDnsSuffixSearchList), new string[] { "externalDnsSuffixSearchList" });
             _dtcHostNameDnsSuffix = DefineProperty<string>(nameof(DtcHostNameDnsSuffix), new string[] { "dtcHostNameDnsSuffix" }, isOutput: true);
+            _isFqdnEnabled = DefineProperty<bool>(nameof(IsFqdnEnabled), new string[] { "fqdnEnabled" });
             _provisioningState = DefineProperty<JobExecutionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

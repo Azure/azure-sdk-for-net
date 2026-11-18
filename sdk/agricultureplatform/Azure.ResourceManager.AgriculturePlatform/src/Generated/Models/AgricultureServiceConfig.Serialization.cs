@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceUri))
             {
                 writer.WritePropertyName("instanceUri"u8);
-                writer.WriteStringValue(InstanceUri);
+                writer.WriteStringValue(InstanceUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             {
                 return null;
             }
-            string instanceUri = default;
+            Uri instanceUri = default;
             string version = default;
             ResourceIdentifier appServiceResourceId = default;
             ResourceIdentifier cosmosDBResourceId = default;
@@ -164,7 +164,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             {
                 if (prop.NameEquals("instanceUri"u8))
                 {
-                    instanceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instanceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgricultureServiceConfig(

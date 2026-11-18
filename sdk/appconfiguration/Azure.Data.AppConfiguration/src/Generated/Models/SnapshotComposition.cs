@@ -51,7 +51,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Converts a string to a <see cref="SnapshotComposition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotComposition?(string value) => value == null ? null : new SnapshotComposition(value);
+        public static implicit operator SnapshotComposition?(string value) => value == null ? (SnapshotComposition?)null : new SnapshotComposition(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

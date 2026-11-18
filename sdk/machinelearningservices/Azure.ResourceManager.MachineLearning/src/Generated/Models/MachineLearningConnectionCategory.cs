@@ -164,17 +164,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the AzureKeyVault. </summary>
         public static MachineLearningConnectionCategory AzureKeyVault { get; } = new MachineLearningConnectionCategory(AzureKeyVaultValue);
 
-        /// <summary> Gets the AzureSqlDb. </summary>
-        public static MachineLearningConnectionCategory AzureSqlDb { get; } = new MachineLearningConnectionCategory(AzureSqlDbValue);
-
         /// <summary> Gets the AzureSynapseAnalytics. </summary>
         public static MachineLearningConnectionCategory AzureSynapseAnalytics { get; } = new MachineLearningConnectionCategory(AzureSynapseAnalyticsValue);
-
-        /// <summary> Gets the AzureMySqlDb. </summary>
-        public static MachineLearningConnectionCategory AzureMySqlDb { get; } = new MachineLearningConnectionCategory(AzureMySqlDbValue);
-
-        /// <summary> Gets the AzurePostgresDb. </summary>
-        public static MachineLearningConnectionCategory AzurePostgresDb { get; } = new MachineLearningConnectionCategory(AzurePostgresDbValue);
 
         /// <summary> Gets the ADLSGen2. </summary>
         public static MachineLearningConnectionCategory ADLSGen2 { get; } = new MachineLearningConnectionCategory(ADLSGen2Value);

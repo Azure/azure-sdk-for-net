@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SystemCreatedAcrAccount))
+            if (Optional.IsDefined(SystemCreatedAcrAccount, _systemCreatedAcrAccountIsDefined))
             {
-                writer.WritePropertyName("systemCreatedAcrAccount"u8);
-                writer.WriteObjectValue(SystemCreatedAcrAccount, options);
+                if (SystemCreatedAcrAccount != null)
+                {
+                    writer.WritePropertyName("systemCreatedAcrAccount"u8);
+                    writer.WriteObjectValue(SystemCreatedAcrAccount, options);
+                }
+                else
+                {
+                    writer.WriteNull("systemCreatedAcrAccount"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool systemCreatedAcrAccountIsDefined = false;
             SystemCreatedAcrAccount systemCreatedAcrAccount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("systemCreatedAcrAccount"u8))
                 {
+                    systemCreatedAcrAccountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         systemCreatedAcrAccount = null;
@@ -137,10 +146,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RegistryAcrDetails(systemCreatedAcrAccount, additionalBinaryDataProperties);
+            return new RegistryAcrDetails(systemCreatedAcrAccount, additionalBinaryDataProperties)
+            {
+                _systemCreatedAcrAccountIsDefined = systemCreatedAcrAccountIsDefined
+            };
         }
     }
 }

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("connectionString"u8))
                 {
-                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AzureMySqlLinkedServiceTypeProperties(connectionString, password, encryptedCredential, additionalBinaryDataProperties);

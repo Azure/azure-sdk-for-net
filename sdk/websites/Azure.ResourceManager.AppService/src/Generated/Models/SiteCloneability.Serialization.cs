@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SiteCloneability(result, blockingFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), unsupportedFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), blockingCharacteristics ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), additionalBinaryDataProperties);

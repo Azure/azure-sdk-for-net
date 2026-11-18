@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaUsageList(value, nextLink, additionalBinaryDataProperties);
+            return new QuotaUsageList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerQuotaUsage>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

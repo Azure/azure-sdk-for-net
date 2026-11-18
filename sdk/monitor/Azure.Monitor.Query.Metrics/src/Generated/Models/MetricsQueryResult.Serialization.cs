@@ -204,7 +204,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MetricsQueryResult(
@@ -214,7 +214,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 @namespace,
                 resourceRegion,
                 resourceId,
-                metrics,
+                metrics ?? new ChangeTrackingList<MetricResult>(),
                 additionalBinaryDataProperties);
         }
     }

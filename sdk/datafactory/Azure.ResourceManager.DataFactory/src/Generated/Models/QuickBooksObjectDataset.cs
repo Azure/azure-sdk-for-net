@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> QuickBooks server dataset. </summary>
     public partial class QuickBooksObjectDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="QuickBooksObjectDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public QuickBooksObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("QuickBooksObject", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="QuickBooksObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

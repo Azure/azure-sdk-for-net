@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RedisEnterpriseClusterPatch(sku, properties, identity, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

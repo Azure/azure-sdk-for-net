@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for entity Metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeMetadata"/>, <see cref="VolumeMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="AreaMetadata"/>, <see cref="LengthMetadata"/>, <see cref="InformationMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="WeightMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="AddressMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TimeMetadata"/>, <see cref="NumberMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="TemporalSpanMetadata"/>, and <see cref="NumericRangeMetadata"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddressMetadata"/>, <see cref="AgeMetadata"/>, <see cref="AreaMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="InformationMetadata"/>, <see cref="LengthMetadata"/>, <see cref="NumberMetadata"/>, <see cref="NumericRangeMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TemporalSpanMetadata"/>, <see cref="TimeMetadata"/>, <see cref="VolumeMetadata"/>, and <see cref="WeightMetadata"/>.
     /// </summary>
     public abstract partial class BaseMetadata
     {

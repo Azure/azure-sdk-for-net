@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new CosmosDBForPostgreSqlPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterCollectionResultOfT(
+            return new PageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new CosmosDBForPostgreSqlPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

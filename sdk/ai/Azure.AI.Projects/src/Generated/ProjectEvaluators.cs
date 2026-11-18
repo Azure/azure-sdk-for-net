@@ -594,17 +594,16 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult StartPendingUpload(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult StartPendingUpload(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.StartPendingUpload");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -625,17 +624,16 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> StartPendingUploadAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> StartPendingUploadAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.StartPendingUpload");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -643,32 +641,6 @@ namespace Azure.AI.Projects.Evaluation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
-        /// <param name="name"> The name path parameter. </param>
-        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
-        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<PendingUploadResult> StartPendingUpload(string name, string version, PendingUploadConfiguration pendingUploadRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = StartPendingUpload(name, version, pendingUploadRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
-        }
-
-        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
-        /// <param name="name"> The name path parameter. </param>
-        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
-        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<PendingUploadResult>> StartPendingUploadAsync(string name, string version, PendingUploadConfiguration pendingUploadRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await StartPendingUploadAsync(name, version, pendingUploadRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -682,17 +654,16 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetCredential(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult GetCredential(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetCredential");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
+                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -713,17 +684,16 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetCredentialAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> GetCredentialAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetCredential");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
+                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -731,32 +701,6 @@ namespace Azure.AI.Projects.Evaluation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>
-        /// <param name="name"> The name path parameter. </param>
-        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
-        /// <param name="credentialRequest"> The credential request parameters. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<DatasetCredential> GetCredential(string name, string version, EvaluationCredentialContent credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetCredential(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
-        }
-
-        /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>
-        /// <param name="name"> The name path parameter. </param>
-        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
-        /// <param name="credentialRequest"> The credential request parameters. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<DatasetCredential>> GetCredentialAsync(string name, string version, EvaluationCredentialContent credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetCredentialAsync(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
     }
 }

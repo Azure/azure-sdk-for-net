@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SolutionDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SolutionDeploymentResource.ResourceType, out string solutionDeploymentApiVersion);
             _solutionDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", SolutionDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _solutionDeploymentsRestClient = new SolutionDeployments(_solutionDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, solutionDeploymentApiVersion ?? "2026-05-01-preview");
+            _solutionDeploymentsRestClient = new SolutionDeployments(_solutionDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/solutionDeployments", out string solutionDeploymentsApiVersionOverride) ? solutionDeploymentsApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentsGetByResourceGroupAsyncCollectionResultOfT(_solutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SolutionDeploymentCollection.GetAll"), data => new SolutionDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentDataAsyncCollectionResultOfT(_solutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SolutionDeploymentCollection.GetAll"), data => new SolutionDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentsGetByResourceGroupCollectionResultOfT(_solutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SolutionDeploymentCollection.GetAll"), data => new SolutionDeploymentResource(Client, data));
+            return new PageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentDataCollectionResultOfT(_solutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SolutionDeploymentCollection.GetAll"), data => new SolutionDeploymentResource(Client, data));
         }
 
         /// <summary>

@@ -10,3 +10,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "AZC0012", Justification = ".", Scope = "member", Target = "~T:Azure.AI.Projects.Schedules")]
 [assembly: SuppressMessage("Usage", "AZC0012", Justification = ".", Scope = "member", Target = "~T:Azure.AI.Projects.Target")]
 [assembly: SuppressMessage("Usage", "AZC0012", Justification = ".", Scope = "member", Target = "~T:Azure.AI.Projects.Trigger")]
+[assembly: SuppressMessage("Usage", "AZC0007", Justification = "Custom constructor for ProjectsRealtimeSessionClient.", Scope = "member", Target = "~T:Azure.AI.Projects.ProjectsRealtimeSessionClient")]

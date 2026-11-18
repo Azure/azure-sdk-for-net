@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="DateTimeSubKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DateTimeSubKind?(string value) => value == null ? null : new DateTimeSubKind(value);
+        public static implicit operator DateTimeSubKind?(string value) => value == null ? (DateTimeSubKind?)null : new DateTimeSubKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

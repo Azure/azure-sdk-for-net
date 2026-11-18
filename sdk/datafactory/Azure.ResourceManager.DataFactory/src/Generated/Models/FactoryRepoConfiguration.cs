@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Factory's git repo information.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FactoryVstsConfiguration"/> and <see cref="FactoryGitHubConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
     /// </summary>
     public abstract partial class FactoryRepoConfiguration
     {

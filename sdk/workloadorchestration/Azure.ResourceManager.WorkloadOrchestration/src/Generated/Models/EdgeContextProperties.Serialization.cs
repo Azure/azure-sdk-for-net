@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeContextProperties(uniqueIdentifier, capabilities, hierarchies, provisioningState, additionalBinaryDataProperties);
+            return new EdgeContextProperties(uniqueIdentifier, capabilities ?? new ChangeTrackingList<ContextCapability>(), hierarchies ?? new ChangeTrackingList<ContextHierarchy>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

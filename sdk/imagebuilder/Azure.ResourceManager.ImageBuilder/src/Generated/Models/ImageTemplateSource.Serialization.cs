@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary>
     /// Describes a virtual machine image source for building, customizing and distributing
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplatePlatformImageSource"/>, <see cref="ImageTemplateManagedImageSource"/>, and <see cref="ImageTemplateSharedImageVersionSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateManagedImageSource"/>, <see cref="ImageTemplatePlatformImageSource"/>, and <see cref="ImageTemplateSharedImageVersionSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownImageTemplateSource))]
     public abstract partial class ImageTemplateSource : IJsonModel<ImageTemplateSource>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "PlatformImage":
-                        return ImageTemplatePlatformImageSource.DeserializeImageTemplatePlatformImageSource(element, options);
                     case "ManagedImage":
                         return ImageTemplateManagedImageSource.DeserializeImageTemplateManagedImageSource(element, options);
+                    case "PlatformImage":
+                        return ImageTemplatePlatformImageSource.DeserializeImageTemplatePlatformImageSource(element, options);
                     case "SharedImageVersion":
                         return ImageTemplateSharedImageVersionSource.DeserializeImageTemplateSharedImageVersionSource(element, options);
                 }

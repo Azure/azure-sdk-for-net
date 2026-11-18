@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <returns> A new <see cref="Models.DependencyMapDiscoverySourceProperties"/> instance for mocking. </returns>
         public static DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, string sourceType = default, ResourceIdentifier sourceId = default)
         {
-            return new UnknownDependencyMapDiscoverySourceProperties(provisioningState, default, sourceId, default);
+            return new UnknownDependencyMapDiscoverySourceProperties(provisioningState, sourceType is null ? default : new SourceType(sourceType), sourceId, default);
         }
 
         /// <summary> OffAzure discovery source resource properties. </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <returns> A new <see cref="Models.OffAzureDiscoverySourceProperties"/> instance for mocking. </returns>
         public static OffAzureDiscoverySourceProperties OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, ResourceIdentifier sourceId = default)
         {
-            return new OffAzureDiscoverySourceProperties(provisioningState, default, sourceId, default);
+            return new OffAzureDiscoverySourceProperties(provisioningState, SourceType.OffAzure, sourceId, default);
         }
 
         /// <summary> The type used for updating tags in DiscoverySourceResource resources. </summary>

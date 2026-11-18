@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     shouldAssignPermissions = prop.Value.GetBoolean();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new PolicyParameterMetadataProperties(displayName, description, strongType, shouldAssignPermissions, additionalProperties);
         }

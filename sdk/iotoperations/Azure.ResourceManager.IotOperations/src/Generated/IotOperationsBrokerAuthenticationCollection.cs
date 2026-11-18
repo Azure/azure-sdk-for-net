@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsBrokerAuthenticationData, IotOperationsBrokerAuthenticationResource>(new BrokerAuthenticationGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotOperationsBrokerAuthenticationData, IotOperationsBrokerAuthenticationResource>(new IotOperationsBrokerAuthenticationDataAsyncCollectionResultOfT(
                 _brokerAuthenticationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsBrokerAuthenticationData, IotOperationsBrokerAuthenticationResource>(new BrokerAuthenticationGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<IotOperationsBrokerAuthenticationData, IotOperationsBrokerAuthenticationResource>(new IotOperationsBrokerAuthenticationDataCollectionResultOfT(
                 _brokerAuthenticationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

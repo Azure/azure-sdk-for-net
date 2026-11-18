@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Container for results of all tasks in the conversation job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SummarizationOperationResult"/>, <see cref="CustomSummarizationOperationResult"/>, and <see cref="ConversationPiiOperationResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationPiiOperationResult"/>, <see cref="CustomSummarizationOperationResult"/>, and <see cref="SummarizationOperationResult"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationOperationResult
     {

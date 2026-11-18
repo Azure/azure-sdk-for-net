@@ -204,7 +204,6 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateFromEnumerableMethod(TypeProvider type)
         {
-            // Find the existing FromEnumerable<T> method with 3 parameters (enumerable, rootNameHint, childNameHint)
             var fromEnumerableMethod = type.Methods
                 .FirstOrDefault(m => m.Signature.Name == FromEnumerableMethodName &&
                                     m.Signature.GenericArguments?.Count == 1 &&

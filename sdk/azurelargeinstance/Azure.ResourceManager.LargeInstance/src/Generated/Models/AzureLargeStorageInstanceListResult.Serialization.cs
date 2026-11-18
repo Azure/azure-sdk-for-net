@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureLargeStorageInstanceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AzureLargeStorageInstanceListResult(value ?? new ChangeTrackingList<LargeStorageInstanceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

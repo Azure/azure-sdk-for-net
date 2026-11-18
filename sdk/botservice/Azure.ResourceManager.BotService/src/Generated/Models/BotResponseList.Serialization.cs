@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BotResponseList(value, nextLink, additionalBinaryDataProperties);
+            return new BotResponseList(value ?? new ChangeTrackingList<BotData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

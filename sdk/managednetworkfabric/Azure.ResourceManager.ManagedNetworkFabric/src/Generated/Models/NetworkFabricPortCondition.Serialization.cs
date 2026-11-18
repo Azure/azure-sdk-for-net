@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkFabricPortCondition(portType, layer4Protocol, ports ?? new ChangeTrackingList<string>(), portGroupNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

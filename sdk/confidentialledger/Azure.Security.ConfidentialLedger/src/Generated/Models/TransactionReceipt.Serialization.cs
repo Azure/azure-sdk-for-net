@@ -190,7 +190,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TransactionReceipt(applicationClaims ?? new ChangeTrackingList<ApplicationClaim>(), receipt, state, transactionId, additionalBinaryDataProperties);

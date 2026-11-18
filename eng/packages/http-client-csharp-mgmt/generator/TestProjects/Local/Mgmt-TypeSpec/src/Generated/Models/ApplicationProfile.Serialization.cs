@@ -96,9 +96,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "galleryApplications"u8);
                 for (int i = 0; i < GalleryApplications.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.galleryApplications[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.galleryApplications[{i}]")))
                     {
                         continue;
                     }

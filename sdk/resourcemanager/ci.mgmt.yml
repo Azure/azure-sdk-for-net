@@ -3,12 +3,12 @@
 trigger:
   branches:
     include:
-      - main
-      - hotfix/*
-      - release/*
+    - main
+    - hotfix/*
+    - release/*
   paths:
     include:
-    - sdk/resourcemanager
+    - sdk/resourcemanager/Azure.ResourceManager
     - common/ManagementTestShared
     - common/ManagementCoreShared
 

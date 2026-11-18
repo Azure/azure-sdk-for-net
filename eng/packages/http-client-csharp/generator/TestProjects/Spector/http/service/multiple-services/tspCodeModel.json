@@ -212,7 +212,6 @@
                 "$id": "17",
                 "name": "subOpA",
                 "isExactName": false,
-                "resourceName": "SubNamespace",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -344,7 +343,6 @@
                 "$id": "25",
                 "name": "opA",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -579,7 +577,6 @@
                 "$id": "41",
                 "name": "subOpB",
                 "isExactName": false,
-                "resourceName": "SubNamespace",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -711,7 +708,6 @@
                 "$id": "49",
                 "name": "opB",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [
                   {

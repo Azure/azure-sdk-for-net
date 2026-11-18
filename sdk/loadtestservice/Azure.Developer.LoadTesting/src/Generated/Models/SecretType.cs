@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="SecretType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecretType?(string value) => value == null ? null : new SecretType(value);
+        public static implicit operator SecretType?(string value) => value == null ? (SecretType?)null : new SecretType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

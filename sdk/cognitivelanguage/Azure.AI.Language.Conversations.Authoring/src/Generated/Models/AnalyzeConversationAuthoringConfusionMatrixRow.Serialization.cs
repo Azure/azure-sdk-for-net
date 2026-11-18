@@ -115,7 +115,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new AnalyzeConversationAuthoringConfusionMatrixRow(new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }

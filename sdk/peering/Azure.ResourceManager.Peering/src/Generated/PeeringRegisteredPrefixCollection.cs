@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new PeeringRegisteredPrefixDataAsyncCollectionResultOfT(
                 _registeredPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringCollectionResultOfT(
+            return new PageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new PeeringRegisteredPrefixDataCollectionResultOfT(
                 _registeredPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

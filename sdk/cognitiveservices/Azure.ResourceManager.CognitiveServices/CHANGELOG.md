@@ -1,14 +1,44 @@
 # Release History
 
-## 1.6.0-beta.5 (Unreleased)
+## 1.7.0 (2026-11-13)
 
 ### Features Added
 
+- Upgraded API version to 2026-11-01.
+- Added `CognitiveServicesAccountProperties.TrustedCertificateSources` to trust private CA certificate bundles stored in Azure Key Vault.
+- Added RAI policy egress configuration through `RaiPolicyProperties.EgressPolicy`.
+- Added `GetCognitiveServicesManagedComputeCapacities` to list managed compute capacity for a subscription.
+- Added `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId`, `CognitiveServicesAccountProperties.IsA365LoggingEnabled`, and `ServiceAccountUsage.Id` and `Type`.
+
 ### Breaking Changes
+
+- Compared to `1.6.0`, the `ArmCognitiveServicesModelFactory.CognitiveServicesAccountProperties` compatibility overload accepting `aiFoundryNetworkInjection` now requires all arguments to avoid ambiguity with other overloads.
 
 ### Bugs Fixed
 
+- Preserved optional parameters on 13 `ArmCognitiveServicesModelFactory` compatibility overloads so parameterless and partial named-argument calls supported in `1.6.0` continue to work.
+
+## 1.7.0-beta.1 (2026-10-26)
+
+### Features Added
+
+- Upgraded api-version to 2026-09-15-preview.
+
+### Breaking Changes
+
+- Compared to `1.6.0-beta.4`, renamed `CapabilitySettings` to `CognitiveServicesAgentCapabilitySettings`, including references in account/project properties and model-factory methods.
+- Compared to `1.6.0-beta.4`, changed `CognitiveServicesClusterComputeProperties.SubnetArmId` from `string` to `Azure.Core.ResourceIdentifier`.
+- Compared to `1.6.0-beta.4`, changed `CognitiveServicesManagedComputeDeploymentInfo.DeploymentId` and `ProjectId` from `string` to `Azure.Core.ResourceIdentifier`.
+
+## 1.6.0 (2026-09-10)
+
+### Features Added
+
+- Upgraded API version to 2026-07-01.
+
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.62.0.
 
 ## 1.6.0-beta.4 (2026-08-31)
 

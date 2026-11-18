@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -23,12 +24,12 @@ namespace Azure.Provisioning.Sql
         private JobAgentProperties _properties;
         private SqlSku _sku;
         private JobAgentIdentity _identity;
-        private ResourceReference<SqlServer> _parent;
+        private ProvisioningResourceReference<SqlServer> _parent;
 
         /// <summary> Creates a new SqlServerJobAgent. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SqlServerJobAgent(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents", resourceVersion ?? "2025-01-01")
+        public SqlServerJobAgent(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -199,7 +200,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<JobAgentProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<SqlSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<JobAgentIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<SqlServer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -219,6 +220,12 @@ namespace Azure.Provisioning.Sql
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2025-08-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_08_01_PREVIEW = "2025-08-01-preview";
+            /// <summary> API version "2025-02-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_02_01_PREVIEW = "2025-02-01-preview";
             /// <summary> API version "2025-01-01". </summary>
             public static readonly string V2025_01_01 = "2025-01-01";
         }

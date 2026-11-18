@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PaymentHsmClusterPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PaymentHsmClusterPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<PaymentHsmClusterPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

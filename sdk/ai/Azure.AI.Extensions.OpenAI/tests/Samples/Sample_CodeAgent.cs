@@ -16,7 +16,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
-
+#pragma warning disable AAIP001
 public class Sample_CodeAgent : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_GetPath_CodeAgent

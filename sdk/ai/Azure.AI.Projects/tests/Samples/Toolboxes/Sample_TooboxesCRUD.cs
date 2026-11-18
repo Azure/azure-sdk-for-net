@@ -45,10 +45,10 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesCRUD_Async
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
             name: toolboxName,
@@ -129,10 +129,10 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         string toolboxName = "mcp";
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesCRUD_Sync
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         ToolboxVersion toolBox1 = toolboxClient.CreateVersion(
             name: toolboxName,

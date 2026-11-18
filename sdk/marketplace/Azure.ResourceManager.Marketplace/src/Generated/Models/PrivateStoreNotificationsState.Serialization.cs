@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PrivateStoreNotificationsState(stopSellNotifications ?? new ChangeTrackingList<StopSellNotifications>(), newNotifications ?? new ChangeTrackingList<NewPlanNotification>(), approvalRequests ?? new ChangeTrackingList<RequestApprovalsDetails>(), additionalBinaryDataProperties);

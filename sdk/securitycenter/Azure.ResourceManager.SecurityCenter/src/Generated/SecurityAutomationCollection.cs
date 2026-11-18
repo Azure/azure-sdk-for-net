@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityAutomationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SecurityAutomationResource.ResourceType, out string securityAutomationApiVersion);
             _automationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAutomationResource.ResourceType.Namespace, Diagnostics);
-            _automationsRestClient = new Automations(_automationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityAutomationApiVersion ?? "2023-12-01-preview");
+            _automationsRestClient = new Automations(_automationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new AutomationsGetByResourceGroupAsyncCollectionResultOfT(_automationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityAutomationCollection.GetAll"), data => new SecurityAutomationResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new SecurityAutomationDataAsyncCollectionResultOfT(_automationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityAutomationCollection.GetAll"), data => new SecurityAutomationResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new AutomationsGetByResourceGroupCollectionResultOfT(_automationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityAutomationCollection.GetAll"), data => new SecurityAutomationResource(Client, data));
+            return new PageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new SecurityAutomationDataCollectionResultOfT(_automationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityAutomationCollection.GetAll"), data => new SecurityAutomationResource(Client, data));
         }
 
         /// <summary>

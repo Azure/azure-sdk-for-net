@@ -277,7 +277,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PlanetaryComputerOperation(
@@ -286,7 +286,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 kind,
                 createdOn,
                 collectionId,
-                statusHistory,
+                statusHistory ?? new ChangeTrackingList<PlanetaryComputerOperationStatusHistoryItem>(),
                 startedOn,
                 finishedOn,
                 additionalInformation ?? new ChangeTrackingDictionary<string, string>(),

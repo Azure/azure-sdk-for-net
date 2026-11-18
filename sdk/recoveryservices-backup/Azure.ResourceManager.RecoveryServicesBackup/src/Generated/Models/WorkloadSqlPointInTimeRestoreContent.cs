@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSqlPointInTimeRestoreContent : WorkloadSqlRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
-        public WorkloadSqlPointInTimeRestoreContent()
+        public WorkloadSqlPointInTimeRestoreContent() : base("AzureWorkloadSQLPointInTimeRestoreRequest")
         {
         }
 

@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.ServicePrincipalKey = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public DynamicsAXLinkedService(DataFactoryElement<string> uri, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> aadResourceId) : base("DynamicsAX")
-        {
-            TypeProperties = new DynamicsAXLinkedServiceTypeProperties(uri, servicePrincipalId, servicePrincipalKey, tenant, aadResourceId);
-        }
     }
 }

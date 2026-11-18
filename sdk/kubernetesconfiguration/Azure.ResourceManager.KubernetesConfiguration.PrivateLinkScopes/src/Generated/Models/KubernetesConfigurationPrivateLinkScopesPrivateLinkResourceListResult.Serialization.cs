@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<KubernetesConfigurationPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

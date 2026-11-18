@@ -1968,10 +1968,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A response containing error details. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="errorCode"> String error code indicating what went wrong. </param>
-        /// <returns> A new <see cref="Easm.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(ResponseError error = default, string errorCode = default)
+        /// <returns> A new <see cref="Easm.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
         {
-            return new ErrorResponse(error, errorCode, additionalBinaryDataProperties: null);
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A request body used to update an asset. </summary>
@@ -2190,7 +2190,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// The DataConnection.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.LogAnalyticsDataConnection"/> and <see cref="Easm.AzureDataExplorerDataConnection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.AzureDataExplorerDataConnection"/> and <see cref="Easm.LogAnalyticsDataConnection"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
@@ -2317,7 +2317,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// The DataConnectionPayload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.LogAnalyticsDataConnectionPayload"/> and <see cref="Easm.AzureDataExplorerDataConnectionPayload"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.AzureDataExplorerDataConnectionPayload"/> and <see cref="Easm.LogAnalyticsDataConnectionPayload"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         /// <param name="name"> The name of data connection. </param>
@@ -2530,11 +2530,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <param name="errors"> The list of exceptions. </param>
         /// <returns> A new <see cref="Easm.AssetChainSummaryResult"/> instance for mocking. </returns>
-        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary = default, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary = default, IEnumerable<ErrorResponse> errors = default)
+        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary = default, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary = default, IEnumerable<ErrorResult> errors = default)
         {
             affectedAssetsSummary ??= new ChangeTrackingList<AssetChainKindSummaryResult>();
             affectedGroupsSummary ??= new ChangeTrackingList<DiscoveryGroupSummaryResult>();
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            errors ??= new ChangeTrackingList<ErrorResult>();
 
             return new AssetChainSummaryResult(affectedAssetsSummary.ToList(), affectedGroupsSummary.ToList(), errors.ToList(), additionalBinaryDataProperties: null);
         }

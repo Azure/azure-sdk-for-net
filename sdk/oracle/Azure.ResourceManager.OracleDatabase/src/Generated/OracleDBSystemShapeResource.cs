@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class OracleDBSystemShapeResource : ArmResource
     {
         private readonly ClientDiagnostics _dbSystemShapesClientDiagnostics;
-        private readonly DbSystemShapes _dbSystemShapesRestClient;
+        private readonly DBSystemShapes _dbSystemShapesRestClient;
         private readonly OracleDBSystemShapeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Oracle.Database/locations/dbSystemShapes";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleDBSystemShapeApiVersion);
             _dbSystemShapesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _dbSystemShapesRestClient = new DbSystemShapes(_dbSystemShapesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeApiVersion ?? "2025-09-01");
+            _dbSystemShapesRestClient = new DBSystemShapes(_dbSystemShapesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

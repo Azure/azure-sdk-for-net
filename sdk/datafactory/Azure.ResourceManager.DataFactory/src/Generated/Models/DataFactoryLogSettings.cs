@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,6 +17,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
+        /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logLocationSettings"/> is null. </exception>
+        public DataFactoryLogSettings(LogLocationSettings logLocationSettings)
+        {
+            Argument.AssertNotNull(logLocationSettings, nameof(logLocationSettings));
+
+            LogLocationSettings = logLocationSettings;
+        }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
         /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>

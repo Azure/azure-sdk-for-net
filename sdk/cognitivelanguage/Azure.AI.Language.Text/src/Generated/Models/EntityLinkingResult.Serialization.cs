@@ -184,10 +184,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntityLinkingResult(errors, statistics, modelVersion, documents, additionalBinaryDataProperties);
+            return new EntityLinkingResult(errors ?? new ChangeTrackingList<DocumentError>(), statistics, modelVersion, documents ?? new ChangeTrackingList<EntityLinkingActionResult>(), additionalBinaryDataProperties);
         }
     }
 }

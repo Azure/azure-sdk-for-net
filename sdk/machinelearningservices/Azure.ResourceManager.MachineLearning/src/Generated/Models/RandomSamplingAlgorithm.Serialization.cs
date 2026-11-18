@@ -80,10 +80,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("rule"u8);
                 writer.WriteStringValue(Rule.Value.ToString());
             }
-            if (Optional.IsDefined(Seed))
+            if (Optional.IsDefined(Seed, _seedIsDefined))
             {
-                writer.WritePropertyName("seed"u8);
-                writer.WriteNumberValue(Seed.Value);
+                if (Seed != null)
+                {
+                    writer.WritePropertyName("seed"u8);
+                    writer.WriteNumberValue(Seed.Value);
+                }
+                else
+                {
+                    writer.WriteNull("seed"u8);
+                }
             }
         }
 
@@ -115,6 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SamplingAlgorithmType samplingAlgorithmType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RandomSamplingAlgorithmRule? rule = default;
+            bool seedIsDefined = false;
             int? seed = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,6 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("seed"u8))
                 {
+                    seedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         seed = null;
@@ -144,10 +153,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, additionalBinaryDataProperties, rule, seed);
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, additionalBinaryDataProperties, rule, seed)
+            {
+                _seedIsDefined = seedIsDefined
+            };
         }
     }
 }

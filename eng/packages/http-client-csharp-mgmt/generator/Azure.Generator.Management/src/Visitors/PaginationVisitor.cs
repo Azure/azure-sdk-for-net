@@ -37,7 +37,7 @@ internal class PaginationVisitor : ScmLibraryVisitor
         return base.VisitStatements(statements, method);
     }
 
-    private static bool IsAsPagesMethod(MethodProvider method) => method.Signature.Name.Equals("AsPages");
+    private static bool IsAsPagesMethod(MethodProvider method) => method.Signature.Name is "AsPages" or "AsPagesAsync";
 
     private void DoVisitAsPagesMethodStatements(MethodBodyStatements statements, MethodProvider method)
     {

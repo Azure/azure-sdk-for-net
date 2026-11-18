@@ -95,30 +95,65 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(VNetSolution))
+            if (Optional.IsDefined(VNetSolution, _vNetSolutionIsDefined))
             {
-                writer.WritePropertyName("vNetSolution"u8);
-                writer.WriteObjectValue(VNetSolution, options);
+                if (VNetSolution != null)
+                {
+                    writer.WritePropertyName("vNetSolution"u8);
+                    writer.WriteObjectValue(VNetSolution, options);
+                }
+                else
+                {
+                    writer.WriteNull("vNetSolution"u8);
+                }
             }
-            if (Optional.IsDefined(SecretStore))
+            if (Optional.IsDefined(SecretStore, _secretStoreIsDefined))
             {
-                writer.WritePropertyName("secretStore"u8);
-                writer.WriteObjectValue(SecretStore, options);
+                if (SecretStore != null)
+                {
+                    writer.WritePropertyName("secretStore"u8);
+                    writer.WriteObjectValue(SecretStore, options);
+                }
+                else
+                {
+                    writer.WriteNull("secretStore"u8);
+                }
             }
-            if (Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope, _scopeIsDefined))
             {
-                writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope);
+                if (Scope != null)
+                {
+                    writer.WritePropertyName("scope"u8);
+                    writer.WriteStringValue(Scope);
+                }
+                else
+                {
+                    writer.WriteNull("scope"u8);
+                }
             }
-            if (Optional.IsDefined(PublicNetworkSolution))
+            if (Optional.IsDefined(PublicNetworkSolution, _publicNetworkSolutionIsDefined))
             {
-                writer.WritePropertyName("publicNetworkSolution"u8);
-                writer.WriteObjectValue(PublicNetworkSolution, options);
+                if (PublicNetworkSolution != null)
+                {
+                    writer.WritePropertyName("publicNetworkSolution"u8);
+                    writer.WriteObjectValue(PublicNetworkSolution, options);
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkSolution"u8);
+                }
             }
-            if (Optional.IsDefined(ConfigurationInfo))
+            if (Optional.IsDefined(ConfigurationInfo, _configurationInfoIsDefined))
             {
-                writer.WritePropertyName("configurationInfo"u8);
-                writer.WriteObjectValue(ConfigurationInfo, options);
+                if (ConfigurationInfo != null)
+                {
+                    writer.WritePropertyName("configurationInfo"u8);
+                    writer.WriteObjectValue(ConfigurationInfo, options);
+                }
+                else
+                {
+                    writer.WriteNull("configurationInfo"u8);
+                }
             }
         }
 
@@ -153,10 +188,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AuthBaseInfo authInfo = default;
             LinkerClientType? clientType = default;
             string provisioningState = default;
+            bool vNetSolutionIsDefined = false;
             VnetSolution vNetSolution = default;
+            bool secretStoreIsDefined = false;
             LinkerSecretStore secretStore = default;
+            bool scopeIsDefined = false;
             string scope = default;
+            bool publicNetworkSolutionIsDefined = false;
             LinkerPublicNetworkSolution publicNetworkSolution = default;
+            bool configurationInfoIsDefined = false;
             LinkerConfigurationInfo configurationInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,6 +239,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("vNetSolution"u8))
                 {
+                    vNetSolutionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         vNetSolution = null;
@@ -209,6 +250,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("secretStore"u8))
                 {
+                    secretStoreIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         secretStore = null;
@@ -219,6 +261,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("scope"u8))
                 {
+                    scopeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scope = null;
@@ -229,6 +272,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("publicNetworkSolution"u8))
                 {
+                    publicNetworkSolutionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         publicNetworkSolution = null;
@@ -239,6 +283,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("configurationInfo"u8))
                 {
+                    configurationInfoIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         configurationInfo = null;
@@ -249,7 +294,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CreateOrUpdateDryrunContent(
@@ -263,7 +308,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 secretStore,
                 scope,
                 publicNetworkSolution,
-                configurationInfo);
+                configurationInfo)
+            {
+                _vNetSolutionIsDefined = vNetSolutionIsDefined,
+                _secretStoreIsDefined = secretStoreIsDefined,
+                _scopeIsDefined = scopeIsDefined,
+                _publicNetworkSolutionIsDefined = publicNetworkSolutionIsDefined,
+                _configurationInfoIsDefined = configurationInfoIsDefined
+            };
         }
     }
 }

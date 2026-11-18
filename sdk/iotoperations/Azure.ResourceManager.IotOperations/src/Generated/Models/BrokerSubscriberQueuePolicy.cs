@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BrokerSubscriberQueuePolicy"/>. </summary>
+        protected BrokerSubscriberQueuePolicy() : this(default)
+        {
+        }
+
         /// <summary> 'All' to persist all subscriber queues, 'None' to not persist any, 'Custom' to persist only the specified queues. </summary>
         internal BrokerPersistencePolicyMode Mode { get; set; }
     }

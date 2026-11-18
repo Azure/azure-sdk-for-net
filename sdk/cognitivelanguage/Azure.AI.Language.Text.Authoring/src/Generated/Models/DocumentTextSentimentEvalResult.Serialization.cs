@@ -161,10 +161,10 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentTextSentimentEvalResult(expectedSentimentSpans, predictedSentimentSpans, additionalBinaryDataProperties);
+            return new DocumentTextSentimentEvalResult(expectedSentimentSpans ?? new ChangeTrackingList<DocumentSentimentLabelEvalResult>(), predictedSentimentSpans ?? new ChangeTrackingList<DocumentSentimentLabelEvalResult>(), additionalBinaryDataProperties);
         }
     }
 }

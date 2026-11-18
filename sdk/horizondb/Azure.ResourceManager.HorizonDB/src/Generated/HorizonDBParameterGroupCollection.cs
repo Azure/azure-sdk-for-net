@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HorizonDBParameterGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDBParameterGroupResource.ResourceType, out string horizonDBParameterGroupApiVersion);
             _horizonDBParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBParameterGroupResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBParameterGroupApiVersion ?? "2026-05-01-preview");
+            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string horizonDBParameterGroupsApiVersionOverride) ? horizonDBParameterGroupsApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetByResourceGroupAsyncCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBParameterGroupCollection.GetAll"), data => new HorizonDBParameterGroupResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupDataAsyncCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBParameterGroupCollection.GetAll"), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetByResourceGroupCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBParameterGroupCollection.GetAll"), data => new HorizonDBParameterGroupResource(Client, data));
+            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupDataCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBParameterGroupCollection.GetAll"), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>

@@ -1,5 +1,206 @@
 # Release History
 
+## 1.0.0-beta.10 (Unreleased)
+
+### Features Added
+- Either `ResilientBackground` or `SteerableConversations` now activates the Core
+  durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
+  deployments retain durable task bookkeeping but mark interrupted background responses
+  failed instead of re-invoking their handlers.
+- `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (`ToolCallCaller`,
+  either `DirectToolCallCaller` or `ProgramToolCallCaller`), plus `Async` on the call, following
+  the Foundry spec.
+
+### Breaking Changes
+- The package no longer emits its own copies of the OpenAI Responses models. Public handler,
+  context, and event-stream APIs now use the shared types from the `OpenAI` package and
+  `Azure.AI.Extensions.OpenAI`, so handlers and tests that referenced the removed types must
+  switch to them (add `using OpenAI.Responses;`, and `using Azure.AI.Extensions.OpenAI;` for
+  Azure-specific items). The handler signature is now
+  `IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(CreateResponseOptions request, ResponseContext context, CancellationToken cancellationToken)`.
+  Common replacements: `CreateResponse` → `CreateResponseOptions`, `ResponseStreamEvent` →
+  `StreamingResponseUpdate` (and `Response*Event` → `StreamingResponse*Update`),
+  `ResponseObject` → `ResponseResult`, `Item` / `OutputItem` → `ResponseItem`,
+  `ItemMessage` / `OutputItemMessage` → `MessageResponseItem`,
+  `FunctionCallOutputItemParam` → `FunctionCallOutputResponseItem`,
+  `ConversationReference` → `ResponseConversationOptions`, and
+  `StructuredOutputsOutputItem` → `AgentStructuredOutputsResponseItem`. Public APIs that expose
+  experimental OpenAI types are now marked `[Experimental("OPENAI001")]`, forwarding the OpenAI
+  package's diagnostic ID, so consumers must suppress or acknowledge `OPENAI001` to use them.
+- Several properties that carried JSON as a `string` are now `BinaryData` on the OpenAI types:
+  the arguments of function calls and MCP tool calls (`FunctionCallResponseItem.FunctionArguments`,
+  `McpToolCallItem.ToolArguments`, `McpToolCallApprovalRequestItem.ToolArguments`) together with
+  their streaming delta and done updates, and image generation results
+  (`ImageGenerationCallResponseItem.ImageResultBytes`,
+  `StreamingResponseImageGenerationCallPartialImageUpdate.PartialImageBytes`). Function call output
+  went the other way: `FunctionCallOutputResponseItem.FunctionOutput` is a `string` where the
+  previous model used `BinaryData`. When the output is sent as an array of content parts,
+  `FunctionOutput` returns the newline-joined text of its text parts, while the original array
+  (including `input_image` and `input_file` parts) is kept and sent back as-is when the item is
+  serialized, stored or replayed. `ResponseEventStream.OutputItemFunctionCallOutput` still takes
+  `BinaryData` as JSON: a JSON string is sent as its value and an array of content parts is sent
+  as an array; any other value is sent as its UTF-8 text.
+- `CreateResponseRequest`, the argument of `ResponsesProvider.CreateResponseAsync`, is renamed to
+  `CreateResponsePersistRequest` (the old name is now used by a generated internal model). Its
+  `Response` is an `OpenAI.Responses.ResponseResult` and its `InputItems` are
+  `OpenAI.Responses.ResponseItem`, so custom `ResponsesProvider` implementations must update their
+  override.
+- Models in `Azure.AI.AgentServer.Responses.Models` that no public API of this package uses any
+  more are now internal, so they no longer duplicate or collide with the OpenAI types. This covers
+  the `ItemField*` hierarchy and its status enums, the request-side models (`CreateResponseRequest`,
+  `Reasoning`, `Prompt`, `IncludeEnum`, `ResponseTextParam`, `TextResponseFormat*`,
+  `ResponseStreamOptions`, `ContextManagementParam`, `Metadata`), the apply-patch, function-shell,
+  local-shell, code-interpreter, MCP list-tools, and web-search action models, `InputTextContent`,
+  `InputImageContent`, `InputFileContent`, `FunctionAndCustomToolCallOutput*`, `MessageRole`,
+  `MessageStatus`, `MessagePhase`, `AgentId`, `CreatedBy`, `ComputerScreenshotImage`,
+  `CompactResource`, `ResponseIncompleteDetails`, `Error` / `ApiErrorResponse`, `DeleteResponseResult`,
+  and `AgentsPagedResultOutputItem`. Use the equivalent `OpenAI.Responses` or
+  `Azure.AI.Extensions.OpenAI` types instead.
+- The "expanded" helpers that duplicated the OpenAI types are removed:
+  `ItemMessageExtensions.GetContentExpanded`, `GetToolChoiceExpanded` on `CreateResponseOptions`
+  and `ResponseResult`, `ResponseResult.SetToolChoice`, and
+  `CreateResponseOptions.GetConversationExpanded`. Use `MessageResponseItem.Content`
+  (`ResponseContentPart`, switching on `Kind`), `ToolChoice` (`ResponseToolChoice`, with `Kind` and
+  `FunctionName`), and `ConversationOptions.ConversationId` instead. The models that only these
+  helpers exposed are now internal: `MessageContent` and its `MessageContent*Content` subtypes,
+  `SummaryTextContent`, `TextContent`, `ComputerScreenshotContent`, `ImageDetail`,
+  `FileInputDetail`, `LogProb`, `TopLogProb`, `ToolChoiceParam` and its `ToolChoice*` subtypes,
+  `ToolChoiceOptions`, `ToolChoiceAllowedMode`, `Specific*Param`, `PromptCacheBreakpointConfig`,
+  and `ConversationParam`. The remaining public models in `Azure.AI.AgentServer.Responses.Models`
+  (status enums, tool-call callers and the custom tool call items) are tracked for removal in
+  [#64833](https://github.com/Azure/azure-sdk-for-net/issues/64833).
+- `ResponsesProvider.GetInputItemsAsync` now returns `OpenAI.Responses.ResponseItemCollectionPage`
+  (was `AgentsPagedResultOutputItem`) and is marked `[Experimental("OPENAI001")]`, so custom
+  `ResponsesProvider` implementations must update their override.
+- `OutputItemExtensions` (`GetId(this OutputItem)`) is removed; use `ResponseItem.Id` instead.
+- The `AgentsPagedResultOutputItem` and `DeleteResponseResult` model factory methods are removed
+  along with their (now internal) models.
+- `ResponseEventStream` no longer has the builders for local-shell, function-shell, and compaction
+  output items: `AddOutputItemLocalShellCall`, `AddOutputItemLocalShellCallOutput`,
+  `AddOutputItemFunctionShellCall`, `AddOutputItemFunctionShellCallOutput`, and
+  `AddOutputItemCompaction`, plus the matching `OutputItemLocalShellCall`,
+  `OutputItemLocalShellCallOutput`, `OutputItemFunctionShellCall`,
+  `OutputItemFunctionShellCallOutput`, and `OutputItemCompaction` convenience methods. The models
+  they emitted (`OutputItemLocalShellToolCall`, `OutputItemLocalShellToolCallOutput`,
+  `OutputItemFunctionShellCall`, `OutputItemFunctionShellCallOutput`, and
+  `OutputItemCompactionBody`) were removed too. `OpenAI.Responses.ResponseItem` has no item types
+  for these kinds, so there is no typed replacement.
+- `ResponsesApiException` now takes and exposes `OpenAI.Responses.ResponseError` instead of the
+  generated `Models.Error`: both constructors and the `Error` property changed type. On the new
+  type `Code` is a `ResponseErrorCode` (was `string`), `Type` is now `Kind`, and `Details`,
+  `AdditionalInfo`, and `DebugInfo` are no longer exposed.
+
+- Core's `SetResilientTasksEnabled()` no longer activates Responses when both
+  Responses feature flags are disabled. Configure `ResilientBackground` or
+  `SteerableConversations` to opt in to task-backed Responses execution.
+
+### Bugs Fixed
+
+- Preserved asynchronously replayed SSE events before reporting a resilient task's
+  terminal persistence failure. The HTTP relay drains retained events through the
+  failure-time watermark without closing the task stream needed for recovery.
+- Do not reclaim, delete, or dispatch Responses tasks during startup or inline
+  recovery when Responses task execution is disabled, even if Invocations
+  enables the shared Core runtime. Tasks started from a Responses request retain
+  Responses ownership across restart.
+
+### Other Changes
+- The package now depends on `OpenAI` 2.15.0 or later and on `Azure.AI.Extensions.OpenAI`,
+  because their types appear in its public API. Applications that pin an older `OpenAI` version
+  must raise it.
+- Request validation now covers eight more tool types from the Foundry spec (`a2a`,
+  `browser_automation`, `cloud_computer_use_preview`, `fabric_iq_preview`,
+  `github_copilot_toolset_preview`, `microsoft_copilot_toolset_preview`,
+  `programmatic_tool_calling`, and `web_iq_preview`), so a malformed tool of these types is
+  rejected instead of passing through unvalidated.
+
+## 1.0.0-beta.9 (2026-10-15)
+
+### Features Added
+- Hosted durable multi-turn task IDs are now scoped by `FOUNDRY_AGENT_SESSION_GUID`, preventing
+  recreated sessions from reusing name-derived IDs that refer to tombstoned tasks from an earlier
+  incarnation and can cause a service precondition failure (HTTP 412).
+  Public `ResponseContext.ConversationChainId` values and one-shot task IDs are unchanged, and
+  pending, in-progress, or suspended pre-rollout chains continue under their legacy task IDs.
+- Added `AddResponsesServer(IHostApplicationBuilder host, string sectionName)` and
+  `AddResponsesServer(IHostApplicationBuilder host, string sectionName, Action<ResponsesServerSettings>)`,
+  which bind a new `ResponsesServerSettings : ClientSettings` (the Foundry credential, `Endpoint`,
+  and option flags) from a single configuration section. Because response storage and
+  resilient-task storage bind the same identity and endpoint from one section, the two cannot
+  diverge. This is the required entry point in hosted Foundry environments. In a hosted
+  container, values the section does not provide default to the platform: `Endpoint` to
+  `FOUNDRY_PROJECT_ENDPOINT`, and an absent `Credential` section to a `DefaultAzureCredential`
+  limited by default to the production credentials (environment, workload identity and managed
+  identity; `AZURE_TOKEN_CREDENTIALS` overrides the selection), so
+  `ResponsesServer.Run<THandler>()` needs no configuration. A `Credential` section that does not
+  resolve still fails startup.
+- Added `ResponseContext.ClientCancellation` (a `CancellationToken`) alongside
+  `ResponseContext.Shutdown`, so an explicit client cancel is composable as a token.
+
+### Breaking Changes
+- Stored responses use Core durable tasks only when the resilient-task runtime is enabled.
+  `ResilientBackground=true` enables it automatically; otherwise `store=true` requests execute
+  in-process and are not recovered after an ungraceful crash.
+- The local file-backed response provider now uses a new `responses/partitions-v1` namespace.
+  Previously persisted responses and their history are not visible after upgrade, including
+  for anonymous requests and crash recovery. Legacy files remain unchanged; there is no
+  automatic migration or legacy read fallback. Restoring old data requires an explicit,
+  operator-controlled migration with independently verified ownership. Newly persisted
+  partitioned data continues to survive restarts.
+- Hosted registration now uses the `ClientSettings` pattern. The
+  `AddResponsesServer(IServiceCollection, Action<ResponsesServerOptions>)` overload remains for
+  local / non-hosted scenarios and now throws in a hosted Foundry environment (use the
+  `IHostApplicationBuilder` overload there). The internal `DEFAULT_FETCH_HISTORY_ITEM_COUNT`
+  environment-variable read and the ambient `TokenCredential` registration were removed
+  (`FOUNDRY_PROJECT_ENDPOINT` is now only the fallback for an unconfigured
+  `ResponsesServer:Endpoint`); the HTTPS-in-non-development check now honors
+  `IHostEnvironment.IsDevelopment()` rather than reading `ASPNETCORE_ENVIRONMENT` /
+  `DOTNET_ENVIRONMENT` directly.
+- `ResponseEventStream.Checkpoint()` was renamed to the virtual `CreateCheckpointEvent()`, and
+  `ResponseEventStream.InternalMetadata` was renamed to `PersistedMetadata`.
+- `ResponseContext.ClientCancelled` was renamed to `IsClientCancelled`. `IsShutdownRequested` and
+  `IsClientCancelled` are now get-only virtual passthroughs over the `Shutdown` /
+  `ClientCancellation` tokens; the settable `IsShutdownRequested` was removed.
+
+### Bugs Fixed
+
+- Legacy-chain migration now atomically requires the selected legacy task to still exist. If
+  deletion wins after the compatibility probe, Responses starts the session-instance-scoped task
+  instead of recreating the tombstoned legacy ID, including when the legacy chain is active and
+  accepting steering input.
+- Scope local in-memory and file-backed response envelopes, items, history, and conversation
+  indexes to `PlatformContext.UserIdKey`. Anonymous requests use a separate local partition.
+- Require an existing response in the caller's partition for updates, and retain deletion
+  semantics without allowing updates to recreate deleted responses.
+- Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
+  automatic truncation of conversation history. Positive limits remain supported.
+- Hosted `ResponsesServer.Run` and `AgentHostBuilder.AddResponses` now bind through the
+  `ResponsesServer` settings section instead of routing through the local-only service-collection
+  registration path.
+- Hosted `ResponsesServer.Run<THandler>()` and `AgentHostBuilder.AddResponses` no longer fail at
+  startup in a hosted Foundry container that provides only the platform environment
+  (`FOUNDRY_PROJECT_ENDPOINT` and a managed identity). Unconfigured values fall back to the
+  platform, and the fallback is logged at startup. A configured but unresolvable `Credential`
+  section still fails startup.
+- The Foundry response-storage HTTP pipeline is now private to its provider, preventing unrelated
+  ambient pipeline registrations from replacing the configured credential-bound pipeline.
+- Task-bound SSE relays now observe durable task completion failures, emit the existing SSE error
+  event instead of hanging, and leave the underlying stream open for recovery.
+
+### Other Changes
+
+- Registered the Responses event-stream backing as a protocol default so an explicit
+  application selection takes precedence regardless of registration order.
+- Hosted settings now reject malformed endpoint, count, and boolean values instead of silently
+  falling back to defaults, and reject unsupported authentication-provider types with the actual
+  configured type in the error.
+- Hosted response storage and resilient-task storage now receive the same resolved project endpoint
+  as well as the same credential.
+- Explicit client-cancel and shutdown signals are replayed when a task context attaches after the
+  signal, closing the multi-turn dispatch race.
+- Resilient streaming publishes and subscribes through Core's task-owned stream path; observer
+  errors propagate to the task owner while normal completion leaves transport closure to Core.
+
 ## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added
@@ -40,7 +241,7 @@
   `ResponseContext.ConversationChainId`.
 - Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
   interface. SSE streaming is now composed on the `Azure.AI.AgentServer.Core` event-stream
-  primitive (`IEventStreamRegistry` / `IEventStream`) rather than a Responses-owned stream
+  primitive (`AgentEventStreamRegistry` / `AgentEventStream`) rather than a Responses-owned stream
   provider, matching the Python implementation. The local default event-stream backing is
   in-memory replay, upgraded automatically to durable file-backed replay when resilient
   background is enabled outside a hosted environment.

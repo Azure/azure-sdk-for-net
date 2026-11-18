@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Base Model for API authentication.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GcpAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, and <see cref="SessionAuthModel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GcpAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="SecurityInsightsApiKeyAuthModel"/>, and <see cref="SessionAuthModel"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCcpAuthConfig))]
     public abstract partial class CcpAuthConfig : IJsonModel<CcpAuthConfig>
@@ -130,8 +130,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "APIKey":
-                        return SecurityInsightsApiKeyAuthModel.DeserializeSecurityInsightsApiKeyAuthModel(element, options);
                     case "AWS":
                         return AwsAuthModel.DeserializeAwsAuthModel(element, options);
                     case "Basic":
@@ -142,14 +140,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return GenericBlobSbsAuthModel.DeserializeGenericBlobSbsAuthModel(element, options);
                     case "GitHub":
                         return GitHubAuthModel.DeserializeGitHubAuthModel(element, options);
-                    case "None":
-                        return NoneAuthModel.DeserializeNoneAuthModel(element, options);
                     case "JwtToken":
                         return JwtAuthModel.DeserializeJwtAuthModel(element, options);
+                    case "None":
+                        return NoneAuthModel.DeserializeNoneAuthModel(element, options);
                     case "OAuth2":
                         return OAuthModel.DeserializeOAuthModel(element, options);
                     case "Oracle":
                         return OracleAuthModel.DeserializeOracleAuthModel(element, options);
+                    case "APIKey":
+                        return SecurityInsightsApiKeyAuthModel.DeserializeSecurityInsightsApiKeyAuthModel(element, options);
                     case "Session":
                         return SessionAuthModel.DeserializeSessionAuthModel(element, options);
                 }

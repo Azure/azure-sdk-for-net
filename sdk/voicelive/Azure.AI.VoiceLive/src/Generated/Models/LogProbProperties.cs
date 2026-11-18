@@ -45,5 +45,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> The log probability of the token. </summary>
         public float Logprob { get; }
+
+        /// <summary> The bytes that were used to generate the log probability. </summary>
+        public BinaryData Bytes { get; }
     }
 }

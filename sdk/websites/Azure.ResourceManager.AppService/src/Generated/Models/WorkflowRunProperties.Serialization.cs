@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = BinaryData.FromString(prop.Value.GetRawText());
+                    error = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("correlationId"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WorkflowRunProperties(

@@ -186,7 +186,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Converts a string to a <see cref="PhiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PhiCategory?(string value) => value == null ? null : new PhiCategory(value);
+        public static implicit operator PhiCategory?(string value) => value == null ? (PhiCategory?)null : new PhiCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.LinkedService = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService)
-        {
-            TypeProperties = new BlobTriggerTypeProperties(folderPath, maxConcurrency, linkedService);
-        }
     }
 }

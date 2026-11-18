@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// Delivery attribute mapping details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticDeliveryAttributeMapping"/> and <see cref="DynamicDeliveryAttributeMapping"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
     /// </summary>
     public abstract partial class DeliveryAttributeMapping
     {

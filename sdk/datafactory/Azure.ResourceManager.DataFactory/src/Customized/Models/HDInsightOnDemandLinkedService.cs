@@ -113,11 +113,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return TypeProperties.AdditionalLinkedServiceNames;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public HDInsightOnDemandLinkedService(DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup) : base("HDInsightOnDemand")
-        {
-            TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties(clusterSize, timeToLiveExpression, version, linkedServiceName, hostSubscriptionId, tenant, clusterResourceGroup);
-        }
     }
 }

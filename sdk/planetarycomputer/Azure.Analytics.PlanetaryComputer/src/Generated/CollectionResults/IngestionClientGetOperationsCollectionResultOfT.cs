@@ -48,7 +48,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The pages of IngestionClientGetOperationsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<PlanetaryComputerOperation>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -56,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 {
                     yield break;
                 }
-                OperationPagedResponse result = (OperationPagedResponse)response;
+                OperationPagedResult result = (OperationPagedResult)response;
                 nextPage = result.NextLink;
                 yield return Page<PlanetaryComputerOperation>.FromValues((IReadOnlyList<PlanetaryComputerOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(ResourceType, out string mongoClusterFirewallRuleApiVersion);
             _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterFirewallRuleApiVersion ?? "2026-06-01");
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterFirewallRuleApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster firewall rule.
+        /// Gets information about a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster firewall rule.
+        /// Gets information about a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster firewall rule.
+        /// Deletes a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster firewall rule.
+        /// Deletes a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

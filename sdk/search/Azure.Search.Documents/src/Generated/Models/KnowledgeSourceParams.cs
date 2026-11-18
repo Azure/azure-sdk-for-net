@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, and <see cref="IndexedSqlKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedSqlKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, and <see cref="WorkIQKnowledgeSourceParams"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceParams
     {

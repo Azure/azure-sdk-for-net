@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary>
     /// The properties of the reservation recommendation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModernSingleScopeReservationRecommendationProperties"/> and <see cref="ModernSharedScopeReservationRecommendationProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModernSharedScopeReservationRecommendationProperties"/> and <see cref="ModernSingleScopeReservationRecommendationProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownModernReservationRecommendationProperties))]
     public abstract partial class ModernReservationRecommendationProperties : IJsonModel<ModernReservationRecommendationProperties>
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Single":
-                        return ModernSingleScopeReservationRecommendationProperties.DeserializeModernSingleScopeReservationRecommendationProperties(element, options);
                     case "Shared":
                         return ModernSharedScopeReservationRecommendationProperties.DeserializeModernSharedScopeReservationRecommendationProperties(element, options);
+                    case "Single":
+                        return ModernSingleScopeReservationRecommendationProperties.DeserializeModernSingleScopeReservationRecommendationProperties(element, options);
                 }
             }
             return UnknownModernReservationRecommendationProperties.DeserializeUnknownModernReservationRecommendationProperties(element, options);

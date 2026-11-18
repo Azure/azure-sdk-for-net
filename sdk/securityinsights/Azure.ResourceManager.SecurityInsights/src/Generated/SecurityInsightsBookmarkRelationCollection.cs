@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsIncidentRelationData, SecurityInsightsBookmarkRelationResource>(new BookmarkRelationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsIncidentRelationData, SecurityInsightsBookmarkRelationResource>(new SecurityInsightsIncidentRelationDataAsync0CollectionResultOfT(
                 _bookmarkRelationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsIncidentRelationData, SecurityInsightsBookmarkRelationResource>(new BookmarkRelationsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsIncidentRelationData, SecurityInsightsBookmarkRelationResource>(new SecurityInsightsIncidentRelationData0CollectionResultOfT(
                 _bookmarkRelationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

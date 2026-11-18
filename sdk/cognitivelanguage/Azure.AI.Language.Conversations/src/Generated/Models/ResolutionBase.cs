@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base class for entity resolutions.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="VolumeResolution"/>, <see cref="SpeedResolution"/>, <see cref="AreaResolution"/>, <see cref="LengthResolution"/>, <see cref="InformationResolution"/>, <see cref="TemperatureResolution"/>, <see cref="WeightResolution"/>, <see cref="CurrencyResolution"/>, <see cref="BooleanResolution"/>, <see cref="DateTimeResolution"/>, <see cref="NumberResolution"/>, <see cref="OrdinalResolution"/>, <see cref="TemporalSpanResolution"/>, and <see cref="NumericRangeResolution"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/>, and <see cref="WeightResolution"/>.
     /// </summary>
     public abstract partial class ResolutionBase
     {

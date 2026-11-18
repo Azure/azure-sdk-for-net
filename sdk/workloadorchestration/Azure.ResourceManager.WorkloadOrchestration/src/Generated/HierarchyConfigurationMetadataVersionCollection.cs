@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HierarchyConfigurationMetadataVersionData, HierarchyConfigurationMetadataVersionResource>(new HierarchyConfigurationMetadataVersionsGetByParentAsyncCollectionResultOfT(_hierarchyConfigurationMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "HierarchyConfigurationMetadataVersionCollection.GetAll"), data => new HierarchyConfigurationMetadataVersionResource(Client, data));
+            return new AsyncPageableWrapper<HierarchyConfigurationMetadataVersionData, HierarchyConfigurationMetadataVersionResource>(new HierarchyConfigurationMetadataVersionDataAsyncCollectionResultOfT(_hierarchyConfigurationMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "HierarchyConfigurationMetadataVersionCollection.GetAll"), data => new HierarchyConfigurationMetadataVersionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HierarchyConfigurationMetadataVersionData, HierarchyConfigurationMetadataVersionResource>(new HierarchyConfigurationMetadataVersionsGetByParentCollectionResultOfT(_hierarchyConfigurationMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "HierarchyConfigurationMetadataVersionCollection.GetAll"), data => new HierarchyConfigurationMetadataVersionResource(Client, data));
+            return new PageableWrapper<HierarchyConfigurationMetadataVersionData, HierarchyConfigurationMetadataVersionResource>(new HierarchyConfigurationMetadataVersionDataCollectionResultOfT(_hierarchyConfigurationMetadataVersionsRestClient, Id.Parent.ToString(), Id.Name, context, "HierarchyConfigurationMetadataVersionCollection.GetAll"), data => new HierarchyConfigurationMetadataVersionResource(Client, data));
         }
 
         /// <summary>

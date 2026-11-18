@@ -36,6 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMILinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        public AzureSqlMILinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            ConnectionString = connectionString;
+        }
+
         /// <summary> Azure SQL Managed Instance linked service properties. </summary>
         internal AzureSqlMILinkedServiceTypeProperties TypeProperties { get; set; }
 

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="dynamicConfigurationVersionId"> Dynamic Configuration Id for the solution template version. </param>
         /// <param name="configurationStatus"> Configuration status of the solution template version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionMetadataVersionProperties(string parentDisplayName, ResourceIdentifier solutionTemplateVersionId, ResourceIdentifier schemaId, ResourceIdentifier dynamicConfigurationVersionId, ConfigurationState? configurationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionMetadataVersionProperties(string parentDisplayName, ResourceIdentifier solutionTemplateVersionId, ResourceIdentifier schemaId, ResourceIdentifier dynamicConfigurationVersionId, SolutionConfigurationState? configurationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ParentDisplayName = parentDisplayName;
             SolutionTemplateVersionId = solutionTemplateVersionId;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public ResourceIdentifier DynamicConfigurationVersionId { get; }
 
         /// <summary> Configuration status of the solution template version. </summary>
-        public ConfigurationState? ConfigurationStatus { get; }
+        public SolutionConfigurationState? ConfigurationStatus { get; }
     }
 }

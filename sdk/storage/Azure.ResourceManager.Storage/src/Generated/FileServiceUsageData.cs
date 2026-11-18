@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Storage
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FileServiceUsageData"/>. </summary>
+        public FileServiceUsageData()
+        {
+        }
+
         /// <summary> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </summary>
         [WirePath("properties")]
         public FileServiceUsageProperties Properties { get; }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             ResourceIdentifier solutionTemplateVersionId = default;
             ResourceIdentifier schemaId = default;
             ResourceIdentifier dynamicConfigurationVersionId = default;
-            ConfigurationState? configurationStatus = default;
+            SolutionConfigurationState? configurationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    configurationStatus = new ConfigurationState(prop.Value.GetString());
+                    configurationStatus = new SolutionConfigurationState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SolutionMetadataVersionProperties(

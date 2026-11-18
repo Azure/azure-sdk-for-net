@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP Table Resource properties. </summary>
     public partial class SapTableResourceDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="SapTableResourceDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="tableName"> The name of the SAP Table. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
+        public SapTableResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base("SapTableResource", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
+            TypeProperties = new SapTableResourceDatasetTypeProperties(tableName);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SapTableResourceDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

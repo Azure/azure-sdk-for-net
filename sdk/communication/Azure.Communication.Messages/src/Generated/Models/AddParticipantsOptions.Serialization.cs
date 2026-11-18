@@ -154,10 +154,10 @@ namespace Azure.Communication.Messages
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AddParticipantsOptions(participants, additionalBinaryDataProperties);
+            return new AddParticipantsOptions(participants ?? new ChangeTrackingList<ConversationParticipant>(), additionalBinaryDataProperties);
         }
     }
 }

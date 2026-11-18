@@ -12,7 +12,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the conversation message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="VideoConversationMessageContent"/>, <see cref="AudioConversationMessageContent"/>, and <see cref="TemplateConversationMessageContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AudioConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="TemplateConversationMessageContent"/>, <see cref="TextConversationMessageContent"/>, and <see cref="VideoConversationMessageContent"/>.
     /// </summary>
     public abstract partial class ConversationMessageContent
     {

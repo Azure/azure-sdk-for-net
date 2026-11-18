@@ -36,6 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlServerLinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        public SqlServerLinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            ConnectionString = connectionString;
+        }
+
         /// <summary> SQL Server linked service properties. </summary>
         internal SqlServerLinkedServiceTypeProperties TypeProperties { get; set; }
 

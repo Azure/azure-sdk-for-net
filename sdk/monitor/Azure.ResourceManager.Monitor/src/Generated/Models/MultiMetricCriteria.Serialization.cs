@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
     /// The types of conditions for a multi resource alert.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MetricCriteria"/> and <see cref="DynamicMetricCriteria"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
     /// </summary>
     public partial class MultiMetricCriteria : IJsonModel<MultiMetricCriteria>
     {
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StaticThresholdCriterion":
-                        return MetricCriteria.DeserializeMetricCriteria(element, options);
                     case "DynamicThresholdCriterion":
                         return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element, options);
+                    case "StaticThresholdCriterion":
+                        return MetricCriteria.DeserializeMetricCriteria(element, options);
                 }
             }
             return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element, options);

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Defines an action for the recovery orchestration group.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryGroupManualAction"/> and <see cref="RecoveryGroupCustomRunbookAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryGroupCustomRunbookAction"/> and <see cref="RecoveryGroupManualAction"/>.
     /// </summary>
     public abstract partial class RecoveryGroupBaseAction
     {

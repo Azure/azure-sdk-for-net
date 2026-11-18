@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    expressionValue = BinaryData.FromString(prop.Value.GetRawText());
+                    expressionValue = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("targetValue"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    targetValue = BinaryData.FromString(prop.Value.GetRawText());
+                    targetValue = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("operator"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComponentExpressionEvaluationDetails(

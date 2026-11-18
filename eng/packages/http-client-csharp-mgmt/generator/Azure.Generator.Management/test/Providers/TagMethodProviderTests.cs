@@ -259,6 +259,38 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_TagMethodsGenerated_WhenPutBodyIsOptionalResourceData()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceNoPatchOnlyPut(isPutBodyRequired: false);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(resourceClientProvider, Is.Not.Null);
+
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.That(method, Is.Not.Null, $"Tag method '{tagMethodName}' should be generated when the optional PUT body uses the resource data model.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPutBodyDiffersFromResourceData()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceNoPatchOnlyPut(useSeparatePutBody: true);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(resourceClientProvider, Is.Not.Null);
+
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when the PUT body differs from the resource data model.");
+            }
+        }
+
+        [TestCase]
         public void Verify_NoTagMethods_WhenPatchBodyHasNoTags()
         {
             var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags();

@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningSasDatastoreSecrets)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(SasToken))
+            if (Optional.IsDefined(SasToken, _sasTokenIsDefined))
             {
-                writer.WritePropertyName("sasToken"u8);
-                writer.WriteStringValue(SasToken);
+                if (SasToken != null)
+                {
+                    writer.WritePropertyName("sasToken"u8);
+                    writer.WriteStringValue(SasToken);
+                }
+                else
+                {
+                    writer.WriteNull("sasToken"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool sasTokenIsDefined = false;
             string sasToken = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("sasToken"u8))
                 {
+                    sasTokenIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sasToken = null;
@@ -129,10 +138,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningSasDatastoreSecrets(secretsType, additionalBinaryDataProperties, sasToken);
+            return new MachineLearningSasDatastoreSecrets(secretsType, additionalBinaryDataProperties, sasToken)
+            {
+                _sasTokenIsDefined = sasTokenIsDefined
+            };
         }
     }
 }

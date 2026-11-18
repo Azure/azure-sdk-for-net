@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new ArtifactSigningCertificateProfileDataAsyncCollectionResultOfT(
                 _certificateProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountCollectionResultOfT(
+            return new PageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new ArtifactSigningCertificateProfileDataCollectionResultOfT(
                 _certificateProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

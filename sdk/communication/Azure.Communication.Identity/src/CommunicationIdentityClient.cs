@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Identity.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,7 +18,10 @@ namespace Azure.Communication.Identity
     public class CommunicationIdentityClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal CommunicationIdentityRestClient RestClient { get; }
+
+        internal IdentityOperations RestClient { get; }
+
+        internal TeamsUserOperations TeamsUserRestClient { get; }
 
         #region public constructors - all argument need null check
 
@@ -45,8 +48,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                CheckNotNull(keyCredential, nameof(keyCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -56,8 +59,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                CheckNotNull(tokenCredential, nameof(tokenCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -80,7 +83,16 @@ namespace Azure.Communication.Identity
         private CommunicationIdentityClient(string endpoint, HttpPipeline httpPipeline, CommunicationIdentityClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            RestClient = new IdentityOperations(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            TeamsUserRestClient = new TeamsUserOperations(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+        }
+
+        // The generated Argument helper only exposes a void-returning AssertNotNull, but the
+        // constructor chain above needs to validate and forward in a single expression.
+        private static T CheckNotNull<T>(T value, string name)
+        {
+            Argument.AssertNotNull(value, name);
+            return value;
         }
 
         #endregion
@@ -90,80 +102,18 @@ namespace Azure.Communication.Identity
         {
             _clientDiagnostics = null;
             RestClient = null;
-        }
-
-        /// <summary>Gets user details. <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="communicationUser">Identifier of the identity. </param>"
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response<CommunicationUserDetail> GetUserDetail(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetUserDetail)}");
-            scope.Start();
-            try
-            {
-                Response<CommunicationIdentity> response = RestClient.Get(communicationUser.Id, cancellationToken: cancellationToken);
-                return BuildCommunicationUserDetail(response);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>Gets user details. <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> whose tokens should get revoked.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserDetail>> GetUserDetailAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetUserDetail)}");
-            scope.Start();
-            try
-            {
-                Response<CommunicationIdentity> response = await RestClient.GetAsync(communicationUser.Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return BuildCommunicationUserDetail(response);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            TeamsUserRestClient = null;
         }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="customId">Custom Id to be associated with the user.</param>"
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response<CommunicationUserIdentifier> CreateUser(string customId, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationUserIdentifier> CreateUser(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
             scope.Start();
             try
             {
-                Response<CommunicationUserIdentifierAndToken> response = RestClient.Create(customId, Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken);
-                var id = response.Value.Identity.Id;
-                return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response<CommunicationUserIdentifier> CreateUser(CancellationToken cancellationToken = default) => CreateUser(default, cancellationToken);
-
-        /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/> if the to doesn't exist or get the user otherwise/>.</summary>
-        /// <param name="customId">Custom Id to be associated with the user.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(string customId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
-            scope.Start();
-            try
-            {
-                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(customId, Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<CommunicationUserIdentifierAndToken> response = RestClient.Create(new CommunicationIdentityCreateRequest(), cancellationToken);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -176,22 +126,15 @@ namespace Azure.Communication.Identity
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(CancellationToken cancellationToken = default) => await CreateUserAsync(default, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="customId">Custom Id to be associated with the user.</param>
-        /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(string customId, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
             scope.Start();
             try
             {
-                int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
-
-                return RestClient.Create(customId, scopes, expiresIn, cancellationToken);
+                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(new CommunicationIdentityCreateRequest(), cancellationToken).ConfigureAwait(false);
+                var id = response.Value.Identity.Id;
+                return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -201,18 +144,25 @@ namespace Azure.Communication.Identity
         }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="customId">Custom Id to be associated with the user.</param>
-        /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(string customId, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
-            => CreateUserAndToken(customId, scopes, default, cancellationToken);
-
-        /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
-            => CreateUserAndToken(default, scopes, tokenExpiresIn, cancellationToken);
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
+            scope.Start();
+            try
+            {
+                int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
+
+                return RestClient.Create(BuildCreateRequest(scopes, expiresIn), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">The scopes that the token should have.</param>
@@ -221,11 +171,10 @@ namespace Azure.Communication.Identity
             => CreateUserAndToken(scopes, default, cancellationToken);
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="customId">Custom Id to be associated with the user.</param>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(string customId, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
             scope.Start();
@@ -233,7 +182,7 @@ namespace Azure.Communication.Identity
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                return await RestClient.CreateAsync(customId, scopes, expiresIn, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(BuildCreateRequest(scopes, expiresIn), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -241,20 +190,6 @@ namespace Azure.Communication.Identity
                 throw;
             }
         }
-
-        /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="customId">Custom Id to be associated with the user.</param>
-        /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(string customId, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
-            => await CreateUserAndTokenAsync(customId, scopes, default, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
-            => await CreateUserAndTokenAsync(default, scopes, tokenExpiresIn, cancellationToken).ConfigureAwait(false);
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">The scopes that the token should have.</param>
@@ -272,7 +207,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return RestClient.Delete(communicationUser.Id, cancellationToken);
+                return RestClient.Delete(communicationUser.Id, AcceptJson(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -290,7 +225,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteAsync(communicationUser.Id, AcceptJson(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -313,7 +248,7 @@ namespace Azure.Communication.Identity
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresIn, cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, BuildAccessTokenRequest(scopes, expiresIn), cancellationToken);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
@@ -347,7 +282,7 @@ namespace Azure.Communication.Identity
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresIn, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, BuildAccessTokenRequest(scopes, expiresIn), cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
@@ -377,7 +312,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return RestClient.RevokeAccessTokens(communicationUser.Id, cancellationToken);
+                return RestClient.RevokeAccessTokens(communicationUser.Id, AcceptJson(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -395,7 +330,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, AcceptJson(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -414,7 +349,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = RestClient.ExchangeTeamsUserAccessToken(options.TeamsUserAadToken, options.ClientId, options.UserObjectId, cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = TeamsUserRestClient.ExchangeTeamsUserAccessToken(BuildTeamsUserExchangeTokenRequest(options), cancellationToken);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -433,7 +368,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = await RestClient.ExchangeTeamsUserAccessTokenAsync(options.TeamsUserAadToken, options.ClientId, options.UserObjectId, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await TeamsUserRestClient.ExchangeTeamsUserAccessTokenAsync(BuildTeamsUserExchangeTokenRequest(options), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -443,13 +378,62 @@ namespace Azure.Communication.Identity
             }
         }
 
-        private static Response<CommunicationUserDetail> BuildCommunicationUserDetail(Response<CommunicationIdentity> response)
+        // The two no-content operations lose Accept: application/json under the DPG emitter.
+        // Restore it per-operation rather than with a pipeline-wide policy, so only the affected
+        // requests are touched.
+        private static RequestContext AcceptJson(CancellationToken cancellationToken)
         {
-            var customId = response.Value.CustomId;
-            var responseId = response.Value.Id;
-            var lastTokenIssuedAt = response.Value.LastTokenIssuedAt;
+            var context = new RequestContext { CancellationToken = cancellationToken };
+            context.AddPolicy(AcceptJsonPolicy.Shared, HttpPipelinePosition.PerCall);
+            return context;
+        }
 
-            return Response.FromValue(new CommunicationUserDetail(customId, lastTokenIssuedAt, responseId), response.GetRawResponse());
+        private static CommunicationIdentityCreateRequest BuildCreateRequest(IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
+        {
+            var request = new CommunicationIdentityCreateRequest { ExpiresInMinutes = expiresInMinutes };
+            foreach (CommunicationTokenScope scope in scopes ?? Enumerable.Empty<CommunicationTokenScope>())
+            {
+                request.CreateTokenWithScopes.Add(scope);
+            }
+
+            return request;
+        }
+
+        // AutoRest emitted null guards on operation parameters; the DPG emitter does not.
+        // Validate here so a null argument still fails fast with ArgumentNullException instead
+        // of reaching the service and coming back as a 400. The parameter names match the ones
+        // the AutoRest client reported, so callers catching these see no change.
+        private static CommunicationIdentityAccessTokenRequest BuildAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
+        {
+            if (scopes == null)
+            {
+                throw new ArgumentNullException(nameof(scopes));
+            }
+
+            return new CommunicationIdentityAccessTokenRequest(scopes)
+            {
+                ExpiresInMinutes = expiresInMinutes
+            };
+        }
+
+        private static TeamsUserExchangeTokenRequest BuildTeamsUserExchangeTokenRequest(GetTokenForTeamsUserOptions options)
+        {
+            if (options.TeamsUserAadToken == null)
+            {
+                throw new ArgumentNullException("token");
+            }
+
+            if (options.ClientId == null)
+            {
+                throw new ArgumentNullException("appId");
+            }
+
+            if (options.UserObjectId == null)
+            {
+                throw new ArgumentNullException("userId");
+            }
+
+            return new TeamsUserExchangeTokenRequest(options.TeamsUserAadToken, options.ClientId, options.UserObjectId);
         }
 
         private static int? GetTokenExpirationInMinutes(TimeSpan tokenExpiresIn, string paramName)

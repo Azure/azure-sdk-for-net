@@ -375,13 +375,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AppComplianceReportProperties(
                 triggerOn,
                 timeZone,
-                resources,
+                resources ?? new ChangeTrackingList<ReportResourceMetadata>(),
                 status,
                 errors ?? new ChangeTrackingList<string>(),
                 tenantId,

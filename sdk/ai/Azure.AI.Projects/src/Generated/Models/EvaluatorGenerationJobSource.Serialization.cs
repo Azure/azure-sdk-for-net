@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// The base source model for evaluator generation jobs. Polymorphic over `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptEvaluatorGenerationJobSource"/>, <see cref="AgentEvaluatorGenerationJobSource"/>, <see cref="TracesEvaluatorGenerationJobSource"/>, and <see cref="DatasetEvaluatorGenerationJobSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentEvaluatorGenerationJobSource"/>, <see cref="DatasetEvaluatorGenerationJobSource"/>, <see cref="PromptEvaluatorGenerationJobSource"/>, and <see cref="TracesEvaluatorGenerationJobSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluatorGenerationJobSource))]
     public abstract partial class EvaluatorGenerationJobSource : IJsonModel<EvaluatorGenerationJobSource>
@@ -127,14 +127,14 @@ namespace Azure.AI.Projects.Evaluation
             {
                 switch (discriminator.GetString())
                 {
-                    case "prompt":
-                        return PromptEvaluatorGenerationJobSource.DeserializePromptEvaluatorGenerationJobSource(element, options);
                     case "agent":
                         return AgentEvaluatorGenerationJobSource.DeserializeAgentEvaluatorGenerationJobSource(element, options);
-                    case "traces":
-                        return TracesEvaluatorGenerationJobSource.DeserializeTracesEvaluatorGenerationJobSource(element, options);
                     case "dataset":
                         return DatasetEvaluatorGenerationJobSource.DeserializeDatasetEvaluatorGenerationJobSource(element, options);
+                    case "prompt":
+                        return PromptEvaluatorGenerationJobSource.DeserializePromptEvaluatorGenerationJobSource(element, options);
+                    case "traces":
+                        return TracesEvaluatorGenerationJobSource.DeserializeTracesEvaluatorGenerationJobSource(element, options);
                 }
             }
             return UnknownEvaluatorGenerationJobSource.DeserializeUnknownEvaluatorGenerationJobSource(element, options);

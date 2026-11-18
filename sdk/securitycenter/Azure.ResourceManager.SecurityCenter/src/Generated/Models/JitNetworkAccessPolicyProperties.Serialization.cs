@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JitNetworkAccessPolicyProperties(virtualMachines, requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(), provisioningState, additionalBinaryDataProperties);
+            return new JitNetworkAccessPolicyProperties(virtualMachines ?? new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>(), requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

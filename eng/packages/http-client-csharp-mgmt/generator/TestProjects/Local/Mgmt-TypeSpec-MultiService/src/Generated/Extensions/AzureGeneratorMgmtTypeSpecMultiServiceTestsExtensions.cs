@@ -197,7 +197,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckAvailabilityResponse>> CheckAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckAvailabilityResult>> CheckAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -217,7 +217,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckAvailabilityResponse> CheckAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckAvailabilityResult> CheckAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

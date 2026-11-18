@@ -1,0 +1,4 @@
+directory: specification/attestation/data-plane/Attestation
+commit: c1ee6fb13212c3ba00f0a7d9532767573286d21b
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomRecommendationData, CustomRecommendationResource>(new CustomRecommendationsGetAllAsyncCollectionResultOfT(_customRecommendationsRestClient, Id.ToString(), context, "CustomRecommendationCollection.GetAll"), data => new CustomRecommendationResource(Client, data));
+            return new AsyncPageableWrapper<CustomRecommendationData, CustomRecommendationResource>(new CustomRecommendationDataAsyncCollectionResultOfT(_customRecommendationsRestClient, Id.ToString(), context, "CustomRecommendationCollection.GetAll"), data => new CustomRecommendationResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomRecommendationData, CustomRecommendationResource>(new CustomRecommendationsGetAllCollectionResultOfT(_customRecommendationsRestClient, Id.ToString(), context, "CustomRecommendationCollection.GetAll"), data => new CustomRecommendationResource(Client, data));
+            return new PageableWrapper<CustomRecommendationData, CustomRecommendationResource>(new CustomRecommendationDataCollectionResultOfT(_customRecommendationsRestClient, Id.ToString(), context, "CustomRecommendationCollection.GetAll"), data => new CustomRecommendationResource(Client, data));
         }
 
         /// <summary>

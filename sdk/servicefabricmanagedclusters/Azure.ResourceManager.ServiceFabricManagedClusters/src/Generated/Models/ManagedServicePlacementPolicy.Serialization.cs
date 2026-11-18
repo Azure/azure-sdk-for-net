@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequireDomainDistributionPolicy"/>, and <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequireDomainDistributionPolicy"/>, and <see cref="ServicePlacementRequiredDomainPolicy"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownServicePlacementPolicy))]
     public abstract partial class ManagedServicePlacementPolicy : IJsonModel<ManagedServicePlacementPolicy>
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     case "InvalidDomain":
                         return ServicePlacementInvalidDomainPolicy.DeserializeServicePlacementInvalidDomainPolicy(element, options);
-                    case "RequiredDomain":
-                        return ServicePlacementRequiredDomainPolicy.DeserializeServicePlacementRequiredDomainPolicy(element, options);
+                    case "NonPartiallyPlaceService":
+                        return ServicePlacementNonPartiallyPlaceServicePolicy.DeserializeServicePlacementNonPartiallyPlaceServicePolicy(element, options);
                     case "PreferredPrimaryDomain":
                         return ServicePlacementPreferPrimaryDomainPolicy.DeserializeServicePlacementPreferPrimaryDomainPolicy(element, options);
                     case "RequiredDomainDistribution":
                         return ServicePlacementRequireDomainDistributionPolicy.DeserializeServicePlacementRequireDomainDistributionPolicy(element, options);
-                    case "NonPartiallyPlaceService":
-                        return ServicePlacementNonPartiallyPlaceServicePolicy.DeserializeServicePlacementNonPartiallyPlaceServicePolicy(element, options);
+                    case "RequiredDomain":
+                        return ServicePlacementRequiredDomainPolicy.DeserializeServicePlacementRequiredDomainPolicy(element, options);
                 }
             }
             return UnknownServicePlacementPolicy.DeserializeUnknownServicePlacementPolicy(element, options);

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Import command settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeradataImportCommand"/>, <see cref="AzureDatabricksDeltaLakeImportCommand"/>, and <see cref="SnowflakeImportCopyCommand"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDatabricksDeltaLakeImportCommand"/>, <see cref="SnowflakeImportCopyCommand"/>, and <see cref="TeradataImportCommand"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownImportSettings))]
     public abstract partial class ImportSettings : IJsonModel<ImportSettings>
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TeradataImportCommand":
-                        return TeradataImportCommand.DeserializeTeradataImportCommand(element, options);
                     case "AzureDatabricksDeltaLakeImportCommand":
                         return AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(element, options);
                     case "SnowflakeImportCopyCommand":
                         return SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(element, options);
+                    case "TeradataImportCommand":
+                        return TeradataImportCommand.DeserializeTeradataImportCommand(element, options);
                 }
             }
             return UnknownImportSettings.DeserializeUnknownImportSettings(element, options);

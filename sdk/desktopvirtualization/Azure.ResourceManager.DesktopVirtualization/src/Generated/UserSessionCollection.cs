@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionDataAsyncCollectionResultOfT(
                 _userSessionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetAllCollectionResultOfT(
+            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionDataCollectionResultOfT(
                 _userSessionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

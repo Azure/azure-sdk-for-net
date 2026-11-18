@@ -151,12 +151,12 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("bytes"u8))
                 {
-                    bytes = BinaryData.FromString(prop.Value.GetRawText());
+                    bytes = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties);

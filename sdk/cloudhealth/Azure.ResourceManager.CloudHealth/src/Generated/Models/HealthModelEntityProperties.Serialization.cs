@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 writer.WritePropertyName("signalAggregationGroups"u8);
                 writer.WriteStartArray();
-                foreach (SignalAggregationGroup item in SignalAggregationGroups)
+                foreach (HealthModelSignalAggregationGroup item in SignalAggregationGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
-            EntityCoordinates canvasPosition = default;
-            EntityIcon icon = default;
+            HealthModelEntityCoordinates canvasPosition = default;
+            HealthModelEntityIcon icon = default;
             float? healthObjective = default;
-            EntityImpact? impact = default;
+            HealthModelEntityImpact? impact = default;
             IDictionary<string, string> tags = default;
             EntitySignalGroups signalGroups = default;
-            IList<SignalAggregationGroup> signalAggregationGroups = default;
+            IList<HealthModelSignalAggregationGroup> signalAggregationGroups = default;
             string discoveredBy = default;
             EntityHealthState? healthState = default;
             EntityAlerts alerts = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    canvasPosition = EntityCoordinates.DeserializeEntityCoordinates(prop.Value, options);
+                    canvasPosition = HealthModelEntityCoordinates.DeserializeHealthModelEntityCoordinates(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("icon"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    icon = EntityIcon.DeserializeEntityIcon(prop.Value, options);
+                    icon = HealthModelEntityIcon.DeserializeHealthModelEntityIcon(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("healthObjective"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    impact = new EntityImpact(prop.Value.GetString());
+                    impact = new HealthModelEntityImpact(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    List<SignalAggregationGroup> array = new List<SignalAggregationGroup>();
+                    List<HealthModelSignalAggregationGroup> array = new List<HealthModelSignalAggregationGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SignalAggregationGroup.DeserializeSignalAggregationGroup(item, options));
+                        array.Add(HealthModelSignalAggregationGroup.DeserializeHealthModelSignalAggregationGroup(item, options));
                     }
                     signalAggregationGroups = array;
                     continue;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HealthModelEntityProperties(
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 impact,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 signalGroups,
-                signalAggregationGroups ?? new ChangeTrackingList<SignalAggregationGroup>(),
+                signalAggregationGroups ?? new ChangeTrackingList<HealthModelSignalAggregationGroup>(),
                 discoveredBy,
                 healthState,
                 alerts,

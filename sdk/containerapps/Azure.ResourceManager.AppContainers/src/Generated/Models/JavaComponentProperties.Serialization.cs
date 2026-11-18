@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary>
     /// Java Component common properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudEurekaComponent"/>, and <see cref="SpringCloudConfigComponent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudConfigComponent"/>, and <see cref="SpringCloudEurekaComponent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownJavaComponentProperties))]
     public abstract partial class JavaComponentProperties : IJsonModel<JavaComponentProperties>
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     case "SpringBootAdmin":
                         return SpringBootAdminComponent.DeserializeSpringBootAdminComponent(element, options);
-                    case "SpringCloudEureka":
-                        return SpringCloudEurekaComponent.DeserializeSpringCloudEurekaComponent(element, options);
                     case "SpringCloudConfig":
                         return SpringCloudConfigComponent.DeserializeSpringCloudConfigComponent(element, options);
+                    case "SpringCloudEureka":
+                        return SpringCloudEurekaComponent.DeserializeSpringCloudEurekaComponent(element, options);
                 }
             }
             return UnknownJavaComponentProperties.DeserializeUnknownJavaComponentProperties(element, options);

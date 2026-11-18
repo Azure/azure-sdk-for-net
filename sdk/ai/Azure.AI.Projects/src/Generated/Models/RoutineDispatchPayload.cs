@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a manual dispatch payload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentResponsesApiDispatchPayload"/> and <see cref="AgentInvocationsApiDispatchPayload"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentInvocationsApiDispatchPayload"/> and <see cref="AgentResponsesApiDispatchPayload"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class RoutineDispatchPayload

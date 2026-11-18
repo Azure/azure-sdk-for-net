@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MonitorSliProperties(
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 category,
                 evaluationType,
                 executionState,
-                destinationAmwAccounts,
+                destinationAmwAccounts ?? new ChangeTrackingList<SliAmwAccount>(),
                 destinationMetrics ?? new ChangeTrackingList<SliMetric>(),
                 baselineProperties,
                 streamingRuleId,

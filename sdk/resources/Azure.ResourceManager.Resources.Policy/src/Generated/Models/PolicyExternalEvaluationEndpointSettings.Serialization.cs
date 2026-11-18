@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    details = BinaryData.FromString(prop.Value.GetRawText());
+                    details = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PolicyExternalEvaluationEndpointSettings(kind, details, additionalBinaryDataProperties);

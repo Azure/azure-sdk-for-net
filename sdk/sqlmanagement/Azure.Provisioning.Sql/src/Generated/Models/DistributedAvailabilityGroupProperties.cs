@@ -24,6 +24,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _instanceAvailabilityGroupName;
         private BicepValue<SqlServerFailoverModeType> _failoverMode;
         private BicepValue<SeedingModeType> _seedingMode;
+        private BicepValue<LinkModeType> _linkMode;
         private BicepList<DistributedAvailabilityGroupDatabase> _databases;
 
         /// <summary> Creates a new DistributedAvailabilityGroupProperties. </summary>
@@ -166,6 +167,21 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets or sets the LinkMode. </summary>
+        public BicepValue<LinkModeType> LinkMode
+        {
+            get
+            {
+                Initialize();
+                return _linkMode;
+            }
+            set
+            {
+                Initialize();
+                _linkMode.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Databases. </summary>
         public BicepList<DistributedAvailabilityGroupDatabase> Databases
         {
@@ -195,6 +211,7 @@ namespace Azure.Provisioning.Sql
             _instanceAvailabilityGroupName = DefineProperty<string>(nameof(InstanceAvailabilityGroupName), new string[] { "instanceAvailabilityGroupName" });
             _failoverMode = DefineProperty<SqlServerFailoverModeType>(nameof(FailoverMode), new string[] { "failoverMode" });
             _seedingMode = DefineProperty<SeedingModeType>(nameof(SeedingMode), new string[] { "seedingMode" });
+            _linkMode = DefineProperty<LinkModeType>(nameof(LinkMode), new string[] { "linkMode" });
             _databases = DefineListProperty<DistributedAvailabilityGroupDatabase>(nameof(Databases), new string[] { "databases" });
             DefineAdditionalProperties();
         }

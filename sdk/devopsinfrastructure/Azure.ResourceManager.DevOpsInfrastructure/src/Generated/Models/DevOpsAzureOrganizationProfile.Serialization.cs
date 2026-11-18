@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DevOpsAzureOrganizationProfile(
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 additionalBinaryDataProperties,
                 description,
                 updateDescription,
-                organizations,
+                organizations ?? new ChangeTrackingList<DevOpsOrganization>(),
                 permissionProfile,
                 @alias);
         }

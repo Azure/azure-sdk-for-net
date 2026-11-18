@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     parameters = dictionary;
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    datasetParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    datasetParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), datasetParameters, additionalBinaryDataProperties);

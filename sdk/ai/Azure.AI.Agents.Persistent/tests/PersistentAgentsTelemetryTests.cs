@@ -810,7 +810,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         var listRunStepsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_run_steps");
         CheckRunSteps(
             runStepActivity: listRunStepsSpan,
-            contents: [null, "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"openapi\"}]}"],
+            contents: [null, "{\"tool_calls\":[{\"details\":{},\"id\":\"*\",\"type\":\"openapi\"}]}"],
             events: ["gen_ai.run_step.message_creation", "gen_ai.run_step.tool_calls"]);
     }
 

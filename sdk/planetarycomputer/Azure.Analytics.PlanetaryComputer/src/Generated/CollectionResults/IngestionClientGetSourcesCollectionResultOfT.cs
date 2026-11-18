@@ -42,7 +42,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The pages of IngestionClientGetSourcesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<IngestionSourceSummary>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -50,7 +50,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 {
                     yield break;
                 }
-                IngestionSourceSummaryPagedResponse result = (IngestionSourceSummaryPagedResponse)response;
+                IngestionSourceSummaryPagedResult result = (IngestionSourceSummaryPagedResult)response;
                 nextPage = result.NextLink;
                 yield return Page<IngestionSourceSummary>.FromValues((IReadOnlyList<IngestionSourceSummary>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

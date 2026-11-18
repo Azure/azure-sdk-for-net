@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotsGetByFileShareAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotDataAsyncCollectionResultOfT(
                 _fileShareSnapshotsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotsGetByFileShareCollectionResultOfT(
+            return new PageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotDataCollectionResultOfT(
                 _fileShareSnapshotsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

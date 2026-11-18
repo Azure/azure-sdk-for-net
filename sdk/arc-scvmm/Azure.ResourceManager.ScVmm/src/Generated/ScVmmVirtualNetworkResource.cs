@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmVirtualNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scVmmVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmVirtualNetworkApiVersion ?? "2025-03-13");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/virtualNetworks", out string virtualNetworksApiVersionOverride) ? virtualNetworksApiVersionOverride : "2025-03-13");
             ValidateResourceId(id);
         }
 
@@ -517,10 +517,9 @@ namespace Azure.ResourceManager.ScVmm
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -560,10 +559,9 @@ namespace Azure.ResourceManager.ScVmm
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

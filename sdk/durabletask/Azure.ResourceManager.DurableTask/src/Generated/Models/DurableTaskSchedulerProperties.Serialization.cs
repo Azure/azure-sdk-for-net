@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DurableTaskSchedulerProperties(
                 provisioningState,
                 endpoint,
-                ipAllowlist,
+                ipAllowlist ?? new ChangeTrackingList<string>(),
                 sku,
                 publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<DurableTaskPrivateEndpointConnectionData>(),

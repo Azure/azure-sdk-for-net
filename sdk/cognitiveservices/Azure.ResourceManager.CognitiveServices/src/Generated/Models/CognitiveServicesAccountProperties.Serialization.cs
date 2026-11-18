@@ -280,11 +280,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FoundryAutoUpgrade))
-            {
-                writer.WritePropertyName("foundryAutoUpgrade"u8);
-                writer.WriteObjectValue(FoundryAutoUpgrade, options);
-            }
             if (Optional.IsDefined(AllowProjectManagement))
             {
                 writer.WritePropertyName("allowProjectManagement"u8);
@@ -310,20 +305,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CapabilitySettings))
+            if (Optional.IsCollectionDefined(TrustedCertificateSources))
             {
-                writer.WritePropertyName("capabilitySettings"u8);
-                writer.WriteObjectValue(CapabilitySettings, options);
-            }
-            if (Optional.IsCollectionDefined(AgentHostingConfigurations))
-            {
-                writer.WritePropertyName("agentHostingConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (AgentHostingConfiguration item in AgentHostingConfigurations)
+                if (TrustedCertificateSources != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("trustedCertificateSources"u8);
+                    writer.WriteStartArray();
+                    foreach (CognitiveServicesTrustedCertificateSource item in TrustedCertificateSources)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("trustedCertificateSources"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -399,12 +396,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
             IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default;
-            FoundryAutoUpgrade foundryAutoUpgrade = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
-            CapabilitySettings capabilitySettings = default;
-            IList<AgentHostingConfiguration> agentHostingConfigurations = default;
+            IList<CognitiveServicesTrustedCertificateSource> trustedCertificateSources = new ChangeTrackingList<CognitiveServicesTrustedCertificateSource>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -729,15 +724,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     aiFoundryNetworkInjections = array;
                     continue;
                 }
-                if (prop.NameEquals("foundryAutoUpgrade"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    foundryAutoUpgrade = FoundryAutoUpgrade.DeserializeFoundryAutoUpgrade(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("allowProjectManagement"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -773,32 +759,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     associatedProjects = array;
                     continue;
                 }
-                if (prop.NameEquals("capabilitySettings"u8))
+                if (prop.NameEquals("trustedCertificateSources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        trustedCertificateSources = null;
                         continue;
                     }
-                    capabilitySettings = CapabilitySettings.DeserializeCapabilitySettings(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("agentHostingConfigurations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AgentHostingConfiguration> array = new List<AgentHostingConfiguration>();
+                    List<CognitiveServicesTrustedCertificateSource> array = new List<CognitiveServicesTrustedCertificateSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentHostingConfiguration.DeserializeAgentHostingConfiguration(item, options));
+                        array.Add(CognitiveServicesTrustedCertificateSource.DeserializeCognitiveServicesTrustedCertificateSource(item, options));
                     }
-                    agentHostingConfigurations = array;
+                    trustedCertificateSources = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesAccountProperties(
@@ -834,12 +812,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>(),
-                foundryAutoUpgrade,
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),
-                capabilitySettings,
-                agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
+                trustedCertificateSources,
                 additionalBinaryDataProperties);
         }
     }

@@ -1,0 +1,70 @@
+parameters:
+  - name: kind
+    type: string
+    values:
+      - base
+      - target
+  - name: ref
+    type: string
+  - name: condition
+    type: string
+    default: failed()
+
+steps:
+  - task: AzurePowerShell@5
+    displayName: Report ${{ parameters.kind }} API review failure
+    condition: ${{ parameters.condition }}
+    retryCountOnTaskFailure: 3
+    inputs:
+      azureSubscription: $(CompletionCallbackAzureSubscription)
+      azurePowerShellVersion: LatestVersion
+      ScriptType: InlineScript
+      Inline: |
+        $ErrorActionPreference = 'Stop'
+
+        if ([string]::IsNullOrWhiteSpace($env:CALLBACK_PROOF)) {
+          throw 'The callback proof is required.'
+        }
+        $tokenResponse = Get-AzAccessToken -ResourceUrl $env:CALLBACK_RESOURCE_URL -AsSecureString
+        $token = [System.Net.NetworkCredential]::new('', $tokenResponse.Token).Password
+        if ([string]::IsNullOrWhiteSpace($token)) {
+          throw 'The API Review Hub access token was empty.'
+        }
+
+        $body = @{
+          operationId = $env:OPERATION_ID
+          mode = $env:REQUEST_MODE
+          language = $env:LANGUAGE
+          kind = $env:KIND
+          ref = $env:REF
+          sourceCommit = $env:SOURCE_COMMIT
+          result = 'Failed'
+          artifactName = $env:ARTIFACT_NAME
+          buildId = $env:BUILD_ID
+          project = $env:PROJECT
+        } | ConvertTo-Json -Compress
+        $headers = @{
+          Authorization = "Bearer $token"
+          'x-arh-callback-proof' = $env:CALLBACK_PROOF
+        }
+        $callbackUrl = "$($env:API_REVIEW_HUB_ENDPOINT.TrimEnd('/'))/api/operations/$($env:OPERATION_ID)"
+        Write-Host "Completion callback URL: $callbackUrl"
+        Write-Host "Completion callback body: $body"
+        Invoke-WebRequest -Method Post -Uri $callbackUrl -Headers $headers -ContentType 'application/json' -Body $body | Out-Null
+    env:
+      ${{ if eq(parameters.kind, 'base') }}:
+        CALLBACK_PROOF: $(BaseCallbackProof)
+        SOURCE_COMMIT: $(ApiReviewBaseCommit)
+      ${{ if eq(parameters.kind, 'target') }}:
+        CALLBACK_PROOF: $(TargetCallbackProof)
+        SOURCE_COMMIT: $(ApiReviewTargetCommit)
+      CALLBACK_RESOURCE_URL: $(CompletionCallbackResourceUrl)
+      API_REVIEW_HUB_ENDPOINT: $(ApiReviewHubEndpoint)
+      OPERATION_ID: $(ApiReviewOperationId)
+      REQUEST_MODE: $(ApiReviewRequestMode)
+      LANGUAGE: $(ApiReviewRequestLanguage)
+      KIND: ${{ parameters.kind }}
+      REF: ${{ parameters.ref }}
+      ARTIFACT_NAME: ${{ parameters.kind }}-$(System.JobAttempt)
+      BUILD_ID: $(Build.BuildId)
+      PROJECT: $(System.TeamProject)

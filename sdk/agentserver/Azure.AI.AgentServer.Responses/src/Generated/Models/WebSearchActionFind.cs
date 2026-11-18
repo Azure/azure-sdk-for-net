@@ -6,12 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Find action. </summary>
-    public partial class WebSearchActionFind
+    internal partial class WebSearchActionFind
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -19,12 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="WebSearchActionFind"/>. </summary>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="pattern"/> is null. </exception>
         public WebSearchActionFind(Uri url, string pattern)
         {
-            Argument.AssertNotNull(url, nameof(url));
-            Argument.AssertNotNull(pattern, nameof(pattern));
-
             Url = url;
             Pattern = pattern;
         }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.EdgeZones.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExtendedZoneListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExtendedZoneListResult(value ?? new ChangeTrackingList<ExtendedZoneData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

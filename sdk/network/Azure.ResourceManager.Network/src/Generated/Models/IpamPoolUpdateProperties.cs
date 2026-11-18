@@ -25,11 +25,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="IpamPoolUpdateProperties"/>. </summary>
         /// <param name="description"></param>
         /// <param name="displayName"> String representing a friendly name for the resource. </param>
+        /// <param name="minAllocationSize"> Minimum number of IP addresses required for allocations from this IpamPool to be compliant. Must be less than or equal to the maximum allocation size. Omit to leave the current value unchanged; set to an empty string to clear it. </param>
+        /// <param name="maxAllocationSize"> Maximum number of IP addresses allowed for allocations from this IpamPool to be compliant. Must be greater than or equal to the minimum allocation size. Omit to leave the current value unchanged; set to an empty string to clear it. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolUpdateProperties(string description, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IpamPoolUpdateProperties(string description, string displayName, string minAllocationSize, string maxAllocationSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DisplayName = displayName;
+            MinAllocationSize = minAllocationSize;
+            MaxAllocationSize = maxAllocationSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +44,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> String representing a friendly name for the resource. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary> Minimum number of IP addresses required for allocations from this IpamPool to be compliant. Must be less than or equal to the maximum allocation size. Omit to leave the current value unchanged; set to an empty string to clear it. </summary>
+        [WirePath("minAllocationSize")]
+        public string MinAllocationSize { get; set; }
+
+        /// <summary> Maximum number of IP addresses allowed for allocations from this IpamPool to be compliant. Must be greater than or equal to the minimum allocation size. Omit to leave the current value unchanged; set to an empty string to clear it. </summary>
+        [WirePath("maxAllocationSize")]
+        public string MaxAllocationSize { get; set; }
     }
 }

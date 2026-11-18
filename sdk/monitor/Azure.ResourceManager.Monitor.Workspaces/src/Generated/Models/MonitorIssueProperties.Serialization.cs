@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MonitorIssueProperties(
                 title,
                 status,
                 severity,
-                investigations,
+                investigations ?? new ChangeTrackingList<IssueInvestigationMetadata>(),
                 impactOn,
                 investigationsCount,
                 background,

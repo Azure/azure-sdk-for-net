@@ -16,11 +16,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Test run app component. </summary>
     public partial class TestRunAppComponents : IJsonModel<TestRunAppComponents>
     {
-        /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/> for deserialization. </summary>
-        internal TestRunAppComponents()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunAppComponents PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -215,11 +210,11 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TestRunAppComponents(
-                components,
+                components ?? new ChangeTrackingDictionary<string, LoadTestingAppComponent>(),
                 testRunId,
                 createdOn,
                 createdBy,

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    /// <summary> An device group resource belonging to a product resource. </summary>
+    /// <summary> A device group resource belonging to a product resource. </summary>
     public partial class SphereDeviceGroupData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

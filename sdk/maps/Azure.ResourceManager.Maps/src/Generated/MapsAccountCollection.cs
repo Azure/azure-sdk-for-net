@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Maps
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MapsAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MapsAccountResource.ResourceType, out string mapsAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", MapsAccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mapsAccountApiVersion ?? "2025-10-01-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Maps/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
+            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new MapsAccountDataAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
+            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new MapsAccountDataCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
         }
 
         /// <summary>

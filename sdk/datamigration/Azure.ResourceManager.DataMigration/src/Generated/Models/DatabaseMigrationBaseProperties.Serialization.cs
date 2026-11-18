@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Database Migration Base Resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatabaseMigrationPropertiesCosmosDBMongo"/>, <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/>, and <see cref="DatabaseMigrationSqlVmProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatabaseMigrationProperties"/>, <see cref="DatabaseMigrationPropertiesCosmosDBMongo"/>, <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/>, and <see cref="DatabaseMigrationSqlVmProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDatabaseMigrationBaseProperties))]
     public abstract partial class DatabaseMigrationBaseProperties : IJsonModel<DatabaseMigrationBaseProperties>
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "DatabaseMigrationProperties":
+                        return DatabaseMigrationProperties.DeserializeDatabaseMigrationProperties(element, options);
                     case "MongoToCosmosDbMongo":
                         return DatabaseMigrationPropertiesCosmosDBMongo.DeserializeDatabaseMigrationPropertiesCosmosDBMongo(element, options);
                     case "SqlDb":
                         return DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(element, options);
-                    case "DatabaseMigrationProperties":
-                        return DatabaseMigrationProperties.DeserializeDatabaseMigrationProperties(element, options);
                     case "SqlMi":
                         return DatabaseMigrationSqlMIProperties.DeserializeDatabaseMigrationSqlMIProperties(element, options);
                     case "SqlVm":

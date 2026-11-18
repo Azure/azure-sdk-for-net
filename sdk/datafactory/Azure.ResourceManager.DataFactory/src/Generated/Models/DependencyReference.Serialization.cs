@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Referenced dependency.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TriggerDependencyReference"/>, <see cref="TumblingWindowTriggerDependencyReference"/>, and <see cref="SelfDependencyTumblingWindowTriggerReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/>, and <see cref="TumblingWindowTriggerDependencyReference"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDependencyReference))]
     public abstract partial class DependencyReference : IJsonModel<DependencyReference>
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "SelfDependencyTumblingWindowTriggerReference":
+                        return SelfDependencyTumblingWindowTriggerReference.DeserializeSelfDependencyTumblingWindowTriggerReference(element, options);
                     case "TriggerDependencyReference":
                         return TriggerDependencyReference.DeserializeTriggerDependencyReference(element, options);
                     case "TumblingWindowTriggerDependencyReference":
                         return TumblingWindowTriggerDependencyReference.DeserializeTumblingWindowTriggerDependencyReference(element, options);
-                    case "SelfDependencyTumblingWindowTriggerReference":
-                        return SelfDependencyTumblingWindowTriggerReference.DeserializeSelfDependencyTumblingWindowTriggerReference(element, options);
                 }
             }
             return UnknownDependencyReference.DeserializeUnknownDependencyReference(element, options);

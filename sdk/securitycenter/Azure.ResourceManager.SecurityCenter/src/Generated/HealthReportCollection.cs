@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthReportData, HealthReportResource>(new HealthReportsGetAllAsyncCollectionResultOfT(_healthReportsRestClient, Id.ToString(), context, "HealthReportCollection.GetAll"), data => new HealthReportResource(Client, data));
+            return new AsyncPageableWrapper<HealthReportData, HealthReportResource>(new HealthReportDataAsyncCollectionResultOfT(_healthReportsRestClient, Id.ToString(), context, "HealthReportCollection.GetAll"), data => new HealthReportResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthReportData, HealthReportResource>(new HealthReportsGetAllCollectionResultOfT(_healthReportsRestClient, Id.ToString(), context, "HealthReportCollection.GetAll"), data => new HealthReportResource(Client, data));
+            return new PageableWrapper<HealthReportData, HealthReportResource>(new HealthReportDataCollectionResultOfT(_healthReportsRestClient, Id.ToString(), context, "HealthReportCollection.GetAll"), data => new HealthReportResource(Client, data));
         }
 
         /// <summary>

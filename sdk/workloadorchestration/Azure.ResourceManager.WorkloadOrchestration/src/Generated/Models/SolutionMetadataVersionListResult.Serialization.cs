@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SolutionMetadataVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SolutionMetadataVersionListResult(value ?? new ChangeTrackingList<SolutionMetadataVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

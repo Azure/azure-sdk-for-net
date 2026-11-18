@@ -148,42 +148,6 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary>
-        /// Returns the SuiteOffer resource associated with the given name.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetSuiteOfferAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<QuantumSuiteOffer> GetSuiteOfferAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetSuiteOfferAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the SuiteOffer resource associated with the given name.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetSuiteOffer(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<QuantumSuiteOffer> GetSuiteOffer(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetSuiteOffer(cancellationToken);
-        }
-
-        /// <summary>
         /// Check the availability of the resource name for the given location.
         /// <item>
         /// <term> Mocking. </term>
@@ -259,6 +223,42 @@ namespace Azure.ResourceManager.Quantum
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableQuantumSubscriptionResource(subscriptionResource).GetProviderOfferings(locationName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the SuiteOffer resource associated with the given name.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetSuiteOfferAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<QuantumSuiteOffer> GetSuiteOfferAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetSuiteOfferAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the SuiteOffer resource associated with the given name.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetSuiteOffer(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QuantumSuiteOffer> GetSuiteOffer(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetSuiteOffer(cancellationToken);
         }
     }
 }

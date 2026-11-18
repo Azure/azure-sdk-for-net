@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FluxConfigurationsList(value, nextLink, additionalBinaryDataProperties);
+            return new FluxConfigurationsList(value ?? new ChangeTrackingList<FluxConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new PrivateLinkResourceGetByBatchAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new BatchPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new PrivateLinkResourceGetByBatchAccountCollectionResultOfT(
+            return new PageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new BatchPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

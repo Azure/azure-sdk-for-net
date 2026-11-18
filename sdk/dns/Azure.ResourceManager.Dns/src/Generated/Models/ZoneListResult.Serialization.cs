@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ZoneListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ZoneListResult(value ?? new ChangeTrackingList<DnsZoneData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

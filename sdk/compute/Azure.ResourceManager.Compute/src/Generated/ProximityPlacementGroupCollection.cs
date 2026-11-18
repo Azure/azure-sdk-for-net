@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProximityPlacementGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ProximityPlacementGroupResource.ResourceType, out string proximityPlacementGroupApiVersion);
             _proximityPlacementGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProximityPlacementGroupResource.ResourceType.Namespace, Diagnostics);
-            _proximityPlacementGroupsRestClient = new ProximityPlacementGroups(_proximityPlacementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, proximityPlacementGroupApiVersion ?? "2026-04-01");
+            _proximityPlacementGroupsRestClient = new ProximityPlacementGroups(_proximityPlacementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetByResourceGroupAsyncCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ProximityPlacementGroupCollection.GetAll"), data => new ProximityPlacementGroupResource(Client, data));
+            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupDataAsyncCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ProximityPlacementGroupCollection.GetAll"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetByResourceGroupCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ProximityPlacementGroupCollection.GetAll"), data => new ProximityPlacementGroupResource(Client, data));
+            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupDataCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ProximityPlacementGroupCollection.GetAll"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>

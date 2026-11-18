@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IotOperationsBrokerListenerProperties(
                 serviceName,
-                ports,
+                ports ?? new ChangeTrackingList<BrokerListenerPort>(),
                 listenerServiceType,
                 provisioningState,
                 healthState,

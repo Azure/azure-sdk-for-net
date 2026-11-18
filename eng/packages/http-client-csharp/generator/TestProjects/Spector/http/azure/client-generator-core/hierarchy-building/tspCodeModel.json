@@ -515,7 +515,6 @@
                 "$id": "44",
                 "name": "updatePetAsAnimal",
                 "isExactName": false,
-                "resourceName": "AnimalOperations",
                 "doc": "Update a pet as an animal",
                 "accessibility": "public",
                 "parameters": [
@@ -707,7 +706,6 @@
                 "$id": "52",
                 "name": "updateDogAsAnimal",
                 "isExactName": false,
-                "resourceName": "AnimalOperations",
                 "doc": "Update a dog as an animal",
                 "accessibility": "public",
                 "parameters": [
@@ -949,7 +947,6 @@
                 "$id": "64",
                 "name": "updatePetAsPet",
                 "isExactName": false,
-                "resourceName": "PetOperations",
                 "doc": "Update a pet as a pet",
                 "accessibility": "public",
                 "parameters": [
@@ -1141,7 +1138,6 @@
                 "$id": "72",
                 "name": "updateDogAsPet",
                 "isExactName": false,
-                "resourceName": "PetOperations",
                 "doc": "Update a dog as a pet",
                 "accessibility": "public",
                 "parameters": [
@@ -1383,7 +1379,6 @@
                 "$id": "84",
                 "name": "updateDogAsDog",
                 "isExactName": false,
-                "resourceName": "DogOperations",
                 "doc": "Update a dog as a dog",
                 "accessibility": "public",
                 "parameters": [

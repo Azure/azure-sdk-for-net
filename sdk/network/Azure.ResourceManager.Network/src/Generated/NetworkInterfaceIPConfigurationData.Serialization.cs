@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             ResourceIdentifier id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             ResourceType? resourceType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkInterfaceIPConfigurationPropertiesFormat properties = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkInterfaceIPConfigurationData(
                 id,
-                additionalBinaryDataProperties,
                 name,
                 resourceType,
+                additionalBinaryDataProperties,
                 properties,
                 eTag);
         }

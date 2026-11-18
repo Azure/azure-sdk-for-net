@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The azure resource reference which is used for deployment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
     /// </summary>
     public abstract partial class DeploymentResourceIdReference
     {

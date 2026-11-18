@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GetUserTablesMySqlTaskOutput(id, databasesToTables, validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), additionalBinaryDataProperties);

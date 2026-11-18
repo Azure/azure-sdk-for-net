@@ -101,11 +101,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("afterStageWaitInSeconds"u8);
                 writer.WriteNumberValue(AfterStageWaitInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxAllowedFailures))
-            {
-                writer.WritePropertyName("maxAllowedFailures"u8);
-                writer.WriteStringValue(MaxAllowedFailures);
-            }
             if (Optional.IsDefined(MaxConcurrency))
             {
                 writer.WritePropertyName("maxConcurrency"u8);
@@ -177,7 +172,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             IList<ContainerServiceFleetUpdateGroup> groups = default;
             MemberSelector memberSelector = default;
             int? afterStageWaitInSeconds = default;
-            string maxAllowedFailures = default;
             string maxConcurrency = default;
             IList<ContainerServiceFleetGateConfiguration> beforeGates = default;
             IList<ContainerServiceFleetGateConfiguration> afterGates = default;
@@ -221,11 +215,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     afterStageWaitInSeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maxAllowedFailures"u8))
-                {
-                    maxAllowedFailures = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("maxConcurrency"u8))
                 {
                     maxConcurrency = prop.Value.GetString();
@@ -261,7 +250,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerServiceFleetUpdateStage(
@@ -269,7 +258,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>(),
                 memberSelector,
                 afterStageWaitInSeconds,
-                maxAllowedFailures,
                 maxConcurrency,
                 beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
                 afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),

@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         private CognitiveServicesClient _cognitiveServicesClientRestClient;
         private ClientDiagnostics _deletedAccountsClientDiagnostics;
         private DeletedAccounts _deletedAccountsRestClient;
-        private ClientDiagnostics _managedComputeUsagesOperationGroupClientDiagnostics;
-        private ManagedComputeUsagesOperationGroup _managedComputeUsagesOperationGroupRestClient;
         private ClientDiagnostics _managedComputeCapacitiesClientDiagnostics;
         private ManagedComputeCapacities _managedComputeCapacitiesRestClient;
         private ClientDiagnostics _resourceSkusOperationGroupClientDiagnostics;
@@ -60,51 +58,47 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string apiVersion) ? apiVersion : "2026-11-01");
 
         private ClientDiagnostics CommitmentPlanOperationGroupClientDiagnostics => _commitmentPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommitmentPlanOperationGroup CommitmentPlanOperationGroupRestClient => _commitmentPlanOperationGroupRestClient ??= new CommitmentPlanOperationGroup(CommitmentPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private CommitmentPlanOperationGroup CommitmentPlanOperationGroupRestClient => _commitmentPlanOperationGroupRestClient ??= new CommitmentPlanOperationGroup(CommitmentPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/commitmentPlans", out string apiVersion0) ? apiVersion0 : "2026-11-01");
 
         private ClientDiagnostics CognitiveServicesClientClientDiagnostics => _cognitiveServicesClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
-
-        private ClientDiagnostics ManagedComputeUsagesOperationGroupClientDiagnostics => _managedComputeUsagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ManagedComputeUsagesOperationGroup ManagedComputeUsagesOperationGroupRestClient => _managedComputeUsagesOperationGroupRestClient ??= new ManagedComputeUsagesOperationGroup(ManagedComputeUsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ManagedComputeCapacitiesClientDiagnostics => _managedComputeCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedComputeCapacities ManagedComputeCapacitiesRestClient => _managedComputeCapacitiesRestClient ??= new ManagedComputeCapacities(ManagedComputeCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private ManagedComputeCapacities ManagedComputeCapacitiesRestClient => _managedComputeCapacitiesRestClient ??= new ManagedComputeCapacities(ManagedComputeCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ResourceSkusOperationGroupClientDiagnostics => _resourceSkusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceSkusOperationGroup ResourceSkusOperationGroupRestClient => _resourceSkusOperationGroupRestClient ??= new ResourceSkusOperationGroup(ResourceSkusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private ResourceSkusOperationGroup ResourceSkusOperationGroupRestClient => _resourceSkusOperationGroupRestClient ??= new ResourceSkusOperationGroup(ResourceSkusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics CommitmentTiersOperationGroupClientDiagnostics => _commitmentTiersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommitmentTiersOperationGroup CommitmentTiersOperationGroupRestClient => _commitmentTiersOperationGroupRestClient ??= new CommitmentTiersOperationGroup(CommitmentTiersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private CommitmentTiersOperationGroup CommitmentTiersOperationGroupRestClient => _commitmentTiersOperationGroupRestClient ??= new CommitmentTiersOperationGroup(CommitmentTiersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics LocationBasedModelCapacitiesOperationGroupClientDiagnostics => _locationBasedModelCapacitiesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocationBasedModelCapacitiesOperationGroup LocationBasedModelCapacitiesOperationGroupRestClient => _locationBasedModelCapacitiesOperationGroupRestClient ??= new LocationBasedModelCapacitiesOperationGroup(LocationBasedModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private LocationBasedModelCapacitiesOperationGroup LocationBasedModelCapacitiesOperationGroupRestClient => _locationBasedModelCapacitiesOperationGroupRestClient ??= new LocationBasedModelCapacitiesOperationGroup(LocationBasedModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ModelCapacitiesOperationGroupClientDiagnostics => _modelCapacitiesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ModelCapacitiesOperationGroup ModelCapacitiesOperationGroupRestClient => _modelCapacitiesOperationGroupRestClient ??= new ModelCapacitiesOperationGroup(ModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private ModelCapacitiesOperationGroup ModelCapacitiesOperationGroupRestClient => _modelCapacitiesOperationGroupRestClient ??= new ModelCapacitiesOperationGroup(ModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics CognitiveServicesModelsClientDiagnostics => _cognitiveServicesModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CognitiveServicesModels CognitiveServicesModelsRestClient => _cognitiveServicesModelsRestClient ??= new CognitiveServicesModels(CognitiveServicesModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15-preview");
+        private CognitiveServicesModels CognitiveServicesModelsRestClient => _cognitiveServicesModelsRestClient ??= new CognitiveServicesModels(CognitiveServicesModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         /// <summary> Gets a collection of CognitiveServicesDeletedAccounts in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of CognitiveServicesDeletedAccounts and their operations over a CognitiveServicesDeletedAccountResource. </returns>
@@ -126,7 +120,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,7 +191,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +220,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +256,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +285,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,7 +306,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> An object representing collection of RaiContentFilters and their operations over a RaiContentFilterResource. </returns>
         public virtual RaiContentFilterCollection GetRaiContentFilters(AzureLocation location)
         {
-            return GetCachedClient(client => new RaiContentFilterCollection(client, Id, location));
+            return new RaiContentFilterCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -328,7 +322,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,7 +352,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +389,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -424,7 +418,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,7 +447,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +459,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetCognitiveServicesAccountsAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountDataAsync0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
@@ -481,7 +475,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -493,7 +487,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetCognitiveServicesAccountsCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
+            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountData0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
@@ -509,7 +503,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,7 +515,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetCognitiveServicesCommitmentPlansAsyncCollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
+            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanDataAsync1CollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -537,7 +531,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,7 +543,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetCognitiveServicesCommitmentPlansCollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
+            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanData1CollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -565,7 +559,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,7 +576,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesClientCheckSkuAvailabilityAsyncCollectionResultOfT(
+            return new CognitiveServicesSkuAvailabilityListAsyncCollectionResultOfT(
                 CognitiveServicesClientRestClient,
                 Id.SubscriptionId,
                 location,
@@ -604,7 +598,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -621,7 +615,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesClientCheckSkuAvailabilityCollectionResultOfT(
+            return new CognitiveServicesSkuAvailabilityListCollectionResultOfT(
                 CognitiveServicesClientRestClient,
                 Id.SubscriptionId,
                 location,
@@ -643,7 +637,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -691,7 +685,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -739,7 +733,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -787,7 +781,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -835,7 +829,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -847,7 +841,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAccountsGetCognitiveServicesDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
+            return new CognitiveServicesAccountDataAsync1CollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
         }
 
         /// <summary>
@@ -863,7 +857,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -875,65 +869,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAccountsGetCognitiveServicesDeletedAccountsCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
-        }
-
-        /// <summary>
-        /// List managed compute quota usages for a subscription and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/managedComputeUsages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedComputeUsagesOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesManagedComputeUsage> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ManagedComputeUsagesOperationGroupGetAllAsyncCollectionResultOfT(ManagedComputeUsagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetAll");
-        }
-
-        /// <summary>
-        /// List managed compute quota usages for a subscription and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/managedComputeUsages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedComputeUsagesOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesManagedComputeUsage> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ManagedComputeUsagesOperationGroupGetAllCollectionResultOfT(ManagedComputeUsagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetAll");
+            return new CognitiveServicesAccountData1CollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
         }
 
         /// <summary>
@@ -950,7 +886,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -960,11 +896,20 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// Optional deployment resource ID. When provided, returns capacity for the specific region
         /// where the deployment is hosted rather than the best available region.
         /// </param>
+        /// <param name="location">
+        /// Optional Azure location used to select a DataZone scope. Without a deployment ID,
+        /// omitted or blank location returns Global and both US and EU DataZone capacities.
+        /// A supported location returns Global and the matching DataZone capacities; an
+        /// unsupported location returns Global capacity only. With a deployment ID, a
+        /// nonblank location must match the parent account location, ignoring case and
+        /// surrounding whitespace, or the request returns HTTP 400. Capacity is still
+        /// returned for the deployment's backend region.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesManagedComputeCapacity> GetAllAsync(string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacitiesAsync(string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
@@ -972,14 +917,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedComputeCapacitiesGetAllAsyncCollectionResultOfT(
+            return new CognitiveServicesManagedComputeCapacityAsyncCollectionResultOfT(
                 ManagedComputeCapacitiesRestClient,
                 Id.SubscriptionId,
                 offer,
                 acceleratorType,
                 deploymentId,
+                location,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacities");
         }
 
         /// <summary>
@@ -996,7 +942,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1006,11 +952,20 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// Optional deployment resource ID. When provided, returns capacity for the specific region
         /// where the deployment is hosted rather than the best available region.
         /// </param>
+        /// <param name="location">
+        /// Optional Azure location used to select a DataZone scope. Without a deployment ID,
+        /// omitted or blank location returns Global and both US and EU DataZone capacities.
+        /// A supported location returns Global and the matching DataZone capacities; an
+        /// unsupported location returns Global capacity only. With a deployment ID, a
+        /// nonblank location must match the parent account location, ignoring case and
+        /// surrounding whitespace, or the request returns HTTP 400. Capacity is still
+        /// returned for the deployment's backend region.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesManagedComputeCapacity> GetAll(string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CognitiveServicesManagedComputeCapacity> GetCognitiveServicesManagedComputeCapacities(string offer, string acceleratorType = default, string deploymentId = default, string location = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
@@ -1018,14 +973,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedComputeCapacitiesGetAllCollectionResultOfT(
+            return new CognitiveServicesManagedComputeCapacityCollectionResultOfT(
                 ManagedComputeCapacitiesRestClient,
                 Id.SubscriptionId,
                 offer,
                 acceleratorType,
                 deploymentId,
+                location,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesManagedComputeCapacities");
         }
 
         /// <summary>
@@ -1041,7 +997,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1053,7 +1009,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusOperationGroupGetResourceSkusAsyncCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
+            return new AvailableCognitiveServicesSkuAsyncCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
         }
 
         /// <summary>
@@ -1069,7 +1025,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1081,7 +1037,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusOperationGroupGetResourceSkusCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
+            return new AvailableCognitiveServicesSkuCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
         }
 
         /// <summary>
@@ -1097,7 +1053,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1111,7 +1067,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(
+            return new ServiceAccountUsageAsync0CollectionResultOfT(
                 UsagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1133,7 +1089,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1147,7 +1103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesCollectionResultOfT(
+            return new ServiceAccountUsage0CollectionResultOfT(
                 UsagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1169,7 +1125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1182,7 +1138,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommitmentTiersOperationGroupGetCommitmentTiersAsyncCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
+            return new CommitmentTierAsyncCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
         }
 
         /// <summary>
@@ -1198,7 +1154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1211,7 +1167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommitmentTiersOperationGroupGetCommitmentTiersCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
+            return new CommitmentTierCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
         }
 
         /// <summary>
@@ -1227,7 +1183,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1249,7 +1205,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesAsyncCollectionResultOfT(
+            return new ModelCapacityListResultValueItemAsyncCollectionResultOfT(
                 LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1273,7 +1229,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1295,7 +1251,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesCollectionResultOfT(
+            return new ModelCapacityListResultValueItemCollectionResultOfT(
                 LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1319,7 +1275,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1340,7 +1296,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesOperationGroupGetModelCapacitiesAsyncCollectionResultOfT(
+            return new ModelCapacityListResultValueItemAsync0CollectionResultOfT(
                 ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
@@ -1363,7 +1319,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1384,7 +1340,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesOperationGroupGetModelCapacitiesCollectionResultOfT(
+            return new ModelCapacityListResultValueItem0CollectionResultOfT(
                 ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
@@ -1407,7 +1363,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1420,7 +1376,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesModelsGetModelsAsyncCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
+            return new CognitiveServicesModelAsyncCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
         }
 
         /// <summary>
@@ -1436,7 +1392,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1449,7 +1405,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesModelsGetModelsCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
+            return new CognitiveServicesModelCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
         }
     }
 }

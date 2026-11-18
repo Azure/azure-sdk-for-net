@@ -31,7 +31,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <summary> Initializes a new instance of <see cref="ProjectConversationsClient"/>. </summary>
     /// <param name="pipeline"> The client pipeline used to send requests. </param>
     /// <param name="options"> The options used to configure the client. </param>
-    public ProjectConversationsClient(ClientPipeline pipeline, OpenAIClientOptions options)
+    public ProjectConversationsClient(ClientPipeline pipeline, ConversationClientOptions options)
         : base(pipeline, options)
     {
         _endpoint = options.Endpoint;

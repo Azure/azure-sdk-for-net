@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from a reimage request. </summary>
+    /// <summary> The result of a bulk reimage action. </summary>
     public partial class BulkActionsReimageResourceOperationResponseResult : IJsonModel<BulkActionsReimageResourceOperationResponseResult>
     {
         /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResponseResult"/> for deserialization. </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BulkActionsReimageResourceOperationResponseResult(description, resourceTypeName, location, results ?? new ChangeTrackingList<ComputeBulkOperationResult>(), additionalBinaryDataProperties);

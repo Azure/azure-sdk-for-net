@@ -166,10 +166,10 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedTextAnalysisAuthoringProjectMetadata(value, nextLink, additionalBinaryDataProperties);
+            return new PagedTextAnalysisAuthoringProjectMetadata(value ?? new ChangeTrackingList<TextAuthoringProjectMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

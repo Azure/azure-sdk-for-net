@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfigTemplateSchemaData, ConfigTemplateSchemaResource>(new ConfigTemplateSchemasGetByConfigTemplateVersionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfigTemplateSchemaData, ConfigTemplateSchemaResource>(new ConfigTemplateSchemaDataAsyncCollectionResultOfT(
                 _configTemplateSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfigTemplateSchemaData, ConfigTemplateSchemaResource>(new ConfigTemplateSchemasGetByConfigTemplateVersionCollectionResultOfT(
+            return new PageableWrapper<ConfigTemplateSchemaData, ConfigTemplateSchemaResource>(new ConfigTemplateSchemaDataCollectionResultOfT(
                 _configTemplateSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

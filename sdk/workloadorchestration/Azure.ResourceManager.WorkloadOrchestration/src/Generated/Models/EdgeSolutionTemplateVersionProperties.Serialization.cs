@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string configurations = default;
             IDictionary<string, BinaryData> specification = default;
             SolutionVersionOrchestratorType? orchestratorType = default;
-            InternalState? internalState = default;
+            SolutionTemplateVersionInternalState? internalState = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     specification = dictionary;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    internalState = new InternalState(prop.Value.GetString());
+                    internalState = new SolutionTemplateVersionInternalState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EdgeSolutionTemplateVersionProperties(
                 configurations,
-                specification,
+                specification ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 orchestratorType,
                 internalState,
                 provisioningState,

@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="RelationshipCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelationshipCategory?(string value) => value == null ? null : new RelationshipCategory(value);
+        public static implicit operator RelationshipCategory?(string value) => value == null ? (RelationshipCategory?)null : new RelationshipCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

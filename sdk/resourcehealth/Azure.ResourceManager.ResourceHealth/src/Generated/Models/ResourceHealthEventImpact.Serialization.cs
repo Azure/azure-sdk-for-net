@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceHealthEventImpact(impactedService, impactedServiceGuid, impactedRegions ?? new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>(), additionalBinaryDataProperties);

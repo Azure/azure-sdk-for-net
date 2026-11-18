@@ -96,9 +96,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 writer.WritePropertyName("flattenedProperty"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "flattenedProperty"u8);
                 for (int i = 0; i < FlattenedProperty.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.flattenedProperty[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.flattenedProperty[{i}]")))
                     {
                         continue;
                     }

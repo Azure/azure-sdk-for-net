@@ -17,11 +17,6 @@ namespace Azure.AI.Discovery
     /// <summary> A knowledgeBase. </summary>
     public partial class KnowledgeBase : IJsonModel<KnowledgeBase>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/> for deserialization. </summary>
-        internal KnowledgeBase()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -397,7 +392,7 @@ namespace Azure.AI.Discovery
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeBase(

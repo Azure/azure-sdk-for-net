@@ -63,6 +63,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<bool> _performCutover;
         private BicepValue<SqlAvailabilityZoneType> _availabilityZone;
         private BicepValue<bool> _encryptionProtectorAutoRotation;
+        private BicepValue<string> _provisioningState;
 
         /// <summary> Creates a new DatabaseProperties. </summary>
         public DatabaseProperties()
@@ -719,6 +720,16 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<string> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for DatabaseProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -771,6 +782,7 @@ namespace Azure.Provisioning.Sql
             _performCutover = DefineProperty<bool>(nameof(PerformCutover), new string[] { "performCutover" });
             _availabilityZone = DefineProperty<SqlAvailabilityZoneType>(nameof(AvailabilityZone), new string[] { "availabilityZone" });
             _encryptionProtectorAutoRotation = DefineProperty<bool>(nameof(EncryptionProtectorAutoRotation), new string[] { "encryptionProtectorAutoRotation" });
+            _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

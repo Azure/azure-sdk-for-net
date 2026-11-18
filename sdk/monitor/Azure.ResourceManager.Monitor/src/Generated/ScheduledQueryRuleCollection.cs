@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScheduledQueryRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ScheduledQueryRuleResource.ResourceType, out string scheduledQueryRuleApiVersion);
             _scheduledQueryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ScheduledQueryRuleResource.ResourceType.Namespace, Diagnostics);
-            _scheduledQueryRulesRestClient = new ScheduledQueryRules(_scheduledQueryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledQueryRuleApiVersion ?? "2025-01-01-preview");
+            _scheduledQueryRulesRestClient = new ScheduledQueryRules(_scheduledQueryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupAsyncCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRuleDataAsyncCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
+            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRuleDataCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>

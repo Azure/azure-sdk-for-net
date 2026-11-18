@@ -41,15 +41,19 @@ Write-Host "Installing test-proxy version $version"
 $invocation = @"
 dotnet tool install azure.sdk.tools.testproxy `
     --tool-path $BinariesDirectory/test-proxy `
-    --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json `
+    --source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json `
     --version $version
 "@
 Write-Host $invocation
 
 dotnet tool install azure.sdk.tools.testproxy `
     --tool-path $BinariesDirectory/test-proxy `
-    --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json `
+    --source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json `
     --version $version
+
+if ($LASTEXITCODE -ne 0) {
+    throw "Failed to install test-proxy version $version (dotnet exited with code $LASTEXITCODE)."
+}
 
 Write-Host "Prepending path with the test proxy tool install location: '$BinariesDirectory/test-proxy'"
 Write-Host "##vso[task.prependpath]$BinariesDirectory/test-proxy"

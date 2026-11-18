@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// The request of the insights report.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationRunClusterInsightRequest"/>, <see cref="AgentClusterInsightRequest"/>, and <see cref="EvaluationComparisonInsightRequest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentClusterInsightRequest"/>, <see cref="EvaluationComparisonInsightRequest"/>, and <see cref="EvaluationRunClusterInsightRequest"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownInsightRequest))]
     public abstract partial class InsightRequest : IJsonModel<InsightRequest>
@@ -127,12 +127,12 @@ namespace Azure.AI.Projects.Evaluation
             {
                 switch (discriminator.GetString())
                 {
-                    case "EvaluationRunClusterInsight":
-                        return EvaluationRunClusterInsightRequest.DeserializeEvaluationRunClusterInsightRequest(element, options);
                     case "AgentClusterInsight":
                         return AgentClusterInsightRequest.DeserializeAgentClusterInsightRequest(element, options);
                     case "EvaluationComparison":
                         return EvaluationComparisonInsightRequest.DeserializeEvaluationComparisonInsightRequest(element, options);
+                    case "EvaluationRunClusterInsight":
+                        return EvaluationRunClusterInsightRequest.DeserializeEvaluationRunClusterInsightRequest(element, options);
                 }
             }
             return UnknownInsightRequest.DeserializeUnknownInsightRequest(element, options);

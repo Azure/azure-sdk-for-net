@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Evaluation;
 
-[Experimental("AAIP001")]
 [CodeGenType("Evaluators")]
 public partial class ProjectEvaluators
 {
@@ -26,7 +24,7 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-        ClientResult result = StartPendingUpload(name, version, pendingUploadRequest, default, cancellationToken.ToRequestOptions());
+        ClientResult result = StartPendingUpload(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
     }
 
@@ -44,7 +42,7 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-        ClientResult result = await StartPendingUploadAsync(name, version, pendingUploadRequest, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        ClientResult result = await StartPendingUploadAsync(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
     }
 
@@ -62,7 +60,7 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-        ClientResult result = GetCredential(name, version, credentialRequest, default, cancellationToken.ToRequestOptions());
+        ClientResult result = GetCredential(name, version, credentialRequest, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
     }
 
@@ -80,7 +78,7 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-        ClientResult result = await GetCredentialAsync(name, version, credentialRequest, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        ClientResult result = await GetCredentialAsync(name, version, credentialRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
     }
 }

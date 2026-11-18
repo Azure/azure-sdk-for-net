@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a single item of thread message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageContent))]
     public abstract partial class MessageContent : IJsonModel<MessageContent>
@@ -124,10 +124,10 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "text":
-                        return MessageTextContent.DeserializeMessageTextContent(element, options);
                     case "image_file":
                         return MessageImageFileContent.DeserializeMessageImageFileContent(element, options);
+                    case "text":
+                        return MessageTextContent.DeserializeMessageTextContent(element, options);
                 }
             }
             return UnknownMessageContent.DeserializeUnknownMessageContent(element, options);

@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                     if (locationIp != null)
                     {
-                        Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
+                        Tags[ContextTagKeys.AiLocationIP.ToString()] = locationIp;
                     }
                 }
             }
@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                 if (microsoftClientIp != null)
                 {
-                    Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp;
+                    Tags[ContextTagKeys.AiLocationIP.ToString()] = microsoftClientIp;
                 }
             }
 
@@ -161,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 if (logContext.MicrosoftClientIp != null)
                 {
-                    Tags[ContextTagKeys.AiLocationIp.ToString()] = logContext.MicrosoftClientIp;
+                    Tags[ContextTagKeys.AiLocationIP.ToString()] = logContext.MicrosoftClientIp;
                 }
 
                 if (logContext.EndUserPseudoId != null)

@@ -5,22 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> The result of a policy certificate modification. </summary>
     public partial class PolicyModificationResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PolicyModificationResult"/>. </summary>
-        /// <param name="policyResolution"> The result of the operation. </param>
-        /// <param name="basePolicyTokenHash"> The SHA256 hash of the policy object modified. </param>
+        /// <param name="basePolicyResolution"> The result of the operation. </param>
+        /// <param name="policyTokenHash"> The SHA256 hash of the policy object modified. </param>
         /// <param name="basePolicySigner"> The certificate used to sign the policy object, if specified. </param>
-        /// <param name="basePolicy"> A JSON Web Token containing a StoredAttestationPolicy object with the attestation policy. </param>
-        internal PolicyModificationResult(PolicyModification policyResolution, string basePolicyTokenHash, JsonWebKey basePolicySigner, string basePolicy)
+        /// <param name="basePolicy">
+        /// A JSON Web Token containing a StoredAttestationPolicy object with the
+        /// attestation policy
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyModificationResult(PolicyModification? basePolicyResolution, BinaryData policyTokenHash, JsonWebKey basePolicySigner, string basePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PolicyResolution = policyResolution;
-            BasePolicyTokenHash = basePolicyTokenHash;
+            BasePolicyResolution = basePolicyResolution;
+            PolicyTokenHash = policyTokenHash;
             BasePolicySigner = basePolicySigner;
             BasePolicy = basePolicy;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// The SHA256 hash of the policy object modified
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData PolicyTokenHash { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetParametersContent"/>. </summary>
-        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="id"> The Azure resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DiskEncryptionSetParametersContent(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, additionalBinaryDataProperties)
         {

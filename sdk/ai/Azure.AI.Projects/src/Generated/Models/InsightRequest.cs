@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// The request of the insights report.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationRunClusterInsightRequest"/>, <see cref="AgentClusterInsightRequest"/>, and <see cref="EvaluationComparisonInsightRequest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentClusterInsightRequest"/>, <see cref="EvaluationComparisonInsightRequest"/>, and <see cref="EvaluationRunClusterInsightRequest"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class InsightRequest

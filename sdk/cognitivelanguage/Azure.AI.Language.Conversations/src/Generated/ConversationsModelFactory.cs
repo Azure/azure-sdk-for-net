@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
     {
         /// <summary>
         /// The base class of a conversation input task.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITask"/> and <see cref="Models.ConversationLanguageUnderstandingInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationLanguageUnderstandingInput"/> and <see cref="Models.ConversationalAITask"/>.
         /// </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationInput"/> instance for mocking. </returns>
@@ -221,7 +221,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// This is the parameter set of either the Orchestration project itself or one of the target services.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisConfig"/>, <see cref="Models.QuestionAnsweringConfig"/>, and <see cref="Models.ConversationConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationConfig"/>, <see cref="Models.LuisConfig"/>, and <see cref="Models.QuestionAnsweringConfig"/>.
         /// </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
@@ -370,7 +370,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The base class of a conversation input task result.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITaskResult"/> and <see cref="Models.ConversationActionResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationActionResult"/> and <see cref="Models.ConversationalAITaskResult"/>.
         /// </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationActionResult"/> instance for mocking. </returns>
@@ -466,7 +466,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The abstract base class for entity resolutions.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AgeResolution"/>, <see cref="Models.VolumeResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.WeightResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.TemporalSpanResolution"/>, and <see cref="Models.NumericRangeResolution"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AgeResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.NumericRangeResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.TemporalSpanResolution"/>, <see cref="Models.VolumeResolution"/>, and <see cref="Models.WeightResolution"/>.
         /// </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <returns> A new <see cref="Models.ResolutionBase"/> instance for mocking. </returns>
@@ -768,7 +768,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// This is the base class of an intent prediction
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.QuestionAnsweringTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/>, and <see cref="Models.ConversationTargetIntentResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationTargetIntentResult"/>, <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/>, and <see cref="Models.QuestionAnsweringTargetIntentResult"/>.
         /// </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
@@ -1000,7 +1000,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// Container for results of all tasks in the conversation job.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SummarizationOperationResult"/>, <see cref="Models.CustomSummarizationOperationResult"/>, and <see cref="Models.ConversationPiiOperationResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationPiiOperationResult"/>, <see cref="Models.CustomSummarizationOperationResult"/>, and <see cref="Models.SummarizationOperationResult"/>.
         /// </summary>
         /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
@@ -1314,7 +1314,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// Base class for a long-running conversation input task.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CustomSummarizationOperationAction"/>, <see cref="Models.SummarizationOperationAction"/>, and <see cref="Models.PiiOperationAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CustomSummarizationOperationAction"/>, <see cref="Models.PiiOperationAction"/>, and <see cref="Models.SummarizationOperationAction"/>.
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
@@ -1428,7 +1428,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CharacterMaskPolicyType"/>, <see cref="Models.NoMaskPolicyType"/>, and <see cref="Models.EntityMaskTypePolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CharacterMaskPolicyType"/>, <see cref="Models.EntityMaskTypePolicyType"/>, and <see cref="Models.NoMaskPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <returns> A new <see cref="Models.BaseRedactionPolicy"/> instance for mocking. </returns>

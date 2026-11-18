@@ -6,7 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Containers;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -87,10 +87,17 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MemoryLimit))
+            if (Optional.IsDefined(MemoryLimit, _memoryLimitIsDefined))
             {
-                writer.WritePropertyName("memory_limit"u8);
-                writer.WriteStringValue(MemoryLimit.Value.ToSerialString());
+                if (MemoryLimit != null)
+                {
+                    writer.WritePropertyName("memory_limit"u8);
+                    writer.WriteObjectValue<ContainerMemoryLimit?>(MemoryLimit.Value, options);
+                }
+                else
+                {
+                    writer.WriteNull("memory_limit"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Skills))
             {
@@ -137,6 +144,7 @@ namespace Azure.AI.Projects.Agents
             string @type = "container_auto";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> fileIds = default;
+            bool memoryLimitIsDefined = false;
             ContainerMemoryLimit? memoryLimit = default;
             IList<ContainerSkill> skills = default;
             ToolboxShellNetworkPolicy networkPolicy = default;
@@ -170,12 +178,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("memory_limit"u8))
                 {
+                    memoryLimitIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         memoryLimit = null;
                         continue;
                     }
-                    memoryLimit = prop.Value.GetString().ToContainerMemoryLimit();
+                    memoryLimit = ModelReaderWriter.Read<ContainerMemoryLimit?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("skills"u8))
@@ -203,7 +212,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ToolboxShellContainerAutoEnvironment(
@@ -212,7 +221,10 @@ namespace Azure.AI.Projects.Agents
                 fileIds ?? new ChangeTrackingList<string>(),
                 memoryLimit,
                 skills ?? new ChangeTrackingList<ContainerSkill>(),
-                networkPolicy);
+                networkPolicy)
+            {
+                _memoryLimitIsDefined = memoryLimitIsDefined
+            };
         }
     }
 }

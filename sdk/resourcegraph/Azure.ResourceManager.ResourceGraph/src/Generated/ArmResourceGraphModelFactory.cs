@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary>
         /// A facet containing additional statistics on the response of a query. Can be either FacetResult or FacetError.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FacetResult"/> and <see cref="Models.FacetError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FacetError"/> and <see cref="Models.FacetResult"/>.
         /// </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             return new FacetResult(
                 expression,
-                default,
+                "FacetResult",
                 default,
                 totalRecords,
                 count,
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             errors ??= new ChangeTrackingList<FacetErrorDetails>();
 
-            return new FacetError(expression, default, default, (errors ?? new ChangeTrackingList<FacetErrorDetails>()).ToList());
+            return new FacetError(expression, "FacetError", default, (errors ?? new ChangeTrackingList<FacetErrorDetails>()).ToList());
         }
 
         /// <summary> Describes a history request to be executed. </summary>

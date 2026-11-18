@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, and <see cref="IndexedSqlKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedSqlKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, and <see cref="WorkIQKnowledgeSourceParams"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSourceParams))]
     public abstract partial class KnowledgeSourceParams : IJsonModel<KnowledgeSourceParams>
@@ -177,30 +177,30 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "searchIndex":
-                        return SearchIndexKnowledgeSourceParams.DeserializeSearchIndexKnowledgeSourceParams(element, options);
                     case "azureBlob":
                         return AzureBlobKnowledgeSourceParams.DeserializeAzureBlobKnowledgeSourceParams(element, options);
-                    case "indexedSharePoint":
-                        return IndexedSharePointKnowledgeSourceParams.DeserializeIndexedSharePointKnowledgeSourceParams(element, options);
-                    case "indexedOneLake":
-                        return IndexedOneLakeKnowledgeSourceParams.DeserializeIndexedOneLakeKnowledgeSourceParams(element, options);
-                    case "web":
-                        return WebKnowledgeSourceParams.DeserializeWebKnowledgeSourceParams(element, options);
-                    case "remoteSharePoint":
-                        return RemoteSharePointKnowledgeSourceParams.DeserializeRemoteSharePointKnowledgeSourceParams(element, options);
-                    case "workIQ":
-                        return WorkIQKnowledgeSourceParams.DeserializeWorkIQKnowledgeSourceParams(element, options);
                     case "fabricDataAgent":
                         return FabricDataAgentKnowledgeSourceParams.DeserializeFabricDataAgentKnowledgeSourceParams(element, options);
                     case "fabricOntology":
                         return FabricOntologyKnowledgeSourceParams.DeserializeFabricOntologyKnowledgeSourceParams(element, options);
-                    case "mcpServer":
-                        return McpServerKnowledgeSourceParams.DeserializeMcpServerKnowledgeSourceParams(element, options);
                     case "file":
                         return FileKnowledgeSourceParams.DeserializeFileKnowledgeSourceParams(element, options);
+                    case "indexedOneLake":
+                        return IndexedOneLakeKnowledgeSourceParams.DeserializeIndexedOneLakeKnowledgeSourceParams(element, options);
+                    case "indexedSharePoint":
+                        return IndexedSharePointKnowledgeSourceParams.DeserializeIndexedSharePointKnowledgeSourceParams(element, options);
                     case "indexedSql":
                         return IndexedSqlKnowledgeSourceParams.DeserializeIndexedSqlKnowledgeSourceParams(element, options);
+                    case "mcpServer":
+                        return McpServerKnowledgeSourceParams.DeserializeMcpServerKnowledgeSourceParams(element, options);
+                    case "remoteSharePoint":
+                        return RemoteSharePointKnowledgeSourceParams.DeserializeRemoteSharePointKnowledgeSourceParams(element, options);
+                    case "searchIndex":
+                        return SearchIndexKnowledgeSourceParams.DeserializeSearchIndexKnowledgeSourceParams(element, options);
+                    case "web":
+                        return WebKnowledgeSourceParams.DeserializeWebKnowledgeSourceParams(element, options);
+                    case "workIQ":
+                        return WorkIQKnowledgeSourceParams.DeserializeWorkIQKnowledgeSourceParams(element, options);
                 }
             }
             return UnknownKnowledgeSourceParams.DeserializeUnknownKnowledgeSourceParams(element, options);

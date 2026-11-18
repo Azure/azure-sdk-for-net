@@ -181,10 +181,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TilerAssetGeoJson(id, collection, boundingBox, assets, additionalBinaryDataProperties);
+            return new TilerAssetGeoJson(id, collection, boundingBox ?? new ChangeTrackingList<float>(), assets ?? new ChangeTrackingDictionary<string, StacAsset>(), additionalBinaryDataProperties);
         }
     }
 }

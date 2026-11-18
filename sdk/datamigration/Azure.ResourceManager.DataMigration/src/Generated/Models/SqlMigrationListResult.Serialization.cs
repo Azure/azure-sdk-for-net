@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlMigrationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SqlMigrationListResult(value ?? new ChangeTrackingList<SqlMigrationServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary>
     /// The metric definition, which determines how the metric value is calculated from event data.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventCountMetricDefinition"/>, <see cref="UserCountMetricDefinition"/>, <see cref="EventRateMetricDefinition"/>, <see cref="UserRateMetricDefinition"/>, <see cref="SumMetricDefinition"/>, <see cref="AverageMetricDefinition"/>, and <see cref="PercentileMetricDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AverageMetricDefinition"/>, <see cref="EventCountMetricDefinition"/>, <see cref="EventRateMetricDefinition"/>, <see cref="PercentileMetricDefinition"/>, <see cref="SumMetricDefinition"/>, <see cref="UserCountMetricDefinition"/>, and <see cref="UserRateMetricDefinition"/>.
     /// </summary>
     public abstract partial class ExperimentMetricDefinition
     {

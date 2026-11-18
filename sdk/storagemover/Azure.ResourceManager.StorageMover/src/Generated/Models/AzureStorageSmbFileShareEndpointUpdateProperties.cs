@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -16,14 +17,41 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>. </summary>
         public AzureStorageSmbFileShareEndpointUpdateProperties() : base(EndpointType.AzureStorageSmbFileShare)
         {
+            AllowedStorageAccounts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureStorageSmbFileShareEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(endpointType, description, additionalBinaryDataProperties)
+        /// <param name="enableCrossTenantTransfer">
+        /// Opt-in flag enabling this endpoint to be used as one side of a cross-tenant
+        /// data transfer pair. Defaults to false.
+        /// </param>
+        /// <param name="allowedStorageAccounts">
+        /// Replaces the list of partner-tenant storage account ARM IDs allowed to be
+        /// the other side of a cross-tenant data transfer pair with this endpoint.
+        /// Omit an entry to remove it; include an entry to add it. Removing an entry
+        /// blocks future job runs that reference that storage account.
+        /// </param>
+        internal AzureStorageSmbFileShareEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? enableCrossTenantTransfer, IList<string> allowedStorageAccounts) : base(endpointType, description, additionalBinaryDataProperties)
         {
+            EnableCrossTenantTransfer = enableCrossTenantTransfer;
+            AllowedStorageAccounts = allowedStorageAccounts;
         }
+
+        /// <summary>
+        /// Opt-in flag enabling this endpoint to be used as one side of a cross-tenant
+        /// data transfer pair. Defaults to false.
+        /// </summary>
+        public bool? EnableCrossTenantTransfer { get; set; }
+
+        /// <summary>
+        /// Replaces the list of partner-tenant storage account ARM IDs allowed to be
+        /// the other side of a cross-tenant data transfer pair with this endpoint.
+        /// Omit an entry to remove it; include an entry to add it. Removing an entry
+        /// blocks future job runs that reference that storage account.
+        /// </summary>
+        public IList<string> AllowedStorageAccounts { get; }
     }
 }

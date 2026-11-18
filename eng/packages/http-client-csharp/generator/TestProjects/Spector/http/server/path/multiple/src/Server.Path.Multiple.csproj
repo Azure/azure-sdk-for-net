@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Server.Path.Multiple client library for developing .NET applications with rich experience.</Description>
+    <Description>The Server.Path.Multiple client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Server.Path.Multiple</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Server.Path.Multiple</PackageTags>

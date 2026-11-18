@@ -23,7 +23,6 @@ namespace Specs.Azure.ClientGenerator.Core.Access
     [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInPublic))]
     [ModelReaderWriterBuildable(typeof(RealModel))]
     [ModelReaderWriterBuildable(typeof(SharedModel))]
-    [ModelReaderWriterBuildable(typeof(UnknownAbstractModel))]
     public partial class SpecsAzureClientGeneratorCoreAccessContext : ModelReaderWriterContext
     {
     }

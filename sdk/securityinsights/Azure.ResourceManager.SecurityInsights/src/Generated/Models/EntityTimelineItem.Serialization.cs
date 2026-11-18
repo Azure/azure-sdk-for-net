@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Entity timeline Item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityTimelineItem"/>, <see cref="BookmarkTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, and <see cref="SecurityAlertTimelineItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, <see cref="BookmarkTimelineItem"/>, and <see cref="SecurityAlertTimelineItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEntityTimelineItem))]
     public abstract partial class EntityTimelineItem : IJsonModel<EntityTimelineItem>
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     case "Activity":
                         return ActivityTimelineItem.DeserializeActivityTimelineItem(element, options);
-                    case "Bookmark":
-                        return BookmarkTimelineItem.DeserializeBookmarkTimelineItem(element, options);
                     case "Anomaly":
                         return AnomalyTimelineItem.DeserializeAnomalyTimelineItem(element, options);
+                    case "Bookmark":
+                        return BookmarkTimelineItem.DeserializeBookmarkTimelineItem(element, options);
                     case "SecurityAlert":
                         return SecurityAlertTimelineItem.DeserializeSecurityAlertTimelineItem(element, options);
                 }

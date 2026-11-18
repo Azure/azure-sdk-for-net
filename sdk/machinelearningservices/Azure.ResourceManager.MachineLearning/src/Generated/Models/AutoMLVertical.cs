@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// AutoML vertical class.
     /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoMLVerticalRegression"/>, <see cref="ClassificationTask"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="MachineLearningForecasting"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
     /// </summary>
     public abstract partial class AutoMLVertical
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _targetColumnName;
+        private protected bool _targetColumnNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal AutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogVerbosity = logVerbosity;
-            TargetColumnName = targetColumnName;
+            _targetColumnName = targetColumnName;
             TaskType = taskType;
             TrainingData = trainingData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -57,7 +59,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Also known as label column name in context of classification tasks.
         /// </summary>
         [WirePath("targetColumnName")]
-        public string TargetColumnName { get; set; }
+        public string TargetColumnName
+        {
+            get
+            {
+                return _targetColumnName;
+            }
+            set
+            {
+                _targetColumnName = value;
+                _targetColumnNameIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] Task type for AutoMLJob. </summary>
         [WirePath("taskType")]

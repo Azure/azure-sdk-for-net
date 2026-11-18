@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SiteResource.ResourceType, out string siteApiVersion);
             _sitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", SiteResource.ResourceType.Namespace, Diagnostics);
-            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteApiVersion ?? "2025-03-30");
+            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/sites", out string sitesApiVersionOverride) ? sitesApiVersionOverride : "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteData, SiteResource>(new SitesGetByResourceGroupAsyncCollectionResultOfT(_sitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteCollection.GetAll"), data => new SiteResource(Client, data));
+            return new AsyncPageableWrapper<SiteData, SiteResource>(new SiteDataAsyncCollectionResultOfT(_sitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteCollection.GetAll"), data => new SiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteData, SiteResource>(new SitesGetByResourceGroupCollectionResultOfT(_sitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteCollection.GetAll"), data => new SiteResource(Client, data));
+            return new PageableWrapper<SiteData, SiteResource>(new SiteDataCollectionResultOfT(_sitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteCollection.GetAll"), data => new SiteResource(Client, data));
         }
 
         /// <summary>

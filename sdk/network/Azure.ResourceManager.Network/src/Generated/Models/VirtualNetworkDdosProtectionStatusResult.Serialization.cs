@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkDdosProtectionStatusResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkDdosProtectionStatusResult(value ?? new ChangeTrackingList<PublicIPDdosProtectionStatusResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

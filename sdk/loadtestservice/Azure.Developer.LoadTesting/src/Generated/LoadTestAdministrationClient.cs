@@ -2065,7 +2065,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
 
-            CloneTestRequest spreadModel = new CloneTestRequest(newTestId, displayName, description, default);
+            CloneTestContent spreadModel = new CloneTestContent(newTestId, displayName, description, default);
             Operation<BinaryData> result = CloneTest(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
         }
@@ -2084,7 +2084,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
 
-            CloneTestRequest spreadModel = new CloneTestRequest(newTestId, displayName, description, default);
+            CloneTestContent spreadModel = new CloneTestContent(newTestId, displayName, description, default);
             Operation<BinaryData> result = await CloneTestAsync(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
         }

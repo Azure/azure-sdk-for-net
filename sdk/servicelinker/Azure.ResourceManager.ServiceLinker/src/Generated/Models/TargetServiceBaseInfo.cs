@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
     /// The target service properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="FabricPlatformTargetService"/>, <see cref="SelfHostedServerTargetService"/>, and <see cref="ConfluentSchemaRegistryInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatformTargetService"/>, and <see cref="SelfHostedServerTargetService"/>.
     /// </summary>
     public abstract partial class TargetServiceBaseInfo
     {

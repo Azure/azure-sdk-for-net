@@ -1,6 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/resourceconnector/Azure.ResourceManager.ResourceConnector
+    - sdk/resourceconnector/Azure.Provisioning.ResourceConnector
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -9,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ResourceConnector
       safeName: AzureResourceManagerResourceConnector
+    - name: Azure.Provisioning.ResourceConnector
+      safeName: AzureProvisioningResourceConnector

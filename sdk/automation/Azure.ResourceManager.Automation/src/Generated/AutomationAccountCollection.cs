@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomationAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AutomationAccountResource.ResourceType, out string automationAccountApiVersion);
             _automationAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationAccountResource.ResourceType.Namespace, Diagnostics);
-            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Automation/automationAccounts", out string automationAccountApiVersionOverride) ? automationAccountApiVersionOverride : "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetByResourceGroupAsyncCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
+            return new AsyncPageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountDataAsyncCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetByResourceGroupCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
+            return new PageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountDataCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>

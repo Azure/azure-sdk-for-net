@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Format read settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ParquetReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/>, and <see cref="BinaryReadSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="ParquetReadSettings"/>, and <see cref="XmlReadSettings"/>.
     /// </summary>
     public abstract partial class FormatReadSettings
     {
@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             FormatReadSettingsType = formatReadSettingsType;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
+        protected FormatReadSettings() : this(default)
+        {
         }
 
         /// <summary> The read setting type. </summary>

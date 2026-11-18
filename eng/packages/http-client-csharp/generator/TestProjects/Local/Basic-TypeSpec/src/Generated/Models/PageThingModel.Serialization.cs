@@ -151,10 +151,10 @@ namespace BasicTypeSpec
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PageThingModel(items, additionalBinaryDataProperties);
+            return new PageThingModel(items ?? new ChangeTrackingList<ThingModel>(), additionalBinaryDataProperties);
         }
     }
 }

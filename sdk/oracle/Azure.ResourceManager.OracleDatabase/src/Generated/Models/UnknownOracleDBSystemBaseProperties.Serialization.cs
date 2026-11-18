@@ -143,6 +143,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string version = default;
             OracleDatabaseComputeModel? computeModel = default;
             int? computeCount = default;
+            DiagnosticCollectionConfig dataCollectionOptions = default;
+            string characterSet = default;
+            string ncharacterSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -384,9 +387,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     computeCount = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("dataCollectionOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("characterSet"u8))
+                {
+                    characterSet = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ncharacterSet"u8))
+                {
+                    ncharacterSet = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownOracleDBSystemBaseProperties(
@@ -414,12 +436,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 scanDnsName,
                 scanIPs ?? new ChangeTrackingList<string>(),
                 shape,
-                sshPublicKeys,
+                sshPublicKeys ?? new ChangeTrackingList<string>(),
                 storageVolumePerformanceMode,
                 timeZone,
                 version,
                 computeModel,
                 computeCount,
+                dataCollectionOptions,
+                characterSet,
+                ncharacterSet,
                 additionalBinaryDataProperties);
         }
     }

@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new RelayHybridConnectionDataAsyncCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceCollectionResultOfT(
+            return new PageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new RelayHybridConnectionDataCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

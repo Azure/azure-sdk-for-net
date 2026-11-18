@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DaprComponentResiliencyPolicyData, DaprComponentResiliencyPolicyResource>(new DaprComponentResiliencyPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DaprComponentResiliencyPolicyData, DaprComponentResiliencyPolicyResource>(new DaprComponentResiliencyPolicyDataAsyncCollectionResultOfT(
                 _daprComponentResiliencyPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DaprComponentResiliencyPolicyData, DaprComponentResiliencyPolicyResource>(new DaprComponentResiliencyPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<DaprComponentResiliencyPolicyData, DaprComponentResiliencyPolicyResource>(new DaprComponentResiliencyPolicyDataCollectionResultOfT(
                 _daprComponentResiliencyPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -159,7 +159,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new QueueSignedIdentifiers(items);
+            return new QueueSignedIdentifiers(items ?? new ChangeTrackingList<QueueSignedIdentifier>());
         }
 
         /// <param name="writer"> The XML writer. </param>

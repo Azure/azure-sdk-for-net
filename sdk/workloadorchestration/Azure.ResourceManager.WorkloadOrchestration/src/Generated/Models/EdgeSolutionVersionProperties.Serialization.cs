@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("stages"u8);
                 writer.WriteStartArray();
-                foreach (StageMap item in Stages)
+                foreach (SolutionStageMap item in Stages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string reviewId = default;
             string externalValidationId = default;
             SolutionInstanceState? state = default;
-            StageMap currentStage = default;
-            IReadOnlyList<StageMap> stages = default;
+            SolutionStageMap currentStage = default;
+            IReadOnlyList<SolutionStageMap> stages = default;
             string solutionInstanceName = default;
             IReadOnlyList<EdgeSolutionDependency> solutionDependencies = default;
             ResponseError errorDetails = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     specification = dictionary;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    currentStage = StageMap.DeserializeStageMap(prop.Value, options);
+                    currentStage = SolutionStageMap.DeserializeSolutionStageMap(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("stages"u8))
@@ -339,10 +339,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    List<StageMap> array = new List<StageMap>();
+                    List<SolutionStageMap> array = new List<SolutionStageMap>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StageMap.DeserializeStageMap(item, options));
+                        array.Add(SolutionStageMap.DeserializeSolutionStageMap(item, options));
                     }
                     stages = array;
                     continue;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EdgeSolutionVersionProperties(
@@ -414,12 +414,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 targetDisplayName,
                 configuration,
                 targetLevelConfiguration,
-                specification,
+                specification ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 reviewId,
                 externalValidationId,
                 state,
                 currentStage,
-                stages ?? new ChangeTrackingList<StageMap>(),
+                stages ?? new ChangeTrackingList<SolutionStageMap>(),
                 solutionInstanceName,
                 solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependency>(),
                 errorDetails,

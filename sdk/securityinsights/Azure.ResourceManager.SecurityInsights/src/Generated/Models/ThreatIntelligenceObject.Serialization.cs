@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Represents a threat intelligence object in Azure Security Insights.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThreatIntelligenceThreatActor"/>, <see cref="ThreatIntelligenceAttackPattern"/>, <see cref="ThreatIntelligenceIdentity"/>, <see cref="ThreatIntelligenceRelationship"/>, and <see cref="ThreatIntelligenceIndicator"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThreatIntelligenceAttackPattern"/>, <see cref="ThreatIntelligenceIdentity"/>, <see cref="ThreatIntelligenceIndicator"/>, <see cref="ThreatIntelligenceRelationship"/>, and <see cref="ThreatIntelligenceThreatActor"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownThreatIntelligenceObject))]
     public abstract partial class ThreatIntelligenceObject : ResourceData, IJsonModel<ThreatIntelligenceObject>
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ThreatActor":
-                        return ThreatIntelligenceThreatActor.DeserializeThreatIntelligenceThreatActor(element, options);
                     case "AttackPattern":
                         return ThreatIntelligenceAttackPattern.DeserializeThreatIntelligenceAttackPattern(element, options);
                     case "Identity":
                         return ThreatIntelligenceIdentity.DeserializeThreatIntelligenceIdentity(element, options);
-                    case "Relationship":
-                        return ThreatIntelligenceRelationship.DeserializeThreatIntelligenceRelationship(element, options);
                     case "Indicator":
                         return ThreatIntelligenceIndicator.DeserializeThreatIntelligenceIndicator(element, options);
+                    case "Relationship":
+                        return ThreatIntelligenceRelationship.DeserializeThreatIntelligenceRelationship(element, options);
+                    case "ThreatActor":
+                        return ThreatIntelligenceThreatActor.DeserializeThreatIntelligenceThreatActor(element, options);
                 }
             }
             return UnknownThreatIntelligenceObject.DeserializeUnknownThreatIntelligenceObject(element, options);

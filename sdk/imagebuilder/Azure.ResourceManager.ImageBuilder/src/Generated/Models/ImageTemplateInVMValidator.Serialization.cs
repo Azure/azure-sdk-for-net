@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary>
     /// Describes a unit of in-VM validation of image
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateShellValidator"/>, <see cref="ImageTemplatePowerShellValidator"/>, and <see cref="ImageTemplateFileValidator"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateFileValidator"/>, <see cref="ImageTemplatePowerShellValidator"/>, and <see cref="ImageTemplateShellValidator"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownImageTemplateInVMValidator))]
     public abstract partial class ImageTemplateInVMValidator : IJsonModel<ImageTemplateInVMValidator>
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Shell":
-                        return ImageTemplateShellValidator.DeserializeImageTemplateShellValidator(element, options);
-                    case "PowerShell":
-                        return ImageTemplatePowerShellValidator.DeserializeImageTemplatePowerShellValidator(element, options);
                     case "File":
                         return ImageTemplateFileValidator.DeserializeImageTemplateFileValidator(element, options);
+                    case "PowerShell":
+                        return ImageTemplatePowerShellValidator.DeserializeImageTemplatePowerShellValidator(element, options);
+                    case "Shell":
+                        return ImageTemplateShellValidator.DeserializeImageTemplateShellValidator(element, options);
                 }
             }
             return UnknownImageTemplateInVMValidator.DeserializeUnknownImageTemplateInVMValidator(element, options);

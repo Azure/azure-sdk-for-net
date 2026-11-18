@@ -1440,8 +1440,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                TaskCompletionSource<bool> closeSessionTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 int messageCt = 0;
                 int sessionErrorEventCt = 0;
+                Exception errorHandlerException = null;
 
                 var options = new ServiceBusSessionProcessorOptions
                 {
@@ -1469,7 +1471,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     throw new TestException();
                 }
 
-                async Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
+                Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
                 {
                     try
                     {
@@ -1503,26 +1505,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         {
                             Assert.Fail(eventArgs.Exception.ToString());
                         }
+                        if (errorSource != ServiceBusErrorSource.Abandon ||
+                            sessionErrorEventCt == 2)
+                        {
+                            tcs.TrySetResult(true);
+                        }
                     }
-                    finally
+                    catch (Exception ex)
                     {
-                        if (eventArgs.ErrorSource != ServiceBusErrorSource.CloseSession)
-                        {
-                            if (errorSource != ServiceBusErrorSource.Abandon ||
-                                sessionErrorEventCt == 2)
-                            {
-                                tcs.SetResult(true);
-                            }
-                        }
-                        if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptSession ||
-                            eventArgs.ErrorSource == ServiceBusErrorSource.CloseSession ||
-                            eventArgs.ErrorSource == ServiceBusErrorSource.Receive)
-                        {
-                            // add small delay to prevent race condition that can result in error handler
-                            // being called twice as the processor will immediately try to accept the session again.
-                            await Task.Delay(1000);
-                        }
+                        Interlocked.CompareExchange(ref errorHandlerException, ex, null);
+                        tcs.TrySetException(ex);
                     }
+
+                    return Task.CompletedTask;
                 }
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -1557,7 +1552,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                                 await Task.Delay(delayDuration);
                                 break;
                             case ServiceBusErrorSource.CloseSession:
-                                tcs.TrySetResult(true);
+                                closeSessionTcs.TrySetResult(true);
                                 break;
                         }
                     }
@@ -1566,8 +1561,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         var ct = Interlocked.Increment(ref messageCt);
                     }
                 }
-                await tcs.Task;
+                if (errorSource == ServiceBusErrorSource.CloseSession)
+                {
+                    await await Task.WhenAny(closeSessionTcs.Task, tcs.Task);
+                }
+                else
+                {
+                    await tcs.Task;
+                }
                 await processor.CloseAsync();
+                await tcs.Task;
+                Assert.IsNull(errorHandlerException, errorHandlerException?.ToString());
                 if (errorSource != ServiceBusErrorSource.AcceptSession)
                 {
                     Assert.AreEqual(1, messageCt);

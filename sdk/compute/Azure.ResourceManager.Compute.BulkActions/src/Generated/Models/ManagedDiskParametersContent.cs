@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedDiskParametersContent"/>. </summary>
-        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="id"> The Azure resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specifies the security profile for the managed disk. </summary>
         public VMDiskSecurityProfile SecurityProfile { get; set; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string DiskEncryptionSetId
         {
             get

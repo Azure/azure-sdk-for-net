@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
             _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion ?? "2026-01-01");
+            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinksGetAllAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinksGetAllCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>

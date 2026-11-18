@@ -113,8 +113,7 @@ namespace Azure.Storage.Blobs.Batch.Tests
         public void ImplicitConversion_FromNull_ToNullable()
         {
             BatchAccessTier? tier = (string)null;
-            Assert.IsTrue(tier.HasValue);
-            Assert.IsNull(tier.Value.ToString());
+            Assert.IsFalse(tier.HasValue);
         }
         #endregion
 

@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new DataReplicationEmailConfigurationDataAsyncCollectionResultOfT(
                 _emailConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new DataReplicationEmailConfigurationDataCollectionResultOfT(
                 _emailConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

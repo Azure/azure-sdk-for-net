@@ -212,7 +212,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
-            UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
+            UpdateSkillContent spreadModel = new UpdateSkillContent(defaultVersion, default);
             ClientResult result = UpdateDefaultVersion(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
@@ -229,7 +229,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
-            UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
+            UpdateSkillContent spreadModel = new UpdateSkillContent(defaultVersion, default);
             ClientResult result = await UpdateDefaultVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }

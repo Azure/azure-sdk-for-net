@@ -259,13 +259,13 @@ namespace Azure.AI.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBaseOperationResponse> GetOperationStatus(string knowledgeBaseName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseOperationResult> GetOperationStatus(string knowledgeBaseName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Response result = GetOperationStatus(knowledgeBaseName, operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeBaseOperationResponse)result, result);
+            return Response.FromValue((KnowledgeBaseOperationResult)result, result);
         }
 
         /// <summary> Get the status of a long-running operation. </summary>
@@ -275,13 +275,13 @@ namespace Azure.AI.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBaseOperationResponse>> GetOperationStatusAsync(string knowledgeBaseName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseOperationResult>> GetOperationStatusAsync(string knowledgeBaseName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Response result = await GetOperationStatusAsync(knowledgeBaseName, operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeBaseOperationResponse)result, result);
+            return Response.FromValue((KnowledgeBaseOperationResult)result, result);
         }
 
         /// <summary> Start indexing. </summary>
@@ -350,7 +350,7 @@ namespace Azure.AI.Discovery
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            StartIndexingRequest spreadModel = new StartIndexingRequest(nodePoolId, projectId, default);
+            StartIndexingContent spreadModel = new StartIndexingContent(nodePoolId, projectId, default);
             return StartIndexing(waitUntil, knowledgeBaseName, spreadModel, cancellationToken.ToRequestContext());
         }
 
@@ -366,7 +366,7 @@ namespace Azure.AI.Discovery
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            StartIndexingRequest spreadModel = new StartIndexingRequest(nodePoolId, projectId, default);
+            StartIndexingContent spreadModel = new StartIndexingContent(nodePoolId, projectId, default);
             return await StartIndexingAsync(waitUntil, knowledgeBaseName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -507,7 +507,7 @@ namespace Azure.AI.Discovery
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Search(WaitUntil waitUntil, string knowledgeBaseName, SearchRequest body, CancellationToken cancellationToken = default)
+        public virtual Operation Search(WaitUntil waitUntil, string knowledgeBaseName, SearchContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(body, nameof(body));
@@ -522,7 +522,7 @@ namespace Azure.AI.Discovery
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> SearchAsync(WaitUntil waitUntil, string knowledgeBaseName, SearchRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> SearchAsync(WaitUntil waitUntil, string knowledgeBaseName, SearchContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(body, nameof(body));

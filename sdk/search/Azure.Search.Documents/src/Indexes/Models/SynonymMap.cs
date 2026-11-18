@@ -96,10 +96,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("synonyms"u8);
             // Write synonyms as a newline-delimited string, not as an array
             writer.WriteStringValue(Synonyms);
-            if (Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey, _encryptionKeyIsDefined))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey"u8);
+                }
             }
             if (Optional.IsDefined(_etag))
             {
@@ -134,6 +141,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string format = default;
             IList<string> synonyms = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,6 +181,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -197,7 +206,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 synonyms,
                 encryptionKey,
                 eTag,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

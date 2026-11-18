@@ -248,7 +248,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcsChatThreadPropertiesUpdatedEventData(
@@ -259,8 +259,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 version,
                 editedByCommunicationIdentifier,
                 editTime,
-                properties,
-                metadata,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 retentionPolicy);
         }
 

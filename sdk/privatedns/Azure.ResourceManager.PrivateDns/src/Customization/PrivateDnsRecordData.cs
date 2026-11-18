@@ -40,11 +40,6 @@ namespace Azure.ResourceManager.PrivateDns
     public partial class PrivateDnsRecordData : PrivateDnsBaseRecordData
     {
         /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordData"/>. </summary>
-        public PrivateDnsRecordData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordData"/>. </summary>
         internal PrivateDnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateDnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
         }

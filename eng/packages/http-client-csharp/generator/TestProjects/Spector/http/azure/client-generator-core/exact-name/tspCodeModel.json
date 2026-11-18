@@ -251,6 +251,7 @@
           "$id": "23",
           "kind": "property",
           "name": "_MyName",
+          "originalName": "name",
           "apiVersions": [],
           "serializedName": "name",
           "type": {
@@ -383,7 +384,6 @@
                 "$id": "33",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -623,7 +623,6 @@
                 "$id": "45",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -863,7 +862,6 @@
                 "$id": "57",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "EnumValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1103,7 +1101,6 @@
                 "$id": "69",
                 "name": "myOp",
                 "isExactName": true,
-                "resourceName": "Operation",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -1194,7 +1191,6 @@
                 "$id": "75",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "Parameter",
                 "accessibility": "public",
                 "parameters": [
                   {

@@ -22,11 +22,15 @@ namespace Azure.ResourceManager.Sql.Models
         public ExtendedServerBlobAuditingPolicyProperties(BlobAuditingPolicyState state)
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
+            RequiredFields = new ChangeTrackingList<string>();
             State = state;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedServerBlobAuditingPolicyProperties"/>. </summary>
         /// <param name="isDevopsAuditEnabled">
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
@@ -104,6 +108,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
         /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="requiredFields">
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -115,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedServerBlobAuditingPolicyProperties(bool? isDevopsAuditEnabled, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtendedServerBlobAuditingPolicyProperties(bool? isDevopsAuditEnabled, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, IList<string> requiredFields, BlobAuditingPolicyState state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDevopsAuditEnabled = isDevopsAuditEnabled;
             PredicateExpression = predicateExpression;
@@ -125,6 +135,7 @@ namespace Azure.ResourceManager.Sql.Models
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             QueueDelayMs = queueDelayMs;
             IsManagedIdentityInUse = isManagedIdentityInUse;
+            RequiredFields = requiredFields;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -133,6 +144,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary>
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
@@ -233,6 +247,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
         [WirePath("isManagedIdentityInUse")]
         public bool? IsManagedIdentityInUse { get; set; }
+
+        /// <summary>
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </summary>
+        [WirePath("requiredFields")]
+        public IList<string> RequiredFields { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         [WirePath("state")]

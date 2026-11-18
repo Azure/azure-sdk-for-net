@@ -48,7 +48,8 @@ namespace RandomNamespace
         }
 
         [Test]
-        public async Task AZC0004NotProducedForAsyncStreamingMethod()
+        public async Task AZC0004NotProducedForAsyncStreamingMethod(
+            [Values("AsyncStreamingResult", "AsyncStreamingClientResult")] string resultTypeName)
         {
             const string code = @"
 using System.Threading;
@@ -67,11 +68,12 @@ namespace RandomNamespace
             CancellationToken cancellationToken = default) => null;
     }
 }";
-            await Verifier.VerifyAnalyzerAsync(code);
+            await Verifier.VerifyAnalyzerAsync(code.Replace("AsyncStreamingClientResult", resultTypeName));
         }
 
         [Test]
-        public async Task AZC0004NotProducedForDerivedAsyncStreamingMethod()
+        public async Task AZC0004NotProducedForDerivedAsyncStreamingMethod(
+            [Values("AsyncStreamingResult", "AsyncStreamingClientResult")] string resultTypeName)
         {
             const string code = @"
 using System.Threading.Tasks;
@@ -90,11 +92,12 @@ namespace RandomNamespace
         public virtual Task<CustomStreamingResult<string>> StreamAsync() => null;
     }
 }";
-            await Verifier.VerifyAnalyzerAsync(code);
+            await Verifier.VerifyAnalyzerAsync(code.Replace("AsyncStreamingClientResult", resultTypeName));
         }
 
         [Test]
-        public async Task AZC0004ProducedForSameNamedStreamingTypeFromAnotherNamespace()
+        public async Task AZC0004ProducedForSameNamedStreamingTypeFromAnotherNamespace(
+            [Values("AsyncStreamingResult", "AsyncStreamingClientResult")] string resultTypeName)
         {
             const string code = @"
 using System.Threading.Tasks;
@@ -111,11 +114,12 @@ namespace RandomNamespace
         public virtual Task<OtherNamespace.AsyncStreamingClientResult<string>> {|AZC0004:StreamAsync|}() => null;
     }
 }";
-            await Verifier.VerifyAnalyzerAsync(code);
+            await Verifier.VerifyAnalyzerAsync(code.Replace("AsyncStreamingClientResult", resultTypeName));
         }
 
         [Test]
-        public async Task AZC0004ProducedForDirectAsyncStreamingReturnType()
+        public async Task AZC0004ProducedForDirectAsyncStreamingReturnType(
+            [Values("AsyncStreamingResult", "AsyncStreamingClientResult")] string resultTypeName)
         {
             const string code = @"
 namespace System.ClientModel
@@ -130,11 +134,12 @@ namespace RandomNamespace
         public virtual System.ClientModel.AsyncStreamingClientResult<string> {|AZC0004:StreamAsync|}() => null;
     }
 }";
-            await Verifier.VerifyAnalyzerAsync(code);
+            await Verifier.VerifyAnalyzerAsync(code.Replace("AsyncStreamingClientResult", resultTypeName));
         }
 
         [Test]
-        public async Task AZC0004ProducedForUserDefinedTaskOfStreamingResult()
+        public async Task AZC0004ProducedForUserDefinedTaskOfStreamingResult(
+            [Values("AsyncStreamingResult", "AsyncStreamingClientResult")] string resultTypeName)
         {
             const string code = @"
 namespace System.ClientModel
@@ -151,6 +156,30 @@ namespace RandomNamespace
         public virtual Task<System.ClientModel.AsyncStreamingClientResult<string>> {|AZC0004:StreamAsync|}() => null;
     }
 }";
+            await Verifier.VerifyAnalyzerAsync(code.Replace("AsyncStreamingClientResult", resultTypeName));
+        }
+
+        [TestCase("AsyncStreamingResult")]
+        [TestCase("AsyncStreamingClientResult")]
+        public async Task AZC0004SupportsBothStreamingTypesInSameCompilation(string resultTypeName)
+        {
+            string code = $$"""
+using System.Threading.Tasks;
+
+namespace System.ClientModel
+{
+    public sealed class AsyncStreamingResult<T> { }
+    public sealed class AsyncStreamingClientResult<T> { }
+}
+
+namespace RandomNamespace
+{
+    public class SomeClient
+    {
+        public virtual Task<System.ClientModel.{{resultTypeName}}<string>> StreamAsync() => null;
+    }
+}
+""";
             await Verifier.VerifyAnalyzerAsync(code);
         }
 

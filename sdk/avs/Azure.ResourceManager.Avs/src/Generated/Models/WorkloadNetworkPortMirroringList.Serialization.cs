@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadNetworkPortMirroringList(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadNetworkPortMirroringList(value ?? new ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

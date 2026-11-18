@@ -255,16 +255,6 @@ namespace Azure.Search.Documents.Models
             string documentationLink) =>
             new SearchIndexerWarning(key, message, name, details, documentationLink, additionalBinaryDataProperties: null);
 
-        /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
-        /// <param name="documentCount"> The number of documents in the index. </param>
-        /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
-        /// <returns> A new SearchIndexStatistics instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexStatistics SearchIndexStatistics(
-            long documentCount,
-            long storageSize) =>
-            new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize: default, additionalBinaryDataProperties: null);
-
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
         /// <param name="usage"> The resource usage amount. </param>
         /// <param name="quota"> The resource amount quota. </param>
@@ -273,44 +263,6 @@ namespace Azure.Search.Documents.Models
             long usage,
             long? quota) =>
             new SearchResourceCounter(usage, quota, additionalBinaryDataProperties: null);
-
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
-        /// <param name="indexCounter"> Total number of indexes. </param>
-        /// <param name="indexerCounter"> Total number of indexers. </param>
-        /// <param name="dataSourceCounter"> Total number of data sources. </param>
-        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
-        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceCounters SearchServiceCounters(
-            SearchResourceCounter documentCounter,
-            SearchResourceCounter indexCounter,
-            SearchResourceCounter indexerCounter,
-            SearchResourceCounter dataSourceCounter,
-            SearchResourceCounter storageSizeCounter,
-            SearchResourceCounter synonymMapCounter) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null, vectorIndexSizeCounter: null, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
-
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
-        /// <param name="indexCounter"> Total number of indexes. </param>
-        /// <param name="indexerCounter"> Total number of indexers. </param>
-        /// <param name="dataSourceCounter"> Total number of data sources. </param>
-        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
-        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <param name="skillsetCounter"> Total number of skillsets. </param>
-        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceCounters SearchServiceCounters(
-            SearchResourceCounter documentCounter,
-            SearchResourceCounter indexCounter,
-            SearchResourceCounter indexerCounter,
-            SearchResourceCounter dataSourceCounter,
-            SearchResourceCounter storageSizeCounter,
-            SearchResourceCounter synonymMapCounter,
-            SearchResourceCounter skillsetCounter) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter: null, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
 
         // <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -349,20 +301,6 @@ namespace Azure.Search.Documents.Models
         int? maxComplexObjectsInCollectionsPerDocument = null,
         long? maxStoragePerIndexInBytes = null) =>
         new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, null, additionalBinaryDataProperties: null);
-
-        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
-        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
-        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
-        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
-        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
-        /// <returns> A new SearchServiceLimits instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceLimits SearchServiceLimits(
-        int? maxFieldsPerIndex,
-        int? maxFieldNestingDepthPerIndex,
-        int? maxComplexCollectionFieldsPerIndex,
-        int? maxComplexObjectsInCollectionsPerDocument) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, maxVectorIndexSizePerIndexInBytes: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
@@ -615,7 +553,6 @@ namespace Azure.Search.Documents.Models
 
             return new SynonymMap(name, format, synonyms?.Split('\n'), encryptionKey, etag, additionalBinaryDataProperties);
         }
-
         /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -623,7 +560,6 @@ namespace Azure.Search.Documents.Models
         {
             return new DocumentDebugInfo(semantic: null, vectors, innerHits: null, additionalBinaryDataProperties: null);
         }
-
         /// <summary> Initializes a new instance of QueryAnswerResult. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
@@ -634,7 +570,6 @@ namespace Azure.Search.Documents.Models
         {
             return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
         }
-
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -644,54 +579,6 @@ namespace Azure.Search.Documents.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of VectorQuery. </summary>
-        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
-        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. </param>
-        /// <param name="oversampling"> Oversampling factor. </param>
-        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
-        /// <param name="kind"> The kind of vector query being performed. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
-        {
-            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
-        }
-
-        /// <summary> Initializes a new instance of KnowledgeSource. </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> The description of the knowledge source. </param>
-        /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="eTag"> A string representing an ETag that can be used to perform optimistic concurrency control. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
-        {
-            return KnowledgeSource(name: name, description: description, kind: kind, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey);
-        }
-
-        /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>
-        /// <param name="id"> The ID of the activity record. </param>
-        /// <param name="type"> The type of the activity record. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <param name="error"> The error detail. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id, string @type, int? elapsedMs, KnowledgeBaseErrorDetail error)
-        {
-            return KnowledgeBaseActivityRecord(id: id, @type: @type, elapsedMs: elapsedMs, error: error, warning: default);
-        }
-
-        /// <summary> Initializes a new instance of KnowledgeSourceParams. </summary>
-        /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
-        /// <param name="includeReferences"> Indicates whether references should be included. </param>
-        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data. </param>
-        /// <param name="rerankerThreshold"> The reranker threshold. </param>
-        /// <param name="kind"> The type of the knowledge source. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string kind)
-        {
-            return KnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, kind: kind);
         }
     }
 }

@@ -95,7 +95,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             // invoke the operation
             PublicCloudConnectorPatch patch = new PublicCloudConnectorPatch
             {
-                AwsCloudExcludedAccounts = { "zrbtd" },
+                Properties = new PublicCloudConnectorPropertiesPatch
+                {
+                    AwsCloudExcludedAccounts = { "zrbtd" },
+                },
                 Tags = { },
             };
             PublicCloudConnectorResource result = await publicCloudConnector0.UpdateAsync(patch);

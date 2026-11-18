@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    input = BinaryData.FromString(prop.Value.GetRawText());
+                    input = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    output = BinaryData.FromString(prop.Value.GetRawText());
+                    output = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -309,10 +309,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    error = BinaryData.FromString(prop.Value.GetRawText());
+                    error = prop.Value.GetUtf8Bytes();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new PipelineActivityRunInformation(
                 pipelineName,

@@ -3,37 +3,48 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> Compatibility declaration for the MockableNetworkResourceGroupResource type. </summary>
     public partial class MockableNetworkResourceGroupResource
     {
+        // Keep the released historical names for binary compatibility.
+        // The PrivateLinkService suffix is redundant; these aliases forward to the preferred shorter generated names.
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService compatibility operation. </summary>
-        public virtual global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(global::Azure.WaitUntil waitUntil, global::Azure.Core.AzureLocation location, global::Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, global::System.Threading.CancellationToken cancellationToken)
-            => CheckPrivateLinkServiceVisibilityByResourceGroup(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
-        /// <summary> Invokes the GetCloudServiceSwaps compatibility operation. </summary>
-        public virtual global::Azure.ResourceManager.Network.CloudServiceSwapCollection GetCloudServiceSwaps(global::System.String cloudServiceName)
-            => Client.GetCloudServiceSwaps(new global::Azure.Core.ResourceIdentifier($"{Id}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"));
-        /// <summary> Invokes the GetCloudServiceSwap compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+
+        // The released resource-group owner accepts a cloud service name; native access requires its Compute scope ID.
+        // Keep the virtual entry points while delegating collection and singleton operations to the native collection.
+        /// <summary> Gets the swap collection for the specified cloud service. </summary>
+        public virtual CloudServiceSwapCollection GetCloudServiceSwaps(string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            return Client.GetCloudServiceSwaps(new ResourceIdentifier($"{Id}/providers/Microsoft.Compute/cloudServices/{resourceName}"));
+        }
+
+        /// <summary> Gets the swap resource for the specified cloud service. </summary>
         [ForwardsClientCalls]
-        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.CloudServiceSwapResource> GetCloudServiceSwap(global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken)
-            => GetCloudServiceSwaps(cloudServiceName).Get(cancellationToken);
+        public virtual Response<CloudServiceSwapResource> GetCloudServiceSwap(string resourceName, CancellationToken cancellationToken = default)
+            => GetCloudServiceSwaps(resourceName).Get(cancellationToken);
+
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync compatibility operation. </summary>
-        public virtual global::System.Threading.Tasks.Task<global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(global::Azure.WaitUntil waitUntil, global::Azure.Core.AzureLocation location, global::Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, global::System.Threading.CancellationToken cancellationToken)
-            => CheckPrivateLinkServiceVisibilityByResourceGroupAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
-        /// <summary> Invokes the GetCloudServiceSwapAsync compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
+        public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+
+        /// <summary> Gets the swap resource for the specified cloud service. </summary>
         [ForwardsClientCalls]
-        public virtual async global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.CloudServiceSwapResource>> GetCloudServiceSwapAsync(global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken)
-            => await GetCloudServiceSwaps(cloudServiceName).GetAsync(cancellationToken).ConfigureAwait(false);
-        /// <summary> Invokes the GetLoadBalancerAsync compatibility operation. </summary>
-        [ForwardsClientCalls]
-        public virtual async global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.LoadBalancerResource>> GetLoadBalancerAsync(global::System.String loadBalancerName, global::System.String expand = null, global::System.Threading.CancellationToken cancellationToken = default)
-            => await GetLoadBalancerAsync(loadBalancerName, expand, default(global::Azure.ResourceManager.Network.Models.LoadBalancerDetailLevel?), cancellationToken).ConfigureAwait(false);
-        /// <summary> Invokes the GetLoadBalancer compatibility operation. </summary>
-        [ForwardsClientCalls]
-        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.LoadBalancerResource> GetLoadBalancer(global::System.String loadBalancerName, global::System.String expand = null, global::System.Threading.CancellationToken cancellationToken = default)
-            => GetLoadBalancer(loadBalancerName, expand, default(global::Azure.ResourceManager.Network.Models.LoadBalancerDetailLevel?), cancellationToken);
+        public virtual Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(string resourceName, CancellationToken cancellationToken = default)
+            => GetCloudServiceSwaps(resourceName).GetAsync(cancellationToken);
     }
 }

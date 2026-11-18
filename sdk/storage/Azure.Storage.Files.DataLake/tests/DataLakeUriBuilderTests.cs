@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -74,6 +76,28 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("", dataLakeUriBuilder.Snapshot);
             Assert.IsNull(dataLakeUriBuilder.Sas);
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_UserDelegationSasKeyTimes_RoundTrip()
+        {
+            string skt = "2026-01-01T10:00:00Z";
+            string ske = "2026-01-01T12:00:00Z";
+            string se = "2026-01-01T13:00:00Z";
+            string uriString =
+                "https://account.dfs.core.windows.net/filesystem/path" +
+                "?skoid=oid&sktid=tid&skt=" + Uri.EscapeDataString(skt) + "&ske=" + Uri.EscapeDataString(ske) + "&sks=b&skv=2022-11-02" +
+                "&sp=r&sr=b&sv=2022-11-02&se=" + Uri.EscapeDataString(se) + "&sig=abc";
+
+            var dataLakeUriBuilder = new DataLakeUriBuilder(new Uri(uriString));
+
+            Dictionary<string, string> queryParameters = dataLakeUriBuilder.ToUri().Query.TrimStart('?').Split('&')
+                .ToDictionary(
+                    s => s.Split('=')[0],
+                    s => Uri.UnescapeDataString(s.Split('=')[1]));
+
+            Assert.AreEqual(skt, queryParameters[Constants.Sas.Parameters.KeyStart]);
+            Assert.AreEqual(ske, queryParameters[Constants.Sas.Parameters.KeyExpiry]);
         }
 
         [RecordedTest]

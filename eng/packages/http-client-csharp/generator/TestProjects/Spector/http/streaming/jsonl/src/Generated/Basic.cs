@@ -30,12 +30,8 @@ namespace Streaming.Jsonl._Basic
 
         public virtual Task<Response> SendAsync(IAsyncEnumerable<Info> stream, CancellationToken cancellationToken = default) => throw null;
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual Task<AsyncStreamingClientResult<BinaryData>> ReceiveAsync(RequestContext context) => throw null;
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual Task<AsyncStreamingResult<BinaryData>> ReceiveAsync(RequestContext context) => throw null;
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual Task<AsyncStreamingClientResult<Info>> ReceiveAsync(CancellationToken cancellationToken = default) => throw null;
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual Task<AsyncStreamingResult<Info>> ReceiveAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

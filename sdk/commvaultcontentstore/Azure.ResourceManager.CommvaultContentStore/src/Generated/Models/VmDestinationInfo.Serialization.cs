@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             writer.WritePropertyName("vmInfoList"u8);
             writer.WriteStartArray();
-            foreach (VmInfo item in VmInfoList)
+            foreach (CommvaultVmRestoreSettings item in VmInfoList)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,26 +128,26 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            IList<VmInfo> vmInfoList = default;
+            IList<CommvaultVmRestoreSettings> vmInfoList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmInfoList"u8))
                 {
-                    List<VmInfo> array = new List<VmInfo>();
+                    List<CommvaultVmRestoreSettings> array = new List<CommvaultVmRestoreSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmInfo.DeserializeVmInfo(item, options));
+                        array.Add(CommvaultVmRestoreSettings.DeserializeCommvaultVmRestoreSettings(item, options));
                     }
                     vmInfoList = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VmDestinationInfo(vmInfoList, additionalBinaryDataProperties);
+            return new VmDestinationInfo(vmInfoList ?? new ChangeTrackingList<CommvaultVmRestoreSettings>(), additionalBinaryDataProperties);
         }
     }
 }

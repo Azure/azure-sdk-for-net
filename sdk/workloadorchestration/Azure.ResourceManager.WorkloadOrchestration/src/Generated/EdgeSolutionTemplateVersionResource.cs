@@ -624,12 +624,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> BulkReviewSolutionAsync(WaitUntil waitUntil, BulkReviewSolutionParameter body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> BulkReviewSolutionAsync(WaitUntil waitUntil, BulkReviewSolutionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkReviewSolution");
             scope.Start();
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkReviewSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkReviewSolutionParameter.ToRequestContent(body), context);
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkReviewSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkReviewSolutionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplateVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -677,12 +677,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation BulkReviewSolution(WaitUntil waitUntil, BulkReviewSolutionParameter body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation BulkReviewSolution(WaitUntil waitUntil, BulkReviewSolutionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkReviewSolution");
             scope.Start();
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkReviewSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkReviewSolutionParameter.ToRequestContent(body), context);
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkReviewSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkReviewSolutionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplateVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

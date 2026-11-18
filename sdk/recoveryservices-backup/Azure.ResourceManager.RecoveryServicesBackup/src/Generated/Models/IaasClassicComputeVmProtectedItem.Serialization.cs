@@ -137,6 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string protectedItemDataId = default;
             IaasVmProtectedItemExtendedInfo extendedInfo = default;
             IaasVmBackupExtendedProperties extendedProperties = default;
+            ExistingBasicVMProtection? existingBasicVMProtection = default;
             string policyType = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -419,6 +420,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("existingBasicVMProtection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    existingBasicVMProtection = new ExistingBasicVMProtection(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("policyType"u8))
                 {
                     policyType = prop.Value.GetString();
@@ -426,7 +436,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IaasClassicComputeVmProtectedItem(
@@ -464,6 +474,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 protectedItemDataId,
                 extendedInfo,
                 extendedProperties,
+                existingBasicVMProtection,
                 policyType);
         }
     }

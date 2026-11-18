@@ -11,9 +11,6 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public abstract partial class VectorQuery
     {
-        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
-        protected VectorQuery() { }
-
         /// <summary> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </summary>
         public IList<string> Fields { get; internal set; } = new List<string>();
 

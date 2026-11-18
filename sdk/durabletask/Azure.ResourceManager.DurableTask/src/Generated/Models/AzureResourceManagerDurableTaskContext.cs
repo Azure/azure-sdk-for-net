@@ -16,6 +16,15 @@ namespace Azure.ResourceManager.DurableTask
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DetectorDataset))]
+    [ModelReaderWriterBuildable(typeof(DetectorMetadata))]
+    [ModelReaderWriterBuildable(typeof(DetectorProperties))]
+    [ModelReaderWriterBuildable(typeof(DetectorRenderingProperties))]
+    [ModelReaderWriterBuildable(typeof(DetectorStatus))]
+    [ModelReaderWriterBuildable(typeof(DetectorTable))]
+    [ModelReaderWriterBuildable(typeof(DetectorTableColumn))]
+    [ModelReaderWriterBuildable(typeof(DurableTaskDetectorData))]
+    [ModelReaderWriterBuildable(typeof(DurableTaskDetectorResource))]
     [ModelReaderWriterBuildable(typeof(DurableTaskHubData))]
     [ModelReaderWriterBuildable(typeof(DurableTaskHubProperties))]
     [ModelReaderWriterBuildable(typeof(DurableTaskHubResource))]
@@ -40,12 +49,24 @@ namespace Azure.ResourceManager.DurableTask
     [ModelReaderWriterBuildable(typeof(DurableTaskSchedulerResource))]
     [ModelReaderWriterBuildable(typeof(DurableTaskSchedulerSku))]
     [ModelReaderWriterBuildable(typeof(DurableTaskSchedulerSkuUpdate))]
+    [ModelReaderWriterBuildable(typeof(FailoverInstanceData))]
+    [ModelReaderWriterBuildable(typeof(FailoverInstanceProperties))]
+    [ModelReaderWriterBuildable(typeof(FailoverInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchedulerListResult))]
     [ModelReaderWriterBuildable(typeof(SchedulerPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TaskHubListResult))]
+    [ModelReaderWriterBuildable(typeof(TaskQueueData))]
+    [ModelReaderWriterBuildable(typeof(TaskQueuePatch))]
+    [ModelReaderWriterBuildable(typeof(TaskQueueProperties))]
+    [ModelReaderWriterBuildable(typeof(TaskQueueResource))]
+    [ModelReaderWriterBuildable(typeof(TransparentDataEncryptionData))]
+    [ModelReaderWriterBuildable(typeof(TransparentDataEncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(TransparentDataEncryptionResource))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDurableTaskContext : ModelReaderWriterContext
     {
     }

@@ -130,10 +130,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     case "AvailabilityData":
                         return AvailabilityData.DeserializeAvailabilityData(element, options);
-                    case "EventData":
-                        return TelemetryEventData.DeserializeTelemetryEventData(element, options);
-                    case "ExceptionData":
-                        return TelemetryExceptionData.DeserializeTelemetryExceptionData(element, options);
                     case "MessageData":
                         return MessageData.DeserializeMessageData(element, options);
                     case "MetricsData":
@@ -146,6 +142,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                         return RemoteDependencyData.DeserializeRemoteDependencyData(element, options);
                     case "RequestData":
                         return RequestData.DeserializeRequestData(element, options);
+                    case "EventData":
+                        return TelemetryEventData.DeserializeTelemetryEventData(element, options);
+                    case "ExceptionData":
+                        return TelemetryExceptionData.DeserializeTelemetryExceptionData(element, options);
                 }
             }
             return UnknownMonitorDomain.DeserializeUnknownMonitorDomain(element, options);

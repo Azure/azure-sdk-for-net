@@ -879,7 +879,6 @@
             "$id": "57",
             "name": "longRunningRpc",
             "isExactName": false,
-            "resourceName": "Rpc",
             "summary": "Generate data.",
             "doc": "Generate data.",
             "accessibility": "public",

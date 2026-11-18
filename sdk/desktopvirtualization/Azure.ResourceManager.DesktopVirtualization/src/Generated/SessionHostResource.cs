@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new SessionHostsGetSingleSessionHostRegistrationTokensAsyncCollectionResultOfT(
+            return new DesktopVirtualizationRegistrationTokenMinimalAsync0CollectionResultOfT(
                 _sessionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new SessionHostsGetSingleSessionHostRegistrationTokensCollectionResultOfT(
+            return new DesktopVirtualizationRegistrationTokenMinimal0CollectionResultOfT(
                 _sessionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

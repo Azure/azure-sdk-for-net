@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// The SAP Configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DiscoveryConfiguration"/>, <see cref="DeploymentConfiguration"/>, and <see cref="DeploymentWithOSConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/>, and <see cref="DiscoveryConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSapConfiguration))]
     public abstract partial class SapConfiguration : IJsonModel<SapConfiguration>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Discovery":
-                        return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element, options);
                     case "Deployment":
                         return DeploymentConfiguration.DeserializeDeploymentConfiguration(element, options);
                     case "DeploymentWithOSConfig":
                         return DeploymentWithOSConfiguration.DeserializeDeploymentWithOSConfiguration(element, options);
+                    case "Discovery":
+                        return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element, options);
                 }
             }
             return UnknownSapConfiguration.DeserializeUnknownSapConfiguration(element, options);

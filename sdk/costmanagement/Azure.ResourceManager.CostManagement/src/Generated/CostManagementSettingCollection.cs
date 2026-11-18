@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new SettingsGetAllAsyncCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new CostManagementSettingDataAsyncCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new SettingsGetAllCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
+            return new PageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new CostManagementSettingDataCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
         }
 
         /// <summary>

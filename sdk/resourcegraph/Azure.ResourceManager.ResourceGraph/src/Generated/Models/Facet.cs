@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary>
     /// A facet containing additional statistics on the response of a query. Can be either FacetResult or FacetError.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FacetResult"/> and <see cref="FacetError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FacetError"/> and <see cref="FacetResult"/>.
     /// </summary>
     public abstract partial class Facet
     {

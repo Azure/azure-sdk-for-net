@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionCallItem"/>, <see cref="FunctionCallOutputItem"/>, and <see cref="MessageItem"/>.
     /// </summary>
     public abstract partial class ConversationRequestItem
     {

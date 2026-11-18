@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesBySubscriptionAsyncCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusAsyncCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 filter,
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesBySubscriptionCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 filter,

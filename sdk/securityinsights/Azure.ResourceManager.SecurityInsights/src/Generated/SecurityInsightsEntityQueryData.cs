@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// Specific entity query.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExpansionEntityQuery"/> and <see cref="ActivityEntityQuery"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityEntityQuery"/> and <see cref="ExpansionEntityQuery"/>.
     /// </summary>
     public abstract partial class SecurityInsightsEntityQueryData : ResourceData
     {
