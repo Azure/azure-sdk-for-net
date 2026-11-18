@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTriggeredWebJobHistoryRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _webJobName, _context) : _client.CreateGetTriggeredWebJobHistoryRequest(_subscriptionId, _resourceGroupName, _name, _webJobName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListTriggeredWebJobHistoryRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _webJobName, _context) : _client.CreateListTriggeredWebJobHistoryRequest(_subscriptionId, _resourceGroupName, _name, _webJobName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

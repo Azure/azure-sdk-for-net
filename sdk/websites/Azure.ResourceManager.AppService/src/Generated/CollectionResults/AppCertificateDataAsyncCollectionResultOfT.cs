@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSlotRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _slot, _context) : _client.CreateGetSlotRequest(_subscriptionId, _resourceGroupName, _name, _slot, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListSlotRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _slot, _context) : _client.CreateListSlotRequest(_subscriptionId, _resourceGroupName, _name, _slot, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

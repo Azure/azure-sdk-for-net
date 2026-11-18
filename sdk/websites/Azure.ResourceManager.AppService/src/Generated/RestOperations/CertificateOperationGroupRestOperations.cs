@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateListSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateNextListSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
