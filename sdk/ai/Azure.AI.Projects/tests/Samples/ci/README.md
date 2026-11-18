@@ -27,7 +27,7 @@ and unconditional feature modules to create:
 - An OpenAPI project connection using the supplied external service key.
 
 All modules run regardless of sample selection. This increases cost and
-prerequisites even for the three original samples. There are no new managed
+prerequisites even for a small smoke selection. There are no new managed
 identities or Azure IAM role assignments, and no existing validation project
 is used as the sample target. The Python pytest adapters are not invoked.
 The former Standard-only entry point remains available for explicit local use,
@@ -93,6 +93,14 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
   parallel worker count defaults to four; it does not repeat the samples.
   The slice filters select the `False` (sync) NUnit fixture, so each sample
   executes once without editing the samples or adding skipped async variants.
+- The default smoke selection runs six distinct samples, two per package:
+
+  | Package | Samples |
+  | --- | --- |
+  | `Azure.AI.Projects` | `Sample_AIAgents.AgentsBasics`, `Sample_Deployment.DeploymentExample` |
+  | `Azure.AI.Projects.Agents` | `Sample_agents_CRUD.VersionSelection`, `Sample_agents_CRUD.AgentCRUD` |
+  | `Azure.AI.Extensions.OpenAI` | `Sample_ResponseBasic.AgentResponseSync`, `Sample_ResponseStreaming.AgentResponseStreamingSync` |
+
 - `selectionKind`/`selection` restrict the existing slices; they do not add
   tests outside that matrix. A `test-id` selection is a .NET test-filter
   expression; semicolon-separated expressions are ORed. Semicolon-separated
@@ -164,6 +172,10 @@ the .NET `foo` request's `query` argument and the `azure-function-foo-input` /
 `azure-functions`; no dependency is added to the .NET SDK.
 Data-source, skillset and indexer names replace index-name underscores with
 hyphens because Azure Search permits underscores only in the index name.
+Each worker creates a fresh Search service and waits for each indexer's
+automatic initial execution. It does not reset or manually rerun the indexer,
+which would race that execution. A successful run must process documents
+without failures or enrichment warnings, and the final index must be searchable.
 The permanent identities remain administered by the linked Python bootstrap;
 this repository does not duplicate that bootstrap or grant roles.
 

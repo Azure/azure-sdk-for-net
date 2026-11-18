@@ -88,13 +88,13 @@ def search_url(endpoint, path):
     return f"{endpoint.rstrip('/')}/{path}?api-version={SEARCH_API_VERSION}"
 
 
-def wait_for_indexer(client, endpoint, name, previous_start):
+def wait_for_indexer(client, endpoint, name):
     url = search_url(endpoint, f"indexers/{urllib.parse.quote(name, safe='')}/status")
     deadline = time.monotonic() + 600
     while time.monotonic() < deadline:
         status = client.request("GET", url, SEARCH_AUDIENCE)
         result = status.get("lastResult")
-        if result is not None and result.get("startTime") != previous_start:
+        if result is not None:
             state = result["status"]
             if state == "success":
                 if result.get("itemsFailed", 0) or result.get("errors") or result.get("warnings"):
@@ -142,11 +142,8 @@ def provision(configuration, client):
     for indexer in configuration["indexers"]:
         name = urllib.parse.quote(indexer["name"], safe="")
         client.request("PUT", search_url(endpoint, f"indexers/{name}"), SEARCH_AUDIENCE, indexer)
-        status = client.request("GET", search_url(endpoint, f"indexers/{name}/status"), SEARCH_AUDIENCE)
-        previous = status.get("lastResult") or {}
-        client.request("POST", search_url(endpoint, f"indexers/{name}/reset"), SEARCH_AUDIENCE)
-        client.request("POST", search_url(endpoint, f"indexers/{name}/run"), SEARCH_AUDIENCE)
-        wait_for_indexer(client, endpoint, indexer["name"], previous.get("startTime"))
+        # Workers use fresh resources; resetting would race the automatic initial run.
+        wait_for_indexer(client, endpoint, indexer["name"])
     result = client.request(
         "POST",
         search_url(endpoint, f"indexes/{urllib.parse.quote(configuration['index']['name'], safe='')}/docs/search"),

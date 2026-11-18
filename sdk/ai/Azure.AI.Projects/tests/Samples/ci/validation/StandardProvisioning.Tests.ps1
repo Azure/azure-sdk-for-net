@@ -88,6 +88,28 @@ Describe 'Pipeline sample selection contract' {
         }
     }
 
+    It 'selects six distinct smoke samples with two per package and no duplicate workers' {
+        $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
+        $expected = @{
+            q1 = @('AgentsBasics', 'DeploymentExample')
+            q2 = @('AgentCRUD', 'VersionSelection')
+            q3 = @('AgentResponseStreamingSync', 'AgentResponseSync')
+        }
+        $slices = @($matrix.matrix.SampleSelector.Values)
+        (($slices.SampleQueueName | Sort-Object) -join ',') | Should BeExactly 'q1,q2,q3'
+        foreach ($slice in $slices) {
+            $names = @([regex]::Matches($slice.SampleSliceFilter, '\bName=([A-Za-z0-9_]+)') |
+                ForEach-Object { $_.Groups[1].Value } | Sort-Object)
+            ($names -join ',') | Should BeExactly (($expected[$slice.SampleQueueName] | Sort-Object) -join ',')
+        }
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $selectionParameter = [regex]::Match(
+            $pipeline, '(?ms)^  - name: selection\r?\n.*?(?=^  - name:|\z)').Value
+        $selectionNames = @([regex]::Matches($selectionParameter, '\bName=([A-Za-z0-9_]+)') |
+            ForEach-Object { $_.Groups[1].Value } | Sort-Object)
+        ($selectionNames -join ',') | Should BeExactly (($expected.Values | ForEach-Object { $_ } | Sort-Object) -join ',')
+    }
+
     It 'opts into task-scoped CLI authentication while retaining the default test tasks' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
         $pipeline | Should Match 'UseAzureCliForTests: true'

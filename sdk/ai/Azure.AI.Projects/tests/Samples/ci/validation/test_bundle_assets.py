@@ -9,7 +9,7 @@ from pathlib import Path
 import sys
 import types
 import unittest
-from unittest.mock import ANY, patch
+from unittest.mock import ANY, Mock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,8 +68,6 @@ class BundleAssetTests(unittest.TestCase):
         class Client:
             def request(self, method, url, audience, body=None, headers=None):
                 calls.append((method, url, audience, body, headers))
-                if url.endswith("/status?api-version=" + module.SEARCH_API_VERSION):
-                    return {"lastResult": {"startTime": "previous"}}
                 if "/docs/search?" in url:
                     return {"value": [{"chunk": "CozyNights sleeping bag"}]}
 
@@ -85,15 +83,71 @@ class BundleAssetTests(unittest.TestCase):
         }
         with patch.object(module, "wait_for_indexer") as wait:
             module.provision(configuration, Client())
-        wait.assert_called_once_with(ANY, configuration["searchEndpoint"], "indexer", "previous")
+        wait.assert_called_once_with(ANY, configuration["searchEndpoint"], "indexer")
         upload = calls[0]
         self.assertEqual(upload[4]["x-ms-meta-category"], "sleeping bag")
         self.assertIn(b"20 degrees Fahrenheit", upload[3])
-        self.assertTrue(any("/indexers/indexer/run?" in call[1] for call in calls))
+        indexer_calls = [call for call in calls if "/indexers/" in call[1]]
+        self.assertEqual(len(indexer_calls), 1)
+        self.assertEqual(indexer_calls[0][0], "PUT")
         template = (ROOT / "infra" / "ai-search.bicep").read_text()
         self.assertIn("param indexName string = 'sample_index'", template)
         self.assertIn("{ name: 'category', type: 'Edm.String', filterable: true", template)
         self.assertIn("{ name: 'category', source: '/document/category' }", template)
+
+    def test_search_waits_for_automatic_initial_indexer_run(self):
+        module = load_module("bundle_search", ROOT / "infra" / "search-indexing.py")
+        client = Mock()
+        client.request.side_effect = [
+            {"lastResult": None},
+            {"lastResult": {"status": "inProgress", "itemsProcessed": 0}},
+            {"lastResult": {"status": "success", "itemsProcessed": 1}},
+        ]
+        with patch.object(module.time, "sleep") as sleep:
+            module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+        self.assertEqual(client.request.call_count, 3)
+        client.request.assert_called_with(
+            "GET",
+            module.search_url("https://unit.search.windows.net", "indexers/indexer/status"),
+            module.SEARCH_AUDIENCE,
+        )
+        self.assertEqual(sleep.call_count, 2)
+
+    def test_search_accepts_initial_run_completed_before_first_poll(self):
+        module = load_module("bundle_search", ROOT / "infra" / "search-indexing.py")
+        client = Mock()
+        client.request.return_value = {"lastResult": {"status": "success", "itemsProcessed": 1}}
+        with patch.object(module.time, "sleep") as sleep:
+            module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+        client.request.assert_called_once()
+        sleep.assert_not_called()
+
+    def test_search_rejects_empty_or_partially_failed_initial_runs(self):
+        module = load_module("bundle_search", ROOT / "infra" / "search-indexing.py")
+        for result in (
+            {"status": "success", "itemsProcessed": 0},
+            {"status": "success", "itemsProcessed": 1, "itemsFailed": 1},
+            {"status": "success", "itemsProcessed": 1, "errors": [{"message": "failure"}]},
+            {"status": "success", "itemsProcessed": 1, "warnings": [{"message": "warning"}]},
+            {"status": "persistentFailure"},
+        ):
+            with self.subTest(result=result):
+                client = Mock()
+                client.request.return_value = {"lastResult": result}
+                with patch.object(module.time, "sleep") as sleep:
+                    with self.assertRaises(RuntimeError):
+                        module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+                sleep.assert_not_called()
+
+    def test_search_initial_run_has_bounded_readiness_wait(self):
+        module = load_module("bundle_search", ROOT / "infra" / "search-indexing.py")
+        client = Mock()
+        client.request.return_value = {"lastResult": None}
+        with patch.object(module.time, "monotonic", side_effect=[0, 0, 601]):
+            with patch.object(module.time, "sleep"):
+                with self.assertRaises(TimeoutError):
+                    module.wait_for_indexer(client, "https://unit.search.windows.net", "indexer")
+        client.request.assert_called_once()
 
 if __name__ == "__main__":
     unittest.main()
