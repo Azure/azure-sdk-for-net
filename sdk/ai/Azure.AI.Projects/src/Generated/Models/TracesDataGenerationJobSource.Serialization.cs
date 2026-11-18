@@ -97,11 +97,11 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(AgentVersion);
             }
             writer.WritePropertyName("start_time"u8);
-            writer.WriteNumberValue(StartAt, "U");
-            if (Optional.IsDefined(EndAt))
+            writer.WriteNumberValue(StartsAt, "U");
+            if (Optional.IsDefined(EndsAt))
             {
                 writer.WritePropertyName("end_time"u8);
-                writer.WriteNumberValue(EndAt.Value, "U");
+                writer.WriteNumberValue(EndsAt.Value, "U");
             }
             if (Optional.IsCollectionDefined(TraceIds))
             {
@@ -151,8 +151,8 @@ namespace Azure.AI.Projects
             string agentId = default;
             string agentName = default;
             string agentVersion = default;
-            DateTimeOffset startAt = default;
-            DateTimeOffset? endAt = default;
+            DateTimeOffset startsAt = default;
+            DateTimeOffset? endsAt = default;
             IList<string> traceIds = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("start_time"u8))
                 {
-                    startAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startsAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("end_time"u8))
@@ -192,7 +192,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    endAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endsAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("trace_ids"u8))
@@ -228,8 +228,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startAt,
-                endAt,
+                startsAt,
+                endsAt,
                 traceIds ?? new ChangeTrackingList<string>());
         }
     }

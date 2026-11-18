@@ -11,10 +11,10 @@ namespace Azure.AI.Projects
     public partial class TracesDataGenerationJobSource : DataGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobSource"/>. </summary>
-        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        public TracesDataGenerationJobSource(DateTimeOffset startAt) : base(DataGenerationJobSourceType.Traces)
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        public TracesDataGenerationJobSource(DateTimeOffset startsAt) : base(DataGenerationJobSourceType.Traces)
         {
-            StartAt = startAt;
+            StartsAt = startsAt;
             TraceIds = new ChangeTrackingList<string>();
         }
 
@@ -25,16 +25,16 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
-        internal TracesDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startAt, DateTimeOffset? endAt, IList<string> traceIds) : base(@type, description, additionalBinaryDataProperties)
+        internal TracesDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startsAt, DateTimeOffset? endsAt, IList<string> traceIds) : base(@type, description, additionalBinaryDataProperties)
         {
             AgentId = agentId;
             AgentName = agentName;
             AgentVersion = agentVersion;
-            StartAt = startAt;
-            EndAt = endAt;
+            StartsAt = startsAt;
+            EndsAt = endsAt;
             TraceIds = traceIds;
         }
 
@@ -51,10 +51,10 @@ namespace Azure.AI.Projects
         public string AgentVersion { get; set; }
 
         /// <summary> Start of the time window (Unix timestamp in seconds) for fetching traces. </summary>
-        public DateTimeOffset StartAt { get; set; }
+        public DateTimeOffset StartsAt { get; set; }
 
         /// <summary> End of the time window (Unix timestamp in seconds). Defaults to current time. </summary>
-        public DateTimeOffset? EndAt { get; set; }
+        public DateTimeOffset? EndsAt { get; set; }
 
         /// <summary> Optional explicit list of trace IDs to include. </summary>
         public IList<string> TraceIds { get; }

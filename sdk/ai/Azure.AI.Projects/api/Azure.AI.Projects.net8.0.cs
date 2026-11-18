@@ -1383,8 +1383,8 @@ namespace Azure.AI.Projects
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.ToolUseFineTuningDataGenerationJobConfiguration ToolUseFineTuningDataGenerationJobConfiguration(float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null, int maxSamples = 0) { throw null; }
         public static Azure.AI.Projects.TracesDataGenerationJobConfiguration TracesDataGenerationJobConfiguration(float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null, int? maxSamples = default(int?), bool? redactPrivateContent = default(bool?)) { throw null; }
-        public static Azure.AI.Projects.TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startAt = default(System.DateTimeOffset), System.DateTimeOffset? endAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> traceIds = null) { throw null; }
-        public static Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startAt = default(System.DateTimeOffset), System.DateTimeOffset? endAt = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Projects.TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startsAt = default(System.DateTimeOffset), System.DateTimeOffset? endsAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> traceIds = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startsAt = default(System.DateTimeOffset), System.DateTimeOffset? endsAt = default(System.DateTimeOffset?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.UpdateModelVersionOptions UpdateModelVersionOptions(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -2891,13 +2891,13 @@ namespace Azure.AI.Projects
     }
     public partial class TracesDataGenerationJobSource : Azure.AI.Projects.DataGenerationJobSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TracesDataGenerationJobSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesDataGenerationJobSource>
     {
-        public TracesDataGenerationJobSource(System.DateTimeOffset startAt) { }
+        public TracesDataGenerationJobSource(System.DateTimeOffset startsAt) { }
         public string AgentId { get { throw null; } set { } }
         public string AgentName { get { throw null; } set { } }
         public string AgentVersion { get { throw null; } set { } }
         public override string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndAt { get { throw null; } set { } }
-        public System.DateTimeOffset StartAt { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsAt { get { throw null; } set { } }
+        public System.DateTimeOffset StartsAt { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TraceIds { get { throw null; } }
         protected override Azure.AI.Projects.DataGenerationJobSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4484,13 +4484,13 @@ namespace Azure.AI.Projects.Evaluation
     }
     public partial class TracesEvaluatorGenerationJobSource : Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>
     {
-        public TracesEvaluatorGenerationJobSource(System.DateTimeOffset startAt) { }
+        public TracesEvaluatorGenerationJobSource(System.DateTimeOffset startsAt) { }
         public string AgentId { get { throw null; } set { } }
         public string AgentName { get { throw null; } set { } }
         public string AgentVersion { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndAt { get { throw null; } set { } }
-        public System.DateTimeOffset StartAt { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsAt { get { throw null; } set { } }
+        public System.DateTimeOffset StartsAt { get { throw null; } set { } }
         protected override Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

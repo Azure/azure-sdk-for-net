@@ -1364,10 +1364,10 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <returns> A new <see cref="Evaluation.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startAt = default, DateTimeOffset? endAt = default)
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsAt = default, DateTimeOffset? endsAt = default)
         {
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
@@ -1376,8 +1376,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startAt,
-                endAt);
+                startsAt,
+                endsAt);
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -2564,11 +2564,11 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startAt = default, DateTimeOffset? endAt = default, IEnumerable<string> traceIds = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsAt = default, DateTimeOffset? endsAt = default, IEnumerable<string> traceIds = default)
         {
             traceIds ??= new ChangeTrackingList<string>();
 
@@ -2579,8 +2579,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startAt,
-                endAt,
+                startsAt,
+                endsAt,
                 traceIds.ToList());
         }
 
