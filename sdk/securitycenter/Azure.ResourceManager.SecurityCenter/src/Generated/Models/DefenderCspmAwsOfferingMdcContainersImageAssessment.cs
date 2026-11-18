@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingMdcContainersImageAssessment"/>. </summary>
         /// <param name="enabled"> Is Microsoft Defender container image assessment enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
+        /// <param name="securityFindingsEnabled"> Is security findings enabled for container image assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmAwsOfferingMdcContainersImageAssessment(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderCspmAwsOfferingMdcContainersImageAssessment(bool? enabled, string cloudRoleArn, bool? securityFindingsEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             CloudRoleArn = cloudRoleArn;
+            SecurityFindingsEnabled = securityFindingsEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
+
+        /// <summary> Is security findings enabled for container image assessment. </summary>
+        public bool? SecurityFindingsEnabled { get; set; }
     }
 }

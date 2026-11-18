@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(DefenderForStorageSettingResource.ResourceType, out string defenderForStorageSettingApiVersion);
             _defenderForStorageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DefenderForStorageSettingResource.ResourceType.Namespace, Diagnostics);
-            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForStorageSettingApiVersion ?? "2025-09-01-preview");
+            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForStorageSettingApiVersion ?? "2026-09-01");
         }
 
         /// <summary>
@@ -56,17 +55,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="data"> Defender for Storage Settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DefenderForStorageSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DefenderForStorageSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.CreateOrUpdate");
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName, DefenderForStorageSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -109,17 +110,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="data"> Defender for Storage Settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DefenderForStorageSettingResource> CreateOrUpdate(WaitUntil waitUntil, SettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DefenderForStorageSettingResource> CreateOrUpdate(WaitUntil waitUntil, string settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.CreateOrUpdate");
@@ -130,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName, DefenderForStorageSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -162,14 +165,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DefenderForStorageSettingResource>> GetAsync(SettingName settingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DefenderForStorageSettingResource>> GetAsync(string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Get");
             scope.Start();
             try
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -207,14 +214,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DefenderForStorageSettingResource> Get(SettingName settingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DefenderForStorageSettingResource> Get(string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Get");
             scope.Start();
             try
@@ -223,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,14 +319,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(SettingName settingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Exists");
             scope.Start();
             try
@@ -324,7 +339,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;
@@ -361,14 +376,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(SettingName settingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Exists");
             scope.Start();
             try
@@ -377,7 +396,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;
@@ -414,14 +433,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<DefenderForStorageSettingResource>> GetIfExistsAsync(SettingName settingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DefenderForStorageSettingResource>> GetIfExistsAsync(string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.GetIfExists");
             scope.Start();
             try
@@ -430,7 +453,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;
@@ -471,14 +494,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="settingName"> The Defender for Storage setting name. Only 'current' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<DefenderForStorageSettingResource> GetIfExists(SettingName settingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DefenderForStorageSettingResource> GetIfExists(string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.GetIfExists");
             scope.Start();
             try
@@ -487,7 +514,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;

@@ -592,6 +592,49 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="pricingBatchPlansConfigurations"> Pricing plan configurations represented by this resource. </param>
+        /// <returns> A new <see cref="SecurityCenter.PricingBatchData"/> instance for mocking. </returns>
+        public static PricingBatchData PricingBatchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<PricingBatchPlanItem> pricingBatchPlansConfigurations = default)
+        {
+            return new PricingBatchData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                pricingBatchPlansConfigurations is null ? default : new PricingBatchProperties((pricingBatchPlansConfigurations ?? new ChangeTrackingList<PricingBatchPlanItem>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> An individual pricing plan configuration. </summary>
+        /// <param name="planName"> Name of the pricing plan. </param>
+        /// <param name="properties"> Pricing configuration properties for the plan. </param>
+        /// <param name="operationStatus"> Status of this plan's update operation. This property is returned only after a PUT operation. </param>
+        /// <returns> A new <see cref="Models.PricingBatchPlanItem"/> instance for mocking. </returns>
+        public static PricingBatchPlanItem PricingBatchPlanItem(string planName = default, PricingPropertiesReference properties = default, PricingPlanOperationStatus operationStatus = default)
+        {
+            return new PricingBatchPlanItem(planName, properties, operationStatus, default);
+        }
+
+        /// <summary> Reference to the pricing properties defined in pricings.json. </summary>
+        /// <returns> A new <see cref="Models.PricingPropertiesReference"/> instance for mocking. </returns>
+        public static PricingPropertiesReference PricingPropertiesReference()
+        {
+            return new PricingPropertiesReference(default);
+        }
+
+        /// <summary> Status of a pricing plan update operation. </summary>
+        /// <param name="code"> The operation status code. </param>
+        /// <param name="message"> Additional information about the operation result. </param>
+        /// <returns> A new <see cref="Models.PricingPlanOperationStatus"/> instance for mocking. </returns>
+        public static PricingPlanOperationStatus PricingPlanOperationStatus(PricingPlanOperationStatusCode? code = default, string message = default)
+        {
+            return new PricingPlanOperationStatus(code, message, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="resourceStatus"> The status of the resource regarding a single assessment. </param>
         /// <returns> A new <see cref="SecurityCenter.ComplianceResultData"/> instance for mocking. </returns>
         public static ComplianceResultData ComplianceResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentResourceStatus? resourceStatus = default)
@@ -1600,15 +1643,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
+        /// <param name="securityOperatorResourceId"> Resource ID of the security operator associated with the pricing configuration. </param>
+        /// <param name="originatedFrom"> Indicates the origin of the most recent configuration change. </param>
+        /// <param name="managedBy"> Indicates who exclusively manages the pricing configuration. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, SecurityPolicyEnforce? enforce = default, SecurityCenterPricingInheritance? inherited = default, string inheritedFrom = default, SecurityCenterResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<SecurityConnectorExtension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default)
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, SecurityPolicyEnforce? enforce = default, SecurityCenterPricingInheritance? inherited = default, string inheritedFrom = default, SecurityCenterResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<SecurityConnectorExtension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default, string securityOperatorResourceId = default, OriginatedFrom? originatedFrom = default, string managedBy = default)
         {
             return new SecurityCenterPricingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                pricingTier is null && subPlan is null && freeTrialRemainingTime is null && enablementOn is null && enforce is null && inherited is null && inheritedFrom is null && resourcesCoverageStatus is null && extensions is null && isDeprecated is null && replacedBy is null ? default : new PricingProperties(
+                pricingTier is null && subPlan is null && freeTrialRemainingTime is null && enablementOn is null && enforce is null && inherited is null && inheritedFrom is null && resourcesCoverageStatus is null && extensions is null && isDeprecated is null && replacedBy is null && securityOperatorResourceId is null && originatedFrom is null && managedBy is null ? default : new PricingProperties(
                     pricingTier.GetValueOrDefault(),
                     subPlan,
                     freeTrialRemainingTime,
@@ -1620,6 +1666,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     (extensions ?? new ChangeTrackingList<SecurityConnectorExtension>()).ToList(),
                     isDeprecated,
                     (replacedBy ?? new ChangeTrackingList<string>()).ToList(),
+                    securityOperatorResourceId,
+                    originatedFrom,
+                    managedBy,
                     default),
                 default);
         }
@@ -1629,12 +1678,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
         /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
         /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
+        /// <param name="securityOperatorResourceId"> Resource ID of the security operator associated with the extension. </param>
         /// <returns> A new <see cref="Models.SecurityConnectorExtension"/> instance for mocking. </returns>
-        public static SecurityConnectorExtension SecurityConnectorExtension(string name = default, SecurityCenterExtensionIsEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = default, SecurityCenterOperationStatus operationStatus = default)
+        public static SecurityConnectorExtension SecurityConnectorExtension(string name = default, SecurityCenterExtensionIsEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = default, SecurityCenterOperationStatus operationStatus = default, string securityOperatorResourceId = default)
         {
             additionalExtensionProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new SecurityConnectorExtension(name, isEnabled, additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), operationStatus, default);
+            return new SecurityConnectorExtension(
+                name,
+                isEnabled,
+                additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                operationStatus,
+                securityOperatorResourceId,
+                default);
         }
 
         /// <summary> A status describing the success/failure of the enablement/disablement operation. </summary>
@@ -1844,6 +1900,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kubernetesDataCollectionCloudRoleArn"> The cloud role ARN in AWS for this feature used for reading data. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS used by CloudWatch to transfer data into Kinesis. </param>
         /// <param name="kinesisToS3CloudRoleArn"> The cloud role ARN in AWS used by Kinesis to transfer data into S3. </param>
+        /// <param name="installationMethod"> The installation method for the Defender for Containers agent. </param>
+        /// <param name="securityGatingEnabled"> Is security gating enabled. </param>
+        /// <param name="containerAntiMalwareEnabled"> Is defender anti-malware enabled. </param>
         /// <param name="enableAuditLogsAutoProvisioning"> Is audit logs data collection enabled. </param>
         /// <param name="enableDefenderAgentAutoProvisioning"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
         /// <param name="enablePolicyAgentAutoProvisioning"> Is Policy Kubernetes agent auto provisioning enabled. </param>
@@ -1853,7 +1912,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Container K8s VM host scanning configuration. </param>
         /// <returns> A new <see cref="Models.DefenderForContainersAwsOffering"/> instance for mocking. </returns>
-        public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = default, string kubernetesServiceCloudRoleArn = default, string kubernetesDataCollectionCloudRoleArn = default, string cloudRoleArn = default, string kinesisToS3CloudRoleArn = default, bool? enableAuditLogsAutoProvisioning = default, bool? enableDefenderAgentAutoProvisioning = default, bool? enablePolicyAgentAutoProvisioning = default, long? kubeAuditRetentionTime = default, string dataCollectionExternalId = default, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default, DefenderForContainersAwsOfferingVmScanners vmScanners = default)
+        public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = default, string kubernetesServiceCloudRoleArn = default, string kubernetesDataCollectionCloudRoleArn = default, string cloudRoleArn = default, string kinesisToS3CloudRoleArn = default, InstallationMethod? installationMethod = default, bool? securityGatingEnabled = default, bool? containerAntiMalwareEnabled = default, bool? enableAuditLogsAutoProvisioning = default, bool? enableDefenderAgentAutoProvisioning = default, bool? enablePolicyAgentAutoProvisioning = default, long? kubeAuditRetentionTime = default, string dataCollectionExternalId = default, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default, DefenderForContainersAwsOfferingVmScanners vmScanners = default)
         {
             return new DefenderForContainersAwsOffering(
                 OfferingType.DefenderForContainersAws,
@@ -1863,6 +1922,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 kubernetesDataCollectionCloudRoleArn is null ? default : new DefenderForContainersAwsOfferingKubernetesDataCollection(kubernetesDataCollectionCloudRoleArn, default),
                 cloudRoleArn is null ? default : new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn, default),
                 kinesisToS3CloudRoleArn is null ? default : new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn, default),
+                installationMethod,
+                securityGatingEnabled,
+                containerAntiMalwareEnabled,
                 enableAuditLogsAutoProvisioning,
                 enableDefenderAgentAutoProvisioning,
                 enablePolicyAgentAutoProvisioning,
@@ -1876,10 +1938,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The Microsoft Defender container image assessment configuration. </summary>
         /// <param name="enabled"> Is Microsoft Defender container image assessment enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
+        /// <param name="securityFindingsEnabled"> Is security findings enabled for container image assessment. </param>
         /// <returns> A new <see cref="Models.DefenderForContainersAwsOfferingMdcContainersImageAssessment"/> instance for mocking. </returns>
-        public static DefenderForContainersAwsOfferingMdcContainersImageAssessment DefenderForContainersAwsOfferingMdcContainersImageAssessment(bool? enabled = default, string cloudRoleArn = default)
+        public static DefenderForContainersAwsOfferingMdcContainersImageAssessment DefenderForContainersAwsOfferingMdcContainersImageAssessment(bool? enabled = default, string cloudRoleArn = default, bool? securityFindingsEnabled = default)
         {
-            return new DefenderForContainersAwsOfferingMdcContainersImageAssessment(enabled, cloudRoleArn, default);
+            return new DefenderForContainersAwsOfferingMdcContainersImageAssessment(enabled, cloudRoleArn, securityFindingsEnabled, default);
         }
 
         /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
@@ -2198,13 +2261,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
         /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
         /// <param name="enableAuditLogsAutoProvisioning"> Is audit logs data collection enabled. </param>
+        /// <param name="installationMethod"> The installation method for the Defender for Containers agent. </param>
+        /// <param name="securityGatingEnabled"> Is security gating enabled. </param>
+        /// <param name="containerAntiMalwareEnabled"> Is defender anti-malware enabled. </param>
         /// <param name="enableDefenderAgentAutoProvisioning"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
         /// <param name="enablePolicyAgentAutoProvisioning"> Is Policy Kubernetes agent auto provisioning enabled. </param>
         /// <param name="mdcContainersImageAssessment"> The Microsoft Defender Container image assessment configuration. </param>
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender Container agentless discovery configuration. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Container K8s VM host scanning configuration. </param>
         /// <returns> A new <see cref="Models.DefenderForContainersGcpOffering"/> instance for mocking. </returns>
-        public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description = default, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = default, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = default, bool? enableAuditLogsAutoProvisioning = default, bool? enableDefenderAgentAutoProvisioning = default, bool? enablePolicyAgentAutoProvisioning = default, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default, DefenderForContainersGcpOfferingVmScanners vmScanners = default)
+        public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description = default, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = default, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = default, bool? enableAuditLogsAutoProvisioning = default, InstallationMethod? installationMethod = default, bool? securityGatingEnabled = default, bool? containerAntiMalwareEnabled = default, bool? enableDefenderAgentAutoProvisioning = default, bool? enablePolicyAgentAutoProvisioning = default, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default, DefenderForContainersGcpOfferingVmScanners vmScanners = default)
         {
             return new DefenderForContainersGcpOffering(
                 OfferingType.DefenderForContainersGcp,
@@ -2213,6 +2279,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 nativeCloudConnection,
                 dataPipelineNativeCloudConnection,
                 enableAuditLogsAutoProvisioning,
+                installationMethod,
+                securityGatingEnabled,
+                containerAntiMalwareEnabled,
                 enableDefenderAgentAutoProvisioning,
                 enablePolicyAgentAutoProvisioning,
                 mdcContainersImageAssessment,
@@ -2242,10 +2311,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="enabled"> Is Microsoft Defender container image assessment enabled. </param>
         /// <param name="workloadIdentityProviderId"> The workload identity provider id in GCP for this feature. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
+        /// <param name="securityFindingsEnabled"> Is security findings enabled for container image assessment. </param>
         /// <returns> A new <see cref="Models.DefenderForContainersGcpOfferingMdcContainersImageAssessment"/> instance for mocking. </returns>
-        public static DefenderForContainersGcpOfferingMdcContainersImageAssessment DefenderForContainersGcpOfferingMdcContainersImageAssessment(bool? enabled = default, string workloadIdentityProviderId = default, string serviceAccountEmailAddress = default)
+        public static DefenderForContainersGcpOfferingMdcContainersImageAssessment DefenderForContainersGcpOfferingMdcContainersImageAssessment(bool? enabled = default, string workloadIdentityProviderId = default, string serviceAccountEmailAddress = default, bool? securityFindingsEnabled = default)
         {
-            return new DefenderForContainersGcpOfferingMdcContainersImageAssessment(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, default);
+            return new DefenderForContainersGcpOfferingMdcContainersImageAssessment(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, securityFindingsEnabled, default);
         }
 
         /// <summary> The Microsoft Defender Container agentless discovery configuration. </summary>
@@ -2283,7 +2353,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CspmMonitorAzureDevOpsOffering(OfferingType.CspmMonitorAzureDevOps, description, default);
         }
 
-        /// <summary> The CSPM P1 for AWS offering. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="vmScanners"> The Microsoft Defender for CSPM offering VM scanning configuration. </param>
         /// <param name="dataSensitivityDiscovery"> The Microsoft Defender Data Sensitivity discovery configuration. </param>
@@ -2291,8 +2360,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="ciem"> Defenders CSPM Permissions Management offering configurations. </param>
         /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
+        /// <param name="serverlessContainersEnabled"> Is serverless containers scanning enabled. </param>
+        /// <param name="agentlessServerlessPosture"> The Microsoft Defender agentless serverless posture configuration. </param>
         /// <returns> A new <see cref="Models.DefenderCspmAwsOffering"/> instance for mocking. </returns>
-        public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description = default, DefenderCspmAwsOfferingVmScanners vmScanners = default, DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default, DefenderCspmAwsOfferingDatabasesDspm databasesDspm = default, DefenderCspmAwsOfferingCiem ciem = default, DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default)
+        public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description = default, DefenderCspmAwsOfferingVmScanners vmScanners = default, DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default, DefenderCspmAwsOfferingDatabasesDspm databasesDspm = default, DefenderCspmAwsOfferingCiem ciem = default, DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default, bool? serverlessContainersEnabled = default, DefenderCspmAwsOfferingAgentlessServerlessPosture agentlessServerlessPosture = default)
         {
             return new DefenderCspmAwsOffering(
                 OfferingType.DefenderCspmAws,
@@ -2303,7 +2374,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 databasesDspm,
                 ciem,
                 mdcContainersImageAssessment,
-                mdcContainersAgentlessDiscoveryK8S);
+                mdcContainersAgentlessDiscoveryK8S,
+                serverlessContainersEnabled is null ? default : new DefenderCspmAwsOfferingServerlessContainers(serverlessContainersEnabled, default),
+                agentlessServerlessPosture);
         }
 
         /// <summary> The Microsoft Defender for CSPM offering VM scanning configuration. </summary>
@@ -2334,12 +2407,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderCspmAwsOfferingDatabasesDspm(enabled, cloudRoleArn, default);
         }
 
-        /// <param name="ciemDiscoveryCloudRoleArn"> The cloud role ARN in AWS for Permissions Management discovery. </param>
         /// <param name="ciemOidc"> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </param>
+        /// <param name="logCollectionOidcCloudRoleArn"> The cloud role ARN in AWS used for the log collection oidc connection. </param>
+        /// <param name="cloudTrailAuditLogIngestion"> The CloudTrail audit log ingestion configuration. </param>
         /// <returns> A new <see cref="Models.DefenderCspmAwsOfferingCiem"/> instance for mocking. </returns>
-        public static DefenderCspmAwsOfferingCiem DefenderCspmAwsOfferingCiem(string ciemDiscoveryCloudRoleArn = default, DefenderCspmAwsOfferingCiemCiemOidc ciemOidc = default)
+        public static DefenderCspmAwsOfferingCiem DefenderCspmAwsOfferingCiem(DefenderCspmAwsOfferingCiemCiemOidc ciemOidc = default, string logCollectionOidcCloudRoleArn = default, AwsCloudTrailConfiguration cloudTrailAuditLogIngestion = default)
         {
-            return new DefenderCspmAwsOfferingCiem(ciemDiscoveryCloudRoleArn is null ? default : new DefenderCspmAwsOfferingCiemCiemDiscovery(ciemDiscoveryCloudRoleArn, default), ciemOidc, default);
+            return new DefenderCspmAwsOfferingCiem(ciemOidc, logCollectionOidcCloudRoleArn is null ? default : new DefenderCspmAwsOfferingCiemLogCollectionOidc(logCollectionOidcCloudRoleArn, default), cloudTrailAuditLogIngestion, default);
         }
 
         /// <summary> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </summary>
@@ -2351,13 +2425,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderCspmAwsOfferingCiemCiemOidc(cloudRoleArn, azureActiveDirectoryAppName, default);
         }
 
+        /// <summary> The configuration for AWS CloudTrail audit log ingestion. </summary>
+        /// <param name="provisioningType"> The provisioning type for the CloudTrail resources. </param>
+        /// <param name="cloudTrailResourceSets"> The existing CloudTrail resource sets. Required when provisioningType is BringYourOwn. </param>
+        /// <param name="resourceNamePrefix"> The resource name prefix used when provisioning the CloudTrail resources. </param>
+        /// <param name="deploymentRegion">
+        /// The AWS region in which the CloudTrail resources are provisioned. Required when
+        /// provisioningType is ManualProvisioning or AutoProvisioning.
+        /// </param>
+        /// <returns> A new <see cref="Models.AwsCloudTrailConfiguration"/> instance for mocking. </returns>
+        public static AwsCloudTrailConfiguration AwsCloudTrailConfiguration(AwsCloudTrailProvisioningType? provisioningType = default, IEnumerable<AwsCloudTrailResourceSet> cloudTrailResourceSets = default, string resourceNamePrefix = default, string deploymentRegion = default)
+        {
+            cloudTrailResourceSets ??= new ChangeTrackingList<AwsCloudTrailResourceSet>();
+
+            return new AwsCloudTrailConfiguration(provisioningType, (cloudTrailResourceSets ?? new ChangeTrackingList<AwsCloudTrailResourceSet>()).ToList(), resourceNamePrefix, deploymentRegion, default);
+        }
+
+        /// <summary> A resource set describing existing AWS CloudTrail audit log resources. </summary>
+        /// <param name="resourceRegion"> The AWS region of the resources in this set. </param>
+        /// <param name="s3BucketArn"> The S3 bucket ARN in which the CloudTrail logs are stored. </param>
+        /// <param name="sqsQueueArn"> The SQS queue ARN used for CloudTrail log notifications. </param>
+        /// <param name="kmsKeyArn"> The KMS key ARN used for CloudTrail log encryption. </param>
+        /// <returns> A new <see cref="Models.AwsCloudTrailResourceSet"/> instance for mocking. </returns>
+        public static AwsCloudTrailResourceSet AwsCloudTrailResourceSet(string resourceRegion = default, string s3BucketArn = default, string sqsQueueArn = default, string kmsKeyArn = default)
+        {
+            return new AwsCloudTrailResourceSet(resourceRegion, s3BucketArn, sqsQueueArn, kmsKeyArn, default);
+        }
+
         /// <summary> The Microsoft Defender container image assessment configuration. </summary>
         /// <param name="enabled"> Is Microsoft Defender container image assessment enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
+        /// <param name="securityFindingsEnabled"> Is security findings enabled for container image assessment. </param>
         /// <returns> A new <see cref="Models.DefenderCspmAwsOfferingMdcContainersImageAssessment"/> instance for mocking. </returns>
-        public static DefenderCspmAwsOfferingMdcContainersImageAssessment DefenderCspmAwsOfferingMdcContainersImageAssessment(bool? enabled = default, string cloudRoleArn = default)
+        public static DefenderCspmAwsOfferingMdcContainersImageAssessment DefenderCspmAwsOfferingMdcContainersImageAssessment(bool? enabled = default, string cloudRoleArn = default, bool? securityFindingsEnabled = default)
         {
-            return new DefenderCspmAwsOfferingMdcContainersImageAssessment(enabled, cloudRoleArn, default);
+            return new DefenderCspmAwsOfferingMdcContainersImageAssessment(enabled, cloudRoleArn, securityFindingsEnabled, default);
         }
 
         /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
@@ -2369,21 +2471,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(enabled, cloudRoleArn, default);
         }
 
+        /// <summary> The Microsoft Defender agentless serverless posture configuration. </summary>
+        /// <param name="enabled"> Is agentless serverless posture enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
+        /// <returns> A new <see cref="Models.DefenderCspmAwsOfferingAgentlessServerlessPosture"/> instance for mocking. </returns>
+        public static DefenderCspmAwsOfferingAgentlessServerlessPosture DefenderCspmAwsOfferingAgentlessServerlessPosture(bool? enabled = default, string cloudRoleArn = default)
+        {
+            return new DefenderCspmAwsOfferingAgentlessServerlessPosture(enabled, cloudRoleArn, default);
+        }
+
         /// <summary> The CSPM P1 for GCP offering. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="ciemDiscovery"> GCP Defenders CSPM Permissions Management OIDC (Open ID connect) connection configurations. </param>
+        /// <param name="ciem"> The GCP Defender CSPM Permissions Management configurations. </param>
         /// <param name="vmScanners"> The Microsoft Defender for CSPM VM scanning configuration. </param>
         /// <param name="dataSensitivityDiscovery"> The Microsoft Defender Data Sensitivity discovery configuration. </param>
         /// <param name="mdcContainersImageAssessment"> The Microsoft Defender Container image assessment configuration. </param>
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender Container agentless discovery configuration. </param>
         /// <returns> A new <see cref="Models.DefenderCspmGcpOffering"/> instance for mocking. </returns>
-        public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = default, DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery = default, DefenderCspmGcpOfferingVmScanners vmScanners = default, DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default, DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default)
+        public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = default, DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery = default, DefenderCspmGcpOfferingCiem ciem = default, DefenderCspmGcpOfferingVmScanners vmScanners = default, DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default, DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default)
         {
             return new DefenderCspmGcpOffering(
                 OfferingType.DefenderCspmGcp,
                 description,
                 default,
                 ciemDiscovery,
+                ciem,
                 vmScanners,
                 dataSensitivityDiscovery,
                 mdcContainersImageAssessment,
@@ -2394,10 +2507,53 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for Permissions Management offering. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for Permissions Management offering. </param>
         /// <param name="azureActiveDirectoryAppName"> the azure active directory app name used of authenticating against GCP workload identity federation. </param>
+        /// <param name="enableAuditLogIngestion"> Is audit log ingestion enabled for the Permissions Management offering. </param>
         /// <returns> A new <see cref="Models.DefenderCspmGcpOfferingCiemDiscovery"/> instance for mocking. </returns>
-        public static DefenderCspmGcpOfferingCiemDiscovery DefenderCspmGcpOfferingCiemDiscovery(string workloadIdentityProviderId = default, string serviceAccountEmailAddress = default, string azureActiveDirectoryAppName = default)
+        public static DefenderCspmGcpOfferingCiemDiscovery DefenderCspmGcpOfferingCiemDiscovery(string workloadIdentityProviderId = default, string serviceAccountEmailAddress = default, string azureActiveDirectoryAppName = default, bool? enableAuditLogIngestion = default)
         {
-            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId, serviceAccountEmailAddress, azureActiveDirectoryAppName, default);
+            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId, serviceAccountEmailAddress, azureActiveDirectoryAppName, enableAuditLogIngestion, default);
+        }
+
+        /// <summary> The GCP Defender CSPM Permissions Management configurations. </summary>
+        /// <param name="ciemOidc"> The GCP Permissions Management OIDC (open id connect) connection configuration. </param>
+        /// <param name="logCollectionOidc"> The GCP log collection OIDC (open id connect) connection configuration. </param>
+        /// <param name="gcpAuditLogIngestion"> The GCP audit log ingestion configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderCspmGcpOfferingCiem"/> instance for mocking. </returns>
+        public static DefenderCspmGcpOfferingCiem DefenderCspmGcpOfferingCiem(DefenderCspmGcpOfferingCiemOidc ciemOidc = default, DefenderCspmGcpOfferingCiemOidc logCollectionOidc = default, GcpAuditLogConfiguration gcpAuditLogIngestion = default)
+        {
+            return new DefenderCspmGcpOfferingCiem(ciemOidc, logCollectionOidc, gcpAuditLogIngestion, default);
+        }
+
+        /// <summary> A GCP OIDC (open id connect) connection configuration. </summary>
+        /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for this feature. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
+        /// <returns> A new <see cref="Models.DefenderCspmGcpOfferingCiemOidc"/> instance for mocking. </returns>
+        public static DefenderCspmGcpOfferingCiemOidc DefenderCspmGcpOfferingCiemOidc(string workloadIdentityProviderId = default, string serviceAccountEmailAddress = default)
+        {
+            return new DefenderCspmGcpOfferingCiemOidc(workloadIdentityProviderId, serviceAccountEmailAddress, default);
+        }
+
+        /// <summary> The configuration for GCP audit log ingestion. </summary>
+        /// <param name="provisioningType"> The provisioning type for the GCP logging resources. </param>
+        /// <param name="resourceSets"> The existing GCP logging resource sets. Required when provisioningType is BringYourOwn. </param>
+        /// <param name="resourceNamePrefix">
+        /// The resource name prefix used when provisioning the GCP logging resources. Required when
+        /// provisioningType is ManualProvisioning or AutoProvisioning.
+        /// </param>
+        /// <returns> A new <see cref="Models.GcpAuditLogConfiguration"/> instance for mocking. </returns>
+        public static GcpAuditLogConfiguration GcpAuditLogConfiguration(GcpLoggingProvisioningType? provisioningType = default, IEnumerable<GcpLoggingResourceSet> resourceSets = default, string resourceNamePrefix = default)
+        {
+            resourceSets ??= new ChangeTrackingList<GcpLoggingResourceSet>();
+
+            return new GcpAuditLogConfiguration(provisioningType, (resourceSets ?? new ChangeTrackingList<GcpLoggingResourceSet>()).ToList(), resourceNamePrefix, default);
+        }
+
+        /// <summary> A resource set describing existing GCP logging resources. </summary>
+        /// <param name="pubSubSubscriptionName"> The Pub/Sub subscription name in which the GCP logs are stored. </param>
+        /// <returns> A new <see cref="Models.GcpLoggingResourceSet"/> instance for mocking. </returns>
+        public static GcpLoggingResourceSet GcpLoggingResourceSet(string pubSubSubscriptionName = default)
+        {
+            return new GcpLoggingResourceSet(pubSubSubscriptionName, default);
         }
 
         /// <summary> The Microsoft Defender for CSPM VM scanning configuration. </summary>
@@ -2423,10 +2579,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="enabled"> Is Microsoft Defender container image assessment enabled. </param>
         /// <param name="workloadIdentityProviderId"> The workload identity provider id in GCP for this feature. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
+        /// <param name="securityFindingsEnabled"> Is security findings enabled for container image assessment. </param>
         /// <returns> A new <see cref="Models.DefenderCspmGcpOfferingMdcContainersImageAssessment"/> instance for mocking. </returns>
-        public static DefenderCspmGcpOfferingMdcContainersImageAssessment DefenderCspmGcpOfferingMdcContainersImageAssessment(bool? enabled = default, string workloadIdentityProviderId = default, string serviceAccountEmailAddress = default)
+        public static DefenderCspmGcpOfferingMdcContainersImageAssessment DefenderCspmGcpOfferingMdcContainersImageAssessment(bool? enabled = default, string workloadIdentityProviderId = default, string serviceAccountEmailAddress = default, bool? securityFindingsEnabled = default)
         {
-            return new DefenderCspmGcpOfferingMdcContainersImageAssessment(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, default);
+            return new DefenderCspmGcpOfferingMdcContainersImageAssessment(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, securityFindingsEnabled, default);
         }
 
         /// <summary> The Microsoft Defender Container agentless discovery configuration. </summary>
@@ -4301,10 +4458,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="malwareScanning"> Properties of Malware Scanning. </param>
         /// <param name="sensitiveDataDiscovery"> Properties of Sensitive Data Discovery. </param>
         /// <param name="isOverrideSubscriptionLevelSettings"> Indicates whether the settings defined for this storage account should override the settings defined for the subscription. </param>
+        /// <param name="managedBy"> Indicates whether this resource's Defender for Storage settings are managed by a higher MDC enforcement scope and which component is managing them. When set to a value other than 'None', the resource-level settings become read-only and can only be modified by the managing component. Possible values: 'None' (not managed), 'MicrosoftDefenderXDR' (managed by Microsoft Defender XDR), 'SubscriptionSettingsEnforcer' (managed by subscription-level settings enforcer). </param>
         /// <returns> A new <see cref="Models.DefenderForStorageSettingProperties"/> instance for mocking. </returns>
-        public static DefenderForStorageSettingProperties DefenderForStorageSettingProperties(bool? isEnabled = default, MalwareScanningProperties malwareScanning = default, SensitiveDataDiscoveryProperties sensitiveDataDiscovery = default, bool? isOverrideSubscriptionLevelSettings = default)
+        public static DefenderForStorageSettingProperties DefenderForStorageSettingProperties(bool? isEnabled = default, MalwareScanningProperties malwareScanning = default, SensitiveDataDiscoveryProperties sensitiveDataDiscovery = default, bool? isOverrideSubscriptionLevelSettings = default, ManagedByType? managedBy = default)
         {
-            return new DefenderForStorageSettingProperties(isEnabled, malwareScanning, sensitiveDataDiscovery, isOverrideSubscriptionLevelSettings, default);
+            return new DefenderForStorageSettingProperties(
+                isEnabled,
+                malwareScanning,
+                sensitiveDataDiscovery,
+                isOverrideSubscriptionLevelSettings,
+                managedBy,
+                default);
         }
 
         /// <summary> Properties of Malware Scanning. </summary>
@@ -4312,15 +4476,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="scanResultsEventGridTopicResourceId"> Optional. Resource id of an Event Grid Topic to send scan results to. </param>
         /// <param name="blobScanResultsOptions"> Optional. Write scan result on BlobIndexTags by default. </param>
         /// <param name="automatedResponse"> Optional. Specifies the automated response action to take when malware is detected. </param>
+        /// <param name="scannerResourceId"> Optional. Resource id of the scanner resource (e.g., securityOperator or dataScanner) whose identity will be used for malware scanning. </param>
         /// <param name="operationStatus"> Upon failure or partial success. Additional data describing Malware Scanning enable/disable operation. </param>
         /// <returns> A new <see cref="Models.MalwareScanningProperties"/> instance for mocking. </returns>
-        public static MalwareScanningProperties MalwareScanningProperties(OnUploadProperties onUpload = default, ResourceIdentifier scanResultsEventGridTopicResourceId = default, BlobScanResultsConfig? blobScanResultsOptions = default, MalwareScanningAutomatedResponseType? automatedResponse = default, SecurityCenterOperationStatus operationStatus = default)
+        public static MalwareScanningProperties MalwareScanningProperties(OnUploadProperties onUpload = default, ResourceIdentifier scanResultsEventGridTopicResourceId = default, BlobScanResultsConfig? blobScanResultsOptions = default, MalwareScanningAutomatedResponseType? automatedResponse = default, ResourceIdentifier scannerResourceId = default, SecurityCenterOperationStatus operationStatus = default)
         {
             return new MalwareScanningProperties(
                 onUpload,
                 scanResultsEventGridTopicResourceId,
                 blobScanResultsOptions,
                 automatedResponse,
+                scannerResourceId,
                 operationStatus,
                 default);
         }
@@ -4345,7 +4511,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="excludeBlobsWithSuffix"> Optional. A list of suffixes to exclude from on-upload malware scanning. Suffixes match only the end of blob names, and should be used for file extensions or blob name endings only. </param>
         /// <param name="excludeBlobsLargerThan"> Optional. Specifies the maximum size in bytes for blobs to be scanned. This parameter accepts a single positive integer value. Blobs larger than this value will be excluded from scanning. </param>
         /// <returns> A new <see cref="Models.OnUploadFilters"/> instance for mocking. </returns>
-        public static OnUploadFilters OnUploadFilters(IEnumerable<string> excludeBlobsWithPrefix = default, IEnumerable<string> excludeBlobsWithSuffix = default, BinaryData excludeBlobsLargerThan = default)
+        public static OnUploadFilters OnUploadFilters(IEnumerable<string> excludeBlobsWithPrefix = default, IEnumerable<string> excludeBlobsWithSuffix = default, long? excludeBlobsLargerThan = default)
         {
             excludeBlobsWithPrefix ??= new ChangeTrackingList<string>();
             excludeBlobsWithSuffix ??= new ChangeTrackingList<string>();
@@ -4355,37 +4521,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Properties of Sensitive Data Discovery. </summary>
         /// <param name="isEnabled"> Indicates whether Sensitive Data Discovery should be enabled. </param>
+        /// <param name="scannerResourceId"> Optional. Resource id of the scanner resource (e.g., securityOperator or dataScanner) whose identity will be used for sensitive data discovery. </param>
         /// <param name="operationStatus"> Upon failure or partial success. Additional data describing Sensitive Data Discovery enable/disable operation. </param>
         /// <returns> A new <see cref="Models.SensitiveDataDiscoveryProperties"/> instance for mocking. </returns>
-        public static SensitiveDataDiscoveryProperties SensitiveDataDiscoveryProperties(bool? isEnabled = default, SecurityCenterOperationStatus operationStatus = default)
+        public static SensitiveDataDiscoveryProperties SensitiveDataDiscoveryProperties(bool? isEnabled = default, ResourceIdentifier scannerResourceId = default, SecurityCenterOperationStatus operationStatus = default)
         {
-            return new SensitiveDataDiscoveryProperties(isEnabled, operationStatus, default);
+            return new SensitiveDataDiscoveryProperties(isEnabled, scannerResourceId, operationStatus, default);
         }
 
         /// <summary> Describes the state of a malware scan operation. </summary>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.MalwareScan"/> instance for mocking. </returns>
-        public static MalwareScan MalwareScan(MalwareScanProperties properties = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="SecurityCenter.MalwareScanData"/> instance for mocking. </returns>
+        public static MalwareScanData MalwareScanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MalwareScanProperties properties = default)
         {
-            return new MalwareScan(properties, default);
+            return new MalwareScanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
-        /// <summary> The MalwareScanProperties. </summary>
+        /// <summary> Properties of a malware scan operation. </summary>
         /// <param name="scanId"> The identifier of the scan. </param>
         /// <param name="scanStatus"> A status code of the scan operation. </param>
         /// <param name="scanStatusMessage"> A description of the status of the scan. </param>
-        /// <param name="scanStartTime"> The time at which the scan had been initiated. </param>
-        /// <param name="scanEndTime"> The time at which the scan has ended. Only available for a scan which has terminated. </param>
+        /// <param name="scanStartsOn"> The time at which the scan had been initiated. </param>
+        /// <param name="scanEndsOn"> The time at which the scan has ended. Only available for a scan which has terminated. </param>
         /// <param name="scanSummary"> A summary of the scan results. </param>
         /// <returns> A new <see cref="Models.MalwareScanProperties"/> instance for mocking. </returns>
-        public static MalwareScanProperties MalwareScanProperties(string scanId = default, string scanStatus = default, string scanStatusMessage = default, string scanStartTime = default, string scanEndTime = default, ScanSummary scanSummary = default)
+        public static MalwareScanProperties MalwareScanProperties(string scanId = default, MalwareScanStatus? scanStatus = default, string scanStatusMessage = default, DateTimeOffset? scanStartsOn = default, DateTimeOffset? scanEndsOn = default, ScanSummary scanSummary = default)
         {
             return new MalwareScanProperties(
                 scanId,
                 scanStatus,
                 scanStatusMessage,
-                scanStartTime,
-                scanEndTime,
+                scanStartsOn,
+                scanEndsOn,
                 scanSummary,
                 default);
         }
@@ -4434,6 +4611,49 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 failedFilesCount,
                 scannedFilesInGB,
                 default);
+        }
+
+        /// <param name="startMalwareScanRequestFilters"> Optional filters to scope the malware scan to specific blobs or files. </param>
+        /// <returns> A new <see cref="Models.StartMalwareScanRequest"/> instance for mocking. </returns>
+        public static StartMalwareScanRequest StartMalwareScanRequest(MalwareScanFilters startMalwareScanRequestFilters = default)
+        {
+            return new StartMalwareScanRequest(startMalwareScanRequestFilters is null ? default : new StartMalwareScanRequestProperties(startMalwareScanRequestFilters, default), default);
+        }
+
+        /// <summary> Filters to scope the malware scan. </summary>
+        /// <param name="blobs"> Optional filter for blob scanning. Specifies which blobs to scan. </param>
+        /// <param name="files"> Optional filter for file scanning. Specifies which files to scan. </param>
+        /// <returns> A new <see cref="Models.MalwareScanFilters"/> instance for mocking. </returns>
+        public static MalwareScanFilters MalwareScanFilters(BlobScanFilter blobs = default, FileScanFilter files = default)
+        {
+            return new MalwareScanFilters(blobs, files, default);
+        }
+
+        /// <summary> Filter for blob scanning. At least one of 'container' or 'blob' must be specified; a request with neither is rejected by the service. If only container is provided, all blobs in that container are scanned. If only blob is provided, blobs matching the filter across all containers are scanned. </summary>
+        /// <param name="container"> Optional filter for the blob container to scan. If not provided, the blob filter will apply across all containers. </param>
+        /// <param name="blob"> Optional filter for specific blob(s). If container is specified, this filters blobs within that container. If container is not specified, this filters blobs across all containers. </param>
+        /// <returns> A new <see cref="Models.BlobScanFilter"/> instance for mocking. </returns>
+        public static BlobScanFilter BlobScanFilter(MatchFilter container = default, MatchFilter blob = default)
+        {
+            return new BlobScanFilter(container, blob, default);
+        }
+
+        /// <summary> Filter with value and matching strategy. </summary>
+        /// <param name="value"> The value to match against. </param>
+        /// <param name="match"> The matching strategy for the filter. </param>
+        /// <returns> A new <see cref="Models.MatchFilter"/> instance for mocking. </returns>
+        public static MatchFilter MatchFilter(string value = default, MatchType match = default)
+        {
+            return new MatchFilter(value, match, default);
+        }
+
+        /// <summary> Filter for file scanning. At least one of 'share' or 'file' must be specified; a request with neither is rejected by the service. If only share is provided, all files in that share are scanned. If only file is provided, files matching the filter across all shares are scanned. </summary>
+        /// <param name="share"> Optional filter for the file share to scan. If not provided, the file filter will apply across all shares. </param>
+        /// <param name="file"> Optional filter for specific file(s). If share is specified, this filters files within that share. If share is not specified, this filters files across all shares. </param>
+        /// <returns> A new <see cref="Models.FileScanFilter"/> instance for mocking. </returns>
+        public static FileScanFilter FileScanFilter(MatchFilter share = default, MatchFilter @file = default)
+        {
+            return new FileScanFilter(share, @file, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4767,12 +4987,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Request payload for updating a private link resource. Used in PATCH operations to update specific mutable properties without affecting the entire resource configuration. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourcePatch"/> instance for mocking. </returns>
-        public static PrivateLinkResourcePatch PrivateLinkResourcePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.SecurityCenterPrivateLinkResourcePatch"/> instance for mocking. </returns>
+        public static SecurityCenterPrivateLinkResourcePatch SecurityCenterPrivateLinkResourcePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PrivateLinkResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new SecurityCenterPrivateLinkResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

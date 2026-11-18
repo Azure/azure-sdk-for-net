@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -79,6 +80,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (Optional.IsDefined(ScannerResourceId, _scannerResourceIdIsDefined))
+            {
+                if (ScannerResourceId != null)
+                {
+                    writer.WritePropertyName("scannerResourceId"u8);
+                    writer.WriteStringValue(ScannerResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("scannerResourceId"u8);
+                }
+            }
             if (options.Format != "W" && Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
@@ -127,6 +140,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             bool? isEnabled = default;
+            bool scannerResourceIdIsDefined = false;
+            ResourceIdentifier scannerResourceId = default;
             SecurityCenterOperationStatus operationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -138,6 +153,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         continue;
                     }
                     isEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("scannerResourceId"u8))
+                {
+                    scannerResourceIdIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scannerResourceId = null;
+                        continue;
+                    }
+                    scannerResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("operationStatus"u8))
@@ -154,7 +180,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SensitiveDataDiscoveryProperties(isEnabled, operationStatus, additionalBinaryDataProperties);
+            return new SensitiveDataDiscoveryProperties(isEnabled, scannerResourceId, operationStatus, additionalBinaryDataProperties)
+            {
+                _scannerResourceIdIsDefined = scannerResourceIdIsDefined
+            };
         }
     }
 }

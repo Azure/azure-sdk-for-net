@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for Permissions Management offering. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for Permissions Management offering. </param>
         /// <param name="azureActiveDirectoryAppName"> the azure active directory app name used of authenticating against GCP workload identity federation. </param>
+        /// <param name="enableAuditLogIngestion"> Is audit log ingestion enabled for the Permissions Management offering. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmGcpOfferingCiemDiscovery(string workloadIdentityProviderId, string serviceAccountEmailAddress, string azureActiveDirectoryAppName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderCspmGcpOfferingCiemDiscovery(string workloadIdentityProviderId, string serviceAccountEmailAddress, string azureActiveDirectoryAppName, bool? enableAuditLogIngestion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkloadIdentityProviderId = workloadIdentityProviderId;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             AzureActiveDirectoryAppName = azureActiveDirectoryAppName;
+            EnableAuditLogIngestion = enableAuditLogIngestion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> the azure active directory app name used of authenticating against GCP workload identity federation. </summary>
         public string AzureActiveDirectoryAppName { get; set; }
+
+        /// <summary> Is audit log ingestion enabled for the Permissions Management offering. </summary>
+        public bool? EnableAuditLogIngestion { get; set; }
     }
 }

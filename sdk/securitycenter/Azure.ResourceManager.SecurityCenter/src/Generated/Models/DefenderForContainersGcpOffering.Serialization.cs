@@ -90,6 +90,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("enableAuditLogsAutoProvisioning"u8);
                 writer.WriteBooleanValue(EnableAuditLogsAutoProvisioning.Value);
             }
+            if (Optional.IsDefined(InstallationMethod))
+            {
+                writer.WritePropertyName("installationMethod"u8);
+                writer.WriteStringValue(InstallationMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(SecurityGatingEnabled))
+            {
+                writer.WritePropertyName("securityGatingEnabled"u8);
+                writer.WriteBooleanValue(SecurityGatingEnabled.Value);
+            }
+            if (Optional.IsDefined(ContainerAntiMalwareEnabled))
+            {
+                writer.WritePropertyName("containerAntiMalwareEnabled"u8);
+                writer.WriteBooleanValue(ContainerAntiMalwareEnabled.Value);
+            }
             if (Optional.IsDefined(EnableDefenderAgentAutoProvisioning))
             {
                 writer.WritePropertyName("enableDefenderAgentAutoProvisioning"u8);
@@ -148,6 +163,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = default;
             DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = default;
             bool? enableAuditLogsAutoProvisioning = default;
+            InstallationMethod? installationMethod = default;
+            bool? securityGatingEnabled = default;
+            bool? containerAntiMalwareEnabled = default;
             bool? enableDefenderAgentAutoProvisioning = default;
             bool? enablePolicyAgentAutoProvisioning = default;
             DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
@@ -190,6 +208,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         continue;
                     }
                     enableAuditLogsAutoProvisioning = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("installationMethod"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    installationMethod = new InstallationMethod(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("securityGatingEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityGatingEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("containerAntiMalwareEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerAntiMalwareEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableDefenderAgentAutoProvisioning"u8))
@@ -249,6 +294,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 nativeCloudConnection,
                 dataPipelineNativeCloudConnection,
                 enableAuditLogsAutoProvisioning,
+                installationMethod,
+                securityGatingEnabled,
+                containerAntiMalwareEnabled,
                 enableDefenderAgentAutoProvisioning,
                 enablePolicyAgentAutoProvisioning,
                 mdcContainersImageAssessment,

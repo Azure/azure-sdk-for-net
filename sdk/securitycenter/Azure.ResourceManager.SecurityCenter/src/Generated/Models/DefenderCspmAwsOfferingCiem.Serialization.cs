@@ -74,15 +74,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingCiem)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CiemDiscovery))
-            {
-                writer.WritePropertyName("ciemDiscovery"u8);
-                writer.WriteObjectValue(CiemDiscovery, options);
-            }
             if (Optional.IsDefined(CiemOidc))
             {
                 writer.WritePropertyName("ciemOidc"u8);
                 writer.WriteObjectValue(CiemOidc, options);
+            }
+            if (Optional.IsDefined(LogCollectionOidc))
+            {
+                writer.WritePropertyName("logCollectionOidc"u8);
+                writer.WriteObjectValue(LogCollectionOidc, options);
+            }
+            if (Optional.IsDefined(CloudTrailAuditLogIngestion))
+            {
+                writer.WritePropertyName("cloudTrailAuditLogIngestion"u8);
+                writer.WriteObjectValue(CloudTrailAuditLogIngestion, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,20 +131,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            DefenderCspmAwsOfferingCiemCiemDiscovery ciemDiscovery = default;
             DefenderCspmAwsOfferingCiemCiemOidc ciemOidc = default;
+            DefenderCspmAwsOfferingCiemLogCollectionOidc logCollectionOidc = default;
+            AwsCloudTrailConfiguration cloudTrailAuditLogIngestion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("ciemDiscovery"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ciemDiscovery = DefenderCspmAwsOfferingCiemCiemDiscovery.DeserializeDefenderCspmAwsOfferingCiemCiemDiscovery(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("ciemOidc"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -149,12 +146,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ciemOidc = DefenderCspmAwsOfferingCiemCiemOidc.DeserializeDefenderCspmAwsOfferingCiemCiemOidc(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("logCollectionOidc"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logCollectionOidc = DefenderCspmAwsOfferingCiemLogCollectionOidc.DeserializeDefenderCspmAwsOfferingCiemLogCollectionOidc(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("cloudTrailAuditLogIngestion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudTrailAuditLogIngestion = AwsCloudTrailConfiguration.DeserializeAwsCloudTrailConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DefenderCspmAwsOfferingCiem(ciemDiscovery, ciemOidc, additionalBinaryDataProperties);
+            return new DefenderCspmAwsOfferingCiem(ciemOidc, logCollectionOidc, cloudTrailAuditLogIngestion, additionalBinaryDataProperties);
         }
     }
 }

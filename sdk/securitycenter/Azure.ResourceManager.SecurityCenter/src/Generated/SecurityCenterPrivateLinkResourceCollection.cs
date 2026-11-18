@@ -20,26 +20,26 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateLinkResource"/> and their operations.
-    /// Each <see cref="PrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="PrivateLinkResourceCollection"/> instance call the GetPrivateLinkResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="SecurityCenterPrivateLinkResource"/> and their operations.
+    /// Each <see cref="SecurityCenterPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityCenterPrivateLinkResourceCollection"/> instance call the GetSecurityCenterPrivateLinkResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
+    public partial class SecurityCenterPrivateLinkResourceCollection : ArmCollection, IEnumerable<SecurityCenterPrivateLinkResource>, IAsyncEnumerable<SecurityCenterPrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinksClientDiagnostics;
         private readonly PrivateLinks _privateLinksRestClient;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceCollection for mocking. </summary>
-        protected PrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of SecurityCenterPrivateLinkResourceCollection for mocking. </summary>
+        protected SecurityCenterPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityCenterPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterPrivateLinkResource.ResourceType.Namespace, Diagnostics);
             _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateLinkName, SecurityCenterPrivateLinkResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityCenterPrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateLinkName, SecurityCenterPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _privateLinksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, SecurityCenterPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SecurityCenterArmOperation<PrivateLinkResource> operation = new SecurityCenterArmOperation<PrivateLinkResource>(
-                    new PrivateLinkResourceOperationSource(Client),
+                SecurityCenterArmOperation<SecurityCenterPrivateLinkResource> operation = new SecurityCenterArmOperation<SecurityCenterPrivateLinkResource>(
+                    new SecurityCenterPrivateLinkResourceOperationSource(Client),
                     _privateLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string privateLinkName, SecurityCenterPrivateLinkResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityCenterPrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string privateLinkName, SecurityCenterPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _privateLinksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, SecurityCenterPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SecurityCenterArmOperation<PrivateLinkResource> operation = new SecurityCenterArmOperation<PrivateLinkResource>(
-                    new PrivateLinkResourceOperationSource(Client),
+                SecurityCenterArmOperation<SecurityCenterPrivateLinkResource> operation = new SecurityCenterArmOperation<SecurityCenterPrivateLinkResource>(
+                    new SecurityCenterPrivateLinkResourceOperationSource(Client),
                     _privateLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(string privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterPrivateLinkResource>> GetAsync(string privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PrivateLinkResource> Get(string privateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterPrivateLinkResource> Get(string privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, SecurityCenterPrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterPrivateLinkResourceCollection.GetAll"), data => new SecurityCenterPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -314,14 +314,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, SecurityCenterPrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterPrivateLinkResourceCollection.GetAll"), data => new SecurityCenterPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PrivateLinkResource>> GetIfExistsAsync(string privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityCenterPrivateLinkResource>> GetIfExistsAsync(string privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<SecurityCenterPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -520,11 +520,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PrivateLinkResource> GetIfExists(string privateLinkName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityCenterPrivateLinkResource> GetIfExists(string privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinksClientDiagnostics.CreateScope("SecurityCenterPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<SecurityCenterPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        IEnumerator<PrivateLinkResource> IEnumerable<PrivateLinkResource>.GetEnumerator()
+        IEnumerator<SecurityCenterPrivateLinkResource> IEnumerable<SecurityCenterPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PrivateLinkResource> IAsyncEnumerable<PrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityCenterPrivateLinkResource> IAsyncEnumerable<SecurityCenterPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

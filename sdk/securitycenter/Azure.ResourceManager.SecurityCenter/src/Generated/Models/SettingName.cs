@@ -11,21 +11,21 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary></summary>
+    /// <summary> The name of a Microsoft.Security integration or Defender for Storage setting. </summary>
     public readonly partial struct SettingName : IEquatable<SettingName>
     {
         private readonly string _value;
-        /// <summary> MCAS. </summary>
+        /// <summary> Integration with Microsoft Defender for Cloud Apps (formerly Microsoft Cloud App Security). </summary>
         private const string McasValue = "MCAS";
-        /// <summary> WDATP. </summary>
+        /// <summary> Integration with Microsoft Defender for Endpoint (formerly Windows Defender ATP). </summary>
         private const string WdatpValue = "WDATP";
-        /// <summary> WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW. </summary>
+        /// <summary> Microsoft Defender for Endpoint integration that excludes the Linux public preview. </summary>
         private const string WdatpExcludeLinuxPublicPreviewValue = "WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW";
-        /// <summary> WDATP_UNIFIED_SOLUTION. </summary>
+        /// <summary> Integration with the Microsoft Defender for Endpoint unified agent solution. </summary>
         private const string WdatpUnifiedSolutionValue = "WDATP_UNIFIED_SOLUTION";
-        /// <summary> Sentinel. </summary>
+        /// <summary> Integration with Microsoft Sentinel. </summary>
         private const string SentinelValue = "Sentinel";
-        /// <summary> Name of the Defender for Storage Settings name. </summary>
+        /// <summary> The current Defender for Storage setting for the resource. </summary>
         private const string CurrentValue = "current";
 
         /// <summary> Initializes a new instance of <see cref="SettingName"/>. </summary>
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _value = value;
         }
 
-        /// <summary> MCAS. </summary>
+        /// <summary> Integration with Microsoft Defender for Cloud Apps (formerly Microsoft Cloud App Security). </summary>
         public static SettingName Mcas { get; } = new SettingName(McasValue);
 
-        /// <summary> WDATP. </summary>
+        /// <summary> Integration with Microsoft Defender for Endpoint (formerly Windows Defender ATP). </summary>
         public static SettingName Wdatp { get; } = new SettingName(WdatpValue);
 
-        /// <summary> WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW. </summary>
+        /// <summary> Microsoft Defender for Endpoint integration that excludes the Linux public preview. </summary>
         public static SettingName WdatpExcludeLinuxPublicPreview { get; } = new SettingName(WdatpExcludeLinuxPublicPreviewValue);
 
-        /// <summary> WDATP_UNIFIED_SOLUTION. </summary>
+        /// <summary> Integration with the Microsoft Defender for Endpoint unified agent solution. </summary>
         public static SettingName WdatpUnifiedSolution { get; } = new SettingName(WdatpUnifiedSolutionValue);
 
-        /// <summary> Sentinel. </summary>
+        /// <summary> Integration with Microsoft Sentinel. </summary>
         public static SettingName Sentinel { get; } = new SettingName(SentinelValue);
 
-        /// <summary> Name of the Defender for Storage Settings name. </summary>
+        /// <summary> The current Defender for Storage setting for the resource. </summary>
         public static SettingName Current { get; } = new SettingName(CurrentValue);
 
         /// <summary> Determines if two <see cref="SettingName"/> values are the same. </summary>

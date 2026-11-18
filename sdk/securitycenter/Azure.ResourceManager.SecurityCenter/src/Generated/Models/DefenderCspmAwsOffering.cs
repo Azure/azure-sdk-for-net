@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="ciem"> Defenders CSPM Permissions Management offering configurations. </param>
         /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
-        internal DefenderCspmAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderCspmAwsOfferingVmScanners vmScanners, DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery, DefenderCspmAwsOfferingDatabasesDspm databasesDspm, DefenderCspmAwsOfferingCiem ciem, DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description, additionalBinaryDataProperties)
+        /// <param name="serverlessContainers"> The Microsoft Defender serverless containers configuration. </param>
+        /// <param name="agentlessServerlessPosture"> The Microsoft Defender agentless serverless posture configuration. </param>
+        internal DefenderCspmAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderCspmAwsOfferingVmScanners vmScanners, DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery, DefenderCspmAwsOfferingDatabasesDspm databasesDspm, DefenderCspmAwsOfferingCiem ciem, DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S, DefenderCspmAwsOfferingServerlessContainers serverlessContainers, DefenderCspmAwsOfferingAgentlessServerlessPosture agentlessServerlessPosture) : base(offeringType, description, additionalBinaryDataProperties)
         {
             VmScanners = vmScanners;
             DataSensitivityDiscovery = dataSensitivityDiscovery;
@@ -36,6 +38,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Ciem = ciem;
             MdcContainersImageAssessment = mdcContainersImageAssessment;
             MdcContainersAgentlessDiscoveryK8S = mdcContainersAgentlessDiscoveryK8S;
+            ServerlessContainers = serverlessContainers;
+            AgentlessServerlessPosture = agentlessServerlessPosture;
         }
 
         /// <summary> The Microsoft Defender for CSPM offering VM scanning configuration. </summary>
@@ -55,5 +59,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
         public DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S { get; set; }
+
+        /// <summary> The Microsoft Defender serverless containers configuration. </summary>
+        internal DefenderCspmAwsOfferingServerlessContainers ServerlessContainers { get; set; }
+
+        /// <summary> The Microsoft Defender agentless serverless posture configuration. </summary>
+        public DefenderCspmAwsOfferingAgentlessServerlessPosture AgentlessServerlessPosture { get; set; }
+
+        /// <summary> Is serverless containers scanning enabled. </summary>
+        public bool? ServerlessContainersEnabled
+        {
+            get
+            {
+                return ServerlessContainers is null ? default : ServerlessContainers.Enabled;
+            }
+            set
+            {
+                if (ServerlessContainers is null)
+                {
+                    ServerlessContainers = new DefenderCspmAwsOfferingServerlessContainers();
+                }
+                ServerlessContainers.Enabled = value;
+            }
+        }
     }
 }
