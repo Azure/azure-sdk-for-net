@@ -38,7 +38,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
         public Task Export() => Test(async host =>
         {
             var requests = new RequestRecorder();
-            var operation = await GetResourceGroup(host, requests).ExportAsync(WaitUntil.Completed, "order1", new ExportRequest("csv"));
+            var operation = await GetResourceGroup(host, requests).ExportAsync(WaitUntil.Completed, "order1", new ExportContent("csv"));
             Assert.That(requests.Count, Is.GreaterThanOrEqualTo(2));
             requests.AssertRequest(0, "POST", $"{ResourceGroupProviderPath}/orders/order1/export", """{"format":"csv"}""");
             for (int i = 1; i < requests.Count; i++)
@@ -69,7 +69,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
         public Task ExportArray() => Test(async host =>
         {
             var requests = new RequestRecorder();
-            var operation = await GetSubscription(host, requests).ExportArrayAsync(WaitUntil.Completed, new ExportRequest("csv"));
+            var operation = await GetSubscription(host, requests).ExportArrayAsync(WaitUntil.Completed, new ExportContent("csv"));
             Assert.That(requests.Count, Is.GreaterThanOrEqualTo(2));
             requests.AssertRequest(0, "POST", $"{ProviderPath}/exportArray", """{"format":"csv"}""");
             for (int i = 1; i < requests.Count; i++)

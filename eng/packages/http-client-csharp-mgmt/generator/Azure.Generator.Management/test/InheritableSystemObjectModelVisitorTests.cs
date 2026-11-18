@@ -20,6 +20,31 @@ namespace Azure.Generator.Mgmt.Tests
 {
     public class InheritableSystemObjectModelVisitorTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ResourceTypeStringAliasReadsInheritedSemanticProperty(bool required)
+        {
+            var resourceType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
+            var baseProperty = InputFactory.Property("resourceType", resourceType, isRequired: required, isReadOnly: true, serializedName: "type");
+            baseProperty.Update(originalName: "type");
+            var baseModel = InputFactory.Model("NetworkTrackedResourceData", properties: [baseProperty],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var alias = InputFactory.Property("type", InputPrimitiveType.String, isRequired: required, isReadOnly: true, serializedName: "type");
+            var model = InputFactory.Model("ExpressRouteLagData", properties: [alias], baseModel: baseModel,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, model]);
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var property = provider.Properties.Single(property => property.Name == "Type");
+            var source = new TypeProviderWriter(provider).Write().Content;
+
+            Assert.That(property.Type.WithNullable(false), Is.EqualTo(new CSharpType(typeof(string))));
+            Assert.That(source, Does.Contain(required
+                ? "Type => base.ResourceType.ToString();"
+                : "Type => base.ResourceType?.ToString();"));
+            Assert.That(source, Does.Not.Contain("this._resourceType"));
+        }
+
         [Test]
         public void EnsureFrameworkTypeRegistered_RegistersBothTypes()
         {

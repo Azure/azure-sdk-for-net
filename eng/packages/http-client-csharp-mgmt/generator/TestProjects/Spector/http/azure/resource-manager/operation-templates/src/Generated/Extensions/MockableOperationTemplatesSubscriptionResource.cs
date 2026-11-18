@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckGlobalAsync(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckGlobalAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckGlobal(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckGlobal(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckLocalAsync(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckLocalAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckLocal(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckLocal(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<IList<ExportResult>>> ExportArrayAsync(WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<ExportResult>>> ExportArrayAsync(WaitUntil waitUntil, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<IList<ExportResult>> operation = new OperationTemplatesArmOperation<IList<ExportResult>>(
                     new IListOfExportResultOperationSource(),
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<IList<ExportResult>> ExportArray(WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<ExportResult>> ExportArray(WaitUntil waitUntil, ExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<IList<ExportResult>> operation = new OperationTemplatesArmOperation<IList<ExportResult>>(
                     new IListOfExportResultOperationSource(),
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(ChangeAllowanceContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OptionalBodyClientDiagnostics.CreateScope("MockableOperationTemplatesSubscriptionResource.ProviderPost");
             scope.Start();
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
+                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChangeAllowanceResult> response = Response.FromValue(ChangeAllowanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ChangeAllowanceResult> ProviderPost(ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<ChangeAllowanceResult> ProviderPost(ChangeAllowanceContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OptionalBodyClientDiagnostics.CreateScope("MockableOperationTemplatesSubscriptionResource.ProviderPost");
             scope.Start();
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
+                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChangeAllowanceResult> response = Response.FromValue(ChangeAllowanceResult.FromResponse(result), result);
                 if (response.Value == null)

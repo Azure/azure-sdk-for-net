@@ -10,22 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The ActionRequest. </summary>
-    public partial class ActionRequest
+    /// <summary> The ActionContent. </summary>
+    public partial class ActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionRequest"/>. </summary>
-        public ActionRequest()
+        /// <summary> Initializes a new instance of <see cref="ActionContent"/>. </summary>
+        public ActionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionContent"/>. </summary>
         /// <param name="actionType"> The action type to perform. </param>
         /// <param name="parameters"> Additional action parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionRequest(string actionType, string parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionContent(string actionType, string parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionType = actionType;
             Parameters = parameters;

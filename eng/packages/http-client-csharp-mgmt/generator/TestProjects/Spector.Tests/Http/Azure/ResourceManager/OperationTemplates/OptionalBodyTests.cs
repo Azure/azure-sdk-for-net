@@ -53,7 +53,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
             var empty = await widget.PostAsync();
             Assert.That(empty.Value.Result, Is.EqualTo("Action completed successfully"));
 
-            var response = await widget.PostAsync(new ActionRequest { ActionType = "perform", Parameters = "test-parameters" });
+            var response = await widget.PostAsync(new ActionContent { ActionType = "perform", Parameters = "test-parameters" });
             Assert.That(requests.Count, Is.EqualTo(2));
             requests.AssertRequest(0, "POST", $"{ResourceGroupProviderPath}/widgets/widget1/post", "");
             requests.AssertRequest(1, "POST", $"{ResourceGroupProviderPath}/widgets/widget1/post", """{"actionType":"perform","parameters":"test-parameters"}""");
@@ -69,7 +69,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
             Assert.That(empty.Value.TotalAllowed, Is.EqualTo(50));
             Assert.That(empty.Value.Status, Is.EqualTo("Changed to default allowance"));
 
-            var response = await subscription.ProviderPostAsync(new ChangeAllowanceRequest { TotalAllowed = 100, Reason = "Increased demand" });
+            var response = await subscription.ProviderPostAsync(new ChangeAllowanceContent { TotalAllowed = 100, Reason = "Increased demand" });
             Assert.That(requests.Count, Is.EqualTo(2));
             requests.AssertRequest(0, "POST", $"{ProviderPath}/providerPost", "");
             requests.AssertRequest(1, "POST", $"{ProviderPath}/providerPost", """{"totalAllowed":100,"reason":"Increased demand"}""");

@@ -16,12 +16,12 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecMultiServiceTestsModelFactory
     {
-        /// <summary> The CheckAvailabilityRequest. </summary>
+        /// <summary> The CheckAvailabilityContent. </summary>
         /// <param name="name"> The name to check availability for. </param>
-        /// <returns> A new <see cref="Models.CheckAvailabilityRequest"/> instance for mocking. </returns>
-        public static CheckAvailabilityRequest CheckAvailabilityRequest(string name = default)
+        /// <returns> A new <see cref="Models.CheckAvailabilityContent"/> instance for mocking. </returns>
+        public static CheckAvailabilityContent CheckAvailabilityContent(string name = default)
         {
-            return new CheckAvailabilityRequest(name, default);
+            return new CheckAvailabilityContent(name, default);
         }
 
         /// <summary> The CheckAvailabilityResult. </summary>
