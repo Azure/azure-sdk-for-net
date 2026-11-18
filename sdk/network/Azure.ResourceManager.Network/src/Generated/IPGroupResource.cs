@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal IPGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ipGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _ipGroupsRestClient = new IPGroups(_ipGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _ipGroupsRestClient = new IPGroups(_ipGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ipGroups", out string ipGroupsApiVersionOverride) ? ipGroupsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkManagerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerResource.ResourceType.Namespace, Diagnostics);
-            _networkManagersRestClient = new NetworkManagers(_networkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _networkManagersRestClient = new NetworkManagers(_networkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkManagers", out string networkManagersApiVersionOverride) ? networkManagersApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

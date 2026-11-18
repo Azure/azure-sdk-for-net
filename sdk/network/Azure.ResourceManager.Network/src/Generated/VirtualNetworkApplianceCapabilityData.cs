@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.Network
     /// VirtualNetworkApplianceCapabilityProperties). One capability of a given kind may exist per appliance.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Nat64Capability"/>, <see cref="PLGatewayCapability"/>, <see cref="PLGatewayFastpathCapability"/>, and <see cref="PLIPForwardersCapability"/>.
     /// </summary>
-    public abstract partial class VirtualNetworkApplianceCapabilityData : VirtualNetworkApplianceCapabilityBaseData
+    public abstract partial class VirtualNetworkApplianceCapabilityData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceCapabilityData"/>. </summary>
         /// <param name="kind"> The kind of capability (the top-level discriminator). </param>
         private protected VirtualNetworkApplianceCapabilityData(VirtualNetworkApplianceCapabilityKind kind)
@@ -34,12 +37,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of capability (the top-level discriminator). </param>
-        internal VirtualNetworkApplianceCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualNetworkApplianceCapabilityProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkApplianceCapabilityKind kind) : base(id, name, resourceType, systemData, properties, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkApplianceCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualNetworkApplianceCapabilityProperties properties, VirtualNetworkApplianceCapabilityKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
+        public VirtualNetworkApplianceCapabilityProperties Properties { get; set; }
 
         /// <summary> The kind of capability (the top-level discriminator). </summary>
         [WirePath("kind")]

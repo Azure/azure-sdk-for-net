@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualNetworks", out string virtualNetworksApiVersionOverride) ? virtualNetworksApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

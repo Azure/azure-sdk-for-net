@@ -37,10 +37,80 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Properties of the interconnect group. </summary>
         [WirePath("properties")]
-        public InterconnectGroupPropertiesFormat Properties { get; set; }
+        internal InterconnectGroupPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public string ETag { get; }
+
+        /// <summary> Scope of interconnect group resource. </summary>
+        [WirePath("properties.scope")]
+        public InterconnectGroupScope? Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InterconnectGroupPropertiesFormat();
+                }
+                Properties.Scope = value;
+            }
+        }
+
+        /// <summary> A list of subgroups of the interconnect group. </summary>
+        [WirePath("properties.subgroups")]
+        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InterconnectGroupPropertiesFormat();
+                }
+                return Properties.Subgroups;
+            }
+        }
+
+        /// <summary> The provisioning state of the interconnect group resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The resource GUID property of the interconnect group resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
+        /// <summary> The subgroup profile of the interconnect group resource. </summary>
+        [WirePath("properties.subgroupProfile")]
+        public SubgroupProfile SubgroupProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubgroupProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InterconnectGroupPropertiesFormat();
+                }
+                Properties.SubgroupProfile = value;
+            }
+        }
     }
 }

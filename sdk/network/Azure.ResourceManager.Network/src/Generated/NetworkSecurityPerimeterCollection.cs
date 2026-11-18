@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkSecurityPerimeterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkSecurityPerimetersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimetersRestClient = new NetworkSecurityPerimeters(_networkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _networkSecurityPerimetersRestClient = new NetworkSecurityPerimeters(_networkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkSecurityPerimeters", out string networkSecurityPerimetersApiVersionOverride) ? networkSecurityPerimetersApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

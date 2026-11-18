@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal VpnGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayResource.ResourceType.Namespace, Diagnostics);
-            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/vpnGateways", out string vpnGatewaysApiVersionOverride) ? vpnGatewaysApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

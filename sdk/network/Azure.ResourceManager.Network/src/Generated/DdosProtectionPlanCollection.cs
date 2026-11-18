@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal DdosProtectionPlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ddosProtectionPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DdosProtectionPlanResource.ResourceType.Namespace, Diagnostics);
-            _ddosProtectionPlansRestClient = new DdosProtectionPlans(_ddosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _ddosProtectionPlansRestClient = new DdosProtectionPlans(_ddosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ddosProtectionPlans", out string ddosProtectionPlansApiVersionOverride) ? ddosProtectionPlansApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 
