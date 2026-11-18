@@ -849,6 +849,34 @@ Describe 'Re-review prompt' {
         $script:Step0 | Should -Match '(?i)if a required guideline source remains unavailable after permitted alternatives, call `report_incomplete`'
     }
 
+    It 'passes a complete read-only delegation contract rather than assuming children inherit the workflow prompt' {
+        $contract = [regex]::Match($script:Step0, '(?s)<!-- BEGIN DELEGATED REVIEW CONTRACT -->(.*?)<!-- END DELEGATED REVIEW CONTRACT -->').Groups[1].Value
+        $contract | Should -Not -BeNullOrEmpty
+        $script:Step0 | Should -Match '(?i)include the contract below verbatim in every delegated task'
+        $script:Step0 | Should -Match '(?i)pass the frozen review rules.*safety.*coverage'
+        $contract | Should -Match '(?is)get_file_contents.*owner `Azure`.*repo `azure-sdk`.*ref `refs/heads/main`.*`docs/dotnet/introduction\.md`'
+        $contract | Should -Match '(?is)owner `dotnet`.*repo `runtime`.*`docs/coding-guidelines/breaking-change-rules\.md`'
+        $contract | Should -Match '(?i)do not use `curl`, `wget`, or other shell HTTP clients'
+        $contract | Should -Match '(?i)try permitted alternatives before declaring.*unavailable'
+        $contract | Should -Match '(?i)do not call any safe-output tools'
+        $contract | Should -Match '(?i)status: complete\|blocked'
+        $contract | Should -Match '(?i)safe_output_signals: none\|.*'
+    }
+
+    It 'reconciles child blockers and failure signals before queuing any publication' {
+        $script:Step4 | Should -Match '(?i)before queuing any publication.*collect every delegated result'
+        $script:Step4 | Should -Match '(?i)missing or ambiguous child status.*incomplete'
+        $script:Step4 | Should -Match '(?i)child.*emitted.*`missing_tool`.*do not.*publication'
+        $script:Step4 | Should -Match '(?i)do not discard.*signals.*or bypass.*guard'
+    }
+
+    It 'defers Step 2 thread actions until Step 4 reconciles delegated results' {
+        $step2 = [regex]::Match($script:PromptBody, '(?ms)^## Step 2\b.*?(?=^## |\z)').Value
+        $step2 | Should -Match '(?i)record proposed thread actions.*do not call.*until Step 4'
+        $step2 | Should -Not -Match '(?i)if addressed: reply briefly'
+        $script:Step4 | Should -Match '(?i)only after.*reconciliation.*queue.*recorded thread actions'
+    }
+
     It 'points the agent at the patches the export step writes instead of get_files' {
         $steps = Get-CompiledSteps 'agent'
         $export = @($steps | Where-Object Name -ceq 'Export changed-file patches for the re-review')
