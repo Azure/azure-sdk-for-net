@@ -2,6 +2,10 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
+. (Join-Path $PSScriptRoot '..\SampleTestPlanHelpers.ps1')
+. (Join-Path $PSScriptRoot '..\SampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot '..\DotNetSampleCiHelpers.ps1')
+
 Describe 'Offline deployment-plan defaults' {
     BeforeEach {
         $script:originalSubscription = $env:AZURE_SUBSCRIPTION_ID
@@ -11,11 +15,20 @@ Describe 'Offline deployment-plan defaults' {
         $env:AZURE_TENANT_ID = '22222222-2222-2222-2222-222222222222'
         $env:SAMPLE_QUEUE_NAME = 'q1'
         $script:planDirectory = Join-Path $TestDrive ([guid]::NewGuid().ToString('N'))
-        $manifest = Join-Path $TestDrive 'selection.json'
-        @{ schemaVersion = 1; tests = @(@{
-            node_id = 'tests/samples/test_samples.py::TestSamples::test_agent_tools_samples[sample_agent_mcp_with_project_connection]'
-            sample_path = 'samples/agents/tools/sample_agent_mcp_with_project_connection.py'
-        }) } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifest -Encoding utf8
+        $manifest = Join-Path $TestDrive 'selected-tests.json'
+        $agents = @{
+            package = 'Azure.AI.Projects'
+            fullName = 'Azure.AI.Projects.Tests.Samples.Sample_AIAgents(False).AgentsBasics'
+            name = 'AgentsBasics'
+        }
+        $function = @{
+            package = 'Azure.AI.Extensions.OpenAI'
+            fullName = 'Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_AzureFunction(False).AzureFunction'
+            name = 'AzureFunction'
+        }
+        $script:agentsAssignment = (New-SampleQueuePlan -Tests $agents -Pool unit -Image unit).queues.q1
+        $script:functionAssignment = (New-SampleQueuePlan -Tests $function -Pool unit -Image unit).queues.q1
+        $script:agentsAssignment | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifest -Encoding utf8
         $script:planArguments = @{
             SelectionManifest = $manifest
             OutputDirectory = $script:planDirectory
@@ -60,31 +73,37 @@ Describe 'Offline deployment-plan defaults' {
     }
 
     It 'plans the registered Azure Function sample with all queue bindings without contacting Azure' {
-        @{ schemaVersion = 1; tests = @(@{
-            node_id = 'tests/samples/test_samples.py::TestSamples::test_agent_tools_samples[sample_agent_azure_function]'
-            sample_path = 'samples/agents/tools/sample_agent_azure_function.py'
-        }) } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $script:planArguments.SelectionManifest -Encoding utf8
+        $script:functionAssignment | ConvertTo-Json -Depth 5 |
+            Set-Content -LiteralPath $script:planArguments.SelectionManifest -Encoding utf8
         & {
             function az { throw 'Offline planning must not contact Azure.' }
             & $script:planScript @script:planArguments
         }
         $plan = Get-Content -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
         @($plan.selectedTests).Count | Should Be 1
+        foreach ($field in @('package', 'fullName', 'name')) {
+            $plan.selectedTests[0][$field] | Should BeExactly $script:functionAssignment.selectedTests[0][$field]
+        }
+        $plan.filter | Should BeExactly $script:functionAssignment.filter
         foreach ($name in @('STORAGE_INPUT_QUEUE_NAME', 'STORAGE_OUTPUT_QUEUE_NAME', 'STORAGE_QUEUE_SERVICE_ENDPOINT')) {
-            $plan.requiredEnvironment -contains $name | Should Be $true
             $plan.environmentBindings -contains $name | Should Be $true
         }
-        Test-Path -LiteralPath (Join-Path $script:planDirectory 'rejected-tests.json') | Should Be $false
+        $environment = @{}
+        foreach ($name in $plan.environmentBindings) { $environment[$name] = 'test-value' }
+        $environment.STORAGE_QUEUE_SERVICE_ENDPOINT = 'https://storage.queue.core.windows.net/'
+        $bindings = Get-DotNetSampleEnvironment -Environment $environment
+        $bindings.STORAGE_QUEUE_URI | Should BeExactly 'https://storage.queue.core.windows.net'
+        $bindings.STORAGE_INPUT_QUEUE_NAME | Should BeExactly $environment.STORAGE_INPUT_QUEUE_NAME
+        $bindings.STORAGE_OUTPUT_QUEUE_NAME | Should BeExactly $environment.STORAGE_OUTPUT_QUEUE_NAME
     }
 
-    It 'includes all Function bindings even when the selected sample does not require them' {
+    It 'includes all Function bindings even for the AgentsBasics selection' {
         & $script:planScript @script:planArguments
         $plan = Get-Content -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
         $functionBindings = @('FUNCTION_APP_NAME', 'FUNCTION_APP_URL', 'STORAGE_INPUT_QUEUE_NAME',
             'STORAGE_OUTPUT_QUEUE_NAME', 'STORAGE_QUEUE_SERVICE_ENDPOINT')
         foreach ($name in $functionBindings) {
             $plan.environmentBindings -contains $name | Should Be $true
-            $plan.requiredEnvironment -contains $name | Should Be $false
         }
     }
 
@@ -113,14 +132,13 @@ Describe 'Offline deployment-plan defaults' {
     It 'keeps provisioning bindings identical for Function and non-Function sample selections' {
         & $script:planScript @script:planArguments
         $firstPlan = Get-Content -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
-        @{ schemaVersion = 1; tests = @(@{
-            node_id = 'tests/samples/test_samples.py::TestSamples::test_agent_tools_samples[sample_agent_azure_function]'
-            sample_path = 'samples/agents/tools/sample_agent_azure_function.py'
-        }) } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $script:planArguments.SelectionManifest -Encoding utf8
+        $script:functionAssignment | ConvertTo-Json -Depth 5 |
+            Set-Content -LiteralPath $script:planArguments.SelectionManifest -Encoding utf8
         & $script:planScript @script:planArguments
         $secondPlan = Get-Content -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
         ($secondPlan.environmentBindings -join ',') | Should BeExactly ($firstPlan.environmentBindings -join ',')
-        ($secondPlan.requiredEnvironment -join ',') | Should Not Be ($firstPlan.requiredEnvironment -join ',')
+        $secondPlan.filter | Should Not Be $firstPlan.filter
+        $secondPlan.selectedTests[0].fullName | Should Not Be $firstPlan.selectedTests[0].fullName
     }
 
     It 'requires the identity resource group instead of a name pattern' {
@@ -163,72 +181,51 @@ Describe 'Offline deployment-plan defaults' {
         }
         Test-Path -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') | Should Be $false
     }
-}
-
-Describe 'Per-sample rejection of unsupported environment variables' {
-    BeforeEach {
-        $script:originalSubscription = $env:AZURE_SUBSCRIPTION_ID
-        $script:originalTenant = $env:AZURE_TENANT_ID
-        $env:AZURE_SUBSCRIPTION_ID = '11111111-1111-1111-1111-111111111111'
-        $env:AZURE_TENANT_ID = '22222222-2222-2222-2222-222222222222'
-        $script:planDirectory = Join-Path $TestDrive ([guid]::NewGuid().ToString('N'))
-        $script:packageRoot = Join-Path $TestDrive 'package'
-        $scannerDirectory = Join-Path $script:packageRoot '.github/skills/azure-ai-projects-record-sample/scripts'
-        $null = New-Item -ItemType Directory -Path $scannerDirectory, (Join-Path $script:packageRoot 'samples') -Force
-        Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../../../../.github/skills/azure-ai-projects-record-sample/scripts/GetSampleRequiredEnvironmentVariables.ps1') -Destination $scannerDirectory
-        Set-Content -LiteralPath (Join-Path $script:packageRoot 'samples/supported.py') -Value @('import os', 'endpoint = os.environ["FOUNDRY_PROJECT_ENDPOINT"]')
-        Set-Content -LiteralPath (Join-Path $script:packageRoot 'samples/validated.py') -Value @('import os', 'endpoint = os.environ["LLM_VALIDATION_PROJECT_ENDPOINT"]')
-        Set-Content -LiteralPath (Join-Path $script:packageRoot 'samples/unsupported.py') -Value @('import os', 'value = os.environ["UNIT_UNSUPPORTED_SETTING"]')
-        $script:writeManifest = {
-            param([string[]] $Samples)
-            $path = Join-Path $TestDrive ([guid]::NewGuid().ToString('N') + '.json')
-            @{ schemaVersion = 1; tests = @($Samples | ForEach-Object { @{
-                node_id = "tests/samples/test_samples.py::TestSamples::test_agents_samples[$_]"; sample_path = "samples/$_.py" } }) } |
-                ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $path -Encoding utf8
-            return $path
-        }
-        $script:planScript = Join-Path $PSScriptRoot '../New-SampleDeploymentPlan.ps1'
-        $script:arguments = @{
-            OutputDirectory = $script:planDirectory; QueueName = 'q1'; PackageRoot = $script:packageRoot
-            DefinitionId = $(if ($env:SYSTEM_DEFINITIONID) { $env:SYSTEM_DEFINITIONID } else { '8392' })
-            BuildId = $(if ($env:BUILD_BUILDID) { $env:BUILD_BUILDID } else { '12345' }); JobAttempt = '1'
-            IdentityResourceGroup = 'rg-azsdk-identities-westus3-102826_164519'
-        }
-    }
-    AfterEach {
-        $env:AZURE_SUBSCRIPTION_ID = $script:originalSubscription
-        $env:AZURE_TENANT_ID = $script:originalTenant
-    }
-
-    It 'rejects only the sample with an unsupported variable and keeps the rest' {
-        $manifest = & $script:writeManifest @('supported', 'unsupported', 'validated')
-        & $script:planScript -SelectionManifest $manifest @script:arguments
+    It 'keeps the matched sample assignments and excludes non-matching cases' {
+        $candidates = @($script:agentsAssignment.selectedTests + $script:functionAssignment.selectedTests +
+            @{ package = 'Azure.AI.Projects'; fullName = 'Azure.AI.Projects.Tests.Samples.Sample_AIAgents(True).AgentsBasicsAsync'; name = 'AgentsBasicsAsync' })
+        $tree = ConvertTo-SampleSelectionTree -Selection '(Name=AgentsBasics|Name=AzureFunction)'
+        $selected = @($candidates | Where-Object { Test-SampleSelection -Tree $tree -Test $_ })
+        $assignment = (New-SampleQueuePlan -Tests $selected -QueueCount 1 -Pool unit -Image unit).queues.q1
+        $assignment | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $script:planArguments.SelectionManifest -Encoding utf8
+        & $script:planScript @script:planArguments
         $plan = Get-Content -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
-        @($plan.selectedTests).Count | Should Be 2
-        @($plan.selectedTests | ForEach-Object { $_.sample_path } | Sort-Object) -join ',' | Should Be 'samples/supported.py,samples/validated.py'
-        @($plan.requiredEnvironment) -join ',' | Should Be 'FOUNDRY_PROJECT_ENDPOINT,LLM_VALIDATION_PROJECT_ENDPOINT'
-        $rejected = @(Get-Content -LiteralPath (Join-Path $script:planDirectory 'rejected-tests.json') -Raw | ConvertFrom-Json -AsHashtable)
-        $rejected.Count | Should Be 1
-        $rejected[0].sample_path | Should Be 'samples/unsupported.py'
-        @($rejected[0].unsupported) -join ',' | Should Be 'UNIT_UNSUPPORTED_SETTING'
+        ($plan.selectedTests.name -join ',') | Should BeExactly 'AzureFunction,AgentsBasics'
+        $plan.filter | Should BeExactly $assignment.filter
     }
 
     It 'derives the saved bindings from the Bicep output and excludes the validation endpoint' {
-        $manifest = & $script:writeManifest @('supported')
-        & $script:planScript -SelectionManifest $manifest @script:arguments
+        & $script:planScript @script:planArguments
         $plan = Get-Content -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
         foreach ($name in @('FOUNDRY_PROJECT_ENDPOINT', 'FOUNDRY_MODEL_NAME', 'FOUNDRY_AGENT_NAME', 'MCP_PROJECT_CONNECTION_ID',
                 'AZURE_SUBSCRIPTION_ID', 'AZURE_TENANT_ID', 'AZURE_RESOURCE_GROUP')) {
             @($plan.environmentBindings) -contains $name | Should Be $true
         }
         @($plan.environmentBindings) -contains 'LLM_VALIDATION_PROJECT_ENDPOINT' | Should Be $false
-        Test-Path -LiteralPath (Join-Path $script:planDirectory 'rejected-tests.json') | Should Be $false
     }
 
-    It 'writes no plan when every sample in the queue is rejected, without failing the script' {
-        $manifest = & $script:writeManifest @('unsupported')
-        & $script:planScript -SelectionManifest $manifest @script:arguments
+    It 'writes no resource plan for an empty queue assignment' {
+        $script:agentsAssignment.selectedTests = @()
+        $script:agentsAssignment | ConvertTo-Json -Depth 5 |
+            Set-Content -LiteralPath $script:planArguments.SelectionManifest -Encoding utf8
+        { & $script:planScript @script:planArguments } | Should Throw 'at least one selected test'
         Test-Path -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') | Should Be $false
-        Test-Path -LiteralPath (Join-Path $script:planDirectory 'rejected-tests.json') | Should Be $true
+    }
+
+    It 'rejects invalid .NET assignment metadata before writing a plan: <Field>' -TestCases @(
+        @{ Field = 'schemaVersion'; Value = 2; Error = 'schema or queue' },
+        @{ Field = 'queueName'; Value = 'q2'; Error = 'schema or queue' },
+        @{ Field = 'filter'; Value = ''; Error = 'test filter' },
+        @{ Field = 'fullName'; Value = ''; Error = 'unique test IDs' },
+        @{ Field = 'name'; Value = ''; Error = 'package and name metadata' },
+        @{ Field = 'package'; Value = ''; Error = 'package and name metadata' }
+    ) {
+        param($Field, $Value, $Error)
+        if ($script:agentsAssignment.ContainsKey($Field)) { $script:agentsAssignment[$Field] = $Value }
+        else { $script:agentsAssignment.selectedTests[0][$Field] = $Value }
+        $script:agentsAssignment | ConvertTo-Json -Depth 5 |
+            Set-Content -LiteralPath $script:planArguments.SelectionManifest -Encoding utf8
+        { & $script:planScript @script:planArguments } | Should Throw $Error
+        Test-Path -LiteralPath (Join-Path $script:planDirectory 'deployment-plan.json') | Should Be $false
     }
 }

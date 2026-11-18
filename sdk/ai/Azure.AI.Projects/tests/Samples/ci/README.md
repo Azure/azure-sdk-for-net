@@ -208,8 +208,16 @@ Each worker creates a fresh Search service and waits for each indexer's
 automatic initial execution. It does not reset or manually rerun the indexer,
 which would race that execution. A successful run must process documents
 without failures or enrichment warnings, and the final index must be searchable.
-The permanent identities remain administered by the linked Python bootstrap;
-this repository does not duplicate that bootstrap or grant roles.
+The optional `New-SampleDeploymentPlan.ps1` adapter accepts the .NET queue
+manifest emitted by `New-SampleTestPlan.ps1`; it does not scan Python samples.
+`Invoke-SampleProvisioning.ps1` validates .NET assignments and rejects duplicate
+test IDs across queues before shared batch admission. The active pipeline uses
+the discovery matrix and `Invoke-BundleProvisioning.ps1`, so empty queues never
+start provisioning.
+The permanent identity bootstrap files under
+[`../shared-identities/infra`](../shared-identities/infra) are identical to the
+Python and common-resource repository copies. They remain administrator-owned:
+the live-test pipeline never invokes that bootstrap or creates its role grants.
 
 ## Cleanup safety
 
@@ -219,32 +227,26 @@ and ownership tags before deletion. Hard cancellation, agent loss, or Azure
 errors can still prevent cleanup. Expiry tags do not automatically delete
 resources; inspect the saved state before manual cleanup and wait for cleanup
 to finish before queueing another run.
+Agents test teardown propagates read and deletion authorization failures rather
+than treating HTTP 403 as successful cleanup, including outside this pipeline.
 
 ## Maintainer validation
 
 Use PowerShell 7.2+ with Pester 4.10.1 from this directory:
 
 ```powershell
-Invoke-Pester -Script @(
-  './validation/BundleProvisioning.Tests.ps1',
-  './validation/StandardProvisioning.Tests.ps1',
-  './validation/SampleTestPlan.Tests.ps1',
-  './validation/SharedProvisioning.Tests.ps1',
-  './validation/SampleCiHelpers.Tests.ps1',
-  './validation/Invoke-SampleProvisioning.Tests.ps1',
-  './validation/Remove-SampleResources.Tests.ps1',
-  './validation/IdentityResolution.Tests.ps1',
-  './validation/SamplePreflight.Tests.ps1'
-) -EnableExit
-./validation/Test-BicepTemplates.ps1
+Import-Module Pester -RequiredVersion 4.10.1
+Invoke-Pester -Script ./validation -EnableExit
+./validation/Test-BicepTemplates.ps1 -IdentityInfrastructurePath ../shared-identities/infra
+python -m pytest ./test_search_indexing.py
 python -m unittest discover -s ./validation -p test_bundle_assets.py
 ```
 
 The Bicep checker compiles the complete bundle and inspects nested resources,
 secret parameters, module dependencies and non-secret outputs. No deployment
 is performed. Permanent identity bootstrap validation is separate: supply
-`-IdentityInfrastructurePath` pointing to the Python checkout's
-`tests/samples/shared-identities/infra` directory to include its grant checks.
+`-IdentityInfrastructurePath ../shared-identities/infra` to include grant checks
+using this checkout's synchronized bootstrap.
 Offline checks do not establish live RBAC, regional feature
 availability or that live samples pass. Queue the existing pipeline only after
 reviewing its new billable footprint and setting both secret variables.

@@ -4,11 +4,10 @@
 
 <#
 .SYNOPSIS
-Python sample CI adapter for the language-neutral resource provisioner.
+.NET sample CI adapter for the language-neutral resource provisioner.
 .DESCRIPTION
-Checks the pytest-node partition before batch admission, then delegates Azure operations
-to Invoke-ResourceProvisioning.ps1. Python sample selection never changes the resource
-bundle. Other SDK languages call the shared provisioner directly with infrastructure plans.
+Checks .NET sample assignments for overlap before batch admission, then delegates Azure
+operations to Invoke-ResourceProvisioning.ps1. Sample selection never changes the resource bundle.
 #>
 [CmdletBinding(DefaultParameterSetName = 'Provision')]
 param(
@@ -22,10 +21,21 @@ param(
 
 $ErrorActionPreference = 'Stop'
 if ($PSCmdlet.ParameterSetName -eq 'Admission') {
-    . (Join-Path $PSScriptRoot 'PythonSampleCiHelpers.ps1')
-    $plans = @(Get-ChildItem -LiteralPath $BatchPlanDirectory -Filter 'deployment-plan.json' -Recurse -File |
-        ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json -AsHashtable })
-    if ($plans.Count -lt 1 -or $plans.Count -gt 4) { throw 'Expected one to four fresh queue plans.' }
-    Assert-PythonSamplePartition -Plans $plans
+    . (Join-Path $PSScriptRoot 'DotNetSampleAssignmentHelpers.ps1')
+    $files = @(Get-ChildItem -LiteralPath $BatchPlanDirectory -Filter 'deployment-plan.json' -Recurse -File)
+    if ($files.Count -lt 1 -or $files.Count -gt 4) { throw 'Expected one to four fresh queue plans.' }
+    $assignedTests = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    $queues = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($file in $files) {
+        $queue = $file.Directory.Name
+        $plan = Get-Content -LiteralPath $file.FullName -Raw | ConvertFrom-Json -AsHashtable
+        Assert-DotNetSampleAssignment -Assignment $plan -QueueName $queue
+        if (-not $queues.Add($queue)) { throw "Duplicate deployment plan for queue '$queue'." }
+        foreach ($test in $plan.selectedTests) {
+            if (-not $assignedTests.Add($test.fullName)) {
+                throw "Sample '$($test.fullName)' is assigned to more than one queue."
+            }
+        }
+    }
 }
 & (Join-Path $PSScriptRoot 'Invoke-ResourceProvisioning.ps1') @PSBoundParameters

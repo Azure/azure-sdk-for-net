@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "managedIdentities": [
+    { "target": "project" },
+    { "target": "account" },
+    { "target": "search" },
+    { "target": "function" }
+  ],
+  "roleAssignments": [
+    {
+      "target": "project",
+      "roleDefinitionId": "53ca6127-db72-4b80-b1b0-d745d6d5456d",
+      "roleName": "Foundry User"
+    },
+    {
+      "target": "project",
+      "roleDefinitionId": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
+      "roleName": "Storage Blob Data Contributor"
+    },
+    {
+      "target": "project",
+      "roleDefinitionId": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b",
+      "roleName": "Storage Blob Data Owner",
+      "condition": "((!(ActionMatches{'Microsoft.Storage/storageAccounts/blobServices/containers/blobs/tags/read'})  AND  !(ActionMatches{'Microsoft.Storage/storageAccounts/blobServices/containers/blobs/filter/action'}) AND  !(ActionMatches{'Microsoft.Storage/storageAccounts/blobServices/containers/blobs/tags/write'}) ) OR (@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:name] StringLikeIgnoreCase '*-azureml-agent'))",
+      "conditionVersion": "2.0"
+    },
+    {
+      "target": "project",
+      "roleDefinitionId": "230815da-be43-4aae-9cb4-875f7bd000aa",
+      "roleName": "Cosmos DB Operator"
+    },
+    {
+      "target": "project",
+      "roleDefinitionId": "7ca78c08-252a-4471-8644-bb5ff32d4ba0",
+      "roleName": "Search Service Contributor"
+    },
+    {
+      "target": "project",
+      "roleDefinitionId": "8ebe5a00-799e-43f5-93ac-243d3dce84a7",
+      "roleName": "Search Index Data Contributor"
+    },
+    {
+      "target": "project",
+      "roleDefinitionId": "974c5e8b-45b9-4653-ba55-5f855dd0fb88",
+      "roleName": "Storage Queue Data Contributor"
+    },
+    {
+      "target": "project",
+      "roleDefinitionId": "78cf819f-0969-4ebe-8759-015c6efcd5bf",
+      "roleName": "Playwright Workspace Contributor"
+    },
+    {
+      "target": "search",
+      "roleDefinitionId": "7ca78c08-252a-4471-8644-bb5ff32d4ba0",
+      "roleName": "Search Service Contributor"
+    },
+    {
+      "target": "search",
+      "roleDefinitionId": "8ebe5a00-799e-43f5-93ac-243d3dce84a7",
+      "roleName": "Search Index Data Contributor"
+    },
+    {
+      "target": "search",
+      "roleDefinitionId": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
+      "roleName": "Storage Blob Data Contributor"
+    },
+    {
+      "target": "search",
+      "roleDefinitionId": "5e0bd9bd-7b93-4f28-af87-19fc36ad61bd",
+      "roleName": "Cognitive Services OpenAI User"
+    },
+    {
+      "target": "function",
+      "roleDefinitionId": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b",
+      "roleName": "Storage Blob Data Owner"
+    },
+    {
+      "target": "function",
+      "roleDefinitionId": "974c5e8b-45b9-4653-ba55-5f855dd0fb88",
+      "roleName": "Storage Queue Data Contributor"
+    },
+    {
+      "target": "pipeline",
+      "roleDefinitionId": "53ca6127-db72-4b80-b1b0-d745d6d5456d",
+      "roleName": "Foundry User"
+    }
+  ]
+}

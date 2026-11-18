@@ -3,7 +3,7 @@
 #Requires -Version 7.2
 
 . (Join-Path $PSScriptRoot '../SampleCiHelpers.ps1')
-. (Join-Path $PSScriptRoot '../PythonSampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot '..\SampleTestPlanHelpers.ps1')
 
 function Invoke-QueueTestEnvironment {
     param([Parameter(Mandatory)] [scriptblock] $Test)
@@ -38,19 +38,35 @@ function Invoke-QueueTestEnvironment {
     }
 }
 
+function New-TestQueueAssignments {
+    param([ValidateRange(1, 4)] [int] $Count = 4)
+
+    $tests = @(
+        @{ package = 'Azure.AI.Projects'; name = 'AgentsBasics'; fullName = 'Azure.AI.Projects.Tests.Samples.Sample_AIAgents(False).AgentsBasics' }
+        @{ package = 'Azure.AI.Extensions.OpenAI'; name = 'AzureFunction'; fullName = 'Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_AzureFunction(False).AzureFunction' }
+        @{ package = 'Azure.AI.Projects'; name = 'EvaluationsExample'; fullName = 'Azure.AI.Projects.Tests.Samples.Evaluation.Sample_Evaluations(False).EvaluationsExample' }
+        @{ package = 'Azure.AI.Projects'; name = 'EvaluationsAIAssistedExample'; fullName = 'Azure.AI.Projects.Tests.Samples.Evaluation.Sample_EvaluationsAIAssisted(False).EvaluationsAIAssistedExample' }
+    )
+    return (New-SampleQueuePlan -Tests $tests[0..($Count - 1)] -Pool unit -Image unit).queues
+}
+
 function New-OfflineQueuePlan {
     param([Parameter(Mandatory)] [string] $OutputDirectory, [string] $QueueName = 'q1',
         [string] $IdentityResourceGroup = 'rg-azsdk-identities-westus3-102826_164519',
-        [string] $NameSuffix = 'westus3-102826_164519', [string] $Location = 'westus3')
+        [string] $NameSuffix = 'westus3-102826_164519', [string] $Location = 'westus3',
+        [hashtable] $Assignment = (New-TestQueueAssignments)[$QueueName])
 
     $null = New-Item -ItemType Directory -Path $OutputDirectory -Force
-    $manifest = Join-Path $OutputDirectory 'selection.json'
-    @{ schemaVersion = 1; tests = @(@{
-        node_id = 'tests/samples/test_samples.py::TestSamples::test_agent_tools_samples[sample_agent_mcp_with_project_connection-{0}]' -f $QueueName
-        sample_path = 'samples/agents/tools/sample_agent_mcp_with_project_connection.py'
-    }) } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifest -Encoding utf8
-    $planScript = Join-Path $PSScriptRoot '../New-SampleDeploymentPlan.ps1'
-    & $planScript -SelectionManifest $manifest -OutputDirectory $OutputDirectory -QueueName $QueueName `
+    $planScript = Join-Path $PSScriptRoot '..\New-SampleDeploymentPlan.ps1'
+    $selectionArguments = @{}
+    if ($Assignment) {
+        $manifest = Join-Path $OutputDirectory 'selected-tests.json'
+        $Assignment | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifest -Encoding utf8
+        $selectionArguments.SelectionManifest = $manifest
+    } else {
+        $planScript = Join-Path $PSScriptRoot '..\New-ResourceDeploymentPlan.ps1'
+    }
+    & $planScript @selectionArguments -OutputDirectory $OutputDirectory -QueueName $QueueName `
         -DefinitionId $env:SYSTEM_DEFINITIONID -BuildId $env:BUILD_BUILDID -JobAttempt $env:SYSTEM_JOBATTEMPT -IdentityResourceGroup $IdentityResourceGroup
     $plan = Get-Content -LiteralPath (Join-Path $OutputDirectory 'deployment-plan.json') -Raw | ConvertFrom-Json -AsHashtable
     # Explicit fixture admission only: the live resolver is covered by IdentityResolution.Tests.ps1.
@@ -66,10 +82,13 @@ function New-OfflineQueuePlan {
 }
 
 function New-OfflineQueuePlans {
-    param([Parameter(Mandatory)] [string] $OutputDirectory)
+    param([Parameter(Mandatory)] [string] $OutputDirectory, [ValidateRange(1, 4)] [int] $Count = 4,
+        [switch] $InfrastructureOnly)
 
-    foreach ($queue in @('q1', 'q2', 'q3', 'q4')) {
-        New-OfflineQueuePlan -OutputDirectory (Join-Path $OutputDirectory $queue) -QueueName $queue
+    $assignments = New-TestQueueAssignments -Count $Count
+    foreach ($queue in $assignments.Keys) {
+        $assignment = if (-not $InfrastructureOnly) { $assignments[$queue] }
+        New-OfflineQueuePlan -OutputDirectory (Join-Path $OutputDirectory $queue) -QueueName $queue -Assignment $assignment
     }
 }
 
@@ -94,6 +113,7 @@ Describe 'Offline queue ownership and deployment plans' {
     It 'creates four unique run-owned groups while binding the same four static shared identities' {
         Invoke-QueueTestEnvironment {
             $plans = @(New-OfflineQueuePlans -OutputDirectory (Join-Path $TestDrive 'plans'))
+            $assignments = New-TestQueueAssignments
             $expectedIdentities = Get-QueueTestIdentityIds
             $plans.Count | Should Be 4
             ($plans.queueName -join ',') | Should Be 'q1,q2,q3,q4'
@@ -107,7 +127,8 @@ Describe 'Offline queue ownership and deployment plans' {
                 $plan.tenantId | Should Be $env:AZURE_TENANT_ID
                 $plan.ContainsKey('provisionMcp') | Should Be $false
                 @($plan.selectedTests).Count | Should Be 1
-                $plan.selectedTests[0].sample_path | Should Be 'samples/agents/tools/sample_agent_mcp_with_project_connection.py'
+                $plan.selectedTests[0].fullName | Should BeExactly $assignments[$plan.queueName].selectedTests[0].fullName
+                $plan.filter | Should BeExactly $assignments[$plan.queueName].filter
                 $plan.sharedIdentities.Count | Should Be 4
                 foreach ($purpose in $expectedIdentities.Keys) {
                     $plan.sharedIdentities[$purpose] | Should Be $expectedIdentities[$purpose]
@@ -485,9 +506,9 @@ Describe 'Aggregate four-queue capacity admission' {
         }
     }
 
-    It 'checks only two active queues for the default two-case selection' {
+    It 'checks only two active queues for a two-case selection' {
         Invoke-QueueTestEnvironment {
-            $plans = @(New-OfflineQueuePlans -OutputDirectory (Join-Path $TestDrive 'two-queue-capacity'))[0..1]
+            $plans = @(New-OfflineQueuePlans -OutputDirectory (Join-Path $TestDrive 'two-queue-capacity') -Count 2)
             $script:batchCapacityFixture.account.limit = 2
             $script:batchCapacityFixture.search.limit = 2
             $script:batchCapacityFixture.model.limit = 20
@@ -496,12 +517,12 @@ Describe 'Aggregate four-queue capacity admission' {
         }
     }
 
-    It 'admits infrastructure plans with no Python test metadata' {
+    It 'admits shared infrastructure plans with no .NET assignment metadata' {
         Invoke-QueueTestEnvironment {
-            $plans = @(New-OfflineQueuePlans -OutputDirectory (Join-Path $TestDrive 'language-neutral-capacity'))
+            $plans = @(New-OfflineQueuePlans -OutputDirectory (Join-Path $TestDrive 'language-neutral-capacity') -InfrastructureOnly)
             foreach ($plan in $plans) {
-                $plan.Remove('selectedTests')
-                $plan.Remove('requiredEnvironment')
+                $plan.Contains('selectedTests') | Should Be $false
+                $plan.Contains('filter') | Should Be $false
             }
             @(Assert-SampleBatchCapacity -Plans $plans).Count | Should Be 0
             Assert-MockCalled Invoke-SampleAzure -Times 4 -Exactly -Scope It
@@ -509,14 +530,24 @@ Describe 'Aggregate four-queue capacity admission' {
     }
 
     It 'rejects empty or repeated queue selections before contacting Azure: <Mode>' -TestCases @(
-        @{ Mode = 'empty' }, @{ Mode = 'repeat' }
+        @{ Mode = 'empty'; ExpectedError = 'at least one selected test' },
+        @{ Mode = 'repeat'; ExpectedError = 'assigned to more than one queue' }
     ) {
-        param($Mode)
+        param($Mode, $ExpectedError)
         Invoke-QueueTestEnvironment {
-            $plans = @(New-OfflineQueuePlans -OutputDirectory (Join-Path $TestDrive 'invalid-shards'))
+            $batchDirectory = Join-Path $TestDrive "invalid-shards-$Mode"
+            $resolvedDirectory = Join-Path $TestDrive "resolved-$Mode"
+            $plans = @(New-OfflineQueuePlans -OutputDirectory $batchDirectory)
             if ($Mode -eq 'empty') { $plans[1].selectedTests = @() }
-            else { $plans[1].selectedTests = $plans[0].selectedTests }
-            { Assert-PythonSamplePartition -Plans $plans } | Should Throw 'unique test nodes'
+            else {
+                $plans[1].selectedTests = $plans[0].selectedTests
+                $plans[1].filter = $plans[0].filter
+            }
+            $plans[1] | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath (Join-Path $batchDirectory 'q2\deployment-plan.json') -Encoding utf8
+            $provisioningScript = Join-Path $PSScriptRoot '..\Invoke-SampleProvisioning.ps1'
+            { & $provisioningScript -BatchPlanDirectory $batchDirectory -ResolvedPlanDirectory $resolvedDirectory } |
+                Should Throw $ExpectedError
+            Test-Path -LiteralPath $resolvedDirectory | Should Be $false
             Assert-MockCalled Invoke-SampleAzure -Times 0 -Exactly -Scope It
             $script:queueAzureCalls.Count | Should Be 0
         }

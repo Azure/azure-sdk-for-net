@@ -1,0 +1,21 @@
+{
+  "repository": "microsoft-foundry/foundry-samples",
+  "commit": "fbbe89b701c758e871922adaceea0ac0e4dae40f",
+  "path": "infrastructure/infrastructure-setup-bicep/43-standard-agent-setup-with-customization",
+  "files": {
+    "main.bicep": "6219ab326d14d96a89f9a7801be89c4882be339ac23e94060d3b1af03903da37",
+    "modules-standard/validate-existing-resources.bicep": "7b6ee940a173e86cf834538d6353c0089486b0ef229d7a55ff762688a0a3f48b",
+    "modules-standard/standard-dependent-resources.bicep": "b2df5832a11c757135df068a3b0d5c517069e6d4df8b549cb496a9876a8cadd5",
+    "modules-standard/ai-account-identity.bicep": "d917395d0b972d96c4ed594e35c836b8febd68a042ef3214b476b7ee3cb888a8",
+    "modules-standard/ai-project-identity.bicep": "0220ed1406abd8a4e4f133122fc59665a10e59aa82fd564ad4f9ac618e6c57fe",
+    "modules-standard/format-project-workspace-id.bicep": "257ee1db2c33660f3a66d5eca78cc2969795eb4e512777244fda97223a3d8dbe",
+    "modules-standard/application-insights.bicep": "44ecb5a5508b640cec90b1cb7bf829f4a9b72175790ba8b87cc1e47f9247820c",
+    "modules-standard/application-insights-role-assignment.bicep": "e2e50c693df5a2304ac99f3f848fe3a15ef231c26310f76e81a0e871e3900fcc",
+    "modules-standard/azure-storage-account-role-assignment.bicep": "21974374f925c3222fb3ffef6f259cf75bb61d37d43aaa8dcf01b7e585051d69",
+    "modules-standard/cosmosdb-account-role-assignment.bicep": "d568c3ecea1da6dec298cda1dfde08cd16b80976d860e52d4e67b63d0d479e8a",
+    "modules-standard/ai-search-role-assignments.bicep": "f7fba74a88f55611102f11de644fde0d684309583adefcd9e6af75e00de03f57",
+    "modules-standard/add-project-capability-host.bicep": "09c8d966f9f8efe7cb7603219236a73654b7b587d01050fd0dd3e885b85b1ed5",
+    "modules-standard/blob-storage-container-role-assignments.bicep": "73d1105c27be8c36752a4cb457cc292e9630ad06b77c7888a7b0f1e8b76d0b5f",
+    "modules-standard/cosmos-container-role-assignments.bicep": "eb3b43de72a3e4d5e743497bdf0e16bec39053a9c868aeb13f34b04e0705e3b7"
+  }
+}

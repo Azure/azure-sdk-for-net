@@ -5,6 +5,21 @@
 . (Join-Path $PSScriptRoot '../SampleTestPlanHelpers.ps1')
 
 Describe 'Dynamic sample queue assignment' {
+    It 'creates one billable worker for a single selected sample and wires discovery before provisioning' {
+        $plan = New-SampleQueuePlan -Tests @(@{
+            fullName = 'Azure.AI.Projects.Tests.Samples.Sample_AIAgents(False).AgentsBasics'
+            name = 'AgentsBasics'
+            package = 'Azure.AI.Projects'
+        }) -QueueCount 4 -Pool pool -Image image
+        @($plan.matrix.Keys).Count | Should Be 1
+        $plan.matrix.Contains('q1') | Should Be $true
+        $template = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-tests-stages.yml') -Raw
+        $template | Should Match "dependsOn: Plan"
+        $template | Should Match "Matrix: stageDependencies.Plan.Plan.outputs\['Discover.WorkerMatrix'\]"
+        $template.IndexOf('Invalid or empty worker assignment.') |
+            Should BeLessThan $template.IndexOf('- ${{ parameters.PreSteps }}')
+    }
+
     It 'distributes <Count> samples across up to <Queues> queues without repeats or empty workers' -TestCases @(
         @{ Count = 6; Queues = 4; Sizes = '2,2,1,1' }
         @{ Count = 5; Queues = 4; Sizes = '2,1,1,1' }

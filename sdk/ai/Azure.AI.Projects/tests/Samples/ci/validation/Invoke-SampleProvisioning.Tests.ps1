@@ -2,6 +2,8 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
+. (Join-Path $PSScriptRoot '..\SampleTestPlanHelpers.ps1')
+
 Describe 'Provisioning rejects missing secrets and ineligible regions before mutation' {
     It 'creates neither deployment state nor resources: <Label>' -TestCases @(
         @{ Label = 'missing OpenAPI key'; OpenApiKey = $null },
@@ -22,12 +24,16 @@ Describe 'Provisioning rejects missing secrets and ineligible regions before mut
             $env:AZURE_SUBSCRIPTION_ID = '11111111-1111-1111-1111-111111111111'
             $env:AZURE_TENANT_ID = '22222222-2222-2222-2222-222222222222'
             $env:SAMPLE_QUEUE_NAME = 'q1'
-            $plan = @{
-                schemaVersion = 1
+            $test = @{
+                package = 'Azure.AI.Projects'
+                fullName = 'Azure.AI.Projects.Tests.Samples.Sample_AIAgents(False).AgentsBasics'
+                name = 'AgentsBasics'
+            }
+            $plan = (New-SampleQueuePlan -Tests $test -Pool unit -Image unit).queues.q1
+            $plan += @{
                 definitionId = $(if ($env:SYSTEM_DEFINITIONID) { $env:SYSTEM_DEFINITIONID } else { '8392' })
                 buildId = $(if ($env:BUILD_BUILDID) { $env:BUILD_BUILDID } else { '12345' })
                 jobAttempt = '1'; ownerToken = '0123456789abcdef0123456789abcdef'
-                queueName = 'q1'
                 subscriptionId = $env:AZURE_SUBSCRIPTION_ID; tenantId = $env:AZURE_TENANT_ID
                 location = 'westus3'
             }
@@ -48,8 +54,10 @@ Describe 'Provisioning rejects missing secrets and ineligible regions before mut
                             $payload = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(($claims | ConvertTo-Json -Compress))).TrimEnd('=').Replace('+', '-').Replace('/', '_')
                             return (@{ accessToken = 'header.' + $payload + '.signature' } | ConvertTo-Json -Compress)
                         }
-                        return (@{ id = $env:AZURE_SUBSCRIPTION_ID; tenantId = $env:AZURE_TENANT_ID; state = 'Enabled';
-                            user = @{ type = 'servicePrincipal'; name = '33333333-3333-3333-3333-333333333333' } } | ConvertTo-Json -Compress)
+                        if ($args[1] -eq 'show') {
+                            return (@{ id = $env:AZURE_SUBSCRIPTION_ID; tenantId = $env:AZURE_TENANT_ID; state = 'Enabled';
+                                user = @{ type = 'servicePrincipal'; name = '33333333-3333-3333-3333-333333333333' } } | ConvertTo-Json -Compress)
+                        }
                     }
                     if ($args[0] -eq 'group' -and $args[1] -eq 'exists') { return 'false' }
                     if ($args[0] -eq 'rest' -and $args[2] -eq 'get') {
