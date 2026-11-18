@@ -35,7 +35,11 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             string useAzureCli = GetOptionalVariable("USE_AZURE_CLI_CREDENTIAL");
             if (useAzureCli != null && bool.Parse(useAzureCli))
             {
-                return new AzureCliCredential(new AzureCliCredentialOptions { TenantId = TenantId });
+                return new AzureCliCredential(new AzureCliCredentialOptions
+                {
+                    TenantId = TenantId,
+                    ProcessTimeout = TimeSpan.FromMinutes(1)
+                });
             }
 
             return base.CreateDeveloperCredential();

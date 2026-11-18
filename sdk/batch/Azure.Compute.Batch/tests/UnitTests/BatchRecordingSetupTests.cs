@@ -49,6 +49,20 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             }, fixture.JsonPathSanitizers);
         }
 
+        [Test]
+        public void OrdinaryWindowsPoolsUseD2V2AndWindows2022()
+        {
+            var fixture = new WindowsPoolFixture(null, "test-pool", false);
+
+            BatchPoolCreateOptions options = fixture.CreatePoolOptions(1);
+
+            Assert.AreEqual("Standard_D2_v2", options.VmSize);
+            Assert.AreEqual(1, options.TargetDedicatedNodes);
+            Assert.AreEqual("windowsserver2022", options.VirtualMachineConfiguration.ImageReference.Offer);
+            Assert.AreEqual("2022-datacenter-smalldisk", options.VirtualMachineConfiguration.ImageReference.Sku);
+            Assert.AreEqual("batch.node.windows amd64", options.VirtualMachineConfiguration.NodeAgentSkuId);
+        }
+
         private class TestableEnvironment : BatchLiveTestEnvironment
         {
             public TokenCredential CreateCredential() => CreateDeveloperCredential();

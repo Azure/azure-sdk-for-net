@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolID);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolID);
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolID);
             }
         }
 
@@ -146,11 +146,21 @@ namespace Azure.Compute.Batch.Tests.Integration
             var client = CreateBatchClient();
             WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "ReImageBatchNode", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
+            bool poolCreated = false;
 
             try
             {
-                // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
+                VirtualMachineConfiguration configuration = iaasWindowsPoolFixture.CreatePoolOptions(1).VirtualMachineConfiguration;
+                configuration.ImageReference.Offer = "windowsserver2022";
+                configuration.ImageReference.Sku = "2022-datacenter-smalldisk";
+                var options = new BatchPoolCreateOptions(poolID, "Standard_D2_v2")
+                {
+                    VirtualMachineConfiguration = configuration,
+                    TargetDedicatedNodes = 1
+                };
+                await client.CreatePoolAsync(options);
+                poolCreated = true;
+                await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
 
                 string batchNodeID = "";
                 await foreach (BatchNode item in client.GetNodesAsync(poolID))
@@ -159,7 +169,6 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
                 Assert.IsNotEmpty(batchNodeID);
 
-                // reboot node
                 ReimageNodeOperation reImageNodeOperation = await client.ReimageNodeAsync(WaitUntil.Started, poolID, batchNodeID);
 
                 BatchNode node = await reImageNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
@@ -171,7 +180,10 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                if (poolCreated)
+                {
+                    await client.DeletePoolAsync(WaitUntil.Completed, poolID);
+                }
             }
         }
 
@@ -212,7 +224,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolID);
             }
         }
 
@@ -260,7 +272,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolID);
             }
         }
 
@@ -307,7 +319,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolID);
             }
         }
 
@@ -347,7 +359,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeletePoolAsync(WaitUntil.Completed, poolID);
             }
         }
     }

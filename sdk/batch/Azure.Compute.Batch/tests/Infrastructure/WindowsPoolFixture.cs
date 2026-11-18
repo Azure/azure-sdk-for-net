@@ -34,8 +34,8 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
-                Offer = "WindowsServer",
-                Sku = "2019-datacenter-smalldisk",
+                Offer = "windowsserver2022",
+                Sku = "2022-datacenter-smalldisk",
                 Version = "latest"
             };
             VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");

@@ -1251,6 +1251,9 @@ Set `AZURE_TEST_MODE=Record` and use a test-name filter to record only the inten
 Start with `BatchApplicationsIntegrationTests.GetandListApplication`, which only lists and
 reads applications. Other integration tests create and delete billable resources and should
 use dedicated accounts. Run the same tests with `AZURE_TEST_MODE=Playback` afterward.
+Ordinary Windows pool fixtures use `Standard_D2_v2` with the
+`windowsserver2022:2022-datacenter-smalldisk` image. Pool cleanup waits for deletion
+before the next test can reuse the same pool name.
 The security-profile test uses a confidential-capable Ubuntu VM in the Batch service
 allocation account. The disk-encryption test independently uses an ordinary Windows VM
 with the configured Disk Encryption Set in the user-subscription account; it does not
