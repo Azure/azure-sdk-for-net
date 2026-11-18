@@ -897,26 +897,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new BulkPublishSolutionContent((targets ?? new ChangeTrackingList<BulkPublishTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), solutionConfiguration, default);
         }
 
-        /// <summary> Bulk publish target details. </summary>
-        /// <param name="targetId"> ArmId of Target. </param>
-        /// <param name="solutionDependencies"> Solution dependencies. </param>
-        /// <param name="solutionInstanceName"> Name of the solution instance. </param>
-        /// <param name="solutionVersionId"> ArmId of Target Solution Version. </param>
-        /// <param name="solutionConfiguration"> Configuration of solution. </param>
-        /// <returns> A new <see cref="Models.BulkPublishTargetDetails"/> instance for mocking. </returns>
-        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default, string solutionInstanceName = default, ResourceIdentifier solutionVersionId = default, string solutionConfiguration = default)
-        {
-            solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
-
-            return new BulkPublishTargetDetails(
-                targetId,
-                (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(),
-                solutionInstanceName,
-                solutionVersionId,
-                solutionConfiguration,
-                default);
-        }
-
         /// <summary> Bulk publish solution parameter. </summary>
         /// <param name="targets"> Targets to which solution needs to be published. </param>
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
