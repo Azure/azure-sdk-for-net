@@ -13,23 +13,23 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Azure configuration returned as part of FlexNode bootstrap data. </summary>
-    public partial class BootstrapAzureConfig
+    public partial class AgentPoolBootstrapAzureConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapAzureConfig"/>. </summary>
-        internal BootstrapAzureConfig()
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapAzureConfig"/>. </summary>
+        internal AgentPoolBootstrapAzureConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapAzureConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapAzureConfig"/>. </summary>
         /// <param name="resourceManagerEndpoint"> Azure Resource Manager endpoint for the cloud environment. </param>
         /// <param name="targetCluster"> Target cluster identity. </param>
         /// <param name="targetAgentPoolName"> Target agent pool name. </param>
         /// <param name="bootstrapTokenDetail"> Bootstrap token for node enrollment. Do not cache or log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootstrapAzureConfig(string resourceManagerEndpoint, BootstrapTargetCluster targetCluster, string targetAgentPoolName, BootstrapTokenInfo bootstrapTokenDetail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolBootstrapAzureConfig(string resourceManagerEndpoint, BootstrapTargetCluster targetCluster, string targetAgentPoolName, BootstrapTokenInfo bootstrapTokenDetail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceManagerEndpoint = resourceManagerEndpoint;
             TargetCluster = targetCluster;

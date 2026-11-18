@@ -17,56 +17,56 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// Properties of a maintenance window.
     /// For more information, see https://aka.ms/aks/maintenance-windows.
     /// </summary>
-    public partial class MaintenanceWindowResourceProperties : IJsonModel<MaintenanceWindowResourceProperties>
+    public partial class ContainerServiceManagedMaintenanceWindowProperties : IJsonModel<ContainerServiceManagedMaintenanceWindowProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResourceProperties"/> for deserialization. </summary>
-        internal MaintenanceWindowResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedMaintenanceWindowProperties"/> for deserialization. </summary>
+        internal ContainerServiceManagedMaintenanceWindowProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceWindowResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceManagedMaintenanceWindowProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedMaintenanceWindowProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMaintenanceWindowResourceProperties(document.RootElement, options);
+                        return DeserializeContainerServiceManagedMaintenanceWindowProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceManagedMaintenanceWindowProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedMaintenanceWindowProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceManagedMaintenanceWindowProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceWindowResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceManagedMaintenanceWindowProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindowResourceProperties IPersistableModel<MaintenanceWindowResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceManagedMaintenanceWindowProperties IPersistableModel<ContainerServiceManagedMaintenanceWindowProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceWindowResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceManagedMaintenanceWindowProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenanceWindowResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceManagedMaintenanceWindowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedMaintenanceWindowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceManagedMaintenanceWindowProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -132,24 +132,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindowResourceProperties IJsonModel<MaintenanceWindowResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceManagedMaintenanceWindowProperties IJsonModel<ContainerServiceManagedMaintenanceWindowProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceWindowResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceManagedMaintenanceWindowProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedMaintenanceWindowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceManagedMaintenanceWindowProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceWindowResourceProperties(document.RootElement, options);
+            return DeserializeContainerServiceManagedMaintenanceWindowProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaintenanceWindowResourceProperties DeserializeMaintenanceWindowResourceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceManagedMaintenanceWindowProperties DeserializeContainerServiceManagedMaintenanceWindowProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MaintenanceWindowResourceProperties(
+            return new ContainerServiceManagedMaintenanceWindowProperties(
                 provisioningState,
                 schedule,
                 startsOn,

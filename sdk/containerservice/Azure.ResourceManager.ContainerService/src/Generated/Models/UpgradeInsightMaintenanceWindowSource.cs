@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The auto-upgrade schedule that a maintenance window is derived from. </summary>
-    public readonly partial struct MaintenanceWindowSource : IEquatable<MaintenanceWindowSource>
+    public readonly partial struct UpgradeInsightMaintenanceWindowSource : IEquatable<UpgradeInsightMaintenanceWindowSource>
     {
         private readonly string _value;
         /// <summary> The window is derived from the cluster auto-upgrade schedule (aksManagedAutoUpgradeSchedule), which governs Kubernetes version upgrades. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The window is derived from the node OS auto-upgrade schedule (aksManagedNodeOSUpgradeSchedule), which governs node OS image upgrades. </summary>
         private const string NodeOSUpgradeScheduleValue = "NodeOSUpgradeSchedule";
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightMaintenanceWindowSource"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MaintenanceWindowSource(string value)
+        public UpgradeInsightMaintenanceWindowSource(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The window is derived from the cluster auto-upgrade schedule (aksManagedAutoUpgradeSchedule), which governs Kubernetes version upgrades. </summary>
-        public static MaintenanceWindowSource ClusterAutoUpgradeSchedule { get; } = new MaintenanceWindowSource(ClusterAutoUpgradeScheduleValue);
+        public static UpgradeInsightMaintenanceWindowSource ClusterAutoUpgradeSchedule { get; } = new UpgradeInsightMaintenanceWindowSource(ClusterAutoUpgradeScheduleValue);
 
         /// <summary> The window is derived from the node OS auto-upgrade schedule (aksManagedNodeOSUpgradeSchedule), which governs node OS image upgrades. </summary>
-        public static MaintenanceWindowSource NodeOSUpgradeSchedule { get; } = new MaintenanceWindowSource(NodeOSUpgradeScheduleValue);
+        public static UpgradeInsightMaintenanceWindowSource NodeOSUpgradeSchedule { get; } = new UpgradeInsightMaintenanceWindowSource(NodeOSUpgradeScheduleValue);
 
-        /// <summary> Determines if two <see cref="MaintenanceWindowSource"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="UpgradeInsightMaintenanceWindowSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MaintenanceWindowSource left, MaintenanceWindowSource right) => left.Equals(right);
+        public static bool operator ==(UpgradeInsightMaintenanceWindowSource left, UpgradeInsightMaintenanceWindowSource right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MaintenanceWindowSource"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="UpgradeInsightMaintenanceWindowSource"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MaintenanceWindowSource left, MaintenanceWindowSource right) => !left.Equals(right);
+        public static bool operator !=(UpgradeInsightMaintenanceWindowSource left, UpgradeInsightMaintenanceWindowSource right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MaintenanceWindowSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="UpgradeInsightMaintenanceWindowSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceWindowSource(string value) => new MaintenanceWindowSource(value);
+        public static implicit operator UpgradeInsightMaintenanceWindowSource(string value) => new UpgradeInsightMaintenanceWindowSource(value);
 
-        /// <summary> Converts a string to a <see cref="MaintenanceWindowSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="UpgradeInsightMaintenanceWindowSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceWindowSource?(string value) => value == null ? null : new MaintenanceWindowSource(value);
+        public static implicit operator UpgradeInsightMaintenanceWindowSource?(string value) => value == null ? null : new UpgradeInsightMaintenanceWindowSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MaintenanceWindowSource other && Equals(other);
+        public override bool Equals(object obj) => obj is UpgradeInsightMaintenanceWindowSource other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MaintenanceWindowSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(UpgradeInsightMaintenanceWindowSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

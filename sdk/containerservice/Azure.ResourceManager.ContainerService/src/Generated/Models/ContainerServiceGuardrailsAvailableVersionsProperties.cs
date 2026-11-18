@@ -12,21 +12,21 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Whether the version is default or not and support info. </summary>
-    public partial class GuardrailsAvailableVersionsProperties
+    public partial class ContainerServiceGuardrailsAvailableVersionsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GuardrailsAvailableVersionsProperties"/>. </summary>
-        internal GuardrailsAvailableVersionsProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsAvailableVersionsProperties"/>. </summary>
+        internal ContainerServiceGuardrailsAvailableVersionsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GuardrailsAvailableVersionsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsAvailableVersionsProperties"/>. </summary>
         /// <param name="isDefaultVersion"> Whether this is the default version. </param>
         /// <param name="support"> Whether the version is preview or stable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuardrailsAvailableVersionsProperties(bool? isDefaultVersion, ContainerServiceGuardrailsSupport? support, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceGuardrailsAvailableVersionsProperties(bool? isDefaultVersion, ContainerServiceGuardrailsSupport? support, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDefaultVersion = isDefaultVersion;
             Support = support;

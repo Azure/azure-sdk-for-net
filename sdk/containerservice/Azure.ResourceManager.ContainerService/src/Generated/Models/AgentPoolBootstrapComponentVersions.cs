@@ -12,22 +12,22 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Component versions returned as part of FlexNode bootstrap data. </summary>
-    public partial class BootstrapComponentVersions
+    public partial class AgentPoolBootstrapComponentVersions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapComponentVersions"/>. </summary>
-        internal BootstrapComponentVersions()
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapComponentVersions"/>. </summary>
+        internal AgentPoolBootstrapComponentVersions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapComponentVersions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapComponentVersions"/>. </summary>
         /// <param name="kubernetes"> Kubernetes version. </param>
         /// <param name="containerd"> Containerd version. </param>
         /// <param name="runc"> Runc version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootstrapComponentVersions(string kubernetes, string containerd, string runc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolBootstrapComponentVersions(string kubernetes, string containerd, string runc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kubernetes = kubernetes;
             Containerd = containerd;

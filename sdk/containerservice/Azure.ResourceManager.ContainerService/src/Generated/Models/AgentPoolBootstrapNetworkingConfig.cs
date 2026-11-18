@@ -12,21 +12,21 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Network configuration returned as part of FlexNode bootstrap data. </summary>
-    public partial class BootstrapNetworkingConfig
+    public partial class AgentPoolBootstrapNetworkingConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapNetworkingConfig"/>. </summary>
-        internal BootstrapNetworkingConfig()
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapNetworkingConfig"/>. </summary>
+        internal AgentPoolBootstrapNetworkingConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapNetworkingConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapNetworkingConfig"/>. </summary>
         /// <param name="dnsServiceIP"> IP address of the cluster DNS service. </param>
         /// <param name="cniVersion"> CNI plugin version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootstrapNetworkingConfig(string dnsServiceIP, string cniVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolBootstrapNetworkingConfig(string dnsServiceIP, string cniVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsServiceIP = dnsServiceIP;
             CniVersion = cniVersion;

@@ -14,51 +14,51 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Component versions returned as part of FlexNode bootstrap data. </summary>
-    public partial class BootstrapComponentVersions : IJsonModel<BootstrapComponentVersions>
+    public partial class AgentPoolBootstrapComponentVersions : IJsonModel<AgentPoolBootstrapComponentVersions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BootstrapComponentVersions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentPoolBootstrapComponentVersions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolBootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBootstrapComponentVersions(document.RootElement, options);
+                        return DeserializeAgentPoolBootstrapComponentVersions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BootstrapComponentVersions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolBootstrapComponentVersions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolBootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BootstrapComponentVersions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolBootstrapComponentVersions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BootstrapComponentVersions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentPoolBootstrapComponentVersions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BootstrapComponentVersions IPersistableModel<BootstrapComponentVersions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentPoolBootstrapComponentVersions IPersistableModel<AgentPoolBootstrapComponentVersions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BootstrapComponentVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentPoolBootstrapComponentVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BootstrapComponentVersions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentPoolBootstrapComponentVersions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolBootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BootstrapComponentVersions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolBootstrapComponentVersions)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Kubernetes))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BootstrapComponentVersions IJsonModel<BootstrapComponentVersions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentPoolBootstrapComponentVersions IJsonModel<AgentPoolBootstrapComponentVersions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BootstrapComponentVersions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentPoolBootstrapComponentVersions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolBootstrapComponentVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BootstrapComponentVersions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolBootstrapComponentVersions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBootstrapComponentVersions(document.RootElement, options);
+            return DeserializeAgentPoolBootstrapComponentVersions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BootstrapComponentVersions DeserializeBootstrapComponentVersions(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentPoolBootstrapComponentVersions DeserializeAgentPoolBootstrapComponentVersions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BootstrapComponentVersions(kubernetes, containerd, runc, additionalBinaryDataProperties);
+            return new AgentPoolBootstrapComponentVersions(kubernetes, containerd, runc, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// Properties of a maintenance window.
     /// For more information, see https://aka.ms/aks/maintenance-windows.
     /// </summary>
-    public partial class MaintenanceWindowResourceProperties
+    public partial class ContainerServiceManagedMaintenanceWindowProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedMaintenanceWindowProperties"/>. </summary>
         /// <param name="schedule">
         /// Recurrence schedule for the maintenance window. One and only one of the schedule
         /// types should be specified: 'daily', 'weekly', 'absoluteMonthly', or 'relativeMonthly'.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </param>
         /// <param name="durationHours"> Length of the maintenance window in hours. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="startTime"/> is null. </exception>
-        public MaintenanceWindowResourceProperties(ContainerServiceMaintenanceSchedule schedule, string startTime, int durationHours)
+        public ContainerServiceManagedMaintenanceWindowProperties(ContainerServiceMaintenanceSchedule schedule, string startTime, int durationHours)
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
             Argument.AssertNotNull(startTime, nameof(startTime));
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             NotAllowedDates = new ChangeTrackingList<ContainerServiceDateSpan>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedMaintenanceWindowProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the maintenance window. </param>
         /// <param name="schedule">
         /// Recurrence schedule for the maintenance window. One and only one of the schedule
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// '2026-12-22 22:00' to '2027-01-03 22:00' in UTC time.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowResourceProperties(ContainerServiceProvisioningState? provisioningState, ContainerServiceMaintenanceSchedule schedule, DateTimeOffset? startsOn, string startTime, int durationHours, string utcOffset, IList<ContainerServiceDateSpan> notAllowedDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceManagedMaintenanceWindowProperties(ContainerServiceProvisioningState? provisioningState, ContainerServiceMaintenanceSchedule schedule, DateTimeOffset? startsOn, string startTime, int durationHours, string utcOffset, IList<ContainerServiceDateSpan> notAllowedDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Schedule = schedule;

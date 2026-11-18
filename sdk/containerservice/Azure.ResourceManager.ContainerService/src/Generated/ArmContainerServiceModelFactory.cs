@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="networking"> Network configuration for the node. </param>
         /// <param name="node"> Node-level configuration for kubelet, labels, and taints. </param>
         /// <returns> A new <see cref="Models.AgentPoolBootstrapInfo"/> instance for mocking. </returns>
-        public static AgentPoolBootstrapInfo AgentPoolBootstrapInfo(BootstrapAzureConfig azure = default, BootstrapComponentVersions components = default, BootstrapNetworkingConfig networking = default, BootstrapNodeConfig node = default)
+        public static AgentPoolBootstrapInfo AgentPoolBootstrapInfo(AgentPoolBootstrapAzureConfig azure = default, AgentPoolBootstrapComponentVersions components = default, AgentPoolBootstrapNetworkingConfig networking = default, AgentPoolBootstrapNodeConfig node = default)
         {
             return new AgentPoolBootstrapInfo(azure, components, networking, node, default);
         }
@@ -699,29 +699,29 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="targetClusterResourceId"> Azure resource ID of the target AKS cluster. </param>
         /// <param name="targetAgentPoolName"> Target agent pool name. </param>
         /// <param name="token"> Short-lived bootstrap token for kubelet. Do not cache or log. </param>
-        /// <returns> A new <see cref="Models.BootstrapAzureConfig"/> instance for mocking. </returns>
-        public static BootstrapAzureConfig BootstrapAzureConfig(string resourceManagerEndpoint = default, ResourceIdentifier targetClusterResourceId = default, string targetAgentPoolName = default, string token = default)
+        /// <returns> A new <see cref="Models.AgentPoolBootstrapAzureConfig"/> instance for mocking. </returns>
+        public static AgentPoolBootstrapAzureConfig AgentPoolBootstrapAzureConfig(string resourceManagerEndpoint = default, ResourceIdentifier targetClusterResourceId = default, string targetAgentPoolName = default, string token = default)
         {
-            return new BootstrapAzureConfig(resourceManagerEndpoint, targetClusterResourceId is null ? default : new BootstrapTargetCluster(targetClusterResourceId, default), targetAgentPoolName, token is null ? default : new BootstrapTokenInfo(token, default), default);
+            return new AgentPoolBootstrapAzureConfig(resourceManagerEndpoint, targetClusterResourceId is null ? default : new BootstrapTargetCluster(targetClusterResourceId, default), targetAgentPoolName, token is null ? default : new BootstrapTokenInfo(token, default), default);
         }
 
         /// <summary> Component versions returned as part of FlexNode bootstrap data. </summary>
         /// <param name="kubernetes"> Kubernetes version. </param>
         /// <param name="containerd"> Containerd version. </param>
         /// <param name="runc"> Runc version. </param>
-        /// <returns> A new <see cref="Models.BootstrapComponentVersions"/> instance for mocking. </returns>
-        public static BootstrapComponentVersions BootstrapComponentVersions(string kubernetes = default, string containerd = default, string runc = default)
+        /// <returns> A new <see cref="Models.AgentPoolBootstrapComponentVersions"/> instance for mocking. </returns>
+        public static AgentPoolBootstrapComponentVersions AgentPoolBootstrapComponentVersions(string kubernetes = default, string containerd = default, string runc = default)
         {
-            return new BootstrapComponentVersions(kubernetes, containerd, runc, default);
+            return new AgentPoolBootstrapComponentVersions(kubernetes, containerd, runc, default);
         }
 
         /// <summary> Network configuration returned as part of FlexNode bootstrap data. </summary>
         /// <param name="dnsServiceIP"> IP address of the cluster DNS service. </param>
         /// <param name="cniVersion"> CNI plugin version. </param>
-        /// <returns> A new <see cref="Models.BootstrapNetworkingConfig"/> instance for mocking. </returns>
-        public static BootstrapNetworkingConfig BootstrapNetworkingConfig(string dnsServiceIP = default, string cniVersion = default)
+        /// <returns> A new <see cref="Models.AgentPoolBootstrapNetworkingConfig"/> instance for mocking. </returns>
+        public static AgentPoolBootstrapNetworkingConfig AgentPoolBootstrapNetworkingConfig(string dnsServiceIP = default, string cniVersion = default)
         {
-            return new BootstrapNetworkingConfig(dnsServiceIP, cniVersion, default);
+            return new AgentPoolBootstrapNetworkingConfig(dnsServiceIP, cniVersion, default);
         }
 
         /// <summary> Node configuration returned as part of FlexNode bootstrap data. </summary>
@@ -729,13 +729,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="labels"> Node labels to apply during registration. </param>
         /// <param name="taints"> Node taints in the format 'key=value:effect'. </param>
         /// <param name="kubelet"> Kubelet configuration. </param>
-        /// <returns> A new <see cref="Models.BootstrapNodeConfig"/> instance for mocking. </returns>
-        public static BootstrapNodeConfig BootstrapNodeConfig(int? maxPods = default, IReadOnlyDictionary<string, string> labels = default, IEnumerable<string> taints = default, BootstrapKubeletConfig kubelet = default)
+        /// <returns> A new <see cref="Models.AgentPoolBootstrapNodeConfig"/> instance for mocking. </returns>
+        public static AgentPoolBootstrapNodeConfig AgentPoolBootstrapNodeConfig(int? maxPods = default, IReadOnlyDictionary<string, string> labels = default, IEnumerable<string> taints = default, BootstrapKubeletConfig kubelet = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             taints ??= new ChangeTrackingList<string>();
 
-            return new BootstrapNodeConfig(maxPods, labels ?? new ChangeTrackingDictionary<string, string>(), (taints ?? new ChangeTrackingList<string>()).ToList(), kubelet, default);
+            return new AgentPoolBootstrapNodeConfig(maxPods, labels ?? new ChangeTrackingDictionary<string, string>(), (taints ?? new ChangeTrackingList<string>()).ToList(), kubelet, default);
         }
 
         /// <summary> Kubelet configuration returned as part of FlexNode bootstrap data. </summary>
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Profile to enable managed Azure Bastion or reference to an existing Bastion for the managed cluster.
         /// See https://aka.ms/aks/BastionConnect for more details.
         /// </summary>
-        /// <param name="enabled"> Indicates whether managed bastion is enabled. </param>
+        /// <param name="isEnabled"> Indicates whether managed bastion is enabled. </param>
         /// <param name="bastionId"> The resource ID of the managed bastion associated with the managed cluster. </param>
         /// <param name="sku">
         /// The SKU of the managed bastion.
@@ -1363,10 +1363,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// This field cannot be updated. To change IP address after creation, please disable and re-enable the managed bastion with the new public IP address.
         /// </param>
         /// <returns> A new <see cref="Models.ManagedClusterBastionProfile"/> instance for mocking. </returns>
-        public static ManagedClusterBastionProfile ManagedClusterBastionProfile(bool? enabled = default, ResourceIdentifier bastionId = default, ManagedClusterBastionSku? sku = default, int? scaleUnits = default, ResourceIdentifier publicIPAddressId = default)
+        public static ManagedClusterBastionProfile ManagedClusterBastionProfile(bool? isEnabled = default, ResourceIdentifier bastionId = default, ManagedClusterBastionSku? sku = default, int? scaleUnits = default, ResourceIdentifier publicIPAddressId = default)
         {
             return new ManagedClusterBastionProfile(
-                enabled,
+                isEnabled,
                 bastionId,
                 sku,
                 scaleUnits,
@@ -1742,7 +1742,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isEnabled"> Indicates whether service account based image pull is enabled, for which identity bindings are required for the managed identity to be used for authentication. For more information, refer to https://aka.ms/aks/identity-binding-docs. </param>
         /// <param name="defaultManagedIdentityId"> Optional. The default managed identity resource ID used for image pulls at the cluster level. When configured, this identity is used if a Pod’s service account does not explicitly specify an identity for pulling images. If not configured and no identity is specified at service account level, image will be pulled via anonymous authentication. </param>
         /// <returns> A new <see cref="Models.ServiceAccountImagePullProfile"/> instance for mocking. </returns>
-        public static ServiceAccountImagePullProfile ServiceAccountImagePullProfile(bool? isEnabled = default, string defaultManagedIdentityId = default)
+        public static ServiceAccountImagePullProfile ServiceAccountImagePullProfile(bool? isEnabled = default, ResourceIdentifier defaultManagedIdentityId = default)
         {
             return new ServiceAccountImagePullProfile(isEnabled, defaultManagedIdentityId, default);
         }
@@ -1767,12 +1767,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Quick Attach Detach settings for the AzureDisk CSI driver. </summary>
-        /// <param name="enabled"> Whether to enable Quick Attach Detach for the AzureDisk CSI driver. The default value is false. </param>
+        /// <param name="isEnabled"> Whether to enable Quick Attach Detach for the AzureDisk CSI driver. The default value is false. </param>
         /// <param name="identity"> Identity used by Quick Attach Detach. This property is returned by GET and cannot be set by clients. The Quick Attach Detach feature uses a managed identity that is automatically created and managed by the AKS resource provider. In most scenarios, no user action is required. An exception applies when using customer-managed disks that are located outside of the AKS node resource group (Bring Your Own Disk scenario). In this case, users must grant the Quick Attach Detach managed identity the required permissions on the resource group containing the disk. </param>
         /// <returns> A new <see cref="Models.ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach"/> instance for mocking. </returns>
-        public static ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(bool? enabled = default, ContainerServiceUserAssignedIdentity identity = default)
+        public static ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(bool? isEnabled = default, ContainerServiceUserAssignedIdentity identity = default)
         {
-            return new ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(enabled, identity, default);
+            return new ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(isEnabled, identity, default);
         }
 
         /// <param name="webAppRouting"> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </param>
@@ -2270,7 +2270,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Whether the version is default or not and support info. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceGuardrailsAvailableVersionData"/> instance for mocking. </returns>
-        public static ContainerServiceGuardrailsAvailableVersionData ContainerServiceGuardrailsAvailableVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GuardrailsAvailableVersionsProperties properties = default)
+        public static ContainerServiceGuardrailsAvailableVersionData ContainerServiceGuardrailsAvailableVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceGuardrailsAvailableVersionsProperties properties = default)
         {
             return new ContainerServiceGuardrailsAvailableVersionData(
                 id,
@@ -2284,10 +2284,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether the version is default or not and support info. </summary>
         /// <param name="isDefaultVersion"> Whether this is the default version. </param>
         /// <param name="support"> Whether the version is preview or stable. </param>
-        /// <returns> A new <see cref="Models.GuardrailsAvailableVersionsProperties"/> instance for mocking. </returns>
-        public static GuardrailsAvailableVersionsProperties GuardrailsAvailableVersionsProperties(bool? isDefaultVersion = default, ContainerServiceGuardrailsSupport? support = default)
+        /// <returns> A new <see cref="Models.ContainerServiceGuardrailsAvailableVersionsProperties"/> instance for mocking. </returns>
+        public static ContainerServiceGuardrailsAvailableVersionsProperties ContainerServiceGuardrailsAvailableVersionsProperties(bool? isDefaultVersion = default, ContainerServiceGuardrailsSupport? support = default)
         {
-            return new GuardrailsAvailableVersionsProperties(isDefaultVersion, support, default);
+            return new ContainerServiceGuardrailsAvailableVersionsProperties(isDefaultVersion, support, default);
         }
 
         /// <summary> Available Safeguards Version. </summary>
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Whether the version is default or not and support info. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceSafeguardsAvailableVersionData"/> instance for mocking. </returns>
-        public static ContainerServiceSafeguardsAvailableVersionData ContainerServiceSafeguardsAvailableVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SafeguardsAvailableVersionsProperties properties = default)
+        public static ContainerServiceSafeguardsAvailableVersionData ContainerServiceSafeguardsAvailableVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceSafeguardsAvailableVersionsProperties properties = default)
         {
             return new ContainerServiceSafeguardsAvailableVersionData(
                 id,
@@ -2311,10 +2311,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether the version is default or not and support info. </summary>
         /// <param name="isDefaultVersion"> Whether this is the default version. </param>
         /// <param name="support"> Whether the version is preview or stable. </param>
-        /// <returns> A new <see cref="Models.SafeguardsAvailableVersionsProperties"/> instance for mocking. </returns>
-        public static SafeguardsAvailableVersionsProperties SafeguardsAvailableVersionsProperties(bool? isDefaultVersion = default, ContainerServiceSafeguardsSupport? support = default)
+        /// <returns> A new <see cref="Models.ContainerServiceSafeguardsAvailableVersionsProperties"/> instance for mocking. </returns>
+        public static ContainerServiceSafeguardsAvailableVersionsProperties ContainerServiceSafeguardsAvailableVersionsProperties(bool? isDefaultVersion = default, ContainerServiceSafeguardsSupport? support = default)
         {
-            return new SafeguardsAvailableVersionsProperties(isDefaultVersion, support, default);
+            return new ContainerServiceSafeguardsAvailableVersionsProperties(isDefaultVersion, support, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2507,7 +2507,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of a maintenance window. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceManagedMaintenanceWindowData"/> instance for mocking. </returns>
-        public static ContainerServiceManagedMaintenanceWindowData ContainerServiceManagedMaintenanceWindowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MaintenanceWindowResourceProperties properties = default)
+        public static ContainerServiceManagedMaintenanceWindowData ContainerServiceManagedMaintenanceWindowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerServiceManagedMaintenanceWindowProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2556,12 +2556,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// '2026-12-23' to '2027-01-03', maintenance will be blocked from
         /// '2026-12-22 22:00' to '2027-01-03 22:00' in UTC time.
         /// </param>
-        /// <returns> A new <see cref="Models.MaintenanceWindowResourceProperties"/> instance for mocking. </returns>
-        public static MaintenanceWindowResourceProperties MaintenanceWindowResourceProperties(ContainerServiceProvisioningState? provisioningState = default, ContainerServiceMaintenanceSchedule schedule = default, DateTimeOffset? startsOn = default, string startTime = default, int durationHours = default, string utcOffset = default, IEnumerable<ContainerServiceDateSpan> notAllowedDates = default)
+        /// <returns> A new <see cref="Models.ContainerServiceManagedMaintenanceWindowProperties"/> instance for mocking. </returns>
+        public static ContainerServiceManagedMaintenanceWindowProperties ContainerServiceManagedMaintenanceWindowProperties(ContainerServiceProvisioningState? provisioningState = default, ContainerServiceMaintenanceSchedule schedule = default, DateTimeOffset? startsOn = default, string startTime = default, int durationHours = default, string utcOffset = default, IEnumerable<ContainerServiceDateSpan> notAllowedDates = default)
         {
             notAllowedDates ??= new ChangeTrackingList<ContainerServiceDateSpan>();
 
-            return new MaintenanceWindowResourceProperties(
+            return new ContainerServiceManagedMaintenanceWindowProperties(
                 provisioningState,
                 schedule,
                 startsOn,
@@ -3711,7 +3711,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="startsOn"> The UTC start time of the next scheduled maintenance window. </param>
         /// <param name="endsOn"> The UTC end time of the next scheduled maintenance window. </param>
         /// <returns> A new <see cref="Models.UpgradeInsightMaintenanceWindow"/> instance for mocking. </returns>
-        public static UpgradeInsightMaintenanceWindow UpgradeInsightMaintenanceWindow(string maintenanceConfigurationName = default, MaintenanceWindowSource? source = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default)
+        public static UpgradeInsightMaintenanceWindow UpgradeInsightMaintenanceWindow(string maintenanceConfigurationName = default, UpgradeInsightMaintenanceWindowSource? source = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default)
         {
             return new UpgradeInsightMaintenanceWindow(maintenanceConfigurationName, source, startsOn, endsOn, default);
         }

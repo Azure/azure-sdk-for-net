@@ -12,21 +12,21 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Whether the version is default or not and support info. </summary>
-    public partial class SafeguardsAvailableVersionsProperties
+    public partial class ContainerServiceSafeguardsAvailableVersionsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SafeguardsAvailableVersionsProperties"/>. </summary>
-        internal SafeguardsAvailableVersionsProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSafeguardsAvailableVersionsProperties"/>. </summary>
+        internal ContainerServiceSafeguardsAvailableVersionsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SafeguardsAvailableVersionsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSafeguardsAvailableVersionsProperties"/>. </summary>
         /// <param name="isDefaultVersion"> Whether this is the default version. </param>
         /// <param name="support"> Whether the version is preview or stable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SafeguardsAvailableVersionsProperties(bool? isDefaultVersion, ContainerServiceSafeguardsSupport? support, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceSafeguardsAvailableVersionsProperties(bool? isDefaultVersion, ContainerServiceSafeguardsSupport? support, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDefaultVersion = isDefaultVersion;
             Support = support;

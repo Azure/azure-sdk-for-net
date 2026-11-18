@@ -12,25 +12,25 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Node configuration returned as part of FlexNode bootstrap data. </summary>
-    public partial class BootstrapNodeConfig
+    public partial class AgentPoolBootstrapNodeConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapNodeConfig"/>. </summary>
-        internal BootstrapNodeConfig()
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapNodeConfig"/>. </summary>
+        internal AgentPoolBootstrapNodeConfig()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
             Taints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BootstrapNodeConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolBootstrapNodeConfig"/>. </summary>
         /// <param name="maxPods"> Maximum pods per node. </param>
         /// <param name="labels"> Node labels to apply during registration. </param>
         /// <param name="taints"> Node taints in the format 'key=value:effect'. </param>
         /// <param name="kubelet"> Kubelet configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootstrapNodeConfig(int? maxPods, IReadOnlyDictionary<string, string> labels, IReadOnlyList<string> taints, BootstrapKubeletConfig kubelet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolBootstrapNodeConfig(int? maxPods, IReadOnlyDictionary<string, string> labels, IReadOnlyList<string> taints, BootstrapKubeletConfig kubelet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxPods = maxPods;
             Labels = labels;
