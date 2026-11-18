@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Recommender;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
         public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ComputeRecommenderDiagnosticResource.ValidateResourceId(id);
+            if (id.ResourceType == ComputeRecommenderDiagnosticResource.ResourceType && !string.Equals(id.Name, "spot", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "spot"), nameof(id));
+            }
             return new ComputeRecommenderDiagnosticResource(Client, id);
         }
 
@@ -40,7 +49,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// <returns> Returns a <see cref="ComputePlacementScoresResource"/> object. </returns>
         public virtual ComputePlacementScoresResource GetComputePlacementScoresResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ComputePlacementScoresResource.ValidateResourceId(id);
+            if (id.ResourceType == ComputePlacementScoresResource.ResourceType && !string.Equals(id.Name, "regular", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "regular"), nameof(id));
+            }
             return new ComputePlacementScoresResource(Client, id);
         }
 
@@ -49,7 +66,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// <returns> Returns a <see cref="ComputeSkuMixPlacementResource"/> object. </returns>
         public virtual ComputeSkuMixPlacementResource GetComputeSkuMixPlacementResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ComputeSkuMixPlacementResource.ValidateResourceId(id);
+            if (id.ResourceType == ComputeSkuMixPlacementResource.ResourceType && !string.Equals(id.Name, "recommendations", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "recommendations"), nameof(id));
+            }
             return new ComputeSkuMixPlacementResource(Client, id);
         }
     }
