@@ -34,22 +34,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="identity"> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, string sqlVmName, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            SqlVmName = sqlVmName;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource properties. </summary>
         internal SqlVirtualMachineProperties Properties { get; set; }
-
-        /// <summary> Name of the SQL virtual machine. </summary>
-        public string SqlVmName { get; }
 
         /// <summary> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </summary>
         public ManagedServiceIdentity Identity { get; set; }
