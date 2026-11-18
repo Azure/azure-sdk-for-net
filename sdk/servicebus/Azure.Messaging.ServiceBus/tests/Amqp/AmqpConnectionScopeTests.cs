@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var expireTime = currentTime.AddHours(1);
             var buffer = GetAuthorizationRefreshBuffer();
             var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
-            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime, credentialRefreshAt: null);
             var calculatedExpire = currentTime.Add(calculatedRefresh);
 
             Assert.That(calculatedExpire, Is.LessThan(expireTime), "The refresh should be account for the buffer and be earlier than expiration.");
@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
             var minimumRefresh = GetMinimumAuthorizationRefresh();
             var expireTime = currentTime.Add(minimumRefresh.Subtract(TimeSpan.FromMilliseconds(500)));
-            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime, credentialRefreshAt: null);
 
             Assert.That(calculatedRefresh, Is.GreaterThanOrEqualTo(minimumRefresh), "The minimum refresh duration should be violated.");
             Assert.That(calculatedRefresh, Is.EqualTo(minimumRefresh).Within(jitterBuffer), "The minimum refresh duration should have been used.");
@@ -144,10 +144,75 @@ namespace Azure.Messaging.ServiceBus.Tests
             var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
             var maximumRefresh = GetMaximumAuthorizationRefresh();
             var expireTime = currentTime.Add(maximumRefresh.Add(refreshBuffer).Add(TimeSpan.FromMilliseconds(500)));
-            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime, credentialRefreshAt: null);
 
             Assert.That(calculatedRefresh, Is.LessThanOrEqualTo(maximumRefresh), "The maximum refresh duration should not be exceeded.");
             Assert.That(calculatedRefresh, Is.EqualTo(maximumRefresh).Within(jitterBuffer), "The maximum refresh duration should have been used.");
+        }
+
+        /// <summary>
+        ///   Verifies that <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
+        ///   fires at an earlier credential refresh time, without jitter moving that tick earlier.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateLinkAuthorizationRefreshIntervalUsesAnEarlierRefreshOn()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var now = new DateTime(2015, 10, 27, 0, 0, 0, DateTimeKind.Utc);
+            var expires = now.AddHours(1);
+            var refreshOn = new DateTimeOffset(now.AddMinutes(30), TimeSpan.Zero);
+
+            var interval = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expires, now, refreshOn);
+
+            Assert.That(now.Add(interval), Is.EqualTo(refreshOn.UtcDateTime), "The timer should fire at RefreshOn, when the cache will refresh.");
+        }
+
+        /// <summary>
+        ///   Verifies that a credential refresh a few minutes out is not postponed to the minimum interval.
+        /// </summary>
+        ///
+        [Test]
+        public void RefreshOnScheduleDoesNotFireBeforeTheCachedTokenIsDue()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var now = new DateTime(2015, 10, 27, 0, 0, 0, DateTimeKind.Utc);
+            var expires = now.AddHours(1);
+            var refreshOn = new DateTimeOffset(now.AddMinutes(5), TimeSpan.Zero);
+            var minimumRefresh = GetMinimumAuthorizationRefresh();
+
+            var interval = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expires, now, refreshOn);
+
+            Assert.That(now.Add(interval), Is.EqualTo(refreshOn.UtcDateTime), "The tick should land on RefreshOn, when the cache will refresh.");
+            Assert.That(interval, Is.GreaterThan(minimumRefresh), "A five-minute RefreshOn should not be postponed to the minimum refresh interval.");
+        }
+
+        /// <summary>
+        ///   Verifies that a credential refresh inside the expiration buffer still rotates
+        ///   a buffer before the token expires.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateLinkAuthorizationRefreshIntervalKeepsTheBufferWhenRefreshOnIsCloseToExpiration()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var now = new DateTime(2015, 10, 27, 0, 0, 0, DateTimeKind.Utc);
+            var expires = now.AddHours(1);
+            var refreshOn = new DateTimeOffset(expires.AddMinutes(-2), TimeSpan.Zero);
+            var buffer = GetAuthorizationRefreshBuffer();
+            var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
+
+            var interval = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expires, now, refreshOn);
+            var fire = now.Add(interval);
+
+            Assert.That(fire, Is.EqualTo(expires.Subtract(buffer)).Within(jitterBuffer), "A RefreshOn inside the expiration buffer should still refresh a buffer before expiration.");
+            Assert.That(fire, Is.LessThan(refreshOn.UtcDateTime), "The refresh should not wait until a RefreshOn that is already inside the expiration buffer.");
         }
 
         /// <summary>
@@ -633,7 +698,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             public TimeSpan InvokeCalculateLinkAuthorizationRefreshInterval(
                 DateTime expirationTimeUtc,
-                DateTime currentTimeUtc) => base.CalculateLinkAuthorizationRefreshInterval(expirationTimeUtc, currentTimeUtc);
+                DateTime currentTimeUtc,
+                DateTimeOffset? credentialRefreshAt = null) => base.CalculateLinkAuthorizationRefreshInterval(expirationTimeUtc, currentTimeUtc, credentialRefreshAt);
 
             protected override Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
                                                                                  Uri serviceEndpoint,

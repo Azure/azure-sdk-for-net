@@ -40,8 +40,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The cancellation token to consider when making requests.</summary>
         private readonly CancellationToken CancellationToken;
 
-        /// <summary>The JWT-based <see cref="CbsToken" /> that is currently cached for authorization.</summary>
-        private CbsToken _cachedJwtToken;
+        /// <summary>The JWT-based token that is currently cached for authorization.</summary>
+        private CachedJwtToken _cachedJwtToken;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CbsTokenProvider"/> class.
@@ -74,6 +74,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 TokenAcquireSemaphore = new SemaphoreSlim(1, 1);
             }
         }
+
+        /// <summary>
+        ///   The time at which a credential asked for its cached token to be refreshed, when that
+        ///   time is earlier than the token's actual expiration. <c>null</c> when the credential
+        ///   did not request an earlier refresh.
+        /// </summary>
+        ///
+        internal DateTimeOffset? CredentialRefreshAt => Volatile.Read(ref _cachedJwtToken)?.CredentialRefreshAt;
 
         /// <summary>
         ///   Asynchronously requests a CBS token to be used for authorization within an AMQP
@@ -109,13 +117,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private async Task<CbsToken> AcquireJwtTokenAsync()
         {
-            var token = Volatile.Read(ref _cachedJwtToken);
+            var cachedToken = Volatile.Read(ref _cachedJwtToken);
             var semaphoreAcquired = false;
 
             // If the token is expiring, attempt to acquire the semaphore needed to
             // refresh it.
 
-            if (IsNearingExpiration(token))
+            if (IsNearingExpiration(cachedToken))
             {
                 try
                 {
@@ -134,14 +142,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     // is only updated when the semaphore is held, there's no need to perform a volatile
                     // read for this refresh.
 
-                    token = _cachedJwtToken;
+                    cachedToken = _cachedJwtToken;
 
-                    if (IsNearingExpiration(token))
+                    if (IsNearingExpiration(cachedToken))
                     {
                         var accessToken = await Credential.GetTokenUsingDefaultScopeAsync(CancellationToken).ConfigureAwait(false);
-                        token = new CbsToken(accessToken.Token, TokenType, accessToken.ExpiresOn.UtcDateTime);
 
-                        _cachedJwtToken = token;
+                        // RefreshOn is the cache deadline only. The CBS token keeps ExpiresOn so the
+                        // service still sees the token's real lifetime.
+
+                        DateTimeOffset? credentialRefreshAt = null;
+                        if (accessToken.RefreshOn is DateTimeOffset refreshOn && refreshOn < accessToken.ExpiresOn)
+                        {
+                            credentialRefreshAt = refreshOn;
+                        }
+
+                        cachedToken = new CachedJwtToken(
+                            new CbsToken(accessToken.Token, TokenType, accessToken.ExpiresOn.UtcDateTime),
+                            credentialRefreshAt);
+
+                        _cachedJwtToken = cachedToken;
                     }
                 }
                 finally
@@ -153,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
-            return token;
+            return cachedToken.Token;
         }
 
         /// <summary>
@@ -177,7 +197,37 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns><c>true</c> if the specified token is near expiring; otherwise, <c>false</c>.</returns>
         ///
-        private bool IsNearingExpiration(CbsToken token) =>
-            ((token == null) || token.ExpiresAtUtc.Subtract(TokenExpirationBuffer) <= DateTimeOffset.UtcNow);
+        private bool IsNearingExpiration(CachedJwtToken token)
+        {
+            if (token == null)
+            {
+                return true;
+            }
+
+            if (token.CredentialRefreshAt is DateTimeOffset refreshAt && refreshAt <= DateTimeOffset.UtcNow)
+            {
+                return true;
+            }
+
+            return token.Token.ExpiresAtUtc.Subtract(TokenExpirationBuffer) <= DateTimeOffset.UtcNow;
+        }
+
+        /// <summary>
+        ///   A cached JWT and, when the credential requested it, the earlier time at which that
+        ///   token should be refreshed.
+        /// </summary>
+        ///
+        private sealed class CachedJwtToken
+        {
+            public CachedJwtToken(CbsToken token, DateTimeOffset? credentialRefreshAt)
+            {
+                Token = token;
+                CredentialRefreshAt = credentialRefreshAt;
+            }
+
+            public CbsToken Token { get; }
+
+            public DateTimeOffset? CredentialRefreshAt { get; }
+        }
     }
 }
