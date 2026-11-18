@@ -197,7 +197,7 @@ public class VoiceConnectionExporterArtifactTests
         });
         using var provider = Sdk.CreateTracerProviderBuilder()
             .AddSource(ActivitySourceName)
-            .AddProcessor(new AgentIdentityProcessor())
+            .AddProcessor(new AgentIdentityProcessor(markGenAi: true))
             .AddProcessor(new SimpleActivityExportProcessor(
                 new AzureMonitorTraceExporter(azureMonitorOptions)))
             .AddProcessor(new SimpleActivityExportProcessor(
@@ -293,7 +293,7 @@ public class VoiceConnectionExporterArtifactTests
         });
         using var provider = Sdk.CreateTracerProviderBuilder()
             .AddSource(ActivitySourceName)
-            .AddProcessor(new AgentIdentityProcessor())
+            .AddProcessor(new AgentIdentityProcessor(markGenAi: true))
             .AddProcessor(new SimpleActivityExportProcessor(
                 new AzureMonitorTraceExporter(azureMonitorOptions)))
             .AddProcessor(new SimpleActivityExportProcessor(
@@ -342,6 +342,64 @@ public class VoiceConnectionExporterArtifactTests
             Assert.That(otlpSpan.TraceId, Is.EqualTo(s_traceId.ToHexString()));
             Assert.That(otlpSpan.ParentSpanId, Is.EqualTo(s_parentSpanId.ToHexString()));
             Assert.That(Encoding.UTF8.GetString(otlpRequest.Body), Does.Not.Contain(SecretSentinel));
+        });
+    }
+
+    [Test]
+    public async Task Agent365_SkipsNonGenAiConnectionWhileCoexportersExport()
+    {
+        await using var otlpReceiver = await OtlpHttpReceiver.StartAsync();
+        var otlpOptions = new OtlpExporterOptions
+        {
+            Endpoint = new Uri(otlpReceiver.BaseUri, "/v1/traces"),
+            Protocol = OtlpExportProtocol.HttpProtobuf,
+            ExportProcessorType = ExportProcessorType.Simple,
+            TimeoutMilliseconds = 3000,
+        };
+        var azureMonitorTransport = MockTransport.FromMessageCallback(_ =>
+            new MockResponse(200).SetContent(
+                "{\"itemsReceived\":1,\"itemsAccepted\":1,\"errors\":[]}"));
+        var azureMonitorOptions = new AzureMonitorExporterOptions
+        {
+            ConnectionString =
+                "InstrumentationKey=00000000-0000-0000-0000-000000000007;" +
+                "IngestionEndpoint=https://ingestion.test/",
+            DisableOfflineStorage = true,
+            SamplingRatio = 1.0F,
+            TracesPerSecond = null,
+            Transport = azureMonitorTransport,
+        };
+        var tokenResolverCalls = 0;
+        using var agent365Transport = new CapturingHttpMessageHandler();
+        using var agent365Client = new HttpClient(agent365Transport, disposeHandler: false);
+        var agent365Options = CreateAgent365Options((_, _) =>
+        {
+            Interlocked.Increment(ref tokenResolverCalls);
+            return Task.FromResult("artifact-token");
+        });
+        using var provider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(ActivitySourceName)
+            .AddProcessor(new AgentIdentityProcessor())
+            .AddProcessor(new SimpleActivityExportProcessor(
+                new AzureMonitorTraceExporter(azureMonitorOptions)))
+            .AddProcessor(new SimpleActivityExportProcessor(
+                CreateAgent365Exporter(agent365Options, agent365Client)))
+            .AddProcessor(new SimpleActivityExportProcessor(new OtlpTraceExporter(otlpOptions)))
+            .Build();
+
+        EmitCompletedConnection();
+        Assert.That(provider.ForceFlush(), Is.True);
+        var otlpRequest = await otlpReceiver.Request.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(tokenResolverCalls, Is.Zero);
+            Assert.That(agent365Transport.RequestCount, Is.Zero);
+            Assert.That(azureMonitorTransport.Requests, Has.Count.EqualTo(1));
+            Assert.That(otlpReceiver.RequestCount, Is.EqualTo(1));
+            Assert.That(
+                OtlpSpanArtifact.ParseSingle(otlpRequest.Body, ConnectionOperationName).TraceId,
+                Is.EqualTo(s_traceId.ToHexString()));
         });
     }
 
@@ -587,12 +645,25 @@ public class VoiceConnectionExporterArtifactTests
 
     private sealed class AgentIdentityProcessor : BaseProcessor<Activity>
     {
+        private readonly bool _markGenAi;
+
+        // Agent365 exports only spans with a known gen_ai.operation.name. The connection span has
+        // none, so tests that exercise the Agent365 export path mark it as a GenAI span.
+        public AgentIdentityProcessor(bool markGenAi = false)
+        {
+            _markGenAi = markGenAi;
+        }
+
         public override void OnStart(Activity activity)
         {
             if (activity.OperationName == ConnectionOperationName)
             {
                 activity.SetTag("gen_ai.agent.id", AgentId);
                 activity.SetTag("microsoft.tenant.id", TenantId);
+                if (_markGenAi)
+                {
+                    activity.SetTag("gen_ai.operation.name", "invoke_agent");
+                }
             }
         }
     }

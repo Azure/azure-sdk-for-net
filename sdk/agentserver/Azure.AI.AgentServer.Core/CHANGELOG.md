@@ -6,9 +6,18 @@
 
 ### Breaking Changes
 
+- `FoundryStateStore` and the `FoundryStorage*Exception` types are now experimental
+  (`AAAS004`), and `AgentRestoreContext` joins the experimental snapshot lifecycle
+  contract (`AAAS002`). Callers must suppress the corresponding diagnostic.
+
 ### Bugs Fixed
 
+- Fixed hosted startup failing with `MissingMethodException` when Agent365 trace export
+  was enabled and a stable `Microsoft.OpenTelemetry` distro was resolved.
+
 ### Other Changes
+
+- Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`.
 
 ## 1.0.0-beta.31 (2026-11-04)
 

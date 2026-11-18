@@ -113,6 +113,7 @@
   `github_copilot_toolset_preview`, `microsoft_copilot_toolset_preview`,
   `programmatic_tool_calling`, and `web_iq_preview`), so a malformed tool of these types is
   rejected instead of passing through unvalidated.
+- Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`. This fixes the `MissingMethodException` that hosted agents hit at startup when Agent365 export is enabled.
 
 ## 1.0.0-beta.9 (2026-10-15)
 
