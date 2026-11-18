@@ -93,21 +93,48 @@ internal sealed class SnapshotLifecycleCoordinator
             }
 
             CaptureEnvironmentBaseline();
+            bool transactionalRollback =
+                _participants.Any(participant => participant.UsesTransactionalRestore);
             IReadOnlyDictionary<string, string?> prospectiveEnvironment =
                 BuildProspectiveEnvironment(
                     context.SessionId,
                     context.SessionEnvironmentOverrides);
-            foreach (ISnapshotLifecycleParticipant participant in _participants)
+            int validatedParticipants = 0;
+            try
             {
-                await participant.ValidateAfterRestoreAsync(
-                    context,
-                    prospectiveEnvironment,
-                    cancellationToken).ConfigureAwait(false);
+                foreach (ISnapshotLifecycleParticipant participant in _participants)
+                {
+                    await participant.ValidateAfterRestoreAsync(
+                        context,
+                        prospectiveEnvironment,
+                        cancellationToken).ConfigureAwait(false);
+                    validatedParticipants++;
+                }
+            }
+            catch
+            {
+                await CancelValidatedParticipantsAsync(validatedParticipants)
+                    .ConfigureAwait(false);
+                throw;
             }
 
-            EnvironmentRollback rollback =
-                ApplyEnvironmentOverrides(context.SessionId, context.SessionEnvironmentOverrides);
-            _pendingEnvironmentRollback = rollback;
+            EnvironmentRollback rollback;
+            try
+            {
+                rollback = ApplyEnvironmentOverrides(
+                    context.SessionId,
+                    context.SessionEnvironmentOverrides);
+            }
+            catch
+            {
+                await CancelValidatedParticipantsAsync(validatedParticipants)
+                    .ConfigureAwait(false);
+                throw;
+            }
+
+            _pendingEnvironmentRollback = transactionalRollback
+                ? rollback
+                : null;
             _pendingPreparedParticipantCount = 0;
             _sessionId ??= context.SessionId;
 
@@ -146,7 +173,11 @@ internal sealed class SnapshotLifecycleCoordinator
                 }
                 catch
                 {
-                    await CompletePendingRollbackAsync(context).ConfigureAwait(false);
+                    if (transactionalRollback)
+                    {
+                        await CompletePendingRollbackAsync(context).ConfigureAwait(false);
+                    }
+
                     throw;
                 }
             }
@@ -322,6 +353,16 @@ internal sealed class SnapshotLifecycleCoordinator
         RestoreEnvironment(rollback);
         _pendingEnvironmentRollback = null;
         _pendingPreparedParticipantCount = 0;
+    }
+
+    private async Task CancelValidatedParticipantsAsync(int validatedParticipants)
+    {
+        for (int i = validatedParticipants - 1; i >= 0; i--)
+        {
+            await _participants[i]
+                .CancelAfterRestoreValidationAsync()
+                .ConfigureAwait(false);
+        }
     }
 
     private sealed record EnvironmentRollback(

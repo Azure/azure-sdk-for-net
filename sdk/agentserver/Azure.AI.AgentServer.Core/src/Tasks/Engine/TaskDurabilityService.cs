@@ -37,6 +37,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
     private Task? _loop;
     private string? _completedRestoreId;
     private string? _preparedRestoreId;
+    private bool _restoreScanPaused;
     private int _disposed;
 
     internal bool IsStarted => _loop is not null;
@@ -81,6 +82,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
         string restoreId,
         CancellationToken cancellationToken = default)
     {
+        await PauseRecoveryAsync(cancellationToken).ConfigureAwait(false);
         await _activationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
@@ -94,15 +96,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
                     restoreId,
                     StringComparison.Ordinal))
             {
-                await _scanGate.WaitAsync(cancellationToken).ConfigureAwait(false);
-                try
-                {
-                    _engine.RotateLeaseInstanceIfIdle();
-                }
-                finally
-                {
-                    _scanGate.Release();
-                }
+                _engine.RotateLeaseInstanceIfIdle();
             }
 
             _preparedRestoreId = restoreId;
@@ -112,6 +106,27 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
             _activationGate.Release();
         }
     }
+
+    internal async Task PauseRecoveryAsync(
+        CancellationToken cancellationToken = default)
+    {
+        await _activationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            if (!_restoreScanPaused)
+            {
+                await _scanGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+                _restoreScanPaused = true;
+            }
+        }
+        finally
+        {
+            _activationGate.Release();
+        }
+    }
+
+    internal void ResumeRecoveryAfterValidation()
+        => ReleaseRestoreScanPause();
 
     private async Task ActivateAsync(
         string? restoreId,
@@ -147,7 +162,14 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
                     _stopCts.Token);
             try
             {
-                await ScanOnceAsync(startupCts.Token).ConfigureAwait(false);
+                if (_restoreScanPaused)
+                {
+                    await _scanner.ScanAsync(startupCts.Token).ConfigureAwait(false);
+                }
+                else
+                {
+                    await ScanOnceAsync(startupCts.Token).ConfigureAwait(false);
+                }
             }
             catch (OperationCanceledException) when (startupCts.IsCancellationRequested)
             {
@@ -167,6 +189,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
             _completedRestoreId = restoreId;
             _preparedRestoreId = restoreId;
             _enablement.MarkReady();
+            ReleaseRestoreScanPause();
         }
         finally
         {
@@ -206,7 +229,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
 
     internal async Task RollbackAsync()
     {
-        SignalStop();
+        SignalRollbackStop();
         if (_loop is not null)
         {
             try
@@ -223,6 +246,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
         }
 
         await _engine.ShutdownForRollbackAsync().ConfigureAwait(false);
+        ReleaseRestoreScanPause();
     }
 
     internal void SignalStop()
@@ -254,6 +278,15 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
         if (Interlocked.Exchange(ref _disposed, 1) == 0)
         {
             _stopCts.Dispose();
+        }
+    }
+
+    private void ReleaseRestoreScanPause()
+    {
+        if (_restoreScanPaused)
+        {
+            _restoreScanPaused = false;
+            _scanGate.Release();
         }
     }
 

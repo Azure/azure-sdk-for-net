@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Net;
+using System.Net.ServerSentEvents;
 using System.Text;
 using Azure.AI.AgentServer.Core.Internal;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -1147,6 +1150,1039 @@ public sealed class SnapshotTaskActivationTests
         Assert.That(unavailable, Is.True);
     }
 
+    [Test]
+    public async Task SnapshotRuntimeIsAsyncDisposableWithoutHostStop()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var handlerStarted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var handlerCleaned =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskDefinition<string, string>? definition = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (_, cancellationToken) =>
+            {
+                await definition!.StartAsync(
+                    "dispose",
+                    new RunOptions { TaskId = "dispose-runtime-task" },
+                    cancellationToken);
+                await handlerStarted.Task.WaitAsync(cancellationToken);
+            },
+        };
+
+        WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                definition = services.AddResilientTask<string, string>(
+                    "dispose-runtime",
+                    async (context, cancellationToken) =>
+                    {
+                        handlerStarted.TrySetResult();
+                        try
+                        {
+                            await Task.Delay(
+                                Timeout.InfiniteTimeSpan,
+                                cancellationToken);
+                        }
+                        finally
+                        {
+                            handlerCleaned.TrySetResult();
+                        }
+
+                        return context.Input;
+                    });
+            },
+            lifecycle);
+
+        try
+        {
+            using HttpClient client = app.GetTestClient();
+            using HttpResponseMessage response = await PostRestoreAsync(client);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+            SnapshotTaskRuntime runtime =
+                app.Services.GetRequiredService<SnapshotTaskRuntime>();
+            Assert.That(runtime, Is.InstanceOf<IAsyncDisposable>());
+            Task dispose = runtime.DisposeAsync().AsTask();
+            bool disposedPromptly;
+            try
+            {
+                await dispose.WaitAsync(TimeSpan.FromSeconds(2));
+                disposedPromptly = true;
+            }
+            catch (TimeoutException)
+            {
+                disposedPromptly = false;
+                app.Services.GetRequiredService<TaskEngine>().SignalShutdown();
+                await dispose.WaitAsync(TimeSpan.FromSeconds(5));
+            }
+
+            await handlerCleaned.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.That(disposedPromptly, Is.True);
+        }
+        finally
+        {
+            await app.DisposeAsync();
+        }
+    }
+
+    [Test]
+    public async Task StopRetriesRetainedOwnedStoreCleanupWithoutAnotherRestore()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var firstStore = new DisposableStore(
+            new LocalTaskStore(CreateDirectory()),
+            failFirstDispose: true);
+        var secondStore = new DisposableStore(
+            new LocalTaskStore(CreateDirectory()),
+            failFirstDispose: false);
+        var stores = new Queue<ITaskStore>(new ITaskStore[]
+        {
+            firstStore,
+            secondStore,
+        });
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = (_, _) =>
+                throw new InvalidOperationException("retain failed cleanup"),
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.AddSingleton(
+                    new TaskStoreFactory(
+                        () => (stores.Dequeue(), true)));
+                services.SetResilientTasksEnabled();
+                services.AddResilientTask<string, string>(
+                    "stop-cleanup-retry",
+                    (context, cancellationToken) => Task.FromResult(context.Input));
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage failed = await PostRestoreAsync(client);
+        SnapshotTaskRuntime runtime =
+            app.Services.GetRequiredService<SnapshotTaskRuntime>();
+
+        bool stopped;
+        using (var stopCts = new CancellationTokenSource(TimeSpan.FromSeconds(2)))
+        {
+            try
+            {
+                await runtime.StopAsync(stopCts.Token);
+                stopped = true;
+            }
+            catch (OperationCanceledException)
+            {
+                stopped = false;
+            }
+        }
+
+        if (!stopped)
+        {
+            using HttpResponseMessage cleanupRetry = await PostRestoreAsync(client);
+            Assert.That(
+                cleanupRetry.StatusCode,
+                Is.EqualTo(HttpStatusCode.InternalServerError));
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(failed.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+            Assert.That(stopped, Is.True);
+            Assert.That(firstStore.DisposeAttempts, Is.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async Task NewRestorePausesRecoveryScansUntilCallbackCompletes()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var store = new SignalingListStore(new LocalTaskStore(CreateDirectory()));
+        var callbackEntered =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseCallback =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (context, cancellationToken) =>
+            {
+                if (context.RestoreId == "restore-2")
+                {
+                    callbackEntered.TrySetResult();
+                    await releaseCallback.Task.WaitAsync(cancellationToken);
+                }
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(store);
+                services.AddResilientTask<string, string>(
+                    "scan-pause",
+                    (context, cancellationToken) => Task.FromResult(context.Input));
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage first = await PostRestoreAsync(client, "restore-1");
+        Task<HttpResponseMessage> second = PostRestoreAsync(client, "restore-2");
+        await callbackEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        SnapshotTaskRuntime runtime =
+            app.Services.GetRequiredService<SnapshotTaskRuntime>();
+        TaskDurabilityService durability = GetDurability(runtime);
+        Task<int> manualScan = durability.ScanOnceAsync();
+        bool scanEnteredDuringCallback;
+        try
+        {
+            await store.SecondListEntered.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            scanEnteredDuringCallback = true;
+        }
+        catch (TimeoutException)
+        {
+            scanEnteredDuringCallback = false;
+        }
+
+        releaseCallback.TrySetResult();
+        using HttpResponseMessage restored =
+            await second.WaitAsync(TimeSpan.FromSeconds(5));
+        await manualScan.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(restored.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(scanEnteredDuringCallback, Is.False);
+        });
+    }
+
+    [Test]
+    public async Task ResponsesWorkerRetainsResolvedProtocolAfterCallbackScopeEnds()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var allowNested =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var nestedOutcome =
+            new TaskCompletionSource<Exception?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskDefinition<string, string>? outer = null;
+        TaskDefinition<string, string>? nested = null;
+        IServiceProvider? root = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (_, cancellationToken) =>
+            {
+                await outer!.StartAsync(
+                    "outer",
+                    new RunOptions { TaskId = "responses-worker" },
+                    cancellationToken);
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.AddResilientTasks();
+                services.RegisterResilientTaskProtocol("responses", () => true);
+                services.Configure<ResilientTaskOptions>(options => options.Enabled = true);
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                nested = services.AddResilientTask<string, string>(
+                    "nested-responses",
+                    (context, cancellationToken) => Task.FromResult(context.Input));
+                outer = services.AddResilientTask<string, string>(
+                    "outer-responses",
+                    async (context, cancellationToken) =>
+                    {
+                        await allowNested.Task.WaitAsync(cancellationToken);
+                        try
+                        {
+                            await nested.RunAsync(
+                                "nested",
+                                cancellationToken: cancellationToken);
+                            nestedOutcome.TrySetResult(null);
+                        }
+                        catch (Exception exception)
+                        {
+                            nestedOutcome.TrySetResult(exception);
+                        }
+
+                        return context.Input;
+                    });
+            },
+            lifecycle);
+        root = app.Services;
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage response = await PostRestoreAsync(client);
+        allowNested.TrySetResult();
+        Exception? outcome =
+            await nestedOutcome.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(outcome, Is.Null);
+        });
+
+        using (root.EnterResilientTaskScope("responses"))
+        {
+            await outer!.DeleteAsync("responses-worker");
+        }
+    }
+
+    [Test]
+    public async Task NewRestoreClosesExternalAdmissionUntilRecoveryCompletes()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var callbackEntered =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseCallback =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskDefinition<string, string>? definition = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (context, cancellationToken) =>
+            {
+                if (context.RestoreId == "restore-2")
+                {
+                    callbackEntered.TrySetResult();
+                    await releaseCallback.Task.WaitAsync(cancellationToken);
+                }
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                definition = services.AddResilientTask<string, string>(
+                    "external-admission",
+                    (context, cancellationToken) => Task.FromResult(context.Input));
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage first = await PostRestoreAsync(client, "restore-1");
+        Task<HttpResponseMessage> second = PostRestoreAsync(client, "restore-2");
+        await callbackEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        InvalidOperationException? rejected =
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await definition!.StartAsync("outside"))!;
+
+        releaseCallback.TrySetResult();
+        using HttpResponseMessage restored =
+            await second.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(restored.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(rejected.Message, Does.Contain("not ready"));
+        });
+    }
+
+    [TestCase(null)]
+    [TestCase("false")]
+    public async Task ColdModeFailureKeepsRestoredEnvironmentForAcceptedWorker(
+        string? snapshotValue)
+    {
+        const string RestoreVariable = "AGENTSERVER_COLD_FAILURE_VALUE";
+        RememberEnvironment(RestoreVariable);
+        Environment.SetEnvironmentVariable(RestoreVariable, "captured");
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, snapshotValue);
+        var handlerStarted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseHandler =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var handlerFinallyEnvironment =
+            new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskDefinition<string, string>? definition = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (_, cancellationToken) =>
+            {
+                await definition!.StartAsync(
+                    "cold",
+                    new RunOptions { TaskId = "cold-failure-task" },
+                    cancellationToken);
+                await handlerStarted.Task.WaitAsync(cancellationToken);
+                throw new InvalidOperationException("cold callback failure");
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                definition = services.AddResilientTask<string, string>(
+                    "cold-failure",
+                    async (context, cancellationToken) =>
+                    {
+                        handlerStarted.TrySetResult();
+                        try
+                        {
+                            await releaseHandler.Task;
+                        }
+                        finally
+                        {
+                            handlerFinallyEnvironment.TrySetResult(
+                                Environment.GetEnvironmentVariable(RestoreVariable));
+                        }
+
+                        return context.Input;
+                    });
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage response = await PostRestoreWithOverrideAsync(
+            client,
+            RestoreVariable,
+            "restored");
+        string? environmentWhileWorkerRuns =
+            Environment.GetEnvironmentVariable(RestoreVariable);
+        releaseHandler.TrySetResult();
+        string? environmentInFinally =
+            await handlerFinallyEnvironment.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+            Assert.That(environmentWhileWorkerRuns, Is.EqualTo("restored"));
+            Assert.That(environmentInFinally, Is.EqualTo("restored"));
+        });
+    }
+
+    [Test]
+    public async Task LocalInjectedStoreIgnoresProjectEndpointChanges()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+
+        await using WebApplication app = await StartAppAsync(services =>
+        {
+            services.SetResilientTasksEnabled();
+            services.AddSingleton<ITaskStore>(
+                new LocalTaskStore(CreateDirectory()));
+            services.AddResilientTask<string, string>(
+                "local-endpoint",
+                (context, cancellationToken) => Task.FromResult(context.Input));
+        });
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage first = await PostRestoreWithOverrideAsync(
+            client,
+            "FOUNDRY_PROJECT_ENDPOINT",
+            "https://first.example.invalid/project");
+        using HttpResponseMessage second = await PostRestoreWithOverrideAsync(
+            client,
+            "FOUNDRY_PROJECT_ENDPOINT",
+            "https://second.example.invalid/project",
+            restoreId: "restore-2");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(second.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        });
+    }
+
+    [Test]
+    public async Task OwnedHostedBindingNormalizesEndpointAndRejectsActualChange()
+    {
+        const string HostingVariable = "FOUNDRY_HOSTING_ENVIRONMENT";
+        RememberEnvironment(HostingVariable);
+        Environment.SetEnvironmentVariable(HostingVariable, "hosted");
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        FoundryEnvironment.Reload();
+
+        await using WebApplication app = await StartAppAsync(services =>
+        {
+            services.AddSingleton(
+                new TaskStoreFactory(
+                    () => (
+                        new LocalTaskStore(CreateDirectory()),
+                        true)));
+            services.SetResilientTasksEnabled();
+            services.AddResilientTask<string, string>(
+                "hosted-endpoint",
+                (context, cancellationToken) => Task.FromResult(context.Input));
+        });
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage first = await PostRestoreWithOverrideAsync(
+            client,
+            "FOUNDRY_PROJECT_ENDPOINT",
+            "https://example.invalid/project");
+        using HttpResponseMessage equivalent = await PostRestoreWithOverrideAsync(
+            client,
+            "FOUNDRY_PROJECT_ENDPOINT",
+            "https://example.invalid/project/",
+            restoreId: "restore-2");
+        using HttpResponseMessage changed = await PostRestoreWithOverrideAsync(
+            client,
+            "FOUNDRY_PROJECT_ENDPOINT",
+            "https://other.invalid/project",
+            restoreId: "restore-3");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(equivalent.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(changed.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        });
+    }
+
+    [Test]
+    public async Task ImplicitFileReplayDirectoryUsesRestoredStateRoot()
+    {
+        const string StateRootVariable = "AGENTSERVER_STATE_ROOT";
+        RememberEnvironment(StateRootVariable);
+        string capturedRoot = CreateDirectory();
+        string restoredRoot = CreateDirectory();
+        Environment.SetEnvironmentVariable(StateRootVariable, capturedRoot);
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var emitted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskDefinition<string, string>? definition = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (_, cancellationToken) =>
+            {
+                await definition!.StartAsync(
+                    "stream",
+                    new RunOptions { TaskId = "restored-stream-task" },
+                    cancellationToken);
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.AddAgentEventStreams(
+                    options => options.UseFileBackedReplay());
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                definition = services.AddResilientMultiTurnTask<string, string>(
+                    "restored-stream",
+                    async (context, cancellationToken) =>
+                    {
+                        await context.Stream.EmitAsync(
+                            new SseItem<string>("progress")
+                            {
+                                EventId = "1",
+                            },
+                            cancellationToken);
+                        emitted.TrySetResult();
+                        return context.Input;
+                    });
+            },
+            lifecycle);
+
+        _ = app.Services.GetRequiredService<AgentEventStreamRegistry>();
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage response = await PostRestoreWithOverrideAsync(
+            client,
+            StateRootVariable,
+            restoredRoot.Replace("\\", "\\\\", StringComparison.Ordinal));
+        await emitted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        string capturedStreams = Path.Combine(capturedRoot, "streams");
+        string restoredStreams = Path.Combine(restoredRoot, "streams");
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(
+                Directory.Exists(capturedStreams)
+                    && Directory.EnumerateFiles(capturedStreams, "*.jsonl").Any(),
+                Is.False);
+            Assert.That(
+                Directory.Exists(restoredStreams)
+                    && Directory.EnumerateFiles(restoredStreams, "*.jsonl").Any(),
+                Is.True);
+        });
+    }
+
+    [Test]
+    public async Task ExplicitFileReplayDirectoryRemainsFixedAfterRestore()
+    {
+        const string StateRootVariable = "AGENTSERVER_STATE_ROOT";
+        RememberEnvironment(StateRootVariable);
+        string capturedRoot = CreateDirectory();
+        string restoredRoot = CreateDirectory();
+        string explicitStreams = CreateDirectory();
+        Environment.SetEnvironmentVariable(StateRootVariable, capturedRoot);
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var emitted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskDefinition<string, string>? definition = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (_, cancellationToken) =>
+            {
+                await definition!.StartAsync(
+                    "stream",
+                    new RunOptions { TaskId = "explicit-stream-task" },
+                    cancellationToken);
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.AddAgentEventStreams(
+                    options => options.UseFileBackedReplay(explicitStreams));
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                definition = services.AddResilientMultiTurnTask<string, string>(
+                    "explicit-stream",
+                    async (context, cancellationToken) =>
+                    {
+                        await context.Stream.EmitAsync(
+                            new SseItem<string>("progress")
+                            {
+                                EventId = "1",
+                            },
+                            cancellationToken);
+                        emitted.TrySetResult();
+                        return context.Input;
+                    });
+            },
+            lifecycle);
+
+        _ = app.Services.GetRequiredService<AgentEventStreamRegistry>();
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage response = await PostRestoreWithOverrideAsync(
+            client,
+            StateRootVariable,
+            restoredRoot.Replace("\\", "\\\\", StringComparison.Ordinal));
+        await emitted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(
+                Directory.EnumerateFiles(explicitStreams, "*.jsonl").Any(),
+                Is.True);
+            Assert.That(
+                Directory.Exists(Path.Combine(restoredRoot, "streams")),
+                Is.False);
+        });
+    }
+
+    [Test]
+    public async Task NonCooperativeRollbackIsBoundedAndRetriedAfterWorkerStops()
+    {
+        const string RestoreVariable = "AGENTSERVER_BOUNDED_ROLLBACK_VALUE";
+        RememberEnvironment(RestoreVariable);
+        Environment.SetEnvironmentVariable(RestoreVariable, "captured");
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var handlerStarted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseHandler =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskDefinition<string, string>? definition = null;
+        int callbackCount = 0;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (_, cancellationToken) =>
+            {
+                if (Interlocked.Increment(ref callbackCount) != 1)
+                {
+                    return;
+                }
+
+                await definition!.StartAsync(
+                    "bounded",
+                    new RunOptions { TaskId = "bounded-rollback-task" },
+                    cancellationToken);
+                await handlerStarted.Task.WaitAsync(cancellationToken);
+                throw new InvalidOperationException("bounded rollback");
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.Configure<AgentHostOptions>(
+                    options => options.ShutdownTimeout = TimeSpan.FromMilliseconds(200));
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                definition = services.AddResilientTask<string, string>(
+                    "bounded-rollback",
+                    async (context, cancellationToken) =>
+                    {
+                        handlerStarted.TrySetResult();
+                        await releaseHandler.Task;
+                        return context.Input;
+                    });
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        Task<HttpResponseMessage> firstRequest = PostRestoreWithOverrideAsync(
+            client,
+            RestoreVariable,
+            "restored");
+        await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        HttpResponseMessage? first = null;
+        bool firstBounded;
+        try
+        {
+            first = await firstRequest.WaitAsync(TimeSpan.FromSeconds(1));
+            firstBounded = true;
+        }
+        catch (TimeoutException)
+        {
+            firstBounded = false;
+        }
+
+        if (!firstBounded)
+        {
+            releaseHandler.TrySetResult();
+            first = await firstRequest.WaitAsync(TimeSpan.FromSeconds(5));
+        }
+
+        using (first)
+        {
+            Assert.That(firstBounded, Is.True);
+            Assert.That(first!.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        }
+
+        using HttpResponseMessage pendingRetry =
+            await PostRestoreWithOverrideAsync(
+                client,
+                RestoreVariable,
+                "restored").WaitAsync(TimeSpan.FromSeconds(1));
+        Assert.That(
+            pendingRetry.StatusCode,
+            Is.EqualTo(HttpStatusCode.InternalServerError));
+        Assert.That(
+            Environment.GetEnvironmentVariable(RestoreVariable),
+            Is.EqualTo("restored"));
+
+        releaseHandler.TrySetResult();
+        SnapshotTaskRuntime runtime =
+            app.Services.GetRequiredService<SnapshotTaskRuntime>();
+        using (var cleanupCts =
+            new CancellationTokenSource(TimeSpan.FromSeconds(5)))
+        {
+            await runtime.StopAsync(cleanupCts.Token);
+        }
+
+        using HttpResponseMessage successfulRetry =
+            await PostRestoreWithOverrideAsync(
+                client,
+                RestoreVariable,
+                "restored").WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(successfulRetry.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(callbackCount, Is.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async Task DisposeTimeoutDoesNotPreventOtherServicesFromDisposing()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var handlerStarted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseHandler =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var handlerStopped =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var disposeProbe = new DisposeProbe();
+        var loggerProvider = new RecordingLoggerProvider();
+        TaskDefinition<string, string>? definition = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (_, cancellationToken) =>
+            {
+                await definition!.StartAsync(
+                    "dispose-timeout",
+                    new RunOptions { TaskId = "dispose-timeout-task" },
+                    cancellationToken);
+                await handlerStarted.Task.WaitAsync(cancellationToken);
+            },
+        };
+
+        WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.Configure<AgentHostOptions>(
+                    options => options.ShutdownTimeout = TimeSpan.FromMilliseconds(200));
+                services.AddLogging(
+                    logging => logging.AddProvider(loggerProvider));
+                services.AddSingleton(disposeProbe);
+                services.AddSingleton<IHostedService>(
+                    provider => provider.GetRequiredService<DisposeProbe>());
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                definition = services.AddResilientTask<string, string>(
+                    "dispose-timeout",
+                    async (context, cancellationToken) =>
+                    {
+                        handlerStarted.TrySetResult();
+                        try
+                        {
+                            await releaseHandler.Task;
+                        }
+                        finally
+                        {
+                            handlerStopped.TrySetResult();
+                        }
+
+                        return context.Input;
+                    });
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage response = await PostRestoreAsync(client);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        await app.DisposeAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.Multiple(() =>
+        {
+            Assert.That(disposeProbe.Disposed.Task.IsCompleted, Is.True);
+            Assert.That(
+                loggerProvider.Messages.Count(
+                    message => message.Contains(
+                        "disposal timed out",
+                        StringComparison.OrdinalIgnoreCase)),
+                Is.EqualTo(1));
+        });
+
+        releaseHandler.TrySetResult();
+        await handlerStopped.Task.WaitAsync(TimeSpan.FromSeconds(5));
+    }
+
+    [Test]
+    public async Task DisposedRuntimeRejectsLaterActivationWithoutCreatingStore()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        int storeCreations = 0;
+
+        await using WebApplication app = await StartAppAsync(services =>
+        {
+            services.AddSingleton(
+                new TaskStoreFactory(
+                    () =>
+                    {
+                        Interlocked.Increment(ref storeCreations);
+                        return (
+                            (ITaskStore)new LocalTaskStore(CreateDirectory()),
+                            true);
+                    }));
+            services.SetResilientTasksEnabled();
+            services.AddResilientTask<string, string>(
+                "disposed-activation",
+                (context, cancellationToken) => Task.FromResult(context.Input));
+        });
+
+        SnapshotTaskRuntime runtime =
+            app.Services.GetRequiredService<SnapshotTaskRuntime>();
+        await Task.WhenAll(
+            runtime.DisposeAsync().AsTask(),
+            runtime.DisposeAsync().AsTask(),
+            runtime.DisposeAsync().AsTask());
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage response = await PostRestoreAsync(client);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+            Assert.That(storeCreations, Is.Zero);
+        });
+    }
+
+    [Test]
+    public async Task DisposeLogsOwnedStoreFailureAndAllowsOtherServicesToDispose()
+    {
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var store = new DisposableStore(
+            new LocalTaskStore(CreateDirectory()),
+            failFirstDispose: true);
+        var disposeProbe = new DisposeProbe();
+        var loggerProvider = new RecordingLoggerProvider();
+
+        WebApplication app = await StartAppAsync(services =>
+        {
+            services.AddLogging(
+                logging => logging.AddProvider(loggerProvider));
+            services.AddSingleton(disposeProbe);
+            services.AddSingleton<IHostedService>(
+                provider => provider.GetRequiredService<DisposeProbe>());
+            services.AddSingleton(
+                new TaskStoreFactory(() => (store, true)));
+            services.SetResilientTasksEnabled();
+            services.AddResilientTask<string, string>(
+                "dispose-failure",
+                (context, cancellationToken) => Task.FromResult(context.Input));
+        });
+
+        SnapshotTaskRuntime runtime =
+            app.Services.GetRequiredService<SnapshotTaskRuntime>();
+        try
+        {
+            using HttpClient client = app.GetTestClient();
+            using HttpResponseMessage response = await PostRestoreAsync(client);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+            Assert.DoesNotThrowAsync(
+                async () => await app.DisposeAsync().AsTask());
+            Assert.That(disposeProbe.Disposed.Task.IsCompleted, Is.True);
+            Assert.That(store.DisposeAttempts, Is.EqualTo(1));
+
+            using var stopCts =
+                new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await runtime.StopAsync(stopCts.Token);
+            Assert.That(store.DisposeAttempts, Is.EqualTo(2));
+            Assert.That(
+                loggerProvider.Messages.Any(
+                    message => message.Contains(
+                        "cleanup failure",
+                        StringComparison.OrdinalIgnoreCase)),
+                Is.True);
+        }
+        finally
+        {
+            await app.DisposeAsync();
+        }
+    }
+
+    [Test]
+    public async Task InflightRecoveryScanDrainsBeforeRestoredEnvironmentIsPublished()
+    {
+        const string RestoreVariable = "AGENTSERVER_SCAN_DRAIN_VALUE";
+        RememberEnvironment(RestoreVariable);
+        Environment.SetEnvironmentVariable(RestoreVariable, "old");
+        Environment.SetEnvironmentVariable(SnapshotEnabledVariable, "true");
+        var store = new ControllableListStore(
+            new LocalTaskStore(CreateDirectory()));
+        var callbackEntered =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseCallback =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = async (context, cancellationToken) =>
+            {
+                if (context.RestoreId == "restore-2")
+                {
+                    callbackEntered.TrySetResult();
+                    await releaseCallback.Task.WaitAsync(cancellationToken);
+                }
+            },
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(store);
+                services.AddResilientTask<string, string>(
+                    "scan-drain",
+                    (context, cancellationToken) => Task.FromResult(context.Input));
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage first = await PostRestoreAsync(client);
+        Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        store.BlockNextList();
+        SnapshotTaskRuntime runtime =
+            app.Services.GetRequiredService<SnapshotTaskRuntime>();
+        Task<int> inflightScan = GetDurability(runtime).ScanOnceAsync();
+        await store.ListEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Task<HttpResponseMessage> second = PostRestoreWithOverrideAsync(
+            client,
+            RestoreVariable,
+            "new",
+            restoreId: "restore-2");
+        Assert.That(
+            Environment.GetEnvironmentVariable(RestoreVariable),
+            Is.EqualTo("old"));
+        Assert.That(callbackEntered.Task.IsCompleted, Is.False);
+
+        store.ReleaseList.TrySetResult();
+        await inflightScan.WaitAsync(TimeSpan.FromSeconds(5));
+        await callbackEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        Assert.That(
+            Environment.GetEnvironmentVariable(RestoreVariable),
+            Is.EqualTo("new"));
+
+        releaseCallback.TrySetResult();
+        using HttpResponseMessage restored =
+            await second.WaitAsync(TimeSpan.FromSeconds(5));
+        Assert.That(restored.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+    }
+
+    [TestCase("true", "false", "true")]
+    [TestCase("false", "true", "true")]
+    public async Task RestoreRollbackModeIsPinnedToStartupMode(
+        string startupValue,
+        string overrideValue,
+        string expectedAfterFailure)
+    {
+        Environment.SetEnvironmentVariable(
+            SnapshotEnabledVariable,
+            startupValue);
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = (_, _) =>
+                throw new InvalidOperationException("mode pinning failure"),
+        };
+
+        await using WebApplication app = await StartAppAsync(
+            services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton<ITaskStore>(
+                    new LocalTaskStore(CreateDirectory()));
+                services.AddResilientTask<string, string>(
+                    "mode-pinning",
+                    (context, cancellationToken) => Task.FromResult(context.Input));
+            },
+            lifecycle);
+
+        using HttpClient client = app.GetTestClient();
+        using HttpResponseMessage response = await PostRestoreWithOverrideAsync(
+            client,
+            SnapshotEnabledVariable,
+            overrideValue);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+            Assert.That(
+                Environment.GetEnvironmentVariable(SnapshotEnabledVariable),
+                Is.EqualTo(expectedAfterFailure));
+        });
+    }
+
     [TestCase(null)]
     [TestCase("false")]
     [TestCase("true")]
@@ -1317,7 +2353,8 @@ public sealed class SnapshotTaskActivationTests
     private static Task<HttpResponseMessage> PostRestoreWithOverrideAsync(
         HttpClient client,
         string variable,
-        string value) =>
+        string value,
+        string restoreId = "restore-1") =>
         PostJsonAsync(
             client,
             "/_agent/after-restore",
@@ -1325,7 +2362,7 @@ public sealed class SnapshotTaskActivationTests
             {
               "session_context": {
                 "session_id": "restored-session",
-                "restore_id": "restore-1",
+                "restore_id": "{{restoreId}}",
                 "session_env_overrides": {
                   "{{variable}}": "{{value}}"
                 }
@@ -1367,6 +2404,21 @@ public sealed class SnapshotTaskActivationTests
     private void RememberEnvironment(string name)
     {
         _originalEnvironment[name] = Environment.GetEnvironmentVariable(name);
+    }
+
+    private static TaskDurabilityService GetDurability(
+        SnapshotTaskRuntime runtime)
+    {
+        System.Reflection.FieldInfo field =
+            typeof(SnapshotTaskRuntime).GetField(
+                "_durability",
+                System.Reflection.BindingFlags.Instance
+                    | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException(
+                "Snapshot runtime durability field was not found.");
+        return (TaskDurabilityService?)field.GetValue(runtime)
+            ?? throw new InvalidOperationException(
+                "Snapshot runtime durability service is not prepared.");
     }
 
     private sealed class TestSnapshotLifecycle : IAgentSnapshotLifecycle
@@ -1511,9 +2563,114 @@ public sealed class SnapshotTaskActivationTests
         }
     }
 
+    private sealed class SignalingListStore(ITaskStore inner) : ITaskStore
+    {
+        private int _listCalls;
+
+        public TaskCompletionSource SecondListEntered { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default) =>
+            inner.CreateAsync(request, cancellationToken);
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default) =>
+            inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default) =>
+            inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default) =>
+            inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            if (Interlocked.Increment(ref _listCalls) == 2)
+            {
+                SecondListEntered.TrySetResult();
+            }
+
+            return inner.ListAsync(query, cancellationToken);
+        }
+    }
+
+    private sealed class ControllableListStore(ITaskStore inner) : ITaskStore
+    {
+        private int _blockNext;
+
+        public TaskCompletionSource ListEntered { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleaseList { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public void BlockNextList()
+        {
+            ListEntered = new TaskCompletionSource(
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            ReleaseList = new TaskCompletionSource(
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            Volatile.Write(ref _blockNext, 1);
+        }
+
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default) =>
+            inner.CreateAsync(request, cancellationToken);
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default) =>
+            inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default) =>
+            inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default) =>
+            inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public async Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            if (Interlocked.Exchange(ref _blockNext, 0) != 0)
+            {
+                ListEntered.TrySetResult();
+                await ReleaseList.Task.WaitAsync(cancellationToken);
+            }
+
+            return await inner.ListAsync(query, cancellationToken);
+        }
+    }
+
     private sealed class ProspectiveBindingProbe(
         string restoreId) : ISnapshotLifecycleParticipant
     {
+        public bool UsesTransactionalRestore => false;
+
         public TaskCompletionSource InspectRequested { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -1544,6 +2701,9 @@ public sealed class SnapshotTaskActivationTests
                 await ObservedEnvironment.Task.WaitAsync(cancellationToken);
             }
         }
+
+        public Task CancelAfterRestoreValidationAsync() =>
+            Task.CompletedTask;
 
         public IDisposable EnterAfterRestoreCallbackScope() =>
             NoOpDisposable.Instance;
@@ -1615,6 +2775,70 @@ public sealed class SnapshotTaskActivationTests
 
         public void Dispose()
         {
+        }
+    }
+
+    private sealed class DisposeProbe : IHostedService, IAsyncDisposable
+    {
+        public TaskCompletionSource Disposed { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task StartAsync(CancellationToken cancellationToken) =>
+            Task.CompletedTask;
+
+        public Task StopAsync(CancellationToken cancellationToken) =>
+            Task.CompletedTask;
+
+        public ValueTask DisposeAsync()
+        {
+            Disposed.TrySetResult();
+            return ValueTask.CompletedTask;
+        }
+    }
+
+    private sealed class RecordingLoggerProvider : ILoggerProvider
+    {
+        private readonly List<string> _messages = new();
+
+        public IReadOnlyList<string> Messages
+        {
+            get
+            {
+                lock (_messages)
+                {
+                    return _messages.ToArray();
+                }
+            }
+        }
+
+        public ILogger CreateLogger(string categoryName) =>
+            new RecordingLogger(_messages);
+
+        public void Dispose()
+        {
+        }
+
+        private sealed class RecordingLogger(
+            List<string> messages) : ILogger
+        {
+            public IDisposable? BeginScope<TState>(TState state)
+                where TState : notnull =>
+                null;
+
+            public bool IsEnabled(LogLevel logLevel) => true;
+
+            public void Log<TState>(
+                LogLevel logLevel,
+                EventId eventId,
+                TState state,
+                Exception? exception,
+                Func<TState, Exception?, string> formatter)
+            {
+                lock (messages)
+                {
+                    messages.Add(formatter(state, exception));
+                }
+            }
         }
     }
 }

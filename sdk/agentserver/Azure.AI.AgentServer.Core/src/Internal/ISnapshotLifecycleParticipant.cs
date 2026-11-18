@@ -5,10 +5,14 @@ namespace Azure.AI.AgentServer.Core.Internal;
 
 internal interface ISnapshotLifecycleParticipant
 {
+    bool UsesTransactionalRestore { get; }
+
     Task ValidateAfterRestoreAsync(
         AgentRestoreContext context,
         IReadOnlyDictionary<string, string?> prospectiveEnvironment,
         CancellationToken cancellationToken);
+
+    Task CancelAfterRestoreValidationAsync();
 
     Task PrepareAfterRestoreAsync(
         AgentRestoreContext context,

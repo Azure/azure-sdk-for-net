@@ -1394,6 +1394,12 @@ internal sealed partial class TaskEngine : IDisposable
         CancellationTokenSource handlerCts,
         bool isSteeredTurn = false)
     {
+        using IDisposable? protocolScope = _enablement is not null
+            ? TaskEngineAccessor.EnterProtocolScope(
+                _enablement,
+                activeRun.Protocol,
+                enabled: true)
+            : null;
         var handler = registration.RequiresServiceScope
             ? null
             : (Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler;
@@ -1410,9 +1416,8 @@ internal sealed partial class TaskEngine : IDisposable
         EntryMode currentMode = entryMode;
         bool steered = isSteeredTurn;
         CancellationTokenSource currentCts = handlerCts;
-        using IDisposable? recoveryHandlerScope = entryMode == EntryMode.Recovered
-            ? TaskEngineAccessor.EnterRecoveryHandlerScope(this)
-            : null;
+        using IDisposable workerHandlerScope =
+            TaskEngineAccessor.EnterRecoveryHandlerScope(this);
 
         try
         {

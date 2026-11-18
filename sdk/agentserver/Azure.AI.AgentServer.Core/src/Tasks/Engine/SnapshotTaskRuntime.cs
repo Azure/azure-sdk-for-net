@@ -8,16 +8,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 
 internal sealed class SnapshotTaskRuntime :
     IHostedService,
+    IAsyncDisposable,
     ISnapshotLifecycleParticipant
 {
     private readonly IServiceProvider _services;
     private readonly ResilientTaskEnablementState _enablement;
     private readonly TaskEngineAccessor _accessor;
+    private readonly TimeSpan _cleanupTimeout;
+    private readonly ILogger<SnapshotTaskRuntime> _logger;
     private readonly SemaphoreSlim _gate = new(1, 1);
     private readonly object _activationStateGate = new();
     private TaskDurabilityService? _durability;
@@ -28,15 +32,22 @@ internal sealed class SnapshotTaskRuntime :
     private bool _deferred;
     private bool _activationPending;
     private TaskCompletionSource _activationSettled = CompletedSignal();
+    private Task? _cleanupTask;
+    private Task? _disposeTask;
+    private bool _disposeRequested;
 
     public SnapshotTaskRuntime(
         IServiceProvider services,
         ResilientTaskEnablementState enablement,
-        TaskEngineAccessor accessor)
+        TaskEngineAccessor accessor,
+        IOptions<AgentHostOptions> hostOptions,
+        ILogger<SnapshotTaskRuntime> logger)
     {
         _services = services;
         _enablement = enablement;
         _accessor = accessor;
+        _cleanupTimeout = hostOptions.Value.ShutdownTimeout;
+        _logger = logger;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -45,6 +56,9 @@ internal sealed class SnapshotTaskRuntime :
         _enablement.MarkStopped();
         return Task.CompletedTask;
     }
+
+    public bool UsesTransactionalRestore =>
+        _deferred && _enablement.IsConfigured;
 
     public async Task StopAsync(CancellationToken cancellationToken)
     {
@@ -66,10 +80,93 @@ internal sealed class SnapshotTaskRuntime :
         await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
+            if (_cleanupTask is not null)
+            {
+                Task cleanup = GetOrStartCleanupTask();
+                await cleanup.WaitAsync(cancellationToken).ConfigureAwait(false);
+                _cleanupTask = null;
+                return;
+            }
+
             if (_durability is not null)
             {
                 await _durability.StopAsync(cancellationToken).ConfigureAwait(false);
                 await DisposeRuntimeAsync().ConfigureAwait(false);
+            }
+        }
+        finally
+        {
+            _gate.Release();
+        }
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        lock (_activationStateGate)
+        {
+            _disposeRequested = true;
+            _disposeTask ??= DisposeCoreAsync();
+            return new ValueTask(_disposeTask);
+        }
+    }
+
+    private async Task DisposeCoreAsync()
+    {
+        await Task.Yield();
+        try
+        {
+            await DisposeCoreAttemptAsync().ConfigureAwait(false);
+        }
+        catch (TimeoutException)
+        {
+            LogWarning(
+                "Snapshot task runtime disposal timed out; owned cleanup remains pending.");
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            LogWarning(
+                exception,
+                "Snapshot task runtime disposal encountered a cleanup failure; owned cleanup remains pending.");
+        }
+    }
+
+    private async Task DisposeCoreAttemptAsync()
+    {
+        Task? pendingActivation;
+        lock (_activationStateGate)
+        {
+            pendingActivation = _activationPending
+                ? _activationSettled.Task
+                : null;
+        }
+
+        if (pendingActivation is not null)
+        {
+            _durability?.SignalRollbackStop();
+            try
+            {
+                await pendingActivation.WaitAsync(_cleanupTimeout).ConfigureAwait(false);
+            }
+            catch (TimeoutException)
+            {
+                LogWarning(
+                    "Snapshot task runtime disposal timed out while activation cleanup remains pending.");
+                return;
+            }
+        }
+
+        await _gate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+        try
+        {
+            Task cleanup = GetOrStartCleanupTask();
+            try
+            {
+                await cleanup.WaitAsync(_cleanupTimeout).ConfigureAwait(false);
+                _cleanupTask = null;
+            }
+            catch (TimeoutException)
+            {
+                throw;
             }
         }
         finally
@@ -93,28 +190,34 @@ internal sealed class SnapshotTaskRuntime :
             await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                RuntimeBinding binding = RuntimeBinding.Current(
-                    _services.GetRequiredService<TaskHostEnvironment>());
-                if (_binding is not null && _binding != binding)
+                TaskHostEnvironment hostEnvironment =
+                    _services.GetRequiredService<TaskHostEnvironment>();
+                if (_binding is not null)
                 {
-                    if (_durability?.IsStarted == true)
+                    RuntimeBinding candidate = RuntimeBinding.Current(
+                        hostEnvironment,
+                        _ownsStore);
+                    if (_binding != candidate)
                     {
-                        throw new InvalidOperationException(
-                            "Cannot change the resilient-task runtime binding while recovery workers are running.");
-                    }
+                        if (_durability?.IsStarted == true)
+                        {
+                            throw new InvalidOperationException(
+                                "Cannot change the resilient-task runtime binding while recovery workers are running.");
+                        }
 
-                    if (_engine is not null)
-                    {
-                        _accessor.Unbind(_engine);
-                        _engine.Dispose();
-                        await DisposeOwnedStoreAsync().ConfigureAwait(false);
-                    }
+                        if (_engine is not null)
+                        {
+                            _accessor.Unbind(_engine);
+                            _engine.Dispose();
+                            await DisposeOwnedStoreAsync().ConfigureAwait(false);
+                        }
 
-                    _durability?.DisposeAfterShutdown();
-                    _durability = null;
-                    _engine = null;
-                    _store = null;
-                    _binding = null;
+                        _durability?.DisposeAfterShutdown();
+                        _durability = null;
+                        _engine = null;
+                        _store = null;
+                        _binding = null;
+                    }
                 }
 
                 if (_durability is null)
@@ -151,7 +254,9 @@ internal sealed class SnapshotTaskRuntime :
                         shutdownGrace: null,
                         logger,
                         _enablement);
-                    _binding = binding;
+                    _binding = RuntimeBinding.Current(
+                        hostEnvironment,
+                        _ownsStore);
                 }
 
                 await _durability.PrepareAfterRestoreAsync(
@@ -170,23 +275,41 @@ internal sealed class SnapshotTaskRuntime :
         }
     }
 
-    public Task ValidateAfterRestoreAsync(
+    public async Task ValidateAfterRestoreAsync(
         AgentRestoreContext context,
         IReadOnlyDictionary<string, string?> prospectiveEnvironment,
         CancellationToken cancellationToken)
     {
+        ThrowIfDisposalRequested();
         if (!_deferred || !_enablement.IsConfigured || _binding is null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         RuntimeBinding prospectiveBinding = RuntimeBinding.FromEnvironment(
             prospectiveEnvironment,
-            _services.GetRequiredService<TaskHostEnvironment>());
+            _services.GetRequiredService<TaskHostEnvironment>(),
+            _ownsStore);
         if (_binding != prospectiveBinding && _durability?.IsStarted == true)
         {
             throw new InvalidOperationException(
                 "Cannot change the resilient-task runtime binding while recovery workers are running.");
+        }
+
+        if (_binding == prospectiveBinding && _durability?.IsStarted == true)
+        {
+            _enablement.MarkStopped();
+            await _durability.PauseRecoveryAsync(cancellationToken)
+                .ConfigureAwait(false);
+        }
+    }
+
+    public Task CancelAfterRestoreValidationAsync()
+    {
+        _durability?.ResumeRecoveryAfterValidation();
+        if (_durability?.IsStarted == true)
+        {
+            _enablement.MarkReady();
         }
 
         return Task.CompletedTask;
@@ -243,16 +366,23 @@ internal sealed class SnapshotTaskRuntime :
         await _gate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
         try
         {
-            TaskDurabilityService? durability = _durability;
-            if (durability is null)
+            try
             {
+                Task cleanup = GetOrStartCleanupTask();
+                await cleanup.WaitAsync(_cleanupTimeout).ConfigureAwait(false);
+                _cleanupTask = null;
                 CompleteActivation();
-                return;
             }
+            catch
+            {
+                if (_cleanupTask?.IsCompleted == true)
+                {
+                    _cleanupTask = null;
+                }
 
-            await durability.RollbackAsync().ConfigureAwait(false);
-            await DisposeRuntimeAsync().ConfigureAwait(false);
-            CompleteActivation();
+                CompleteActivation();
+                throw;
+            }
         }
         finally
         {
@@ -289,6 +419,42 @@ internal sealed class SnapshotTaskRuntime :
         _binding = null;
     }
 
+    private Task GetOrStartCleanupTask()
+    {
+        if (_cleanupTask is { IsFaulted: true } or { IsCanceled: true })
+        {
+            if (_cleanupTask.Exception is Exception exception)
+            {
+                LogWarning(
+                    exception,
+                    "Retrying snapshot task runtime cleanup after an earlier cleanup failure.");
+            }
+
+            _cleanupTask = null;
+        }
+
+        if (_cleanupTask is not null)
+        {
+            return _cleanupTask;
+        }
+
+        TaskDurabilityService? durability = _durability;
+        if (durability is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        _cleanupTask = CleanupRuntimeAsync(durability);
+        return _cleanupTask;
+    }
+
+    private async Task CleanupRuntimeAsync(
+        TaskDurabilityService durability)
+    {
+        await durability.RollbackAsync().ConfigureAwait(false);
+        await DisposeRuntimeAsync().ConfigureAwait(false);
+    }
+
     private async Task DisposeOwnedStoreAsync()
     {
         if (!_ownsStore || _store is null)
@@ -312,6 +478,7 @@ internal sealed class SnapshotTaskRuntime :
     {
         lock (_activationStateGate)
         {
+            ThrowIfDisposalRequested();
             _activationSettled = new TaskCompletionSource(
                 TaskCreationOptions.RunContinuationsAsynchronously);
             _activationPending = true;
@@ -338,15 +505,51 @@ internal sealed class SnapshotTaskRuntime :
         return completion;
     }
 
+    private void ThrowIfDisposalRequested()
+    {
+        lock (_activationStateGate)
+        {
+            if (_disposeRequested)
+            {
+                throw new InvalidOperationException(
+                    "The snapshot task runtime is being disposed and cannot be activated.");
+            }
+        }
+    }
+
+    private void LogWarning(string message)
+    {
+        try
+        {
+            _logger.LogWarning(message);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+        }
+    }
+
+    private void LogWarning(Exception exception, string message)
+    {
+        try
+        {
+            _logger.LogWarning(exception, message);
+        }
+        catch (Exception loggingException)
+            when (loggingException is not OutOfMemoryException)
+        {
+        }
+    }
+
     private sealed record RuntimeBinding(
         string AgentName,
         string SessionId,
         string? SessionInstanceId,
-        bool IsHosted,
-        string? Endpoint,
-        string? StateRoot)
+        string ProviderKind,
+        string? ProviderLocation)
     {
-        public static RuntimeBinding Current(TaskHostEnvironment environment)
+        public static RuntimeBinding Current(
+            TaskHostEnvironment environment,
+            bool ownsStore)
         {
             var currentEnvironment = new Dictionary<string, string?>(
                 EnvironmentVariableNames.Comparer);
@@ -358,15 +561,34 @@ internal sealed class SnapshotTaskRuntime :
                     (string?)variable.Value);
             }
 
-            return FromEnvironment(currentEnvironment, environment);
+            return FromEnvironment(
+                currentEnvironment,
+                environment,
+                ownsStore);
         }
 
         public static RuntimeBinding FromEnvironment(
             IReadOnlyDictionary<string, string?> environmentVariables,
-            TaskHostEnvironment environment)
+            TaskHostEnvironment environment,
+            bool ownsStore)
         {
             string? Get(string name) =>
                 environmentVariables.GetValueOrDefault(name);
+            bool isHosted =
+                !string.IsNullOrEmpty(Get("FOUNDRY_HOSTING_ENVIRONMENT"));
+            string providerKind = !ownsStore
+                ? "injected"
+                : isHosted
+                    ? "hosted"
+                    : "local";
+            string? providerLocation = providerKind switch
+            {
+                "hosted" => NormalizeEndpoint(
+                    environment.Endpoint?.AbsoluteUri
+                        ?? Get("FOUNDRY_PROJECT_ENDPOINT")),
+                "local" => ResolveTasksRoot(Get("AGENTSERVER_STATE_ROOT")),
+                _ => null,
+            };
 
             return new(
                 string.IsNullOrEmpty(Get("FOUNDRY_AGENT_NAME"))
@@ -376,10 +598,19 @@ internal sealed class SnapshotTaskRuntime :
                     ? TaskEngineConstants.DefaultSessionId
                     : Get("FOUNDRY_AGENT_SESSION_ID")!,
                 Get("FOUNDRY_AGENT_SESSION_GUID"),
-                !string.IsNullOrEmpty(Get("FOUNDRY_HOSTING_ENVIRONMENT")),
-                environment.Endpoint?.AbsoluteUri
-                    ?? Get("FOUNDRY_PROJECT_ENDPOINT"),
-                ResolveTasksRoot(Get("AGENTSERVER_STATE_ROOT")));
+                providerKind,
+                providerLocation);
+        }
+
+        private static string? NormalizeEndpoint(string? endpoint)
+        {
+            if (string.IsNullOrWhiteSpace(endpoint)
+                || !Uri.TryCreate(endpoint, UriKind.Absolute, out Uri? uri))
+            {
+                return endpoint;
+            }
+
+            return uri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/";
         }
 
         private static string ResolveTasksRoot(string? stateRoot)

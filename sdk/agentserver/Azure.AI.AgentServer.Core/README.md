@@ -227,6 +227,14 @@ after the callback completes. The variable accepts only `true` or `false`
 (case-insensitive, with surrounding whitespace); absence preserves ordinary
 cold-start activation.
 
+If snapshot-mode restoration fails, Core keeps the restored configuration in
+place until accepted task workers and owned storage finish cleanup; retries are
+bounded by the host shutdown timeout and continue retained cleanup safely.
+Ordinary cold-mode callbacks preserve their established behavior: a callback
+failure does not revert the restored environment while cold-start workers may
+still be using it. File-backed replay with an implicit directory resolves the
+state root after restoration; an explicitly configured directory remains fixed.
+
 ### Resilient tasks and streaming
 
 The library provides durable **task** and resumable **streaming** primitives for long-running agents. Durable tasks are opt-in: call `SetResilientTasksEnabled()` before host startup, then register tasks with `AddResilientTask()`/`AddResilientMultiTurnTask()`. Registration alone does not initialize task storage or recovery. Run work through the typed `TaskDefinition<TInput, TOutput>` handle returned at registration and emit progress through `AgentEventStreamRegistry`. Enabled tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
