@@ -82,7 +82,7 @@ Describe 'Standard Foundry provisioning contract' {
 Describe 'Pipeline sample selection contract' {
     It 'selects only the sync fixture without changing sample attributes' {
         $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
-        $matrix.matrix.SampleSelector.Count | Should Be 3
+        $matrix.matrix.SampleSelector.Count | Should Be 4
         foreach ($slice in $matrix.matrix.SampleSelector.Values) {
             $slice.SampleSliceFilter | Should Match 'FullyQualifiedName~False'
         }
@@ -93,10 +93,11 @@ Describe 'Pipeline sample selection contract' {
         $expected = @{
             q1 = @('AgentsBasics', 'DeploymentExample')
             q2 = @('AgentCRUD', 'VersionSelection')
-            q3 = @('AgentResponseStreamingSync', 'AgentResponseSync')
+            q3 = @('AgentResponseSync')
+            q4 = @('AgentResponseStreamingSync')
         }
         $slices = @($matrix.matrix.SampleSelector.Values)
-        (($slices.SampleQueueName | Sort-Object) -join ',') | Should BeExactly 'q1,q2,q3'
+        (($slices.SampleQueueName | Sort-Object) -join ',') | Should BeExactly 'q1,q2,q3,q4'
         foreach ($slice in $slices) {
             $names = @([regex]::Matches($slice.SampleSliceFilter, '\bName=([A-Za-z0-9_]+)') |
                 ForEach-Object { $_.Groups[1].Value } | Sort-Object)
@@ -143,7 +144,7 @@ Describe 'Pipeline sample selection contract' {
     It 'keeps the writable test filter out of the read-only matrix' {
         $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
         $matrix.matrix.ContainsKey('AdditionalTestFilters') | Should Be $false
-        $matrix.matrix.SampleSelector.Count | Should Be 3
+        $matrix.matrix.SampleSelector.Count | Should Be 4
         foreach ($slice in $matrix.matrix.SampleSelector.Values) {
             $slice.ContainsKey('AdditionalTestFilters') | Should Be $false
             [string]::IsNullOrWhiteSpace($slice.SampleSliceFilter) | Should Be $false

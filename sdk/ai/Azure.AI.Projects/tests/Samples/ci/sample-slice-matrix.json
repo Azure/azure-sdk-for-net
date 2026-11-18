@@ -27,7 +27,11 @@
       },
       "OpenAIResponseBasic": {
         "SampleQueueName": "q3",
-        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & FullyQualifiedName~False & ((FullyQualifiedName~Sample_ResponseBasic & Name=AgentResponseSync)|(FullyQualifiedName~Sample_ResponseStreaming & Name=AgentResponseStreamingSync))))"
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic & Name=AgentResponseSync & FullyQualifiedName~False))"
+      },
+      "OpenAIResponseStreaming": {
+        "SampleQueueName": "q4",
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseStreaming & Name=AgentResponseStreamingSync & FullyQualifiedName~False))"
       }
     }
   }

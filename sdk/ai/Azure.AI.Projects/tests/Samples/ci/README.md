@@ -88,7 +88,7 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
 
 ## Execution and results
 
-- The existing matrix has three disjoint sample slices, one framework
+- The existing matrix has four disjoint sample slices, one framework
   (`net10.0`), Debug, and one package-reference configuration. The maximum
   parallel worker count defaults to four; it does not repeat the samples.
   The slice filters select the `False` (sync) NUnit fixture, so each sample
@@ -100,6 +100,11 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
   | `Azure.AI.Projects` | `Sample_AIAgents.AgentsBasics`, `Sample_Deployment.DeploymentExample` |
   | `Azure.AI.Projects.Agents` | `Sample_agents_CRUD.VersionSelection`, `Sample_agents_CRUD.AgentCRUD` |
   | `Azure.AI.Extensions.OpenAI` | `Sample_ResponseBasic.AgentResponseSync`, `Sample_ResponseStreaming.AgentResponseStreamingSync` |
+
+  With the default four-worker limit, q1 runs the two Projects samples,
+  q2 runs the two Agents samples, q3 runs the basic Response sample, and
+  q4 runs the streaming Response sample: a 2 + 2 + 1 + 1 distribution.
+  Each worker provisions and cleans up its own full resource bundle.
 
 - `selectionKind`/`selection` restrict the existing slices; they do not add
   tests outside that matrix. A `test-id` selection is a .NET test-filter
@@ -146,7 +151,7 @@ feature's quota; a later module failure still triggers ownership-checked cleanup
   Plans and provisioning/cleanup state are published in each
   worker's `standard-foundry` artifact, including on failure.
 
-The three disjoint matrix slices are unchanged: deploying more resources does
+The four disjoint matrix slices cover only the selected smoke scenarios: deploying more resources does
 not automatically select every sample or make samples requiring other services
 (for example SharePoint, Fabric or hosted agents) runnable.
 
