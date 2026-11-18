@@ -844,6 +844,20 @@ Describe 'Re-review prompt' {
         $step3 | Should -Match '(?i)generated files such as compiled `\*\.lock\.yml`'
     }
 
+    It 'distinguishes incidental lookups from the required review inputs' {
+        $step3 = [regex]::Match($script:PromptBody, '(?ms)^## Step 3\b.*?(?=^## |\z)').Value
+        $step3 | Should -Match '(?i)classify attempted lookups by necessity'
+        $step3 | Should -Match '(?i)PR metadata.*complete review history.*required patch parts.*guideline sources.*source or released-contract context.*remain required'
+        $step3 | Should -Match '(?i)incidental reference.*PR description.*not automatically required'
+        $step3 | Should -Match '(?i)optional lookup fails.*record the limitation and continue'
+        $step3 | Should -Match '(?i)required information remains unavailable after permitted alternatives.*report_incomplete'
+        $step3 | Should -Match '(?i)never bypass MCP policy or invent unavailable evidence'
+    }
+
+    It 'preserves fail-closed handling of already emitted incomplete-work signals' {
+        $script:PromptBody | Should -Match '(?i)already emitted.*`missing_tool`.*`missing_data`.*`report_incomplete`.*block publication of a review or new inline finding'
+    }
+
     It 'routes <Area> to the changelog rule even when the changelog is unchanged' -ForEach @(
         @{ Area = '`api/*.cs`, new or changed `public`/`protected` API' }
         @{ Area = 'Client or model implementation under `src/**`' }
@@ -865,6 +879,11 @@ Describe 'Re-review prompt' {
         $stated = @([regex]::Matches($script:PromptBody, '\b(\d+)[- ]minutes?\b') | ForEach-Object { $_.Groups[1].Value })
         $stated | Should -Not -BeNullOrEmpty
         $stated | Select-Object -Unique | Should -Be $minutes
+    }
+
+    It 'treats a failed lookup as a blocker only when required information remains unavailable' {
+        $script:Step4 | Should -Match '(?i)a required page or tool failed and permitted alternatives did not recover needed review information'
+        $script:Step4 | Should -Not -Match '(?i)a page failed to load, a tool was unavailable or returned an error'
     }
 
     It 'reserves report_incomplete for failures that happen, not a size estimate' {
