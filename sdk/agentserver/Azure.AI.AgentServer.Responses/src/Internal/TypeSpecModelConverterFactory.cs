@@ -73,16 +73,33 @@ internal sealed class TypeSpecModelConverter<T> : JsonConverter<T>
             modelTypeToCreate = TypeSpecModelConverterFactory.GetProxyType(typeToConvert);
         }
 
-        try
+        var raw = BinaryData.FromString(jsonDoc.RootElement.GetRawText());
+
+        // A function_call_output with array-form output, or a custom tool call item with an
+        // object-form created_by, must go through ModelJson, which restores the original value
+        // after the read (see FunctionCallOutputParts and CustomToolCallCreatedBy).
+        if (raw.ToMemory().Span.IndexOf("function_call_output"u8) < 0 &&
+            !CustomToolCallCreatedBy.MayContain(raw.ToMemory().Span))
         {
-            if (Activator.CreateInstance(modelTypeToCreate, nonPublic: true) is IJsonModel<T> model)
+            try
             {
-                return model.Create(ref readerSnapshot, ModelReaderWriterOptions.Json);
+                if (Activator.CreateInstance(modelTypeToCreate, nonPublic: true) is IJsonModel<T> model)
+                {
+                    return model.Create(ref readerSnapshot, ModelReaderWriterOptions.Json);
+                }
+            }
+            catch (MissingMethodException)
+            {
+                // Fall through to the ModelReaderWriter path below.
             }
         }
-        catch (MissingMethodException)
+
+        // Models that expose no accessible parameterless constructor — notably the
+        // OpenAI.Responses types this package consumes — are materialized through
+        // ModelReaderWriter, which knows how to build them.
+        if (ModelJson.Read(raw, typeToConvert, ModelReaderWriterOptions.Json) is T model2)
         {
-            // Fall through to standard deserialization
+            return model2;
         }
 
         return JsonSerializer.Deserialize<T>(jsonDoc.RootElement, options);

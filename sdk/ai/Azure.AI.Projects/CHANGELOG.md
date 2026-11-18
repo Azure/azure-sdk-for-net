@@ -1,14 +1,14 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
+## 3.0.0 (2026-11-12)
 
 ### Features Added
+- Uploading of models now can be cancelled.
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
+- The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
+- The `Azure.AI.Projects.Agents` dependency has renamed agent models and members used by project clients. For example, replace `VersionRefIndicator` with `VersionReferenceIndicator` and `VoiceAgentAudioConfig` with `VoiceAgentAudioConfiguration`. See the `Azure.AI.Projects.Agents` changelog for the complete list.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

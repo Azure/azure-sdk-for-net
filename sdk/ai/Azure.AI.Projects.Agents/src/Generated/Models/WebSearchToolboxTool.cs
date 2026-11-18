@@ -13,11 +13,15 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A web search tool stored in a toolbox. </summary>
     public partial class WebSearchToolboxTool : ToolboxTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private WebSearchToolFilters _filters;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _filtersIsDefined;
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private WebSearchToolApproximateLocation _userLocation;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _userLocationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>

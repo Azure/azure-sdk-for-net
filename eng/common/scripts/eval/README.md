@@ -67,11 +67,17 @@ publishing to another account does not redirect the reader. Service-connection
 authorization, approved branch checks and existing RBAC remain required.
 
 Publishing policy stays in YAML: organization `https://dev.azure.com/azure-sdk/`,
-project `internal`, repository `Azure/azure-sdk-tools`, exact `refs/heads/main`, and
-a CI, scheduled or manual reason. There is no hardcoded definition-ID allowlist or
-variable template in shared code. Feature branches, other repositories, PRs, pull
-refs and public-project runs do not get the credential-bearing task. At runtime it
-also requires a complete summary and a configured storage account.
+project `internal`, an Azure-owned repository whose name does not end in `-pr`,
+exact `refs/heads/main`, and a CI, scheduled or manual reason. There is no per-repo
+or definition-ID allowlist in shared code. New Azure SDK repos do not need another
+shared-template edit. Personal forks, private `-pr` repos, feature branches, PRs,
+pull refs and public-project runs do not get the credential-bearing task. At runtime
+it also requires a complete summary and a configured storage account.
+
+Each consuming pipeline must opt in through its repo-local entrypoint. A repo-local
+1ES redirect must expose the existing `AllowAzureStorage` hook. The pipeline owner
+must authorize the publisher service connection and configure storage before uploads
+can run. This support does not enable the separate TypeSpec authoring benchmarks.
 
 There is no separate automatic-publication, feature-branch override or network-access
 flag. Publication requests the documented

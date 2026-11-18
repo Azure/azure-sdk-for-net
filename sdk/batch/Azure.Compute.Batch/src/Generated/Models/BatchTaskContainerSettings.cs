@@ -17,13 +17,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/>. </summary>
-        /// <param name="imageName"> The Image to use to create the container in which the Task will run. This is the full Image reference, as would be specified to "docker pull". If no tag is provided as part of the Image name, the tag ":latest" is used as a default. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public BatchTaskContainerSettings(string imageName)
+        public BatchTaskContainerSettings()
         {
-            Argument.AssertNotNull(imageName, nameof(imageName));
-
-            ImageName = imageName;
             ContainerHostBatchBindMounts = new ChangeTrackingList<ContainerHostBatchBindMountEntry>();
         }
 
@@ -42,6 +37,16 @@ namespace Azure.Compute.Batch
             WorkingDirectory = workingDirectory;
             ContainerHostBatchBindMounts = containerHostBatchBindMounts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/>. </summary>
+        /// <param name="imageName"> The Image to use to create the container in which the Task will run. This is the full Image reference, as would be specified to "docker pull". If no tag is provided as part of the Image name, the tag ":latest" is used as a default. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        public BatchTaskContainerSettings(string imageName) : this()
+        {
+            Argument.AssertNotNull(imageName, nameof(imageName));
+
+            ImageName = imageName;
         }
 
         /// <summary> Additional options to the container create command. These additional options are supplied as arguments to the "docker create" command, in addition to those controlled by the Batch Service. </summary>

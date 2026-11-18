@@ -1,6 +1,19 @@
 # Release History
 
-## 12.31.0-beta.1 (Unreleased)
+## 12.31.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed SAS builder/client resource-name validation to use ordinal comparisons in `BlobBaseClient` and `BlobContainerClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
+- Fixed an issue where `BlobClient.Upload(..., overwrite: false)` with upload checksum validation configured as `StorageChecksumAlgorithm.StorageCrc64` could throw `InvalidDataException` when the blob already existed. The operation now surfaces the expected `RequestFailedException` for `409 *AlreadyExists`.
+
+### Other Changes
+
+## 12.31.0-beta.1 (2026-11-05)
 
 ### Features Added
 - Added support for Session Authentication for `TokenCredential`-authenticated clients using GET Blob operations. This is currently disabled by default and can be enabled via `BlobClientOptions.SessionOptions.SessionMode`.
@@ -24,8 +37,6 @@
   - `BlobServiceClient.GenerateAccountSasUri(...)`
   - `BlobSasBuilder`
 
-### Other Changes
-
 ## 12.30.1 (2026-10-05)
 
 ### Bugs Fixed
@@ -36,13 +47,13 @@
 ### Features Added
 - Includes all features from 12.30.0-beta.1 and 12.30.0-beta.2.
 
-## 12.29.2 (2026-08-24)
+## 12.30.0-beta.2 (2026-08-24)
 
 ### Bugs Fixed
 - Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
 - Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
 
-## 12.30.0-beta.2 (2026-08-24)
+## 12.29.2 (2026-08-24)
 
 ### Bugs Fixed
 - Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.

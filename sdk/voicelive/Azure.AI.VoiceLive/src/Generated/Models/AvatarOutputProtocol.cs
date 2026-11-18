@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AvatarOutputProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvatarOutputProtocol?(string value) => value == null ? null : new AvatarOutputProtocol(value);
+        public static implicit operator AvatarOutputProtocol?(string value) => value == null ? (AvatarOutputProtocol?)null : new AvatarOutputProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

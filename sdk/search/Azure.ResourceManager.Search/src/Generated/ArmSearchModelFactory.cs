@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
         public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = default)
         {
-            return new SearchServiceNameAvailabilityContent(name, default, default);
+            return new SearchServiceNameAvailabilityContent(name, "searchServices", default);
         }
 
         /// <summary> Output of check name availability API. </summary>

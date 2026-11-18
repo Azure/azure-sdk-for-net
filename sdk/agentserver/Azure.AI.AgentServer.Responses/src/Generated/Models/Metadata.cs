@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Keys are strings with a maximum length of 64 characters. Values are strings
     /// with a maximum length of 512 characters.
     /// </summary>
-    public partial class Metadata
+    internal partial class Metadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

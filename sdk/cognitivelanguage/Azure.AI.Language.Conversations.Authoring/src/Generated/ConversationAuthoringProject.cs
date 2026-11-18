@@ -1385,7 +1385,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            CopyProjectAuthorizationRequest spreadModel = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, default);
+            CopyProjectAuthorizationContent spreadModel = new CopyProjectAuthorizationContent(projectKind, storageInputContainerName, allowOverwrite, default);
             Response result = AuthorizeProjectCopy(projectName, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((ConversationAuthoringCopyProjectDetails)result, result);
         }
@@ -1403,7 +1403,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            CopyProjectAuthorizationRequest spreadModel = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, default);
+            CopyProjectAuthorizationContent spreadModel = new CopyProjectAuthorizationContent(projectKind, storageInputContainerName, allowOverwrite, default);
             Response result = await AuthorizeProjectCopyAsync(projectName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ConversationAuthoringCopyProjectDetails)result, result);
         }

@@ -6,20 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP tool. </summary>
-    public partial class ToolChoiceMCP : ToolChoiceParam
+    internal partial class ToolChoiceMCP : ToolChoiceParam
     {
+        private string _name;
+        private bool _nameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ToolChoiceMCP"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
         public ToolChoiceMCP(string serverLabel) : base(ToolChoiceParamType.Mcp)
         {
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-
             ServerLabel = serverLabel;
         }
 
@@ -31,13 +29,24 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal ToolChoiceMCP(ToolChoiceParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
-            Name = name;
+            _name = name;
         }
 
         /// <summary> The label of the MCP server to use. </summary>
         public string ServerLabel { get; set; }
 
         /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                _nameIsDefined = true;
+            }
+        }
     }
 }

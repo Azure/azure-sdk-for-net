@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Container Reference. </summary>
-    public partial class ContainerReferenceResource : FunctionShellCallEnvironment, IJsonModel<ContainerReferenceResource>
+    internal partial class ContainerReferenceResource : FunctionShellCallEnvironment, IJsonModel<ContainerReferenceResource>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerReferenceResource"/> for deserialization. </summary>
         internal ContainerReferenceResource()
@@ -125,7 +124,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerReferenceResource(@type, additionalBinaryDataProperties, containerId);

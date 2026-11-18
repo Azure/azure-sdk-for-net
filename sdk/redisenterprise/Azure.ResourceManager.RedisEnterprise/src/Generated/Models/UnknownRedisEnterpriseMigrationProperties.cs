@@ -20,8 +20,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
+        /// <param name="rollbackEligibilityExpiresOn"> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceType != default ? sourceType : "unknown", targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, additionalBinaryDataProperties)
+        internal UnknownRedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? rollbackEligibilityExpiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceType != default ? sourceType : "unknown", targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, rollbackEligibilityExpiresOn, additionalBinaryDataProperties)
         {
         }
     }

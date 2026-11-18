@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="IPFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPFamily?(string value) => value == null ? null : new IPFamily(value);
+        public static implicit operator IPFamily?(string value) => value == null ? (IPFamily?)null : new IPFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

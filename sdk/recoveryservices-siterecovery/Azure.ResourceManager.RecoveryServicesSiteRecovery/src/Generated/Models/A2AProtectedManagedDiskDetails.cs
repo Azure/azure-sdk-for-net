@@ -56,8 +56,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryNetworkAccessPolicy"> The network access policy for the recovery managed disk. </param>
         /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
         /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
+        /// <param name="confidentialDiskEncryptionInfo"> The confidential disk encryption info for the managed disk. Applicable to CMK confidential VMs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IList<string> siteRecoveryAllowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IList<string> siteRecoveryAllowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess, ConfidentialDiskEncryptionInfo confidentialDiskEncryptionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -90,6 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryNetworkAccessPolicy = recoveryNetworkAccessPolicy;
             RecoveryDiskAccessId = recoveryDiskAccessId;
             RecoveryPublicNetworkAccess = recoveryPublicNetworkAccess;
+            ConfidentialDiskEncryptionInfo = confidentialDiskEncryptionInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -185,5 +187,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The public network access setting for the recovery managed disk. </summary>
         public SiteRecoveryDiskPublicNetworkAccess? RecoveryPublicNetworkAccess { get; set; }
+
+        /// <summary> The confidential disk encryption info for the managed disk. Applicable to CMK confidential VMs. </summary>
+        public ConfidentialDiskEncryptionInfo ConfidentialDiskEncryptionInfo { get; }
     }
 }

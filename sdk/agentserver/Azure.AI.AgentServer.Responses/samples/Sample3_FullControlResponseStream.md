@@ -17,8 +17,8 @@ Use `OutputItemMessage()` to emit a complete text message in one call. The conve
 ```C# Snippet:Responses_Sample3_GreetingHandlerConvenience
 public class GreetingHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -26,8 +26,8 @@ public class GreetingHandler : ResponseHandler
         var stream = new ResponseEventStream(context, request);
 
         // Configure Response properties BEFORE EmitCreated().
-        stream.Response.Temperature = 0.7;
-        stream.Response.MaxOutputTokens = 1024;
+        stream.Response.Temperature = 0.7f;
+        stream.Response.MaxOutputTokenCount = 1024;
 
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
@@ -49,8 +49,8 @@ When your handler calls an LLM that produces tokens incrementally, pass an `IAsy
 ```C# Snippet:Responses_Sample3_StreamingGreetingHandler
 public class StreamingGreetingHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -93,16 +93,16 @@ When you need to interleave non-event work between individual delta/done calls w
 ```C# Snippet:Responses_Sample3_GreetingHandler
 public class GreetingHandlerFullControl : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(context, request);
 
-        stream.Response.Temperature = 0.7;
-        stream.Response.MaxOutputTokens = 1024;
+        stream.Response.Temperature = 0.7f;
+        stream.Response.MaxOutputTokenCount = 1024;
 
         // Emit the opening lifecycle events.
         yield return stream.EmitCreated();   // response.created

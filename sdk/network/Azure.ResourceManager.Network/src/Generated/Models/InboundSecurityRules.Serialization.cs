@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(LoadBalancerConfiguration))
+            {
+                writer.WritePropertyName("loadBalancerConfiguration"u8);
+                writer.WriteObjectValue(LoadBalancerConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -172,6 +177,7 @@ namespace Azure.ResourceManager.Network.Models
             int? destinationPortRange = default;
             IList<string> destinationPortRanges = default;
             IList<string> appliesOn = default;
+            NetworkVirtualApplianceLoadBalancerConfiguration loadBalancerConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -245,6 +251,15 @@ namespace Azure.ResourceManager.Network.Models
                     appliesOn = array;
                     continue;
                 }
+                if (prop.NameEquals("loadBalancerConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loadBalancerConfiguration = NetworkVirtualApplianceLoadBalancerConfiguration.DeserializeNetworkVirtualApplianceLoadBalancerConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -257,6 +272,7 @@ namespace Azure.ResourceManager.Network.Models
                 destinationPortRange,
                 destinationPortRanges ?? new ChangeTrackingList<string>(),
                 appliesOn ?? new ChangeTrackingList<string>(),
+                loadBalancerConfiguration,
                 additionalBinaryDataProperties);
         }
     }

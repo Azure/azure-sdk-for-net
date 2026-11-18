@@ -72,7 +72,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="EnvironmentDefinitionParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnvironmentDefinitionParameterType?(string value) => value == null ? null : new EnvironmentDefinitionParameterType(value);
+        public static implicit operator EnvironmentDefinitionParameterType?(string value) => value == null ? (EnvironmentDefinitionParameterType?)null : new EnvironmentDefinitionParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

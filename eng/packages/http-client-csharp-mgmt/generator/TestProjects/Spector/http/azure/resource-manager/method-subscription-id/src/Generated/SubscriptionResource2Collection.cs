@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, SubscriptionResource2Data.ToRequestContent(data), context);
+                HttpMessage message = _subscription2OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, SubscriptionResource2Data.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResource2Data> response = Response.FromValue(SubscriptionResource2Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, SubscriptionResource2Data.ToRequestContent(data), context);
+                HttpMessage message = _subscription2OperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, SubscriptionResource2Data.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResource2Data> response = Response.FromValue(SubscriptionResource2Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
+                HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResource2Data> response = Response.FromValue(SubscriptionResource2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
+                HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResource2Data> response = Response.FromValue(SubscriptionResource2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
+                HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionResource2Data> response = default;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
+                HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionResource2Data> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
+                HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionResource2Data> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
+                HttpMessage message = _subscription2OperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResource2Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionResource2Data> response = default;

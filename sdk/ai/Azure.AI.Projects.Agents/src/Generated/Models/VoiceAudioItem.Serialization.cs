@@ -118,15 +118,15 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("channels"u8);
                 writer.WriteNumberValue(Channels.Value);
             }
-            if (Optional.IsDefined(StartOffsetMs))
+            if (Optional.IsDefined(StartOffset))
             {
                 writer.WritePropertyName("start_offset_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(StartOffsetMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(StartOffset.Value.TotalMilliseconds)));
             }
-            if (Optional.IsDefined(DurationMs))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(DurationMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(Duration.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(BlobUri))
             {
@@ -182,8 +182,8 @@ namespace Azure.AI.Projects.Agents
             VoiceAudioCodec? codec = default;
             int? sampleRate = default;
             int? channels = default;
-            TimeSpan? startOffsetMs = default;
-            TimeSpan? durationMs = default;
+            TimeSpan? startOffset = default;
+            TimeSpan? duration = default;
             Uri blobUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -249,7 +249,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    startOffsetMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    startOffset = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("duration_ms"u8))
@@ -258,7 +258,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    durationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    duration = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("blob_uri"u8))
@@ -283,8 +283,8 @@ namespace Azure.AI.Projects.Agents
                 codec,
                 sampleRate,
                 channels,
-                startOffsetMs,
-                durationMs,
+                startOffset,
+                duration,
                 blobUri,
                 additionalBinaryDataProperties);
         }

@@ -47,6 +47,24 @@ function run(script, args, env = {}, preload = []) {
     return child;
 }
 
+test("specs bundles preserve pipeline identity and completed failing evaluations", async (t) => {
+    const f = await constructionFixture(t);
+    const specsManifest = { ...manifest, repo: "Azure/azure-rest-api-specs", pipeline: "azure-rest-api-specs - eval-skills",
+        pipelineDefinitionId: "8286", branch: "refs/heads/main", sourceVersion: "c".repeat(40) };
+    const failedTrial = { ...trial, status: "success", error: null, gradeResult: { passed: false } };
+    await writeFile(join(f.artifact, "results.jsonl"), JSON.stringify(failedTrial) + "\n");
+    await writeFile(join(f.junit, "0.junit.xml"), '<testsuite><testcase name="synthetic"><failure message="Evaluation failed"/></testcase></testsuite>');
+
+    const saved = await prepareBundle({ ...f, manifest: specsManifest });
+    const decoded = validateBundle(await readFile(f.outputPath));
+
+    assert.deepEqual(decoded.manifest, specsManifest);
+    assert.equal(saved.blobName, "v1/azure-sdk/internal/8286/1001/1/dashboard-bundle.zip");
+    assert.equal(saved.shards, 1); assert.equal(decoded.trials, 1);
+    assert.deepEqual(JSON.parse(Buffer.from(decoded.entries["results.jsonl"]).toString("utf8").trim()), failedTrial);
+    assert.match(Buffer.from(decoded.entries["junit/0-0.xml"]).toString("utf8"), /<failure/);
+});
+
 test("shared shards -> saved timeline evidence -> token-free summary -> one schema-v1 ZIP", async (t) => {
     const f = await fixture(t), scripts = resolve(import.meta.dirname, "../..");
     const downloads = join(f.root, "downloads"); await mkdir(downloads);
@@ -342,20 +360,33 @@ test("one checkbox gates trusted-run egress; owner configuration additionally ga
     const evaluate = (expression, variables, enabled = true, succeeds = true) => runInNewContext(expression.replace(/\bin\(/g, "oneOf("), {
         variables, parameters: { publishDashboardResults: enabled }, succeeded: () => succeeds,
         and: (...values) => values.every(Boolean), eq: (a, b) => String(a ?? "").toLowerCase() === String(b ?? "").toLowerCase(),
+        not: value => !value,
+        startsWith: (value, prefix) => String(value ?? "").toLowerCase().startsWith(String(prefix).toLowerCase()),
+        endsWith: (value, suffix) => String(value ?? "").toLowerCase().endsWith(String(suffix).toLowerCase()),
         ne: (a, b) => String(a ?? "").toLowerCase() !== String(b ?? "").toLowerCase(),
         oneOf: (value, ...items) => items.some(item => String(value ?? "").toLowerCase() === String(item).toLowerCase()),
     });
     const base = { "System.CollectionUri": "https://dev.azure.com/azure-sdk/", "System.TeamProject": "internal", "Build.Repository.Name": "Azure/azure-sdk-tools",
         "Build.SourceBranch": "refs/heads/main", "Build.Reason": "Manual", "EvalSummaryComplete": "true", "EvalStorageAccountName": "evaltestsummary" };
-    assert.equal(evaluate(networkGate, base), true); assert.equal(evaluate(runtime, base), true);
-    assert.equal(evaluate(networkGate, base, false), false); assert.equal(evaluate(runtime, base, true, false), false);
-    for (const account of [undefined, ""]) assert.equal(evaluate(runtime, { ...base, EvalStorageAccountName: account }), false);
-    assert.equal(evaluate(runtime, { ...base, EvalSummaryComplete: "false" }), false);
-    for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
-        ["Build.Repository.Name", "Azure/azure-rest-api-specs"], ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"],
-        ...["refs/pull/1/merge", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", ""].map(branch => ["Build.SourceBranch", branch])]) {
-        const variables = { ...base, [key]: value };
-        assert.equal(evaluate(networkGate, variables), false); assert.equal(evaluate(runtime, variables), false);
+    for (const repository of ["Azure/azure-sdk-tools", "Azure/azure-rest-api-specs", "Azure/azure-sdk-for-python", "Azure/new-sdk-repository"]) {
+        const trusted = { ...base, "Build.Repository.Name": repository };
+        for (const reason of ["Manual", "Schedule", "IndividualCI", "BatchedCI"]) {
+            const variables = { ...trusted, "Build.Reason": reason };
+            assert.equal(evaluate(networkGate, variables), true, `${repository}: ${reason} egress`);
+            assert.equal(evaluate(runtime, variables), true, `${repository}: ${reason} upload`);
+        }
+        assert.equal(evaluate(networkGate, trusted, false), false);
+        assert.equal(evaluate(runtime, trusted, true, false), false);
+        for (const account of [undefined, ""]) assert.equal(evaluate(runtime, { ...trusted, EvalStorageAccountName: account }), false);
+        for (const complete of [undefined, "", "false"]) assert.equal(evaluate(runtime, { ...trusted, EvalSummaryComplete: complete }), false);
+        for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
+            ["Build.Repository.Name", "example-org/azure-rest-api-specs"], ["Build.Repository.Name", "Azure/azure-rest-api-specs-pr"],
+            ["Build.Repository.Name", "Azure/azure-sdk-for-python-pr"], ["Build.Repository.Name", "example-org/new-sdk-repository"],
+            ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"],
+            ...["refs/pull/1/merge", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", ""].map(branch => ["Build.SourceBranch", branch])]) {
+            const variables = { ...trusted, [key]: value };
+            assert.equal(evaluate(networkGate, variables), false); assert.equal(evaluate(runtime, variables), false);
+        }
     }
     for (const id of ["8255", "9999"]) assert.equal(evaluate(networkGate, { ...base, "System.DefinitionId": id }), true, "Definition IDs are archive identity, not shared policy");
 });

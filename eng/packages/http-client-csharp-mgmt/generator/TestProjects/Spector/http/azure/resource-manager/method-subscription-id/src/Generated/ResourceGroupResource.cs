@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGroupResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGroupResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());

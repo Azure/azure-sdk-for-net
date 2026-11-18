@@ -531,7 +531,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -580,7 +580,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -629,7 +629,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsRequest.ToRequestContent(content), context);
+                HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SAPAvailabilityZoneDetailsResult> response = Response.FromValue(SAPAvailabilityZoneDetailsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -678,7 +678,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsRequest.ToRequestContent(content), context);
+                HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SAPAvailabilityZoneDetailsResult> response = Response.FromValue(SAPAvailabilityZoneDetailsResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -51,7 +51,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Converts a string to a <see cref="DeviceHealthState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceHealthState?(string value) => value == null ? null : new DeviceHealthState(value);
+        public static implicit operator DeviceHealthState?(string value) => value == null ? (DeviceHealthState?)null : new DeviceHealthState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

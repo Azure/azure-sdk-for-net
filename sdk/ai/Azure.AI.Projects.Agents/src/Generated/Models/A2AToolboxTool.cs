@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -43,9 +43,9 @@ namespace Azure.AI.Projects.Agents
         /// specified by the caller (anonymous fetch).
         /// </param>
         /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
-        internal A2AToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUrl, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, A2AProtocolVersion a2aVersion) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal A2AToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, A2AProtocolVersion a2aVersion) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
-            BaseUrl = baseUrl;
+            BaseUri = baseUri;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
             SendCredentialsForAgentCard = sendCredentialsForAgentCard;
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Base URL of the agent. </summary>
-        public Uri BaseUrl { get; set; }
+        public Uri BaseUri { get; set; }
 
         /// <summary>
         /// The path to the agent card relative to the `base_url`.

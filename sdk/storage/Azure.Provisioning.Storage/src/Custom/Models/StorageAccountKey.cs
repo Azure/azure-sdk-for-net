@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using Azure.Provisioning;
@@ -14,10 +14,10 @@ namespace Azure.Provisioning.Storage;
 /// <summary> An access key for the storage account. </summary>
 public partial class StorageAccountKey : ProvisionableConstruct
 {
-    private BicepValue<string>? _keyName;
-    private BicepValue<string>? _value;
-    private BicepValue<StorageAccountKeyPermission>? _permissions;
-    private BicepValue<DateTimeOffset>? _createdOn;
+    private BicepValue<string> _keyName;
+    private BicepValue<string> _value;
+    private BicepValue<StorageAccountKeyPermission> _permissions;
+    private BicepValue<DateTimeOffset> _createdOn;
 
     // Provisioning generation omits the listKeys result model; retain the shipped KeyName output property.
     /// <summary>
@@ -25,7 +25,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
     /// </summary>
     public BicepValue<string> KeyName
     {
-        get { Initialize(); return _keyName!; }
+        get { Initialize(); return _keyName; }
     }
 
     // Provisioning generation omits the listKeys result model; retain the shipped Value output property.
@@ -34,7 +34,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
     /// </summary>
     public BicepValue<string> Value
     {
-        get { Initialize(); return _value!; }
+        get { Initialize(); return _value; }
     }
 
     // Provisioning generation omits the listKeys result model; retain the shipped Permissions output property.
@@ -43,7 +43,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
     /// </summary>
     public BicepValue<StorageAccountKeyPermission> Permissions
     {
-        get { Initialize(); return _permissions!; }
+        get { Initialize(); return _permissions; }
     }
 
     // Provisioning generation omits the listKeys result model; retain the shipped CreatedOn output property.
@@ -52,7 +52,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
     /// </summary>
     public BicepValue<DateTimeOffset> CreatedOn
     {
-        get { Initialize(); return _createdOn!; }
+        get { Initialize(); return _createdOn; }
     }
 
     /// <summary>

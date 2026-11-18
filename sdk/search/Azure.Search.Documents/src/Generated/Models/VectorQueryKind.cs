@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="VectorQueryKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorQueryKind?(string value) => value == null ? null : new VectorQueryKind(value);
+        public static implicit operator VectorQueryKind?(string value) => value == null ? (VectorQueryKind?)null : new VectorQueryKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

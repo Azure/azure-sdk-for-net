@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsInteractiveReplyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsInteractiveReplyKind?(string value) => value == null ? null : new AcsInteractiveReplyKind(value);
+        public static implicit operator AcsInteractiveReplyKind?(string value) => value == null ? (AcsInteractiveReplyKind?)null : new AcsInteractiveReplyKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

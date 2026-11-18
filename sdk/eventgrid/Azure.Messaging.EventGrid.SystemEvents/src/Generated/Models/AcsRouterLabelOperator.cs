@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsRouterLabelOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRouterLabelOperator?(string value) => value == null ? null : new AcsRouterLabelOperator(value);
+        public static implicit operator AcsRouterLabelOperator?(string value) => value == null ? (AcsRouterLabelOperator?)null : new AcsRouterLabelOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

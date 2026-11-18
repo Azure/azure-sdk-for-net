@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateCreateWithSystemAssignedRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, ManagedIdentityTrackedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managedIdentityRestClient.CreateCreateWithSystemAssignedRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, ManagedIdentityTrackedResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedIdentityTrackedResourceData> response = Response.FromValue(ManagedIdentityTrackedResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateCreateWithSystemAssignedRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, ManagedIdentityTrackedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managedIdentityRestClient.CreateCreateWithSystemAssignedRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, ManagedIdentityTrackedResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedIdentityTrackedResourceData> response = Response.FromValue(ManagedIdentityTrackedResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
+                HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedIdentityTrackedResourceData> response = Response.FromValue(ManagedIdentityTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
+                HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedIdentityTrackedResourceData> response = Response.FromValue(ManagedIdentityTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
+                HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedIdentityTrackedResourceData> response = default;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
+                HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedIdentityTrackedResourceData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
+                HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedIdentityTrackedResourceData> response = default;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
+                HttpMessage message = _managedIdentityRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, managedIdentityTrackedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedIdentityTrackedResourceData> response = default;

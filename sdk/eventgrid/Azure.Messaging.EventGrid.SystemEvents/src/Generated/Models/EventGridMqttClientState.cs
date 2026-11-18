@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="EventGridMqttClientState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridMqttClientState?(string value) => value == null ? null : new EventGridMqttClientState(value);
+        public static implicit operator EventGridMqttClientState?(string value) => value == null ? (EventGridMqttClientState?)null : new EventGridMqttClientState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

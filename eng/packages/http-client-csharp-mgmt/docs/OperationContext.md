@@ -144,12 +144,6 @@ _restClient.GetExtensions(
 );
 ```
 
-### Step 6: Owning the HTTP Message
-
-`ResourceMethodSnippets.CreateHttpMessage()` emits a scoped `using` declaration for resource operations and tag helpers. The owning method disposes the message and its request content after consuming the response, including when sending or deserializing fails. Returned buffered responses remain readable after message disposal.
-
-Long-running operations capture the initial request method and URI before the message is disposed; polling creates its own messages. Streaming response paths must transfer ownership of the response stream before disposing the message rather than relying on buffered-response lifetimes.
-
 ## Advanced Scenarios
 
 ### Tuple Resources

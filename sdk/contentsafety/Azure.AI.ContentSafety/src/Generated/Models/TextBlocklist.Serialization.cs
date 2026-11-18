@@ -16,11 +16,6 @@ namespace Azure.AI.ContentSafety
     /// <summary> Text Blocklist. </summary>
     public partial class TextBlocklist : IJsonModel<TextBlocklist>
     {
-        /// <summary> Initializes a new instance of <see cref="TextBlocklist"/> for deserialization. </summary>
-        internal TextBlocklist()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TextBlocklist PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -49,7 +49,7 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
             InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
         };
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(options))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -80,77 +80,6 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_WebSearchPreviewStreaming_Async
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        #endregion
-    }
-
-    [Test]
-    [SyncOnly]
-    public void WebSearchPreviewStreaming()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-#endif
-        AIProjectClientOptions opts = new();
-        //opts.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: opts);
-        #region Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Sync
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are a helpful assistant that can search the web.",
-            Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
-        };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myAgent",
-            options: new(agentDefinition));
-        #endregion
-        #region Snippet:Sample_StreamResponse_WebSearchPreviewStreaming_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-
-        string annotation = "";
-        string text = "";
-        CreateResponseOptions options = new()
-        {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-            InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
-        };
-
-        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming(options))
-        {
-            if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
-            {
-                Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-            }
-            else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-            {
-                Console.WriteLine($"Delta: {textDelta.Delta}");
-            }
-            else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
-            {
-                text = textDoneUpdate.Text;
-            }
-            else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
-            {
-                if (annotation.Length == 0)
-                {
-                    annotation = GetFormattedAnnotation(itemDoneUpdate.Item);
-                }
-            }
-            else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
-            {
-                throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}");
-            }
-        }
-        Console.WriteLine($"{text}{annotation}");
-        #endregion
-
-        #region Snippet:Sample_Cleanup_WebSearchPreviewStreaming_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

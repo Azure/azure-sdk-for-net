@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AsyncStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AsyncStatus?(string value) => value == null ? null : new AsyncStatus(value);
+        public static implicit operator AsyncStatus?(string value) => value == null ? (AsyncStatus?)null : new AsyncStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

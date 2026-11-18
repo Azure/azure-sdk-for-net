@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
             string bestId = default;
             double? baselineScore = default;
             double? bestScore = default;
-            AgentOptimizationCandidatePromotionInfo latestPromotedCandidate = default;
+            AgentOptimizationCandidatePromotion latestPromotedCandidate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    latestPromotedCandidate = AgentOptimizationCandidatePromotionInfo.DeserializeAgentOptimizationCandidatePromotionInfo(prop.Value, options);
+                    latestPromotedCandidate = AgentOptimizationCandidatePromotion.DeserializeAgentOptimizationCandidatePromotion(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

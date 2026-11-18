@@ -9,8 +9,8 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A reference to a versioned Foundry skill. </summary>
-    public partial class SkillReference : IJsonModel<SkillReference>
+    /// <summary> The SkillReference. </summary>
+    public partial class SkillReference : ContainerSkill, IJsonModel<SkillReference>
     {
         /// <summary> Initializes a new instance of <see cref="SkillReference"/> for deserialization. </summary>
         internal SkillReference()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkillReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ContainerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SkillReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SkillReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkillReference IPersistableModel<SkillReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SkillReference IPersistableModel<SkillReference>.Create(BinaryData data, ModelReaderWriterOptions options) => (SkillReference)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SkillReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -68,44 +68,30 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SkillReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SkillReference)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("skill_id"u8);
+            writer.WriteStringValue(SkillId);
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkillReference IJsonModel<SkillReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SkillReference IJsonModel<SkillReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SkillReference)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkillReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ContainerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SkillReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -124,14 +110,20 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string name = default;
-            string version = default;
+            ContainerSkillType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string skillId = default;
+            string version = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = prop.Value.GetString();
+                    @type = new ContainerSkillType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("skill_id"u8))
+                {
+                    skillId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -144,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SkillReference(name, version, additionalBinaryDataProperties);
+            return new SkillReference(@type, additionalBinaryDataProperties, skillId, version);
         }
     }
 }

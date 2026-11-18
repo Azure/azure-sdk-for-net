@@ -132,7 +132,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
-            CreateConversationRequest spreadModel = new CreateConversationRequest(conversation, initialMessage, default);
+            CreateConversationContent spreadModel = new CreateConversationContent(conversation, initialMessage, default);
             Response result = CreateConversation(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((CommunicationConversation)result, result);
         }
@@ -147,7 +147,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
-            CreateConversationRequest spreadModel = new CreateConversationRequest(conversation, initialMessage, default);
+            CreateConversationContent spreadModel = new CreateConversationContent(conversation, initialMessage, default);
             Response result = await CreateConversationAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((CommunicationConversation)result, result);
         }

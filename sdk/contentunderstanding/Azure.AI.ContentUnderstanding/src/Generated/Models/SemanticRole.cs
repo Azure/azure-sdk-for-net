@@ -76,7 +76,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="SemanticRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticRole?(string value) => value == null ? null : new SemanticRole(value);
+        public static implicit operator SemanticRole?(string value) => value == null ? (SemanticRole?)null : new SemanticRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

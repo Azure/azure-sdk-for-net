@@ -4,6 +4,18 @@
 
 This release ensures no breaking API changes compared with version 1.15.0 only. Versions 1.16.x and 1.17.x have been retracted; compatibility with those versions or previous preview releases is not guaranteed.
 
+### Features Added
+
+- Upgraded the default Network API version from 2026-03-01 to 2026-05-01.
+- Added Application Gateway deployment tiers and confidential compute settings.
+- Added configurable TCP idle timeouts for Azure Firewall.
+- Added network adapter indices for network interfaces.
+- Added load-balancer configuration for network virtual appliances and their inbound security rules, including load distribution and idle timeout settings.
+
+### Bugs Fixed
+
+- Ensured Interconnect Group and Subgroup collections return empty collections when their properties are absent, without creating a properties envelope or changing subsequent serialization.
+
 ### Other Changes
 
 - Regenerated the library from the updated Network specification.

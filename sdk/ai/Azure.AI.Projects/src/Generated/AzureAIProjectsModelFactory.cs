@@ -762,11 +762,11 @@ namespace Azure.AI.Projects
 
         /// <summary> Request to fetch credentials for a model asset. </summary>
         /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
-        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelCredentialContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        public static ModelCredentialContent ModelCredentialContent(Uri blobUri = default)
         {
-            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+            return new ModelCredentialContent(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1014,22 +1014,10 @@ namespace Azure.AI.Projects
         /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
         /// </summary>
         /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
-        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIModelTarget"/> instance for mocking. </returns>
-        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
+        public static AzureAIModelTarget AzureAIModelTarget(string model = default)
         {
-            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParams);
-        }
-
-        /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-        /// <param name="temperature"> The temperature parameter for sampling. Defaults to 1.0. </param>
-        /// <param name="topP"> The top-p parameter for nucleus sampling. Defaults to 1.0. </param>
-        /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
-        /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
-        /// <returns> A new <see cref="Evaluation.ModelSamplingParams"/> instance for mocking. </returns>
-        public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
-        {
-            return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
+            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model);
         }
 
         /// <summary>

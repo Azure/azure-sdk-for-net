@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="AllocationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllocationState?(string value) => value == null ? null : new AllocationState(value);
+        public static implicit operator AllocationState?(string value) => value == null ? (AllocationState?)null : new AllocationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

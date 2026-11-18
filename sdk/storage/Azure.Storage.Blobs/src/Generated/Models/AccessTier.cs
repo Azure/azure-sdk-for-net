@@ -127,7 +127,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Converts a string to a <see cref="AccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessTier?(string value) => value == null ? null : new AccessTier(value);
+        public static implicit operator AccessTier?(string value) => value == null ? (AccessTier?)null : new AccessTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

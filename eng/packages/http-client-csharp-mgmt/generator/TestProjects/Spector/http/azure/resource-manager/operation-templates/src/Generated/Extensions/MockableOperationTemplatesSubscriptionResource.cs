@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<IList<ExportResult>> operation = new OperationTemplatesArmOperation<IList<ExportResult>>(
                     new IListOfExportResultOperationSource(),
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
+                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<IList<ExportResult>> operation = new OperationTemplatesArmOperation<IList<ExportResult>>(
                     new IListOfExportResultOperationSource(),
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
+                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChangeAllowanceResult> response = Response.FromValue(ChangeAllowanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
+                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChangeAllowanceResult> response = Response.FromValue(ChangeAllowanceResult.FromResponse(result), result);
                 if (response.Value == null)

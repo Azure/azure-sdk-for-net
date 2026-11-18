@@ -49,7 +49,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="DataConnectionContent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataConnectionContent?(string value) => value == null ? null : new DataConnectionContent(value);
+        public static implicit operator DataConnectionContent?(string value) => value == null ? (DataConnectionContent?)null : new DataConnectionContent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
