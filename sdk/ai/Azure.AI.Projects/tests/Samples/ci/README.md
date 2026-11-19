@@ -8,7 +8,7 @@ resources. There is no automatic CI or PR trigger.
 
 ## Resources
 
-[main.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/ci/shared/infra/main.bicep) uses the copied Standard shared-identity template
+The downloaded `shared/infra/main.bicep` uses the Standard shared-identity template
 and unconditional feature modules to create:
 
 - A Foundry account and project.
@@ -44,6 +44,7 @@ variables in the Library group, not as duplicate pipeline-level entries:
 | `AZURE_SUBSCRIPTION_ID` | Explicit target subscription GUID. |
 | `AZURE_TENANT_ID` | Explicit target tenant GUID. |
 | `LLM_VALIDATION_PROJECT_ENDPOINT` | Shared validation-project endpoint; not used as the provisioned sample target. |
+| `FOUNDRY_SDK_TEST_RESOURCES_URL` | HTTPS Azure Repos Git URL for the shared assets, without credentials. |
 
 Also maintain **secret** Library variables `MCP_GITHUB_PAT` (the complete GitHub
 PAT, including its prefix) and `PROJ_CONN_OPEN_API_KEY` (the TripAdvisor/OpenAPI
@@ -54,6 +55,14 @@ Do not pass them as run parameters or command-line arguments.
 Remove duplicate pipeline-level entries for these five variables so they do not
 override the shared Library values. Library authorization is per pipeline; do
 not enable access for all pipelines.
+
+The repo is in a different Azure DevOps organization. The Entra service
+principal behind `azure-sdk-tests` must be admitted to the target organization
+and have **Read** on the repository. Azure subscription roles and Library
+authorization do not grant Azure Repos access. To verify the permission without
+provisioning anything, run the pipeline with `fetchSharedResourcesOnly: true`
+and inspect the **Check shared resource repository access** stage. The queue
+form still requires an `identityResourceGroup` value, but this mode does not use it.
 
 Supply `identityResourceGroup` when queueing: the same permanent identity RG
 used by the Python sample pipeline. The existing resolver verifies the four
@@ -184,11 +193,9 @@ aliases, consumed by the existing .NET test environments:
 | `STORAGE_QUEUE_URI` | `STORAGE_QUEUE_SERVICE_ENDPOINT`, without a trailing slash |
 
 OpenAPI connection ID/name and the custom Bing instance name already match.
-The shared provisioning PowerShell and ten full-bundle Bicep modules are
-identical to the Python package's copies; the common PowerShell scripts and
-Search-indexing test are grouped under `ci/shared` in both packages. Embedded
-Search code and documents,
-the Function handler, and shared validation scripts are synchronized too.
+Each live worker downloads the same pinned `ci/shared` revision before
+provisioning. The provisioning scripts, Bicep modules, Search assets, Function
+handler, and common validation tests are not tracked in the .NET branch.
 Search retains the `index-sample` default and SmartView Glasses documents;
 the Function handler uses the weather contract and `weather-input-queue` /
 `weather-output-queue`. These defaults are not customized for .NET samples.
@@ -200,7 +207,8 @@ is added to the .NET SDK.
 environment aliases. NUnit discovery and test execution remain language-specific.
 The shared planner accepts `EnvironmentTemplatePath` for an explicit alternate
 binding contract; its default still discovers the full bundle. Resource changes
-belong in the shared files and must be synchronized in both repositories.
+belong in the shared resource repository. Update the reviewed commit in
+[Get-SharedSampleResources.ps1](./Get-SharedSampleResources.ps1) to adopt them.
 Data-source, skillset and indexer names replace index-name underscores with
 hyphens because Azure Search permits underscores only in the index name.
 Each worker creates a fresh Search service and waits for each indexer's
@@ -213,8 +221,8 @@ manifest emitted by `New-SampleTestPlan.ps1`; it does not scan Python samples.
 test IDs across queues before shared batch admission. The active pipeline uses
 the discovery matrix and `Invoke-BundleProvisioning.ps1`, so empty queues never
 start provisioning.
-The permanent identity bootstrap is maintained only in
-[foundry-sdk-test-resources](https://dev.azure.com/msdata/Vienna/_git/foundry-sdk-test-resources?path=/shared-identities/infra).
+The permanent identity bootstrap is maintained only in the shared resource
+repository.
 Neither SDK contains a copy. Administrators provision identities from that
 repository and pass the existing group to the SDK pipelines; the live-test
 pipeline never invokes that bootstrap or creates its role grants.
@@ -232,13 +240,14 @@ than treating HTTP 403 as successful cleanup, including outside this pipeline.
 
 ## Maintainer validation
 
-Use PowerShell 7.2+ with Pester 4.10.1 from this directory:
+From this directory, set `FOUNDRY_SDK_TEST_RESOURCES_URL` in the local
+environment and sign in to Azure CLI with an identity that can read the
+repository. Use PowerShell 7.2+ with Pester 4.10.1:
 
 ```powershell
 Import-Module Pester -RequiredVersion 4.10.1
-Invoke-Pester -Script ./shared/validation -EnableExit
-Invoke-Pester -Script ./BundleProvisioning.Tests.ps1 -EnableExit
-Invoke-Pester -Script ./SampleTestPlan.Tests.ps1 -EnableExit
+./Get-SharedSampleResources.ps1
+Invoke-Pester -Script @('./shared/validation', './validation', './BundleProvisioning.Tests.ps1', './SampleTestPlan.Tests.ps1') -EnableExit
 ./shared/validation/Test-BicepTemplates.ps1
 python -m pytest ./shared/test_search_indexing.py
 python -m unittest discover -s ./shared/validation -p test_bundle_assets.py
@@ -247,7 +256,7 @@ python -m unittest discover -s ./shared/validation -p test_bundle_assets.py
 The Bicep checker compiles the complete bundle and inspects nested resources,
 secret parameters, module dependencies and non-secret outputs. No deployment
 is performed. Permanent identity bootstrap validation is separate: supply
-`-IdentityInfrastructurePath C:\repo\foundry-sdk-test-resources\shared-identities\infra`
+`-IdentityInfrastructurePath` with the path to `shared-identities/infra`
 to include grant checks from a separate reviewed common-resource checkout.
 Offline checks do not establish live RBAC, regional feature
 availability or that live samples pass. Queue the existing pipeline only after

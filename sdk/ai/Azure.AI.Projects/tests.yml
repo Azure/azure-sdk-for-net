@@ -3,6 +3,10 @@ trigger: none
 pr: none
 
 parameters:
+  - name: fetchSharedResourcesOnly
+    displayName: 'Check shared resource repository access only (no provisioning)'
+    type: boolean
+    default: false
   - name: selectionKind
     displayName: 'Selection type'
     type: string
@@ -55,6 +59,17 @@ extends:
     SelectionKind: ${{ parameters.selectionKind }}
     Selection: ${{ parameters.selection }}
     MaxParallel: ${{ parameters.testQueueCount }}
+    FetchOnly: ${{ parameters.fetchSharedResourcesOnly }}
+    FetchSteps:
+      - task: AzureCLI@2
+        displayName: 'Fetch pinned shared Foundry sample resources'
+        inputs:
+          azureSubscription: azure-sdk-tests
+          scriptType: pscore
+          scriptLocation: scriptPath
+          scriptPath: sdk/ai/Azure.AI.Projects/tests/Samples/ci/Get-SharedSampleResources.ps1
+        env:
+          FOUNDRY_SDK_TEST_RESOURCES_URL: $(FOUNDRY_SDK_TEST_RESOURCES_URL)
     EnvVars:
       CLIENTMODEL_TEST_MODE: Live
       MODEL_PUBLISHER: OpenAI
@@ -94,8 +109,13 @@ extends:
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: |
+            $statePath = Join-Path $env:STANDARD_FOUNDRY_DIRECTORY 'deployment-state.json'
+            if (-not (Test-Path -LiteralPath $statePath -PathType Leaf)) {
+              Write-Host 'No deployment state was written; nothing to clean up.'
+              return
+            }
             & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/shared/Remove-SampleResources.ps1' `
-              -StatePath (Join-Path $env:STANDARD_FOUNDRY_DIRECTORY 'deployment-state.json') `
+              -StatePath $statePath `
               -QueueName $env:SAMPLE_QUEUE_NAME -ConfirmCleanup
         env:
           STANDARD_FOUNDRY_DIRECTORY: $(Build.ArtifactStagingDirectory)/standard-foundry

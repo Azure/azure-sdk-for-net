@@ -7,6 +7,10 @@ parameters:
     type: string
   - name: EnvVars
     type: object
+  - name: FetchOnly
+    type: boolean
+  - name: FetchSteps
+    type: stepList
   - name: PreSteps
     type: stepList
   - name: PostSteps
@@ -16,7 +20,23 @@ extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
     stages:
+      - ${{ if parameters.FetchOnly }}:
+        - stage: CheckSharedResources
+          displayName: Check shared resource repository access
+          variables:
+            - template: /eng/pipelines/templates/variables/globals.yml@self
+            - template: /eng/pipelines/templates/variables/image.yml@self
+          jobs:
+            - job: Fetch
+              timeoutInMinutes: 10
+              pool:
+                name: $(LINUXPOOL)
+                image: $(LINUXVMIMAGE)
+                os: linux
+              steps:
+                - ${{ parameters.FetchSteps }}
       - stage: Plan
+        condition: and(succeeded(), ${{ not(parameters.FetchOnly) }})
         displayName: Discover and partition samples
         variables:
           - template: /eng/pipelines/templates/variables/globals.yml@self
@@ -100,6 +120,7 @@ extends:
                   displayName: Use only this worker's exact assigned test IDs
                   env:
                     SAMPLE_QUEUE_NAME: $(SampleQueueName)
+                - ${{ parameters.FetchSteps }}
                 - ${{ parameters.PreSteps }}
               PostSteps:
                 - pwsh: |

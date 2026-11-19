@@ -2,8 +2,8 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
-. (Join-Path $PSScriptRoot '../SampleCiHelpers.ps1')
-. (Join-Path $PSScriptRoot '..\..\SampleTestPlanHelpers.ps1')
+. (Join-Path $PSScriptRoot '../shared/SampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot '../SampleTestPlanHelpers.ps1')
 
 function Invoke-QueueTestEnvironment {
     param([Parameter(Mandatory)] [scriptblock] $Test)
@@ -57,14 +57,14 @@ function New-OfflineQueuePlan {
         [hashtable] $Assignment = (New-TestQueueAssignments)[$QueueName])
 
     $null = New-Item -ItemType Directory -Path $OutputDirectory -Force
-    $planScript = Join-Path $PSScriptRoot '..\..\New-SampleDeploymentPlan.ps1'
+    $planScript = Join-Path $PSScriptRoot '../New-SampleDeploymentPlan.ps1'
     $selectionArguments = @{}
     if ($Assignment) {
         $manifest = Join-Path $OutputDirectory 'selected-tests.json'
         $Assignment | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifest -Encoding utf8
         $selectionArguments.SelectionManifest = $manifest
     } else {
-        $planScript = Join-Path $PSScriptRoot '..\New-ResourceDeploymentPlan.ps1'
+        $planScript = Join-Path $PSScriptRoot '../shared/New-ResourceDeploymentPlan.ps1'
     }
     & $planScript @selectionArguments -OutputDirectory $OutputDirectory -QueueName $QueueName `
         -DefinitionId $env:SYSTEM_DEFINITIONID -BuildId $env:BUILD_BUILDID -JobAttempt $env:SYSTEM_JOBATTEMPT -IdentityResourceGroup $IdentityResourceGroup
@@ -182,7 +182,7 @@ Describe 'Offline queue ownership and deployment plans' {
             $plan = New-OfflineQueuePlan -OutputDirectory $directory -QueueName q2
             $planPath = Join-Path $directory 'deployment-plan.json'
             $statePath = Join-Path $TestDrive 'q1-state.json'
-            $provisioningScript = Join-Path $PSScriptRoot '../../Invoke-SampleProvisioning.ps1'
+            $provisioningScript = Join-Path $PSScriptRoot '../Invoke-SampleProvisioning.ps1'
             { & $provisioningScript -PlanPath $planPath -StatePath $statePath -QueueName q1 -ConfirmProvisioning } |
                 Should Throw 'different test queue'
             $plan.queueName | Should Be 'q2'
@@ -202,7 +202,7 @@ Describe 'Offline queue ownership and deployment plans' {
                 resourceGroupDeployment = 'sample-ci-rg-' + $plan.ownerToken; status = 'Ready'
             } | ConvertTo-Json -Depth 15 | Set-Content -LiteralPath $statePath -Encoding utf8
             $originalState = Get-Content -LiteralPath $statePath -Raw
-            $cleanupScript = Join-Path $PSScriptRoot '../Remove-SampleResources.ps1'
+            $cleanupScript = Join-Path $PSScriptRoot '../shared/Remove-SampleResources.ps1'
             { & $cleanupScript -StatePath $statePath -QueueName q1 -ConfirmCleanup } | Should Throw 'different test queue'
             (Get-Content -LiteralPath $statePath -Raw) | Should Be $originalState
             $script:queueAzureCalls.Count | Should Be 0
@@ -544,7 +544,7 @@ Describe 'Aggregate four-queue capacity admission' {
                 $plans[1].filter = $plans[0].filter
             }
             $plans[1] | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath (Join-Path $batchDirectory 'q2\deployment-plan.json') -Encoding utf8
-            $provisioningScript = Join-Path $PSScriptRoot '..\..\Invoke-SampleProvisioning.ps1'
+            $provisioningScript = Join-Path $PSScriptRoot '../Invoke-SampleProvisioning.ps1'
             { & $provisioningScript -BatchPlanDirectory $batchDirectory -ResolvedPlanDirectory $resolvedDirectory } |
                 Should Throw $ExpectedError
             Test-Path -LiteralPath $resolvedDirectory | Should Be $false

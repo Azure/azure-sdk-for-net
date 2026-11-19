@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
-. (Join-Path $PSScriptRoot '..\..\SampleTestPlanHelpers.ps1')
+. (Join-Path $PSScriptRoot '../SampleTestPlanHelpers.ps1')
 
 Describe 'Provisioning rejects missing secrets and ineligible regions before mutation' {
     It 'creates neither deployment state nor resources: <Label>' -TestCases @(
@@ -42,7 +42,7 @@ Describe 'Provisioning rejects missing secrets and ineligible regions before mut
             $statePath = Join-Path $TestDrive 'state.json'
             $plan | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $planPath -Encoding utf8
             $calls = [Collections.Generic.List[string]]::new()
-            $provisioningScript = Join-Path $PSScriptRoot '../../Invoke-SampleProvisioning.ps1'
+            $provisioningScript = Join-Path $PSScriptRoot '../Invoke-SampleProvisioning.ps1'
             $failure = & {
                 function az {
                     $global:LASTEXITCODE = 0

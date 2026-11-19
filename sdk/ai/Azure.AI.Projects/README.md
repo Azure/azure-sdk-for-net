@@ -2156,11 +2156,10 @@ Beyond the introductory scenarios discussed, the AI Projects client library offe
 
 See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building, testing, and contributing to this library.
 
-The shared runtime and provisioning files under `tests/samples/ci/shared/` are
-maintained identically in this repository, the Python SDK repository, and
-`foundry-sdk-test-resources/ci/shared/`. Update those shared files in all three
-repositories together. .NET-specific selectors, runners, and supplemental
-validation tests remain in this SDK.
+The live-test pipeline downloads its shared runtime and provisioning files
+before running. See the [live-test CI setup](./tests/Samples/ci/README.md)
+for repository access and local validation. .NET-specific selectors, runners,
+and supplemental validation tests remain in this SDK.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
