@@ -463,11 +463,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 Times.Exactly(2));
         }
 
-        [Test]
-        [Ignore("Wall-clock-dependent continuation polling misses a deferred blob, see: https://github.com/Azure/azure-sdk-for-net/issues/63781")]
-        public async Task ExecuteAsync_PollNewBlobsAsync_ContinuationTokenUpdatedBlobs()
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(1)]
+        public async Task ExecuteAsync_PollNewBlobsAsync_ContinuationTokenUpdatedBlobs(long secondSweepCutoffOffsetTicks)
         {
             // Arrange
+            // Use fixed timestamps and pin each sweep's PollingStartTime instead of relying on
+            // DateTimeOffset.UtcNow and Task.Delay, which made this test flaky in CI (#63781).
+            DateTimeOffset baseTime = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset deferredBlobLastModified = baseTime.AddSeconds(5);
+            DateTimeOffset updatedBlobsLastModified = deferredBlobLastModified.AddSeconds(-2);
+            DateTimeOffset firstSweepCutoff = baseTime;
+            DateTimeOffset secondSweepCutoff = deferredBlobLastModified.AddTicks(secondSweepCutoffOffsetTicks);
+            DateTimeOffset thirdSweepCutoff = deferredBlobLastModified.AddSeconds(1);
+            bool deferredBlobInSecondSweep = secondSweepCutoff >= deferredBlobLastModified;
+
             int testScanBlobLimitPerPoll = 3;
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, NullLogger<BlobListener>.Instance);
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
@@ -484,49 +495,66 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             // Create first page of blobs to list from
             List<BlobItem> blobItems = new List<BlobItem>();
-            List<string> expectedNames = new List<string>();
+            List<string> firstPageNames = new List<string>();
             for (int i = 0; i < 5; i++)
             {
-                DateTimeOffset lastModified = DateTimeOffset.UtcNow.AddMinutes(-10 * i);
-                expectedNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItems, lastModified: lastModified));
+                DateTimeOffset lastModified = baseTime.AddMinutes(-10 * i);
+                firstPageNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItems, lastModified: lastModified));
             }
+
             // Create second page
             List<BlobItem> blobItemsPage2 = new List<BlobItem>();
+            List<string> secondPageNames = new List<string>();
             for (int i = 0; i < 3; i++)
             {
-                DateTimeOffset lastModified = DateTimeOffset.UtcNow.AddMinutes(-5 * i);
-                expectedNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItemsPage2, lastModified: lastModified));
+                DateTimeOffset lastModified = baseTime.AddMinutes(-5 * i);
+                secondPageNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItemsPage2, lastModified: lastModified));
             }
 
-            // Add at least one blob that has a LastModifiedTime that goes beyond the start time of polling
-            DateTimeOffset lastModifiedAfterStartPolling = DateTimeOffset.UtcNow.AddSeconds(5);
-            string blobNameWithLmtAfterStartedPolling = CreateBlobAndUploadToContainer(containerMock, blobItemsPage2, lastModified: lastModifiedAfterStartPolling);
+            // Add one blob on the second page whose LastModified is after the first sweep's cutoff.
+            // It must be deferred by the first sweep and delivered by a later one.
+            string deferredBlobName = CreateBlobAndUploadToContainer(containerMock, blobItemsPage2, lastModified: deferredBlobLastModified);
 
-            // Update all the blobs in the second listing, that way they get detected again in the second polling
+            // Blobs updated between the first and second sweeps, listed on the first page of the second sweep.
             List<BlobItem> blobItemsUpdated = new List<BlobItem>();
-            List<string> secondSetExpectedNames = new List<string>();
+            List<string> updatedNames = new List<string>();
             for (int i = 0; i < 4; i++)
             {
-                // Create LastModified to be after the LMT of the blob that was beyond the start of the polling time to test if blobs created after that time will also be detected
-                secondSetExpectedNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItemsUpdated, lastModified: lastModifiedAfterStartPolling.AddSeconds(-2)));
+                updatedNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItemsUpdated, lastModified: updatedBlobsLastModified));
             }
-            // Add blob with LMT after polling started to the second polling expected names.
-            secondSetExpectedNames.Add(blobNameWithLmtAfterStartedPolling);
 
-            // Set up GetBlobsAsync to return pages with continuation token for each page, but not at the end of each polling
+            // Register the container to initialize _scanInfo
+            await product.RegisterAsync(_blobClientMock.Object, containerMock.Object, executor, CancellationToken.None);
+            ContainerScanInfo scanInfo = GetContainerScanInfo(product, containerMock.Object);
+
+            // Set up GetBlobsAsync to return pages with continuation token for each page, but not at the end of each sweep.
+            // The strategy sets PollingStartTime to DateTimeOffset.UtcNow right before listing the first page of a sweep,
+            // so the page factory replaces it with a fixed cutoff.
             containerMock.SetupSequence(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                // First polling
+                // First sweep
                 .Returns(() =>
                 {
+                    scanInfo.PollingStartTime = firstSweepCutoff;
                     return new TestAsyncPageableWithContinuationToken(blobItems, true);
                 })
                 .Returns(() =>
                 {
                     return new TestAsyncPageableWithContinuationToken(blobItemsPage2, false);
                 })
-                // Second polling
+                // Second sweep
                 .Returns(() =>
                 {
+                    scanInfo.PollingStartTime = secondSweepCutoff;
+                    return new TestAsyncPageableWithContinuationToken(blobItemsUpdated, true);
+                })
+                .Returns(() =>
+                {
+                    return new TestAsyncPageableWithContinuationToken(blobItemsPage2, false);
+                })
+                // Third sweep
+                .Returns(() =>
+                {
+                    scanInfo.PollingStartTime = thirdSweepCutoff;
                     return new TestAsyncPageableWithContinuationToken(blobItemsUpdated, true);
                 })
                 .Returns(() =>
@@ -534,19 +562,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     return new TestAsyncPageableWithContinuationToken(blobItemsPage2, false);
                 });
 
-            // Register the container to initialize _scanInfo
-            await product.RegisterAsync(_blobClientMock.Object, containerMock.Object, executor, CancellationToken.None);
+            // Act / Assert - First sweep, first page
+            CollectionAssert.AreEquivalent(firstPageNames, ExecuteAndGetNotifiedBlobs(product, executor));
+            Assert.IsNotNull(scanInfo.ContinuationToken);
+            Assert.AreEqual(firstSweepCutoff, scanInfo.PollingStartTime);
+            Assert.AreEqual(DateTimeOffset.MinValue, scanInfo.LastSweepCycleLatestModified);
 
-            // Act / Assert - First Polling
-            RunExecuteWithMultiPollingInterval(expectedNames, product, executor, blobItems.Count);
+            // First sweep, second page: the deferred blob is beyond the cutoff and must not be notified or
+            // raise the high-water mark.
+            CollectionAssert.AreEquivalent(secondPageNames, ExecuteAndGetNotifiedBlobs(product, executor));
+            Assert.IsNull(scanInfo.ContinuationToken);
+            Assert.AreEqual(baseTime, scanInfo.LastSweepCycleLatestModified);
 
-            // Wait 5 seconds to ensure that the blob with LMT after polling started is detected as a new blob.
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            // Second sweep, first page: updated blobs are notified; the high-water mark is only applied at the end of a sweep.
+            CollectionAssert.AreEquivalent(updatedNames, ExecuteAndGetNotifiedBlobs(product, executor));
+            Assert.IsNotNull(scanInfo.ContinuationToken);
+            Assert.AreEqual(secondSweepCutoff, scanInfo.PollingStartTime);
+            Assert.AreEqual(baseTime, scanInfo.LastSweepCycleLatestModified);
 
-            // Act / Assert - Second Polling
-            // We expect all the blobs we updated above to be detected and the blob that was created after the first polling started that wasn't detected
-            // to be now detected in this polling.
-            RunExecuteWithMultiPollingInterval(secondSetExpectedNames, product, executor, blobItemsUpdated.Count);
+            // Second sweep, second page: the deferred blob is delivered only if the cutoff reached its LastModified.
+            List<string> expectedSecondSweepSecondPage = deferredBlobInSecondSweep ? new List<string> { deferredBlobName } : new List<string>();
+            CollectionAssert.AreEquivalent(expectedSecondSweepSecondPage, ExecuteAndGetNotifiedBlobs(product, executor));
+            Assert.IsNull(scanInfo.ContinuationToken);
+            Assert.AreEqual(deferredBlobInSecondSweep ? deferredBlobLastModified : updatedBlobsLastModified, scanInfo.LastSweepCycleLatestModified);
+
+            // Third sweep: nothing is notified twice, and a deferred blob not delivered yet is delivered now.
+            CollectionAssert.IsEmpty(ExecuteAndGetNotifiedBlobs(product, executor));
+            List<string> expectedThirdSweepSecondPage = deferredBlobInSecondSweep ? new List<string>() : new List<string> { deferredBlobName };
+            CollectionAssert.AreEquivalent(expectedThirdSweepSecondPage, ExecuteAndGetNotifiedBlobs(product, executor));
+            Assert.AreEqual(deferredBlobLastModified, scanInfo.LastSweepCycleLatestModified);
+
+            // Every blob was received exactly once.
+            List<string> allNames = firstPageNames.Concat(secondPageNames).Concat(updatedNames).Append(deferredBlobName).ToList();
+            CollectionAssert.AreEquivalent(allNames, executor.BlobReceipts);
         }
 
         [Test]
@@ -634,6 +682,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 product.Execute();
                 Assert.AreEqual(expectedCount, count);
             }
+        }
+
+        private static List<string> ExecuteAndGetNotifiedBlobs(IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor)
+        {
+            List<string> notifiedBlobs = new List<string>();
+            executor.ExecuteLambda = (b) =>
+            {
+                notifiedBlobs.Add(b.Name);
+                return true;
+            };
+            product.Execute();
+            return notifiedBlobs;
+        }
+
+        private static ContainerScanInfo GetContainerScanInfo(IBlobListenerStrategy product, BlobContainerClient container)
+        {
+            IDictionary<BlobContainerClient, ContainerScanInfo> scanInfo = (IDictionary<BlobContainerClient, ContainerScanInfo>)typeof(ScanBlobScanLogHybridPollingStrategy)
+                .GetField("_scanInfo", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(product);
+            return scanInfo[container];
         }
 
         private void RunExecuterWithExpectedBlobs(List<string> blobNames, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor)
