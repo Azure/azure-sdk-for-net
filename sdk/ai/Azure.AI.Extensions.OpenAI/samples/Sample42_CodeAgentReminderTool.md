@@ -307,17 +307,17 @@ Thread.Sleep(500);
 ProjectsRoutine created = null;
 foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1))
 {
-    // The routine created no earlier than response and not later than one minute after response.
-    if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
-    {
-        created = routine;
-        break;
-    }
-    // If the latest routine was created before the response, our routine was not created.
-    else if (routine.CreatedAt < responseTime)
-    {
-        break;
-    }
+    //// The routine created no earlier than response and not later than one minute after response.
+    //if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
+    //{
+    //    created = routine;
+    //    break;
+    //}
+    //// If the latest routine was created before the response, our routine was not created.
+    //else if (routine.CreatedAt < responseTime)
+    //{
+    //    break;
+    //}
 }
 if (created == null)
 {
@@ -333,17 +333,17 @@ await Task.Delay(500);
 ProjectsRoutine created = null;
 await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
 {
-    // The routine created no earlier than response and not later than one minute after response.
-    if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
-    {
-        created = routine;
-        break;
-    }
-    // If the latest routine was created before the response, our routine was not created.
-    else if (routine.CreatedAt < responseTime)
-    {
-        break;
-    }
+    //// The routine created no earlier than response and not later than one minute after response.
+    //if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
+    //{
+    //    created = routine;
+    //    break;
+    //}
+    //// If the latest routine was created before the response, our routine was not created.
+    //else if (routine.CreatedAt < responseTime)
+    //{
+    //    break;
+    //}
 }
 if (created == null)
 {
@@ -394,7 +394,7 @@ while (DateTime.UtcNow < deadline)
     foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(routineName: created.Name))
     {
         runWasTriggered = true;
-        Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+        //Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
         if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
@@ -423,7 +423,7 @@ while (DateTime.UtcNow < deadline)
     await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
     {
         runWasTriggered = true;
-        Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+        //Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
         if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
