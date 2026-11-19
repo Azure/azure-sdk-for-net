@@ -56,7 +56,12 @@ function ConvertFrom-AzSdkCliJsonResponse([string[]] $Streams) {
           if ($stack.Count -eq 0) {
             $candidate = $stream.Substring($start, $index - $start + 1)
             try {
-              $responses.Add(($candidate | ConvertFrom-Json -ErrorAction Stop))
+              $response = $candidate | ConvertFrom-Json -ErrorAction Stop
+              if ($response.PSObject.Properties["operation_status"] -and
+                $response.operation_status -is [string] -and
+                $response.operation_status -in @("Succeeded", "Failed")) {
+                $responses.Add($response)
+              }
               $start = $index
             }
             catch {

@@ -136,6 +136,20 @@ APIView release check reported a missing review.
         ($messages -join [Environment]::NewLine) | Should Not Match "malformed JSON"
     }
 
+    It "ignores JSON diagnostics when finding the CLI response" {
+        $global:AzSdkOutput = @'
+{"error":{"code":"ReviewNotFound","message":"APIView review is not available."}}
+{"operation_status":"Succeeded","api_review_hub":{"packageVersionId":"version123","isReleased":true},"api_view":null}
+'@
+
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
+            ForEach-Object { "$_" }
+
+        [Array]::IndexOf($messages, "API Review Hub") | Should BeGreaterThan -1
+        ($messages -join [Environment]::NewLine) | Should Not Match "Multiple JSON objects"
+        ($messages -join [Environment]::NewLine) | Should Not Match "malformed JSON"
+    }
+
     It "surfaces partial backend failure details from azsdk" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = '{"operation_status":"Failed","api_review_hub":{"packageVersionId":"version123"},"api_view":null,"response_errors":["APIView: APIView failed"]}'
