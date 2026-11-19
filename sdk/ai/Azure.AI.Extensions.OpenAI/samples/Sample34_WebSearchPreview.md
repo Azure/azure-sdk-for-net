@@ -24,7 +24,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can search the web.",
     Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -95,5 +95,5 @@ Console.WriteLine($"{text}{annotation}");
 5. Finally, delete all the resources we have created in this sample.
 
 ```C# Snippet:Sample_Cleanup_WebSearchPreviewStreaming_Async
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

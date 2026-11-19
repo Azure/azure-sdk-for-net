@@ -8,7 +8,12 @@
 ### Breaking Changes
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
 - The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
-- The `Azure.AI.Projects.Agents` dependency has renamed agent models and members used by project clients. For example, replace `VersionRefIndicator` with `VersionReferenceIndicator` and `VoiceAgentAudioConfig` with `VoiceAgentAudioConfiguration`. See the `Azure.AI.Projects.Agents` changelog for the complete list.
+- `Azure.AI.Projects` no longer depends on `Azure.AI.Projects.Agents`, and the `AIProjectClient.AgentAdministrationClient` property was removed. To create and manage agents, add the `Azure.AI.Projects.Agents` package and call its `GetProjectAgentsClient` extension method on `AIProjectClient`; the returned client shares the project client's pipeline. Distributed tracing for that client is controlled by `AgentAdministrationClientOptions.EnableDistributedTracing` instead of `AIProjectClientOptions.EnableDistributedTracing`.
+- `ProjectsRealtimeSessionClientOptions.Transport` is now a `ProjectsRealtimeTransport` instead of `Azure.AI.Projects.Agents.VoiceAgentTransport`.
+- Agent models and members in `Azure.AI.Projects.Agents` were renamed. For example, replace `VersionRefIndicator` with `VersionReferenceIndicator` and `VoiceAgentAudioConfig` with `VoiceAgentAudioConfiguration`. See the `Azure.AI.Projects.Agents` changelog for the complete list.
+
+### Bugs Fixed
+- The `User-Agent` header sent by `AIProjectClient` now identifies `Azure.AI.Projects` instead of `Azure.AI.Projects.Agents`.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

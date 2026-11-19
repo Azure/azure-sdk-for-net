@@ -34,7 +34,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions.",
     Tools = { new WorkIQPreviewTool(workIQConnection.Id), }
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -47,7 +47,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions.",
     Tools = { new WorkIQPreviewTool(workIQConnection.Id), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -87,10 +87,10 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_WorkIQ_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_WorkIQ_Async
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

@@ -21,7 +21,7 @@ public class VoiceAgentTelemetryConfigurationTests
 {
     [TestCase(false)]
     [TestCase(true)]
-    public async Task ProjectTracingOptionAppliesToVoiceRestSubclient(bool enabled)
+    public async Task TracingOptionAppliesToAgentsClientFromProjectClient(bool enabled)
     {
         const string variable = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
         string previous = Environment.GetEnvironmentVariable(variable);
@@ -44,11 +44,12 @@ public class VoiceAgentTelemetryConfigurationTests
             AIProjectClient client = new(new Uri("https://fake-account.services.ai.azure.com/api/projects/test"),
                 new MockCredential(), new AIProjectClientOptions
                 {
-                    Transport = transport,
-                    EnableDistributedTracing = enabled
+                    Transport = transport
                 });
+            AgentAdministrationClient agentsClient = client.GetProjectAgentsClient(
+                options: new AgentAdministrationClientOptions { EnableDistributedTracing = enabled });
 
-            await client.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations()
+            await agentsClient.GetBetaVoiceAgentEndpointConversations()
                 .DeleteAgentConversationAsync("agent", "conversation");
 
             Assert.That(transport.Requests, Has.Count.EqualTo(1));

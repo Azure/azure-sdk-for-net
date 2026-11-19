@@ -32,7 +32,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
 #endif
         DefaultAzureCredential credential = new();
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: credential);
-        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
+        AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
         #endregion
         try
         {
@@ -71,7 +71,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -125,7 +125,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_ToolBoxWithRAI_Async
         await toolboxClient.DeleteAsync(name: toolBox.Name);
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -145,7 +145,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
 #endif
         DefaultAzureCredential credential = new();
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: credential);
-        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
+        AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
         try
         {
             toolboxClient.Delete(name: "myToolbox");
@@ -183,7 +183,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -237,7 +237,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_ToolBoxWithRAI_Sync
         toolboxClient.Delete(name: toolBox.Name);
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

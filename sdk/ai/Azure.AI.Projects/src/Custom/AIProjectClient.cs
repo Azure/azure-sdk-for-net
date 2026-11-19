@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using OpenAI.Realtime;
@@ -38,7 +37,6 @@ namespace Azure.AI.Projects
         private readonly AuthenticationTokenProvider _tokenProvider;
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
         private ProjectOpenAIClient _cachedOpenAIClient;
-        private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
         private readonly AIProjectClientOptions _clientOptions;
         [Experimental("AAIP002")]
@@ -112,7 +110,7 @@ namespace Azure.AI.Projects
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
             _clientOptions = options;
-            _telemetryDetails = new(typeof(AgentAdministrationClient).Assembly, options?.UserAgentApplicationId);
+            _telemetryDetails = new(typeof(AIProjectClient).Assembly, options?.UserAgentApplicationId);
 
             PipelinePolicyHelpers.AddQueryParameterPolicyIf(
                 options,
@@ -172,12 +170,6 @@ namespace Azure.AI.Projects
         internal virtual ProjectOpenAIClient GetCachedOpenAIClient()
         {
             return Volatile.Read(ref _cachedOpenAIClient) ?? Interlocked.CompareExchange(ref _cachedOpenAIClient, this.GetProjectOpenAIClient(), null) ?? _cachedOpenAIClient;
-        }
-
-        internal virtual AgentAdministrationClient GetCachedAgentsClient()
-        {
-            return Volatile.Read(ref _cachedAgentsClient) ?? Interlocked.CompareExchange(ref _cachedAgentsClient,
-                this.GetProjectAgentsClient(options: new AgentAdministrationClientOptions { EnableDistributedTracing = _clientOptions?.EnableDistributedTracing }), null) ?? _cachedAgentsClient;
         }
 
         /// <summary> Initializes a new instance of RedTeams. </summary>
@@ -299,8 +291,6 @@ namespace Azure.AI.Projects
         public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
         /// <summary> Gets the client for invoking Azure OpenAI operations scoped to this project. </summary>
         public virtual ProjectOpenAIClient ProjectOpenAIClient => GetCachedOpenAIClient();
-        /// <summary> Gets the client for administering agents in this project. </summary>
-        public virtual AgentAdministrationClient AgentAdministrationClient => GetCachedAgentsClient();
         /// <summary> Gets the client for managing memory stores. </summary>
         [Experimental("AAIP001")]
         public virtual AIProjectMemoryStores MemoryStores => GetAIProjectMemoryStoresClient();

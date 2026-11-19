@@ -46,7 +46,7 @@ public class Sample_VoiceAgent : SamplesBase
             Instructions = "Respond briefly and helpfully.",
         };
         definition.OutputModalities.Add(VoiceOutputModality.Text);
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(definition));
         #endregion
@@ -85,7 +85,7 @@ public class Sample_VoiceAgent : SamplesBase
         finally
         {
             #region Snippet:Sample_VoiceAgent_Cleanup
-            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+            await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
             #endregion
         }
     }

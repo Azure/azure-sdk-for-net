@@ -43,7 +43,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -63,7 +63,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_Fabric_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -94,7 +94,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -112,7 +112,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
 
         #region Snippet:Sample_Cleanup_Fabric_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

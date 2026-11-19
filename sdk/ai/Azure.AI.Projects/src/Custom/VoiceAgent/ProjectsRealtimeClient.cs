@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects;
@@ -102,7 +101,7 @@ public class ProjectsRealtimeClient : RealtimeClient
     {
         Argument.AssertNotNullOrEmpty(model, nameof(model));
 
-        VoiceAgentTransport? selectedTransport = (options as ProjectsRealtimeSessionClientOptions)?.Transport;
+        ProjectsRealtimeTransport? selectedTransport = (options as ProjectsRealtimeSessionClientOptions)?.Transport;
         string transport = selectedTransport?.ToString();
         if (selectedTransport.HasValue && string.IsNullOrWhiteSpace(transport))
         {

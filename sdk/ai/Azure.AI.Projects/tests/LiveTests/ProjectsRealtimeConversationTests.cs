@@ -116,7 +116,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
     {
         AIProjectClient client = GetLiveClient();
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
-        await EnsureConversationAgentAsync(client.AgentAdministrationClient, timeout.Token);
+        await EnsureConversationAgentAsync(GetTestAgentsClient(client), timeout.Token);
 
         using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             CONVERSATION_AGENT_NAME,
@@ -155,7 +155,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
     {
         AIProjectClient client = GetLiveClient();
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
-        await EnsureConversationAgentAsync(client.AgentAdministrationClient, timeout.Token);
+        await EnsureConversationAgentAsync(GetTestAgentsClient(client), timeout.Token);
 
         string conversationId;
         using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
@@ -181,7 +181,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
 
         Assert.That(conversationId, Is.Not.Null.And.Not.Empty, "Expected the response.done event to report a conversation ID when Store = true.");
 
-        Azure.AI.Projects.Agents.BetaVoiceAgentsConversations conversationsClient = client.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
+        Azure.AI.Projects.Agents.BetaVoiceAgentsConversations conversationsClient = GetTestAgentsClient(client).GetBetaVoiceAgentEndpointConversations();
 
         System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceConversation> getConversationResult = await conversationsClient.GetAgentConversationAsync(
             CONVERSATION_AGENT_NAME,
@@ -221,7 +221,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
     {
         AIProjectClient client = GetLiveClient();
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
-        await EnsureAudioConversationAgentAsync(client.AgentAdministrationClient, timeout.Token);
+        await EnsureAudioConversationAgentAsync(GetTestAgentsClient(client), timeout.Token);
 
         using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             AUDIO_CONVERSATION_AGENT_NAME,

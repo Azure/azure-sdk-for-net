@@ -318,7 +318,7 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         // To re-record this test please use the hosted agent, created in the sample Sample42_CodeAgentReminderTool.md from Azure.AI.Extensions.OpenAI package.
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentRecord agentRecord = await projectClient.AgentAdministrationClient.GetAgentAsync("myCodeAgentReminderTool");
+        ProjectsAgentRecord agentRecord = await GetTestAgentsClient(projectClient).GetAgentAsync("myCodeAgentReminderTool");
         ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
             apiVersion: "v1"
         );
@@ -389,7 +389,7 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         try
         {
-            return (await projectClient.AgentAdministrationClient.GetAgentAsync($"{HOSTED_AGENT_PREFIX}-{suffix}")).Value.GetLatestVersion();
+            return (await GetTestAgentsClient(projectClient).GetAgentAsync($"{HOSTED_AGENT_PREFIX}-{suffix}")).Value.GetLatestVersion();
         }
         catch
         {
@@ -403,7 +403,7 @@ public class RoutinesTests : ProjectsClientTestBase
             };
             ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
             creationOptions.Metadata["enableVnextExperience"] = "true";
-            ProjectsAgentVersion created = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            ProjectsAgentVersion created = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
                 agentName: $"{HOSTED_AGENT_PREFIX}-{suffix}",
                 options: creationOptions);
             throw new InvalidOperationException($"The agent {created.Name} v. {created.Version} was created. Please assign it \"Foundry user\" role with regards to foundry (one level above project).");
@@ -426,12 +426,12 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         // Remove Agents.
         // This part is commented out because the hosted Agent needs to be assigned "Foundry user" RBAC role and should be reused.
-        //List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT_PREFIX)).ToListAsync();
+        //List<string> hostedAgents = await GetTestAgentsClient(projectClient).GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT_PREFIX)).ToListAsync();
         //foreach (string hostedAgent in hostedAgents)
         //{
         //    try
         //    {
-        //        projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent, force: true);
+        //        GetTestAgentsClient(projectClient).DeleteAgent(hostedAgent, force: true);
         //    }
         //    catch { }
         //}

@@ -632,7 +632,6 @@ namespace Azure.AI.Projects
         public AIProjectClient(Azure.AI.Projects.AIProjectClientSettings settings) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
-        public virtual Azure.AI.Projects.Agents.AgentAdministrationClient AgentAdministrationClient { get { throw null; } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual Azure.AI.Projects.AgentInsightMonitors AgentInsightMonitors { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectConnectionsOperations Connections { get { throw null; } }
@@ -2375,7 +2374,25 @@ namespace Azure.AI.Projects
     public partial class ProjectsRealtimeSessionClientOptions : OpenAI.Realtime.RealtimeSessionClientOptions
     {
         public ProjectsRealtimeSessionClientOptions() { }
-        public Azure.AI.Projects.Agents.VoiceAgentTransport? Transport { get { throw null; } set { } }
+        public Azure.AI.Projects.ProjectsRealtimeTransport? Transport { get { throw null; } set { } }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProjectsRealtimeTransport : System.IEquatable<Azure.AI.Projects.ProjectsRealtimeTransport>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProjectsRealtimeTransport(string value) { throw null; }
+        public static Azure.AI.Projects.ProjectsRealtimeTransport Webrtc { get { throw null; } }
+        public static Azure.AI.Projects.ProjectsRealtimeTransport Websocket { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.ProjectsRealtimeTransport other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.ProjectsRealtimeTransport left, Azure.AI.Projects.ProjectsRealtimeTransport right) { throw null; }
+        public static implicit operator Azure.AI.Projects.ProjectsRealtimeTransport (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.ProjectsRealtimeTransport? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.ProjectsRealtimeTransport left, Azure.AI.Projects.ProjectsRealtimeTransport right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class ProjectsRoutine : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ProjectsRoutine>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsRoutine>

@@ -23,7 +23,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 ```
@@ -42,7 +42,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion1 = projectClient.GetProjectAgentsClient().CreateAgentVersion(
     agentName: "myAgent1",
     options: new(agentDefinition));
 ```

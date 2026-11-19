@@ -42,7 +42,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
 
-        ProjectsAgentVersion newAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
         Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
@@ -70,7 +70,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -95,7 +95,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:CleanUp_Basic_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
+        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: "myAgent");
         #endregion
     }
 
@@ -119,7 +119,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -136,7 +136,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         responseOptions.PreviousResponseId = response.Id;
         response = responseClient.CreateResponse(responseOptions);
         Console.WriteLine(response.GetOutputText());
-        projectClient.AgentAdministrationClient.DeleteAgent(agentName: "myAgent");
+        projectClient.GetProjectAgentsClient().DeleteAgent(agentName: "myAgent");
     }
 
     [Test]
@@ -199,7 +199,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
-        ProjectsAgentVersion newAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
 
@@ -262,7 +262,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ErrorHandling
         try
         {
-            ProjectsAgentVersion agent = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
+            ProjectsAgentVersion agent = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(
                 agentName: "agent_which_dies_not_exist", agentVersion: "1");
         }
         catch (ClientResultException e) when (e.Status == 404)

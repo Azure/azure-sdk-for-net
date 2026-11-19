@@ -2,7 +2,7 @@
 The AI Projects client library is part of the Azure AI Foundry SDK and provides easy access to resources in your Azure AI Foundry Project. Use it to:
 
 * **Create and run Classic Agents** using the `GetPersistentAgentsClient` method on the client.
-* **Create Agents** using `AgentAdministrationClient` property.
+* **Create Agents** using the `GetProjectAgentsClient` extension method from the `Azure.AI.Projects.Agents` package.
 * **Enumerate AI Models** deployed to your Foundry Project using the `Deployments` operations.
 * **Enumerate connected Azure resources** in your Foundry project using the `Connections` operations.
 * **Upload documents and create Datasets** to reference them using the `Datasets` operations.
@@ -85,6 +85,12 @@ To install latest beta version please run:
 dotnet add package Azure.AI.Projects --prerelease
 ```
 
+To create and manage Agents, also install the [Azure.AI.Projects.Agents](https://www.nuget.org/packages/Azure.AI.Projects.Agents) package:
+
+```dotnetcli
+dotnet add package Azure.AI.Projects.Agents
+```
+
 ### Authenticate the client
 
 A secure, keyless authentication approach is to use Microsoft Entra ID (formerly Azure Active Directory) via the [Azure Identity library][azure_identity]. To use this library, you need to install the [Azure.Identity package](https://www.nuget.org/packages/Azure.Identity):
@@ -116,12 +122,11 @@ To select a transport for a Voice Agent connection, pass `ProjectsRealtimeSessio
 to `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync`:
 
 ```C#
-#pragma warning disable AAIP001 // VoiceAgentTransport is experimental.
-#pragma warning disable AAIP002 // The realtime client is experimental.
+#pragma warning disable AAIP002 // The realtime client and transport are experimental.
 #pragma warning disable OPENAI002 // OpenAI realtime types are experimental.
 ProjectsRealtimeSessionClientOptions options = new()
 {
-    Transport = VoiceAgentTransport.Websocket,
+    Transport = ProjectsRealtimeTransport.Websocket,
     QueryString = "store=true"
 };
 using RealtimeSessionClient session = await projectClient.ProjectsRealtimeClient.StartSessionAsync(
@@ -129,7 +134,7 @@ using RealtimeSessionClient session = await projectClient.ProjectsRealtimeClient
 ```
 
 Use `Transport` to select the connection transport; the SDK handles the connection details.
-Setting `VoiceAgentTransport.Webrtc` selects WebRTC signaling over the WebSocket; your application
+Setting `ProjectsRealtimeTransport.Webrtc` selects WebRTC signaling over the WebSocket; your application
 must also handle the peer connection, media, and SDP exchange.
 
 See the [runnable WebSocket transport sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_WebSocketTransport.md)
@@ -139,7 +144,9 @@ demonstrates streaming PCM input and output while logging actual byte counts.
 
 ### Performing Agent operations
 
-Azure.AI.Projects can be used to create, update and delete Agents.
+Agents are created, updated and deleted with `AgentAdministrationClient` from the `Azure.AI.Projects.Agents` package.
+Call the `GetProjectAgentsClient` extension method (in the `Azure.AI.Projects.Agents` namespace) on `AIProjectClient`
+to get a client that shares the project client's endpoint, credential and pipeline.
 
 For setup, see [Quickstart: Set up Microsoft Foundry resources](https://learn.microsoft.com/azure/foundry/tutorials/quickstart-create-foundry-resources).
 
@@ -151,11 +158,11 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion1 = projectClient.GetProjectAgentsClient().CreateAgentVersion(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-ProjectsAgentVersion agentVersion2 = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion2 = projectClient.GetProjectAgentsClient().CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -167,11 +174,11 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-ProjectsAgentVersion agentVersion2 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion2 = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -181,13 +188,13 @@ Get Agent
 
 Synchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Sync
-ProjectsAgentRecord result = projectClient.AgentAdministrationClient.GetAgent(agentVersion1.Name);
+ProjectsAgentRecord result = projectClient.GetProjectAgentsClient().GetAgent(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
 Asynchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Async
-ProjectsAgentRecord result = await projectClient.AgentAdministrationClient.GetAgentAsync(agentVersion1.Name);
+ProjectsAgentRecord result = await projectClient.GetProjectAgentsClient().GetAgentAsync(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
@@ -195,7 +202,7 @@ List Agents
 
 Synchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Sync
-foreach (ProjectsAgentRecord agent in projectClient.AgentAdministrationClient.GetAgents())
+foreach (ProjectsAgentRecord agent in projectClient.GetProjectAgentsClient().GetAgents())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -203,7 +210,7 @@ foreach (ProjectsAgentRecord agent in projectClient.AgentAdministrationClient.Ge
 
 Asynchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Async
-await foreach (ProjectsAgentRecord agent in projectClient.AgentAdministrationClient.GetAgentsAsync())
+await foreach (ProjectsAgentRecord agent in projectClient.GetProjectAgentsClient().GetAgentsAsync())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -213,17 +220,17 @@ Delete Agent
 
 Synchronous call:
 ```C# Snippet:Sample_DeleteAgentCRUD_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
 Asynchronous call:
 ```C# Snippet:Sample_DeleteAgentCRUD_Async
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
@@ -1508,7 +1515,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that answers general questions",
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "evalAgent",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");

@@ -33,7 +33,7 @@ public partial class ResponsesTelemetryTests
             Tools = { ResponseTool.CreateWebSearchTool() }
         };
 
-        return await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        return await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
     }
@@ -165,7 +165,7 @@ public partial class ResponsesTelemetryTests
         }
         finally
         {
-            await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
+            await GetTestAgentsClient(projectClient).DeleteAgentAsync(agentName: agentName);
         }
     }
 

@@ -155,7 +155,7 @@ public class Sample_Function : ProjectsOpenAITestBase
                     + "nicknames for cities whenever possible.",
             Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -187,7 +187,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_Function_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -241,7 +241,7 @@ public class Sample_Function : ProjectsOpenAITestBase
                     + "nicknames for cities whenever possible.",
             Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -273,7 +273,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_Function_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

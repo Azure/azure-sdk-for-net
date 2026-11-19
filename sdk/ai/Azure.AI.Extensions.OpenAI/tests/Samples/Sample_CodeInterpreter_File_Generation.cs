@@ -43,7 +43,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -92,7 +92,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Async
         await containerClient.DeleteContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -121,7 +121,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -168,7 +168,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Sync
         containerClient.DeleteContainerFile(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

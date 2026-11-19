@@ -67,7 +67,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateAgent_CodeAgent_Async
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgent",
             filePath: GetDirectory(Path.Combine(["Assets", "AgentsCode"])),
             metadata: GetAgentMetadata()
@@ -77,7 +77,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Task.Delay(500);
-            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -97,7 +97,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
             MatchCollection session = Regex.Matches(e.Message, "'[^']+'");
             if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) != -1 && session.Count > 0)
             {
-                SessionLogEvent logEvent = await projectClient.AgentAdministrationClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
+                SessionLogEvent logEvent = await projectClient.GetProjectAgentsClient().GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
                 Console.WriteLine(logEvent.Data);
             }
             throw;
@@ -105,11 +105,11 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_DownloadCode_CodeAgent_Async
         string downloadPath = Path.GetFullPath("./AgentCode");
-        await projectClient.AgentAdministrationClient.DownloadAgentCodeAsync(agentName: agentVersion.Name, path: downloadPath);
+        await projectClient.GetProjectAgentsClient().DownloadAgentCodeAsync(agentName: agentVersion.Name, path: downloadPath);
         Console.WriteLine($"The Agent code was downloaded to {downloadPath}");
         #endregion
         #region Snippet:DeleteCodeAgent_CodeAgent_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
+        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -130,7 +130,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateAgent_CodeAgent_Sync
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersionFromCode(
             agentName: "myCodeAgent",
             filePath: GetDirectory(Path.Combine(["Assets", "AgentsCode"])),
             metadata: GetAgentMetadata()
@@ -140,7 +140,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             Thread.Sleep(500);
-            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = projectClient.GetProjectAgentsClient().GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -160,7 +160,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
             MatchCollection session = Regex.Matches(e.Message, "'[^']+'");
             if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) != -1 && session.Count > 0)
             {
-                SessionLogEvent logEvent = projectClient.AgentAdministrationClient.GetSessionLogStream(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
+                SessionLogEvent logEvent = projectClient.GetProjectAgentsClient().GetSessionLogStream(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
                 Console.WriteLine(logEvent.Data);
             }
             throw;
@@ -168,11 +168,11 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_DownloadCode_CodeAgent_Sync
         string downloadPath = Path.GetFullPath("./AgentCode");
-        projectClient.AgentAdministrationClient.DownloadAgentCode(agentName: agentVersion.Name, path: downloadPath);
+        projectClient.GetProjectAgentsClient().DownloadAgentCode(agentName: agentVersion.Name, path: downloadPath);
         Console.WriteLine($"The Agent code was downloaded to {downloadPath}");
         #endregion
         #region Snippet:DeleteCodeAgent_CodeAgent_Sync
-        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
+        projectClient.GetProjectAgentsClient().DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 

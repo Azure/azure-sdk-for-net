@@ -1,6 +1,6 @@
 # Stream audio with a Foundry Voice Agent over WebSocket
 
-This runnable sample explicitly selects `VoiceAgentTransport.Websocket`, streams five PCM audio
+This runnable sample explicitly selects `ProjectsRealtimeTransport.Websocket`, streams five PCM audio
 chunks to a voice agent, and logs the actual input and output audio bytes alongside every received
 event. It sends a text request for the voice agent to answer aloud; the generated tone exercises
 the incremental audio input path but is not speech to transcribe. Replace the tone with microphone
@@ -37,7 +37,7 @@ VoiceAgentDefinition definition = new()
     }
 };
 definition.OutputModalities.Add(VoiceOutputModality.Audio);
-ClientResult<ProjectsAgentVersion> createResult = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ClientResult<ProjectsAgentVersion> createResult = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName, new ProjectsAgentVersionCreationOptions(definition));
 ProjectsAgentVersion agentVersion = createResult;
 Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Version}: HTTP {createResult.GetRawResponse().Status}");
@@ -50,7 +50,7 @@ after each send succeeds, and count output bytes from the received audio delta p
 using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
 ProjectsRealtimeSessionClientOptions options = new()
 {
-    Transport = VoiceAgentTransport.Websocket
+    Transport = ProjectsRealtimeTransport.Websocket
 };
 using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
     await projectClient.ProjectsRealtimeClient.StartSessionAsync(
@@ -113,10 +113,10 @@ if (!sawCompletedResponse || inputAudioBytes == 0 || outputAudioBytes == 0)
 3. Delete the temporary agent version, including when the audio exchange fails.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketAudio_Cleanup
-ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
+ClientResult deleteResult = await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(
     agentName: agentName, agentVersion: agentVersion.Version);
 Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
 ```
 
-Selecting `VoiceAgentTransport.Webrtc` instead changes the signaling transport only. It does not
+Selecting `ProjectsRealtimeTransport.Webrtc` instead changes the signaling transport only. It does not
 send WebRTC media for you; a full WebRTC application needs a separate peer connection and SDP flow.

@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Tests.Utils;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -181,6 +182,13 @@ namespace Azure.AI.Projects.Tests
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
             return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
         }
+
+        /// <summary>
+        /// Gets an <see cref="AgentAdministrationClient"/> that shares <paramref name="projectClient"/>'s pipeline.
+        /// The extension method's result is not intercepted by the project client proxy, so it is proxied here to keep sync/async coverage.
+        /// </summary>
+        protected AgentAdministrationClient GetTestAgentsClient(AIProjectClient projectClient)
+            => CreateProxyFromClient(projectClient.GetProjectAgentsClient());
 
         /// <summary>
         /// Creates a client in live mode, bypassing any proxy transport.

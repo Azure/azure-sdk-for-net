@@ -46,7 +46,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
             Instructions = "Respond briefly and helpfully.",
         };
         definition.OutputModalities.Add(VoiceOutputModality.Text);
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(definition));
         #endregion
@@ -83,7 +83,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
             #region Snippet:Sample_VoiceAgent_ReadConversation_Read
             // Once the session above closes, the conversation it produced becomes readable through
             // the REST-only BetaVoiceAgentsConversations surface -- no realtime connection needed.
-            BetaVoiceAgentsConversations conversationsClient = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
+            BetaVoiceAgentsConversations conversationsClient = projectClient.GetProjectAgentsClient().GetBetaVoiceAgentEndpointConversations();
 
             VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(agentName, conversationId);
             Console.WriteLine($"Conversation {conversation.Id} status: {conversation.Status}");
@@ -102,7 +102,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
         finally
         {
             #region Snippet:Sample_VoiceAgent_ReadConversation_Cleanup
-            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+            await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
             #endregion
         }
     }

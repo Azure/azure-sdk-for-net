@@ -42,7 +42,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
             Instructions = "Use the available Fabric IQ tools to answer questions and perform tasks.",
             Tools = { fabricIQTool },
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myFabricIQAgent",
             options: new(agentDefinition));
         #endregion
@@ -61,7 +61,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_FabricIQ_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -91,7 +91,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
             Instructions = "Use the available Fabric IQ tools to answer questions and perform tasks.",
             Tools = { fabricIQTool },
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myFabricIQAgent",
             options: new(agentDefinition));
         #endregion
@@ -108,7 +108,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
 
         #region Snippet:Sample_Cleanup_FabricIQ_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

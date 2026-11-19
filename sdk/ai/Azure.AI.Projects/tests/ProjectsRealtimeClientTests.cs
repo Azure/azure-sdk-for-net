@@ -159,9 +159,9 @@ public class ProjectsRealtimeClientTests
         {
             Transport = transportValue switch
             {
-                "websocket" => VoiceAgentTransport.Websocket,
-                "webrtc" => VoiceAgentTransport.Webrtc,
-                _ => new VoiceAgentTransport(transportValue)
+                "websocket" => ProjectsRealtimeTransport.Websocket,
+                "webrtc" => ProjectsRealtimeTransport.Webrtc,
+                _ => new ProjectsRealtimeTransport(transportValue)
             },
             QueryString = additionalQuery
         };
@@ -211,7 +211,7 @@ public class ProjectsRealtimeClientTests
     public void DefaultTransportValueIsRejectedBeforeConnecting()
     {
         AIProjectClient client = new(new Uri("http://127.0.0.1:1/api/projects/proj1"), new FakeTokenProvider());
-        ProjectsRealtimeSessionClientOptions options = new() { Transport = default(VoiceAgentTransport) };
+        ProjectsRealtimeSessionClientOptions options = new() { Transport = default(ProjectsRealtimeTransport) };
 
         ArgumentException exception = Assert.ThrowsAsync<ArgumentException>(() =>
             client.ProjectsRealtimeClient.StartSessionAsync("agent", intent: null, options: options));

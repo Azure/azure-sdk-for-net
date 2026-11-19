@@ -90,13 +90,13 @@ dotnet add package Azure.AI.Extensions.OpenAI
 
 ### Authenticate the client
 
-To be able to create, update and delete Agents, please install `Azure.AI.Projects` and use `AIProjectClient`. It is a good practice to only allow this operation for users with elevated permissions, for example, administrators.
+To be able to create, update and delete Agents, please install `Azure.AI.Projects` and `Azure.AI.Projects.Agents`, then get an `AgentAdministrationClient` from `AIProjectClient` with the `GetProjectAgentsClient` extension method. It is a good practice to only allow this operation for users with elevated permissions, for example, administrators.
 
 ```C# Snippet:CreateAgentClientDirectlyFromProjectEndpoint
 AIProjectClient projectClient = new(
     endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
     tokenProvider: new AzureCliCredential());
-AgentAdministrationClient agentClient = projectClient.AgentAdministrationClient;
+AgentAdministrationClient agentClient = projectClient.GetProjectAgentsClient();
 ```
 
 If you're already using an `AIProjectClient` from `Azure.AI.Projects`, you can initialize an `ProjectOpenAIClient` instance directly via an extension method:
@@ -178,7 +178,7 @@ ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_D
     Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
 };
 
-ProjectsAgentVersion newAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion newAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: FOUNDRY_AGENT_NAME,
     options: new(agentDefinition));
 Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
@@ -231,7 +231,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -265,7 +265,7 @@ Console.WriteLine(response.GetOutputText());
 Finally, we can delete Agent.
 
 ```C# Snippet:CleanUp_Basic_Async
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
+await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: "myAgent");
 ```
 
 Previously created responses can also be listed, typically to find all responses associated with a particular agent or conversation.
@@ -513,7 +513,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
 );
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myHostedAgent1",
     options: creationOptions);
 ```
@@ -524,7 +524,7 @@ The deployment of hosted Agent may take time so we may need to wait while it is 
 while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     await Task.Delay(500);
-    agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 if (agentVersion.Status != AgentVersionStatus.Active)
 {
@@ -547,7 +547,7 @@ PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,
 };
-ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
+ProjectsAgentRecord patchedRecord = projectClient.GetProjectAgentsClient().PatchAgent(
     agentName: agentVersion.Name,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -652,7 +652,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
                    "and returns it in the desired structured output format.",
     TextOptions = textOptions
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -693,7 +693,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -715,7 +715,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -786,7 +786,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -1032,7 +1032,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             + "nicknames for cities whenever possible.",
     Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1092,7 +1092,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can search the web",
     Tools = { ResponseTool.CreateWebSearchTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1109,7 +1109,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1125,7 +1125,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can search the web.",
     Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1153,7 +1153,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
     Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1267,7 +1267,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool, }
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1336,7 +1336,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { customBingSearchAgentTool, }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1357,7 +1357,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     )) }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1423,7 +1423,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
     Tools = { tool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1452,7 +1452,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1494,7 +1494,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1574,7 +1574,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     "related to web browsing using the Browser Automation tool available to you.",
     Tools = { playwrightTool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1609,7 +1609,7 @@ await foreach (StreamingResponseUpdate update in await responseClient.CreateResp
 After the sample completes, delete the agent version that you created. Agents can be reused across responses. Delete an agent version only when it is no longer needed.
 
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 #### Browser automation preview tool
@@ -1640,7 +1640,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { new SharePointPreviewTool(sharepointToolOption), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1743,7 +1743,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1764,7 +1764,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "Use the available Fabric IQ tools to answer questions and perform tasks.",
     Tools = { fabricIQTool },
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myFabricIQAgent",
     options: new(agentDefinition));
 ```
@@ -1822,7 +1822,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { a2aTool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1838,7 +1838,7 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-ProjectsAgentVersion agentVersionWithMemory = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersionWithMemory = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
@@ -1994,7 +1994,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         + "\"Foo says\" and then the response from the tool.",
     Tools = { GetFunctionTool(storageQueueUri) },
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -2012,7 +2012,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions.",
     Tools = { new WorkIQPreviewTool(workIQConnection.Id), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -2031,7 +2031,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "Use the available Web IQ tools to answer questions and perform tasks.",
     Tools = { WebIQTool },
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myWebIQAgent",
     options: new(agentDefinition));
 ```
@@ -2117,7 +2117,7 @@ Any operation that fails will throw a [ClientResultException][ClientResultExcept
 ```C# Snippet:ErrorHandling
 try
 {
-    ProjectsAgentVersion agent = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
+    ProjectsAgentVersion agent = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(
         agentName: "agent_which_dies_not_exist", agentVersion: "1");
 }
 catch (ClientResultException e) when (e.Status == 404)

@@ -111,8 +111,8 @@ This will create the publish output in the `bin\Release\net%version%\publish\` f
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
-ProjectAgentSkills skillsClient = projectClient.AgentAdministrationClient.GetAgentSkills();
+AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
+ProjectAgentSkills skillsClient = projectClient.GetProjectAgentsClient().GetAgentSkills();
 ```
 
 2. Create a skill, add it to the toolbox, and create an MCP server tool using the toolbox.
@@ -214,7 +214,7 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAg
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_ToolBoxSkill_Sync
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
+ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersionFromCode(
     agentName: "myCodeAgentSkill",
     filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
     metadata: GetAgentMetadata(
@@ -227,7 +227,7 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     Thread.Sleep(500);
-    agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    agentVersion = projectClient.GetProjectAgentsClient().GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 if (agentVersion.Status != AgentVersionStatus.Active)
 {
@@ -239,7 +239,7 @@ Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.Cl
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_ToolBoxSkill_Async
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionFromCodeAsync(
     agentName: "myCodeAgentSkill",
     filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
     metadata: GetAgentMetadata(
@@ -252,7 +252,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     await Task.Delay(500);
-    agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 if (agentVersion.Status != AgentVersionStatus.Active)
 {
@@ -356,14 +356,14 @@ Console.WriteLine(latestResponse.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync
-// projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
+// projectClient.GetProjectAgentsClient().DeleteAgent(agentVersion.Name, force: true);
 toolboxClient.Delete(name: toolBox.Name);
 skillsClient.DeleteSkill(name: skill.Name);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
-// await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
+// await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentVersion.Name, force: true);
 await toolboxClient.DeleteAsync(name: toolBox.Name);
 await skillsClient.DeleteSkillAsync(name: skill.Name);
 ```

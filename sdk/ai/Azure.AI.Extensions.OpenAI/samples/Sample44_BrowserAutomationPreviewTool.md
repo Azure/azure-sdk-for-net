@@ -50,7 +50,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     "related to web browsing using the Browser Automation tool available to you.",
     Tools = { playwrightTool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -121,5 +121,5 @@ await foreach (StreamingResponseUpdate update in await responseClient.CreateResp
 9. After the sample is completed, delete the Agent we have created.
 
 ```C# Snippet:Sample_Cleanup_BrowserAutomotionPreview_Async
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

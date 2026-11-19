@@ -27,7 +27,7 @@ public class AgentsSmokeTests : AgentsTestBase
             new Uri("https://ai.azure.com/mock/endpoint/api/projects/myProject"),
             new MockCredential());
         Assert.That(projectClient, Is.Not.Null);
-        AgentAdministrationClient agentClient = projectClient.AgentAdministrationClient;
+        AgentAdministrationClient agentClient = GetTestAgentsClient(projectClient);
         Assert.That(agentClient, Is.Not.Null);
         ProjectOpenAIClient openAIClient = projectClient.ProjectOpenAIClient;
         Assert.That(openAIClient, Is.Not.Null);

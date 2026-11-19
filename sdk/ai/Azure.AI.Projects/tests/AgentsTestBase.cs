@@ -484,7 +484,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteAsync(name: TOOLBOX_NAME);
+            await GetTestAgentsClient(projectClient).GetAgentToolboxes().DeleteAsync(name: TOOLBOX_NAME);
         }
         catch
         {
@@ -522,7 +522,7 @@ public class AgentsTestBase : ProjectsClientTestBase
                 Description = "Search for the toolboxes"
             };
         }
-        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateVersionAsync(
+        ToolboxVersion toolBox = await GetTestAgentsClient(projectClient).GetAgentToolboxes().CreateVersionAsync(
             name: TOOLBOX_NAME,
             tools: [mcp, codeInterpreter, searchTool],
             description: "Toolbox for the unit test."
@@ -723,36 +723,36 @@ public class AgentsTestBase : ProjectsClientTestBase
         //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
         //}
         // Remove Agents.
-        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in GetTestAgentsClient(projectClient).GetAgentVersions(agentName: AGENT_NAME))
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            GetTestAgentsClient(projectClient).DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME2))
+        foreach (ProjectsAgentVersion ag in GetTestAgentsClient(projectClient).GetAgentVersions(agentName: AGENT_NAME2))
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            GetTestAgentsClient(projectClient).DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: CONVERSATION_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in GetTestAgentsClient(projectClient).GetAgentVersions(agentName: CONVERSATION_AGENT_NAME))
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            GetTestAgentsClient(projectClient).DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: LIFECYCLE_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in GetTestAgentsClient(projectClient).GetAgentVersions(agentName: LIFECYCLE_AGENT_NAME))
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            GetTestAgentsClient(projectClient).DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AUDIO_CONVERSATION_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in GetTestAgentsClient(projectClient).GetAgentVersions(agentName: AUDIO_CONVERSATION_AGENT_NAME))
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            GetTestAgentsClient(projectClient).DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: TOOLCALL_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in GetTestAgentsClient(projectClient).GetAgentVersions(agentName: TOOLCALL_AGENT_NAME))
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            GetTestAgentsClient(projectClient).DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT)).ToListAsync();
+        List<string> hostedAgents = await GetTestAgentsClient(projectClient).GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT)).ToListAsync();
         foreach (string hostedAgent in hostedAgents)
         {
             try
             {
-                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+                GetTestAgentsClient(projectClient).DeleteAgent(hostedAgent);
             }
             catch { }
         }

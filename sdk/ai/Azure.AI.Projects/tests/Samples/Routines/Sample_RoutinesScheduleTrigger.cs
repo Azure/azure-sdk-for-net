@@ -32,7 +32,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         AIProjectRoutines routinesClient = projectClient.Routines;
         #endregion
         #region Snippet:Sample_GetHostedAgent_RoutinesScheduleTrigger_Async
-        ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClient.GetAgentAsync(
+        ProjectsAgentVersion agentVersion = (await projectClient.GetProjectAgentsClient().GetAgentAsync(
             agentName: agentName)).Value.GetLatestVersion();
         #endregion
         // Clean up any pre-existing routine with the same name.
@@ -125,7 +125,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
         #region Snippet:Sample_GetHostedAgent_RoutinesScheduleTrigger_Sync
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgent(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().GetAgent(
             agentName: agentName).Value.GetLatestVersion();
         #endregion
         // Clean up any pre-existing routine with the same name.

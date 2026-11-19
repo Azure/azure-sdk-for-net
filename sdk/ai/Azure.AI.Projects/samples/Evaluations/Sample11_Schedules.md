@@ -270,7 +270,7 @@ DeclarativeAgentDefinition agentDefinition = new(modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that answers general questions"
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(agentName: "MyAgent", options: new(agentDefinition));
+ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(agentName: "MyAgent", options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
@@ -280,7 +280,7 @@ DeclarativeAgentDefinition agentDefinition = new(modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that answers general questions"
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(agentName: "MyAgent", options: new(agentDefinition));
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(agentName: "MyAgent", options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
@@ -550,12 +550,12 @@ Synchronous sample:
 ```C# Snippet:Sample_CleanupRedTeams_ScheduledEvaluations_Sync
 projectClient.Schedules.Delete(id: scheduleResponse.Id);
 evaluationClient.DeleteEvaluation(evaluationId, new());
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CleanupRedTeams_ScheduledEvaluations_Async
 await projectClient.Schedules.DeleteAsync(id: scheduleResponse.Id);
 await evaluationClient.DeleteEvaluationAsync(evaluationId, new());
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

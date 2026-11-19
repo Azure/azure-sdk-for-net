@@ -42,7 +42,7 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent.",
             Tools = { bingGroundingAgentTool }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -81,7 +81,7 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_BingGroundingStreaming_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

@@ -173,7 +173,7 @@ public partial class ResponsesTelemetryTests
             Instructions = "You are a helpful assistant."
         };
         var agentName = "responseStreamingTelemetryAgent";
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
 
@@ -224,7 +224,7 @@ public partial class ResponsesTelemetryTests
         }
         finally
         {
-            await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
+            await GetTestAgentsClient(projectClient).DeleteAgentAsync(agentName: agentName);
         }
     }
 }

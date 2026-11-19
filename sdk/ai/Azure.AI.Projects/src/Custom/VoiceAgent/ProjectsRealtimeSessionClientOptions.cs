@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.Projects.Agents;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects;
@@ -15,5 +14,5 @@ public class ProjectsRealtimeSessionClientOptions : RealtimeSessionClientOptions
     /// The optional transport selection for this session. The SDK applies the selection during connection setup.
     /// WebRTC selects signaling over the WebSocket; the application must manage the peer connection and media.
     /// </summary>
-    public VoiceAgentTransport? Transport { get; set; }
+    public ProjectsRealtimeTransport? Transport { get; set; }
 }

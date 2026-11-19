@@ -46,7 +46,7 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
             Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -85,7 +85,7 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_AzureAISearchStreaming_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

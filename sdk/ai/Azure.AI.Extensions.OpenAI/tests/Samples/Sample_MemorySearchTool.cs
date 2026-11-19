@@ -41,7 +41,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -109,7 +109,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        ProjectsAgentVersion agentVersionWithMemory = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersionWithMemory = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion
@@ -124,8 +124,8 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_MemoryTool_Async
         await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: memoryStore.Name);
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
         #endregion
     }
 
@@ -151,7 +151,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -222,7 +222,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        ProjectsAgentVersion agentVersionWithMemory = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersionWithMemory = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion
@@ -237,8 +237,8 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_MemoryTool_Sync
         projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
         #endregion
     }
 

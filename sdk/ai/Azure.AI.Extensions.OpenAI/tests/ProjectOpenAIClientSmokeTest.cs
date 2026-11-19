@@ -108,8 +108,8 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             await responsesClient.CreateResponseAsync(options);
         }
 
-        VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.AgentAdministrationClient), "Azure.AI.Projects.*");
-        VerifyCall(DoCreateAgentAsync(projectClientWithApp.AgentAdministrationClient), "MyApplication Azure.AI.Projects.*");
+        VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.GetProjectAgentsClient()), "Azure.AI.Projects.*");
+        VerifyCall(DoCreateAgentAsync(projectClientWithApp.GetProjectAgentsClient()), "MyApplication Azure.AI.Projects.*");
         VerifyCall(DoResponseAsync(projectClientWithoutApp.ProjectOpenAIClient.GetProjectResponsesClient()), "Azure.AI.Projects.*");
         VerifyCall(DoResponseAsync(projectClientWithApp.ProjectOpenAIClient.GetProjectResponsesClient()), "MyApplication Azure.AI.Projects.*");
         VerifyCall(DoResponseAsync(openAIClientWithoutApp.GetProjectResponsesClient()), "AIProjectClient OpenAI.*");
@@ -320,9 +320,9 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, GetTestAuthenticationProvider());
         // Remove Agents.
-        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.GetProjectAgentsClient().GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
     }
 }

@@ -42,7 +42,7 @@ public class Sample_WebSearchCustomStreaming : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent.",
             Tools = { webSearchTool }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -86,7 +86,7 @@ public class Sample_WebSearchCustomStreaming : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_WebSearchCustomStreaming_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

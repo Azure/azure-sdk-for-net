@@ -39,12 +39,12 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Async
-        var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersionsAsync(agentName: "myAgent");
+        var agentVersions = projectClient.GetProjectAgentsClient().GetAgentVersionsAsync(agentName: "myAgent");
         await foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
         {
             Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -69,7 +69,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_Async
         await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversationAsync(conversationId: conversation.Id);
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -92,12 +92,12 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Sync
-        var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersions(agentName: "myAgent");
+        var agentVersions = projectClient.GetProjectAgentsClient().GetAgentVersions(agentName: "myAgent");
         foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
         {
             Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -122,7 +122,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_Sync
         projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversation(conversationId: conversation.Id);
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

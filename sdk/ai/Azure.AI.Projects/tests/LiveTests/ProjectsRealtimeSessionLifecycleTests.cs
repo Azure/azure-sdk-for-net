@@ -28,7 +28,7 @@ public class ProjectsRealtimeSessionLifecycleTests : ProjectsRealtimeLiveTestBas
 
     private async Task<ProjectsRealtimeSessionClient> StartLifecycleSessionAsync(AIProjectClient client, CancellationToken cancellationToken)
     {
-        Azure.AI.Projects.Agents.AgentAdministrationClient agentsClient = client.AgentAdministrationClient;
+        Azure.AI.Projects.Agents.AgentAdministrationClient agentsClient = GetTestAgentsClient(client);
         try
         {
             await agentsClient.GetAgentAsync(LIFECYCLE_AGENT_NAME, cancellationToken);

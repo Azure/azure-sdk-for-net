@@ -66,7 +66,7 @@ public partial class ResponsesTelemetryTests
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStoreId]) }
         };
 
-        return await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        return await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
     }
@@ -80,7 +80,7 @@ public partial class ResponsesTelemetryTests
         string vectorStoreId,
         string fileId)
     {
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
+        await GetTestAgentsClient(projectClient).DeleteAgentAsync(agentName: agentName);
         await projectClient.ProjectOpenAIClient.GetVectorStoreClient().DeleteVectorStoreAsync(vectorStoreId);
         await projectClient.ProjectOpenAIClient.GetOpenAIFileClient().DeleteFileAsync(fileId);
     }

@@ -9,7 +9,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 var raiPolicyName = System.Environment.GetEnvironmentVariable("RAI_POLICY_NAME");
 DefaultAzureCredential credential = new();
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: credential);
-AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
+AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
 ```
 
 2. Create a toolbox with the MCP tool, using Github. also provide the RAI policy. RAI policies can be managed in Microsoft Foundry on the `Build` tab in `Guardrails` section.
@@ -70,7 +70,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -91,7 +91,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -201,11 +201,11 @@ Console.WriteLine(latestResponse.GetOutputText());
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ToolBoxWithRAI_Sync
 toolboxClient.Delete(name: toolBox.Name);
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ToolBoxWithRAI_Async
 await toolboxClient.DeleteAsync(name: toolBox.Name);
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
