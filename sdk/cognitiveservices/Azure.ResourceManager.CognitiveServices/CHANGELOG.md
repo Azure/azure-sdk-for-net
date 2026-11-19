@@ -13,9 +13,6 @@
 
 ### Breaking Changes
 
-- Compared to `1.7.0-beta.1`, renamed `RaiEgressHeaderValueRef` to `RaiEgressHeaderValueReference`, `RaiEgressManagedIdentityRef` to `RaiEgressManagedIdentityReference`, and `RaiEgressSecretRef` to `RaiEgressSecretReference`, including the corresponding model-factory methods.
-- Compared to `1.7.0-beta.1`, renamed `RaiEgressHeaderTransform.ValueRef` to `ValueReference`, and renamed `SecretRef` and `ManagedIdentityRef` on the former `RaiEgressHeaderValueRef` type to `RaiEgressHeaderValueReference.SecretReference` and `RaiEgressHeaderValueReference.ManagedIdentityReference`.
-- Compared to `1.7.0-beta.1`, changed `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId` from `string` to `Azure.Core.ResourceIdentifier`.
 - Compared to `1.6.0`, the `ArmCognitiveServicesModelFactory.CognitiveServicesAccountProperties` compatibility overload accepting `aiFoundryNetworkInjection` now requires all arguments to avoid ambiguity with other overloads.
 
 ### Bugs Fixed
