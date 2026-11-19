@@ -1,5 +1,16 @@
 # Release History
 
+
+## 1.7.0-beta.1 (2026-10-05)
+
+- PhraseList and PhraseListGrammar are now supported in Recognize API, enabling the use of custom phrase lists for improved speech recognition accuracy.
+- PhraseList and PhraseListGrammar are now supported in Transcription API, allowing for enhanced transcription capabilities with custom phrase lists.
+- Group calls now support DTMFConfigurationOptions to enable DTMF broadcast, allowing DTMF tones to be transmitted during group calls and DTMF recognition settings to be configured for more flexible call interactions.
+
+### Features Added
+
+- Support for MicrosoftTeamsAppIdentifier CommunicationIdentifier
+
 ## 1.6.0-beta.2 (2026-02-03)
 
 ### Features Added
