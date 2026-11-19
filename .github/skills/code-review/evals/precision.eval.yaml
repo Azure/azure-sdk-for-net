@@ -818,7 +818,8 @@ stimuli:
       System.Text.Json source-generated `JsonSerializerContext` serializes them, and the library
       declares no other serialization context. The build, including the AOT compatibility check,
       passes. All other design, implementation, documentation, testing, and packaging
-      requirements are satisfied.
+      requirements are satisfied. Return findings only as a JSON object with a findings array.
+      Each finding must have symbol, reason, and recommendation strings.
     graders:
       - type: skill-invocation
         config:
@@ -828,7 +829,10 @@ stimuli:
           pattern: '^\s*No findings\.\s*$'
       - type: output-matches
         config:
-          pattern: '(?i)((?:IJsonModel|IPersistableModel|ModelReaderWriter)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:IJsonModel|IPersistableModel|ModelReaderWriter))'
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:implement|add|adopt|switch|move|make)\b(?:[^"\\]|\\.)*?(?:IJsonModel|IPersistableModel|ModelReaderWriterContext)'
+      - type: output-not-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:implement|add|adopt|switch|move|make)\b'
 
   - name: report-reflection-path-without-aot-safe-alternative
     prompt: >-
@@ -839,7 +843,9 @@ stimuli:
       `items` with reflection-based System.Text.Json and are annotated
       `[RequiresUnreferencedCode]` and `[RequiresDynamicCode]`, so the build, including the AOT
       compatibility check, passes. No other method uploads items. All other design,
-      implementation, documentation, testing, and packaging requirements are satisfied.
+      implementation, documentation, testing, and packaging requirements are satisfied. Return
+      findings only as a JSON object with a findings array. Each finding must have symbol,
+      reason, and recommendation strings.
     graders:
       - type: skill-invocation
         config:
@@ -849,7 +855,10 @@ stimuli:
           pattern: '^\s*No findings\.\s*$'
       - type: output-matches
         config:
-          pattern: '(?i)((?:alternative|BinaryData|\bstream|JsonTypeInfo)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:alternative|BinaryData|\bstream|JsonTypeInfo))'
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:add|provide|ship|offer|expose|introduce)\b(?:[^"\\]|\\.)*?(?:BinaryData|\bstream|JsonTypeInfo|JsonSerializerContext|overload)'
+      - type: output-not-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:add|provide|ship|offer|expose|introduce)\b'
 
   - name: allow-reflection-path-with-aot-safe-alternative
     prompt: >-
@@ -908,7 +917,8 @@ stimuli:
       plans `public class WidgetClientOptions : ClientOptions` with only a public parameterless
       constructor. The Widgets service versions its REST API, and both 2025-01-01 and 2025-06-01
       are supported. Everything else in the PR satisfies the applicable rules, and no CI
-      diagnostic covers the design document.
+      diagnostic covers the design document. Return findings only as a JSON object with a
+      findings array. Each finding must have symbol, reason, and recommendation strings.
     graders:
       - type: skill-invocation
         config:
@@ -918,4 +928,7 @@ stimuli:
           pattern: '^\s*No findings\.\s*$'
       - type: output-matches
         config:
-          pattern: '(?i)((?:ServiceVersion)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ServiceVersion))'
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:add|take|accept|require|introduce|declare|use)\b(?:[^"\\]|\\.)*?ServiceVersion'
+      - type: output-not-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:add|take|accept|require|introduce|declare|use)\b'
