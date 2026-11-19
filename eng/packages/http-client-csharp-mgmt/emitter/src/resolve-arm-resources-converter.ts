@@ -35,8 +35,11 @@ import {
 import {
   ResolvedResource,
   ResourceType,
+  ArmServiceVersionSelection,
+  ResolveArmResourcesOptions,
   resolveArmResources as resolveArmResourcesFromLibrary
 } from "@azure-tools/typespec-azure-resource-manager";
+import { getVersions } from "@typespec/versioning";
 import {
   findLongestPrefixMatch,
   RequestPath,
@@ -55,19 +58,17 @@ import {
   resolveResourceApiVersions,
   extractRbacRoles,
   extractNameConstraintOverrides,
-  extractResourceNameOverride,
-  detectDynamicTypeSegments,
   isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
 import type { CSharpEmitterContext } from "./code-model-types.js";
 import {
   getCrossLanguageDefinitionId,
+  getLibraryName,
   getClientType,
   SdkModelType,
   SdkHttpOperation,
   SdkMethod,
-  getClientNameOverride,
-  getLibraryName
+  getClientNameOverride
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -79,7 +80,59 @@ import {
   buildScopeInfoFromPath
 } from "./resource-detection.js";
 import { $lib } from "./lib/lib.js";
-import pluralize from "pluralize";
+
+interface ServiceVersionMap {
+  [namespace: string]: string | ServiceVersionMap;
+}
+
+function resolveServiceVersions(
+  program: Program,
+  versions: ServiceVersionMap
+): ArmServiceVersionSelection[] | undefined {
+  const selections: ArmServiceVersionSelection[] = [];
+  function visit(entries: ServiceVersionMap, prefix: string): boolean {
+    for (const [name, value] of Object.entries(entries)) {
+      const namespaceName = prefix ? `${prefix}.${name}` : name;
+      if (typeof value !== "string") {
+        if (!visit(value, namespaceName)) {
+          return false;
+        }
+        continue;
+      }
+      const [namespace] = program.resolveTypeReference(namespaceName);
+      if (namespace?.kind !== "Namespace") {
+        $lib.reportDiagnostic(program, {
+          code: "invalid-arm-service-version",
+          format: {
+            namespace: namespaceName,
+            version: value,
+            reason: "The service namespace could not be resolved."
+          },
+          target: NoTarget
+        });
+        return false;
+      }
+      const version = getVersions(program, namespace)[1]
+        ?.getVersions()
+        .find((candidate) => candidate.value === value);
+      if (version === undefined) {
+        $lib.reportDiagnostic(program, {
+          code: "invalid-arm-service-version",
+          format: {
+            namespace: namespaceName,
+            version: value,
+            reason: "The version is not declared for this service."
+          },
+          target: namespace
+        });
+        return false;
+      }
+      selections.push({ namespace, version });
+    }
+    return true;
+  }
+  return visit(versions, "") ? selections : undefined;
+}
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -96,11 +149,42 @@ export function resolveArmResources(
   program: Program,
   sdkContext: CSharpEmitterContext
 ): ArmProviderSchema {
-  const provider = resolveArmResourcesFromLibrary(program);
+  // Pass through TCGC's selected version rather than selecting one from its
+  // package-version list. Strings go to TARM's `version`; dictionaries go to
+  // `serviceVersions` after resolving the namespace and exact Version objects.
+  // TCGC accepts both dotted namespace keys and nested namespace dictionaries,
+  // so flatten nested keys before looking up the corresponding TypeSpec types.
+  // TODO: Have TCGC expose the exact selected date-like version for each service,
+  // including when the emitter option is omitted or uses `latest` / `all`.
+  // Do not resolve those configuration values to a version in this converter.
+  // Strings remain unchanged, so TARM currently diagnoses
+  // `latest` / `all` if they are not declared service versions.
+  let versionOptions: ResolveArmResourcesOptions;
+  if (
+    sdkContext.apiVersion !== undefined &&
+    typeof sdkContext.apiVersion !== "string"
+  ) {
+    const serviceVersions = resolveServiceVersions(
+      program,
+      sdkContext.apiVersion
+    );
+    if (serviceVersions === undefined) {
+      return { resources: [], nonResourceMethods: [] };
+    }
+    versionOptions = { serviceVersions };
+  } else {
+    versionOptions = { version: sdkContext.apiVersion };
+  }
+  const provider = resolveArmResourcesFromLibrary(program, {
+    ...versionOptions,
+    nameResolver: ({ kind, type }) =>
+      kind === "resource" || type === undefined
+        ? undefined
+        : getLibraryName(sdkContext, type)
+  });
 
   // Convert resources
   const resources: ArmResourceSchema[] = [];
-  const resourceNameOverrides = new Map<string, Map<string, string>>();
   const processedResources = new Set<string>();
   const schemaToResolvedResource = new Map<
     ArmResourceSchema,
@@ -166,11 +250,7 @@ export function resolveArmResources(
         sdkContext,
         resolvedResource,
         methodMap,
-        resourceModelIds,
-        resourceNameOverrides,
-        provider.resources.filter(
-          (resource) => resource.type === resolvedResource.type
-        ).length > 1
+        resourceModelIds
       );
 
       const resource = {
@@ -190,7 +270,8 @@ export function resolveArmResources(
   assignListOperationsToResources(
     sdkContext,
     resources,
-    schemaToResolvedResource
+    schemaToResolvedResource,
+    methodMap
   );
 
   // Convert non-resource methods
@@ -211,8 +292,7 @@ export function resolveArmResources(
     resources,
     {
       serviceMethods: methodMap,
-      diagnosticReporter: reportWarning,
-      resourceNameOverrides
+      diagnosticReporter: reportWarning
     }
   );
 
@@ -242,7 +322,8 @@ export function resolveArmResources(
       // Get method ID from the operation
       const methodId = getMethodIdFromOperation(
         sdkContext,
-        operation.operation
+        operation.operation,
+        methodMap
       );
       if (!methodId) {
         continue;
@@ -326,9 +407,7 @@ function convertResolvedResourceToMetadata(
   sdkContext: CSharpEmitterContext,
   resolvedResource: ResolvedResource,
   methodMap: Map<string, SdkMethod<SdkHttpOperation>>,
-  resourceModelIds?: Set<string>,
-  resourceNameOverrides?: Map<string, Map<string, string>>,
-  hasMultiplePaths = false
+  resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   let resourceIdPattern = "";
@@ -339,7 +418,11 @@ function convertResolvedResourceToMetadata(
 
     if (lifecycle.read && lifecycle.read.length > 0) {
       for (const readOp of lifecycle.read) {
-        const methodId = getMethodIdFromOperation(sdkContext, readOp.operation);
+        const methodId = getMethodIdFromOperation(
+          sdkContext,
+          readOp.operation,
+          methodMap
+        );
         if (methodId) {
           const opPath = new RequestPath(readOp.path);
           methods.push({
@@ -360,7 +443,8 @@ function convertResolvedResourceToMetadata(
       for (const createOp of lifecycle.createOrUpdate) {
         const methodId = getMethodIdFromOperation(
           sdkContext,
-          createOp.operation
+          createOp.operation,
+          methodMap
         );
         if (methodId) {
           const opPath = new RequestPath(createOp.path);
@@ -378,7 +462,8 @@ function convertResolvedResourceToMetadata(
       for (const updateOp of lifecycle.update) {
         const methodId = getMethodIdFromOperation(
           sdkContext,
-          updateOp.operation
+          updateOp.operation,
+          methodMap
         );
         if (methodId) {
           const opPath = new RequestPath(updateOp.path);
@@ -396,7 +481,8 @@ function convertResolvedResourceToMetadata(
       for (const deleteOp of lifecycle.delete) {
         const methodId = getMethodIdFromOperation(
           sdkContext,
-          deleteOp.operation
+          deleteOp.operation,
+          methodMap
         );
         if (methodId) {
           const opPath = new RequestPath(deleteOp.path);
@@ -414,7 +500,11 @@ function convertResolvedResourceToMetadata(
   // Convert action operations
   if (resolvedResource.operations.actions) {
     for (const actionOp of resolvedResource.operations.actions) {
-      const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
+      const methodId = getMethodIdFromOperation(
+        sdkContext,
+        actionOp.operation,
+        methodMap
+      );
       if (methodId) {
         // Classify as List only if the action is pageable AND its response item type
         // is a known resource model. This prevents metadata-returning pageable actions
@@ -449,65 +539,10 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
-  // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
-  // The spec should always define unique resource names for extension resources targeting
-  // different parent types — the emitter should not auto-generate disambiguated names.
-  const modelNameOverride = hasMultiplePaths
-    ? undefined
-    : getClientNameOverride(sdkContext, resolvedResource.type, "csharp") !==
-        undefined
-      ? getLibraryName(sdkContext, resolvedResource.type, "csharp")
-      : undefined;
-  let resourceName = modelNameOverride ?? resolvedResource.resourceName;
-  let resourceNameIsExplicit = modelNameOverride !== undefined;
-  const readOperation =
-    resolvedResource.operations.lifecycle?.read?.[0]?.operation;
-  const rawInterface = readOperation?.interface;
-  const interfaceNameOverride = rawInterface
-    ? getClientNameOverride(sdkContext, rawInterface, "csharp") !== undefined
-      ? getLibraryName(sdkContext, rawInterface, "csharp")
-      : undefined
-    : undefined;
-  if (hasMultiplePaths && interfaceNameOverride !== undefined) {
-    resourceName = pluralize.singular(interfaceNameOverride);
-    resourceNameIsExplicit = true;
-  }
-  const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
-  if (explicitName) {
-    resourceName = explicitName;
-    resourceNameIsExplicit = true;
-  }
-  const readMethodId = readOperation
-    ? getMethodIdFromOperation(sdkContext, readOperation)
-    : undefined;
-  const clientOptionOverride = extractResourceNameOverride(
-    readMethodId ? methodMap.get(readMethodId) : undefined,
-    program
-  );
-  if (clientOptionOverride !== undefined) {
-    const path = new RequestPath(resourceIdPattern);
-    const isExpandable = detectDynamicTypeSegments(path).length > 0;
-    if (typeof clientOptionOverride === "string") {
-      if (isExpandable) {
-        $lib.reportDiagnostic(program, {
-          code: "resource-name-string-on-expandable",
-          format: { value: clientOptionOverride, path: path.path },
-          target: NoTarget
-        });
-      } else {
-        resourceName = clientOptionOverride;
-        resourceNameIsExplicit = true;
-      }
-    } else if (isExpandable) {
-      resourceNameOverrides?.set(path.path, clientOptionOverride);
-    } else {
-      $lib.reportDiagnostic(program, {
-        code: "resource-name-map-on-non-expandable",
-        format: { path: path.path },
-        target: NoTarget
-      });
-    }
-  }
+  const resourceNameIsExplicit =
+    getClientNameOverride(sdkContext, resolvedResource.type, "csharp") !==
+      undefined ||
+    getExplicitResourceNameFromOperations(resolvedResource) !== undefined;
 
   // Extract name constraints from the resource model's "name" property
   const nameProperty = resolvedResource.type.properties.get("name");
@@ -562,7 +597,7 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: new RequestPath(
       resolvedResource.resourceInstancePath
     ).singletonName,
-    resourceName: resourceName,
+    resourceName: resolvedResource.resourceName,
     resourceNameIsExplicit,
     nameConstraints: finalNameConstraints,
     apiVersions,
@@ -571,16 +606,15 @@ function convertResolvedResourceToMetadata(
 }
 
 /**
- * Get method ID (cross-language definition ID) from an Operation.
- * Uses TCGC's getCrossLanguageDefinitionId utility directly.
+ * Returns an operation's cross-language ID only if it exists in the SDK package.
  */
 function getMethodIdFromOperation(
   sdkContext: CSharpEmitterContext,
-  operation: Operation
+  operation: Operation,
+  methodMap: ReadonlyMap<string, SdkMethod<SdkHttpOperation>>
 ): string | undefined {
-  // Use TCGC's utility to get the cross-language definition ID directly
-  // CSharpEmitterContext extends SdkContext which extends TCGCContext
-  return getCrossLanguageDefinitionId(sdkContext, operation);
+  const methodId = getCrossLanguageDefinitionId(sdkContext, operation);
+  return methodMap.has(methodId) ? methodId : undefined;
 }
 
 /**
@@ -678,7 +712,8 @@ function getExplicitResourceNameFromOperations(
 function assignListOperationsToResources(
   sdkContext: CSharpEmitterContext,
   resources: ArmResourceSchema[],
-  schemaToResolvedResource: Map<ArmResourceSchema, ResolvedResource>
+  schemaToResolvedResource: Map<ArmResourceSchema, ResolvedResource>,
+  methodMap: ReadonlyMap<string, SdkMethod<SdkHttpOperation>>
 ): void {
   // Precompute resources grouped by model ID to avoid repeated full scans
   const resourcesByModelId = new Map<string, ArmResourceSchema[]>();
@@ -698,7 +733,11 @@ function assignListOperationsToResources(
     const resourcesForModel = resourcesByModelId.get(modelId) ?? [];
 
     for (const listOp of resolvedResource.operations.lists) {
-      const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
+      const methodId = getMethodIdFromOperation(
+        sdkContext,
+        listOp.operation,
+        methodMap
+      );
       if (!methodId) continue;
 
       let targetResource: ArmResourceSchema | undefined;

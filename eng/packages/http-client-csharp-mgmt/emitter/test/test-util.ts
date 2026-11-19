@@ -40,6 +40,7 @@ export async function createEmitterTestHost(): Promise<TestHost> {
 
 export interface ArmTypeSpecCompileOptions {
   providerNamespace?: string;
+  versions?: string[];
 }
 
 export async function typeSpecCompile(
@@ -68,8 +69,13 @@ export async function typeSpecCompile(
 
     /** api versions */
     enum Versions {
+      ${(options?.versions ?? ["2021-10-01-preview"])
+        .map(
+          (version) => `
       @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
-      \`2021-10-01-preview\`,
+      \`${version}\`,`
+        )
+        .join("\n")}
     }
 
     ${content}
