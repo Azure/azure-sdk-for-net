@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
+
+#pragma warning disable AAAS005 // Preserve the experimental subject snapshot within a request.
 
 namespace Azure.AI.AgentServer.Core;
 
@@ -59,12 +62,13 @@ public class PlatformContext
             ? NormalizeHeaderValue(callValue)
             : null;
 
-        if (userIdKey is null && callId is null)
+        FoundryOriginalSubject? subject = FoundryOriginalSubject.FromHeaders(request.Headers);
+        if (userIdKey is null && callId is null && subject is null)
         {
             return Empty;
         }
 
-        return new PlatformContext(userIdKey, callId);
+        return new PlatformContext(userIdKey, callId, subject);
     }
 
     /// <summary>
@@ -102,9 +106,20 @@ public class PlatformContext
     /// <see langword="null"/> if the header was absent.
     /// </param>
     public PlatformContext(string? userIdKey, string? callId)
+        : this(userIdKey, callId, null)
+    {
+    }
+
+    /// <summary>Initializes a platform context with invocation-local attribution.</summary>
+    /// <param name="userIdKey">The user-state partition key, if supplied.</param>
+    /// <param name="callId">The opaque call ID, if supplied.</param>
+    /// <param name="originalSubject">Original-subject assertions, if supplied.</param>
+    [Experimental("AAAS005")]
+    public PlatformContext(string? userIdKey, string? callId, FoundryOriginalSubject? originalSubject)
     {
         UserIdKey = userIdKey;
         CallId = callId;
+        OriginalSubject = originalSubject;
     }
 
     /// <summary>
@@ -134,4 +149,10 @@ public class PlatformContext
     /// protocol version <c>1.0.0</c>.
     /// </value>
     public virtual string? CallId { get; }
+
+    /// <summary>
+    /// Gets invocation-local original-subject assertions. These are not identity proof.
+    /// </summary>
+    [Experimental("AAAS005")]
+    public virtual FoundryOriginalSubject? OriginalSubject { get; }
 }

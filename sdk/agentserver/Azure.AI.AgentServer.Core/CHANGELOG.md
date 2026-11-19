@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added experimental (`AAAS005`) [original-subject attribution](ORIGINAL_SUBJECT.md) snapshots and an explicit per-call model header helper.
+
 ### Breaking Changes
 
 ### Bugs Fixed

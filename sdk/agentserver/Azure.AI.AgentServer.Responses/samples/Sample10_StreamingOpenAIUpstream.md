@@ -26,103 +26,103 @@ dotnet add package OpenAI
 ## Implement the handler
 
 ```C# Snippet:Responses_Sample10_StreamingUpstreamHandler
-public class StreamingUpstreamHandler : ResponseHandler
-{
-    private readonly ResponsesClient _upstream;
-
-    public StreamingUpstreamHandler(ResponsesClient upstream) => _upstream = upstream;
-
-    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
-        CreateResponseOptions request,
-        ResponseContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken)
-    {
-        // Build the upstream request using the OpenAI .NET SDK.
-        var options = new CreateResponseOptions()
+        public class StreamingUpstreamHandler : ResponseHandler
         {
-            Model = request.Model,
-            Instructions = request.Instructions,
-            StreamingEnabled = true,
-        };
+            private readonly ResponsesClient _upstream;
 
-        // Input items are already OpenAI ResponseItem instances, so
-        // they can be forwarded to the upstream as-is.
-        foreach (ResponseItem item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
-        {
-            options.InputItems.Add(item);
-        }
+            public StreamingUpstreamHandler(ResponsesClient upstream) => _upstream = upstream;
 
-        // This handler owns the response lifecycle — construct
-        // lifecycle events directly instead of forwarding the
-        // upstream's. This gives full control over the response
-        // envelope (ID, metadata, status) while the upstream only
-        // contributes content.
-        int seq = 0;
-        var conversationId = request.GetConversationId();
-        var response = new ResponseResult { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress, AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ResponseConversationOptions(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
-        yield return new StreamingResponseCreatedUpdate { SequenceNumber = (int)(seq++), Response = response };
-        yield return new StreamingResponseInProgressUpdate { SequenceNumber = (int)(seq++), Response = response };
-
-        // Stream from the upstream. Forward content events (output
-        // items, deltas, etc.) directly. Skip upstream
-        // lifecycle events — we own the response envelope.
-        // Track completed output items for the terminal event.
-        var outputItems = new List<ResponseItem>();
-        bool upstreamFailed = false;
-
-        await foreach (StreamingResponseUpdate update in
-            await _upstream.CreateResponseStreamingAsync(options, cancellationToken))
-        {
-            // Skip lifecycle events — we own the response envelope.
-            if (update is StreamingResponseCreatedUpdate
-                or StreamingResponseInProgressUpdate)
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
             {
-                continue;
-            }
+                // Build the upstream request using the OpenAI .NET SDK.
+                var options = new CreateResponseOptions()
+                {
+                    Model = request.Model,
+                    Instructions = request.Instructions,
+                    StreamingEnabled = true,
+                };
 
-            if (update is StreamingResponseCompletedUpdate)
-            {
-                break;
-            }
+                // Input items are already OpenAI ResponseItem instances, so
+                // they can be forwarded to the upstream as-is.
+                foreach (ResponseItem item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
+                {
+                    options.InputItems.Add(item);
+                }
 
-            if (update is StreamingResponseFailedUpdate)
-            {
-                upstreamFailed = true;
-                break;
-            }
+                // This handler owns the response lifecycle — construct
+                // lifecycle events directly instead of forwarding the
+                // upstream's. This gives full control over the response
+                // envelope (ID, metadata, status) while the upstream only
+                // contributes content.
+                int seq = 0;
+                var conversationId = request.GetConversationId();
+                var response = new ResponseResult { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress, AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ResponseConversationOptions(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
+                yield return new StreamingResponseCreatedUpdate { SequenceNumber = (int)(seq++), Response = response };
+                yield return new StreamingResponseInProgressUpdate { SequenceNumber = (int)(seq++), Response = response };
 
-            // Clear upstream response_id on output items so the
-            // orchestrator's auto-stamp fills in this server's ID.
-            // Patch is evaluation-only in System.ClientModel (SCME0001).
-            #pragma warning disable SCME0001
-            if (update is StreamingResponseOutputItemAddedUpdate added)
-                added.Item.Patch.Remove("$.response_id"u8);
-            else if (update is StreamingResponseOutputItemDoneUpdate done)
-            {
-                done.Item.Patch.Remove("$.response_id"u8);
-                outputItems.Add(done.Item);
-            }
-            #pragma warning restore SCME0001
+                // Stream from the upstream. Forward content events (output
+                // items, deltas, etc.) directly. Skip upstream
+                // lifecycle events — we own the response envelope.
+                // Track completed output items for the terminal event.
+                var outputItems = new List<ResponseItem>();
+                bool upstreamFailed = false;
 
-            yield return update;
+                await foreach (StreamingResponseUpdate update in
+                    await _upstream.CreateResponseStreamingAsync(options, cancellationToken))
+                {
+                    // Skip lifecycle events — we own the response envelope.
+                    if (update is StreamingResponseCreatedUpdate
+                        or StreamingResponseInProgressUpdate)
+                    {
+                        continue;
+                    }
+
+                    if (update is StreamingResponseCompletedUpdate)
+                    {
+                        break;
+                    }
+
+                    if (update is StreamingResponseFailedUpdate)
+                    {
+                        upstreamFailed = true;
+                        break;
+                    }
+
+                    // Clear upstream response_id on output items so the
+                    // orchestrator's auto-stamp fills in this server's ID.
+                    // Patch is evaluation-only in System.ClientModel (SCME0001).
+#pragma warning disable SCME0001
+                    if (update is StreamingResponseOutputItemAddedUpdate added)
+                        added.Item.Patch.Remove("$.response_id"u8);
+                    else if (update is StreamingResponseOutputItemDoneUpdate done)
+                    {
+                        done.Item.Patch.Remove("$.response_id"u8);
+                        outputItems.Add(done.Item);
+                    }
+#pragma warning restore SCME0001
+
+                    yield return update;
+                }
+
+                // Emit terminal event — the handler decides the outcome.
+                if (upstreamFailed)
+                {
+                    response.Status = ResponseStatus.Failed;
+                    response.Error = new OpenAI.Responses.ResponseError { Code = ResponseErrorCode.ServerError, Message = "Upstream request failed" };
+                    yield return new StreamingResponseFailedUpdate { SequenceNumber = (int)(seq++), Response = response };
+                }
+                else
+                {
+                    response.Status = ResponseStatus.Completed;
+                    foreach (var item in outputItems)
+                        response.OutputItems.Add(item);
+                    yield return new StreamingResponseCompletedUpdate { SequenceNumber = (int)(seq++), Response = response };
+                }
+            }
         }
-
-        // Emit terminal event — the handler decides the outcome.
-        if (upstreamFailed)
-        {
-            response.Status = ResponseStatus.Failed;
-            response.Error = new OpenAI.Responses.ResponseError { Code = ResponseErrorCode.ServerError, Message = "Upstream request failed" };
-            yield return new StreamingResponseFailedUpdate { SequenceNumber = (int)(seq++), Response = response };
-        }
-        else
-        {
-            response.Status = ResponseStatus.Completed;
-            foreach (var item in outputItems)
-                response.OutputItems.Add(item);
-            yield return new StreamingResponseCompletedUpdate { SequenceNumber = (int)(seq++), Response = response };
-        }
-    }
-}
 ```
 
 ## Start the server

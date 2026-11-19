@@ -162,6 +162,7 @@ internal sealed class ResponsesResilientTaskHandler
             && _tracker.TryGet(responseId, platformContext, out ResponseExecution? existing)
             && existing is not null)
         {
+            platformContext = existing.InboundPlatformContext ?? platformContext;
             // The endpoint pre-created this execution to bridge response.created back to the caller.
             // Reuse its Context when present (one-shot); otherwise build the steering-aware context
             // now (multi-turn dispatch leaves Context unset so Core's ctx drives steering state).

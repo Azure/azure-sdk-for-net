@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
+#pragma warning disable AAAS005 // Test experimental invocation attribution.
+
 namespace Azure.AI.AgentServer.Invocations.Tests;
 
 /// <summary>
@@ -49,6 +51,34 @@ public class PlatformContextEndpointTests
         var json = await ParseJsonAsync(response);
         Assert.That(json.GetProperty("userKey").ValueKind, Is.EqualTo(JsonValueKind.Null));
         Assert.That(json.GetProperty("callId").ValueKind, Is.EqualTo(JsonValueKind.Null));
+    }
+
+    [Test]
+    public async Task PostInvocations_OriginalSubjectIsInvocationLocal()
+    {
+        using var env = await StartAsync<IsolationCapturingHandler>(useCore: true);
+
+        async Task<JsonElement> SendAsync(string? subject)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, "/invocations");
+            request.Content = new StringContent("{}");
+            if (subject is not null)
+            {
+                request.Headers.TryAddWithoutValidation("x-ms-original-subject", $"oid=\"{subject}\", tid=\"tenant\", idtype=\"user\"");
+            }
+
+            using var response = await env.Client.SendAsync(request);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            return await ParseJsonAsync(response);
+        }
+
+        var responses = await Task.WhenAll(SendAsync("one"), SendAsync("two"), SendAsync(null));
+        Assert.That(responses[0].GetProperty("originalSubject").GetString(), Is.EqualTo("one"));
+        Assert.That(responses[1].GetProperty("originalSubject").GetString(), Is.EqualTo("two"));
+        Assert.That(responses[2].GetProperty("originalSubject").ValueKind, Is.EqualTo(JsonValueKind.Null));
+        Assert.That(responses[0].GetProperty("ambientSubject").GetString(), Is.EqualTo("one"));
+        Assert.That(responses[1].GetProperty("ambientSubject").GetString(), Is.EqualTo("two"));
+        Assert.That(responses[2].GetProperty("ambientSubject").ValueKind, Is.EqualTo(JsonValueKind.Null));
     }
 
     [Test]
@@ -121,14 +151,22 @@ public class PlatformContextEndpointTests
         return document.RootElement.Clone();
     }
 
-    private static async Task<TestEnv> StartAsync<THandler>() where THandler : InvocationHandler
+    private static async Task<TestEnv> StartAsync<THandler>(bool useCore = false) where THandler : InvocationHandler
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddInvocationsServer();
+        if (useCore)
+        {
+            builder.Services.AddAgentServerCore();
+        }
         builder.Services.AddScoped<InvocationHandler, THandler>();
 
         var app = builder.Build();
+        if (useCore)
+        {
+            app.UseAgentServerCore();
+        }
         app.MapInvocationsServer();
         await app.StartAsync();
 
@@ -188,6 +226,8 @@ public class PlatformContextEndpointTests
             {
                 ["userKey"] = context.PlatformContext.UserIdKey,
                 ["callId"] = context.PlatformContext.CallId,
+                ["originalSubject"] = context.PlatformContext.OriginalSubject?.ObjectId,
+                ["ambientSubject"] = FoundryAgentRequestContext.Current.OriginalSubject?.ObjectId,
             };
 
             // Include client headers
