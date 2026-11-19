@@ -1,5 +1,10 @@
 # Release History
 
+## 3.0.1 (2026-11-19)
+
+### Features Added
+- Added an `AgentAdministrationClient` extension property on `ClientConnectionProvider`, so `projectClient.AgentAdministrationClient` keeps compiling against `Azure.AI.Projects` versions that no longer define it. It creates the client on first access, as `GetProjectAgentsClient()` does, and returns the same instance afterwards. The property requires C# 14; on earlier language versions, call `GetProjectAgentsClient()`.
+
 ## 3.0.0 (2026-11-12)
 
 ### Breaking Changes

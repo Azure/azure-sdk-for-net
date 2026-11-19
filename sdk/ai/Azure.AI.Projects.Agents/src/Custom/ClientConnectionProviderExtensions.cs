@@ -3,17 +3,28 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Runtime.CompilerServices;
 
 namespace Azure.AI.Projects.Agents;
 
 /// <summary>
-/// Extension methods on <see cref="ClientConnectionProvider"/> that produce
+/// Extension members on <see cref="ClientConnectionProvider"/> that produce
 /// Foundry-project-specific agent clients.
 /// </summary>
 public static partial class ClientConnectionProviderExtensions
 {
+    // Extension members can't add fields to the provider; this keeps one client per provider without extending its lifetime.
+    private static readonly ConditionalWeakTable<ClientConnectionProvider, AgentAdministrationClient> s_agentAdministrationClients = new();
+
     extension(ClientConnectionProvider connectionProvider)
     {
+        /// <summary>
+        /// Gets the <see cref="AgentAdministrationClient"/> for this <see cref="ClientConnectionProvider"/>.
+        /// The client is created with default options on first access, as <c>GetProjectAgentsClient()</c> does,
+        /// and the same instance is returned afterwards.
+        /// </summary>
+        public AgentAdministrationClient AgentAdministrationClient
+            => s_agentAdministrationClients.GetValue(connectionProvider, static provider => provider.GetProjectAgentsClient());
         /// <summary>
         /// Builds an <see cref="AgentAdministrationClient"/> from the connection
         /// information surfaced by this <see cref="ClientConnectionProvider"/>.
