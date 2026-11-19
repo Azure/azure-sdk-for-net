@@ -203,13 +203,14 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   token-provider abstraction, not `TokenCredential` 🟡
 - **Name the parameter for the abstraction it actually takes** — a token provider called
   `credential` misdescribes its own type 🟡
-- **Models the library defines implement `IJsonModel<T>`/`IPersistableModel<T>` with a
+- **HTTP payload models the library defines implement `IJsonModel<T>`/`IPersistableModel<T>` with a
   source-generated `ModelReaderWriterContext`**, the serialization path
   `doc/dev/AotCompatibility.md` prescribes 🟡. Reflection-based `System.Text.Json` for the
   library's own models either trips the AOT analyzers or pushes `RequiresUnreferencedCode` onto
   every method that sends or returns them, and a model without `IPersistableModel<T>` cannot go
   through `RequestContent.Create`/`BinaryContent.Create` or `ModelReaderWriter`. The generator
-  emits this; a hand-written library has to supply it
+  emits this; a hand-written library has to supply it. Types a protocol-specific serializer owns,
+  such as AMQP-backed `ServiceBusMessage`, are out of scope
 - **A new path that requires `RequiresUnreferencedCode`/`RequiresDynamicCode` also ships an
   AOT-safe alternative with the same capability** 🟡. `doc/dev/AotCompatibility.md` calls this
   "critical". Annotating satisfies the analyzers and the CI AOT check, so review is the only gate.
