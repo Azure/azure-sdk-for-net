@@ -7,9 +7,12 @@
   durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
   deployments retain durable task bookkeeping but mark interrupted background responses
   failed instead of re-invoking their handlers.
-- `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (`ToolCallCaller`,
-  either `DirectToolCallCaller` or `ProgramToolCallCaller`), plus `Async` on the call, following
-  the Foundry spec.
+- `CustomToolCallItem` gains `Namespace`, `Async` and `Caller` extension properties, and
+  `CustomToolCallOutputItem` gains `Caller` (`ToolCallCaller`, either `DirectToolCallCaller` or
+  `ProgramToolCallCaller`), following the Foundry spec.
+- `ResponseContentPart.PromptCacheBreakpoint` extension property reads and writes the Azure
+  `prompt_cache_breakpoint` field as raw JSON. The image detail level `"original"` is already
+  supported through OpenAI's `ResponseImageDetailLevel` (`new ResponseImageDetailLevel("original")`).
 
 ### Breaking Changes
 - The package no longer emits its own copies of the OpenAI Responses models. Public handler,
@@ -66,9 +69,16 @@
   `SummaryTextContent`, `TextContent`, `ComputerScreenshotContent`, `ImageDetail`,
   `FileInputDetail`, `LogProb`, `TopLogProb`, `ToolChoiceParam` and its `ToolChoice*` subtypes,
   `ToolChoiceOptions`, `ToolChoiceAllowedMode`, `Specific*Param`, `PromptCacheBreakpointConfig`,
-  and `ConversationParam`. The remaining public models in `Azure.AI.AgentServer.Responses.Models`
-  (status enums, tool-call callers and the custom tool call items) are tracked for removal in
-  [#64833](https://github.com/Azure/azure-sdk-for-net/issues/64833).
+  and `ConversationParam`.
+- `MCPToolCallStatus` is renamed to `McpToolCallStatus`, matching .NET acronym casing and OpenAI's
+  `McpToolCallItem`.
+- `OutputItemCustomToolCall` and `OutputItemCustomToolCallOutput` are removed in favor of OpenAI's
+  `CustomToolCallItem` and `CustomToolCallOutputItem`. `OutputItemCustomToolCallBuilder` now builds
+  a `CustomToolCallItem`, and `ResponseEventStream.AddOutputItemCustomToolCallOutput` returns
+  `OutputItemBuilder<CustomToolCallOutputItem>`. Use `ToolName` instead of `Name`, and the
+  `Namespace`, `Async` and `Caller` extension properties for the Azure-only fields. The
+  `ToolCallCallerParam` types, `DirectToolCallCallerParam` and `ProgramToolCallCallerParam`, are
+  now internal. `FunctionCallStatus` and `FunctionCallOutputStatusEnum` are internal.
 - `ResponsesProvider.GetInputItemsAsync` now returns `OpenAI.Responses.ResponseItemCollectionPage`
   (was `AgentsPagedResultOutputItem`) and is marked `[Experimental("OPENAI001")]`, so custom
   `ResponsesProvider` implementations must update their override.

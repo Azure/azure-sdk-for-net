@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The DirectToolCallCallerParam. </summary>
-    public partial class DirectToolCallCallerParam : ToolCallCallerParam, IJsonModel<DirectToolCallCallerParam>
+    internal partial class DirectToolCallCallerParam : ToolCallCallerParam, IJsonModel<DirectToolCallCallerParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
