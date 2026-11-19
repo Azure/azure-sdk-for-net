@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string? ExtensionLabel { get; set; }
 
-        internal static string? GetVersion(Type? type = null)
+        internal static string? GetVersion(Type? type = null, bool truncate = true)
         {
             if (type == null)
             {
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // 2) "4.6.30411.01 @BuiltBy: XXXXXX @Branch: XXXXXX @srccode: XXXXXX XXXXXX" Ignoring part after '@' if it is present.
                 string shortVersion = versionString.Split('+', '@', ' ')[0];
 
-                if (shortVersion.Length > 20)
+                if (truncate && shortVersion.Length > 20)
                 {
 #if AZURE_MONITOR_EXPORTER
                     AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);

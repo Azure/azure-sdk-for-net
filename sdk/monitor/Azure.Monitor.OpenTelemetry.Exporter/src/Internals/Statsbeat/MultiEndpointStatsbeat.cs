@@ -47,6 +47,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal string? DefaultConnectionString => Volatile.Read(ref _destinations)?.Get(_defaultIsEu)?.ConnectionString;
 
+        internal ConnectionVars? GetNetworkDestination(string host)
+        {
+            // Resolve once per collected point, not on the customer export path.
+            var isEu = AzureMonitorStatsbeat.IsEuRegion("https://" + host);
+            return Volatile.Read(ref _destinations)?.Get(isEu)?.Vars;
+        }
+
         internal void Observe(EndpointRouteBatch batch, long now)
             => Registry.Observe(batch, now);
 
@@ -112,7 +119,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             var options = AzureMonitorStatsbeat.CreateExporterOptions(connectionString);
             var exporter = _connectionStringOverride != null
                 ? AzureMonitorMetricExporter.CreateForInternalTelemetry(options)
-                : AzureMonitorMetricExporter.CreateForInternalTelemetry(options, StatsbeatConstants.AttachStatsbeatMeterName);
+                : AzureMonitorMetricExporter.CreateForInternalTelemetry(
+                    options, StatsbeatConstants.AttachStatsbeatMeterName, GetNetworkDestination);
             return new AttachMetricReader(exporter, this, exportIntervalMilliseconds);
         }
 

@@ -353,10 +353,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 $"InstrumentationKey={defaultIkey};IngestionEndpoint=https://stats.example.invalid/",
                 statsbeat._statsbeat_ConnectionString);
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
-            if (customerCs == null)
-            {
-                Assert.Null(statsbeat.NetworkSdkStatsManager);
-            }
+            Assert.NotNull(statsbeat.NetworkSdkStatsManager);
             Assert.True(statsbeat._statsbeatMeterProvider.ForceFlush());
             Assert.Equal(2, _stats.TelemetryItems.Count);
             Assert.Contains(_stats.TelemetryItems, item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU
@@ -437,6 +434,46 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Assert.Equal(DistinctCustomerIkey, ((MetricsData)item.Data.BaseData).Properties["cikey"]);
             });
             Assert.Equal(2, Assert.Single(GetTransmitter("stats.example.invalid", expectedIkey).Sends).TelemetryItems.Length);
+        }
+
+        [Theory]
+        [InlineData("stats.example.invalid", false)]
+        [InlineData("http://localhost:4318/", false)]
+        [InlineData("stats.example.invalid", true)]
+        public async Task MultiEndpointNetworkUsesCollectorOrRegionalFallback(string endpoint, bool fallback)
+        {
+            _stats.AddEndpoint(endpoint);
+            using var handler = new StubHandler(_ => fallback
+                ? new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)
+                : OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"" + endpoint + "\"}"));
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
+            await AwaitInitAsync(statsbeat);
+            using var provider = statsbeat._statsbeatMeterProvider!;
+
+            statsbeat.NetworkSdkStatsManager!.TrackSuccess("eastus-1.in.applicationinsights.azure.com");
+            statsbeat.NetworkSdkStatsManager.TrackSuccess("westeurope-5.in.applicationinsights.azure.com");
+            Assert.True(provider.ForceFlush());
+
+            Assert.Equal(2, _stats.TelemetryItems.Count);
+            Assert.All(_stats.TelemetryItems, item =>
+            {
+                var data = Assert.IsType<MetricsData>(item.Data.BaseData);
+                Assert.Equal("N/A", data.Properties["cikey"]);
+                Assert.Equal("Request_Success_Count", Assert.Single(data.Metrics).Name);
+                Assert.Equal(data.Properties["host"] == "westeurope-5"
+                    ? StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                    : StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU, item.InstrumentationKey);
+            });
+            var connectionString = fallback ? StatsbeatConstants.Statsbeat_ConnectionString_NonEU
+                : AzureMonitorStatsbeat.BuildConnectionStringFromHost(endpoint, StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU);
+            var transmitter = Assert.IsType<MockTransmitter>(TransmitterFactory.Instance._transmitters[connectionString]);
+            Assert.Equal(fallback ? 2 : 1, transmitter.Sends.Count);
+            if (!fallback)
+            {
+                Assert.Equal(ConnectionStringParser.GetValues(connectionString).IngestionEndpoint,
+                    Assert.Single(transmitter.Sends).IngestionEndpoint);
+            }
         }
 
         [Fact]
@@ -541,7 +578,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public async Task RoutingOnlyAttachHonorsRemoteDisablement()
+        public async Task RoutingOnlyStatsHonorRemoteDisablement()
         {
             using var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":false}"));
             using var statsbeat = new AzureMonitorStatsbeat(
@@ -551,7 +588,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Null(statsbeat._statsbeatMeterProvider);
             Assert.Null(statsbeat._statsbeat_ConnectionString);
-            Assert.Null(statsbeat.NetworkSdkStatsManager);
+            Assert.NotNull(statsbeat.NetworkSdkStatsManager);
+            statsbeat.NetworkSdkStatsManager.TrackSuccess("westeurope-5.in.applicationinsights.azure.com");
+            Assert.Empty(_stats.TelemetryItems);
         }
 
         [Fact]

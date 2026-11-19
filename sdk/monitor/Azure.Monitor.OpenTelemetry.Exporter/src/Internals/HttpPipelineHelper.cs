@@ -233,8 +233,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <param name="isAadEnabled">If AAD auth is enabled.</param>
         /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics.</param>
         /// <param name="networkSdkStatsManager">Optional Network SDKStats manager for per-envelope tracking on 206 partial success responses.</param>
+        /// <param name="networkStatsBatch">Customer attribution for a routed request.</param>
         /// <returns>TransmissionResult describing actions taken.</returns>
-        internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter = null, NetworkSdkStatsManager? networkSdkStatsManager = null)
+        internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter = null, NetworkSdkStatsManager? networkSdkStatsManager = null, INetworkSdkStatsBatch? networkStatsBatch = null)
         {
             var result = CreateTransmissionResult();
 
@@ -270,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (result.StatusCode == ResponseStatusCodes.PartialSuccess)
             {
-                HandlePartialSuccess(httpMessage, blobProvider, blob, origin, ref result, telemetrySchemaTypeCounter, networkSdkStatsManager);
+                HandlePartialSuccess(httpMessage, blobProvider, blob, origin, ref result, telemetrySchemaTypeCounter, networkSdkStatsManager, networkStatsBatch, connectionVars.InstrumentationKey);
             }
             else if (IsRetriableStatus(result.StatusCode))
             {
@@ -371,7 +372,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, NetworkSdkStatsManager? networkSdkStatsManager)
+        private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, NetworkSdkStatsManager? networkSdkStatsManager, INetworkSdkStatsBatch? networkStatsBatch, string customerIkey)
         {
             if (!TryGetTrackResponse(httpMessage, out TrackResult? trackResponse))
             {
@@ -380,17 +381,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             result.ItemsAccepted = trackResponse.ItemsAccepted;
 
+            if (networkStatsBatch != null)
+            {
+                networkSdkStatsManager?.TrackPartialSuccess(httpMessage.Request.Uri.Host, trackResponse, networkStatsBatch);
+            }
+
             // Accepted envelopes within a 206 response are
             // counted toward Request_Success_Count.
-            if (networkSdkStatsManager != null && trackResponse.ItemsAccepted is int acceptedCount && acceptedCount > 0)
+            if (networkStatsBatch == null && networkSdkStatsManager != null && trackResponse.ItemsAccepted is int acceptedCount && acceptedCount > 0)
             {
-                networkSdkStatsManager.TrackPartialSuccessAccepted(httpMessage.Request.Uri.Host, acceptedCount);
+                networkSdkStatsManager.TrackPartialSuccessAccepted(httpMessage.Request.Uri.Host, acceptedCount, customerIkey);
             }
 
             // Per the Network SDKStats spec, rejected envelopes within a 206 response are
             // classified per-envelope: retryable status codes increment Retry_Count, and
             // non-retryable status codes increment Exception_Count.
-            if (networkSdkStatsManager != null && trackResponse.Errors != null)
+            if (networkStatsBatch == null && networkSdkStatsManager != null && trackResponse.Errors != null)
             {
                 var partialHost = httpMessage.Request.Uri.Host;
                 foreach (var error in trackResponse.Errors)
@@ -402,11 +408,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     if (NetworkSdkStatsHelper.IsRetryable(envelopeStatusCode))
                     {
-                        networkSdkStatsManager.TrackRetry(partialHost, envelopeStatusCode);
+                        networkSdkStatsManager.TrackRetry(partialHost, envelopeStatusCode, customerIkey);
                     }
                     else
                     {
-                        networkSdkStatsManager.TrackException(partialHost, exceptionType: envelopeStatusCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                        networkSdkStatsManager.TrackException(partialHost, exceptionType: envelopeStatusCode.ToString(System.Globalization.CultureInfo.InvariantCulture), customerIkey);
                     }
                 }
             }

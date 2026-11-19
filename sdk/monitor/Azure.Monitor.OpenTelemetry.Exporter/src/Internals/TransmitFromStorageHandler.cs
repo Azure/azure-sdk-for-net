@@ -7,9 +7,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
@@ -80,6 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <summary>Set only for a routed partition.</summary>
         private readonly string? _route;
         private TaskCompletionSource<bool>? _inFlightDrain;
+        private bool _networkExceptionRecorded;
         private bool _disposed;
 
         internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null, string? route = null)
@@ -169,6 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // The exporter's own upload must not be recorded as telemetry, as on the export path.
             using var suppress = SuppressInstrumentationScope.Begin();
+            _networkExceptionRecorded = false;
 
             try
             {
@@ -182,7 +186,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                _networkSdkStatsManager?.TrackException(_statsHost, exceptionType: ex.GetType().FullName);
+                if (!_networkExceptionRecorded)
+                {
+                    _networkSdkStatsManager?.TrackException(_statsHost, exceptionType: ex.GetType().FullName,
+                        customerIkey: _trackUri == null ? _connectionVars.InstrumentationKey : null);
+                }
                 AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
             }
             finally
@@ -287,27 +295,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // Routed telemetry is excluded from customer SDK stats: a null counter suppresses both
             // the top-level count and the per-envelope counts synthesized for a 206.
             var telemetrySchemaTypeCounter = _trackUri == null ? CountTelemetryTypes(payload) : null;
-
-            var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;
+            var networkStatsBatch = _trackUri != null && _networkSdkStatsManager != null ? ReadNetworkStatsBatch(payload) : null;
 
             using var requestBudget = new CancellationTokenSource(DrainPostBudgetMilliseconds);
-            using var httpMessage = _trackUri == null
-                ? _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result
-                : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, requestBudget.Token).Result;
-
-            stopwatch?.Stop();
+            using var httpMessage = SendBatch(payload, networkStatsBatch, requestBudget.Token);
 
             var result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
 
-            if (_networkSdkStatsManager != null && httpMessage.HasResponse)
-            {
-                _networkSdkStatsManager.TrackDuration(httpMessage.Request.Uri.Host, stopwatch!.Elapsed.TotalMilliseconds);
-            }
-
             if (result == ExportResult.Success)
             {
-                _networkSdkStatsManager?.TrackSuccess(httpMessage.Request.Uri.Host);
-
                 _transmissionStateManager.ResetConsecutiveErrors();
                 _transmissionStateManager.CloseTransmission();
 
@@ -315,20 +311,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 DeleteAll(batch);
                 return true;
-            }
-
-            if (_networkSdkStatsManager != null)
-            {
-                if (httpMessage.HasResponse)
-                {
-                    // 206 partial-success per-envelope handling happens in
-                    // HttpPipelineHelper.HandlePartialSuccess.
-                    _networkSdkStatsManager.TrackResponseFailure(httpMessage.Request.Uri.Host, httpMessage.Response.Status);
-                }
-                else
-                {
-                    _networkSdkStatsManager.TrackException(httpMessage.Request.Uri.Host, exceptionType: null);
-                }
             }
 
             var statusCode = httpMessage.HasResponse ? httpMessage.Response.Status : 0;
@@ -351,7 +333,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // No blob is passed because this batch may span many of them: a partial success
             // re-persists the retryable subset as a single new blob, after which every blob in the
             // batch has been superseded and is deleted here.
-            var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob: null, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager);
+            TransmissionResult transmissionResult;
+            try
+            {
+                transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob: null, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager, networkStatsBatch);
+            }
+            catch (Exception ex)
+            {
+                _networkSdkStatsManager?.TrackRequest(httpMessage.Request.Uri.Host, statusCode: null, durationMs: null,
+                    networkStatsBatch, ex.GetType().FullName, customerIkey: _trackUri == null ? _connectionVars.InstrumentationKey : null);
+                _networkExceptionRecorded = true;
+                throw;
+            }
 
             if (statusCode == ResponseStatusCodes.PartialSuccess)
             {
@@ -375,6 +368,83 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Retriable, or no response at all: leave the blobs leased so a later pass reclaims them.
             return false;
+        }
+
+        private HttpMessage SendBatch(byte[] payload, INetworkSdkStatsBatch? networkStatsBatch, CancellationToken cancellationToken)
+        {
+            var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;
+            var host = _statsHost;
+            try
+            {
+                var message = _trackUri == null
+                    ? _applicationInsightsRestClient.InternalTrackAsync(payload, cancellationToken).Result
+                    : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, cancellationToken).Result;
+                host = message.Request.Uri.Host;
+                stopwatch?.Stop();
+                _networkSdkStatsManager?.TrackRequest(host, message.HasResponse ? message.Response.Status : null,
+                    stopwatch?.Elapsed.TotalMilliseconds, networkStatsBatch,
+                    customerIkey: _trackUri == null ? _connectionVars.InstrumentationKey : null);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                stopwatch?.Stop();
+                _networkSdkStatsManager?.TrackRequest(host, statusCode: null, stopwatch?.Elapsed.TotalMilliseconds,
+                    networkStatsBatch, ex.GetType().FullName, customerIkey: _trackUri == null ? _connectionVars.InstrumentationKey : null);
+                _networkExceptionRecorded = true;
+                throw;
+            }
+        }
+
+        private StoredNetworkStatsBatch ReadNetworkStatsBatch(byte[] payload)
+        {
+            var batch = new StoredNetworkStatsBatch();
+            for (int start = 0; start < payload.Length;)
+            {
+                var end = Array.IndexOf(payload, (byte)'\n', start);
+                if (end < 0)
+                {
+                    end = payload.Length;
+                }
+
+                string? key = null;
+                try
+                {
+                    using var document = JsonDocument.Parse(new ReadOnlyMemory<byte>(payload, start, end - start));
+                    if (document.RootElement.ValueKind != JsonValueKind.Object
+                        || !document.RootElement.TryGetProperty("iKey", out var property)
+                        || property.ValueKind != JsonValueKind.String || string.IsNullOrEmpty(key = property.GetString()))
+                    {
+                        throw new JsonException("Stored telemetry has no instrumentation key for network statistics.");
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    key = null;
+                    // Still send the original payload. Unknown identities must not inherit another customer's key.
+                    AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
+                }
+
+                batch.Keys.Add(key);
+                if (!string.IsNullOrEmpty(key))
+                {
+                    batch.Counts.TryGetValue(key!, out var count);
+                    batch.Counts[key!] = count + 1;
+                }
+                start = end + 1;
+            }
+            return batch;
+        }
+
+        private sealed class StoredNetworkStatsBatch : INetworkSdkStatsBatch
+        {
+            internal readonly List<string?> Keys = new();
+            internal readonly Dictionary<string, int> Counts = new(StringComparer.Ordinal);
+
+            public int Count => Keys.Count;
+            public IEnumerable<string> InstrumentationKeys => Counts.Keys;
+            public IReadOnlyDictionary<string, int> ItemCountsByInstrumentationKey => Counts;
+            public string? GetInstrumentationKey(int index) => Keys[index];
         }
 
         private bool TransmitIndividually(List<PendingBlob> batch)

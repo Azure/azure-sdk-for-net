@@ -9,6 +9,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -75,6 +76,71 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(1, routeBatch.Count);
             Assert.Equal(EastUs, routeBatch[0].IngestionEndpoint);
             Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
+        }
+
+        [Fact]
+        public void CustomerCountsCombineInterleavedEqualKeysWithoutReorderingItems()
+        {
+            var duplicate = new string("ikey-a".ToCharArray());
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs),
+                CreateActivity("ikey-b", EastUs),
+                CreateActivity(duplicate, EastUs),
+                CreateActivity("IKEY-A", EastUs));
+
+            Assert.Equal(1, routeBatch.Count);
+            var group = routeBatch[0];
+            Assert.Equal(3, group.ItemCountsByInstrumentationKey.Count);
+            Assert.Equal(2, group.ItemCountsByInstrumentationKey["ikey-a"]);
+            Assert.Equal(1, group.ItemCountsByInstrumentationKey["ikey-b"]);
+            Assert.Equal(1, group.ItemCountsByInstrumentationKey["IKEY-A"]);
+            Assert.Equal(new[] { "ikey-a", "ikey-b", "ikey-a", "IKEY-A" },
+                group.TelemetryItems.Select(item => item.InstrumentationKey));
+        }
+
+        [Fact]
+        public void CustomerCountsAreScopedToEndpointAndAuthenticationMode()
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs),
+                CreateActivity("ikey-a", WestUs),
+                CreateActivity("ikey-a", EastUs, ingestionAuth: "aad"),
+                CreateActivity("ikey-a", EastUs));
+
+            Assert.Equal(3, routeBatch.Count);
+            Assert.Equal(2, routeBatch[0].ItemCountsByInstrumentationKey["ikey-a"]);
+            Assert.Equal(1, routeBatch[1].ItemCountsByInstrumentationKey["ikey-a"]);
+            Assert.Equal(1, routeBatch[2].ItemCountsByInstrumentationKey["ikey-a"]);
+        }
+
+        [Fact]
+        public void CustomerCountsIncludeEventsAndPreserveWireIndexes()
+        {
+            var first = CreateActivity("ikey-a", EastUs);
+            first.AddEvent(new ActivityEvent("message"));
+            first.AddEvent(new ActivityEvent(SemanticConventions.AttributeExceptionEventName));
+            first.AddEvent(new ActivityEvent(SemanticConventions.AttributeExceptionEventName,
+                tags: new ActivityTagsCollection
+                {
+                    { SemanticConventions.AttributeExceptionType, "TestException" },
+                    { SemanticConventions.AttributeExceptionMessage, "Test exception" },
+                }));
+            var second = CreateActivity("ikey-b", EastUs);
+            second.AddEvent(new ActivityEvent("message"));
+            var group = Convert(first, second)[0];
+
+            Assert.Equal(3, group.ItemCountsByInstrumentationKey["ikey-a"]);
+            Assert.Equal(2, group.ItemCountsByInstrumentationKey["ikey-b"]);
+            var lines = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(group.TelemetryItems))
+                .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            Assert.Equal(5, lines.Length);
+            var expectedKeys = new[] { "ikey-a", "ikey-a", "ikey-a", "ikey-b", "ikey-b" };
+            for (int i = 0; i < lines.Length; i++)
+            {
+                using var envelope = JsonDocument.Parse(lines[i]);
+                Assert.Equal(expectedKeys[i], envelope.RootElement.GetProperty("iKey").GetString());
+                Assert.Equal(expectedKeys[i], group.TelemetryItems[i].InstrumentationKey);
+            }
         }
 
         [Fact]
@@ -340,6 +406,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(1, routeBatch.Count);
             Assert.Equal(2, routeBatch[0].TelemetryItems.Count);
+            Assert.Equal(2, routeBatch[0].ItemCountsByInstrumentationKey.Count);
+            Assert.All(routeBatch[0].ItemCountsByInstrumentationKey.Values, count => Assert.Equal(1, count));
         }
 
         /// <summary>
@@ -480,16 +548,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(CreateActivity("ikey-a", EastUs)), null, 100, routeBatch);
             var firstGroup = routeBatch[0];
             var firstItems = firstGroup.TelemetryItems;
+            var firstCounts = firstGroup.ItemCountsByInstrumentationKey;
             routeBatch.Reset();
 
             Assert.Equal(0, routeBatch.Count);
             Assert.Empty(firstItems);
+            Assert.Empty(firstCounts);
 
             TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(CreateActivity("ikey-b", WestUs)), null, 100, routeBatch);
 
             Assert.Equal(1, routeBatch.Count);
             Assert.Same(firstGroup, routeBatch[0]);
             Assert.Same(firstItems, routeBatch[0].TelemetryItems);
+            Assert.Same(firstCounts, routeBatch[0].ItemCountsByInstrumentationKey);
+            Assert.Equal(new KeyValuePair<string, int>("ikey-b", 1), Assert.Single(firstCounts));
             Assert.Equal(WestUs, routeBatch[0].IngestionEndpoint);
         }
 
