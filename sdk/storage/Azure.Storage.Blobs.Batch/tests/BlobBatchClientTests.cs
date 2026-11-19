@@ -346,7 +346,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };
@@ -459,7 +459,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };
@@ -785,7 +785,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };
@@ -913,7 +913,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };

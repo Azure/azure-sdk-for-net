@@ -1,14 +1,18 @@
 # Release History
 
-## 12.31.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.30.2 (2026-11-19)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed SAS builder/client resource-name validation to use ordinal comparisons in `BlobBaseClient` and `BlobContainerClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
+- Fixed an issue where `BlobClient.Upload(..., overwrite: false)` with upload checksum validation configured as `StorageChecksumAlgorithm.StorageCrc64` could throw `InvalidDataException` when the blob already existed. The operation now surfaces the expected `RequestFailedException` for `409 *AlreadyExists`.
+- Fixed client-side encryption v1 decryption of ranged downloads so the 16-byte IV is fully read even when the ciphertext stream returns short reads, and a truncated IV now fails instead of silently corrupting plaintext.
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `BlobBaseClient.GenerateSasUri(...)`
+  - `BlobBaseClient.GenerateUserDelegationSasUri(...)`
+  - `BlobContainerClient.GenerateSasUri(...)`
+  - `BlobContainerClient.GenerateUserDelegationSasUri(...)`
+  - `BlobServiceClient.GenerateAccountSasUri(...)`
+  - `BlobSasBuilder`
 
 ## 12.30.1 (2026-10-05)
 

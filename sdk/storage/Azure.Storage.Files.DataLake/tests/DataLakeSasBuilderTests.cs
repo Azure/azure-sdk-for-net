@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +42,28 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException(
                 () => sasBuilder.EnsureState(),
                 new InvalidOperationException("SAS is missing required parameter: ExpiresOn"));
+        }
+
+        [Test]
+        public void DataLakeSasBuilder_ToSasQueryParameters_NormalizesNonUtcTimesToUtc()
+        {
+            DateTimeOffset startsOn = new DateTimeOffset(2026, 01, 01, 10, 00, 00, TimeSpan.FromHours(2));
+            DateTimeOffset expiresOn = new DateTimeOffset(2026, 01, 01, 12, 15, 00, TimeSpan.FromHours(2));
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[32]));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(DataLakeSasPermissions.Read, expiresOn)
+            {
+                StartsOn = startsOn,
+                FileSystemName = "filesystem",
+                Path = "path"
+            };
+
+            string query = sasBuilder.ToSasQueryParameters(credential).ToString();
+            string expectedStart = WebUtility.UrlEncode(startsOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+            string expectedExpiry = WebUtility.UrlEncode(expiresOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+
+            StringAssert.Contains($"st={expectedStart}", query);
+            StringAssert.Contains($"se={expectedExpiry}", query);
         }
 
         [RecordedTest]

@@ -4630,14 +4630,14 @@ namespace Azure.Storage.Files.DataLake
                     Constants.FalseName,
                     nameof(this.GetType));
             }
-            if (!builder.FileSystemName.Equals(FileSystemName, StringComparison.InvariantCulture))
+            if (!builder.FileSystemName.Equals(FileSystemName, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.FileSystemName),
                     nameof(DataLakeSasBuilder),
                     nameof(FileSystemName));
             }
-            if (!builder.Path.Equals(Path, StringComparison.InvariantCulture))
+            if (!builder.Path.Equals(Path, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.Path),

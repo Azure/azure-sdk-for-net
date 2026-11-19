@@ -1,14 +1,19 @@
 # Release History
 
-## 12.29.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.28.1 (2026-11-19)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `ShareClient.GenerateSasUri(...)`
+  - `ShareClient.GenerateUserDelegationSasUri(...)`
+  - `ShareDirectoryClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateUserDelegationSasUri(...)`
+  - `ShareServiceClient.GenerateAccountSasUri(...)`
+  - `ShareSasBuilder`
+- Fixed SAS builder/client share and path name validation to use ordinal comparisons in `ShareClient`, `ShareDirectoryClient`, and `ShareFileClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
+- Fixed an issue where conditional create/write flows using structured-message upload validation could classify `409 *AlreadyExists` responses as non-errors, potentially resulting in `InvalidDataException` instead of the expected `RequestFailedException`.
 
 ## 12.28.0 (2026-09-28)
 
