@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Confluent/organizations", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-02-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-10-21-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Confluent/organizations", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-02-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-10-21-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/listRegions", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/listUsers", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/listServiceAccounts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/listInvitations", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/createInvitation", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/listEnvironments", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/listClusters", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/listRoleBindings", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/createRoleBinding", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/access/default/listRoleBindingNameList", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/linkSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Confluent
             uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/latestLinkedSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-21-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

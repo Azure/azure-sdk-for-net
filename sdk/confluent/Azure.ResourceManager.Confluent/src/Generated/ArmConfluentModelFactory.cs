@@ -608,6 +608,165 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary>
+        /// A monitor that defines the Confluent environment, cluster, and topic to which
+        /// selected Azure logs are sent.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The configured Confluent log destination and current status of the monitor. </param>
+        /// <returns> A new <see cref="Confluent.MonitorResourceData"/> instance for mocking. </returns>
+        public static MonitorResourceData MonitorResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MonitorResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> The Confluent log destination and current status of a monitor. </summary>
+        /// <param name="organizationId">
+        /// The identifier of the Confluent organization that contains the destination
+        /// environment.
+        /// </param>
+        /// <param name="environmentId">
+        /// The identifier of the Confluent environment that contains the destination
+        /// cluster.
+        /// </param>
+        /// <param name="environmentName">
+        /// The display name of the Confluent environment that contains the destination
+        /// cluster.
+        /// </param>
+        /// <param name="clusterId"> The identifier of the Confluent cluster containing the destination topic. </param>
+        /// <param name="clusterName"> The display name of the Confluent cluster containing the destination topic. </param>
+        /// <param name="topicId"> The identifier of the Confluent topic that receives the selected Azure logs. </param>
+        /// <param name="topicName"> The name of the Confluent topic that receives the selected Azure logs. </param>
+        /// <param name="dictionary"> Additional key-value information associated with the monitor. </param>
+        /// <param name="provisioningState"> The status of the most recent operation performed on the monitor. </param>
+        /// <param name="monitoringStatus"> Indicates whether the monitor is currently sending Azure logs to Confluent. </param>
+        /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
+        public static MonitorProperties MonitorProperties(string organizationId = default, string environmentId = default, string environmentName = default, string clusterId = default, string clusterName = default, string topicId = default, string topicName = default, IEnumerable<ConfluentKeyValuePair> dictionary = default, ConfluentProvisionState? provisioningState = default, MonitoringStatus? monitoringStatus = default)
+        {
+            dictionary ??= new ChangeTrackingList<ConfluentKeyValuePair>();
+
+            return new MonitorProperties(
+                organizationId,
+                environmentId,
+                environmentName,
+                clusterId,
+                clusterName,
+                topicId,
+                topicName,
+                (dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>()).ToList(),
+                provisioningState,
+                monitoringStatus,
+                default);
+        }
+
+        /// <summary> A key-value pair for extensibility. </summary>
+        /// <param name="key"> The key. </param>
+        /// <param name="value"> The value. </param>
+        /// <returns> A new <see cref="Models.ConfluentKeyValuePair"/> instance for mocking. </returns>
+        public static ConfluentKeyValuePair ConfluentKeyValuePair(string key = default, string value = default)
+        {
+            return new ConfluentKeyValuePair(key, value, default);
+        }
+
+        /// <summary> The parameters for updating the Azure resource tags of a Confluent monitor. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.MonitorResourcePatch"/> instance for mocking. </returns>
+        public static MonitorResourcePatch MonitorResourcePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MonitorResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary>
+        /// A rule set that specifies which Azure logs are sent to a monitor's configured
+        /// Confluent topic.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The rules that select Azure logs and the current status of the rule set. </param>
+        /// <returns> A new <see cref="Confluent.MonitorTagRuleData"/> instance for mocking. </returns>
+        public static MonitorTagRuleData MonitorTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorTagRuleProperties properties = default)
+        {
+            return new MonitorTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The Azure log-selection rules and current status of a monitor rule set. </summary>
+        /// <param name="provisioningState"> The status of the most recent operation performed on the rule set. </param>
+        /// <param name="logRules">
+        /// Rules that specify which Azure logs are sent to the monitor's configured
+        /// Confluent topic.
+        /// </param>
+        /// <returns> A new <see cref="Models.MonitorTagRuleProperties"/> instance for mocking. </returns>
+        public static MonitorTagRuleProperties MonitorTagRuleProperties(ConfluentProvisionState? provisioningState = default, LogRules logRules = default)
+        {
+            return new MonitorTagRuleProperties(provisioningState, logRules, default);
+        }
+
+        /// <summary>
+        /// Rules that select Azure log categories and Azure resources whose logs are
+        /// sent to the monitor's configured Confluent topic.
+        /// </summary>
+        /// <param name="sendAadLogs"> Specifies whether Microsoft Entra ID logs are sent to Confluent. </param>
+        /// <param name="sendSubscriptionLogs"> Specifies whether Azure subscription logs are sent to Confluent. </param>
+        /// <param name="sendActivityLogs"> Specifies whether activity logs from Azure resources are sent to Confluent. </param>
+        /// <param name="filteringTags">
+        /// Azure resource-tag filters applied when activity logs are enabled. If only
+        /// exclusion filters are present, logs from all resources except matching
+        /// resources are sent. If any inclusion filter is present, logs are sent only
+        /// from matching resources. Exclusion filters take precedence over inclusion
+        /// filters.
+        /// </param>
+        /// <returns> A new <see cref="Models.LogRules"/> instance for mocking. </returns>
+        public static LogRules LogRules(bool? sendAadLogs = default, bool? sendSubscriptionLogs = default, bool? sendActivityLogs = default, IEnumerable<FilteringTag> filteringTags = default)
+        {
+            filteringTags ??= new ChangeTrackingList<FilteringTag>();
+
+            return new LogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, (filteringTags ?? new ChangeTrackingList<FilteringTag>()).ToList(), default);
+        }
+
+        /// <summary>
+        /// A tag filter that includes or excludes activity logs from matching Azure
+        /// resources.
+        /// </summary>
+        /// <param name="name"> The Azure resource tag name to match. </param>
+        /// <param name="value">
+        /// The Azure resource tag value to match. When omitted, the filter matches any
+        /// value for the specified tag name.
+        /// </param>
+        /// <param name="action">
+        /// Specifies whether logs from resources matching the tag filter are included
+        /// or excluded.
+        /// </param>
+        /// <returns> A new <see cref="Models.FilteringTag"/> instance for mocking. </returns>
+        public static FilteringTag FilteringTag(string name = default, string value = default, TagAction action = default)
+        {
+            return new FilteringTag(name, value, action, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1145,15 +1304,6 @@ namespace Azure.ResourceManager.Confluent.Models
                 provisioningState,
                 (dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>()).ToList(),
                 default);
-        }
-
-        /// <summary> A key-value pair for extensibility. </summary>
-        /// <param name="key"> The key. </param>
-        /// <param name="value"> The value. </param>
-        /// <returns> A new <see cref="Models.ConfluentKeyValuePair"/> instance for mocking. </returns>
-        public static ConfluentKeyValuePair ConfluentKeyValuePair(string key = default, string value = default)
-        {
-            return new ConfluentKeyValuePair(key, value, default);
         }
 
         /// <summary> Details of access point record. </summary>
