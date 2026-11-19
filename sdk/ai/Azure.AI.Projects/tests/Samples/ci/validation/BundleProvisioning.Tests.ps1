@@ -58,21 +58,27 @@ Describe 'Full bundle .NET bindings' {
         }
     }
 
-    It 'deploys the full bundle and exposes aliases to tests, with secrets only in provisioning' {
+    It 'publishes aliases as pipeline variables, keeps only fixed test settings in EnvVars, and confines secrets to provisioning' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $provisioningScript = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../Invoke-BundleProvisioning.ps1') -Raw
         $pipeline | Should Match 'Invoke-BundleProvisioning.ps1'
         $pipeline | Should Not Match 'Invoke-StandardProvisioning.ps1'
         $pipeline | Should Match 'MCP_GITHUB_PAT: \$\(MCP_GITHUB_PAT\)'
         $pipeline | Should Match 'PROJ_CONN_OPEN_API_KEY: \$\(PROJ_CONN_OPEN_API_KEY\)'
         $testEnvironment = [regex]::Match($pipeline, '(?ms)^    EnvVars:\r?\n(?<body>.*?)^    PreSteps:').Groups['body'].Value
         $testEnvironment | Should Not Match 'MCP_GITHUB_PAT|PROJ_CONN_OPEN_API_KEY'
+        @([regex]::Matches($testEnvironment, '(?m)^      [A-Z][A-Z0-9_]*:')).Count | Should Be 4
+        $testEnvironment | Should Match '(?m)^      CLIENTMODEL_TEST_MODE: Live\r?$'
+        $testEnvironment | Should Match '(?m)^      MODEL_PUBLISHER: OpenAI\r?$'
+        $testEnvironment | Should Match '(?m)^      AZURE_SUBSCRIPTION_ID: \$\(AZURE_SUBSCRIPTION_ID\)\r?$'
+        $testEnvironment | Should Match '(?m)^      AZURE_TENANT_ID: \$\(AZURE_TENANT_ID\)\r?$'
         $bindings = Get-DotNetSampleEnvironment -Environment $script:environment
         foreach ($name in @('MCP_PROJECT_CONNECTION_NAME', 'AI_SEARCH_CONNECTION_NAME',
             'BING_CONNECTION_ID', 'BING_CONNECTION_NAME', 'CUSTOM_BING_CONNECTION_ID', 'CUSTOM_BING_CONNECTION_NAME',
             'PLAYWRIGHT_CONNECTION_ID', 'PLAYWRIGHT_CONNECTION_NAME', 'BROWSER_AUTOMATION_NAME',
             'OPENAPI_PROJECT_CONNECTION_ID', 'OPENAPI_PROJECT_CONNECTION_NAME', 'STORAGE_QUEUE_URI')) {
             $bindings.ContainsKey($name) | Should Be $true
-            $testEnvironment | Should Match ([regex]::Escape("${name}: `$($name)"))
+            $provisioningScript | Should Match '##vso\[task\.setvariable variable=\$name\]'
         }
         $pipeline | Should Match 'condition: always\(\)'
         $pipeline | Should Match 'Remove-SampleResources.ps1'
