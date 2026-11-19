@@ -246,6 +246,18 @@ Describe 'pr-re-review trigger routing' {
         }
     }
 
+    It 'reopens review threads for a pull request but never for a replay' {
+        $condition = Get-JobCondition 'unresolve_review_thread'
+        # Stand in for the two functions the evaluator does not support: the run is not cancelled, and the agent asked to reopen a thread.
+        foreach ($call in '!cancelled()', "contains(needs.agent.outputs.output_types, 'unresolve_review_thread')") {
+            $condition.Contains($call, [StringComparison]::Ordinal) | Should -BeTrue -Because 'a changed condition shape means this test needs revisiting'
+            $condition = $condition.Replace($call, 'true')
+        }
+        $needs = @{ agent = @{ result = 'success' }; safe_outputs = @{ result = 'success' } }
+        Test-WorkflowCondition $condition @{ github = @{ event_name = 'pull_request' }; needs = $needs } | Should -BeTrue
+        Test-WorkflowCondition $condition @{ github = @{ event_name = 'workflow_dispatch' }; needs = $needs } | Should -BeFalse
+    }
+
     It 'keys workflow concurrency by event so the skipped twin run never queues behind the real run' {
         $group = (Get-YamlSection $LockLines 'concurrency' 0) -cmatch '^  group: '
         $group | Should -HaveCount 1

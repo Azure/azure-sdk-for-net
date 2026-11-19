@@ -657,12 +657,19 @@ Describe 'Compiled re-review publication guard' {
         @{ Name = 'Download exported-patch markers' }
         @{ Name = 'Checkout trusted re-review publication guard' }
         @{ Name = 'Verify re-review helpers match the export' }
-        @{ Name = 'Require complete re-review coverage before publishing' }
         @{ Name = 'Process Safe Outputs' }
     ) {
         $step = Get-Step $Name
         Get-StepProperty $step 'if' | Should -BeNullOrEmpty
         Get-StepProperty $step 'continue-on-error' | Should -BeNullOrEmpty
+    }
+
+    It 'skips the live guard only for a replay, whose safe outputs are staged so nothing is published' {
+        $guard = Get-Step 'Require complete re-review coverage before publishing'
+        Get-StepProperty $guard 'if' | Should -BeExactly "github.event_name != 'workflow_dispatch'"
+        Get-StepProperty $guard 'continue-on-error' | Should -BeNullOrEmpty
+        (Get-StepMapping (Get-Step 'Process Safe Outputs') 'env')['GH_AW_SAFE_OUTPUTS_STAGED'] | Should -BeExactly "`${{ github.event_name == 'workflow_dispatch' }}"
+        Test-PrReReviewReplayStaged (Join-Path $script:RepoRoot '.github' 'workflows' 'pr-re-review.lock.yml') | Should -BeTrue
     }
 
     It 'evaluates a replay only on workflow_dispatch, before the live guard and anything is published' {
@@ -673,6 +680,7 @@ Describe 'Compiled re-review publication guard' {
         Get-StepProperty $replay 'run' | Should -BeExactly './.github/workflows/pr-re-review/Invoke-PrReReviewReplayGuard.ps1'
         $environment = Get-StepMapping $replay 'env'
         $environment['REVIEW_REPLAY'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input/replay.json'
+        $environment['REVIEW_WORKFLOW_LOCK'] | Should -BeExactly '${{ github.workspace }}/.github/workflows/pr-re-review.lock.yml'
         $upload = Get-Step 'Upload replay result'
         Get-StepProperty $upload 'if' | Should -BeExactly '${{ !cancelled() && github.event_name == ''workflow_dispatch'' }}'
         (Get-StepMapping $upload 'with')['path'] | Should -BeExactly ($environment['REVIEW_REPLAY_RESULT'] -replace '/[^/]+$')

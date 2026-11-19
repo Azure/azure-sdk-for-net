@@ -13,8 +13,35 @@ BeforeAll {
     $script:LaterSha = 'd' * 40
     $script:ReplayEnvironment = @(
         'GITHUB_EVENT_NAME', 'GITHUB_REPOSITORY', 'PR_NUMBER', 'PR_HEAD_SHA', 'PR_BASE_SHA', 'REPLAY_PULL_REQUEST', 'REPLAY_HEAD_SHA', 'REPLAY_BASE_SHA',
-        'REPLAY_HISTORY_CUTOFF', 'REVIEW_INPUT_DIR', 'REVIEW_INPUT_MARKERS', 'AGENT_OUTPUT', 'AGENT_SESSION_LOG', 'REVIEW_REPLAY', 'REVIEW_REPLAY_RESULT', 'GITHUB_STEP_SUMMARY'
+        'REPLAY_HISTORY_CUTOFF', 'REVIEW_INPUT_DIR', 'REVIEW_INPUT_MARKERS', 'AGENT_OUTPUT', 'AGENT_SESSION_LOG', 'REVIEW_REPLAY', 'REVIEW_REPLAY_RESULT', 'GITHUB_STEP_SUMMARY',
+        'REVIEW_WORKFLOW_LOCK'
     )
+
+    function New-WorkflowLock {
+        param([string]$PublishEnvironment = "GH_AW_SAFE_OUTPUTS_STAGED: `${{ github.event_name == 'workflow_dispatch' }}")
+
+        $path = Join-Path $TestDrive "pr-re-review-$([guid]::NewGuid()).lock.yml"
+        [IO.File]::WriteAllLines($path, [string[]]@(
+            'jobs:'
+            '  agent:'
+            '    steps:'
+            '      - name: Execute GitHub Copilot CLI'
+            '        env:'
+            "          GH_AW_SAFE_OUTPUTS_STAGED: `${{ github.event_name == 'workflow_dispatch' }}"
+            '  safe_outputs:'
+            '    steps:'
+            '      - name: Evaluate the replayed re-review'
+            "        if: github.event_name == 'workflow_dispatch'"
+            '      - name: Process Safe Outputs'
+            '        env:'
+            '          GH_AW_AGENT_OUTPUT: agent_output.json'
+            "          $PublishEnvironment"
+            '        with:'
+            '          script: |'
+            '            await main();'
+        ))
+        return $path
+    }
 
     function New-ThreadComment {
         param([string]$Id, [string]$Created, [string]$Published = $Created)
@@ -211,18 +238,19 @@ Describe 'Invoke-PrReReviewReplayGuard.ps1' {
         $script:PatchRead = [ordered]@{ type = 'tool.execution_complete'; data = [ordered]@{ toolName = 'bash'; success = $true; result = [ordered]@{ content = "+new`n# End of review input [$marker]" } } }
         $env:AGENT_SESSION_LOG = New-SessionLog @($script:PatchRead)
         $env:AGENT_OUTPUT = Join-Path $root 'agent_output.json'
+        $env:REVIEW_WORKFLOW_LOCK = New-WorkflowLock
     }
 
     AfterEach {
         foreach ($entry in $script:SavedEnvironment.GetEnumerator()) { [Environment]::SetEnvironmentVariable($entry.Key, $entry.Value) }
     }
 
-    It 'records a review whose totals <Label> the replayed history as <Outcome>, then refuses to publish it' -ForEach @(
+    It 'records a review whose totals <Label> the replayed history as <Outcome>, leaving it to staged safe outputs' -ForEach @(
         @{ Label = 'match'; Threads = 2; Outcome = 'would-publish' }
         @{ Label = 'differ from'; Threads = 3; Outcome = 'blocked' }
     ) {
         Write-AgentOutput "Coverage: $Threads/$Threads threads fetched, 1/1 unresolved threads verified, 1/1 changed files reviewed"
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Throw -ExpectedMessage "*never publishes*$Outcome*"
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Not -Throw
         $result = Get-Content $env:REVIEW_REPLAY_RESULT -Raw | ConvertFrom-Json
         $result.outcome | Should -BeExactly $Outcome
         $result.coverage.passed | Should -Be ($Outcome -eq 'would-publish')
@@ -237,7 +265,7 @@ Describe 'Invoke-PrReReviewReplayGuard.ps1' {
     It 'records a run that read the current pull request as contaminated' {
         Write-AgentOutput 'Coverage: 2/2 threads fetched, 1/1 unresolved threads verified, 1/1 changed files reviewed'
         $env:AGENT_SESSION_LOG = New-SessionLog @((New-ToolCall 'github-pull_request_read' @{ method = 'get_reviews'; pullNumber = 1 }), $script:PatchRead)
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Throw -ExpectedMessage '*contaminated*'
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Not -Throw
         $result = Get-Content $env:REVIEW_REPLAY_RESULT -Raw | ConvertFrom-Json
         $result.contaminated | Should -BeTrue
         @($result.contamination) | Should -HaveCount 1
@@ -245,10 +273,21 @@ Describe 'Invoke-PrReReviewReplayGuard.ps1' {
 
     It 'still records a result when the agent produced no output' {
         $env:AGENT_OUTPUT = ''
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Throw -ExpectedMessage '*never publishes*no-review*'
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Not -Throw
         $result = Get-Content $env:REVIEW_REPLAY_RESULT -Raw | ConvertFrom-Json -AsHashtable
         $result.outcome | Should -BeExactly 'no-review'
         $result.items -is [array] | Should -BeTrue
         $result.items.Count | Should -Be 0
+    }
+
+    It 'records the result, then refuses to continue when <Label>' -ForEach @(
+        @{ Label = 'Process Safe Outputs is not staged'; Lock = { New-WorkflowLock 'GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{}"' } }
+        @{ Label = 'Process Safe Outputs is staged off'; Lock = { New-WorkflowLock 'GH_AW_SAFE_OUTPUTS_STAGED: "false"' } }
+        @{ Label = 'the workflow lock is missing'; Lock = { Join-Path $TestDrive 'missing.lock.yml' } }
+    ) {
+        $env:REVIEW_WORKFLOW_LOCK = & $Lock
+        Write-AgentOutput 'Coverage: 2/2 threads fetched, 1/1 unresolved threads verified, 1/1 changed files reviewed'
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewReplayGuard.ps1') } | Should -Throw -ExpectedMessage '*could publish*'
+        (Get-Content $env:REVIEW_REPLAY_RESULT -Raw | ConvertFrom-Json).outcome | Should -BeExactly 'would-publish'
     }
 }

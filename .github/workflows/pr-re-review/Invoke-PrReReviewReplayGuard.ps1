@@ -9,7 +9,7 @@ param()
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1')
 
-foreach ($name in 'REVIEW_REPLAY', 'REVIEW_REPLAY_RESULT') {
+foreach ($name in 'REVIEW_REPLAY', 'REVIEW_REPLAY_RESULT', 'REVIEW_WORKFLOW_LOCK') {
     if (![Environment]::GetEnvironmentVariable($name)) {
         throw "Missing $name."
     }
@@ -37,4 +37,7 @@ if ($env:GITHUB_STEP_SUMMARY) {
     Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY -Value ($summary -join "`n")
 }
 Write-Host ($summary -join "`n")
-throw "A replay never publishes. Outcome: $($result.outcome)$(if ($result.contaminated) { ', contaminated' }). The result is in the pr-re-review-replay artifact."
+if (!(Test-PrReReviewReplayStaged $env:REVIEW_WORKFLOW_LOCK)) {
+    throw "$env:REVIEW_WORKFLOW_LOCK does not stage Process Safe Outputs for workflow_dispatch, so this replay could publish. Stopping here; the result is in the pr-re-review-replay artifact."
+}
+Write-Host 'Process Safe Outputs is staged for this replay, so it previews the agent output instead of publishing it.'

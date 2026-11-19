@@ -542,4 +542,32 @@ function Get-PrReReviewReplayResult {
     }
 }
 
-Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Get-PrReReviewTotals, Assert-PrReReviewOutput, Assert-PrReReviewReadCoverage, Find-PrReReviewReplayContamination, Get-PrReReviewReplayResult
+function Test-PrReReviewReplayStaged {
+    param([Parameter(Mandatory)][AllowEmptyString()][string]$LockPath)
+
+    if (!$LockPath -or ![IO.File]::Exists($LockPath)) {
+        return $false
+    }
+    # Reads the compiler's layout: jobs at two spaces, steps at six, step keys deeper.
+    $lines = [IO.File]::ReadAllLines($LockPath)
+    $job = [array]::IndexOf($lines, '  safe_outputs:')
+    if ($job -lt 0) {
+        return $false
+    }
+    $publishSteps = 0
+    $stagedSteps = 0
+    $inPublish = $false
+    $stagedLine = "GH_AW_SAFE_OUTPUTS_STAGED: `${{ github.event_name == 'workflow_dispatch' }}"
+    for ($i = $job + 1; $i -lt $lines.Count -and ($lines[$i].Length -eq 0 -or $lines[$i].StartsWith('   ')); $i++) {
+        if ($lines[$i] -cmatch '^      - name: (.+)$') {
+            $inPublish = $Matches[1] -ceq 'Process Safe Outputs'
+            if ($inPublish) { $publishSteps++ }
+        } elseif ($inPublish -and $lines[$i].Trim() -ceq $stagedLine) {
+            $stagedSteps++
+            $inPublish = $false
+        }
+    }
+    return $publishSteps -gt 0 -and $stagedSteps -eq $publishSteps
+}
+
+Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Get-PrReReviewTotals, Assert-PrReReviewOutput, Assert-PrReReviewReadCoverage, Find-PrReReviewReplayContamination, Get-PrReReviewReplayResult, Test-PrReReviewReplayStaged

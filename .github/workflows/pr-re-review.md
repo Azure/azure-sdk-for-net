@@ -114,6 +114,8 @@ network:
 safe-outputs:
   runs-on: ubuntu-latest
   report-failure-as-issue: false
+  # A replay previews its safe outputs instead of publishing them.
+  staged: ${{ github.event_name == 'workflow_dispatch' }}
   create-pull-request-review-comment:
     max: 100
   reply-to-pull-request-review-comment:
@@ -146,8 +148,8 @@ safe-outputs:
         if ($LASTEXITCODE -ne 0 -or $exported -cnotmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$' -or $current -cne $exported) {
           throw "The re-review helpers changed between export ($exported) and publication ($current); refusing to publish."
         }
-    # A replay records how the re-review would have fared and then fails, so nothing reaches Process Safe
-    # Outputs. Without a pull request in the event, the live guard below would also fail closed.
+    # A replay records how the re-review would have fared, then lets the staged Process Safe Outputs preview
+    # it. This step stops the job if the compiled workflow does not stage that step for a replay.
     - name: Evaluate the replayed re-review
       if: github.event_name == 'workflow_dispatch'
       shell: pwsh
@@ -157,6 +159,7 @@ safe-outputs:
         REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
         REVIEW_REPLAY: ${{ runner.temp }}/pr-re-review-input/replay.json
         REVIEW_REPLAY_RESULT: ${{ runner.temp }}/pr-re-review-replay/replay-result.json
+        REVIEW_WORKFLOW_LOCK: ${{ github.workspace }}/.github/workflows/pr-re-review.lock.yml
       run: ./.github/workflows/pr-re-review/Invoke-PrReReviewReplayGuard.ps1
     - name: Upload replay result
       if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
@@ -166,6 +169,7 @@ safe-outputs:
         path: ${{ runner.temp }}/pr-re-review-replay
         if-no-files-found: warn
     - name: Require complete re-review coverage before publishing
+      if: github.event_name != 'workflow_dispatch'
       shell: pwsh
       env:
         AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
@@ -184,7 +188,8 @@ safe-outputs:
       description: "Reopen a review thread the agent concluded was resolved without adequate justification"
       runs-on: ubuntu-latest
       needs: safe_outputs
-      if: needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
+      # This job's script does not check staged mode, so a replay must never reach it.
+      if: github.event_name != 'workflow_dispatch' && needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
       # Matches resolve-pull-request-review-thread's max below; without this, gh-aw's
       # ingestion collector defaults custom safe-jobs to a cardinality of 1 and truncates
       # a multi-thread reopen run.

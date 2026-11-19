@@ -21,7 +21,7 @@ gh workflow run pr-re-review.lock.yml --repo Azure/azure-sdk-for-net --ref <bran
 
 - **Changed files:** the patches come from GitHub's comparison of `base_sha...head_sha`, which is the pull request's diff at that head. GitHub lists at most 300 files for a comparison, so a replay fails rather than review a partial list.
 - **Review history:** `history/` beside the patches holds the review threads, reviews, and conversation comments that were public at the cutoff. The prompt tells the agent to read them instead of the live pull request, and to read code only at the replayed commits.
-- **Publishing:** nothing is published. `Evaluate the replayed re-review` records how the publication guard judged the run and then fails the job before `Process Safe Outputs`. Without a pull request in the event, the live guard step would also fail.
+- **Publishing:** nothing is published. A replay's safe outputs are staged, so `Process Safe Outputs` previews them instead of calling GitHub, and the live guard and `unresolve_review_thread` are skipped. `Evaluate the replayed re-review` records how the publication guard judged the run, and fails the job if the compiled workflow does not stage `Process Safe Outputs` for `workflow_dispatch`. Otherwise a replay ends green whatever its outcome, so read the outcome from the result.
 
 ## Read the result
 
