@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
         /// <param name="languageIdentified"> The identified language for a spoken phrase. </param>
-        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
+        /// <param name="sentimentAnalysisResult"></param>
         internal ChoiceResult(string label, string recognizedPhrase, double? confidence, string languageIdentified, SentimentAnalysisResult sentimentAnalysisResult)
         {
             Label = label;
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         public double? Confidence { get; }
         /// <summary> The identified language for a spoken phrase. </summary>
         public string LanguageIdentified { get; }
-        /// <summary> Gets or sets the sentiment analysis result. </summary>
+        /// <summary> Gets the sentiment analysis result. </summary>
         public SentimentAnalysisResult SentimentAnalysisResult { get; }
     }
 }

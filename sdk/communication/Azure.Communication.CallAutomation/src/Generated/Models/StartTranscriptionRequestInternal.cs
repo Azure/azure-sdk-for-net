@@ -16,6 +16,7 @@ namespace Azure.Communication.CallAutomation
         public StartTranscriptionRequestInternal()
         {
             Locales = new ChangeTrackingList<string>();
+            PhraseList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequestInternal"/>. </summary>
@@ -29,8 +30,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="piiRedactionOptions"> PII redaction configuration options. </param>
         /// <param name="enableSentimentAnalysis"> Indicating if sentiment analysis should be used. </param>
         /// <param name="locales"> List of languages for Language Identification. </param>
-        /// <param name="summarizationOptions"> Summarization configuration options. </param>
-        internal StartTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, IList<string> locales, SummarizationOptionsInternal summarizationOptions)
+        /// <param name="summarizationOptions"> Configuration options for call summarization. </param>
+        /// <param name="phraseList"> List of phrases used to bias transcription, e.g. drug names, product SKUs. </param>
+        internal StartTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, IList<string> locales, SummarizationOptionsInternal summarizationOptions, IList<string> phraseList)
         {
             Locale = locale;
             SpeechModelEndpointId = speechModelEndpointId;
@@ -40,6 +42,7 @@ namespace Azure.Communication.CallAutomation
             EnableSentimentAnalysis = enableSentimentAnalysis;
             Locales = locales;
             SummarizationOptions = summarizationOptions;
+            PhraseList = phraseList;
         }
 
         /// <summary> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </summary>
@@ -59,7 +62,9 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableSentimentAnalysis { get; set; }
         /// <summary> List of languages for Language Identification. </summary>
         public IList<string> Locales { get; }
-        /// <summary> Summarization configuration options. </summary>
+        /// <summary> Configuration options for call summarization. </summary>
         public SummarizationOptionsInternal SummarizationOptions { get; set; }
+        /// <summary> List of phrases used to bias transcription, e.g. drug names, product SKUs. </summary>
+        public IList<string> PhraseList { get; }
     }
 }

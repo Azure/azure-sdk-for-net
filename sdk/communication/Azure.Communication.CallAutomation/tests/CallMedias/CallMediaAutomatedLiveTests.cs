@@ -2764,6 +2764,240 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [RecordedTest]
+        public async Task StartTranscriptionWithPhraseList()
+        {
+            /* Tests: Create transcription call, Start Transcription, Update Transcription, Stop Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call with transcription.
+             * 2. Answer a call
+             * 3. Start Transcription with phraseList.
+             * 4. Update Transcrition with phraseList.
+             * 5. Stop Transcription.
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false
+                    };
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          null, transcriptionOptions);
+                    callConnectionId = result.CallerCallConnectionId;
+
+                    //Start Transcription
+                    StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
+                    {
+                        OperationContext = "StartTranscription",
+                        PhraseList = new List<string>
+                                    {
+                                        "Vicodin",
+                                        "Zocor",
+                                        "Lisinopril",
+                                        "Synthroid",
+                                        "Norvasc"
+                                    }
+                    };
+
+                    var callerMedia = client.GetCallConnection(callConnectionId).GetCallMedia();
+                    var startTranscriptionResponse = await callerMedia.StartTranscriptionAsync(startTranscriptionOptions);
+                    var startTranscriptionEvent = await WaitForEvent<TranscriptionStarted>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(startTranscriptionEvent, Is.Not.Null);
+                    Assert.That(startTranscriptionEvent is TranscriptionStarted, Is.True);
+
+                    var source = new TextSource("Vicodin, Zocor, Lisinopril, Synthroid, Norvasc", "en-US-ElizabethNeural");
+                    var options = new PlayToAllOptions(source) { OperationContext = "playalloptionduringtranscription" };
+                    callerMedia.PlayToAll(options);
+
+                    // test get properties
+                    var connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    Assert.That(connectionProperties, Is.Not.Null);
+                    Assert.That(connectionProperties.Value.TranscriptionSubscription, Is.Not.Null);
+                    Assert.That(TranscriptionSubscriptionState.Active, Is.EqualTo(connectionProperties.Value.TranscriptionSubscription.State));
+
+                    // Update Transcription
+                    UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions("en-CA")
+                    {
+                        OperationContext = "UpdateTranscription",
+                        PhraseList = new List<string>
+                                    {
+                                        "Vicodin",
+                                        "Zocor",
+                                        "Lisinopril",
+                                        "Synthroid",
+                                        "Norvasc",
+                                        "Prilosec",
+                                        "Zithromax",
+                                        "Amoxicillin",
+                                        "Metformin",
+                                        "Hydrochlorothiazide"
+                                    }
+                    };
+                    var updateTranscriptionResponse = await callerMedia.UpdateTranscriptionAsync(updateTranscriptionOptions);
+                    var updateTranscriptionEvent = await WaitForEvent<TranscriptionUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(updateTranscriptionEvent, Is.Not.Null);
+                    Assert.That(updateTranscriptionEvent is TranscriptionUpdated, Is.True);
+
+                    var sourceUdpated = new TextSource("Vicodin, Zocor, Lisinopril, Synthroid, Norvasc, Prilosec, Zithromax, Amoxicillin, Metformin, Hydrochlorothiazide", "en-US-ElizabethNeural");
+                    var optionsUpdated = new PlayToAllOptions(sourceUdpated) { OperationContext = "playalloptionduringtranscription" };
+                    callerMedia.PlayToAll(optionsUpdated);
+
+                    connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    Assert.That(connectionProperties, Is.Not.Null);
+                    Assert.That(connectionProperties.Value.TranscriptionSubscription, Is.Not.Null);
+                    Assert.That(TranscriptionSubscriptionState.Active, Is.EqualTo(connectionProperties.Value.TranscriptionSubscription.State));
+
+                    //Stop Transcription
+                    StopTranscriptionOptions stopTranscriptionOptions = new StopTranscriptionOptions() { OperationContext = "StopTranscription" };
+                    var stopTranscriptionResponse = await callerMedia.StopTranscriptionAsync(stopTranscriptionOptions);
+
+                    var stopTranscriptionEvent = await WaitForEvent<TranscriptionStopped>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(stopTranscriptionEvent, Is.Not.Null);
+                    Assert.That(stopTranscriptionEvent is TranscriptionStopped, Is.True);
+
+                    connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    Assert.That(connectionProperties, Is.Not.Null);
+                    Assert.That(connectionProperties.Value.TranscriptionSubscription, Is.Not.Null);
+                    Assert.That(TranscriptionSubscriptionState.Inactive, Is.EqualTo(connectionProperties.Value.TranscriptionSubscription.State));
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(disconnectedEvent, Is.Not.Null);
+                    Assert.That(disconnectedEvent is CallDisconnected, Is.True);
+                    Assert.That(((CallDisconnected)disconnectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task SpeechRecognizeWithPhraseListTextSourcesTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    string SpeechToTextVoice = "en-US-NancyNeural";
+                    RecognizeInputType recognizeInputType = RecognizeInputType.Speech;
+
+                    TextSource textSource = new TextSource("Hi, this is recognize test. please provide input thanks!.")
+                    {
+                        VoiceName = SpeechToTextVoice
+                    };
+
+                    CallMediaRecognizeOptions recognizeOptions = new CallMediaRecognizeSpeechOptions(target)
+                    {
+                        Prompt = textSource,
+                        EndSilenceTimeout = TimeSpan.FromMilliseconds(1000),
+                        OperationContext = "speechContextWithPhraseList",
+                        PhraseList = new List<string>
+                                    {
+                                        "Vicodin",
+                                        "Zocor",
+                                        "Lisinopril",
+                                        "Synthroid",
+                                        "Norvasc"
+                                    }
+                    };
+
+                    await callConnection.GetCallMedia().StartRecognizingAsync(recognizeOptions).ConfigureAwait(false);
+
+                    var recognizeFailedEvent = await WaitForEvent<RecognizeFailed>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(recognizeFailedEvent, Is.Not.Null);
+                    Assert.That(recognizeFailedEvent is RecognizeFailed, Is.True);
+                    Assert.That(((RecognizeFailed)recognizeFailedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+                    Assert.That(((RecognizeFailed)recognizeFailedEvent!).ReasonCode, Is.EqualTo(MediaEventReasonCode.RecognizeInitialSilenceTimedOut));
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(disconnectedEvent, Is.Not.Null);
+                    Assert.That(disconnectedEvent is CallDisconnected, Is.True);
+                    Assert.That(((CallDisconnected)disconnectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
         private async Task<(string CallerCallConnectionId, string TargetCallConnectionId)> CreateAndAnswerCallWithMediaOrTranscriptionOptions(
             CallAutomationClient client,
             CallAutomationClient targetClient,

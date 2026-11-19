@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Options for continuous speech recognition. </summary>
@@ -13,16 +15,21 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
         public SpeechOptionsInternal()
         {
+            PhraseList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
         /// <param name="endSilenceTimeoutInMs"> The length of end silence when user stops speaking and cogservice send response. </param>
-        internal SpeechOptionsInternal(long? endSilenceTimeoutInMs)
+        /// <param name="phraseList"> List of phrases used to bias speech recognition, e.g. drug names, product SKUs. </param>
+        internal SpeechOptionsInternal(long? endSilenceTimeoutInMs, IList<string> phraseList)
         {
             EndSilenceTimeoutInMs = endSilenceTimeoutInMs;
+            PhraseList = phraseList;
         }
 
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>
         public long? EndSilenceTimeoutInMs { get; set; }
+        /// <summary> List of phrases used to bias speech recognition, e.g. drug names, product SKUs. </summary>
+        public IList<string> PhraseList { get; }
     }
 }

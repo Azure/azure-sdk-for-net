@@ -17,20 +17,15 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            string fromCall = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
             CommunicationIdentifierModel participant = default;
+            string fromCall = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fromCall"u8))
-                {
-                    fromCall = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -69,15 +64,20 @@ namespace Azure.Communication.CallAutomation
                     participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("fromCall"u8))
+                {
+                    fromCall = property.Value.GetString();
+                    continue;
+                }
             }
             return new MoveParticipantFailedInternal(
-                fromCall,
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant);
+                participant,
+                fromCall);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

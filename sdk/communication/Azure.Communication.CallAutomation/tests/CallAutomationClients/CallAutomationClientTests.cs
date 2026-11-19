@@ -22,6 +22,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             StartTranscription = true
         };
 
+        private readonly DtmfConfigurationOptions _dtmfConfiguration = new DtmfConfigurationOptions
+        {
+            EnableDtmfBroadcastInGroupCalls = true
+        };
+
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
@@ -87,6 +92,44 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
             Assert.That(response.Value.CallConnectionProperties.MediaStreamingSubscription, Is.Not.Null);
             Assert.That(response.Value.CallConnectionProperties.TranscriptionSubscription, Is.Not.Null);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public async Task AnswerCallWithDtmfConfiguationOptionsAsync_200OK(string incomingCallContext, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithDtmfConfigurationOptionsPayload);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
+            {
+                DtmfConfigurationOptions = _dtmfConfiguration,
+                OperationContext = "dtmfOperation_context"
+            };
+
+            var response = await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions, Is.Not.Null);
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls, Is.EqualTo(_dtmfConfiguration.EnableDtmfBroadcastInGroupCalls));
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public void AnswerCallWithDtmfConfiguationOptions_200OK(string incomingCallContext, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithDtmfConfigurationOptionsPayload);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
+            {
+                DtmfConfigurationOptions = _dtmfConfiguration,
+                OperationContext = "dtmfOperation_context"
+            };
+
+            var response = callAutomationClient.AnswerCall(options);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions, Is.Not.Null);
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls, Is.EqualTo(_dtmfConfiguration.EnableDtmfBroadcastInGroupCalls));
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -275,6 +318,50 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
             Assert.That(response.Value.CallConnectionProperties.MediaStreamingSubscription, Is.Not.Null);
             Assert.That(response.Value.CallConnectionProperties.TranscriptionSubscription, Is.Not.Null);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall))]
+        public async Task CreateCallWithDtmfConfiguationOptionsAsync_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithDtmfConfigurationOptionsPayload);
+            CreateCallOptions options = new CreateCallOptions(
+                callInvite: target,
+                callbackUri: callbackUri)
+            {
+                DtmfConfigurationOptions = _dtmfConfiguration,
+                OperationContext = "dtmfOperation_context"
+            };
+
+            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.That(result, Is.Not.Null);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions, Is.Not.Null);
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls, Is.EqualTo(_dtmfConfiguration.EnableDtmfBroadcastInGroupCalls));
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall))]
+        public void CreateCallWithDtmfConfiguationOptions_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithDtmfConfigurationOptionsPayload);
+            CreateCallOptions options = new CreateCallOptions(
+                callInvite: target,
+                callbackUri: callbackUri)
+            {
+                DtmfConfigurationOptions = _dtmfConfiguration,
+                OperationContext = "dtmfOperation_context"
+            };
+
+            var response = callAutomationClient.CreateCall(options);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.That(result, Is.Not.Null);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions, Is.Not.Null);
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls, Is.EqualTo(_dtmfConfiguration.EnableDtmfBroadcastInGroupCalls));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -536,6 +623,28 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
             Assert.That(response.Value.CallConnectionProperties.MediaStreamingSubscription, Is.Not.Null);
             Assert.That(response.Value.CallConnectionProperties.TranscriptionSubscription, Is.Not.Null);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateGroupCall))]
+        public async Task CreateGroupCallDtmfConfiguationOptionsAsync_201Created(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, PhoneNumberIdentifier callerIdNumber)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithDtmfConfigurationOptionsPayload);
+            CreateGroupCallOptions options = new(
+                targets: targets,
+                callbackUri: callbackUri)
+            {
+                DtmfConfigurationOptions = _dtmfConfiguration,
+                OperationContext = "dtmfOperation_context"
+            };
+
+            var response = await callAutomationClient.CreateGroupCallAsync(options).ConfigureAwait(false);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.That(result, Is.Not.Null);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions, Is.Not.Null);
+            Assert.That(response.Value.CallConnectionProperties.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls, Is.EqualTo(_dtmfConfiguration.EnableDtmfBroadcastInGroupCalls));
         }
 
         private static void ValidateCreateCallResult(CreateCallResult createCallResult)

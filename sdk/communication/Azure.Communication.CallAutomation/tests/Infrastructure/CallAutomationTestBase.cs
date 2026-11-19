@@ -83,11 +83,26 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                         "\"id\": \"81c66a1b-12eb-4d89-ab99-c9f0de59e893\"," +
                                         "\"state\": \"inactive\"," +
                                         "\"subscribedResultTypes\": [\"final\"]}";
+
         private const string NoneTranscriptionSubscription = "null";
         private const string DataSubscriptionId = "\"dataSubscriptionId\"";
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaStreamingSubscription, NoneTranscriptionSubscription);
         protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaStreamingSubscription, TranscriptionSubscription);
         protected string CreateOrAnswerCallOrGetCallConnectionPayloadWithTeamsAppSource = string.Format(DummyOPSPayload, NoneMediaStreamingSubscription, NoneTranscriptionSubscription);
+        protected const string DummyPayloadWithDtmfConfigurationOptions = "{" +
+                                        "\"callConnectionId\": \"someCallConnectionId\"," +
+                                        "\"serverCallId\": \"someServerCallId\"," +
+                                        "\"targets\": [{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"targetId\"}}]," +
+                                        "\"sourceDisplayName\": \"displayName\"," +
+                                        "\"source\":{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"sourceId\"}}," +
+                                        "\"callConnectionState\": \"connecting\"," +
+                                        "\"subject\": \"dummySubject\"," +
+                                        "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
+                                        "\"mediaStreamingSubscription\": null," +
+                                        "\"transcriptionSubscription\": null," +
+                                        "\"dtmfConfigurationOptions\": {\"enableDtmfBroadcastInGroupCalls\": true}" +
+                                        "}";
+        protected string CreateOrAnswerCallOrGetCallConnectionWithDtmfConfigurationOptionsPayload = DummyPayloadWithDtmfConfigurationOptions;
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {

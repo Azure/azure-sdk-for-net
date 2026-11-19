@@ -69,6 +69,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("enableLoopbackAudio"u8);
                 writer.WriteBooleanValue(EnableLoopbackAudio.Value);
             }
+            if (Optional.IsDefined(DtmfOptions))
+            {
+                writer.WritePropertyName("dtmfOptions"u8);
+                writer.WriteObjectValue(DtmfOptions);
+            }
             writer.WriteEndObject();
         }
 

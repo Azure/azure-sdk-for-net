@@ -21,10 +21,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="transportType"> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </param>
         /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
         /// <param name="transportUrl"> The transport URL for media streaming. </param>
-        /// <param name="contentType"></param>
+        /// <param name="contentType"> Type of content in Media streaming. </param>
         /// <param name="startMediaStreaming"> A value indicating whether the media streaming should start immediately after the call is answered. </param>
         /// <param name="enableBidirectional"> A value indicating whether bidirectional streaming is enabled. </param>
-        /// <param name="audioFormat"> The audio format used for encoding, including sample rate and channel type. The default is Pcm16KMono. </param>
+        /// <param name="audioFormat"> The format of the audio received from the audio subscription option. </param>
         /// <param name="enableDtmfTones"> A value that indicates whether to stream the DTMF tones. </param>
         internal WebSocketMediaStreamingOptionsInternal(StreamingTransport transportType, MediaStreamingAudioChannel audioChannelType, string transportUrl, MediaStreamingContent? contentType, bool? startMediaStreaming, bool? enableBidirectional, AudioFormat? audioFormat, bool? enableDtmfTones) : base(transportType, audioChannelType)
         {
@@ -39,13 +39,13 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The transport URL for media streaming. </summary>
         public string TransportUrl { get; set; }
-        /// <summary> Gets or sets the content type. </summary>
+        /// <summary> Type of content in Media streaming. </summary>
         public MediaStreamingContent? ContentType { get; set; }
         /// <summary> A value indicating whether the media streaming should start immediately after the call is answered. </summary>
         public bool? StartMediaStreaming { get; set; }
         /// <summary> A value indicating whether bidirectional streaming is enabled. </summary>
         public bool? EnableBidirectional { get; set; }
-        /// <summary> The audio format used for encoding, including sample rate and channel type. The default is Pcm16KMono. </summary>
+        /// <summary> The format of the audio received from the audio subscription option. </summary>
         public AudioFormat? AudioFormat { get; set; }
         /// <summary> A value that indicates whether to stream the DTMF tones. </summary>
         public bool? EnableDtmfTones { get; set; }

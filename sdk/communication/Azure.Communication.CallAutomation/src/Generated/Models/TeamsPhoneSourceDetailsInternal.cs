@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class TeamsPhoneSourceDetailsInternal
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneSourceDetailsInternal"/>. </summary>
-        /// <param name="source"> ID of the source entity passing along the call details (ex. Application Instance ID of - CQ/AA). </param>
+        /// <param name="source"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="language"> Language of the source entity passing along the call details, passed in the ISO-639 standard. </param>
         /// <param name="status"> Status of the source entity passing along the call details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/>, <paramref name="language"/> or <paramref name="status"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneSourceDetailsInternal"/>. </summary>
-        /// <param name="source"> ID of the source entity passing along the call details (ex. Application Instance ID of - CQ/AA). </param>
+        /// <param name="source"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="language"> Language of the source entity passing along the call details, passed in the ISO-639 standard. </param>
         /// <param name="status"> Status of the source entity passing along the call details. </param>
         /// <param name="intendedTargets"> Intended targets of the source entity passing along the call details. </param>
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
             IntendedTargets = intendedTargets;
         }
 
-        /// <summary> ID of the source entity passing along the call details (ex. Application Instance ID of - CQ/AA). </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Source { get; set; }
         /// <summary> Language of the source entity passing along the call details, passed in the ISO-639 standard. </summary>
         public string Language { get; set; }

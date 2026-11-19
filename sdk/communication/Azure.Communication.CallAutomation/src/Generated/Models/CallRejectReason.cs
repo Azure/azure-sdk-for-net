@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The rejection reason. </summary>
+    /// <summary> Reason of rejecting a call. </summary>
     public readonly partial struct CallRejectReason : IEquatable<CallRejectReason>
     {
         private readonly string _value;

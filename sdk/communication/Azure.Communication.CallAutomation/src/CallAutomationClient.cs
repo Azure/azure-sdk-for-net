@@ -62,6 +62,17 @@ namespace Azure.Communication.CallAutomation
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CallAutomationClientOptions())
         { }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/> with custom PMA endpoint.</summary>
+        /// <param name="pmaEndpoint">Endpoint for PMA</param>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
+        : this(
+              pmaEndpoint,
+              options ?? new CallAutomationClientOptions(),
+              ConnectionString.Parse(connectionString))
+        { }
         #endregion
 
         #region private constructors
@@ -85,6 +96,14 @@ namespace Azure.Communication.CallAutomation
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
+
+        private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
+      : this(
+      endpoint: endpoint,
+      httpPipeline: options.CustomBuildHttpPipeline(connectionString),
+      options: options)
+        { }
+
         #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallAutomationClient"/> for mocking.</summary>
@@ -210,6 +229,7 @@ namespace Azure.Communication.CallAutomation
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
             request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
+            request.DtmfOptions = CreateDtmfConfigurationOptionsInternal(options.DtmfConfigurationOptions);
 
             return request;
         }
@@ -677,6 +697,7 @@ namespace Azure.Communication.CallAutomation
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
+            request.DtmfOptions = CreateDtmfConfigurationOptionsInternal(options.DtmfConfigurationOptions);
 
             return request;
         }
@@ -704,6 +725,7 @@ namespace Azure.Communication.CallAutomation
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
+            request.DtmfOptions = CreateDtmfConfigurationOptionsInternal(options.DtmfConfigurationOptions);
 
             return request;
         }
@@ -770,6 +792,21 @@ namespace Azure.Communication.CallAutomation
             }
 
             return webSocketTranscriptionOptionsInternal;
+        }
+
+        private static DtmfConfigurationOptionsInternal CreateDtmfConfigurationOptionsInternal(DtmfConfigurationOptions configuration)
+        {
+            if (configuration == default)
+            {
+                return default;
+            }
+
+            DtmfConfigurationOptionsInternal dtmfConfigurationOptionsInternal = new DtmfConfigurationOptionsInternal(configuration.EnableDtmfBroadcastInGroupCalls)
+            {
+                EnableDtmfBroadcastInGroupCalls = configuration.EnableDtmfBroadcastInGroupCalls
+            };
+
+            return dtmfConfigurationOptionsInternal;
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

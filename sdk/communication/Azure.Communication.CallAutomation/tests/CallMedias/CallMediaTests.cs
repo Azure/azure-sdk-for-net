@@ -154,6 +154,33 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptionsWithPhraseList = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            EndSilenceTimeout = TimeSpan.FromMilliseconds(500),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceKind = VoiceKind.Female,
+                VoiceName = "LULU"
+            },
+            SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            IsSentimentAnalysisEnabled = true,
+            SpeechModelEndpointId = "customModelEndpointId",
+            PhraseList = new List<string>
+                        {
+                            "Vicodin",
+                            "Zocor",
+                            "Lisinopril",
+                            "Synthroid",
+                            "Norvasc",
+                        }
+        };
+
         private static CallMediaRecognizeSpeechOptions _speechRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
         {
             InterruptCallMediaOperation = true,
@@ -189,6 +216,33 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
             IsSentimentAnalysisEnabled = true,
             SpeechModelEndpointId = "customModelEndpointId"
+        };
+
+        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptionsWithPhraseList = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            EndSilenceTimeout = TimeSpan.FromMilliseconds(500),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceKind = VoiceKind.Female,
+                VoiceName = "LULU"
+            },
+            SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            IsSentimentAnalysisEnabled = true,
+            SpeechModelEndpointId = "customModelEndpointId",
+            PhraseList = new List<string>
+                        {
+                            "Vicodin",
+                            "Zocor",
+                            "Lisinopril",
+                            "Synthroid",
+                            "Norvasc",
+                        }
         };
 
         private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
@@ -839,6 +893,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
                    callMedia => callMedia.StartRecognizingAsync(_emptyRecognizeOptions)
+                },
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_speechRecognizeOptionsWithPhraseList)
+                },
+                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_speechOrDtmfRecognizeOptionsWithPhraseList)
                 }
             };
         }
@@ -908,7 +970,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
-                }
+                },
+                 new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_speechRecognizeOptionsWithPhraseList)
+                },
+                  new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_speechOrDtmfRecognizeOptionsWithPhraseList)
+                },
             };
         }
 
@@ -1052,6 +1122,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                        },
                        IsSentimentAnalysisEnabled = true,
                        Locales = new List<string>() { "en-US", "fr-FR" },
+                       PhraseList = new List<string>
+                        {
+                            "Vicodin",
+                            "Zocor",
+                            "Lisinopril",
+                            "Synthroid",
+                            "Norvasc",
+                        }
                    })
                 }
             };
@@ -1119,7 +1197,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                                IsEndCallSummaryEnabled = false,
                                Locale = "en-US"
                            },
-                           IsSentimentAnalysisEnabled = true
+                           IsSentimentAnalysisEnabled = true,
+                           PhraseList = new List<string>
+                           {
+                               "Vicodin",
+                               "Zocor",
+                               "Lisinopril",
+                               "Synthroid",
+                               "Norvasc",
+                           }
                        }
                    )
                 }

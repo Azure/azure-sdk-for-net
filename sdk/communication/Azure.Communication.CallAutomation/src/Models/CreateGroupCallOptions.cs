@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.Identity.Client;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -70,5 +71,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Enables loopback audio functionality for the call. </summary>
         public bool? IsLoopbackAudioEnabled { get; set; }
+
+        /// <summary>
+        /// Enabling DTMF broadcast allows DTMF tones to be transmitted during group calls.
+        /// </summary>
+        public DtmfConfigurationOptions DtmfConfigurationOptions { get; set; }
     }
 }

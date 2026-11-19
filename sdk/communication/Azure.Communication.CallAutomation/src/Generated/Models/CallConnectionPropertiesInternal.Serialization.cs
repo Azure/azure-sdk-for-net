@@ -31,6 +31,7 @@ namespace Azure.Communication.CallAutomation
             MediaStreamingSubscriptionInternal mediaStreamingSubscription = default;
             TranscriptionSubscriptionInternal transcriptionSubscription = default;
             PhoneNumberIdentifierModel answeredFor = default;
+            DtmfConfigurationOptionsInternal dtmfConfigurationOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -135,6 +136,15 @@ namespace Azure.Communication.CallAutomation
                     answeredFor = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("dtmfConfigurationOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dtmfConfigurationOptions = DtmfConfigurationOptionsInternal.DeserializeDtmfConfigurationOptionsInternal(property.Value);
+                    continue;
+                }
             }
             return new CallConnectionPropertiesInternal(
                 callConnectionId,
@@ -149,7 +159,8 @@ namespace Azure.Communication.CallAutomation
                 answeredBy,
                 mediaStreamingSubscription,
                 transcriptionSubscription,
-                answeredFor);
+                answeredFor,
+                dtmfConfigurationOptions);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

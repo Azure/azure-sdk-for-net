@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Defines the type of the play source. </summary>
+    /// <summary> Defines the types of play source. </summary>
     internal readonly partial struct PlaySourceTypeInternal : IEquatable<PlaySourceTypeInternal>
     {
         private readonly string _value;

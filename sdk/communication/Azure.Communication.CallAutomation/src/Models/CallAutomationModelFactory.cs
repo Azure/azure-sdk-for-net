@@ -177,6 +177,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="transcriptionSubscription">The subscription details for transcription.</param>
         /// <param name="answeredBy">Identifier that answered the call.</param>
         /// <param name="answeredFor">Identity of the original Pstn target of an incoming Call.</param>
+        /// <param name="dtmfConfigurationOptions">The configuration options for DTMF.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
             string callConnectionId = default,
@@ -190,9 +191,10 @@ namespace Azure.Communication.CallAutomation
             CommunicationUserIdentifier answeredBy = default,
             MediaStreamingSubscription mediaStreamingSubscription = default,
             TranscriptionSubscription transcriptionSubscription = default,
-            PhoneNumberIdentifier answeredFor = default)
+            PhoneNumberIdentifier answeredFor = default,
+            DtmfConfigurationOptions dtmfConfigurationOptions = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaStreamingSubscription, transcriptionSubscription, answeredBy, answeredFor);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaStreamingSubscription, transcriptionSubscription, answeredBy, answeredFor, dtmfConfigurationOptions);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>

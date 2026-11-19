@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        /// <param name="summarizationOptions"> Summarization configuration options. </param>
+        /// <param name="summarizationOptions"> Configuration options for call summarization. </param>
         internal SummarizeCallRequestInternal(string operationContext, string operationCallbackUri, SummarizationOptionsInternal summarizationOptions)
         {
             OperationContext = operationContext;
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
-        /// <summary> Summarization configuration options. </summary>
+        /// <summary> Configuration options for call summarization. </summary>
         public SummarizationOptionsInternal SummarizationOptions { get; set; }
     }
 }

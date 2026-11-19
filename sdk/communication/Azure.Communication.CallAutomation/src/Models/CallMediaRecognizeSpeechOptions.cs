@@ -22,5 +22,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>
         public TimeSpan EndSilenceTimeout { get; set; }
+
+        /// <summary> List of phrases used to bias transcription, e.g. drug names, product SKUs. </summary>
+        public IList<string> PhraseList { get; set; }
     }
 }

@@ -22,7 +22,8 @@ namespace Azure.Communication.CallAutomation
             MediaStreamingSubscription mediaStreamingSubscription,
             TranscriptionSubscription transcriptionSubscription,
             CommunicationUserIdentifier answeredBy,
-            PhoneNumberIdentifier answeredFor
+            PhoneNumberIdentifier answeredFor,
+            DtmfConfigurationOptions dtmfConfigurationOptions
             )
         {
             CallConnectionId = callConnectionId;
@@ -37,6 +38,7 @@ namespace Azure.Communication.CallAutomation
             TranscriptionSubscription = transcriptionSubscription;
             AnsweredBy = answeredBy;
             AnsweredFor = answeredFor;
+            DtmfConfigurationOptions = dtmfConfigurationOptions;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -82,6 +84,14 @@ namespace Azure.Communication.CallAutomation
             {
                 AnsweredFor = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.AnsweredFor.Value);
             }
+
+            if (callConnectionPropertiesDtoInternal.DtmfConfigurationOptions != null)
+            {
+                DtmfConfigurationOptions = new DtmfConfigurationOptions()
+                {
+                    EnableDtmfBroadcastInGroupCalls = callConnectionPropertiesDtoInternal.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls
+                };
+            }
         }
 
         /// <summary> The call connection id. </summary>
@@ -125,5 +135,10 @@ namespace Azure.Communication.CallAutomation
         /// Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number.
         /// </summary>
         public PhoneNumberIdentifier AnsweredFor { get; }
+
+        /// <summary>
+        /// Enabling DTMF broadcast allows DTMF tones to be transmitted during group calls.
+        /// </summary>
+        public DtmfConfigurationOptions DtmfConfigurationOptions { get; set; }
     }
 }

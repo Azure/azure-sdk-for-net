@@ -47,16 +47,6 @@ namespace Azure.Communication.CallAutomation
             return new SipDiagnosticInfo(code, message);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
-        /// <param name="tones"></param>
-        /// <returns> A new <see cref="CallAutomation.DtmfResult"/> instance for mocking. </returns>
-        public static DtmfResult DtmfResult(IEnumerable<DtmfTone> tones = null)
-        {
-            tones ??= new List<DtmfTone>();
-
-            return new DtmfResult(tones?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="CallAutomation.ChoiceResult"/>. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
@@ -65,7 +55,7 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
         /// <param name="languageIdentified"> The identified language for a spoken phrase. </param>
-        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
+        /// <param name="sentimentAnalysisResult"></param>
         /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
         public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null, double? confidence = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null)
         {
@@ -80,24 +70,23 @@ namespace Azure.Communication.CallAutomation
             return new SentimentAnalysisResult(sentiment);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
-        /// <param name="speech"> The recognized speech in string. </param>
-        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
-        /// <param name="languageIdentified"> The identified language. </param>
-        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
-        /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
-        public static SpeechResult SpeechResult(string speech = null, double? confidence = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null)
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
+        /// <param name="tones"></param>
+        /// <returns> A new <see cref="CallAutomation.DtmfResult"/> instance for mocking. </returns>
+        public static DtmfResult DtmfResult(IEnumerable<DtmfTone> tones = null)
         {
-            return new SpeechResult(speech, confidence, languageIdentified, sentimentAnalysisResult);
+            tones ??= new List<DtmfTone>();
+
+            return new DtmfResult(tones?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingFailed"/>. </summary>
-        /// <param name="mediaStreamingUpdate"> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </param>
+        /// <param name="mediaStreamingUpdate"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         /// <returns> A new <see cref="CallAutomation.MediaStreamingFailed"/> instance for mocking. </returns>
         public static MediaStreamingFailed MediaStreamingFailed(MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
@@ -121,12 +110,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStarted"/>. </summary>
-        /// <param name="mediaStreamingUpdate"> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </param>
+        /// <param name="mediaStreamingUpdate"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         /// <returns> A new <see cref="CallAutomation.MediaStreamingStarted"/> instance for mocking. </returns>
         public static MediaStreamingStarted MediaStreamingStarted(MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
@@ -140,12 +129,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStopped"/>. </summary>
-        /// <param name="mediaStreamingUpdate"> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </param>
+        /// <param name="mediaStreamingUpdate"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         /// <returns> A new <see cref="CallAutomation.MediaStreamingStopped"/> instance for mocking. </returns>
         public static MediaStreamingStopped MediaStreamingStopped(MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
@@ -158,13 +147,24 @@ namespace Azure.Communication.CallAutomation
                 resultInformation);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
+        /// <param name="speech"> The recognized speech in string. </param>
+        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
+        /// <param name="languageIdentified"> The identified language. </param>
+        /// <param name="sentimentAnalysisResult"></param>
+        /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
+        public static SpeechResult SpeechResult(string speech = null, double? confidence = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null)
+        {
+            return new SpeechResult(speech, confidence, languageIdentified, sentimentAnalysisResult);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.StartRecordingFailed"/>. </summary>
         /// <param name="recordingId"> The call recording Id. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         /// <returns> A new <see cref="CallAutomation.StartRecordingFailed"/> instance for mocking. </returns>
         public static StartRecordingFailed StartRecordingFailed(string recordingId = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
@@ -177,17 +177,17 @@ namespace Azure.Communication.CallAutomation
                 resultInformation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/>. </summary>
+        /// <param name="transcriptionUpdate"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <returns> A new <see cref="CallAutomation.TranscriptionFailed"/> instance for mocking. </returns>
-        public static TranscriptionFailed TranscriptionFailed(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"></param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/> instance for mocking. </returns>
+        public static TranscriptionCallSummaryUpdated TranscriptionCallSummaryUpdated(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new TranscriptionFailed(
+            return new TranscriptionCallSummaryUpdated(
                 transcriptionUpdate,
                 callConnectionId,
                 serverCallId,
@@ -206,13 +206,32 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails, transcriptionMessage);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
+        /// <param name="transcriptionUpdate"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionFailed"/> instance for mocking. </returns>
+        public static TranscriptionFailed TranscriptionFailed(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new TranscriptionFailed(
+                transcriptionUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>
+        /// <param name="transcriptionUpdate"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionStarted"/> instance for mocking. </returns>
         public static TranscriptionStarted TranscriptionStarted(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
@@ -226,12 +245,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStopped"/>. </summary>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <param name="transcriptionUpdate"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionStopped"/> instance for mocking. </returns>
         public static TranscriptionStopped TranscriptionStopped(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
@@ -245,35 +264,16 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdated"/>. </summary>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <param name="transcriptionUpdate"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdated"/> instance for mocking. </returns>
         public static TranscriptionUpdated TranscriptionUpdated(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             return new TranscriptionUpdated(
-                transcriptionUpdate,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/>. </summary>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <returns> A new <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/> instance for mocking. </returns>
-        public static TranscriptionCallSummaryUpdated TranscriptionCallSummaryUpdated(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new TranscriptionCallSummaryUpdated(
                 transcriptionUpdate,
                 callConnectionId,
                 serverCallId,

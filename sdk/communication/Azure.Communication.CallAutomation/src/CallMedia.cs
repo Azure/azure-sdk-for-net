@@ -842,6 +842,14 @@ namespace Azure.Communication.CallAutomation
                     EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeout.TotalMilliseconds
                 };
 
+                if (recognizeSpeechOptions.PhraseList != null && recognizeSpeechOptions.PhraseList.Any())
+                {
+                    foreach (var phrase in recognizeSpeechOptions.PhraseList)
+                    {
+                        speechConfigurations.PhraseList.Add(phrase);
+                    }
+                }
+
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeSpeechOptions.InterruptPrompt,
@@ -886,6 +894,14 @@ namespace Azure.Communication.CallAutomation
                 {
                     EndSilenceTimeoutInMs = (long)recognizeSpeechOrDtmfOptions.EndSilenceTimeout.TotalMilliseconds
                 };
+
+                if (recognizeSpeechOrDtmfOptions.PhraseList != null && recognizeSpeechOrDtmfOptions.PhraseList.Any())
+                {
+                    foreach (var phrase in recognizeSpeechOrDtmfOptions.PhraseList)
+                    {
+                        speechConfigurations.PhraseList.Add(phrase);
+                    }
+                }
 
                 DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal()
                 {
@@ -1325,6 +1341,14 @@ namespace Azure.Communication.CallAutomation
                             request.Locales.Add(locale);
                         }
                     }
+
+                    if (options?.PhraseList != null)
+                    {
+                        foreach (var phrase in options.PhraseList)
+                        {
+                            request.PhraseList.Add(phrase);
+                        }
+                    }
                 }
 
                 return CallMediaRestClient.StartTranscription(CallConnectionId, request, cancellationToken);
@@ -1365,6 +1389,14 @@ namespace Azure.Communication.CallAutomation
                         foreach (string locale in options.Locales)
                         {
                             request.Locales.Add(locale);
+                        }
+                    }
+
+                    if (options?.PhraseList != null)
+                    {
+                        foreach (var phrase in options.PhraseList)
+                        {
+                            request.PhraseList.Add(phrase);
                         }
                     }
                 }
@@ -1440,14 +1472,10 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(
-                    locale: locale,
-                    speechModelEndpointId: null,
-                    operationContext: null,
-                    operationCallbackUri: null,
-                    piiRedactionOptions:null,
-                    enableSentimentAnalysis:null,
-                    summarizationOptions:null);
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal()
+                {
+                    Locale = locale
+                };
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
@@ -1469,15 +1497,24 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(
-                    options.Locale,
-                    options.SpeechRecognitionModelEndpointId,
-                    options.OperationContext,
-                    options.OperationCallbackUri?.AbsoluteUri,
-                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
-                    options.IsSentimentAnalysisEnabled,
-                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale)
-                    );
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal()
+                {
+                    Locale = options.Locale,
+                    SpeechModelEndpointId = options.SpeechRecognitionModelEndpointId,
+                    OperationContext = options.OperationContext,
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                    PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
+                    EnableSentimentAnalysis = options.IsSentimentAnalysisEnabled,
+                    SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale)
+                };
+
+                if (options?.PhraseList != null)
+                {
+                    foreach (var phrase in options.PhraseList)
+                    {
+                        request.PhraseList.Add(phrase);
+                    }
+                }
 
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1500,14 +1537,10 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(
-                    locale: locale,
-                    speechModelEndpointId: null,
-                    operationContext: null,
-                    operationCallbackUri: null,
-                    piiRedactionOptions: null,
-                    enableSentimentAnalysis: null,
-                    summarizationOptions: null);
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal()
+                {
+                    Locale = locale
+                };
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -1529,15 +1562,24 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(
-                    options.Locale,
-                    options.SpeechRecognitionModelEndpointId,
-                    options.OperationContext,
-                    options.OperationCallbackUri?.AbsoluteUri,
-                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
-                    options.IsSentimentAnalysisEnabled,
-                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale)
-                    );
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal()
+                {
+                    Locale = options.Locale,
+                    SpeechModelEndpointId = options.SpeechRecognitionModelEndpointId,
+                    OperationContext = options.OperationContext,
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                    PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
+                    EnableSentimentAnalysis = options.IsSentimentAnalysisEnabled,
+                    SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale)
+                };
+
+                if (options?.PhraseList != null)
+                {
+                    foreach (var phrase in options.PhraseList)
+                    {
+                        request.PhraseList.Add(phrase);
+                    }
+                }
 
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }

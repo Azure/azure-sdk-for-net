@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Transcription subscription state. </summary>
+    /// <summary> Current state of transcription session. </summary>
     public readonly partial struct TranscriptionSubscriptionState : IEquatable<TranscriptionSubscriptionState>
     {
         private readonly string _value;

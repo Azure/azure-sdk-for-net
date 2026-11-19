@@ -30,19 +30,20 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
+        /// <param name="answeredBy"> A user that got created with an Azure Communication Services resource. </param>
         /// <param name="mediaStreamingOptions">
-        /// Media Streaming Options.
+        /// Options for media streaming.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </param>
         /// <param name="transcriptionOptions">
-        /// Transcription Options.
+        /// Options for live transcription.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </param>
         /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, bool? enableLoopbackAudio)
+        /// <param name="dtmfOptions"> Represents the configuration for DTMF functionality in calls. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -52,6 +53,7 @@ namespace Azure.Communication.CallAutomation
             MediaStreamingOptions = mediaStreamingOptions;
             TranscriptionOptions = transcriptionOptions;
             EnableLoopbackAudio = enableLoopbackAudio;
+            DtmfOptions = dtmfOptions;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -62,21 +64,23 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> The identifier of the call automation entity which answers the call. </summary>
+        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
         /// <summary>
-        /// Media Streaming Options.
+        /// Options for media streaming.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </summary>
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
         /// <summary>
-        /// Transcription Options.
+        /// Options for live transcription.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </summary>
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
         /// <summary> Enables loopback audio functionality for the call. </summary>
         public bool? EnableLoopbackAudio { get; set; }
+        /// <summary> Represents the configuration for DTMF functionality in calls. </summary>
+        public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
     }
 }

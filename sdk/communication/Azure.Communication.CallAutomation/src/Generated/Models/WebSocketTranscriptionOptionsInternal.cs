@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="piiRedactionOptions"> PII redaction configuration options. </param>
         /// <param name="enableSentimentAnalysis"> Indicating if sentiment analysis should be enabled. </param>
         /// <param name="locales"> Specifies the list of locales for language identification and transcription. Example: ["en-us", "fr-fr", "hi-in"] etc. </param>
-        /// <param name="summarizationOptions"> Summarization configuration options. </param>
+        /// <param name="summarizationOptions"> Configuration options for call summarization. </param>
         internal WebSocketTranscriptionOptionsInternal(StreamingTransport transportType, string locale, string transportUrl, string speechModelEndpointId, bool? startTranscription, bool? enableIntermediateResults, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, IList<string> locales, SummarizationOptionsInternal summarizationOptions) : base(transportType, locale)
         {
             TransportUrl = transportUrl;
@@ -57,7 +57,7 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableSentimentAnalysis { get; set; }
         /// <summary> Specifies the list of locales for language identification and transcription. Example: ["en-us", "fr-fr", "hi-in"] etc. </summary>
         public IList<string> Locales { get; }
-        /// <summary> Summarization configuration options. </summary>
+        /// <summary> Configuration options for call summarization. </summary>
         public SummarizationOptionsInternal SummarizationOptions { get; set; }
     }
 }

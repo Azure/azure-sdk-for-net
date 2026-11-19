@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The UpdateTranscriptionRequest. </summary>
@@ -13,6 +15,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
         public UpdateTranscriptionRequestInternal()
         {
+            PhraseList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
@@ -25,8 +28,9 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="piiRedactionOptions"> PII redaction configuration options. </param>
         /// <param name="enableSentimentAnalysis"> Indicating if sentiment analysis should be used. </param>
-        /// <param name="summarizationOptions"> Summarization configuration options. </param>
-        internal UpdateTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, SummarizationOptionsInternal summarizationOptions)
+        /// <param name="summarizationOptions"> Configuration options for call summarization. </param>
+        /// <param name="phraseList"> List of phrases used to bias transcription. Replaces the existing list. </param>
+        internal UpdateTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, SummarizationOptionsInternal summarizationOptions, IList<string> phraseList)
         {
             Locale = locale;
             SpeechModelEndpointId = speechModelEndpointId;
@@ -35,6 +39,7 @@ namespace Azure.Communication.CallAutomation
             PiiRedactionOptions = piiRedactionOptions;
             EnableSentimentAnalysis = enableSentimentAnalysis;
             SummarizationOptions = summarizationOptions;
+            PhraseList = phraseList;
         }
 
         /// <summary> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </summary>
@@ -52,7 +57,9 @@ namespace Azure.Communication.CallAutomation
         public PiiRedactionOptionsInternal PiiRedactionOptions { get; set; }
         /// <summary> Indicating if sentiment analysis should be used. </summary>
         public bool? EnableSentimentAnalysis { get; set; }
-        /// <summary> Summarization configuration options. </summary>
+        /// <summary> Configuration options for call summarization. </summary>
         public SummarizationOptionsInternal SummarizationOptions { get; set; }
+        /// <summary> List of phrases used to bias transcription. Replaces the existing list. </summary>
+        public IList<string> PhraseList { get; }
     }
 }

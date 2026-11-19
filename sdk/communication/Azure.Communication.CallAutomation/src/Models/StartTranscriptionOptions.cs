@@ -38,5 +38,8 @@ namespace Azure.Communication.CallAutomation
         public IList<string> Locales { get; set; }
         /// <summary> Summarization configuration options. </summary>
         public SummarizationOptions SummarizationOptions { get; set; }
+
+        /// <summary> List of phrases used to bias transcription, e.g. drug names, product SKUs. </summary>
+        public IList<string> PhraseList { get; set; }
     }
 }

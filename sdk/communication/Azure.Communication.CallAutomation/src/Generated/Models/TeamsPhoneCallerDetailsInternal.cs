@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class TeamsPhoneCallerDetailsInternal
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneCallerDetailsInternal"/>. </summary>
-        /// <param name="caller"> Caller's ID. </param>
+        /// <param name="caller"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="name"> Caller's name. </param>
         /// <param name="phoneNumber"> Caller's phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="caller"/>, <paramref name="name"/> or <paramref name="phoneNumber"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneCallerDetailsInternal"/>. </summary>
-        /// <param name="caller"> Caller's ID. </param>
+        /// <param name="caller"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="name"> Caller's name. </param>
         /// <param name="phoneNumber"> Caller's phone number. </param>
         /// <param name="recordId"> Caller's record ID (ex in CRM). </param>
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallAutomation
             AdditionalCallerInformation = additionalCallerInformation;
         }
 
-        /// <summary> Caller's ID. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Caller { get; set; }
         /// <summary> Caller's name. </summary>
         public string Name { get; set; }

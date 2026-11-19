@@ -41,5 +41,8 @@ namespace Azure.Communication.CallAutomation
         /// List of tones that will stop recognizing.
         /// </summary>
         public IList<DtmfTone> StopTones { get; set; }
+
+        /// <summary> List of phrases used to bias transcription, e.g. drug names, product SKUs. </summary>
+        public IList<string> PhraseList { get; set; }
     }
 }

@@ -13,10 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class ChannelAffinityInternal
     {
         /// <summary> Initializes a new instance of <see cref="ChannelAffinityInternal"/>. </summary>
-        /// <param name="participant">
-        /// The identifier for the participant whose bitstream will be written to the channel
-        /// represented by the channel number.
-        /// </param>
+        /// <param name="participant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
         public ChannelAffinityInternal(CommunicationIdentifierModel participant)
         {
@@ -27,10 +24,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="ChannelAffinityInternal"/>. </summary>
         /// <param name="channel"> Channel number to which bitstream from a particular participant will be written. </param>
-        /// <param name="participant">
-        /// The identifier for the participant whose bitstream will be written to the channel
-        /// represented by the channel number.
-        /// </param>
+        /// <param name="participant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         internal ChannelAffinityInternal(int? channel, CommunicationIdentifierModel participant)
         {
             Channel = channel;
@@ -39,10 +33,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Channel number to which bitstream from a particular participant will be written. </summary>
         public int? Channel { get; set; }
-        /// <summary>
-        /// The identifier for the participant whose bitstream will be written to the channel
-        /// represented by the channel number.
-        /// </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Participant { get; }
     }
 }

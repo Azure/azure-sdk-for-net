@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -40,5 +41,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Summarization configuration options. </summary>
         public SummarizationOptions SummarizationOptions { get; set; }
+        /// <summary> List of phrases used to bias transcription, e.g. drug names, product SKUs. </summary>
+        public IList<string> PhraseList { get; set; }
     }
 }

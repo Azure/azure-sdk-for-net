@@ -60,6 +60,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("summarizationOptions"u8);
                 writer.WriteObjectValue(SummarizationOptions);
             }
+            if (Optional.IsCollectionDefined(PhraseList))
+            {
+                writer.WritePropertyName("phraseList"u8);
+                writer.WriteStartArray();
+                foreach (var item in PhraseList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
