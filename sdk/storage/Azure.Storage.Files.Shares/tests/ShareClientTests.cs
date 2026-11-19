@@ -766,6 +766,37 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task CreateAsync_ChangeFeed()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 3
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.IsTrue(response.Value.EnableChangeFeed);
+                Assert.AreEqual(3, response.Value.ChangeFeedRetentionInDays);
+                Assert.IsNotNull(response.Value.ChangeFeedBlobContainerName);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
         //[RecordedTest]
         //[TestCase(null)]
         //[TestCase(true)]
@@ -1258,6 +1289,21 @@ namespace Azure.Storage.Files.Shares.Tests
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.IsNotNull(response.Value.LastModified);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task GetPropertiesAsync_CreatedOn()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Act
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.CreatedOn);
         }
 
         [RecordedTest]
@@ -2115,6 +2161,56 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(response.Value.EnablePaidBursting);
             Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
             Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task SetPropertiesAsync_ChangeFeed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 5
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnableChangeFeed);
+            Assert.AreEqual(5, response.Value.ChangeFeedRetentionInDays);
+            Assert.IsNotNull(response.Value.ChangeFeedBlobContainerName);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task SetPropertiesAsync_ChangeFeedRetentionInDaysOnly()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await test.Share.SetPropertiesAsync(new ShareSetPropertiesOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 5
+            });
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                ChangeFeedRetentionInDays = 30
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnableChangeFeed);
+            Assert.AreEqual(30, response.Value.ChangeFeedRetentionInDays);
         }
 
         [RecordedTest]
@@ -3382,6 +3478,36 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             TestHelper.AssertExpectedException(
                 () => shareCLient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.ShareName does not match Name in the Client. ShareSasBuilder.ShareName must either be left empty or match the Name in the Client"));
+        }
+
+        [Test]
+        public void GenerateSas_BuilderNameWithIgnorableUnicode_IsRejected()
+        {
+            string shareName = "canary";
+            string spoofedShareName = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(shareName, spoofedShareName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(shareName, spoofedShareName, StringComparison.Ordinal));
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(new Uri("https://account.file.core.windows.net"))
+            {
+                ShareName = shareName
+            };
+
+            ShareClient shareClient = InstrumentClient(new ShareClient(
+                shareUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                ShareName = spoofedShareName
+            };
+
+            TestHelper.AssertExpectedException(
+                () => shareClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.ShareName does not match Name in the Client. ShareSasBuilder.ShareName must either be left empty or match the Name in the Client"));
         }
         #endregion

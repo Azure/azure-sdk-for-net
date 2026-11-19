@@ -10,6 +10,33 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Tests;
 public class SingletonResourceTests
 {
     [Test]
+    public async Task SingletonWithCompositeName()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                SingletonSetting singleton = new("singleton") { Name = "store/default" };
+                SingletonSetting existing = SingletonSetting.FromExisting("existing");
+                existing.Name = "store/default";
+                infra.Add(singleton);
+                infra.Add(existing);
+                return infra;
+            });
+
+        test.Compare(
+            """
+            resource singleton 'ProvisioningTypeSpec/configurationStores/settings@2024-05-01' = {
+              name: 'store/default'
+            }
+
+            resource existing 'ProvisioningTypeSpec/configurationStores/settings@2024-05-01' existing = {
+              name: 'store/default'
+            }
+            """);
+    }
+
+    [Test]
     public async Task DecoratedSingleton()
     {
         await using Trycep test = new Trycep().Define(

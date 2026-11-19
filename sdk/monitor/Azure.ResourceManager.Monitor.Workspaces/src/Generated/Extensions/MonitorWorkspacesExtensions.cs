@@ -92,6 +92,132 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MetricNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetMetricNamespaceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MetricNamespaceResource"/> object. </returns>
+        public static MetricNamespaceResource GetMetricNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorWorkspacesArmClient(client).GetMetricNamespaceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MetricConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetMetricConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MetricConfigurationResource"/> object. </returns>
+        public static MetricConfigurationResource GetMetricConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorWorkspacesArmClient(client).GetMetricConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TraceContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetTraceContainerResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TraceContainerResource"/> object. </returns>
+        public static TraceContainerResource GetTraceContainerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorWorkspacesArmClient(client).GetTraceContainerResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TraceAssociationAtResourceGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetTraceAssociationAtResourceGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
+        public static TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorWorkspacesArmClient(client).GetTraceAssociationAtResourceGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TraceAssociationAtSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetTraceAssociationAtSubscriptionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
+        public static TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorWorkspacesArmClient(client).GetTraceAssociationAtSubscriptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TraceAssociationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetTraceAssociationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TraceAssociationResource"/> object. </returns>
+        public static TraceAssociationResource GetTraceAssociationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorWorkspacesArmClient(client).GetTraceAssociationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TraceAssociationResource"/> along with the instance operations that can be performed on it in the ArmClient
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetTraceAssociation(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TraceAssociationResource"/> object. </returns>
+        public static TraceAssociationResource GetTraceAssociation(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorWorkspacesArmClient(client).GetTraceAssociation(scope);
+        }
+
+        /// <summary>
         /// Gets a collection of MonitorWorkspaces in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -144,6 +270,40 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetMonitorWorkspace(azureMonitorWorkspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TraceAssociationAtResourceGroupResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesResourceGroupResource.GetTraceAssociationAtResourceGroup()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
+        public static TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroup(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetTraceAssociationAtResourceGroup();
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TraceAssociationAtSubscriptionResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesSubscriptionResource.GetTraceAssociationAtSubscription()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
+        public static TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscription(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMonitorWorkspacesSubscriptionResource(subscriptionResource).GetTraceAssociationAtSubscription();
         }
 
         /// <summary>

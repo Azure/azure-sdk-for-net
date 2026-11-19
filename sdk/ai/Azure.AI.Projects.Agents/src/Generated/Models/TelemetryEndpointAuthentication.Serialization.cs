@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Authentication configuration for a telemetry endpoint.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HeaderTelemetryEndpointAuth"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HeaderTelemetryEndpointAuthentication"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelemetryEndpointAuthentication))]
     public abstract partial class TelemetryEndpointAuthentication : IJsonModel<TelemetryEndpointAuthentication>
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Agents
                 switch (discriminator.GetString())
                 {
                     case "header":
-                        return HeaderTelemetryEndpointAuth.DeserializeHeaderTelemetryEndpointAuth(element, options);
+                        return HeaderTelemetryEndpointAuthentication.DeserializeHeaderTelemetryEndpointAuthentication(element, options);
                 }
             }
             return UnknownTelemetryEndpointAuthentication.DeserializeUnknownTelemetryEndpointAuthentication(element, options);

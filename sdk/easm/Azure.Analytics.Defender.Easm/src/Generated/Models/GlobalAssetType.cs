@@ -96,7 +96,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="GlobalAssetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GlobalAssetType?(string value) => value == null ? null : new GlobalAssetType(value);
+        public static implicit operator GlobalAssetType?(string value) => value == null ? (GlobalAssetType?)null : new GlobalAssetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

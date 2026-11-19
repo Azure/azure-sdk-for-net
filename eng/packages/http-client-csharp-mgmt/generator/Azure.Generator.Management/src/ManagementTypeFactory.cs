@@ -95,10 +95,37 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         protected override CSharpType? CreateLastContractModelBaseCore(CSharpType previousBase, InputModelType currentModel)
-            => currentModel.BaseModel is not null &&
-                KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase)
-                    ? knownBase
-                    : null;
+        {
+            if (!KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase))
+            {
+                return null;
+            }
+
+            if (currentModel.BaseModel is null)
+            {
+                // Historical CLR properties may not expose wire names. Check MPG aliases with
+                // the same effective-shape policy before MTG treats them as model-local.
+                var systemBase = new SystemObjectModelProvider(knownBase, currentModel);
+                foreach (var property in currentModel.Properties)
+                {
+                    if (!ArmResourcePropertyProjection.TryGetAliasedName(property, out var propertyName))
+                    {
+                        continue;
+                    }
+
+                    var frameworkProperty = knownBase.FrameworkType.GetProperty(propertyName);
+                    if (frameworkProperty is null ||
+                        !IsLastContractModelBasePropertyCompatibleCore(knownBase, property, new PropertyProvider(
+                            null, MethodSignatureModifiers.Public, new CSharpType(frameworkProperty.PropertyType),
+                            propertyName, new AutoPropertyBody(frameworkProperty.SetMethod?.IsPublic == true), systemBase)))
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return knownBase;
+        }
 
         /// <inheritdoc/>
         protected override bool IsLastContractModelBasePropertyCompatibleCore(
@@ -113,7 +140,12 @@ namespace Azure.Generator.Management
             }
 
             var hasSetter = !currentProperty.IsReadOnly;
-            if (!ArmResourcePropertyProjection.TryGetName(currentProperty, currentType, out var expectedName))
+            string? expectedName;
+            if (ArmResourcePropertyProjection.TryGetHistoricalShape(currentProperty, currentType, out expectedName, out var historicalType))
+            {
+                currentType = historicalType;
+            }
+            else if (!ArmResourcePropertyProjection.TryGetName(currentProperty, currentType, out expectedName))
             {
                 // The base check requires a CLR setter for writable input, but mutable lists and
                 // dictionaries can be modified through a getter. Check their accessors below instead

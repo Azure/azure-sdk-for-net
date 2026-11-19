@@ -17,11 +17,13 @@ public abstract partial class ProjectsAgentDefinition
     /// <param name="model">The model deployment to use for this agent.</param>
     public static DeclarativeAgentDefinition CreatePromptAgentDefinition(string model)
         => new(model);
+#pragma warning disable CS0618 // Preserve the legacy workflow factory for compatibility.
     /// <summary> Creates a workflow-based agent definition from a workflow YAML document. </summary>
     /// <param name="workflowYamlDocument">The workflow defined as a YAML document.</param>
     [Experimental("AAIP001")]
     public static WorkflowAgentDefinition CreateWorkflowAgentDefinitionFromYaml(string workflowYamlDocument)
         => WorkflowAgentDefinition.FromYaml(workflowYamlDocument);
+#pragma warning restore CS0618
     /// <summary> Creates a hosted agent definition with the specified container configuration. </summary>
     /// <param name="containerProtocolVersions">Protocol versions supported by the hosted container.</param>
     /// <param name="cpuConfiguration">The CPU configuration string for the hosted container.</param>

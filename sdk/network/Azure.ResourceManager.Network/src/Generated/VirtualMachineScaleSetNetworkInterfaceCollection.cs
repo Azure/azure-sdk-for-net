@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new VirtualMachineScaleSetNetworkInterfacesGetVirtualMachineScaleSetVMNetworkInterfacesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new NetworkInterfaceDataAsync2CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new VirtualMachineScaleSetNetworkInterfacesGetVirtualMachineScaleSetVMNetworkInterfacesCollectionResultOfT(
+            return new PageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new NetworkInterfaceData2CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

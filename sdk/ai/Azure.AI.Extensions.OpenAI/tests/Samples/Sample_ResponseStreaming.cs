@@ -33,45 +33,7 @@ public class Sample_ResponseStreaming : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseStreaming_Async
-        await foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
-        {
-            if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
-            {
-                Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-            }
-            else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-            {
-                Console.WriteLine($"Delta: {textDelta.Delta}");
-            }
-            else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
-            {
-                Console.WriteLine($"Response done with full message: {textDoneUpdate.Text}");
-            }
-            else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
-            {
-                throw new InvalidOperationException($"The stream has failed with the error: {errorUpdate.Message}");
-            }
-        }
-        #endregion
-    }
-
-    [Test]
-    [SyncOnly]
-    public void AgentResponseStreamingSync()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-#endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        ProjectResponsesClient responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
-
-        #region Snippet:Sample_WriteOutput_ResponseStreaming_Sync
-        foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreaming("What is the size of France in square miles?"))
+        await foreach (StreamingResponseUpdate streamResponse in await responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {

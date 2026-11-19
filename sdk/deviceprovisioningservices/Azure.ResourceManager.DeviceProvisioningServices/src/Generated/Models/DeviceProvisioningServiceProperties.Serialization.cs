@@ -119,6 +119,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceRegistryNamespaces))
+            {
+                writer.WritePropertyName("deviceRegistryNamespaces"u8);
+                writer.WriteStartArray();
+                foreach (DeviceRegistryNamespaceDescription item in DeviceRegistryNamespaces)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AllocationPolicy))
             {
                 writer.WritePropertyName("allocationPolicy"u8);
@@ -212,6 +222,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             string provisioningState = default;
             IList<IotHubDefinitionDescription> iotHubs = default;
+            IReadOnlyList<DeviceRegistryNamespaceDescription> deviceRegistryNamespaces = default;
             DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default;
             string serviceOperationsHostName = default;
             string deviceProvisioningHostName = default;
@@ -288,6 +299,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     iotHubs = array;
                     continue;
                 }
+                if (prop.NameEquals("deviceRegistryNamespaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DeviceRegistryNamespaceDescription> array = new List<DeviceRegistryNamespaceDescription>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeviceRegistryNamespaceDescription.DeserializeDeviceRegistryNamespaceDescription(item, options));
+                    }
+                    deviceRegistryNamespaces = array;
+                    continue;
+                }
                 if (prop.NameEquals("allocationPolicy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -361,6 +386,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(),
                 provisioningState,
                 iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(),
+                deviceRegistryNamespaces ?? new ChangeTrackingList<DeviceRegistryNamespaceDescription>(),
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,

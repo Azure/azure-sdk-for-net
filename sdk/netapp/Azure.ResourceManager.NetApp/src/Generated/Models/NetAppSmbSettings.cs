@@ -23,24 +23,29 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppSmbSettings"/>. </summary>
         /// <param name="smbEncryption"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </param>
-        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, SmbOplocks? smbOplocks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SmbEncryption = smbEncryption;
             SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
+            SmbOplocks = smbOplocks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </summary>
         public NetAppSmbEncryptionState? SmbEncryption { get; set; }
 
-        /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol cache. </summary>
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
 
-        /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol cache. </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
+
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol cache. </summary>
+        public SmbOplocks? SmbOplocks { get; set; }
     }
 }

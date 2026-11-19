@@ -49,11 +49,10 @@ internal static class ResourceSemanticConventions
     public const string AttributeCloudProvider = "cloud.provider";
     public const string AttributeCloudRegion = "cloud.region";
     public const string AttributeCloudResourceId = "cloud.resource_id";
-    public const string AttributeCloudZone = "cloud.zone";
     public const string AttributeComponent = "component";
 
     public const string AttributeOsType = "os.type";
     public const string AttributeOsVersion = "os.version";
 
-    public const string AttributeDeploymentEnvironment = "deployment.environment";
+    public const string AttributeDeploymentEnvironmentName = "deployment.environment.name";
 }

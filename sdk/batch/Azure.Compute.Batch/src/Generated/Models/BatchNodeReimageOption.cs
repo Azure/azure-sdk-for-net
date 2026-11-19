@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchNodeReimageOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeReimageOption?(string value) => value == null ? null : new BatchNodeReimageOption(value);
+        public static implicit operator BatchNodeReimageOption?(string value) => value == null ? (BatchNodeReimageOption?)null : new BatchNodeReimageOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

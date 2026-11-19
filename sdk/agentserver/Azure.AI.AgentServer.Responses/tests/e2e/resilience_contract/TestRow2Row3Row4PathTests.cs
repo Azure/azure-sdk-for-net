@@ -23,12 +23,12 @@ namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 /// <list type="bullet">
 /// <item><b>Row 2</b> (<c>store=true, background=true, ResilientBackground=false</c>) — on a graceful
 /// shutdown that cancels the in-flight handler (Path B), the in-process shutdown loop marks the
-/// response <c>failed</c> (<c>code=server_error</c>) and does NOT create a recovery entry. Path C
+/// response <c>failed</c> (<c>code=server_error</c>) and leaves no in-progress recovery entry. Path C
 /// (crash → mark-failed) is covered by <c>TestRow2PathCCrashFailedTests</c>.</item>
 /// <item><b>Row 3</b> (<c>background=false</c>, foreground) — the stored response is tracked by a Core
-/// one-shot task while in-flight; on any termination the response is marked <c>failed</c>
+/// task while in-flight; on any termination the response is marked <c>failed</c>
 /// (<c>code=server_error</c>) and the handler is never re-invoked (the client connection is already
-/// gone). On graceful shutdown the task finalizes and leaves no recovery entry.</item>
+/// gone). On graceful shutdown the task finalizes and leaves no in-progress recovery entry.</item>
 /// <item><b>Row 4</b> (<c>store=false</c>) — ephemeral: nothing is persisted, GET returns 404, and no
 /// recovery entry is ever written, so no next-lifetime action applies.</item>
 /// </list>
@@ -64,11 +64,10 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
         Assert.That(doc.RootElement.GetProperty("error").GetProperty("shutdown_reason").GetString(),
             Is.EqualTo("grace_exhausted"),
             "Row 2 Path B (in-process graceful shutdown) mark-failed must carry shutdown_reason=grace_exhausted");
-        // Row 2 is now tracked by a Core one-shot task while in-flight (so a crash — Path C — can
-        // mark it failed in the next lifetime). On this graceful shutdown (Path B) the engine removes
-        // the record as the task finalizes; assert the terminal steady state: no lingering entry.
-        await WaitForRecoveryEntryCountAsync(0,
-            "a non-resilient background row must not leave a recovery entry after graceful shutdown");
+        // Steering-only activation tracks Row 2 while in-flight; the completed multi-turn chain
+        // may remain suspended, but there must be no active recovery candidate after shutdown.
+        await WaitForActiveRecoveryEntryCountAsync(0,
+            "a non-resilient background row must not remain in progress after graceful shutdown");
     }
 
     [Test]
@@ -91,11 +90,11 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
 
         await started.Task.WaitAsync(TimeSpan.FromSeconds(10));
 
-        // G1 / Row 3 §6: a foreground stored response now runs inside a Core one-shot task, so a
+        // G1 / Row 3 §6: a foreground stored response now runs inside a Core task, so a
         // recovery entry exists while the handler is in-flight (previously the foreground path ran
         // inline and left no task entry, so a true crash could not be recovered). This is what makes
         // Path C (mark-failed next lifetime) possible for foreground.
-        await WaitForRecoveryEntryCountAsync(1,
+        await WaitForActiveRecoveryEntryCountAsync(1,
             "a foreground stored response must be task-tracked while the handler is in-flight");
 
         await factory.StopAsync();
@@ -109,20 +108,17 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
         Assert.That(doc.RootElement.GetProperty("error").GetProperty("shutdown_reason").GetString(),
             Is.EqualTo("grace_exhausted"),
             "Row 3 foreground shutdown mark-failed must carry shutdown_reason=grace_exhausted");
-        // Row 3 foreground stored responses are now tracked by a Core one-shot task while in-flight
-        // (so a crash — Path C — can mark them failed in the next lifetime, parity with Python
-        // responses-resilience-spec §6). On this graceful shutdown (Path B) the engine removes the
-        // record as the task finalizes; assert the terminal steady state: no lingering entry.
-        await WaitForRecoveryEntryCountAsync(0,
-            "a foreground row must not leave a recovery entry after graceful shutdown");
+        // The multi-turn chain may remain suspended for later turns, but no in-progress recovery
+        // candidate remains after a graceful shutdown.
+        await WaitForActiveRecoveryEntryCountAsync(0,
+            "a foreground row must not remain in progress after graceful shutdown");
     }
 
     [Test]
     public async Task Row2PathA_BackgroundCompletesNaturally_Completed_NoRecoveryEntry()
     {
         // Row 2 Path A: a non-resilient background stored response whose handler reaches a natural
-        // terminal within grace. It must end `completed` and, because the Core one-shot task
-        // finalizes, leave no lingering recovery entry (no next-lifetime action).
+        // terminal within grace. It must end `completed` without an in-progress recovery candidate.
         var handler = new TestHandler
         {
             EventFactory = (_, ctx, ct) => FastCompletingLifecycle(ctx, ct),
@@ -140,15 +136,15 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
             "Row 2 Path A (natural terminal) must complete successfully");
         Assert.That(doc.RootElement.TryGetProperty("error", out var err) && err.ValueKind != JsonValueKind.Null,
             Is.False, "a naturally completed response must carry no error");
-        await WaitForRecoveryEntryCountAsync(0,
-            "a naturally completed background row must not leave a recovery entry");
+        await WaitForActiveRecoveryEntryCountAsync(0,
+            "a naturally completed background row must not remain in progress");
     }
 
     [Test]
     public async Task Row3PathA_ForegroundCompletesNaturally_Completed_NoRecoveryEntry()
     {
         // Row 3 Path A: a foreground stored response whose handler reaches a natural terminal. The
-        // POST returns the FINAL `completed` response inline and the task-tracked entry is cleared.
+        // POST returns the final `completed` response inline and the active task turn finalizes.
         var handler = new TestHandler
         {
             EventFactory = (_, ctx, ct) => FastCompletingLifecycle(ctx, ct),
@@ -166,12 +162,12 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
         Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"),
             "Row 3 Path A (natural terminal) must return the final completed response inline");
 
-        // The stored response remains retrievable and the task-tracked recovery entry is cleared.
+        // The stored response remains retrievable and the active task turn is cleared.
         var get = await client.GetAsync($"/responses/{responseId}");
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.OK),
             "a foreground stored response must remain retrievable after completion");
-        await WaitForRecoveryEntryCountAsync(0,
-            "a naturally completed foreground row must not leave a recovery entry");
+        await WaitForActiveRecoveryEntryCountAsync(0,
+            "a naturally completed foreground row must not remain in progress");
     }
 
     [Test]
@@ -182,7 +178,7 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
             EventFactory = (_, ctx, ct) => FastCompletingLifecycle(ctx, ct),
         };
 
-        using var factory = NewNonResilientHost(handler);
+        using var factory = NewDisabledHost(handler);
         using var client = factory.CreateClient();
 
         var post = await client.PostAsync("/responses",
@@ -197,20 +193,65 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
         var get = await client.GetAsync($"/responses/{responseId}");
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.NotFound),
             "an unstored (store=false) response must not be retrievable");
-        await WaitForRecoveryEntryCountAsync(0,
+        await WaitForActiveRecoveryEntryCountAsync(0,
             "an unstored response must never write a recovery entry (no next-lifetime action)");
     }
 
     private TestWebApplicationFactory NewNonResilientHost(TestHandler handler)
         => new(
             handler,
+            configureOptions: options => options.SteerableConversations = true,
             configureTestServices: services =>
             {
-                services.SetResilientTasksEnabled();
                 services.AddSingleton<ResponsesProvider>(new FileResponsesProvider(ResponsesDir));
                 TestEventStreams.UseFileBacked(services, ResponsesDir);
                 services.AddSingleton(CoreTaskRecoveryTestHelpers.CreateTaskStore(TasksDir));
             });
+
+    private TestWebApplicationFactory NewDisabledHost(TestHandler handler)
+        => new(
+            handler,
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponsesProvider>(new FileResponsesProvider(ResponsesDir));
+                services.AddSingleton(CoreTaskRecoveryTestHelpers.CreateTaskStore(TasksDir));
+            });
+
+    private async Task WaitForActiveRecoveryEntryCountAsync(int expected, string message)
+    {
+        int last = -1;
+        for (int i = 0; i < 200; i++)
+        {
+            last = 0;
+            bool retryRead = false;
+            foreach (string file in Directory.EnumerateFiles(TasksDir, "*.json", SearchOption.AllDirectories))
+            {
+                try
+                {
+                    using JsonDocument record = JsonDocument.Parse(File.ReadAllText(file));
+                    if (record.RootElement.GetProperty("status").GetString() == "in_progress")
+                    {
+                        last++;
+                    }
+                }
+                catch (IOException ex) when (
+                    ex is FileNotFoundException || ((ex.HResult & 0xFFFF) is 32 or 33))
+                {
+                    retryRead = true;
+                    break;
+                }
+            }
+
+            if (!retryRead && last == expected)
+            {
+                return;
+            }
+
+            await Task.Delay(25);
+        }
+
+        Assert.Fail($"{message} No complete matching task-store snapshot was observed; last count: {last}.");
+    }
 
     private static async Task<string> CreateBackgroundAsync(HttpClient client, bool stream)
     {

@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ContainerSkill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InlineSkillParam"/> and <see cref="SkillReferenceParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InlineSkill"/> and <see cref="SkillReference"/>.
     /// </summary>
     public abstract partial class ContainerSkill
     {

@@ -1,5 +1,22 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2026-10-28)
+
+### Features Added
+
+- Initial stable release of the Azure Edge Actions management library for .NET, using service API version `2026-10-01`.
+- Supports managing edge actions, versions, code deployments, and execution filters.
+
 ## 1.0.0-beta.4 (2026-10-22)
 
 ### Features Added

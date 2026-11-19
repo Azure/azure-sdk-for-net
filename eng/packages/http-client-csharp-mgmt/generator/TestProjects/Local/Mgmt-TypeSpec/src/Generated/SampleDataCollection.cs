@@ -22,7 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary>
     /// A class representing a collection of <see cref="SampleDataResource"/> and their operations.
     /// Each <see cref="SampleDataResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="SampleDataCollection"/> instance call the GetSampleDatas method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SampleDataCollection"/> instance call the GetAllSampleData method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SampleDataCollection : ArmCollection, IEnumerable<SampleDataResource>, IAsyncEnumerable<SampleDataResource>
     {

@@ -151,12 +151,12 @@ namespace BasicTypeSpec
             return new ReturnsAnonymousModelResult(additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The MultipartRequestRequest. </summary>
+        /// <summary> The MultipartRequestContent. </summary>
         /// <param name="name"></param>
-        /// <returns> A new <see cref="BasicTypeSpec.MultipartRequestRequest"/> instance for mocking. </returns>
-        public static MultipartRequestRequest MultipartRequestRequest(string name = default)
+        /// <returns> A new <see cref="BasicTypeSpec.MultipartRequestContent"/> instance for mocking. </returns>
+        public static MultipartRequestContent MultipartRequestContent(string name = default)
         {
-            return new MultipartRequestRequest(name);
+            return new MultipartRequestContent(name);
         }
 
         /// <summary> Model with DataFactoryElement properties. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Prometheus Metrics Query recommendation configuration. </summary>
-    public partial class PrometheusMetricsRecommendationConfiguration : SignalRecommendationConfiguration
+    public partial class PrometheusMetricsRecommendationConfiguration : HealthModelSignalRecommendationConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="PrometheusMetricsRecommendationConfiguration"/>. </summary>
         /// <param name="queryText"> Query text in PromQL syntax. Supported entity template variables, such as `{{entity.name}}`, may appear in the query. </param>

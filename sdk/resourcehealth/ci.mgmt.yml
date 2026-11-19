@@ -13,7 +13,6 @@ trigger:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SdkType: mgmtclient
     ServiceDirectory: resourcehealth
     LimitForPullRequest: true
     Artifacts:

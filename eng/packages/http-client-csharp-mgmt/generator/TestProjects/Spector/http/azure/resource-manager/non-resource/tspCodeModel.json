@@ -699,7 +699,6 @@
                 "$id": "46",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "NonResourceOperations",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1047,7 +1046,6 @@
                 "$id": "68",
                 "name": "create",
                 "isExactName": false,
-                "resourceName": "NonResourceOperations",
                 "accessibility": "public",
                 "parameters": [
                   {

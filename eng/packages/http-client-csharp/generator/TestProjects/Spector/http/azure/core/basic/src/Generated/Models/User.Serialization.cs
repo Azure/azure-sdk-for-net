@@ -15,8 +15,6 @@ namespace Specs.Azure.Core.Basic
 {
     public partial class User : IJsonModel<User>
     {
-        internal User() => throw null;
-
         protected virtual User PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;

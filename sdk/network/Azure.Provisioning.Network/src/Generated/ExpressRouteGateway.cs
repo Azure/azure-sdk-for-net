@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new ExpressRouteGateway. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ExpressRouteGateway(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/expressRouteGateways", resourceVersion ?? "2026-01-01")
+        public ExpressRouteGateway(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/expressRouteGateways", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -109,12 +109,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteConnections. </summary>
-        public BicepList<ExpressRouteConnection> ExpressRouteConnections
+        /// <summary> Gets or sets the ExpressRouteConnectionList. </summary>
+        public BicepList<ExpressRouteConnection> ExpressRouteConnectionList
         {
             get
             {
-                return Properties is null ? default : Properties.ExpressRouteConnections;
+                return Properties is null ? default : Properties.ExpressRouteConnectionList;
             }
             set
             {
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new ExpressRouteGatewayProperties();
                 }
-                Properties.ExpressRouteConnections = value;
+                Properties.ExpressRouteConnectionList = value;
             }
         }
 
@@ -219,6 +219,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

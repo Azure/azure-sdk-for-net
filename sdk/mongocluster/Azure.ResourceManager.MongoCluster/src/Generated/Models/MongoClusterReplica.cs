@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Represents a mongo cluster replica. </summary>
+    /// <summary> Represents a DocumentDB cluster replica. </summary>
     public partial class MongoClusterReplica : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

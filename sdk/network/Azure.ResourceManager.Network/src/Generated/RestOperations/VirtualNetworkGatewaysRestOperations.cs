@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGeneratevpnclientpackageRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGenerateVpnClientPackageRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

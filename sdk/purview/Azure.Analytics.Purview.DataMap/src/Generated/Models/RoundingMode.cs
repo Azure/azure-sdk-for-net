@@ -81,7 +81,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="RoundingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoundingMode?(string value) => value == null ? null : new RoundingMode(value);
+        public static implicit operator RoundingMode?(string value) => value == null ? (RoundingMode?)null : new RoundingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

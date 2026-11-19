@@ -294,7 +294,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "azure-ai-search",
                 Description = "Test Azure AI search"
             },
-            ToolType.MCP => new MCPToolboxTool(serverLabel: "api-specs")
+            ToolType.MCP => new McpToolboxTool(serverLabel: "api-specs")
             {
                 Name = "mcp-tool",
                 Description = "Test mcp tool",
@@ -310,6 +310,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "open-api",
                 Description = "Test Open API"
             },
+#pragma warning disable CS0618 // Preserve test coverage for the legacy browser automation tool.
             ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
@@ -318,6 +319,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "browser-automation",
                 Description = "Test browser automation"
             },
+#pragma warning restore CS0618
             ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(TestEnvironment.BROWSER_AUTOMATION_NAME)

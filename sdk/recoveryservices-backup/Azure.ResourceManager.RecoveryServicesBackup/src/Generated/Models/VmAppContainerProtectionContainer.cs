@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmAppContainerProtectionContainer : WorkloadContainer
     {
         /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectionContainer"/>. </summary>
-        public VmAppContainerProtectionContainer()
+        public VmAppContainerProtectionContainer() : base("VMAppContainer")
         {
         }
 

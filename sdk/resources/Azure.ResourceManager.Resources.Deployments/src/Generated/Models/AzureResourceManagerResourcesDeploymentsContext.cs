@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.Resources.Deployments
     [ModelReaderWriterBuildable(typeof(BasicArmDependency))]
     [ModelReaderWriterBuildable(typeof(DebugSetting))]
     [ModelReaderWriterBuildable(typeof(DeploymentDiagnosticsDefinition))]
+    [ModelReaderWriterBuildable(typeof(DeploymentResourceWhatIfPrediction))]
     [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
     [ModelReaderWriterBuildable(typeof(ErrorDeployment))]
     [ModelReaderWriterBuildable(typeof(ErrorDeploymentExtended))]

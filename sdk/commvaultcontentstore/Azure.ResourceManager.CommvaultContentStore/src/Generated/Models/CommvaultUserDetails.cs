@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
-        /// <param name="upn"> User's principal name. </param>
+        /// <param name="userPrincipalName"> User's principal name. </param>
         /// <param name="phoneNumber"> User's phone number. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultUserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultUserDetails(string firstName, string lastName, string emailAddress, string userPrincipalName, string phoneNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
-            Upn = upn;
+            UserPrincipalName = userPrincipalName;
             PhoneNumber = phoneNumber;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string EmailAddress { get; set; }
 
         /// <summary> User's principal name. </summary>
-        public string Upn { get; set; }
+        public string UserPrincipalName { get; set; }
 
         /// <summary> User's phone number. </summary>
         public string PhoneNumber { get; set; }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
-            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null, null);
+            AnalyzeTextSubmitJobContent analyzeTextOperationInput = new AnalyzeTextSubmitJobContent(displayName, textInput, actions.ToList(), defaultLanguage, null, null);
             RequestContext context = cancellationToken.ToRequestContext();
 
             try
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Text
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
-            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null, null);
+            AnalyzeTextSubmitJobContent analyzeTextOperationInput = new AnalyzeTextSubmitJobContent(displayName, textInput, actions.ToList(), defaultLanguage, null, null);
             RequestContext context = cancellationToken.ToRequestContext();
 
             try

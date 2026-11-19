@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="PageAssetRedirectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PageAssetRedirectType?(string value) => value == null ? null : new PageAssetRedirectType(value);
+        public static implicit operator PageAssetRedirectType?(string value) => value == null ? (PageAssetRedirectType?)null : new PageAssetRedirectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

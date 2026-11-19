@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="KeyPhraseExtractionSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyPhraseExtractionSkillLanguage?(string value) => value == null ? null : new KeyPhraseExtractionSkillLanguage(value);
+        public static implicit operator KeyPhraseExtractionSkillLanguage?(string value) => value == null ? (KeyPhraseExtractionSkillLanguage?)null : new KeyPhraseExtractionSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

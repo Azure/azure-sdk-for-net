@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("lastBackUpTime"u8);
-                writer.WriteNumberValue(LastBackUpTime);
+                writer.WriteNumberValue(LastBackupTime);
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("resourceGroup"u8);
-                writer.WriteStringValue(ResourceGroup);
+                writer.WriteStringValue(ResourceGroupName);
             }
             if (options.Format != "W")
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             string resourceName = default;
-            long lastBackUpTime = default;
-            string resourceGroup = default;
+            long lastBackupTime = default;
+            string resourceGroupName = default;
             AzureLocation location = default;
             string vmGuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("lastBackUpTime"u8))
                 {
-                    lastBackUpTime = prop.Value.GetInt64();
+                    lastBackupTime = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("resourceGroup"u8))
                 {
-                    resourceGroup = prop.Value.GetString();
+                    resourceGroupName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -182,8 +182,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             return new ProtectedItemProperties(
                 resourceName,
-                lastBackUpTime,
-                resourceGroup,
+                lastBackupTime,
+                resourceGroupName,
                 location,
                 vmGuid,
                 additionalBinaryDataProperties);

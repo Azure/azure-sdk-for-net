@@ -68,7 +68,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Converts a string to a <see cref="KnowledgeBaseFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeBaseFormat?(string value) => value == null ? null : new KnowledgeBaseFormat(value);
+        public static implicit operator KnowledgeBaseFormat?(string value) => value == null ? (KnowledgeBaseFormat?)null : new KnowledgeBaseFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

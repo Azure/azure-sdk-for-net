@@ -40,23 +40,5 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> NVIDIA-specific GPU settings. </summary>
         [WirePath("nvidia")]
         internal AgentPoolNvidiaGpuProfile Nvidia { get; set; }
-
-        /// <summary> The Managed GPU experience installs additional components, such as the Data Center GPU Manager (DCGM) metrics for monitoring, on top of the GPU driver for you. For more details of what is installed, check out aka.ms/aks/managed-gpu. </summary>
-        [WirePath("nvidia.managementMode")]
-        public GpuManagementMode? NvidiaManagementMode
-        {
-            get
-            {
-                return Nvidia is null ? default : Nvidia.ManagementMode;
-            }
-            set
-            {
-                if (Nvidia is null)
-                {
-                    Nvidia = new AgentPoolNvidiaGpuProfile();
-                }
-                Nvidia.ManagementMode = value;
-            }
-        }
     }
 }

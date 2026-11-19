@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -36,15 +37,15 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class StreamingHandler : ResponseHandler
         {
-            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 CancellationToken cancellationToken)
             {
                 return new TextResponse(context, request,
                     configure: response =>
                     {
-                        response.Temperature = 0.7;
+                        response.Temperature = 0.7f;
                     },
                     createTextStream: GenerateTokensAsync);
             }

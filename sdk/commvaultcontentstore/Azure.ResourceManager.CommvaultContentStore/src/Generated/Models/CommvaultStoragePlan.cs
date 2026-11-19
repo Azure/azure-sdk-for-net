@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ExtendedRetention = new ChangeTrackingList<ExtendedRetentionTime>();
+            ExtendedRetentionPolicies = new ChangeTrackingList<CommvaultExtendedRetentionPolicy>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommvaultStoragePlan"/>. </summary>
@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="copyName"> Copy Name from Commvault. </param>
         /// <param name="copyPrecedence"> Precedence of the Storage Plan, 1 is the highest precedence, 2 is the next highest, and so on. </param>
         /// <param name="retentionPeriod"> Indicates the retention period valid only if the type of retention chosen in CUSTOM. </param>
-        /// <param name="retentionTime"> Indicates the retention timeframe valid only if the type of retention chosen in CUSTOM. </param>
+        /// <param name="retentionInterval"> Indicates the retention timeframe valid only if the type of retention chosen in CUSTOM. </param>
         /// <param name="backupRuleType"> Backup Rule Type. </param>
-        /// <param name="extendedRetention"> Extended Retention Policy. </param>
+        /// <param name="extendedRetentionPolicies"> Extended Retention Policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultStoragePlan(string name, string storagePoolId, string copyName, int? copyPrecedence, int? retentionPeriod, CommvaultRetentionTime? retentionTime, BackupRuleType? backupRuleType, IList<ExtendedRetentionTime> extendedRetention, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultStoragePlan(string name, string storagePoolId, string copyName, int? copyPrecedence, int? retentionPeriod, CommvaultRetentionInterval? retentionInterval, CommvaultBackupRuleType? backupRuleType, IList<CommvaultExtendedRetentionPolicy> extendedRetentionPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             StoragePoolId = storagePoolId;
             CopyName = copyName;
             CopyPrecedence = copyPrecedence;
             RetentionPeriod = retentionPeriod;
-            RetentionTime = retentionTime;
+            RetentionInterval = retentionInterval;
             BackupRuleType = backupRuleType;
-            ExtendedRetention = extendedRetention;
+            ExtendedRetentionPolicies = extendedRetentionPolicies;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public int? RetentionPeriod { get; set; }
 
         /// <summary> Indicates the retention timeframe valid only if the type of retention chosen in CUSTOM. </summary>
-        public CommvaultRetentionTime? RetentionTime { get; set; }
+        public CommvaultRetentionInterval? RetentionInterval { get; set; }
 
         /// <summary> Backup Rule Type. </summary>
-        public BackupRuleType? BackupRuleType { get; set; }
+        public CommvaultBackupRuleType? BackupRuleType { get; set; }
 
         /// <summary> Extended Retention Policy. </summary>
-        public IList<ExtendedRetentionTime> ExtendedRetention { get; }
+        public IList<CommvaultExtendedRetentionPolicy> ExtendedRetentionPolicies { get; }
     }
 }

@@ -11,6 +11,7 @@ import {
 } from "@azure-tools/typespec-client-generator-core";
 import type { CodeModel, CSharpEmitterContext } from "./code-model-types.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
+import type { Operation } from "@typespec/compiler";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armprovidernamespace
 const armProviderNamespaceRegex =
@@ -82,6 +83,37 @@ export const legacyExtensionResourceOperationName =
   "@legacyExtensionResourceOperation";
 export const legacyResourceOperationName = "@legacyResourceOperation";
 export const builtInResourceOperationName = "@builtInResourceOperation";
+
+export function getExplicitResourceName(
+  operation: Operation | undefined
+): string | undefined {
+  for (const decorator of operation?.decorators ?? []) {
+    let index: number;
+    switch (decorator.definition?.name) {
+      case armResourceReadName:
+      case armResourceCreateOrUpdateName:
+      case armResourceUpdateName:
+      case armResourceDeleteName:
+        index = 1;
+        break;
+      case legacyExtensionResourceOperationName:
+      case legacyResourceOperationName:
+        index = 2;
+        break;
+      case extensionResourceOperationName:
+      case builtInResourceOperationName:
+        index = 3;
+        break;
+      default:
+        continue;
+    }
+    const value = decorator.args[index]?.jsValue;
+    if (typeof value === "string" && value.length > 0) {
+      return value;
+    }
+  }
+  return undefined;
+}
 
 export const armResourceWithParameter =
   "Azure.ResourceManager.Private.@armResourceWithParameter";
