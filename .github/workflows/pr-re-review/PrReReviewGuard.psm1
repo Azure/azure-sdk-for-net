@@ -408,9 +408,10 @@ function Get-PrReReviewPublishedFile {
     }
 }
 
-# A safeoutputs command only publishes, so only the commands nested in its arguments can read, and of those,
-# cat reads only a local file or heredoc. A cat or tee heredoc that writes a published file is publication text
-# too, so only the command substitutions that an unquoted delimiter lets it run can read.
+# A safeoutputs command only publishes, so only the commands nested in its arguments can read. Of those, cat reads
+# only a local file or heredoc, though an unquoted heredoc still runs its command substitutions. A cat or tee heredoc
+# that writes a published file is publication text too, so only the command substitutions that an unquoted delimiter
+# lets it run can read.
 function Get-PrReReviewShellReadText {
     param([Parameter(Mandatory)][AllowEmptyString()][string]$Text, [AllowEmptyCollection()][string[]]$PublishedFiles = @())
 
@@ -418,7 +419,15 @@ function Get-PrReReviewShellReadText {
         if ($command.Name -ceq 'safeoutputs') {
             foreach ($substitution in $command.Substitutions) {
                 foreach ($nested in (Split-PrReReviewShellCommand $substitution)) {
-                    if ($nested.Name -cne 'cat') { Get-PrReReviewShellReadText $nested.Source $PublishedFiles }
+                    if ($nested.Name -cne 'cat') {
+                        Get-PrReReviewShellReadText $nested.Source $PublishedFiles
+                        continue
+                    }
+                    foreach ($heredoc in @($nested.Heredocs | Where-Object { !$_.Quoted })) {
+                        foreach ($expansion in (Get-PrReReviewShellExpansion $nested.Source.Substring($heredoc.Start, $heredoc.End - $heredoc.Start))) {
+                            Get-PrReReviewShellReadText $expansion $PublishedFiles
+                        }
+                    }
                 }
             }
         } elseif ($command.Name -cin @('cat', 'tee') -and $command.Heredocs.Count -gt 0 -and @(Get-PrReReviewShellTarget $command | Where-Object { $PublishedFiles -ccontains $_ }).Count -gt 0) {
