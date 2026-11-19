@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
-. (Join-Path $PSScriptRoot '../SampleTestPlanHelpers.ps1')
+. (Join-Path $PSScriptRoot 'SampleTestPlanHelpers.ps1')
 
 Describe 'Dynamic sample queue assignment' {
     It 'creates one billable worker for a single selected sample and wires discovery before provisioning' {
@@ -13,7 +13,7 @@ Describe 'Dynamic sample queue assignment' {
         }) -QueueCount 4 -Pool pool -Image image
         @($plan.matrix.Keys).Count | Should Be 1
         $plan.matrix.Contains('q1') | Should Be $true
-        $template = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-tests-stages.yml') -Raw
+        $template = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'sample-tests-stages.yml') -Raw
         $template | Should Match "dependsOn: Plan"
         $template | Should Match "Matrix: stageDependencies.Plan.Plan.outputs\['Discover.WorkerMatrix'\]"
         $template.IndexOf('Invalid or empty worker assignment.') |
@@ -95,7 +95,7 @@ Describe 'Sample selection filter evaluation' {
             It 'accepts exactly one passing result for the assignment' {
                 '<TestRun><TestDefinitions><UnitTest id="unit" name="Test"><TestMethod className="Namespace.Sample(False)" /></UnitTest></TestDefinitions><Results><UnitTestResult testId="unit" outcome="Passed" /></Results></TestRun>' |
                     Set-Content -LiteralPath (Join-Path $script:results 'unit.trx')
-                & (Join-Path $PSScriptRoot '../Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results
+                & (Join-Path $PSScriptRoot 'Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results
             }
 
             It 'rejects incomplete or repeated assignments: <Scenario>' -TestCases @(
@@ -109,15 +109,15 @@ Describe 'Sample selection filter evaluation' {
                 if ($Duplicate) { $resultXml += $resultXml }
                 "<TestRun><TestDefinitions><UnitTest id='unit' name='$MethodName'><TestMethod className='Namespace.Sample(False)' /></UnitTest></TestDefinitions><Results>$resultXml</Results></TestRun>" |
                     Set-Content -LiteralPath (Join-Path $script:results 'unit.trx')
-                { & (Join-Path $PSScriptRoot '../Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results } |
+                { & (Join-Path $PSScriptRoot 'Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results } |
                     Should Throw
             }
 
             It 'fails when no results or no assigned executions were produced' {
-                { & (Join-Path $PSScriptRoot '../Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results } |
+                { & (Join-Path $PSScriptRoot 'Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results } |
                     Should Throw 'No TRX'
                 '<TestRun><TestDefinitions /><Results /></TestRun>' | Set-Content -LiteralPath (Join-Path $script:results 'empty.trx')
-                { & (Join-Path $PSScriptRoot '../Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results } |
+                { & (Join-Path $PSScriptRoot 'Test-SampleAssignments.ps1') -ManifestPath $script:manifest -ResultsRoot $script:results } |
                     Should Throw 'did not execute'
             }
         }

@@ -2,12 +2,12 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
-. (Join-Path $PSScriptRoot '../SampleCiHelpers.ps1')
-. (Join-Path $PSScriptRoot '../DotNetSampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot 'shared/SampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot 'DotNetSampleCiHelpers.ps1')
 
 Describe 'Full bundle .NET bindings' {
     It 'imports the shared Library group without overriding its environment or secrets' {
-        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../tests.yml') -Raw
         $variables = [regex]::Match($pipeline, '(?ms)^variables:\r?\n(?<body>.*?)^extends:').Groups['body'].Value
         $variables.Trim() | Should BeExactly '- group: Foundry SDK Env Vars and Secrets'
         $variables | Should Not Match 'AZURE_SUBSCRIPTION_ID|AZURE_TENANT_ID|LLM_VALIDATION_PROJECT_ENDPOINT|MCP_GITHUB_PAT|PROJ_CONN_OPEN_API_KEY'
@@ -49,18 +49,18 @@ Describe 'Full bundle .NET bindings' {
     }
 
     It 'publishes the deployed model publisher required by the deployment sample' {
-        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../tests.yml') -Raw
         $testEnvironment = [regex]::Match($pipeline, '(?ms)^    EnvVars:\r?\n(?<body>.*?)^    PreSteps:').Groups['body'].Value
         $testEnvironment | Should Match '(?m)^      MODEL_PUBLISHER: OpenAI\r?$'
-        foreach ($template in @('sample-resources.bicep', 'standard-model.bicep')) {
-            $model = Get-Content -LiteralPath (Join-Path $PSScriptRoot "../infra/$template") -Raw
+        foreach ($template in @('sample-resources.bicep')) {
+            $model = Get-Content -LiteralPath (Join-Path $PSScriptRoot "shared/infra/$template") -Raw
             $model | Should Match "(?m)^      format: 'OpenAI'\r?$"
         }
     }
 
     It 'publishes aliases as pipeline variables, keeps only fixed test settings in EnvVars, and confines secrets to provisioning' {
-        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
-        $provisioningScript = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../Invoke-BundleProvisioning.ps1') -Raw
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../tests.yml') -Raw
+        $provisioningScript = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'Invoke-BundleProvisioning.ps1') -Raw
         $pipeline | Should Match 'Invoke-BundleProvisioning.ps1'
         $pipeline | Should Not Match 'Invoke-StandardProvisioning.ps1'
         $pipeline | Should Match 'MCP_GITHUB_PAT: \$\(MCP_GITHUB_PAT\)'
@@ -97,7 +97,7 @@ Describe 'Full bundle worker orchestration' {
     It 'requires confirmation before state creation or Azure access' {
         & {
             function az { throw 'Unconfirmed provisioning must not contact Azure.' }
-            { & (Join-Path $PSScriptRoot '../Invoke-BundleProvisioning.ps1') @script:arguments } |
+            { & (Join-Path $PSScriptRoot 'Invoke-BundleProvisioning.ps1') @script:arguments } |
                 Should Throw '-ConfirmProvisioning'
         }
         Test-Path -LiteralPath $script:outputDirectory | Should Be $false
@@ -107,7 +107,7 @@ Describe 'Full bundle worker orchestration' {
         $null = New-Item -ItemType Directory -Path $script:outputDirectory
         $path = Join-Path $script:outputDirectory 'deployment-state.json'
         Set-Content -LiteralPath $path -Value 'previous-attempt'
-        { & (Join-Path $PSScriptRoot '../Invoke-BundleProvisioning.ps1') @script:arguments -ConfirmProvisioning } |
+        { & (Join-Path $PSScriptRoot 'Invoke-BundleProvisioning.ps1') @script:arguments -ConfirmProvisioning } |
             Should Throw 'earlier attempt'
         (Get-Content -LiteralPath $path -Raw).Trim() | Should BeExactly 'previous-attempt'
     }
@@ -117,8 +117,9 @@ Describe 'Full bundle worker orchestration' {
     ) {
         param($Status)
         $fixture = Join-Path $TestDrive "wrapper-$Status"
-        $null = New-Item -ItemType Directory -Path $fixture
-        Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../Invoke-BundleProvisioning.ps1') -Destination $fixture
+        $shared = Join-Path $fixture 'shared'
+        $null = New-Item -ItemType Directory -Path $shared -Force
+        Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Invoke-BundleProvisioning.ps1') -Destination $fixture
         @'
 function Set-SampleSubscriptionContext { param($Plan) @{ tenantId = 'tenant' } }
 function Resolve-SampleIdentitySelection { param($Plan) $Plan.identityResolution = 'Resolved'; $Plan }
@@ -126,21 +127,21 @@ function Get-SampleEnvironmentNames { @('FOUNDRY_PROJECT_ENDPOINT') }
 function Assert-SampleEnvironment { param($Environment, $Names)
     if ($Environment.Count -ne 1 -or -not $Environment.Contains('FOUNDRY_PROJECT_ENDPOINT')) { throw 'Unexpected environment.' }
 }
-'@ | Set-Content -LiteralPath (Join-Path $fixture 'SampleCiHelpers.ps1')
+'@ | Set-Content -LiteralPath (Join-Path $shared 'SampleCiHelpers.ps1')
         'function Get-DotNetSampleEnvironment { param($Environment) $Environment }' |
             Set-Content -LiteralPath (Join-Path $fixture 'DotNetSampleCiHelpers.ps1')
         @'
 param($OutputDirectory, $IdentityResourceGroup, $QueueName, $ModelName, $ModelVersion, $ModelSku, $ModelCapacity)
 $null = New-Item -ItemType Directory -Path $OutputDirectory
 @{ identityResolution = 'Pending' } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $OutputDirectory 'deployment-plan.json')
-'@ | Set-Content -LiteralPath (Join-Path $fixture 'New-ResourceDeploymentPlan.ps1')
+'@ | Set-Content -LiteralPath (Join-Path $shared 'New-ResourceDeploymentPlan.ps1')
         @'
 param($PlanPath, $StatePath, $QueueName, [switch] $ConfirmProvisioning)
 $plan = Get-Content -LiteralPath $PlanPath -Raw | ConvertFrom-Json -AsHashtable
 if (-not $ConfirmProvisioning -or $plan.identityResolution -cne 'Resolved') { throw 'Unresolved or unconfirmed deployment.' }
 @{ status = '__STATUS__'; environment = @{ FOUNDRY_PROJECT_ENDPOINT = "https://example.invalid/100%`nvalue" } } |
     ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $StatePath
-'@.Replace('__STATUS__', $Status) | Set-Content -LiteralPath (Join-Path $fixture 'Invoke-ResourceProvisioning.ps1')
+'@.Replace('__STATUS__', $Status) | Set-Content -LiteralPath (Join-Path $shared 'Invoke-ResourceProvisioning.ps1')
         Mock Write-Host {}
         if ($Status -ceq 'Ready') {
             & (Join-Path $fixture 'Invoke-BundleProvisioning.ps1') @script:arguments -ConfirmProvisioning

@@ -28,7 +28,7 @@ Assert-DotNetSampleAssignment -Assignment $assignment -QueueName $QueueName
 
 $resourceArguments = @{} + $PSBoundParameters
 $resourceArguments.Remove('SelectionManifest')
-& (Join-Path $PSScriptRoot 'New-ResourceDeploymentPlan.ps1') @resourceArguments
+& (Join-Path $PSScriptRoot 'shared/New-ResourceDeploymentPlan.ps1') @resourceArguments
 $planPath = Join-Path $OutputDirectory 'deployment-plan.json'
 $plan = Get-Content -LiteralPath $planPath -Raw | ConvertFrom-Json -AsHashtable
 $plan['selectedTests'] = $assignment.selectedTests

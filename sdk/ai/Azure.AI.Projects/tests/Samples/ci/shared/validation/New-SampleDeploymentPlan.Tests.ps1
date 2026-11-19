@@ -2,9 +2,9 @@
 # Licensed under the MIT License.
 #Requires -Version 7.2
 
-. (Join-Path $PSScriptRoot '..\SampleTestPlanHelpers.ps1')
+. (Join-Path $PSScriptRoot '..\..\SampleTestPlanHelpers.ps1')
 . (Join-Path $PSScriptRoot '..\SampleCiHelpers.ps1')
-. (Join-Path $PSScriptRoot '..\DotNetSampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot '..\..\DotNetSampleCiHelpers.ps1')
 
 Describe 'Offline deployment-plan defaults' {
     BeforeEach {
@@ -38,7 +38,7 @@ Describe 'Offline deployment-plan defaults' {
             JobAttempt = '1'
             IdentityResourceGroup = 'rg-azsdk-identities-westus3-102826_164519'
         }
-        $script:planScript = Join-Path $PSScriptRoot '../New-SampleDeploymentPlan.ps1'
+        $script:planScript = Join-Path $PSScriptRoot '../../New-SampleDeploymentPlan.ps1'
     }
     AfterEach {
         $env:AZURE_SUBSCRIPTION_ID = $script:originalSubscription

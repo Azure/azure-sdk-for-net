@@ -94,7 +94,7 @@ extends:
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: |
-            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/Remove-SampleResources.ps1' `
+            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/shared/Remove-SampleResources.ps1' `
               -StatePath (Join-Path $env:STANDARD_FOUNDRY_DIRECTORY 'deployment-state.json') `
               -QueueName $env:SAMPLE_QUEUE_NAME -ConfirmCleanup
         env:

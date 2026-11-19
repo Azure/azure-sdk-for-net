@@ -16,10 +16,12 @@ Describe 'Language-neutral infrastructure contract' {
             $env:AZURE_TENANT_ID = '22222222-2222-2222-2222-222222222222'
             $directory = Join-Path $TestDrive "dotnet-plan-$FutureBinding"
             $bundle = Join-Path $TestDrive "bundle-$FutureBinding"
-            $infra = Join-Path $bundle 'infra'
+            $shared = Join-Path $bundle 'shared'
+            $infra = Join-Path $shared 'infra'
+            $null = New-Item -ItemType Directory -Path $shared -Force
             $null = New-Item -ItemType Directory -Path $infra -Force
             foreach ($name in @('New-ResourceDeploymentPlan.ps1', 'SampleCiHelpers.ps1')) {
-                Copy-Item -LiteralPath (Join-Path $PSScriptRoot "../$name") -Destination $bundle
+                Copy-Item -LiteralPath (Join-Path $PSScriptRoot "../$name") -Destination $shared
             }
             $template = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../infra/main.bicep') -Raw
             if ($FutureBinding) {
@@ -31,7 +33,7 @@ Describe 'Language-neutral infrastructure contract' {
             & {
                 function az { throw 'Offline planning must not invoke Azure CLI.' }
                 function python { throw 'Shared planning must not invoke Python.' }
-                & (Join-Path $bundle 'New-ResourceDeploymentPlan.ps1') -OutputDirectory $directory `
+                & (Join-Path $shared 'New-ResourceDeploymentPlan.ps1') -OutputDirectory $directory `
                     -QueueName q1 -IdentityResourceGroup 'shared-identities' `
                     -DefinitionId $(if ($env:SYSTEM_DEFINITIONID) { $env:SYSTEM_DEFINITIONID } else { '8392' }) `
                     -BuildId $(if ($env:BUILD_BUILDID) { $env:BUILD_BUILDID } else { '12345' }) -JobAttempt 1

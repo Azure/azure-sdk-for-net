@@ -8,7 +8,7 @@ resources. There is no automatic CI or PR trigger.
 
 ## Resources
 
-[main.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/ci/infra/main.bicep) uses the copied Standard shared-identity template
+[main.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/ci/shared/infra/main.bicep) uses the copied Standard shared-identity template
 and unconditional feature modules to create:
 
 - A Foundry account and project.
@@ -30,8 +30,6 @@ All modules run regardless of sample selection. This increases cost and
 prerequisites even for a small smoke selection. There are no new managed
 identities or Azure IAM role assignments, and no existing validation project
 is used as the sample target. The Python pytest adapters are not invoked.
-The former Standard-only entry point remains available for explicit local use,
-but is no longer called by this pipeline.
 
 ## Prerequisites
 
@@ -187,7 +185,9 @@ aliases, consumed by the existing .NET test environments:
 
 OpenAPI connection ID/name and the custom Bing instance name already match.
 The shared provisioning PowerShell and ten full-bundle Bicep modules are
-identical to the Python package's copies. Embedded Search code and documents,
+identical to the Python package's copies; the common PowerShell scripts and
+Search-indexing test are grouped under `ci/shared` in both packages. Embedded
+Search code and documents,
 the Function handler, and shared validation scripts are synchronized too.
 Search retains the `index-sample` default and SmartView Glasses documents;
 the Function handler uses the weather contract and `weather-input-queue` /
@@ -197,11 +197,10 @@ The Function host's only remote dependency is `azure-functions`; no dependency
 is added to the .NET SDK.
 
 [DotNetSampleCiHelpers.ps1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/ci/DotNetSampleCiHelpers.ps1) contains only .NET
-environment aliases. NUnit discovery, test execution and the optional
-standard-only deployment wrappers remain language-specific. The shared planner
-accepts `EnvironmentTemplatePath` for an explicit alternate binding contract;
-its default still discovers the full bundle. Resource changes belong in the
-shared files and must be synchronized in both repositories.
+environment aliases. NUnit discovery and test execution remain language-specific.
+The shared planner accepts `EnvironmentTemplatePath` for an explicit alternate
+binding contract; its default still discovers the full bundle. Resource changes
+belong in the shared files and must be synchronized in both repositories.
 Data-source, skillset and indexer names replace index-name underscores with
 hyphens because Azure Search permits underscores only in the index name.
 Each worker creates a fresh Search service and waits for each indexer's
@@ -237,10 +236,12 @@ Use PowerShell 7.2+ with Pester 4.10.1 from this directory:
 
 ```powershell
 Import-Module Pester -RequiredVersion 4.10.1
-Invoke-Pester -Script ./validation -EnableExit
-./validation/Test-BicepTemplates.ps1
-python -m pytest ./test_search_indexing.py
-python -m unittest discover -s ./validation -p test_bundle_assets.py
+Invoke-Pester -Script ./shared/validation -EnableExit
+Invoke-Pester -Script ./BundleProvisioning.Tests.ps1 -EnableExit
+Invoke-Pester -Script ./SampleTestPlan.Tests.ps1 -EnableExit
+./shared/validation/Test-BicepTemplates.ps1
+python -m pytest ./shared/test_search_indexing.py
+python -m unittest discover -s ./shared/validation -p test_bundle_assets.py
 ```
 
 The Bicep checker compiles the complete bundle and inspects nested resources,

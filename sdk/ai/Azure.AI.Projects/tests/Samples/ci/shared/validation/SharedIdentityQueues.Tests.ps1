@@ -3,7 +3,7 @@
 #Requires -Version 7.2
 
 . (Join-Path $PSScriptRoot '../SampleCiHelpers.ps1')
-. (Join-Path $PSScriptRoot '..\SampleTestPlanHelpers.ps1')
+. (Join-Path $PSScriptRoot '..\..\SampleTestPlanHelpers.ps1')
 
 function Invoke-QueueTestEnvironment {
     param([Parameter(Mandatory)] [scriptblock] $Test)
@@ -57,7 +57,7 @@ function New-OfflineQueuePlan {
         [hashtable] $Assignment = (New-TestQueueAssignments)[$QueueName])
 
     $null = New-Item -ItemType Directory -Path $OutputDirectory -Force
-    $planScript = Join-Path $PSScriptRoot '..\New-SampleDeploymentPlan.ps1'
+    $planScript = Join-Path $PSScriptRoot '..\..\New-SampleDeploymentPlan.ps1'
     $selectionArguments = @{}
     if ($Assignment) {
         $manifest = Join-Path $OutputDirectory 'selected-tests.json'
@@ -182,7 +182,7 @@ Describe 'Offline queue ownership and deployment plans' {
             $plan = New-OfflineQueuePlan -OutputDirectory $directory -QueueName q2
             $planPath = Join-Path $directory 'deployment-plan.json'
             $statePath = Join-Path $TestDrive 'q1-state.json'
-            $provisioningScript = Join-Path $PSScriptRoot '../Invoke-SampleProvisioning.ps1'
+            $provisioningScript = Join-Path $PSScriptRoot '../../Invoke-SampleProvisioning.ps1'
             { & $provisioningScript -PlanPath $planPath -StatePath $statePath -QueueName q1 -ConfirmProvisioning } |
                 Should Throw 'different test queue'
             $plan.queueName | Should Be 'q2'
@@ -544,7 +544,7 @@ Describe 'Aggregate four-queue capacity admission' {
                 $plans[1].filter = $plans[0].filter
             }
             $plans[1] | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath (Join-Path $batchDirectory 'q2\deployment-plan.json') -Encoding utf8
-            $provisioningScript = Join-Path $PSScriptRoot '..\Invoke-SampleProvisioning.ps1'
+            $provisioningScript = Join-Path $PSScriptRoot '..\..\Invoke-SampleProvisioning.ps1'
             { & $provisioningScript -BatchPlanDirectory $batchDirectory -ResolvedPlanDirectory $resolvedDirectory } |
                 Should Throw $ExpectedError
             Test-Path -LiteralPath $resolvedDirectory | Should Be $false

@@ -38,4 +38,4 @@ if ($PSCmdlet.ParameterSetName -eq 'Admission') {
         }
     }
 }
-& (Join-Path $PSScriptRoot 'Invoke-ResourceProvisioning.ps1') @PSBoundParameters
+& (Join-Path $PSScriptRoot 'shared/Invoke-ResourceProvisioning.ps1') @PSBoundParameters

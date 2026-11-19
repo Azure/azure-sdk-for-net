@@ -15,12 +15,12 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-. (Join-Path $PSScriptRoot 'SampleCiHelpers.ps1')
+. (Join-Path $PSScriptRoot 'shared/SampleCiHelpers.ps1')
 . (Join-Path $PSScriptRoot 'DotNetSampleCiHelpers.ps1')
 if (-not $ConfirmProvisioning) { throw 'Supply -ConfirmProvisioning to create the billable full sample resource bundle.' }
 if (Test-Path -LiteralPath $OutputDirectory) { throw 'Provisioning output already exists; refusing to adopt an earlier attempt.' }
 
-& (Join-Path $PSScriptRoot 'New-ResourceDeploymentPlan.ps1') -OutputDirectory $OutputDirectory `
+& (Join-Path $PSScriptRoot 'shared/New-ResourceDeploymentPlan.ps1') -OutputDirectory $OutputDirectory `
     -IdentityResourceGroup $IdentityResourceGroup -QueueName $QueueName `
     -ModelName $ModelName -ModelVersion $ModelVersion -ModelSku $ModelSku -ModelCapacity $ModelCapacity
 $planPath = Join-Path $OutputDirectory 'deployment-plan.json'
@@ -30,7 +30,7 @@ $null = Set-SampleSubscriptionContext -Plan $plan
 $plan = Resolve-SampleIdentitySelection -Plan $plan
 $plan | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $planPath -Encoding utf8
 
-& (Join-Path $PSScriptRoot 'Invoke-ResourceProvisioning.ps1') `
+& (Join-Path $PSScriptRoot 'shared/Invoke-ResourceProvisioning.ps1') `
     -PlanPath $planPath -StatePath $statePath -QueueName $QueueName -ConfirmProvisioning
 $state = Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json -AsHashtable
 if ($state.status -cne 'Ready') { throw 'The resource bundle is not ready; no test bindings were published.' }
