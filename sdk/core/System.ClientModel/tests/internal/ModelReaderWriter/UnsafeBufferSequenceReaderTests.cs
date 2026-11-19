@@ -88,45 +88,30 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         }
 
         [Test]
-        public void DisposeWhileGetBinaryData()
+        public void DisposeWhileGetBinaryDataDuringAllocation()
         {
             UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
-            using ManualResetEventSlim toBinaryDataStarting = new ManualResetEventSlim(false);
 
-            BinaryData? data = null;
-            Exception? firstCallException = null;
-
-            Task toBinaryDataTask = Task.Run(() =>
+            // Dispose after the length has been calculated and while the destination stream is being allocated.
+            Assert.Throws<ObjectDisposedException>(() => reader.ToBinaryData(capacity =>
             {
-                toBinaryDataStarting.Set();
-                try
-                {
-                    data = reader.ToBinaryData();
-                }
-                catch (Exception ex)
-                {
-                    firstCallException = ex;
-                }
-            });
-
-            Task disposeTask = Task.Run(() =>
-            {
-                Assert.IsTrue(toBinaryDataStarting.Wait(TimeSpan.FromSeconds(5)));
                 reader.Dispose();
-            });
+                return new MemoryStream(capacity);
+            }));
+            Assert.Throws<ObjectDisposedException>(() => reader.ToBinaryData());
+        }
 
-            Task.WaitAll(toBinaryDataTask, disposeTask);
+        [Test]
+        public void DisposeWhileGetBinaryDataDuringCopy()
+        {
+            UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
 
-            if (firstCallException is not null)
-            {
-                Assert.IsInstanceOf<ObjectDisposedException>(firstCallException);
-            }
-            else
-            {
-                Assert.NotNull(data);
-                Assert.LessOrEqual(data!.ToMemory().Length, _bufferSize);
-            }
+            // Dispose from within the first write performed by ToBinaryData's internal copy.
+            BinaryData data = reader.ToBinaryData(capacity => new CancellationOnFirstWriteStream(capacity) { OnFirstWrite = reader.Dispose });
 
+            Assert.Greater(data.ToMemory().Length, 0);
+            Assert.Less(data.ToMemory().Length, _bufferSize);
+            Assert.AreEqual(0xFF, data.ToMemory().Span[0]);
             Assert.Throws<ObjectDisposedException>(() => reader.ToBinaryData());
         }
 
