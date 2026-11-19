@@ -53,7 +53,7 @@ public partial class ResponsesTelemetryTests
     private async Task<ResponseResult> RunWebSearchStreamingAsync(ProjectResponsesClient client)
     {
         ResponseResult completedResponse = null;
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(WebSearchPrompt))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(WebSearchPrompt))
         {
             if (update is StreamingResponseCompletedUpdate completed)
             {
@@ -70,7 +70,8 @@ public partial class ResponsesTelemetryTests
     private void ValidateWebSearchSpan(
         string agentName,
         object agentVersion,
-        bool contentRecordingEnabled)
+        bool contentRecordingEnabled,
+        bool streaming)
     {
         _exporter.ForceFlush();
 
@@ -160,7 +161,7 @@ public partial class ResponsesTelemetryTests
                 await RunWebSearchNonStreamingAsync(client);
             }
 
-            ValidateWebSearchSpan(agentName, agentVersion.Version, contentRecordingEnabled);
+            ValidateWebSearchSpan(agentName, agentVersion.Version, contentRecordingEnabled, streaming);
         }
         finally
         {
@@ -189,12 +190,14 @@ public partial class ResponsesTelemetryTests
     #region Web Search Streaming tests
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestWebSearchStreamingWithContentRecordingEnabled()
     {
         await RunWebSearchTelemetryTestAsync(contentRecordingEnabled: true, streaming: true);
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestWebSearchStreamingWithContentRecordingDisabled()
     {
         await RunWebSearchTelemetryTestAsync(contentRecordingEnabled: false, streaming: true);

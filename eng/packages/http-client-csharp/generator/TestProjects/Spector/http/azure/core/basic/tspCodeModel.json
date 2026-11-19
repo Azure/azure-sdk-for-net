@@ -278,7 +278,8 @@
             }
           },
           "isHttpMetadata": false,
-          "isExactName": false
+          "isExactName": false,
+          "requiredInConstructor": false
         },
         {
           "$id": "27",

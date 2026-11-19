@@ -10,8 +10,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Computer tool call output. </summary>
-    public partial class ItemFieldComputerToolCallOutput : ItemField
+    internal partial class ItemFieldComputerToolCallOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCallOutput"/>. </summary>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>

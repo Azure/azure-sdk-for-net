@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            CompanyProfile company = default;
-            CloudAccountMarketplaceUpdate marketplace = default;
-            CloudAccountUserUpdate user = default;
+            CommvaultCompanyProfile company = default;
+            CloudAccountMarketplacePatch marketplace = default;
+            CloudAccountUserPatch user = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    company = CompanyProfile.DeserializeCompanyProfile(prop.Value, options);
+                    company = CommvaultCompanyProfile.DeserializeCommvaultCompanyProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("marketplace"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    marketplace = CloudAccountMarketplaceUpdate.DeserializeCloudAccountMarketplaceUpdate(prop.Value, options);
+                    marketplace = CloudAccountMarketplacePatch.DeserializeCloudAccountMarketplacePatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("user"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    user = CloudAccountUserUpdate.DeserializeCloudAccountUserUpdate(prop.Value, options);
+                    user = CloudAccountUserPatch.DeserializeCloudAccountUserPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,8 +13,8 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ```C# Snippet:Responses_Sample1_EchoHandler
 public class EchoHandler : ResponseHandler
 {
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {

@@ -7,8 +7,88 @@
   durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
   deployments retain durable task bookkeeping but mark interrupted background responses
   failed instead of re-invoking their handlers.
+- `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (`ToolCallCaller`,
+  either `DirectToolCallCaller` or `ProgramToolCallCaller`), plus `Async` on the call, following
+  the Foundry spec.
 
 ### Breaking Changes
+- The package no longer emits its own copies of the OpenAI Responses models. Public handler,
+  context, and event-stream APIs now use the shared types from the `OpenAI` package and
+  `Azure.AI.Extensions.OpenAI`, so handlers and tests that referenced the removed types must
+  switch to them (add `using OpenAI.Responses;`, and `using Azure.AI.Extensions.OpenAI;` for
+  Azure-specific items). The handler signature is now
+  `IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(CreateResponseOptions request, ResponseContext context, CancellationToken cancellationToken)`.
+  Common replacements: `CreateResponse` → `CreateResponseOptions`, `ResponseStreamEvent` →
+  `StreamingResponseUpdate` (and `Response*Event` → `StreamingResponse*Update`),
+  `ResponseObject` → `ResponseResult`, `Item` / `OutputItem` → `ResponseItem`,
+  `ItemMessage` / `OutputItemMessage` → `MessageResponseItem`,
+  `FunctionCallOutputItemParam` → `FunctionCallOutputResponseItem`,
+  `ConversationReference` → `ResponseConversationOptions`, and
+  `StructuredOutputsOutputItem` → `AgentStructuredOutputsResponseItem`. Public APIs that expose
+  experimental OpenAI types are now marked `[Experimental("OPENAI001")]`, forwarding the OpenAI
+  package's diagnostic ID, so consumers must suppress or acknowledge `OPENAI001` to use them.
+- Several properties that carried JSON as a `string` are now `BinaryData` on the OpenAI types:
+  the arguments of function calls and MCP tool calls (`FunctionCallResponseItem.FunctionArguments`,
+  `McpToolCallItem.ToolArguments`, `McpToolCallApprovalRequestItem.ToolArguments`) together with
+  their streaming delta and done updates, and image generation results
+  (`ImageGenerationCallResponseItem.ImageResultBytes`,
+  `StreamingResponseImageGenerationCallPartialImageUpdate.PartialImageBytes`). Function call output
+  went the other way: `FunctionCallOutputResponseItem.FunctionOutput` is a `string` where the
+  previous model used `BinaryData`. When the output is sent as an array of content parts,
+  `FunctionOutput` returns the newline-joined text of its text parts, while the original array
+  (including `input_image` and `input_file` parts) is kept and sent back as-is when the item is
+  serialized, stored or replayed. `ResponseEventStream.OutputItemFunctionCallOutput` still takes
+  `BinaryData` as JSON: a JSON string is sent as its value and an array of content parts is sent
+  as an array; any other value is sent as its UTF-8 text.
+- `CreateResponseRequest`, the argument of `ResponsesProvider.CreateResponseAsync`, is renamed to
+  `CreateResponsePersistRequest` (the old name is now used by a generated internal model). Its
+  `Response` is an `OpenAI.Responses.ResponseResult` and its `InputItems` are
+  `OpenAI.Responses.ResponseItem`, so custom `ResponsesProvider` implementations must update their
+  override.
+- Models in `Azure.AI.AgentServer.Responses.Models` that no public API of this package uses any
+  more are now internal, so they no longer duplicate or collide with the OpenAI types. This covers
+  the `ItemField*` hierarchy and its status enums, the request-side models (`CreateResponseRequest`,
+  `Reasoning`, `Prompt`, `IncludeEnum`, `ResponseTextParam`, `TextResponseFormat*`,
+  `ResponseStreamOptions`, `ContextManagementParam`, `Metadata`), the apply-patch, function-shell,
+  local-shell, code-interpreter, MCP list-tools, and web-search action models, `InputTextContent`,
+  `InputImageContent`, `InputFileContent`, `FunctionAndCustomToolCallOutput*`, `MessageRole`,
+  `MessageStatus`, `MessagePhase`, `AgentId`, `CreatedBy`, `ComputerScreenshotImage`,
+  `CompactResource`, `ResponseIncompleteDetails`, `Error` / `ApiErrorResponse`, `DeleteResponseResult`,
+  and `AgentsPagedResultOutputItem`. Use the equivalent `OpenAI.Responses` or
+  `Azure.AI.Extensions.OpenAI` types instead.
+- The "expanded" helpers that duplicated the OpenAI types are removed:
+  `ItemMessageExtensions.GetContentExpanded`, `GetToolChoiceExpanded` on `CreateResponseOptions`
+  and `ResponseResult`, `ResponseResult.SetToolChoice`, and
+  `CreateResponseOptions.GetConversationExpanded`. Use `MessageResponseItem.Content`
+  (`ResponseContentPart`, switching on `Kind`), `ToolChoice` (`ResponseToolChoice`, with `Kind` and
+  `FunctionName`), and `ConversationOptions.ConversationId` instead. The models that only these
+  helpers exposed are now internal: `MessageContent` and its `MessageContent*Content` subtypes,
+  `SummaryTextContent`, `TextContent`, `ComputerScreenshotContent`, `ImageDetail`,
+  `FileInputDetail`, `LogProb`, `TopLogProb`, `ToolChoiceParam` and its `ToolChoice*` subtypes,
+  `ToolChoiceOptions`, `ToolChoiceAllowedMode`, `Specific*Param`, `PromptCacheBreakpointConfig`,
+  and `ConversationParam`. The remaining public models in `Azure.AI.AgentServer.Responses.Models`
+  (status enums, tool-call callers and the custom tool call items) are tracked for removal in
+  [#64833](https://github.com/Azure/azure-sdk-for-net/issues/64833).
+- `ResponsesProvider.GetInputItemsAsync` now returns `OpenAI.Responses.ResponseItemCollectionPage`
+  (was `AgentsPagedResultOutputItem`) and is marked `[Experimental("OPENAI001")]`, so custom
+  `ResponsesProvider` implementations must update their override.
+- `OutputItemExtensions` (`GetId(this OutputItem)`) is removed; use `ResponseItem.Id` instead.
+- The `AgentsPagedResultOutputItem` and `DeleteResponseResult` model factory methods are removed
+  along with their (now internal) models.
+- `ResponseEventStream` no longer has the builders for local-shell, function-shell, and compaction
+  output items: `AddOutputItemLocalShellCall`, `AddOutputItemLocalShellCallOutput`,
+  `AddOutputItemFunctionShellCall`, `AddOutputItemFunctionShellCallOutput`, and
+  `AddOutputItemCompaction`, plus the matching `OutputItemLocalShellCall`,
+  `OutputItemLocalShellCallOutput`, `OutputItemFunctionShellCall`,
+  `OutputItemFunctionShellCallOutput`, and `OutputItemCompaction` convenience methods. The models
+  they emitted (`OutputItemLocalShellToolCall`, `OutputItemLocalShellToolCallOutput`,
+  `OutputItemFunctionShellCall`, `OutputItemFunctionShellCallOutput`, and
+  `OutputItemCompactionBody`) were removed too. `OpenAI.Responses.ResponseItem` has no item types
+  for these kinds, so there is no typed replacement.
+- `ResponsesApiException` now takes and exposes `OpenAI.Responses.ResponseError` instead of the
+  generated `Models.Error`: both constructors and the `Error` property changed type. On the new
+  type `Code` is a `ResponseErrorCode` (was `string`), `Type` is now `Kind`, and `Details`,
+  `AdditionalInfo`, and `DebugInfo` are no longer exposed.
 
 - Core's `SetResilientTasksEnabled()` no longer activates Responses when both
   Responses feature flags are disabled. Configure `ResilientBackground` or
@@ -25,6 +105,14 @@
   Responses ownership across restart.
 
 ### Other Changes
+- The package now depends on `OpenAI` 2.15.0 or later and on `Azure.AI.Extensions.OpenAI`,
+  because their types appear in its public API. Applications that pin an older `OpenAI` version
+  must raise it.
+- Request validation now covers eight more tool types from the Foundry spec (`a2a`,
+  `browser_automation`, `cloud_computer_use_preview`, `fabric_iq_preview`,
+  `github_copilot_toolset_preview`, `microsoft_copilot_toolset_preview`,
+  `programmatic_tool_calling`, and `web_iq_preview`), so a malformed tool of these types is
+  rejected instead of passing through unvalidated.
 
 ## 1.0.0-beta.9 (2026-10-15)
 

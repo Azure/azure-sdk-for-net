@@ -8,12 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Allowed tools. </summary>
-    public partial class ToolChoiceAllowed : ToolChoiceParam
+    internal partial class ToolChoiceAllowed : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceAllowed"/>. </summary>
         /// <param name="mode">
@@ -33,11 +31,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   ]
         ///   ```
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
         public ToolChoiceAllowed(ToolChoiceAllowedMode mode, IEnumerable<IDictionary<string, BinaryData>> tools) : base(ToolChoiceParamType.AllowedTools)
         {
-            Argument.AssertNotNull(tools, nameof(tools));
-
             Mode = mode;
             Tools = tools.ToList();
         }

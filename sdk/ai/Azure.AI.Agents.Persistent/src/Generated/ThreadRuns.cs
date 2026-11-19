@@ -89,14 +89,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content`
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
         /// to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ThreadRun> InternalCreateRun(string threadId, string assistantId, string overrideModelName = default, string overrideInstructions = default, string additionalInstructions = default, IEnumerable<ThreadMessageOptions> additionalMessages = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, IEnumerable<RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
         {
-            CreateRunRequest spreadModel = new CreateRunRequest(
+            CreateRunContent spreadModel = new CreateRunContent(
                 assistantId,
                 overrideModelName,
                 overrideInstructions,
@@ -162,14 +162,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content`
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
         /// to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ThreadRun>> InternalCreateRunAsync(string threadId, string assistantId, string overrideModelName = default, string overrideInstructions = default, string additionalInstructions = default, IEnumerable<ThreadMessageOptions> additionalMessages = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, IEnumerable<RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
         {
-            CreateRunRequest spreadModel = new CreateRunRequest(
+            CreateRunContent spreadModel = new CreateRunContent(
                 assistantId,
                 overrideModelName,
                 overrideInstructions,
@@ -309,7 +309,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            UpdateRunRequest spreadModel = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            UpdateRunContent spreadModel = new UpdateRunContent(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = UpdateRun(threadId, runId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((ThreadRun)result, result);
         }
@@ -327,7 +327,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            UpdateRunRequest spreadModel = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            UpdateRunContent spreadModel = new UpdateRunContent(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = await UpdateRunAsync(threadId, runId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThreadRun)result, result);
         }
@@ -347,7 +347,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            SubmitToolOutputsToRunRequest spreadModel = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, default);
+            SubmitToolOutputsToRunContent spreadModel = new SubmitToolOutputsToRunContent(toolOutputs?.ToList() as IList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, default);
             Response result = SubmitToolOutputsToRun(threadId, runId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((ThreadRun)result, result);
         }
@@ -367,7 +367,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            SubmitToolOutputsToRunRequest spreadModel = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, default);
+            SubmitToolOutputsToRunContent spreadModel = new SubmitToolOutputsToRunContent(toolOutputs?.ToList() as IList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, default);
             Response result = await SubmitToolOutputsToRunAsync(threadId, runId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThreadRun)result, result);
         }

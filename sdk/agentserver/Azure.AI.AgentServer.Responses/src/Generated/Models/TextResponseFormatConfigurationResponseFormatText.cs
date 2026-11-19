@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Text. </summary>
-    public partial class TextResponseFormatConfigurationResponseFormatText : TextResponseFormatConfiguration
+    internal partial class TextResponseFormatConfigurationResponseFormatText : TextResponseFormatConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatConfigurationResponseFormatText"/>. </summary>
         public TextResponseFormatConfigurationResponseFormatText() : base(TextResponseFormatConfigurationType.Text)

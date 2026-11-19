@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="ResponseFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponseFormat?(string value) => value == null ? null : new ResponseFormat(value);
+        public static implicit operator ResponseFormat?(string value) => value == null ? (ResponseFormat?)null : new ResponseFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

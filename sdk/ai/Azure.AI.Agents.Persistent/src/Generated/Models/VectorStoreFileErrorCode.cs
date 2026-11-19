@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="VectorStoreFileErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreFileErrorCode?(string value) => value == null ? null : new VectorStoreFileErrorCode(value);
+        public static implicit operator VectorStoreFileErrorCode?(string value) => value == null ? (VectorStoreFileErrorCode?)null : new VectorStoreFileErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

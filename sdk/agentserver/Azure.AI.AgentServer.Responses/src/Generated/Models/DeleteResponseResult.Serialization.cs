@@ -13,8 +13,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The result of a delete response operation. </summary>
-    public partial class DeleteResponseResult : IJsonModel<DeleteResponseResult>
+    internal partial class DeleteResponseResult : IJsonModel<DeleteResponseResult>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteResponseResult"/> for deserialization. </summary>
         internal DeleteResponseResult()
@@ -89,10 +88,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("deleted"u8);
-            writer.WriteBooleanValue(Deleted);
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object);
+            writer.WritePropertyName("deleted"u8);
+            writer.WriteBooleanValue(Deleted);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,8 +135,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string id = default;
-            bool deleted = default;
             string @object = default;
+            bool deleted = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,22 +145,22 @@ namespace Azure.AI.AgentServer.Responses.Models
                     id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deleted"u8))
-                {
-                    deleted = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("object"u8))
                 {
                     @object = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("deleted"u8))
+                {
+                    deleted = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeleteResponseResult(id, deleted, @object, additionalBinaryDataProperties);
+            return new DeleteResponseResult(id, @object, deleted, additionalBinaryDataProperties);
         }
     }
 }

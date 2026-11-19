@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-                writer.WriteStringValue(Delay.Value.ToSerialString());
+                writer.WriteStringValue(Delay.Value.ToString());
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model.ToString());
@@ -277,7 +277,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    delay = prop.Value.GetString().ToVoiceAgentAudioInputConfigTranscriptionDelay();
+                    delay = new VoiceAgentAudioInputConfigTranscriptionDelay(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model"u8))

@@ -16,6 +16,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
+#pragma warning disable AAIP002
 public class Sample_EvaluationsAgent : EvaluationSampleBase
 {
     #region Snippet:Sample_CreateData_EvaluationsAgent

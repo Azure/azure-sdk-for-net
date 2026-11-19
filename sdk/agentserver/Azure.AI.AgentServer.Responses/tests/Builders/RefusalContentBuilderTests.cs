@@ -87,7 +87,7 @@ public class RefusalContentBuilderTests
         refusal.EmitAdded();
         var evt = refusal.EmitDelta("I can't ");
         XAssert.IsType<ResponseRefusalDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("I can't "));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("I can't "));
     }
 
     [Test]
@@ -110,8 +110,8 @@ public class RefusalContentBuilderTests
         refusal.EmitAdded();
         var d1 = refusal.EmitDelta("I can't ");
         var d2 = refusal.EmitDelta("help with that.");
-        Assert.That(d1.Delta, Is.EqualTo("I can't "));
-        Assert.That(d2.Delta, Is.EqualTo("help with that."));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("I can't "));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("help with that."));
     }
 
     // ── RefusalContentBuilder.EmitDone() ──────────────────────
@@ -202,7 +202,7 @@ public class RefusalContentBuilderTests
         var evt = msg.EmitDone();
         var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         XAssert.Single(item.Content);
-        var content = XAssert.IsType<MessageContentRefusalContent>(item.Content[0]);
+        var content = XAssert.IsInstanceOf<ResponseContentPart>(item.Content[0]);
         Assert.That(content.Refusal, Is.EqualTo("I can't help with that."));
     }
 
@@ -225,8 +225,8 @@ public class RefusalContentBuilderTests
         var evt = msg.EmitDone();
         var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         Assert.That(item.Content.Count, Is.EqualTo(2));
-        XAssert.IsType<MessageContentOutputTextContent>(item.Content[0]);
-        XAssert.IsType<MessageContentRefusalContent>(item.Content[1]);
+        XAssert.IsInstanceOf<ResponseContentPart>(item.Content[0]);
+        XAssert.IsInstanceOf<ResponseContentPart>(item.Content[1]);
     }
 
     // ── Sequence numbers ──────────────────────────────────────

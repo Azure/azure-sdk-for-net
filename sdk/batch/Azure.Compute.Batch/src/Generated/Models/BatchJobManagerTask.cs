@@ -41,16 +41,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/>. </summary>
-        /// <param name="id"> A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. </param>
-        /// <param name="commandLine"> The command line of the Job Manager Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="commandLine"/> is null. </exception>
-        public BatchJobManagerTask(string id, string commandLine)
+        public BatchJobManagerTask()
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(commandLine, nameof(commandLine));
-
-            Id = id;
-            CommandLine = commandLine;
             ResourceFiles = new ChangeTrackingList<ResourceFile>();
             OutputFiles = new ChangeTrackingList<OutputFile>();
             EnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
@@ -99,6 +91,19 @@ namespace Azure.Compute.Batch
             ApplicationPackageReferences = applicationPackageReferences;
             AllowLowPriorityNode = allowLowPriorityNode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/>. </summary>
+        /// <param name="id"> A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. </param>
+        /// <param name="commandLine"> The command line of the Job Manager Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="commandLine"/> is null. </exception>
+        public BatchJobManagerTask(string id, string commandLine) : this()
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(commandLine, nameof(commandLine));
+
+            Id = id;
+            CommandLine = commandLine;
         }
 
         /// <summary> A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. </summary>

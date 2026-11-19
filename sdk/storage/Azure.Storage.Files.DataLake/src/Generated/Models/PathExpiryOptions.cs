@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary> Converts a string to a <see cref="PathExpiryOptions"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PathExpiryOptions?(string value) => value == null ? null : new PathExpiryOptions(value);
+        public static implicit operator PathExpiryOptions?(string value) => value == null ? (PathExpiryOptions?)null : new PathExpiryOptions(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

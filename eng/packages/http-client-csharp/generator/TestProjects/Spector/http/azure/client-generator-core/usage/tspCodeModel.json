@@ -399,6 +399,7 @@
           "$id": "31",
           "kind": "property",
           "name": "modelName",
+          "originalName": "name",
           "apiVersions": [],
           "serializedName": "name",
           "type": {

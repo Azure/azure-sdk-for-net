@@ -9,14 +9,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> A computer screenshot image used with the computer use tool. </summary>
-    public partial class ComputerScreenshotImage
+    internal partial class ComputerScreenshotImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
-        public ComputerScreenshotImage()
+        internal ComputerScreenshotImage()
         {
         }
 
@@ -43,9 +42,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "computer_screenshot";
 
         /// <summary> The URL of the screenshot image. </summary>
-        public Uri ImageUrl { get; set; }
+        public Uri ImageUrl { get; }
 
         /// <summary> The identifier of an uploaded file that contains the screenshot. </summary>
-        public string FileId { get; set; }
+        public string FileId { get; }
     }
 }

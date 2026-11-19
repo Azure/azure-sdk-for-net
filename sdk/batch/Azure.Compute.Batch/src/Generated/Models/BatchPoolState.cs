@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchPoolState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchPoolState?(string value) => value == null ? null : new BatchPoolState(value);
+        public static implicit operator BatchPoolState?(string value) => value == null ? (BatchPoolState?)null : new BatchPoolState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

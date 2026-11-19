@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Converts a string to a <see cref="DataPointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataPointType?(string value) => value == null ? null : new DataPointType(value);
+        public static implicit operator DataPointType?(string value) => value == null ? (DataPointType?)null : new DataPointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

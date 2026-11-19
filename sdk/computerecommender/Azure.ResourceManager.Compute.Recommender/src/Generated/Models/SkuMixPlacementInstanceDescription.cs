@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> Initializes a new instance of <see cref="SkuMixPlacementInstanceDescription"/>. </summary>
         /// <param name="vmSizes"> The list of VM sizes to consider for placement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSizes"/> is null. </exception>
-        public SkuMixPlacementInstanceDescription(IEnumerable<SkuMixPlacementVMSize> vmSizes)
+        public SkuMixPlacementInstanceDescription(IEnumerable<SkuMixPlacementVmSize> vmSizes)
         {
             Argument.AssertNotNull(vmSizes, nameof(vmSizes));
 
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> Initializes a new instance of <see cref="SkuMixPlacementInstanceDescription"/>. </summary>
         /// <param name="vmSizes"> The list of VM sizes to consider for placement. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuMixPlacementInstanceDescription(IList<SkuMixPlacementVMSize> vmSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuMixPlacementInstanceDescription(IList<SkuMixPlacementVmSize> vmSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizes = vmSizes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of VM sizes to consider for placement. </summary>
-        public IList<SkuMixPlacementVMSize> VmSizes { get; } = new ChangeTrackingList<SkuMixPlacementVMSize>();
+        public IList<SkuMixPlacementVmSize> VmSizes { get; } = new ChangeTrackingList<SkuMixPlacementVmSize>();
     }
 }

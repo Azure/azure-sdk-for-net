@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="SearchIndexKnowledgeSourceBoostKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchIndexKnowledgeSourceBoostKind?(string value) => value == null ? null : new SearchIndexKnowledgeSourceBoostKind(value);
+        public static implicit operator SearchIndexKnowledgeSourceBoostKind?(string value) => value == null ? (SearchIndexKnowledgeSourceBoostKind?)null : new SearchIndexKnowledgeSourceBoostKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

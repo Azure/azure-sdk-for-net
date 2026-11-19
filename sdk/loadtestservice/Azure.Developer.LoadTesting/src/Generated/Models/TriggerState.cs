@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="TriggerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TriggerState?(string value) => value == null ? null : new TriggerState(value);
+        public static implicit operator TriggerState?(string value) => value == null ? (TriggerState?)null : new TriggerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

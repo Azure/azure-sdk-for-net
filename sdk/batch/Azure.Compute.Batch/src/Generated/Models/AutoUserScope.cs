@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="AutoUserScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoUserScope?(string value) => value == null ? null : new AutoUserScope(value);
+        public static implicit operator AutoUserScope?(string value) => value == null ? (AutoUserScope?)null : new AutoUserScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

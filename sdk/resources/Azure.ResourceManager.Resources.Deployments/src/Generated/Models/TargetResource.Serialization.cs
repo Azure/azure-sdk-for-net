@@ -117,6 +117,21 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 writer.WritePropertyName("symbolicName"u8);
                 writer.WriteStringValue(SymbolicName);
             }
+            if (Optional.IsCollectionDefined(SymbolicNamePath))
+            {
+                writer.WritePropertyName("symbolicNamePath"u8);
+                writer.WriteStartArray();
+                foreach (string item in SymbolicNamePath)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,6 +181,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             BinaryData identifiers = default;
             string apiVersion = default;
             string symbolicName = default;
+            IList<string> symbolicNamePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,6 +232,27 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     symbolicName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("symbolicNamePath"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    symbolicNamePath = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -229,6 +266,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 identifiers,
                 apiVersion,
                 symbolicName,
+                symbolicNamePath ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

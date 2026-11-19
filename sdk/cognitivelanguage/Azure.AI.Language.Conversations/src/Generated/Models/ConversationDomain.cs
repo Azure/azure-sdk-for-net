@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="ConversationDomain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationDomain?(string value) => value == null ? null : new ConversationDomain(value);
+        public static implicit operator ConversationDomain?(string value) => value == null ? (ConversationDomain?)null : new ConversationDomain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

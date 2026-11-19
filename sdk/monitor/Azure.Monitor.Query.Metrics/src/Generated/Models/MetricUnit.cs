@@ -113,7 +113,7 @@ namespace Azure.Monitor.Query.Metrics.Models
 
         /// <summary> Converts a string to a <see cref="MetricUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricUnit?(string value) => value == null ? null : new MetricUnit(value);
+        public static implicit operator MetricUnit?(string value) => value == null ? (MetricUnit?)null : new MetricUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

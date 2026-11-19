@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP approval request. </summary>
-    public partial class ItemFieldMcpApprovalRequest : ItemField
+    internal partial class ItemFieldMcpApprovalRequest : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpApprovalRequest"/>. </summary>
         /// <param name="id"> The unique ID of the approval request. </param>

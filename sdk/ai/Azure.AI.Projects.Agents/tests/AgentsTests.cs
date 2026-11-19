@@ -152,7 +152,7 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteAsync("mcp2");
         }
         catch { }
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
@@ -220,7 +220,7 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteAsync("mcp");
         }
         catch { }
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
@@ -401,7 +401,7 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxRecord> records = await toolboxClient.GetAllAsync().ToListAsync();
         int created = 0;
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
@@ -452,7 +452,7 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxVersion> records = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Ascending).ToListAsync();
         int created = 0;
-        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        McpToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
@@ -522,13 +522,13 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
             }
         };
-        SkillInlineRequest content = new(
+        SkillInlineContent content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -542,7 +542,7 @@ public class AgentsTests : AgentsTestBase
                 """
         );
         SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: SKILL, inlineContent: content);
-        AgentCard card = new(version: "42", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
+        AgentCard card = new() { Version = "42", Skills = { new AgentCardSkill(id: simpleSkill.Id, name: SKILL) } };
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
@@ -571,10 +571,10 @@ public class AgentsTests : AgentsTestBase
         // Create
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
-        Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
-        Assert.That(((VersionRefIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionReferenceIndicator)));
+        Assert.That(((VersionReferenceIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -584,10 +584,10 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session1.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
         ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
-        Assert.That(session2.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
-        Assert.That(((VersionRefIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session2.VersionIndicator, Is.InstanceOf<VersionReferenceIndicator>());
+        Assert.That(((VersionReferenceIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -598,8 +598,8 @@ public class AgentsTests : AgentsTestBase
         // Get
         ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         Assert.That(session.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
-        Assert.That(session.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
-        Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session.VersionIndicator, Is.InstanceOf<VersionReferenceIndicator>());
+        Assert.That(((VersionReferenceIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         // Stop
         await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
@@ -652,7 +652,7 @@ public class AgentsTests : AgentsTestBase
                 await agentsClient.CreateSessionAsync(
                     agentName: agentVersion.Name,
                     agentSessionId: $"{sessionIdBase}_{PAGE_SIZE - i}",
-                    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+                    versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
                 );
             }
             catch
@@ -706,7 +706,7 @@ public class AgentsTests : AgentsTestBase
             ProjectAgentSession session = await agentsClient.CreateSessionAsync(
                 agentName: agentVersion.Name,
                 agentSessionId: sessionName,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+                versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
             );
         }
         finally
@@ -723,7 +723,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("weather_openapi.json");
@@ -752,21 +752,21 @@ public class AgentsTests : AgentsTestBase
         // Download
         string temporaryFile = Path.GetTempFileName();
         File.Delete(temporaryFile);
-        BinaryData dataBin = await filesClient.DownloadAsync(
+        BinaryData dataBin = (await filesClient.DownloadAsync(
             sessionStoragePath: $"storage/{file2}",
             localPath: temporaryFile
-        );
+        ));
         string data = File.ReadAllText(temporaryFile);
         Assert.That(data, Is.EqualTo("The test file\n"));
         data = dataBin.ToString();
         Assert.That(data, Is.EqualTo("The test file\n"));
         // Delete
-        await filesClient.DeleteAsync(localPath: $"storage/{file2}");
+        await filesClient.DeleteAsync(sessionStoragePath: $"storage/{file2}");
         response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         lstEntries = await response.Select(x => x.Name).ToListAsync();
         Assert.That(lstEntries, Has.Count.EqualTo(1));
         Assert.That(lstEntries[0], Is.EqualTo(file1));
-        await filesClient.DeleteAsync(localPath: $"storage/{file1}");
+        await filesClient.DeleteAsync(sessionStoragePath: $"storage/{file1}");
         response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         Assert.That(await response.ToListAsync(), Has.Count.EqualTo(0));
         await agentsClient.DeleteSessionAsync(
@@ -782,7 +782,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("test.txt");
@@ -869,7 +869,7 @@ public class AgentsTests : AgentsTestBase
                 await skillsClient.DeleteSkillAsync(skill1.Name);
             }
         }
-        SkillInlineRequest content = new(
+        SkillInlineContent content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum run
@@ -949,7 +949,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         int initialCount = (await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync()).Count;
-        SkillInlineRequest contrent = new(
+        SkillInlineContent contrent = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -999,7 +999,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
-        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -1009,7 +1009,7 @@ public class AgentsTests : AgentsTestBase
         await agentsClient.DisableAgentAsync(agentVersion.Name);
         try
         {
-            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             Assert.Fail("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -1017,7 +1017,7 @@ public class AgentsTests : AgentsTestBase
             Assert.That(ex.Status, Is.EqualTo(403));
         }
         await agentsClient.EnableAgentAsync(agentVersion.Name);
-        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Delay();
@@ -1031,7 +1031,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
-        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
+        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidates();
         ProjectsAgentVersion newAgentVersion = await GetAgentVersion(agentsClient);
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
         string opId = IsAsync ? "bdb68305-c2a7-11f1-8f16-f4289d3215d4" : "c58cf2b5-c2a7-11f1-96e3-f4289d3215d4";
@@ -1185,7 +1185,7 @@ public class AgentsTests : AgentsTestBase
             {
                 Random rv = new Random(42);
                 byte[] randomBytes = new byte[14360];
-                for (int i = 0; i< randomBytes.Length; i++)
+                for (int i = 0; i < randomBytes.Length; i++)
                 {
                     randomBytes[i] = (byte)rv.Next(32, 126);
                 }
