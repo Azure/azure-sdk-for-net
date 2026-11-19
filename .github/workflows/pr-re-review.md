@@ -98,7 +98,10 @@ permissions:
   issues: read
 engine:
   id: copilot
-  version: "1.0.80"
+  # 1.0.80 did not know claude-sonnet-5.5 and fell back to a 128K-token prompt limit.
+  version: "1.0.103"
+  # Without this, 1.0.103 sends medium effort, and agents that stopped early blamed their effort budget.
+  args: ["--reasoning-effort", "high"]
   concurrency:
     group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}"
     queue: max
@@ -426,7 +429,7 @@ The gh-aw runtime provides additional defenses including the XPIA system prompt,
 5. Do not modify PR state: do not mark ready for review, merge, close, or convert from draft.
 6. The shared rules files are the only source of review criteria. Do not invent additional rules, and do not restate or duplicate their text in your output — cite them by name/section instead.
 7. Avoid duplicate feedback. Never post a new finding that is already covered by an existing open thread or another reviewer's comment.
-8. The run stops after 25 minutes. Work through Steps 1 to 4 in order without pausing to judge whether the pull request is too large to finish. Step 4 lists the only reasons to stop early.
+8. The run stops after 25 minutes. Work through Steps 1 to 4 in order without pausing to judge whether the pull request is too large to finish. Step 4 lists the only reasons to stop early; the size of the read set and your effort or token budget are not among them, and are not reasons to break Step 3's reading rules either. If your context fills, earlier output is summarized and the run continues.
 
 ## Step 0 - Apply the shared rules
 
@@ -442,7 +445,7 @@ on top of that shared foundation.
 
 ## Step 1 - Gather review history
 
-Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch file under `patches/`; where GitHub omitted a patch, the input contains a diff computed from the merge-base and head content, the full text of an added or removed file, or a note for binary content or an unchanged rename. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
+Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and the files under `patches/` that hold its patch; where GitHub omitted a patch, the input contains a diff computed from the merge-base and head content, the full text of an added or removed file, or a note for binary content or an unchanged rename. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
 
 Read GitHub data with the GitHub MCP `pull_request_read` tool. Page every list to its end; a first page is not the full history.
 
@@ -474,7 +477,7 @@ For each thread that **is resolved**:
 
 Independently review every changed file listed in `files.json`, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). This overrides the shared skill's guidance to focus a re-review on commits since the previous review: every changed file is in scope, whether or not it changed since then.
 
-A file counts as reviewed only when you have read every file in its `readFiles` array in full, in order, as plain text with no line numbers or filtering. Read them with plain `cat`, at most four parts per command, and never pipe them through `grep`, `cut`, `tail`, or any other filter, including for generated files such as compiled `*.lock.yml` workflows. Never truncate a read (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. Large patches are split into bounded parts; `patchFile` also contains the complete patch for context. If a tool saves a response to a file, reread each affected part individually so its complete text appears in a single successful tool result. If you cannot obtain the complete part in a single successful tool result, call `report_incomplete` rather than submitting a review.
+A file counts as reviewed only when you have read every file in its `readFiles` array in full, in order, as plain text with no line numbers or filtering. Read them with plain `cat`, at most four parts per command, and never pipe them through `grep`, `cut`, `tail`, or any other filter, including for generated files such as compiled `*.lock.yml` workflows. Never truncate a read (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. Large patches are split into bounded parts. If a tool saves a response to a file, reread each affected part individually so its complete text appears in a single successful tool result. If you cannot obtain the complete part in a single successful tool result, call `report_incomplete` rather than submitting a review.
 
 Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 

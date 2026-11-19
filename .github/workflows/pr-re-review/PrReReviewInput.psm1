@@ -157,6 +157,8 @@ function Export-PrReReviewInput {
     $width = [Math]::Max(4, "$total".Length)
     $list = [System.Collections.Generic.List[object]]::new()
     $markers = [System.Collections.Generic.List[object]]::new()
+    $readCount = 0
+    $characters = 0
     for ($i = 0; $i -lt $total; $i++) {
         $file = $Files[$i]
         $number = $i + 1
@@ -222,14 +224,14 @@ function Export-PrReReviewInput {
         $text = "# Review input ${number}/${total}: $($file.filename) ($($file.status), +$($file.additions) -$($file.deletions)$renamed)`n" +
             "$($body.TrimEnd("`n"))`n" +
             "# End of review input ${number}/${total} [$marker]`n"
-        [IO.File]::WriteAllText((Join-Path $InputDirectory $patchFile), $text)
 
         # Keep each independently verifiable read small enough for a tool result, and cut at line
-        # boundaries so no diff line loses its +/- prefix. The original patch remains available for
-        # context; large patches must be read through these parts.
+        # boundaries so no diff line loses its +/- prefix. Write each patch only once: agents size
+        # the review from this directory, and a second full copy doubled their estimate.
         $readFiles = [System.Collections.Generic.List[string]]::new()
         $chunks = [System.Collections.Generic.List[object]]::new()
         if ($text.Length -le 4000) {
+            [IO.File]::WriteAllText((Join-Path $InputDirectory $patchFile), $text)
             $readFiles.Add($patchFile)
             $chunks.Add([ordered]@{ content = $text })
         } else {
@@ -250,6 +252,8 @@ function Export-PrReReviewInput {
                 $offset += $length
             }
         }
+        $readCount += $readFiles.Count
+        foreach ($chunk in $chunks) { $characters += $chunk.content.Length }
 
         $list.Add([ordered]@{
             path = [string]$file.filename
@@ -257,13 +261,14 @@ function Export-PrReReviewInput {
             additions = $file.additions
             deletions = $file.deletions
             previousPath = $file.previous_filename
-            patchFile = $patchFile
             readFiles = $readFiles.ToArray()
         })
         $markers.Add([ordered]@{ path = [string]$file.filename; marker = $marker; chunks = $chunks.ToArray() })
     }
 
-    [IO.File]::WriteAllText((Join-Path $InputDirectory 'files.json'), (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $list.ToArray() }) -Depth 5))
+    # The read set's size comes before the file list so that a partial read of files.json shows it.
+    $readSet = [ordered]@{ changedFiles = $total; readFiles = $readCount; characters = $characters }
+    [IO.File]::WriteAllText((Join-Path $InputDirectory 'files.json'), (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; readSet = $readSet; files = $list.ToArray() }) -Depth 5))
     [IO.File]::WriteAllText($markersFullPath, (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $markers.ToArray() }) -Depth 10))
 }
 
