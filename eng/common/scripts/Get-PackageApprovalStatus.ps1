@@ -106,15 +106,12 @@ function Test-PackageApproval([string] $PackageName, [string] $PackageVersion, [
     $formattedArguments = @($arguments | ForEach-Object { Format-CommandArgument $_ })
     Write-Host "Command: azsdk $($formattedArguments -join ' ')"
 
-    $commandResult = Invoke-AzSdkCliCommand $AzSdkExePath $arguments
+    $commandResult = Invoke-AzSdkCliCommand $AzSdkExePath $arguments -ParseJsonResponse
     $exitCode = $commandResult.ExitCode
-
-    try {
-        $response = $commandResult.Output | ConvertFrom-Json -ErrorAction Stop
-    }
-    catch {
+    $response = $commandResult.ParsedResponse
+    if ($null -eq $response) {
         $capturedOutput = "stdout:`n$($commandResult.Stdout)`nstderr:`n$($commandResult.Stderr)"
-        throw "Package approval check returned malformed JSON for $PackageName $PackageVersion (azsdk exit code $exitCode). Captured output:`n$capturedOutput"
+        throw "Package approval check returned malformed JSON for $PackageName $PackageVersion (azsdk exit code $exitCode): $($commandResult.ParseError) Captured output:`n$capturedOutput"
     }
 
     if ($response.PSObject.Properties["result"] -and
@@ -125,11 +122,25 @@ function Test-PackageApproval([string] $PackageName, [string] $PackageVersion, [
     }
 
     if ($exitCode -ne 0) {
-        $failureMessage = if ($response.PSObject.Properties["response_error"] -and
+        if ($response.PSObject.Properties["result"] -and
+            $null -ne $response.result -and
+            $response.result.PSObject.Properties["isApproved"] -and
+            $response.result.isApproved -is [bool] -and
+            -not $response.result.isApproved) {
+            $reason = if ($response.result.PSObject.Properties["reason"] -and
+                -not [string]::IsNullOrWhiteSpace($response.result.reason)) {
+                " (reason: $($response.result.reason))"
+            } else {
+                ""
+            }
+            $failureMessage = "Package $PackageName $PackageVersion is not approved for release$reason (azsdk exit code $exitCode)."
+        }
+        elseif ($response.PSObject.Properties["response_error"] -and
             -not [string]::IsNullOrWhiteSpace($response.response_error)) {
-            $response.response_error
-        } else {
-            "azsdk exited with code $exitCode."
+            $failureMessage = $response.response_error
+        }
+        else {
+            $failureMessage = "azsdk exited with code $exitCode."
         }
         throw "Package approval check failed: $failureMessage"
     }

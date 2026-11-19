@@ -111,6 +111,31 @@ Describe "Mark-PackageReleased.ps1" {
         ($messages -join [Environment]::NewLine) | Should Match '"revisionId":"revision456"'
     }
 
+    It "parses an indented response after CLI diagnostics" {
+        $global:AzSdkOutput = @'
+APIView release check reported a missing review.
+  {
+    "operation_status": "Succeeded",
+    "api_review_hub": {
+      "packageVersionId": "version123",
+      "isReleased": true
+    },
+    "api_view": {
+      "revisionId": "revision456",
+      "isReleased": true
+    }
+  }
+'@
+
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
+            ForEach-Object { "$_" }
+
+        [Array]::IndexOf($messages, "API Review Hub") | Should BeLessThan ([Array]::IndexOf($messages, "APIView"))
+        ($messages -join [Environment]::NewLine) | Should Match '"packageVersionId":"version123"'
+        ($messages -join [Environment]::NewLine) | Should Match '"revisionId":"revision456"'
+        ($messages -join [Environment]::NewLine) | Should Not Match "malformed JSON"
+    }
+
     It "surfaces partial backend failure details from azsdk" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = '{"operation_status":"Failed","api_review_hub":{"packageVersionId":"version123"},"api_view":null,"response_errors":["APIView: APIView failed"]}'
