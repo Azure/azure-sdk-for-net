@@ -526,7 +526,7 @@ public class ConvenienceGeneratorTests
         var done = mcp.EmitDone();
 
         var item = XAssert.IsType<OutputItemMcpToolCall>(done.Item);
-        Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(McpToolCallStatus.Completed));
     }
 
     [Test]
@@ -541,7 +541,7 @@ public class ConvenienceGeneratorTests
         var done = mcp.EmitDone();
 
         var item = XAssert.IsType<OutputItemMcpToolCall>(done.Item);
-        Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.Failed));
+        Assert.That(item.Status, Is.EqualTo(McpToolCallStatus.Failed));
     }
 
     [Test]
@@ -555,7 +555,7 @@ public class ConvenienceGeneratorTests
         var done = mcp.EmitDone();
 
         var item = XAssert.IsType<OutputItemMcpToolCall>(done.Item);
-        Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(McpToolCallStatus.Completed));
     }
 
     // ──────────────────────────────────────────────────────────

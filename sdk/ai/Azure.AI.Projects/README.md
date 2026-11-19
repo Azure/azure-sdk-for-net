@@ -85,7 +85,7 @@ To install latest beta version please run:
 dotnet add package Azure.AI.Projects --prerelease
 ```
 
-To create and manage Agents, also install version 3.1.0 or later of the [Azure.AI.Projects.Agents](https://www.nuget.org/packages/Azure.AI.Projects.Agents) package:
+To create and manage Agents, also install version 3.0.1 or later of the [Azure.AI.Projects.Agents](https://www.nuget.org/packages/Azure.AI.Projects.Agents) package:
 
 ```dotnetcli
 dotnet add package Azure.AI.Projects.Agents

@@ -258,7 +258,7 @@ namespace Azure.AI.AgentServer.Responses
             if (Optional.IsDefined(PromptCacheOptions))
             {
                 writer.WritePropertyName("prompt_cache_options"u8);
-                writer.WriteObjectValue(PromptCacheOptions, options);
+                writer.WriteObjectValue<object>(PromptCacheOptions, options);
             }
             if (Optional.IsDefined(ServiceTier, _serviceTierIsDefined))
             {
@@ -368,7 +368,7 @@ namespace Azure.AI.AgentServer.Responses
                 if (Moderation != null)
                 {
                     writer.WritePropertyName("moderation"u8);
-                    writer.WriteObjectValue(Moderation, options);
+                    writer.WriteObjectValue<object>(Moderation, options);
                 }
                 else
                 {
@@ -392,7 +392,7 @@ namespace Azure.AI.AgentServer.Responses
                 if (StreamOptions != null)
                 {
                     writer.WritePropertyName("stream_options"u8);
-                    writer.WriteObjectValue(StreamOptions, options);
+                    writer.WriteObjectValue<object>(StreamOptions, options);
                 }
                 else
                 {
@@ -419,9 +419,14 @@ namespace Azure.AI.AgentServer.Responses
                 {
                     writer.WritePropertyName("context_management"u8);
                     writer.WriteStartArray();
-                    foreach (ContextManagementParam item in ContextManagement)
+                    foreach (object item in ContextManagement)
                     {
-                        writer.WriteObjectValue(item, options);
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteObjectValue<object>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -483,12 +488,12 @@ namespace Azure.AI.AgentServer.Responses
             if (Optional.IsDefined(UserSecurityContext))
             {
                 writer.WritePropertyName("user_security_context"u8);
-                writer.WriteObjectValue(UserSecurityContext, options);
+                writer.WriteObjectValue<object>(UserSecurityContext, options);
             }
             if (Optional.IsDefined(RoutingConfig))
             {
                 writer.WritePropertyName("routing_config"u8);
-                writer.WriteObjectValue(RoutingConfig, options);
+                writer.WriteObjectValue<object>(RoutingConfig, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -559,7 +564,7 @@ namespace Azure.AI.AgentServer.Responses
             IList<Tool> tools = default;
             BinaryData toolChoice = default;
             Prompt prompt = default;
-            ResponsePromptCacheOptionsParam promptCacheOptions = default;
+            object promptCacheOptions = default;
             bool serviceTierIsDefined = false;
             CreateResponseRequestServiceTier? serviceTier = default;
             bool truncationIsDefined = false;
@@ -575,22 +580,22 @@ namespace Azure.AI.AgentServer.Responses
             bool instructionsIsDefined = false;
             string instructions = default;
             bool moderationIsDefined = false;
-            ModerationParam moderation = default;
+            object moderation = default;
             bool streamIsDefined = false;
             bool? stream = default;
             bool streamOptionsIsDefined = false;
-            ResponseStreamOptions streamOptions = default;
+            object streamOptions = default;
             bool conversationIsDefined = false;
             ResponseConversationOptions conversation = default;
-            IList<ContextManagementParam> contextManagement = new ChangeTrackingList<ContextManagementParam>();
+            IList<object> contextManagement = new ChangeTrackingList<object>();
             bool maxOutputTokensIsDefined = false;
             long? maxOutputTokens = default;
             AgentReference agent = default;
             string agentSessionId = default;
             AgentReference agentReference = default;
             IDictionary<string, BinaryData> structuredInputs = default;
-            AzureUserSecurityContext userSecurityContext = default;
-            RoutingConfiguration routingConfig = default;
+            object userSecurityContext = default;
+            object routingConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -768,7 +773,7 @@ namespace Azure.AI.AgentServer.Responses
                     {
                         continue;
                     }
-                    promptCacheOptions = ResponsePromptCacheOptionsParam.DeserializeResponsePromptCacheOptionsParam(prop.Value, options);
+                    promptCacheOptions = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("service_tier"u8))
@@ -869,7 +874,7 @@ namespace Azure.AI.AgentServer.Responses
                         moderation = null;
                         continue;
                     }
-                    moderation = ModerationParam.DeserializeModerationParam(prop.Value, options);
+                    moderation = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("stream"u8))
@@ -891,7 +896,7 @@ namespace Azure.AI.AgentServer.Responses
                         streamOptions = null;
                         continue;
                     }
-                    streamOptions = ResponseStreamOptions.DeserializeResponseStreamOptions(prop.Value, options);
+                    streamOptions = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("conversation"u8))
@@ -912,10 +917,17 @@ namespace Azure.AI.AgentServer.Responses
                         contextManagement = null;
                         continue;
                     }
-                    List<ContextManagementParam> array = new List<ContextManagementParam>();
+                    List<object> array = new List<object>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContextManagementParam.DeserializeContextManagementParam(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
                     }
                     contextManagement = array;
                     continue;
@@ -981,7 +993,7 @@ namespace Azure.AI.AgentServer.Responses
                     {
                         continue;
                     }
-                    userSecurityContext = AzureUserSecurityContext.DeserializeAzureUserSecurityContext(prop.Value, options);
+                    userSecurityContext = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("routing_config"u8))
@@ -990,7 +1002,7 @@ namespace Azure.AI.AgentServer.Responses
                     {
                         continue;
                     }
-                    routingConfig = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
+                    routingConfig = prop.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")

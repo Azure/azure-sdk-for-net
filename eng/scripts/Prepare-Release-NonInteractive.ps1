@@ -27,9 +27,6 @@ The version to release. Must follow standard SemVer rules (e.g. "1.42.0", "1.0.0
 .PARAMETER ReleaseDate
 The planned release date in MM/dd/yyyy format (e.g. "03/19/2026").
 
-.PARAMETER ReleaseTrackingOnly
-Optional: If passed, only updates DevOps release tracking items without modifying local version or changelog files.
-
 .PARAMETER GroupId
 Optional: The group ID for Java packages. Defaults to "com.azure" if not provided.
 
@@ -37,11 +34,6 @@ Optional: The group ID for Java packages. Defaults to "com.azure" if not provide
 PS> ./eng/scripts/Prepare-Release-NonInteractive.ps1 -PackageName "Azure.Core" -ServiceDirectory "core" -Version "1.42.0" -ReleaseDate "03/19/2026"
 
 Runs the full release preparation for Azure.Core version 1.42.0 without any interactive prompts.
-
-.EXAMPLE
-PS> ./eng/scripts/Prepare-Release-NonInteractive.ps1 -PackageName "Azure.Core" -ServiceDirectory "core" -Version "1.42.0" -ReleaseDate "03/19/2026" -ReleaseTrackingOnly
-
-Only updates DevOps release tracking items without modifying local files.
 #>
 [CmdletBinding()]
 param(
@@ -53,7 +45,6 @@ param(
   [string]$Version,
   [Parameter(Mandatory = $true)]
   [string]$ReleaseDate,
-  [switch]$ReleaseTrackingOnly = $false,
   [string]$GroupId
 )
 
@@ -90,14 +81,6 @@ function Read-Host {
       return ""
     }
   }
-  elseif ($promptStr -match "Input the display name") {
-    Write-Error "Display name prompt encountered in non-interactive mode. The package may not have release tracking metadata configured."
-    exit 1
-  }
-  elseif ($promptStr -match "Input the service name") {
-    Write-Error "Service name prompt encountered in non-interactive mode. The package may not have release tracking metadata configured."
-    exit 1
-  }
   else {
     Write-Error "Unexpected interactive prompt in non-interactive mode: '$promptStr'"
     exit 1
@@ -109,9 +92,6 @@ Write-Host "  PackageName: $PackageName" -ForegroundColor Cyan
 Write-Host "  ServiceDirectory: $ServiceDirectory" -ForegroundColor Cyan
 Write-Host "  Version: $Version" -ForegroundColor Cyan
 Write-Host "  ReleaseDate: $ReleaseDate" -ForegroundColor Cyan
-if ($ReleaseTrackingOnly) {
-  Write-Host "  ReleaseTrackingOnly: true" -ForegroundColor Cyan
-}
 
 $prepareReleaseScript = Join-Path $PSScriptRoot ".." "common" "scripts" "Prepare-Release.ps1"
 
@@ -119,7 +99,6 @@ $params = @{
   PackageName      = $PackageName
   ServiceDirectory = $ServiceDirectory
   ReleaseDate      = $ReleaseDate
-  ReleaseTrackingOnly = $ReleaseTrackingOnly
 }
 
 if ($GroupId) {
