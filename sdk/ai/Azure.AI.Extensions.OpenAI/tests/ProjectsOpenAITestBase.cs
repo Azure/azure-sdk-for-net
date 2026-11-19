@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI.Tests.Utils;
 using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -103,13 +102,6 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         AIProjectClient baseClient = new(new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestAuthenticationProvider(), options);
         return CreateProxyFromClient(baseClient);
     }
-
-    /// <summary>
-    /// Gets an <see cref="AgentAdministrationClient"/> that shares <paramref name="projectClient"/>'s pipeline.
-    /// The extension method's result is not intercepted by the project client proxy, so it is proxied here to keep sync/async coverage.
-    /// </summary>
-    protected AgentAdministrationClient GetTestAgentsClient(AIProjectClient projectClient)
-        => CreateProxyFromClient(projectClient.GetProjectAgentsClient());
 
     protected ProjectOpenAIClient GetTestProjectOpenAIClient(bool endpointInConstructor = true, bool endpointInOptions = false)
     {

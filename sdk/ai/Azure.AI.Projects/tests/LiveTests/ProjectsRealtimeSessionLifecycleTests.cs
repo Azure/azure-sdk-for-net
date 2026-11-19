@@ -10,6 +10,7 @@ using System;
 using System.ClientModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Realtime;
@@ -28,7 +29,7 @@ public class ProjectsRealtimeSessionLifecycleTests : ProjectsRealtimeLiveTestBas
 
     private async Task<ProjectsRealtimeSessionClient> StartLifecycleSessionAsync(AIProjectClient client, CancellationToken cancellationToken)
     {
-        Azure.AI.Projects.Agents.AgentAdministrationClient agentsClient = GetTestAgentsClient(client);
+        Azure.AI.Projects.Agents.AgentAdministrationClient agentsClient = client.GetProjectAgentsClient();
         try
         {
             await agentsClient.GetAgentAsync(LIFECYCLE_AGENT_NAME, cancellationToken);

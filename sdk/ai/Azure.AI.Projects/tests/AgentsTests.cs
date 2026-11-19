@@ -47,13 +47,13 @@ public class AgentsTests : AgentsTestBase
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try
         {
-            await GetTestAgentsClient(projectClient).DeleteAgentAsync(emptyPromptAgentName);
+            await projectClient.GetProjectAgentsClient().DeleteAgentAsync(emptyPromptAgentName);
         }
         catch (ClientResultException)
         {
             // We do not have the agent to begin with.
         }
-        ProjectsAgentVersion newProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             emptyPromptAgentName,
             new ProjectsAgentVersionCreationOptions(emptyProjectsAgentDefinition)
             {
@@ -61,25 +61,25 @@ public class AgentsTests : AgentsTestBase
             });
         Assert.That(newProjectsAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
 
-        ProjectsAgentRecord retrievedAgent = await GetTestAgentsClient(projectClient).GetAgentAsync(emptyPromptAgentName);
+        ProjectsAgentRecord retrievedAgent = await projectClient.GetProjectAgentsClient().GetAgentAsync(emptyPromptAgentName);
         Assert.That(retrievedAgent?.Id, Is.EqualTo(newProjectsAgentVersion.Name));
 
-        await GetTestAgentsClient(projectClient).DeleteAgentAsync(newProjectsAgentVersion.Name);
+        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(newProjectsAgentVersion.Name);
 
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyProjectsAgentDefinition));
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyProjectsAgentDefinition));
         Assert.That(AGENT_NAME, Is.EqualTo(ProjectsAgentVersion.Name));
-        ProjectsAgentVersion ProjectsAgentVersionObject_ = await GetTestAgentsClient(projectClient).GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
+        ProjectsAgentVersion ProjectsAgentVersionObject_ = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
         Assert.That(AGENT_NAME, Is.EqualTo(ProjectsAgentVersionObject_.Name));
         Assert.That(ProjectsAgentVersion.Version, Is.EqualTo(ProjectsAgentVersionObject_.Version));
         Assert.That(ProjectsAgentVersion.Description, Is.Empty);
         Assert.That(ProjectsAgentVersion.Metadata, Is.Empty);
         // TODO: uncomment this code when the ADO work item 4740406
-        // ProjectsAgentVersionObject_ = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(AGENT_NAME2, new DeclarativeAgentDefinition(MODEL_DEPLOYMENT));
-        // List<string> agentNames = [.. (await GetTestAgentsClient(projectClient).GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
+        // ProjectsAgentVersionObject_ = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(AGENT_NAME2, new DeclarativeAgentDefinition(MODEL_DEPLOYMENT));
+        // List<string> agentNames = [.. (await projectClient.GetProjectAgentsClient().GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME, AGENT_NAME2], agentNames);
-        await GetTestAgentsClient(projectClient).DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await GetTestAgentsClient(projectClient).GetAgentVersionAsync(ProjectsAgentVersion.Name, ProjectsAgentVersion.Version));
-        // agentNames = [.. (await GetTestAgentsClient(projectClient).GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(ProjectsAgentVersion.Name, ProjectsAgentVersion.Version));
+        // agentNames = [.. (await projectClient.GetProjectAgentsClient().GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME2], agentNames);
     }
 
@@ -90,7 +90,7 @@ public class AgentsTests : AgentsTestBase
         // In this test we are assuming that workspace has more then 10 agents.
         // If it is not the case create these agents.
         int agentLimit = 10;
-        AsyncCollectionResult<ProjectsAgentRecord> agents = GetTestAgentsClient(projectClient).GetAgentsAsync(limit: agentLimit, order: "asc");
+        AsyncCollectionResult<ProjectsAgentRecord> agents = projectClient.GetProjectAgentsClient().GetAgentsAsync(limit: agentLimit, order: "asc");
 
         List<string> ids = await agents.Select(x => x.Id).ToListAsync();
         if (ids.Count < agentLimit)
@@ -98,12 +98,12 @@ public class AgentsTests : AgentsTestBase
             for (int i = ids.Count; i < agentLimit; i++)
             {
                 ProjectsAgentDefinition definition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
-                ProjectsAgentVersion agent = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync($"MyAgent{i}", new ProjectsAgentVersionCreationOptions(definition));
+                ProjectsAgentVersion agent = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync($"MyAgent{i}", new ProjectsAgentVersionCreationOptions(definition));
                 ids.Add(agent.Id);
             }
         }
         // Test calling before.
-        agents = GetTestAgentsClient(projectClient).GetAgentsAsync(before: ids[4], limit: 2, order: "asc");
+        agents = projectClient.GetProjectAgentsClient().GetAgentsAsync(before: ids[4], limit: 2, order: "asc");
         int idNum = 0;
         await foreach (ProjectsAgentRecord agent in agents)
         {
@@ -112,7 +112,7 @@ public class AgentsTests : AgentsTestBase
         }
         Assert.That(idNum, Is.EqualTo(4));
         // Test calling after.
-        agents = GetTestAgentsClient(projectClient).GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: "asc");
+        agents = projectClient.GetProjectAgentsClient().GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: "asc");
         await foreach (ProjectsAgentRecord agent in agents)
         {
             Assert.That(ids[idNum], Is.EqualTo(agent.Id), $"The ID #{idNum} is incorrect.");
@@ -322,7 +322,7 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
         ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
@@ -350,7 +350,7 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
 
@@ -369,7 +369,7 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
         ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
@@ -431,7 +431,7 @@ public class AgentsTests : AgentsTestBase
             TextOptions = textOptions
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
         ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
@@ -486,7 +486,7 @@ public class AgentsTests : AgentsTestBase
         ClientResultException exception = null;
         try
         {
-            _ = await GetTestAgentsClient(projectClient).GetAgentAsync("SomeAgentNameThatReallyDoesNotExistAndNeverShould3490");
+            _ = await projectClient.GetProjectAgentsClient().GetAgentAsync("SomeAgentNameThatReallyDoesNotExistAndNeverShould3490");
         }
         catch (ClientResultException ex)
         {
@@ -505,7 +505,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 #pragma warning restore CS0618
 
-        ProjectsAgentVersion newProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
             new ProjectsAgentVersionCreationOptions(workflowProjectsAgentDefinition)
             {
@@ -542,7 +542,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 #pragma warning restore CS0618
 
-        ProjectsAgentVersion newProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
             new ProjectsAgentVersionCreationOptions(workflowProjectsAgentDefinition)
             {
@@ -872,7 +872,7 @@ public class AgentsTests : AgentsTestBase
             headers["x-ms-oai-image-generation-deployment"] = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
         }
         AIProjectClient projectClient = GetTestProjectClient(headers);
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
@@ -972,7 +972,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version));
@@ -1072,7 +1072,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestToolChoiceWorks()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             new ProjectsAgentVersionCreationOptions(
                 new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
@@ -1111,7 +1111,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestInteractiveTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient))
         );
@@ -1178,7 +1178,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestInteractiveToolsStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient))
         );
@@ -1335,7 +1335,7 @@ public class AgentsTests : AgentsTestBase
         // End of file upload code.
         Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : [];
         Dictionary<string, Uri> screenshotsBin = useFileUpload ? [] : GetImagesBin();
-        ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
@@ -1380,7 +1380,7 @@ public class AgentsTests : AgentsTestBase
     //public async Task TestAzureContainerApp()
     //{
     //    AIProjectClient projectClient = GetTestProjectClient();
-    //    ProjectsAgentVersion containerProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+    //    ProjectsAgentVersion containerProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
     //        agentName: AGENT_NAME,
     //        options: new(new ContainerApplicationProjectsAgentDefinition(
     //            containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
@@ -1437,7 +1437,7 @@ public class AgentsTests : AgentsTestBase
                 Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
             };
 
-            ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
                 agentName: "TestPromptAgentFromDotnet",
                 options: new(ProjectsAgentDefinition));
 
@@ -1490,7 +1490,7 @@ public class AgentsTests : AgentsTestBase
             }
         };
 
-        ProjectsAgentVersion newProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             "TestPiratePromptAgentWithToolsFromDotnetTests",
             new ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition)
             {
@@ -1613,12 +1613,12 @@ public class AgentsTests : AgentsTestBase
                 { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.FOUNDRY_PROJECT_ENDPOINT },
             }
         };
-        ProjectsAgentVersion projectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion projectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(ProjectsAgentDefinition));
         Assert.That(projectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
-        await GetTestAgentsClient(projectClient).DeleteAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await GetTestAgentsClient(projectClient).GetAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version));
+        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version));
     }
 
     [RecordedTest]
@@ -1639,13 +1639,13 @@ public class AgentsTests : AgentsTestBase
         };
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: HOSTED_AGENT,
             options: creationOptions);
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Delay();
-            agentVersion = await GetTestAgentsClient(projectClient).GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
@@ -1660,7 +1660,7 @@ public class AgentsTests : AgentsTestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await GetTestAgentsClient(projectClient).PatchAgentAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.GetProjectAgentsClient().PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
@@ -1708,13 +1708,13 @@ public class AgentsTests : AgentsTestBase
         };
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: HOSTED_AGENT,
             options: creationOptions);
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Delay();
-            agentVersion = await GetTestAgentsClient(projectClient).GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
@@ -1729,15 +1729,15 @@ public class AgentsTests : AgentsTestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await GetTestAgentsClient(projectClient).PatchAgentAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.GetProjectAgentsClient().PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         // Create a session.
-        ProjectAgentSession session = await GetTestAgentsClient(projectClient).CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+        ProjectAgentSession session = await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Delay();
-            session = await GetTestAgentsClient(projectClient).GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+            session = await projectClient.GetProjectAgentsClient().GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         }
         ProjectOpenAIClientOptions responsesOptions = new()
         {
@@ -1758,10 +1758,10 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
         Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
         // Disable the Agent
-        await GetTestAgentsClient(projectClient).DisableAgentAsync(agentVersion.Name);
+        await projectClient.GetProjectAgentsClient().DisableAgentAsync(agentVersion.Name);
         try
         {
-            await GetTestAgentsClient(projectClient).CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+            await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             Assert.Fail("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -1769,12 +1769,12 @@ public class AgentsTests : AgentsTestBase
             Assert.That(ex.Status, Is.EqualTo(403));
         }
         // Enable Agent Again
-        await GetTestAgentsClient(projectClient).EnableAgentAsync(agentVersion.Name);
-        session = await GetTestAgentsClient(projectClient).CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+        await projectClient.GetProjectAgentsClient().EnableAgentAsync(agentVersion.Name);
+        session = await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Delay();
-            session = await GetTestAgentsClient(projectClient).GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+            session = await projectClient.GetProjectAgentsClient().GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         }
         responseOptions = new()
         {
@@ -1800,13 +1800,13 @@ public class AgentsTests : AgentsTestBase
         };
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
             agentName: HOSTED_AGENT,
             options: creationOptions);
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Delay();
-            agentVersion = await GetTestAgentsClient(projectClient).GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
@@ -1821,7 +1821,7 @@ public class AgentsTests : AgentsTestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await GetTestAgentsClient(projectClient).PatchAgentAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.GetProjectAgentsClient().PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
@@ -1875,7 +1875,7 @@ public class AgentsTests : AgentsTestBase
                     FileIds = { uploadedFile.Id },
                 });
 
-            ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
                     agentName: AGENT_NAME,
                     options: new ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition));
 
@@ -1900,7 +1900,7 @@ public class AgentsTests : AgentsTestBase
                 {
                     DefaultValue = BinaryData.FromObjectAsJson(JsonValue.Create("Ishmael")),
                 });
-            ProjectsAgentVersion ProjectsAgentVersion = await GetTestAgentsClient(projectClient).CreateAgentVersionAsync(
+            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
                 agentName: AGENT_NAME,
                 options: new ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition));
 

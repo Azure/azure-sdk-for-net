@@ -12,6 +12,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Realtime;
@@ -79,7 +80,7 @@ public class ProjectsRealtimeToolCallTests : ProjectsRealtimeLiveTestBase
     {
         AIProjectClient client = GetLiveClient();
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
-        await EnsureToolCallAgentAsync(GetTestAgentsClient(client), timeout.Token);
+        await EnsureToolCallAgentAsync(client.GetProjectAgentsClient(), timeout.Token);
 
         using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             TOOLCALL_AGENT_NAME,
