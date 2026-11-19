@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Fixed standard metrics extraction using the wrong schema version. ([TODO](TODO))
+
 ### Breaking Changes
 
 ### Bugs Fixed
