@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Batch.Models
         {
             BatchAuthenticationMode.SharedKey => "SharedKey",
             BatchAuthenticationMode.Aad => "AAD",
-            BatchAuthenticationMode.TaskAuthenticationToken => "TaskAuthenticationToken",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAuthenticationMode value.")
         };
 
@@ -30,10 +29,6 @@ namespace Azure.ResourceManager.Batch.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAD"))
             {
                 return BatchAuthenticationMode.Aad;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskAuthenticationToken"))
-            {
-                return BatchAuthenticationMode.TaskAuthenticationToken;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAuthenticationMode value.");
         }

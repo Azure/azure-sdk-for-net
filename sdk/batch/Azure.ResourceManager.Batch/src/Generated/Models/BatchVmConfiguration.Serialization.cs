@@ -143,6 +143,21 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("serviceArtifactReference"u8);
                 writer.WriteObjectValue(ServiceArtifactReference, options);
             }
+            if (Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile"u8);
+                writer.WriteObjectValue(HardwareProfile, options);
+            }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
+            }
+            if (Optional.IsDefined(ResiliencyPolicy))
+            {
+                writer.WritePropertyName("resiliencyPolicy"u8);
+                writer.WriteObjectValue(ResiliencyPolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -197,6 +212,9 @@ namespace Azure.ResourceManager.Batch.Models
             BatchOSDisk osDisk = default;
             BatchSecurityProfile securityProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
+            HardwareProfile hardwareProfile = default;
+            Placement placement = default;
+            ResiliencyPolicy resiliencyPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -306,6 +324,33 @@ namespace Azure.ResourceManager.Batch.Models
                     serviceArtifactReference = ServiceArtifactReference.DeserializeServiceArtifactReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("hardwareProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("placement"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = Placement.DeserializePlacement(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("resiliencyPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -324,6 +369,9 @@ namespace Azure.ResourceManager.Batch.Models
                 osDisk,
                 securityProfile,
                 serviceArtifactReference,
+                hardwareProfile,
+                placement,
+                resiliencyPolicy,
                 additionalBinaryDataProperties);
         }
     }
