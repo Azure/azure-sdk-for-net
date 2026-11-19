@@ -1,8 +1,8 @@
 # Migration guide: `Azure.AI.Extensions.OpenAI` 2.x to 3.x
 
 This guide helps you upgrade from the 2.x releases of `Azure.AI.Extensions.OpenAI` to 3.x.
-The migration began in `3.0.0-beta.1`; the current source version is `3.0.0-beta.6` (unreleased),
-with an `OpenAI` 2.14.0 dependency.
+The migration began in `3.0.0-beta.1`; the current source version is `3.0.0` (2026-11-11),
+with an `OpenAI` 2.15.0 dependency.
 
 ## Overview
 
@@ -10,7 +10,7 @@ Through the 2.x line, `Azure.AI.Extensions.OpenAI` shipped its own generated cop
 Responses object model (response items, tools, and the conversation types), including types prefixed with
 `Responses`, `Agent`, or `Project`. Starting with `3.0.0-beta.1`, the library instead **consumes those types
 directly from the official [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library**.
-That first 3.x preview depended on OpenAI 2.12.0; the current source depends on 2.14.0.
+That first 3.x preview depended on OpenAI 2.15.0.
 
 This is a large, deliberately breaking change. The benefits:
 
@@ -33,13 +33,13 @@ and on [experimental APIs](#experimental-apis).
 ## Update your package references
 
 Use the OpenAI dependency version required by the Extensions version you install. The example below
-uses the latest released Extensions preview, `3.0.0-beta.5`, with `OpenAI` 2.14.0. The current
-`3.0.0-beta.6` source is unreleased and also depends on 2.14.0. If you reference `OpenAI` directly,
-use 2.14.0 or later with this dependency; 2.12.0 was the dependency of the historical `3.0.0-beta.1`.
+uses the latest released Extensions, `3.0.0`, with `OpenAI` 2.15.0. The current
+`3.0.0` source depends on 2.15.0. If you reference `OpenAI` directly,
+use 2.15.0 or later with this dependency.
 
 ```xml
-<PackageReference Include="Azure.AI.Extensions.OpenAI" Version="3.0.0-beta.5" />
-<PackageReference Include="OpenAI" Version="2.14.0" />
+<PackageReference Include="Azure.AI.Extensions.OpenAI" Version="3.0.0" />
+<PackageReference Include="OpenAI" Version="2.15.0" />
 ```
 
 Add the relevant `OpenAI` namespaces where you previously relied on Azure-emitted equivalents:
@@ -140,6 +140,36 @@ there is no public setter on the item. Configure request-level agent and convers
 `CreateResponseOptions` instead; these are not setters for an output item's source `ResponseId`.
 `CreateResponseOptions.SessionId` was introduced in `3.0.0-beta.1` and lets you scope a response to a specific
 session.
+
+### Streaming
+
+- The synchronous `CreateResponseStreaming` overloads were removed, so synchronous callers have to move to async.
+- `CreateResponseStreamingAsync` now returns `Task<AsyncStreamingResult<StreamingResponseUpdate>>`, so it must be awaited
+  before enumerating.
+- Raw page access is replaced by `Status` and `Headers` on the result.
+- The `ProjectConversationsClient` constructor takes `ConversationClientOptions`.
+
+Suggested before (2.x) and after (3.0):
+
+```csharp
+await foreach (StreamingResponseUpdate update in responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
+{
+    if (update is StreamingResponseOutputTextDeltaUpdate textDelta)
+    {
+        Console.Write(textDelta.Delta);
+    }
+}
+```
+
+```csharp
+await foreach (StreamingResponseUpdate update in await responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
+{
+    if (update is StreamingResponseOutputTextDeltaUpdate textDelta)
+    {
+        Console.Write(textDelta.Delta);
+    }
+}
+```
 
 ### Built-in tools now come from OpenAI
 
@@ -399,7 +429,7 @@ ProjectResponsesClient client = new(projectEndpoint, tokenProvider, responsesOpt
 These clients are independently configured. Setting a transport, retry policy, custom pipeline policy,
 or another option on `openAIOptions` does not configure `responsesOptions`. Use the root factory when
 shared-pipeline behavior is intended. These Responses client/options/factory paths require
-`OPENAI001`; individual response calls may additionally require `AAIP001`.
+`AAIP002`; individual response calls may additionally require `AAIP001`.
 
 ## Code-interpreter container settings
 
@@ -451,9 +481,9 @@ and container-ID selection continue to use the upstream `OpenAI.Responses` APIs.
 The initial migration to OpenAI 2.12.0 dropped some generated preview request/response classes.
 Availability depends on the upstream version, not just on the Extensions major version.
 
-OpenAI 2.14.0 now provides strongly-typed custom tools, including text and grammar formats:
+OpenAI 2.15.0 now provides strongly-typed custom tools, including text and grammar formats:
 
-| Removed Extensions type | OpenAI 2.14.0 type in `OpenAI.Responses` |
+| Removed Extensions type | OpenAI 2.15.0 type in `OpenAI.Responses` |
 | --- | --- |
 | `ResponsesCustomToolParam` | `CustomTool` |
 | `ResponsesCustomTextFormatParam` | `CustomToolTextFormat` |
@@ -464,7 +494,7 @@ Use `CustomToolCallItem` for custom-tool calls. These are upstream types, not re
 removed Extensions models.
 
 The following formerly generated preview models still have no strongly-typed equivalents in
-OpenAI 2.14.0:
+OpenAI 2.15.0:
 
 - **`local_shell` / `shell` tools:** `ResponsesLocalShellToolParam`, `ResponsesFunctionShellToolParam`
   (and its environment variants), `OutputItemLocalShellToolCallOutput`.
@@ -519,14 +549,14 @@ acknowledged before you can compile against them. The applicable diagnostics dep
 
 Suppress only the IDs required by the APIs you use, with `#pragma warning disable` around the call
 site or by adding them to `<NoWarn>` in your project. For example, constructing the root client and
-obtaining its Responses client requires only `OPENAI001` for the APIs shown:
+obtaining its Responses client requires only `AAIP002` for the APIs shown:
 
 ```csharp
-#pragma warning disable OPENAI001
+#pragma warning disable AAIP002
 ProjectOpenAIClientOptions openAIOptions = new();
 ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, openAIOptions);
 ProjectResponsesClient client = openAIClient.GetProjectResponsesClient();
-#pragma warning restore OPENAI001
+#pragma warning restore AAIP002
 ```
 
 Calling response methods, accessing extension properties, or constructing Azure tools can require

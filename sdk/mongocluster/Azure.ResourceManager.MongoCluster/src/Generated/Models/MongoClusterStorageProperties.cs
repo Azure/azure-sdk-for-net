@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterStorageProperties"/>. </summary>
         /// <param name="sizeGb"> The size of the data disk assigned to each server. </param>
-        /// <param name="type"> The type of storage to provision the cluster servers with. </param>
+        /// <param name="type"> The type of storage to provision the cluster servers with. Defaults to 'PremiumSSDv2' when omitted during cluster creation. Omitting this property during an update leaves the storage type unchanged. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MongoClusterStorageProperties(long? sizeGb, MongoClusterStorageType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The size of the data disk assigned to each server. </summary>
         public long? SizeGb { get; set; }
 
-        /// <summary> The type of storage to provision the cluster servers with. </summary>
+        /// <summary> The type of storage to provision the cluster servers with. Defaults to 'PremiumSSDv2' when omitted during cluster creation. Omitting this property during an update leaves the storage type unchanged. </summary>
         public MongoClusterStorageType? Type { get; set; }
     }
 }

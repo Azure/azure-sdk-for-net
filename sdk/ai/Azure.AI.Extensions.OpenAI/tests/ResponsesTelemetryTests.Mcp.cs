@@ -105,7 +105,7 @@ public partial class ResponsesTelemetryTests
             nextResponseOptions.StreamingEnabled = true;
             ResponseResult completedResponse = null;
 
-            await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(nextResponseOptions))
+            await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(nextResponseOptions))
             {
                 if (update is StreamingResponseCompletedUpdate completed)
                 {
@@ -151,7 +151,8 @@ public partial class ResponsesTelemetryTests
     private void ValidateMcpSpans(
         string agentName,
         object agentVersion,
-        bool contentRecordingEnabled)
+        bool contentRecordingEnabled,
+        bool streaming)
     {
         _exporter.ForceFlush();
 
@@ -247,7 +248,7 @@ public partial class ResponsesTelemetryTests
                 await RunMcpNonStreamingAsync(client);
             }
 
-            ValidateMcpSpans(agentName, agentVersion.Version, contentRecordingEnabled);
+            ValidateMcpSpans(agentName, agentVersion.Version, contentRecordingEnabled, streaming);
         }
         finally
         {
@@ -276,12 +277,14 @@ public partial class ResponsesTelemetryTests
     #region MCP Streaming tests
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestMcpStreamingWithContentRecordingEnabled()
     {
         await RunMcpTelemetryTestAsync(contentRecordingEnabled: true, streaming: true);
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestMcpStreamingWithContentRecordingDisabled()
     {
         await RunMcpTelemetryTestAsync(contentRecordingEnabled: false, streaming: true);

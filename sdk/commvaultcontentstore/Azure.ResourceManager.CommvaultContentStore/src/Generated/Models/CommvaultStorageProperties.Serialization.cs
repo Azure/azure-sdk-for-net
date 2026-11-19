@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WritePropertyName("vendor"u8);
             writer.WriteStringValue(Vendor.ToString());
             writer.WritePropertyName("class"u8);
-            writer.WriteStringValue(Class.ToString());
+            writer.WriteStringValue(StorageClass.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             AzureLocation location = default;
             CommvaultStorageType storageType = default;
             CommvaultVendor vendor = default;
-            CommvaultStorageClassType @class = default;
+            CommvaultStorageClassType storageClass = default;
             ResourceProvisioningState? provisioningState = default;
             ComplianceLockStatus? complianceLockStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("class"u8))
                 {
-                    @class = new CommvaultStorageClassType(prop.Value.GetString());
+                    storageClass = new CommvaultStorageClassType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 location,
                 storageType,
                 vendor,
-                @class,
+                storageClass,
                 provisioningState,
                 complianceLockStatus,
                 additionalBinaryDataProperties);

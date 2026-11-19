@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local shell call output. </summary>
-    public partial class ItemFieldLocalShellToolCallOutput : ItemField, IJsonModel<ItemFieldLocalShellToolCallOutput>
+    internal partial class ItemFieldLocalShellToolCallOutput : ItemField, IJsonModel<ItemFieldLocalShellToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldLocalShellToolCallOutput"/> for deserialization. </summary>
         internal ItemFieldLocalShellToolCallOutput()
@@ -83,10 +82,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("output"u8);
             writer.WriteStringValue(Output);
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status, _statusIsDefined))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                if (Status != null)
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("status"u8);
+                }
             }
         }
 
@@ -119,6 +125,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string output = default;
+            bool statusIsDefined = false;
             ItemLocalShellToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,6 +146,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
+                    statusIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         status = null;
@@ -149,10 +157,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ItemFieldLocalShellToolCallOutput(@type, additionalBinaryDataProperties, id, output, status);
+            return new ItemFieldLocalShellToolCallOutput(@type, additionalBinaryDataProperties, id, output, status)
+            {
+                _statusIsDefined = statusIsDefined
+            };
         }
     }
 }

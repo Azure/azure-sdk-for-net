@@ -277,7 +277,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="ServerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerEventType?(string value) => value == null ? null : new ServerEventType(value);
+        public static implicit operator ServerEventType?(string value) => value == null ? (ServerEventType?)null : new ServerEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

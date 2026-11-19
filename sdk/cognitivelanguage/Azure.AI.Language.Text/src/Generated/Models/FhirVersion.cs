@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="FhirVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FhirVersion?(string value) => value == null ? null : new FhirVersion(value);
+        public static implicit operator FhirVersion?(string value) => value == null ? (FhirVersion?)null : new FhirVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

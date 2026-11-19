@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaaSResourceDetailsData>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaasResourceDetailsData>> ActivateSaasResourceAsync(WaitUntil waitUntil, CommvaultSaasActivationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateResource");
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateSaasResource");
             scope.Start();
             try
             {
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateSaasResourceRequest(Guid.Parse(Id.SubscriptionId), CommvaultSaasActivationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CommvaultContentStoreArmOperation<SaaSResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaaSResourceDetailsData>(
-                    new SaaSResourceDetailsDataOperationSource(),
+                CommvaultContentStoreArmOperation<SaasResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaasResourceDetailsData>(
+                    new SaasResourceDetailsDataOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SaaSResourceDetailsData> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaasResourceDetailsData> ActivateSaasResource(WaitUntil waitUntil, CommvaultSaasActivationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateResource");
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateSaasResource");
             scope.Start();
             try
             {
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateSaasResourceRequest(Guid.Parse(Id.SubscriptionId), CommvaultSaasActivationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CommvaultContentStoreArmOperation<SaaSResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaaSResourceDetailsData>(
-                    new SaaSResourceDetailsDataOperationSource(),
+                CommvaultContentStoreArmOperation<SaasResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaasResourceDetailsData>(
+                    new SaasResourceDetailsDataOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -17,17 +17,9 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/>. </summary>
-        /// <param name="components">
-        /// Azure resource collection { resource id (fully qualified resource Id e.g
-        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
-        /// : resource object } 
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="components"/> is null. </exception>
-        public TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components)
+        public TestRunAppComponents()
         {
-            Argument.AssertNotNull(components, nameof(components));
-
-            Components = components;
+            Components = new ChangeTrackingDictionary<string, LoadTestingAppComponent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/>. </summary>

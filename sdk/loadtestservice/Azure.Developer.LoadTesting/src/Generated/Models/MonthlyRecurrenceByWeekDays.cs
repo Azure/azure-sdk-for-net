@@ -14,13 +14,9 @@ namespace Azure.Developer.LoadTesting
     public partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/>. </summary>
-        /// <param name="index"> Index of the week in a month at which the recurrence should repeat. For example, if the index is '2', weekDay is 'Monday', interval is 3 and frequency is 'Month', the recurrence will run every second Monday of the month and repeat every 3 months. Value of index can be 1 to 5. </param>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        public MonthlyRecurrenceByWeekDays(int index, int interval) : base(Frequency.MonthlyByDays)
+        public MonthlyRecurrenceByWeekDays() : base(Frequency.MonthlyByDays)
         {
             WeekDaysInMonth = new ChangeTrackingList<WeekDays>();
-            Index = index;
-            Interval = interval;
         }
 
         /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/>. </summary>

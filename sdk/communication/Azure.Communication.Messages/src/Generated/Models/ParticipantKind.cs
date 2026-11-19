@@ -51,7 +51,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="ParticipantKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParticipantKind?(string value) => value == null ? null : new ParticipantKind(value);
+        public static implicit operator ParticipantKind?(string value) => value == null ? (ParticipantKind?)null : new ParticipantKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

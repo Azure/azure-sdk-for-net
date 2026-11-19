@@ -138,7 +138,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStartArray();
                 foreach (VoiceAgentSessionIncludeOption item in Include)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -239,20 +239,20 @@ namespace Azure.AI.Projects.Agents
             string model = default;
             VoiceConversationEngine conversationEngine = default;
             string instructions = default;
-            VoiceAgentGreetingConfig greeting = default;
-            VoiceAgentAudioConfig audio = default;
-            VoiceAgentSoundscapeConfig soundscape = default;
+            VoiceAgentGreetingConfiguration greeting = default;
+            VoiceAgentAudioConfiguration audio = default;
+            VoiceAgentSoundscapeConfiguration soundscape = default;
             IList<VoiceOutputModality> outputModalities = default;
             BinaryData internalMaxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
-            VoiceAgentInterimResponseConfig interimResponse = default;
-            VoiceAgentAvatarConfig avatar = default;
+            VoiceAgentInterimResponseConfiguration interimResponse = default;
+            VoiceAgentAvatarConfiguration avatar = default;
             IList<VoiceAgentTool> tools = default;
             BinaryData internalToolChoice = default;
             bool? parallelToolCalls = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
-            VoiceAgentSubagentConfig subagentConfig = default;
-            VoiceAgentPostCallConfig postCall = default;
+            VoiceAgentSubagentConfiguration subagentConfig = default;
+            VoiceAgentPostCallConfiguration postCall = default;
             bool? store = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -304,7 +304,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    greeting = VoiceAgentGreetingConfig.DeserializeVoiceAgentGreetingConfig(prop.Value, options);
+                    greeting = VoiceAgentGreetingConfiguration.DeserializeVoiceAgentGreetingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("audio"u8))
@@ -313,7 +313,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    audio = VoiceAgentAudioConfig.DeserializeVoiceAgentAudioConfig(prop.Value, options);
+                    audio = VoiceAgentAudioConfiguration.DeserializeVoiceAgentAudioConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("soundscape"u8))
@@ -322,7 +322,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    soundscape = VoiceAgentSoundscapeConfig.DeserializeVoiceAgentSoundscapeConfig(prop.Value, options);
+                    soundscape = VoiceAgentSoundscapeConfiguration.DeserializeVoiceAgentSoundscapeConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_modalities"u8))
@@ -357,7 +357,7 @@ namespace Azure.AI.Projects.Agents
                     List<VoiceAgentSessionIncludeOption> array = new List<VoiceAgentSessionIncludeOption>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToVoiceAgentSessionIncludeOption());
+                        array.Add(new VoiceAgentSessionIncludeOption(item.GetString()));
                     }
                     include = array;
                     continue;
@@ -368,7 +368,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    interimResponse = VoiceAgentInterimResponseConfig.DeserializeVoiceAgentInterimResponseConfig(prop.Value, options);
+                    interimResponse = VoiceAgentInterimResponseConfiguration.DeserializeVoiceAgentInterimResponseConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("avatar"u8))
@@ -377,7 +377,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    avatar = VoiceAgentAvatarConfig.DeserializeVoiceAgentAvatarConfig(prop.Value, options);
+                    avatar = VoiceAgentAvatarConfiguration.DeserializeVoiceAgentAvatarConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
@@ -432,7 +432,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    subagentConfig = VoiceAgentSubagentConfig.DeserializeVoiceAgentSubagentConfig(prop.Value, options);
+                    subagentConfig = VoiceAgentSubagentConfiguration.DeserializeVoiceAgentSubagentConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("post_call"u8))
@@ -441,7 +441,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    postCall = VoiceAgentPostCallConfig.DeserializeVoiceAgentPostCallConfig(prop.Value, options);
+                    postCall = VoiceAgentPostCallConfiguration.DeserializeVoiceAgentPostCallConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("store"u8))

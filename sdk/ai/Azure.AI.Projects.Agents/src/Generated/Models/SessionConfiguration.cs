@@ -19,14 +19,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionConfiguration"/>. </summary>
-        /// <param name="idleTimeoutSeconds">
+        /// <param name="idleTimeout">
         /// The idle duration, in seconds, before a session's sandbox is suspended. When omitted,
         /// the server defaults to 900 seconds. Must be between 120 and 14400 seconds (4 hours).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionConfiguration(TimeSpan? idleTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionConfiguration(TimeSpan? idleTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IdleTimeoutSeconds = idleTimeoutSeconds;
+            IdleTimeout = idleTimeout;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -34,6 +34,6 @@ namespace Azure.AI.Projects.Agents
         /// The idle duration, in seconds, before a session's sandbox is suspended. When omitted,
         /// the server defaults to 900 seconds. Must be between 120 and 14400 seconds (4 hours).
         /// </summary>
-        public TimeSpan? IdleTimeoutSeconds { get; set; }
+        public TimeSpan? IdleTimeout { get; set; }
     }
 }

@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(SessionConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IdleTimeoutSeconds))
+            if (Optional.IsDefined(IdleTimeout))
             {
                 writer.WritePropertyName("idle_timeout_seconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeoutSeconds.Value.TotalSeconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeout.Value.TotalSeconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            TimeSpan? idleTimeoutSeconds = default;
+            TimeSpan? idleTimeout = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    idleTimeoutSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
+                    idleTimeout = TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SessionConfiguration(idleTimeoutSeconds, additionalBinaryDataProperties);
+            return new SessionConfiguration(idleTimeout, additionalBinaryDataProperties);
         }
     }
 }

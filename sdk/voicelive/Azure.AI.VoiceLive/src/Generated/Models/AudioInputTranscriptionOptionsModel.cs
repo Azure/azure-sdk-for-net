@@ -65,7 +65,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AudioInputTranscriptionOptionsModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AudioInputTranscriptionOptionsModel?(string value) => value == null ? null : new AudioInputTranscriptionOptionsModel(value);
+        public static implicit operator AudioInputTranscriptionOptionsModel?(string value) => value == null ? (AudioInputTranscriptionOptionsModel?)null : new AudioInputTranscriptionOptionsModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

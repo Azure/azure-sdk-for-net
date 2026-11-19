@@ -212,7 +212,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="TokenFilterName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TokenFilterName?(string value) => value == null ? null : new TokenFilterName(value);
+        public static implicit operator TokenFilterName?(string value) => value == null ? (TokenFilterName?)null : new TokenFilterName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

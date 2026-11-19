@@ -10,13 +10,13 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The CreatedBy. </summary>
-    public partial class CreatedBy
+    internal partial class CreatedBy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CreatedBy"/>. </summary>
-        public CreatedBy()
+        internal CreatedBy()
         {
         }
 
@@ -32,9 +32,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The agent that created the item. </summary>
-        public AgentId Agent { get; set; }
+        public AgentId Agent { get; }
 
         /// <summary> The response on which the item is created. </summary>
-        public string ResponseId { get; set; }
+        public string ResponseId { get; }
     }
 }

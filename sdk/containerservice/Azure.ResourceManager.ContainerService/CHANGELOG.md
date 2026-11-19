@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.2 (Unreleased)
+## 1.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.10.0 (2026-11-17)
+
+### Features Added
+
+- Upgraded api-version to 2026-09-01.
+- Added pagination support for listing private link resources and private endpoint connections.
 
 ## 1.10.0-beta.1 (2026-10-22)
 

@@ -88,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var exporter = new AzureMonitorLogExporter(exporterOptions);
 
                 BaseProcessor<LogRecord> baseProcessor = exporterOptions.EnableTraceBasedLogsSampler
-                                                            ? new LogFilteringProcessor(exporter)
+                                                            ? new LogFilteringProcessor(exporter, SampleRateHelper.GetFallbackSampleRate(exporterOptions))
                                                             : new AzureMonitorBatchLogRecordExportProcessor(exporter);
 
                 loggerProvider.AddProcessor(new MainAgentAttributionLogProcessor());

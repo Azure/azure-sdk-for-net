@@ -56,7 +56,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="TaskPriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskPriority?(string value) => value == null ? null : new TaskPriority(value);
+        public static implicit operator TaskPriority?(string value) => value == null ? (TaskPriority?)null : new TaskPriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

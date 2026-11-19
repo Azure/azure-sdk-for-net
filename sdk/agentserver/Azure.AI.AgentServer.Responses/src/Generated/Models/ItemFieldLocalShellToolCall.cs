@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local shell call. </summary>
-    public partial class ItemFieldLocalShellToolCall : ItemField
+    internal partial class ItemFieldLocalShellToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldLocalShellToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the local shell call. </param>

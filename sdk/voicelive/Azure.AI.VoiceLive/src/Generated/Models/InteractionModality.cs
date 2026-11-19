@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="InteractionModality"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InteractionModality?(string value) => value == null ? null : new InteractionModality(value);
+        public static implicit operator InteractionModality?(string value) => value == null ? (InteractionModality?)null : new InteractionModality(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

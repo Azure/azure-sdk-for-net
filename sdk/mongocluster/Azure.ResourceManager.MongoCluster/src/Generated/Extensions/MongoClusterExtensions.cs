@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Gets information about a DocumentDB cluster.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMongoClusterResourceGroupResource.GetMongoClusterAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="mongoClusterName"> The name of the DocumentDB cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Gets information about a DocumentDB cluster.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMongoClusterResourceGroupResource.GetMongoCluster(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="mongoClusterName"> The name of the DocumentDB cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.GetMongoClustersAsync(CancellationToken)"/> instead. </description>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.GetMongoClusters(CancellationToken)"/> instead. </description>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.CheckMongoClusterNameAvailabilityAsync(AzureLocation, MongoClusterNameAvailabilityContent, CancellationToken)"/> instead. </description>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.CheckMongoClusterNameAvailability(AzureLocation, MongoClusterNameAvailabilityContent, CancellationToken)"/> instead. </description>

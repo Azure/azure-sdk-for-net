@@ -26,3 +26,8 @@ public partial class ProjectsAgentRecord
 // TODO: remove this stub when the code will be again generated from feature/foundry-release.
 // This class is obsolete and needs to be removed.
 [CodeGenType("AzureFunctionDefinitionFunction")] internal partial class AzureFunctionDefinitionFunction { }
+[CodeGenType("CallableToolAllowedCaller")] public partial struct CallableToolAllowedCaller { }
+[CodeGenType("VoiceAgentAudioInputConfigTranscriptionDelay")] public partial struct VoiceAgentAudioInputConfigTranscriptionDelay { }
+[CodeGenType("VoiceAgentAudioTimestampType")] public partial struct VoiceAgentAudioTimestampType { }
+[CodeGenType("VoiceAgentEchoCancellationReferenceSource")] public partial struct VoiceAgentEchoCancellationReferenceSource { }
+[CodeGenType("VoiceAgentSessionIncludeOption")] public partial struct VoiceAgentSessionIncludeOption { }

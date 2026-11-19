@@ -19,15 +19,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolboxPolicies"/>. </summary>
-        /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
+        /// <param name="contentFilterConfiguration"> Responsible AI content filtering configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxPolicies(ContentFilterConfiguration raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxPolicies(ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RaiConfig = raiConfig;
+            ContentFilterConfiguration = contentFilterConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Responsible AI content filtering configuration. </summary>
-        public ContentFilterConfiguration RaiConfig { get; set; }
+        public ContentFilterConfiguration ContentFilterConfiguration { get; set; }
     }
 }

@@ -6,20 +6,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Reasoning text. </summary>
-    public partial class MessageContentReasoningTextContent : MessageContent
+    internal partial class MessageContentReasoningTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentReasoningTextContent"/>. </summary>
         /// <param name="text"> The reasoning text from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public MessageContentReasoningTextContent(string text) : base(MessageContentType.ReasoningText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 

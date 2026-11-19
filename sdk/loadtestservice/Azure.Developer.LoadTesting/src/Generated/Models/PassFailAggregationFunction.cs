@@ -116,7 +116,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="PassFailAggregationFunction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PassFailAggregationFunction?(string value) => value == null ? null : new PassFailAggregationFunction(value);
+        public static implicit operator PassFailAggregationFunction?(string value) => value == null ? (PassFailAggregationFunction?)null : new PassFailAggregationFunction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
