@@ -120,7 +120,7 @@ stimuli:
           pattern: '(?i)((?:Azure\.Widgets\.Gadgets|extends|parent|revers|invert)[^\n]*🟡|🟡[^\n]*(?:Azure\.Widgets\.Gadgets|extends|parent|revers|invert))'
       - type: output-matches
         config:
-          pattern: '(?i)invert|revers|wrong direction|opposite direction|parent-to-child|parent → child|extends its own|extends the|cycle'
+          pattern: '(?i)🟡[\s\S]{0,400}?(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)|(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)[^\n]*🟡'
 
   - name: report-new-metapackage-bundling-child-named-packages
     prompt: >-
@@ -143,7 +143,7 @@ stimuli:
           pattern: '(?i)((?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends|parent|revers|invert)[^\n]*🟡|🟡[^\n]*(?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends|parent|revers|invert))'
       - type: output-matches
         config:
-          pattern: '(?i)invert|revers|wrong direction|opposite direction|parent-to-child|parent → child|extends its own|extends the|cycle'
+          pattern: '(?i)🟡[\s\S]{0,400}?(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)|(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)[^\n]*🟡'
 
   - name: allow-existing-parent-to-child-reference-on-version-bump
     prompt: >-
