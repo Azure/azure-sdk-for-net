@@ -92,7 +92,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         #endregion
         #region Snippet:Sample_CreateToolbox_CodeAgentReminderTool_Async
         ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
@@ -103,7 +103,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         Console.WriteLine($"Created a toolbox {toolBox.Name} v. {toolBox.Version}.");
         #endregion
         #region Snippet:Sample_CreateAgent_CodeAgentReminderTool_Async
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionFromCodeAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgentReminderTool",
             filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
             metadata: GetAgentMetadata(
@@ -120,7 +120,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Task.Delay(500);
-            agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -130,11 +130,11 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_WaitForSession_CodeAgentReminderTool_Async
         string prompt = "Please remind me to go to lunch after one minute.";
         DateTimeOffset responseTime;
-        ProjectAgentSession session = await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
+        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(500);
-            session = await projectClient.GetProjectAgentsClient().GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+            session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         }
         if (session.Status != AgentSessionStatus.Active)
         {
@@ -233,7 +233,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #endregion
         #region Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Async
         await toolboxClient.DeleteAsync(toolBox.Name);
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentVersion.Name, force: true);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -250,7 +250,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         #region Snippet:Sample_CreateToolbox_CodeAgentReminderTool_Sync
         ToolboxVersion toolBox = toolboxClient.CreateVersion(
             name: "toolboxWithTheReminder",
@@ -260,7 +260,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         Console.WriteLine($"Created a toolbox {toolBox.Name} v. {toolBox.Version}.");
         #endregion
         #region Snippet:Sample_CreateAgent_CodeAgentReminderTool_Sync
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersionFromCode(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
             agentName: "myCodeAgentReminderTool",
             filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
             metadata: GetAgentMetadata(
@@ -277,7 +277,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             Thread.Sleep(500);
-            agentVersion = projectClient.GetProjectAgentsClient().GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -287,11 +287,11 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_WaitForSession_CodeAgentReminderTool_Sync
         string prompt = "Please remind me to go to lunch after one minute.";
         DateTimeOffset responseTime;
-        ProjectAgentSession session = projectClient.GetProjectAgentsClient().CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
+        ProjectAgentSession session = projectClient.AgentAdministrationClient.CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(500);
-            session = projectClient.GetProjectAgentsClient().GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+            session = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         }
         if (session.Status != AgentSessionStatus.Active)
         {
@@ -390,7 +390,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #endregion
         #region Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Sync
         toolboxClient.Delete(toolBox.Name);
-        projectClient.GetProjectAgentsClient().DeleteAgent(agentVersion.Name, force: true);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 

@@ -188,7 +188,7 @@ public class Sample_EvaluationRules : EvaluationSampleBase
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
@@ -288,7 +288,7 @@ public class Sample_EvaluationRules : EvaluationSampleBase
         #region Snippet:Sample_Cleanup_EvaluationRules_Async
         await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
         await projectClient.EvaluationRules.DeleteAsync(id: continuousEvalRule.Id);
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         // Warning! After this step the evaluations will be deleted and will not be available on Microsoft Foundry portal.
         // First we need to remove all runs.
         foreach (string runId in evaluationRunIds.Keys)
@@ -318,7 +318,7 @@ public class Sample_EvaluationRules : EvaluationSampleBase
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
@@ -416,7 +416,7 @@ public class Sample_EvaluationRules : EvaluationSampleBase
         #region Snippet:Sample_Cleanup_EvaluationRules_Sync
         projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversation(conversation.Id);
         projectClient.EvaluationRules.Delete(id: continuousEvalRule.Id);
-        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         // Warning! After this step the evaluations will be deleted and will not be available on Microsoft Foundry portal.
         // First we need to remove all runs.
         foreach (string runId in evaluationRunIds.Keys)

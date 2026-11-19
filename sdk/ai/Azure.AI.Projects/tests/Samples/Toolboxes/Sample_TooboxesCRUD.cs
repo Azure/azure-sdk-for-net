@@ -40,7 +40,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         string toolboxName = "mcp";
         #endregion
         DeleteToolboxMayBe(toolboxClient, toolboxName);
@@ -125,7 +125,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         string toolboxName = "mcp";
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesCRUD_Sync

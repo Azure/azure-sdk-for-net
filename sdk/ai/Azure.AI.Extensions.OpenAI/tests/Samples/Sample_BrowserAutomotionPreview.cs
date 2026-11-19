@@ -90,7 +90,7 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
             "related to web browsing using the Browser Automation tool available to you.",
             Tools = { playwrightTool }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -118,7 +118,7 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_BrowserAutomotionPreview_Async
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

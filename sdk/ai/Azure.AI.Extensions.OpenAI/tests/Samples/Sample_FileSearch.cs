@@ -58,7 +58,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -74,7 +74,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_FileSearch_Async
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         await vctStoreClient.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
         await fileClient.DeleteFileAsync(uploadedFile.Id);
         #endregion
@@ -118,7 +118,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -134,7 +134,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_FileSearch_Sync
-        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         vctStoreClient.DeleteVectorStore(vectorStoreId: vectorStore.Id);
         fileClient.DeleteFile(uploadedFile.Id);
         #endregion

@@ -122,7 +122,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -134,7 +134,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -170,10 +170,10 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:CleanUp_AgentsLogging_Sync
-projectClient.GetProjectAgentsClient().DeleteAgent(agentName: "myAgent");
+projectClient.AgentAdministrationClient.DeleteAgent(agentName: "myAgent");
 ```
 
 Asynchronous sample:
 ```C# Snippet:CleanUp_AgentsLogging_Async
-await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: "myAgent");
+await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
 ```

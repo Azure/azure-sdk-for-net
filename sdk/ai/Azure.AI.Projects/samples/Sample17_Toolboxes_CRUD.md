@@ -8,7 +8,7 @@ In this example we will demonstrate how to create, update and delete toolboxes.
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
+AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
 string toolboxName = "mcp";
 ```
 

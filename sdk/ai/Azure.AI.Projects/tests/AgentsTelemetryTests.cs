@@ -99,11 +99,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -129,11 +129,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -158,11 +158,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -188,11 +188,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -218,7 +218,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
@@ -227,7 +227,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a helpful prompt agent."
         };
 
-        ClientResult protocolUpdateResult = await projectClient.GetProjectAgentsClient().UpdateAgentAsync(
+        ClientResult protocolUpdateResult = await projectClient.AgentAdministrationClient.UpdateAgentAsync(
             agentName: agentName,
             content: BinaryContent.Create(BinaryData.FromString($$"""
                 {
@@ -243,7 +243,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         ProjectsAgentRecord updatedAgent = ModelReaderWriter.Read<ProjectsAgentRecord>(protocolUpdateResult.GetRawResponse().Content);
         string versionNumber = updatedAgent.GetLatestVersion().Version;
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -280,7 +280,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
@@ -289,7 +289,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a helpful prompt agent."
         };
 
-        ClientResult protocolUpdateResult = await projectClient.GetProjectAgentsClient().UpdateAgentAsync(
+        ClientResult protocolUpdateResult = await projectClient.AgentAdministrationClient.UpdateAgentAsync(
             agentName: agentName,
             content: BinaryContent.Create(BinaryData.FromString($$"""
                 {
@@ -301,7 +301,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
                 }
                 """)));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -338,11 +338,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new ProjectsAgentVersionCreationOptions(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -368,11 +368,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -424,7 +424,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             // Note: Please create the image as described in the next sample.
             // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample28_HostedAgent.md
             agentDefinition.ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE);
-            agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+            agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                         agentName: agentName,
                         options: creationOptions);
         }
@@ -438,7 +438,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             // Note: Please place Agent Echo Bot project to the TestData/Agents/AgentsCode
             // to record this sample. See the instruction on how to create the echo bot in the next sample.
             // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample37_CodeAgent.md
-            agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionFromCodeAsync(
+            agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
                 agentName: agentName,
                 filePath: GetDirectory(Path.Combine(["TestData", "Agents", "AgentsCode"])),
                 metadata: new(agentDefinition)
@@ -679,11 +679,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -710,11 +710,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -741,11 +741,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new ProjectsAgentVersionCreationOptions(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -772,11 +772,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new(agentDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -812,11 +812,11 @@ trigger:
         ProjectsAgentDefinition workflowDefinition = WorkflowAgentDefinition.FromYaml(workflowYaml);
 #pragma warning restore CS0618
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new ProjectsAgentVersionCreationOptions(workflowDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -898,11 +898,11 @@ trigger:
         ProjectsAgentDefinition workflowDefinition = WorkflowAgentDefinition.FromYaml(workflowYaml);
 #pragma warning restore CS0618
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
             options: new ProjectsAgentVersionCreationOptions(workflowDefinition));
 
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: ProjectsAgentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();

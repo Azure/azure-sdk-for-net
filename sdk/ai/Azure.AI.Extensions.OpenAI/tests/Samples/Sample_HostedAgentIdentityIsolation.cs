@@ -76,7 +76,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myHostedAgent1",
             options: creationOptions);
         #endregion
@@ -84,7 +84,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Task.Delay(500);
-            agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -104,7 +104,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await projectClient.GetProjectAgentsClient().PatchAgentAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -148,7 +148,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         Console.WriteLine(followUp.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgentIdentityIsolation_HostedAgentIdentityIsolation_Async
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentVersion.Name, force: true);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -174,7 +174,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myHostedAgent1",
             options: creationOptions);
         #endregion
@@ -182,7 +182,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             Thread.Sleep(500);
-            agentVersion = projectClient.GetProjectAgentsClient().GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -202,7 +202,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = projectClient.GetProjectAgentsClient().PatchAgent(
+        ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -245,7 +245,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         Console.WriteLine(followUp.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgentIdentityIsolation_HostedAgentIdentityIsolation_Sync
-        projectClient.GetProjectAgentsClient().DeleteAgent(agentVersion.Name, force: true);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 

@@ -37,7 +37,7 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant that can search the web",
             Tools = { ResponseTool.CreateWebSearchTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -53,7 +53,7 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_WebSearch_Async
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -77,7 +77,7 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant that can search the web",
             Tools = { ResponseTool.CreateWebSearchTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
         };
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -91,7 +91,7 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
         Console.WriteLine($"{response.GetOutputText()} {GetFormattedAnnotation(response)}");
 
         #region Snippet:Sample_Cleanup_WebSearch_Sync
-        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

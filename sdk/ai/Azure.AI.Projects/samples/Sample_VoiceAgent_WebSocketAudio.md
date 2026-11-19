@@ -37,7 +37,7 @@ VoiceAgentDefinition definition = new()
     }
 };
 definition.OutputModalities.Add(VoiceOutputModality.Audio);
-ClientResult<ProjectsAgentVersion> createResult = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ClientResult<ProjectsAgentVersion> createResult = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName, new ProjectsAgentVersionCreationOptions(definition));
 ProjectsAgentVersion agentVersion = createResult;
 Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Version}: HTTP {createResult.GetRawResponse().Status}");
@@ -113,7 +113,7 @@ if (!sawCompletedResponse || inputAudioBytes == 0 || outputAudioBytes == 0)
 3. Delete the temporary agent version, including when the audio exchange fails.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketAudio_Cleanup
-ClientResult deleteResult = await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(
+ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
     agentName: agentName, agentVersion: agentVersion.Version);
 Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
 ```

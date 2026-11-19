@@ -1662,9 +1662,11 @@ namespace Azure.AI.Projects.Agents
     public static partial class ClientConnectionProviderExtensions
     {
         public static Azure.AI.Projects.Agents.AgentAdministrationClient GetProjectAgentsClient(this System.ClientModel.Primitives.ClientConnectionProvider connectionProvider, System.Uri endpoint = null, Azure.AI.Projects.Agents.AgentAdministrationClientOptions options = null) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentAdministrationClient get_AgentAdministrationClient(System.ClientModel.Primitives.ClientConnectionProvider connectionProvider) { throw null; }
         public sealed partial class <G>$EE9D7A1C67932FB454531401B8375DE4
         {
             internal <G>$EE9D7A1C67932FB454531401B8375DE4() { }
+            public Azure.AI.Projects.Agents.AgentAdministrationClient AgentAdministrationClient { get { throw null; } }
             public Azure.AI.Projects.Agents.AgentAdministrationClient GetProjectAgentsClient(System.Uri endpoint = null, Azure.AI.Projects.Agents.AgentAdministrationClientOptions options = null) { throw null; }
             public static partial class <M>$781747A4149937EE6CD40CB5B8268DAD
             {

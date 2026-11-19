@@ -22,7 +22,7 @@ VoiceAgentDefinition definition = new()
     Instructions = "Respond briefly and helpfully.",
 };
 definition.OutputModalities.Add(VoiceOutputModality.Text);
-ClientResult<ProjectsAgentVersion> createResult = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ClientResult<ProjectsAgentVersion> createResult = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName, new ProjectsAgentVersionCreationOptions(definition));
 ProjectsAgentVersion agentVersion = createResult;
 Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Version}: HTTP {createResult.GetRawResponse().Status}");
@@ -75,7 +75,7 @@ using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
 3. After closing the WebSocket session, retrieve the persisted conversation over REST.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketTransport_Read
-ClientResult<VoiceConversation> conversation = await projectClient.GetProjectAgentsClient()
+ClientResult<VoiceConversation> conversation = await projectClient.AgentAdministrationClient
     .GetBetaVoiceAgentEndpointConversations().GetAgentConversationAsync(agentName, conversationId);
 if (conversation.Value.Id != conversationId)
 {
@@ -87,7 +87,7 @@ Console.WriteLine($"Retrieved conversation {conversationId}: HTTP {conversation.
 4. Delete the temporary version, even if the realtime exchange fails.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketTransport_Cleanup
-ClientResult deleteResult = await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(
+ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
     agentName: agentName, agentVersion: agentVersion.Version);
 Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
 ```

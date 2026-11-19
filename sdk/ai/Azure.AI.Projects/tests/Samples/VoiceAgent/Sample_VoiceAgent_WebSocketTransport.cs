@@ -47,7 +47,7 @@ public class Sample_VoiceAgent_WebSocketTransport : SamplesBase
             Instructions = "Respond briefly and helpfully.",
         };
         definition.OutputModalities.Add(VoiceOutputModality.Text);
-        ClientResult<ProjectsAgentVersion> createResult = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ClientResult<ProjectsAgentVersion> createResult = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName, new ProjectsAgentVersionCreationOptions(definition));
         ProjectsAgentVersion agentVersion = createResult;
         Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Version}: HTTP {createResult.GetRawResponse().Status}");
@@ -96,7 +96,7 @@ public class Sample_VoiceAgent_WebSocketTransport : SamplesBase
             #endregion
 
             #region Snippet:Sample_VoiceAgent_WebSocketTransport_Read
-            ClientResult<VoiceConversation> conversation = await projectClient.GetProjectAgentsClient()
+            ClientResult<VoiceConversation> conversation = await projectClient.AgentAdministrationClient
                 .GetBetaVoiceAgentEndpointConversations().GetAgentConversationAsync(agentName, conversationId);
             if (conversation.Value.Id != conversationId)
             {
@@ -108,7 +108,7 @@ public class Sample_VoiceAgent_WebSocketTransport : SamplesBase
         finally
         {
             #region Snippet:Sample_VoiceAgent_WebSocketTransport_Cleanup
-            ClientResult deleteResult = await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(
+            ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
                 agentName: agentName, agentVersion: agentVersion.Version);
             Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
             #endregion

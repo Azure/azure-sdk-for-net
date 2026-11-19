@@ -52,7 +52,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
 
@@ -148,7 +148,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(evaluationResults.Count, Is.GreaterThan(0));
         ClientResult deletionResult = await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
         // Assert.That(ParseClientResult<bool>(deletionResult, ["deleted"])["deleted"], Is.True);
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
     }
 
     [Ignore("Evaluators list results in 404 error; see ADO Item 5063246")]
@@ -379,7 +379,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         object[] testingCriteria = [
@@ -624,7 +624,7 @@ public class EvaluationsTest : ProjectsClientTestBase
             {
                 Instructions = "You are a helpful assistant that answers general questions"
             };
-            ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(agentName: AGENT_NAME, options: new(agentDefinition));
+            ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(agentName: AGENT_NAME, options: new(agentDefinition));
             target = new AzureAIAgentTarget(name: agentVersion.Name)
             {
                 Version = agentVersion.Version,
@@ -1309,9 +1309,9 @@ public class EvaluationsTest : ProjectsClientTestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (ProjectsAgentVersion ag in projectClient.GetProjectAgentsClient().GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME))
         {
-            await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
+            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
         }
         // Remove evaluations
         EvaluationClient evalClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();

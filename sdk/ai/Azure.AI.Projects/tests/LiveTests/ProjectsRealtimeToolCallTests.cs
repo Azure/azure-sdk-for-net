@@ -80,7 +80,7 @@ public class ProjectsRealtimeToolCallTests : ProjectsRealtimeLiveTestBase
     {
         AIProjectClient client = GetLiveClient();
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
-        await EnsureToolCallAgentAsync(client.GetProjectAgentsClient(), timeout.Token);
+        await EnsureToolCallAgentAsync(client.AgentAdministrationClient, timeout.Token);
 
         using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             TOOLCALL_AGENT_NAME,

@@ -42,7 +42,7 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
             Instructions = "Use the available Web IQ tools to answer questions and perform tasks.",
             Tools = { WebIQTool },
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myWebIQAgent",
             options: new(agentDefinition));
         #endregion
@@ -61,7 +61,7 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_WebIQ_Async
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -91,7 +91,7 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
             Instructions = "Use the available Web IQ tools to answer questions and perform tasks.",
             Tools = { WebIQTool },
         };
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myWebIQAgent",
             options: new(agentDefinition));
         #endregion
@@ -108,7 +108,7 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
 
         #region Snippet:Sample_Cleanup_WebIQ_Sync
-        projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

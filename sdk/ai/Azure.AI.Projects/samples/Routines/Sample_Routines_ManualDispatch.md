@@ -24,13 +24,13 @@ AIProjectRoutines routinesClient = projectClient.Routines;
 
 Synchronous sample:
 ```C# Snippet:Sample_GetHostedAgent_RoutinesManualDispatch_Sync
-ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().GetAgent(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgent(
     agentName: agentName).Value.GetLatestVersion();
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetHostedAgent_RoutinesManualDispatch_Async
-ProjectsAgentVersion agentVersion = (await projectClient.GetProjectAgentsClient().GetAgentAsync(
+ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClient.GetAgentAsync(
     agentName: agentName)).Value.GetLatestVersion();
 ```
 

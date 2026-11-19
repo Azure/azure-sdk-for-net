@@ -37,7 +37,7 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         // Create
@@ -99,7 +99,7 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         for (int i = 0; i < PAGE_SIZE + 1; i++)
@@ -156,7 +156,7 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
         try
         {
-            await projectClient.GetProjectAgentsClient().DeleteAgentAsync(AGENT_NAME);
+            await projectClient.AgentAdministrationClient.DeleteAgentAsync(AGENT_NAME);
         }
         catch { }
         // Delete Jobs and generated evaluators.

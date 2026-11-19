@@ -73,7 +73,7 @@ This will create the publish output in the `bin\Release\net%version%\publish\` f
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-AgentToolboxes toolboxClient = projectClient.GetProjectAgentsClient().GetAgentToolboxes();
+AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
 ```
 
 2. For brevity we will create the method, returning the `AgentVersionFromCodeMetadata` object. It contains all environment variables needed to access toolbox from the Hosted Agent.
@@ -144,7 +144,7 @@ Console.WriteLine($"Created a toolbox {toolBox.Name} v. {toolBox.Version}.");
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeAgentReminderTool_Sync
-ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersionFromCode(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
     agentName: "myCodeAgentReminderTool",
     filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
     metadata: GetAgentMetadata(
@@ -160,7 +160,7 @@ Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.Cl
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeAgentReminderTool_Async
-ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionFromCodeAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
     agentName: "myCodeAgentReminderTool",
     filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
     metadata: GetAgentMetadata(
@@ -181,7 +181,7 @@ Synchronous sample:
 while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     Thread.Sleep(500);
-    agentVersion = projectClient.GetProjectAgentsClient().GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 if (agentVersion.Status != AgentVersionStatus.Active)
 {
@@ -194,7 +194,7 @@ Asynchronous sample:
 while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     await Task.Delay(500);
-    agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 if (agentVersion.Status != AgentVersionStatus.Active)
 {
@@ -208,11 +208,11 @@ Synchronous sample:
 ```C# Snippet:Sample_WaitForSession_CodeAgentReminderTool_Sync
 string prompt = "Please remind me to go to lunch after one minute.";
 DateTimeOffset responseTime;
-ProjectAgentSession session = projectClient.GetProjectAgentsClient().CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
+ProjectAgentSession session = projectClient.AgentAdministrationClient.CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
 {
     Thread.Sleep(500);
-    session = projectClient.GetProjectAgentsClient().GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+    session = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 }
 if (session.Status != AgentSessionStatus.Active)
 {
@@ -224,11 +224,11 @@ Asynchronous sample:
 ```C# Snippet:Sample_WaitForSession_CodeAgentReminderTool_Async
 string prompt = "Please remind me to go to lunch after one minute.";
 DateTimeOffset responseTime;
-ProjectAgentSession session = await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
+ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
 {
     await Task.Delay(500);
-    session = await projectClient.GetProjectAgentsClient().GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+    session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 }
 if (session.Status != AgentSessionStatus.Active)
 {
@@ -472,11 +472,11 @@ Console.WriteLine($"The run has completed with status {completedRun.Status}, res
 Synchronous sample:
 ```C# Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Sync
 toolboxClient.Delete(toolBox.Name);
-projectClient.GetProjectAgentsClient().DeleteAgent(agentVersion.Name, force: true);
+projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Async
 await toolboxClient.DeleteAsync(toolBox.Name);
-await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentVersion.Name, force: true);
+await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
 ```

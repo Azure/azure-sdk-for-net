@@ -126,13 +126,13 @@ public class Sample_VoiceAgent_Telemetry : SamplesBase
                 Instructions = "Respond briefly and helpfully."
             };
             definition.OutputModalities.Add(VoiceOutputModality.Text);
-            ClientResult<ProjectsAgentVersion> created = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+            ClientResult<ProjectsAgentVersion> created = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                 agentName, new ProjectsAgentVersionCreationOptions(definition));
             Console.WriteLine($"CREATE {agentName} version {created.Value.Version}: HTTP {created.GetRawResponse().Status}");
 
             try
             {
-                ClientResult<ProjectsAgentVersion> retrieved = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(
+                ClientResult<ProjectsAgentVersion> retrieved = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
                     agentName, created.Value.Version);
                 Console.WriteLine($"GET {agentName} version {retrieved.Value.Version}: HTTP {retrieved.GetRawResponse().Status}");
                 if (retrieved.Value.Id != created.Value.Id)
@@ -141,7 +141,7 @@ public class Sample_VoiceAgent_Telemetry : SamplesBase
                 }
 
                 definition.Instructions = "Respond in one short sentence.";
-                ClientResult<ProjectsAgentVersion> updated = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+                ClientResult<ProjectsAgentVersion> updated = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                     agentName, new ProjectsAgentVersionCreationOptions(definition));
                 Console.WriteLine($"UPDATE {agentName} via version {updated.Value.Version}: HTTP {updated.GetRawResponse().Status}");
                 if (updated.Value.Version == created.Value.Version ||
@@ -153,7 +153,7 @@ public class Sample_VoiceAgent_Telemetry : SamplesBase
             }
             finally
             {
-                ClientResult deleted = await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName);
+                ClientResult deleted = await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName);
                 Console.WriteLine($"DELETE {agentName}: HTTP {deleted.GetRawResponse().Status}");
             }
         }
@@ -214,7 +214,7 @@ public class Sample_VoiceAgent_Telemetry : SamplesBase
                 Instructions = "Respond briefly and helpfully."
             };
             definition.OutputModalities.Add(VoiceOutputModality.Text);
-            ClientResult<ProjectsAgentVersion> created = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+            ClientResult<ProjectsAgentVersion> created = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                 agentName, new ProjectsAgentVersionCreationOptions(definition));
             Console.WriteLine($"CREATE {agentName}: HTTP {created.GetRawResponse().Status}");
 
@@ -259,7 +259,7 @@ public class Sample_VoiceAgent_Telemetry : SamplesBase
                     }
                 }
 
-                BetaVoiceAgentsConversations conversations = projectClient.GetProjectAgentsClient().GetBetaVoiceAgentEndpointConversations();
+                BetaVoiceAgentsConversations conversations = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
                 ClientResult<VoiceConversation> conversation = await conversations.GetAgentConversationAsync(
                     agentName, conversationId, timeout.Token);
                 Console.WriteLine($"GET stored conversation: HTTP {conversation.GetRawResponse().Status}");
@@ -272,7 +272,7 @@ public class Sample_VoiceAgent_Telemetry : SamplesBase
             }
             finally
             {
-                ClientResult deleted = await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName);
+                ClientResult deleted = await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName);
                 Console.WriteLine($"DELETE {agentName}: HTTP {deleted.GetRawResponse().Status}");
             }
         }

@@ -40,7 +40,7 @@ public partial class ResponsesTelemetryTests
             }
         };
 
-        return await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        return await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
     }
@@ -177,7 +177,7 @@ public partial class ResponsesTelemetryTests
         }
         finally
         {
-            await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+            await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
         }
     }
 

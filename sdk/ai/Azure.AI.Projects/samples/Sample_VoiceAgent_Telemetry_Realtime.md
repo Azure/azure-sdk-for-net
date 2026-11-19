@@ -72,7 +72,7 @@ using (Activity workflow = applicationSource.StartActivity("voice_agent.sample.r
         Instructions = "Respond briefly and helpfully."
     };
     definition.OutputModalities.Add(VoiceOutputModality.Text);
-    ClientResult<ProjectsAgentVersion> created = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+    ClientResult<ProjectsAgentVersion> created = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
         agentName, new ProjectsAgentVersionCreationOptions(definition));
     Console.WriteLine($"CREATE {agentName}: HTTP {created.GetRawResponse().Status}");
 
@@ -117,7 +117,7 @@ using (Activity workflow = applicationSource.StartActivity("voice_agent.sample.r
             }
         }
 
-        BetaVoiceAgentsConversations conversations = projectClient.GetProjectAgentsClient().GetBetaVoiceAgentEndpointConversations();
+        BetaVoiceAgentsConversations conversations = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
         ClientResult<VoiceConversation> conversation = await conversations.GetAgentConversationAsync(
             agentName, conversationId, timeout.Token);
         Console.WriteLine($"GET stored conversation: HTTP {conversation.GetRawResponse().Status}");
@@ -130,7 +130,7 @@ using (Activity workflow = applicationSource.StartActivity("voice_agent.sample.r
     }
     finally
     {
-        ClientResult deleted = await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName);
+        ClientResult deleted = await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName);
         Console.WriteLine($"DELETE {agentName}: HTTP {deleted.GetRawResponse().Status}");
     }
 }

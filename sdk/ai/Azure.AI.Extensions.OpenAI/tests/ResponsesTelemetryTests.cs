@@ -158,7 +158,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant."
         };
         var agentName = "responseTelemetryTestAgent";
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
 
@@ -185,7 +185,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         }
         finally
         {
-            await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentName: agentName);
+            await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
         }
     }
 

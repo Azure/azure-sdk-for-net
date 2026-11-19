@@ -22,7 +22,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -33,7 +33,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -172,7 +172,7 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-ProjectsAgentVersion agentVersionWithMemory = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+ProjectsAgentVersion agentVersionWithMemory = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
@@ -184,7 +184,7 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-ProjectsAgentVersion agentVersionWithMemory = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersionWithMemory = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
@@ -216,13 +216,13 @@ Console.WriteLine(response.GetOutputText());
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_MemoryTool_Sync
 projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
-projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_MemoryTool_Async
 await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: memoryStore.Name);
-await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
 ```

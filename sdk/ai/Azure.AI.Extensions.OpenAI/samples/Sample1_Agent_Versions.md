@@ -18,7 +18,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -29,7 +29,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -38,7 +38,7 @@ ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient()
 
 Synchronous sample:
 ```C# Snippet:Sample_ListAgentVersions_Sync
-var agentVersions = projectClient.GetProjectAgentsClient().GetAgentVersions(agentName: "myAgent");
+var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersions(agentName: "myAgent");
 foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 {
     Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -47,7 +47,7 @@ foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListAgentVersions_Async
-var agentVersions = projectClient.GetProjectAgentsClient().GetAgentVersionsAsync(agentName: "myAgent");
+var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersionsAsync(agentName: "myAgent");
 await foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 {
     Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -103,11 +103,11 @@ Console.WriteLine(response.GetOutputText());
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_Sync
 projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversation(conversationId: conversation.Id);
-projectClient.GetProjectAgentsClient().DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_Async
 await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversationAsync(conversationId: conversation.Id);
-await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

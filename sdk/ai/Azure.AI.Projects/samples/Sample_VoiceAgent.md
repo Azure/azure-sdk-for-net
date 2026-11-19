@@ -22,7 +22,7 @@ VoiceAgentDefinition definition = new()
     Instructions = "Respond briefly and helpfully.",
 };
 definition.OutputModalities.Add(VoiceOutputModality.Text);
-ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName,
     new ProjectsAgentVersionCreationOptions(definition));
 ```
@@ -61,5 +61,5 @@ Console.WriteLine($"Voice agent response: {responseText}");
 3. Clean up the temporary agent version.
 
 ```C# Snippet:Sample_VoiceAgent_Cleanup
-await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
 ```

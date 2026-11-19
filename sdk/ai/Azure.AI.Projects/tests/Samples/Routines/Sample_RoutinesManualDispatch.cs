@@ -42,7 +42,7 @@ public class Sample_RoutinesManualDispatch : SamplesRoutineBase
         AIProjectRoutines routinesClient = projectClient.Routines;
         #endregion
         #region Snippet:Sample_GetHostedAgent_RoutinesManualDispatch_Async
-        ProjectsAgentVersion agentVersion = (await projectClient.GetProjectAgentsClient().GetAgentAsync(
+        ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClient.GetAgentAsync(
             agentName: agentName)).Value.GetLatestVersion();
         #endregion
         // Clean up any pre-existing routine with the same name.
@@ -166,7 +166,7 @@ public class Sample_RoutinesManualDispatch : SamplesRoutineBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
         #region Snippet:Sample_GetHostedAgent_RoutinesManualDispatch_Sync
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().GetAgent(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgent(
             agentName: agentName).Value.GetLatestVersion();
         #endregion
         // Clean up any pre-existing routine with the same name.

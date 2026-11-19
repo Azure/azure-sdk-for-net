@@ -17,7 +17,7 @@ VoiceAgentDefinition definition = new()
     Instructions = "Respond briefly and helpfully.",
 };
 definition.OutputModalities.Add(VoiceOutputModality.Text);
-ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName,
     new ProjectsAgentVersionCreationOptions(definition));
 ```
@@ -56,7 +56,7 @@ using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_Read
 // Once the session above closes, the conversation it produced becomes readable through
 // the REST-only BetaVoiceAgentsConversations surface -- no realtime connection needed.
-BetaVoiceAgentsConversations conversationsClient = projectClient.GetProjectAgentsClient().GetBetaVoiceAgentEndpointConversations();
+BetaVoiceAgentsConversations conversationsClient = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
 
 VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(agentName, conversationId);
 Console.WriteLine($"Conversation {conversation.Id} status: {conversation.Status}");
@@ -75,5 +75,5 @@ await foreach (VoiceResult response in conversationsClient.GetAgentConversationR
 4. Clean up the temporary agent version.
 
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_Cleanup
-await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
 ```

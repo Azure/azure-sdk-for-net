@@ -55,7 +55,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myHostedAgent",
             options: creationOptions);
         #endregion
@@ -63,7 +63,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Task.Delay(500);
-            agentVersion = await projectClient.GetProjectAgentsClient().GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -83,19 +83,19 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await projectClient.GetProjectAgentsClient().PatchAgentAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         // If we have occasionally disabled the Agent, enable it again.
-        await projectClient.GetProjectAgentsClient().EnableAgentAsync(agentVersion.Name);
+        await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Async
-        ProjectAgentSession session1 = await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(500);
-            session1 = await projectClient.GetProjectAgentsClient().GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+            session1 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         }
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
@@ -107,11 +107,11 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_DisableTheAgent_HostedAgentSessions_Async
-        await projectClient.GetProjectAgentsClient().DisableAgentAsync(agentVersion.Name);
+        await projectClient.AgentAdministrationClient.DisableAgentAsync(agentVersion.Name);
         // The new session cannot be created.
         try
         {
-            await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -124,12 +124,12 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_EnableTheAgent_HostedAgentSessions_Async
-        await projectClient.GetProjectAgentsClient().EnableAgentAsync(agentVersion.Name);
-        ProjectAgentSession session2 = await projectClient.GetProjectAgentsClient().CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+        await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
+        ProjectAgentSession session2 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(500);
-            session2 = await projectClient.GetProjectAgentsClient().GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+            session2 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         }
         responseOptions = new()
         {
@@ -140,7 +140,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgentSessions_HostedAgentSessions_Async
-        await projectClient.GetProjectAgentsClient().DeleteAgentAsync(agentVersion.Name, force: true);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -165,7 +165,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = projectClient.GetProjectAgentsClient().CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myHostedAgent",
             options: creationOptions);
         #endregion
@@ -173,7 +173,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             Thread.Sleep(500);
-            agentVersion = projectClient.GetProjectAgentsClient().GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
@@ -193,19 +193,19 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = projectClient.GetProjectAgentsClient().PatchAgent(
+        ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         // If we have occasionally disabled the Agent, enable it again.
-        projectClient.GetProjectAgentsClient().EnableAgent(agentVersion.Name);
+        projectClient.AgentAdministrationClient.EnableAgent(agentVersion.Name);
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Sync
-        ProjectAgentSession session1 = projectClient.GetProjectAgentsClient().CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(500);
-            session1 = projectClient.GetProjectAgentsClient().GetSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+            session1 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         }
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
@@ -217,11 +217,11 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_DisableTheAgent_HostedAgentSessions_Sync
-        projectClient.GetProjectAgentsClient().DisableAgent(agentVersion.Name);
+        projectClient.AgentAdministrationClient.DisableAgent(agentVersion.Name);
         // The new session cannot be created.
         try
         {
-            projectClient.GetProjectAgentsClient().CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+            projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -234,12 +234,12 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_EnableTheAgent_HostedAgentSessions_Sync
-        projectClient.GetProjectAgentsClient().EnableAgent(agentVersion.Name);
-        ProjectAgentSession session2 = projectClient.GetProjectAgentsClient().CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
+        projectClient.AgentAdministrationClient.EnableAgent(agentVersion.Name);
+        ProjectAgentSession session2 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(500);
-            session2 = projectClient.GetProjectAgentsClient().GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+            session2 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         }
         responseOptions = new()
         {
@@ -250,7 +250,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgentSessions_HostedAgentSessions_Sync
-        projectClient.GetProjectAgentsClient().DeleteAgent(agentVersion.Name, force: true);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 

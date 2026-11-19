@@ -95,7 +95,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.GetProjectAgentsClient().CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -129,7 +129,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_FileSearch_Streaming_Async
-        await projectClient.GetProjectAgentsClient().DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         await projectClient.ProjectOpenAIClient.GetProjectVectorStoresClient().DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
         await projectClient.ProjectOpenAIClient.GetProjectFilesClient().DeleteFileAsync(uploadedFile.Id);
         #endregion
