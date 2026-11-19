@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Fixed standard metrics extraction using the wrong schema version. ([TODO](TODO))
+- Fixed standard metrics extraction using the wrong schema version. ([65084](https://github.com/Azure/azure-sdk-for-net/pull/65084))
 
 ### Breaking Changes
 
