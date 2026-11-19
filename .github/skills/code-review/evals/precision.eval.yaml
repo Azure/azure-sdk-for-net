@@ -117,10 +117,10 @@ stimuli:
           pattern: '^\s*No findings\.\s*$'
       - type: output-matches
         config:
-          pattern: '(?i)((?:Azure\.Widgets\.Gadgets|extends)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:Azure\.Widgets\.Gadgets|extends))'
+          pattern: '(?i)((?:Azure\.Widgets\.Gadgets|extends|parent|revers|invert)[^\n]*🟡|🟡[^\n]*(?:Azure\.Widgets\.Gadgets|extends|parent|revers|invert))'
       - type: output-matches
         config:
-          pattern: '(?i)invert|revers|direction|layer|builds on|extends|parent|child'
+          pattern: '(?i)invert|revers|wrong direction|opposite direction|parent-to-child|parent → child|extends its own|extends the|cycle'
 
   - name: report-new-metapackage-bundling-child-named-packages
     prompt: >-
@@ -140,10 +140,10 @@ stimuli:
           pattern: '^\s*No findings\.\s*$'
       - type: output-matches
         config:
-          pattern: '(?i)((?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends))'
+          pattern: '(?i)((?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends|parent|revers|invert)[^\n]*🟡|🟡[^\n]*(?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends|parent|revers|invert))'
       - type: output-matches
         config:
-          pattern: '(?i)invert|revers|direction|layer|builds on|extends|parent|child'
+          pattern: '(?i)invert|revers|wrong direction|opposite direction|parent-to-child|parent → child|extends its own|extends the|cycle'
 
   - name: allow-existing-parent-to-child-reference-on-version-bump
     prompt: >-
