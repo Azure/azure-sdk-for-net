@@ -5,3 +5,6 @@ overrides:
     words:
       - Mobo
       - Qubits
+  - filename: '**/sdk/quantum/Azure.Provisioning.Quantum/**/*.cs'
+    words:
+      - AZPROVISION

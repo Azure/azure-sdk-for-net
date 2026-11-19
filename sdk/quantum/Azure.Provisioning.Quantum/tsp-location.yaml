@@ -1,0 +1,4 @@
+directory: specification/quantum/resource-manager/Microsoft.Quantum/Quantum
+commit: cd5de7da8ee469ef9d2403b8ec0014ec5653a1c6
+repo: cxznmhdcxz/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
