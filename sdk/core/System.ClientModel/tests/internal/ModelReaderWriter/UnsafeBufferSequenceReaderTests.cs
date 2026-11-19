@@ -87,6 +87,49 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             VerifyStreams(stream.GetBuffer(), stream.Position, stream2.Position);
         }
 
+        [Test]
+        public void DisposeWhileGetBinaryData()
+        {
+            UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
+            using ManualResetEventSlim toBinaryDataStarting = new ManualResetEventSlim(false);
+
+            BinaryData? data = null;
+            Exception? firstCallException = null;
+
+            Task toBinaryDataTask = Task.Run(() =>
+            {
+                toBinaryDataStarting.Set();
+                try
+                {
+                    data = reader.ToBinaryData();
+                }
+                catch (Exception ex)
+                {
+                    firstCallException = ex;
+                }
+            });
+
+            Task disposeTask = Task.Run(() =>
+            {
+                Assert.IsTrue(toBinaryDataStarting.Wait(TimeSpan.FromSeconds(5)));
+                reader.Dispose();
+            });
+
+            Task.WaitAll(toBinaryDataTask, disposeTask);
+
+            if (firstCallException is not null)
+            {
+                Assert.IsInstanceOf<ObjectDisposedException>(firstCallException);
+            }
+            else
+            {
+                Assert.NotNull(data);
+                Assert.LessOrEqual(data!.ToMemory().Length, _bufferSize);
+            }
+
+            Assert.Throws<ObjectDisposedException>(() => reader.ToBinaryData());
+        }
+
         private void VerifyStreams(byte[] buffer, long written1, long written2)
         {
             //verify the first copy completed successfully
@@ -106,6 +149,15 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         private class CancellationOnFirstWriteStream : MemoryStream
         {
             private bool _didWrite;
+
+            public CancellationOnFirstWriteStream()
+            {
+            }
+
+            public CancellationOnFirstWriteStream(int capacity)
+                : base(capacity)
+            {
+            }
 
             public Action? OnFirstWrite { get; set; }
 
