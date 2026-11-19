@@ -21,5 +21,10 @@ namespace Azure.Data.Tables
             => AppContextSwitchHelper.GetConfigValue(
                 TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterSwitchName,
                 TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterEnvVar);
+
+        public static bool DisableThrowOnUnsupportedMemberFilter
+            => AppContextSwitchHelper.GetConfigValue(
+                TableConstants.CompatSwitches.DisableThrowOnUnsupportedMemberFilterSwitchName,
+                TableConstants.CompatSwitches.DisableThrowOnUnsupportedMemberFilterEnvVar);
     }
 }

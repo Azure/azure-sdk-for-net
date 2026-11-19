@@ -217,6 +217,14 @@ namespace Azure.Data.Tables.Tests
             new object[] { "Length", s_stringLengthUnsupported },
         };
 
+        public static object[] UnsupportedMemberCompatSwitchTestCases =
+        {
+            new object[] { "DateTimeOffset/Year gt 2020", s_dtoYearUnsupported },
+            new object[] { "Timestamp/Year gt 2020", s_timestampYearUnsupported },
+            new object[] { "DateTimeOffsetN/HasValue eq true", s_hasValueUnsupported },
+            new object[] { "String/Length gt 3", s_stringLengthUnsupported },
+        };
+
         [TestCaseSource(nameof(TableItemExpressionTestCases))]
         [Test]
         public void TestTableItemFilterExpressions(string expectedFilter, Expression<Func<TableItem, bool>> expression)
@@ -280,6 +288,7 @@ namespace Azure.Data.Tables.Tests
 
         [TestCaseSource(nameof(UnsupportedMemberExpressionTestCases))]
         [Test]
+        [NonParallelizable]
         public void TestPOCOFilterExpressionsUnsupportedMember(string memberName, Expression<Func<ComplexEntity, bool>> expression)
         {
             var ex = Assert.Throws<NotSupportedException>(() => TableClient.CreateQueryFilter(expression));
@@ -287,10 +296,33 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public void TestDictionaryTableEntityFilterExpressionsUnsupportedMember()
         {
             var ex = Assert.Throws<NotSupportedException>(() => TableClient.CreateQueryFilter(s_TEdtoYearUnsupported));
             Assert.That(ex.Message, Does.Contain("'Year'"));
+        }
+
+        [TestCaseSource(nameof(UnsupportedMemberCompatSwitchTestCases))]
+        [Test]
+        [NonParallelizable]
+        public void TestPOCOFilterExpressionsUnsupportedMemberDoesNotThrowWithCompatSwitch(string expectedFilter, Expression<Func<ComplexEntity, bool>> expression)
+        {
+            using var ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableThrowOnUnsupportedMemberFilterSwitchName, true.ToString());
+            var filter = TableClient.CreateQueryFilter(expression);
+
+            Assert.That(filter, Is.EqualTo(expectedFilter));
+        }
+
+        [TestCaseSource(nameof(UnsupportedMemberCompatSwitchTestCases))]
+        [Test]
+        [NonParallelizable]
+        public void TestPOCOFilterExpressionsUnsupportedMemberDoesNotThrowWithCompatSwitchEnv(string expectedFilter, Expression<Func<ComplexEntity, bool>> expression)
+        {
+            using var env = new TestEnvVar(TableConstants.CompatSwitches.DisableThrowOnUnsupportedMemberFilterEnvVar, true.ToString());
+            var filter = TableClient.CreateQueryFilter(expression);
+
+            Assert.That(filter, Is.EqualTo(expectedFilter));
         }
 
         [Test]

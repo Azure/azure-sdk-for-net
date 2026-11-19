@@ -73,7 +73,7 @@ namespace Azure.Data.Tables.Queryable
                 throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantReferToPublicField, m.Member.Name));
             }
 
-            if (m.Expression != null && IsMemberOfPropertyValue(m))
+            if (m.Expression != null && IsMemberOfPropertyValue(m) && !TablesCompatSwitches.DisableThrowOnUnsupportedMemberFilter)
             {
                 throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantTranslateMember, m.Member.Name, m));
             }
