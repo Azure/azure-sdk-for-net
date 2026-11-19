@@ -104,6 +104,20 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<TableEntity, bool>> s_TEequalsToLowerUnsupported = ent => ent.PartitionKey.Equals(Partition.ToLower(), StringComparison.OrdinalIgnoreCase);
         private static readonly Expression<Func<TableEntity, bool>> s_TEequalsStaticUnsupported = ent => string.Equals(ent.PartitionKey, Partition, StringComparison.OrdinalIgnoreCase);
         private static readonly Expression<Func<TableEntity, bool>> s_TECompareStaticUnsupported = ent => string.Compare(ent.PartitionKey, Partition, StringComparison.OrdinalIgnoreCase) > 0;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoYearUnsupported = ent => ent.DateTimeOffset.Year > 2020;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoNullableYearUnsupported = ent => ent.DateTimeOffsetN.Value.Year > 2020;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoCastYearUnsupported = ent => ((DateTimeOffset)ent.DateTimeOffsetN).Year > 2020;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_timestampYearUnsupported = ent => ent.Timestamp.Value.Year > 2020;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoDateUnsupported = ent => ent.DateTimeOffset.Date == s_someDateTime.Date;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtMonthUnsupported = ent => ent.DateTime.Month == 7;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtNullableDayUnsupported = ent => ent.DateTimeN.Value.Day == 23;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_hasValueUnsupported = ent => ent.DateTimeOffsetN.HasValue;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_notHasValueUnsupported = ent => !ent.Int32N.HasValue;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_stringLengthUnsupported = ent => ent.String.Length > 3;
+        private static readonly Expression<Func<TableEntity, bool>> s_TEdtoYearUnsupported = ent => ent.GetDateTime("DateTimeOffset").Value.Year > 2020;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoNullableValueCmp = ent => ent.DateTimeOffsetN.Value >= s_someDateTimeOffset;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_localYearCmp = ent => ent.Int32 > s_someDateTimeOffset.Year;
+        private static readonly Expression<Func<MemberNamedEntity, bool>> s_propertyNamedYear = ent => ent.Year > 2020 && ent.Length == 3;
 
         public static object[] TableEntityExpressionTestCases =
         {
@@ -139,6 +153,8 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"Bool eq true or BoolN eq true", s_complexExpImplicitCastedBooleanCmpOr },
             new object[] { $"String eq '{Partition}'", s_CEtableEntExpEquals },
             new object[] { $"String eq '{Partition}'", s_CEtableEntExpStaticEquals },
+            new object[] { $"DateTimeOffsetN ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtoNullableValueCmp },
+            new object[] { $"Int32 gt 2020", s_localYearCmp },
         };
 
         public static object[] TableItemExpressionTestCases =
@@ -185,6 +201,20 @@ namespace Azure.Data.Tables.Tests
             new object[] { s_TEequalsStaticUnsupported },
             new object[] { s_TEequalsToLowerUnsupported },
             new object[] { s_TECompareStaticUnsupported },
+        };
+
+        public static object[] UnsupportedMemberExpressionTestCases =
+        {
+            new object[] { "Year", s_dtoYearUnsupported },
+            new object[] { "Year", s_dtoNullableYearUnsupported },
+            new object[] { "Year", s_dtoCastYearUnsupported },
+            new object[] { "Year", s_timestampYearUnsupported },
+            new object[] { "Date", s_dtoDateUnsupported },
+            new object[] { "Month", s_dtMonthUnsupported },
+            new object[] { "Day", s_dtNullableDayUnsupported },
+            new object[] { "HasValue", s_hasValueUnsupported },
+            new object[] { "HasValue", s_notHasValueUnsupported },
+            new object[] { "Length", s_stringLengthUnsupported },
         };
 
         [TestCaseSource(nameof(TableItemExpressionTestCases))]
@@ -246,6 +276,39 @@ namespace Azure.Data.Tables.Tests
             }
             using var env = new TestEnvVar(TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterEnvVar, true.ToString());
             TableClient.CreateQueryFilter(expression);
+        }
+
+        [TestCaseSource(nameof(UnsupportedMemberExpressionTestCases))]
+        [Test]
+        public void TestPOCOFilterExpressionsUnsupportedMember(string memberName, Expression<Func<ComplexEntity, bool>> expression)
+        {
+            var ex = Assert.Throws<NotSupportedException>(() => TableClient.CreateQueryFilter(expression));
+            Assert.That(ex.Message, Does.Contain($"'{memberName}'"));
+        }
+
+        [Test]
+        public void TestDictionaryTableEntityFilterExpressionsUnsupportedMember()
+        {
+            var ex = Assert.Throws<NotSupportedException>(() => TableClient.CreateQueryFilter(s_TEdtoYearUnsupported));
+            Assert.That(ex.Message, Does.Contain("'Year'"));
+        }
+
+        [Test]
+        public void TestFilterExpressionsWithPropertiesNamedLikeFrameworkMembers()
+        {
+            var filter = TableClient.CreateQueryFilter(s_propertyNamedYear);
+
+            Assert.That(filter, Is.EqualTo("Year gt 2020 and Length eq 3"));
+        }
+
+        public class MemberNamedEntity : ITableEntity
+        {
+            public int Year { get; set; }
+            public int Length { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
     }
 }
