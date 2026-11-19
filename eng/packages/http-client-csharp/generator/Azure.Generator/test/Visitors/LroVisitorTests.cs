@@ -77,10 +77,72 @@ namespace Azure.Generator.Tests.Visitors
             var property = metadataType.Properties.Single();
             Assert.AreEqual(access == "public", property.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             Assert.AreEqual(access == "internal", property.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
+            Assert.IsTrue(property.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
+            Assert.IsFalse(property.Body.HasSetter);
             Assert.AreEqual(new CSharpType(typeof(int), isNullable: true), property.Type);
             var body = ((MethodPropertyBody)property.Body).Getter!.ToDisplayString();
             StringAssert.Contains("\"wire_details\", \"percent_done\"", body);
             Assert.IsNull(output.GetLroOperation(ordinary, client, protocol: false));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SelectedMetadataPreservesOwnerlessPropertyEncoding(bool isReadOnly)
+        {
+            MockHelpers.LoadMockGenerator();
+            var input = InputFactory.Property("StartTime",
+                new InputDateTimeType(DateTimeKnownEncoding.Rfc7231, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String),
+                isReadOnly: isReadOnly, wireName: "started_at");
+            var metadata = new LroStatusMetadataProvider("StartOperationMetadata", "Samples",
+                [new InputLroStatusMetadata(input, [input])], TypeSignatureModifiers.Public);
+
+            var property = metadata.Properties.Single();
+            Assert.IsNull(input.EnclosingType);
+            Assert.AreEqual("StartsOn", property.Name);
+            Assert.AreEqual(new CSharpType(typeof(DateTimeOffset), isNullable: true), property.Type);
+            Assert.AreEqual(SerializationFormat.DateTime_RFC7231, property.SerializationFormat);
+            Assert.AreEqual("started_at", property.WireInfo?.SerializedName);
+            Assert.IsFalse(property.Body.HasSetter);
+        }
+
+        [Test]
+        public void SelectedMetadataPreservesPropertyLevelArrayEncoding()
+        {
+            MockHelpers.LoadMockGenerator();
+            var input = InputFactory.Property("items", InputFactory.Array(InputPrimitiveType.String), encode: ArrayKnownEncoding.PipeDelimited);
+            var metadata = new LroStatusMetadataProvider("StartOperationMetadata", "Samples",
+                [new InputLroStatusMetadata(input, [input])], TypeSignatureModifiers.Public);
+
+            var property = metadata.Properties.Single();
+            Assert.IsNull(input.EnclosingType);
+            Assert.AreEqual(SerializationFormat.Array_PipeDelimited, property.SerializationFormat);
+            Assert.IsFalse(property.Body.HasSetter);
+        }
+
+        [TestCase("internal", true, 0)]
+        [TestCase("internal", false, 0)]
+        [TestCase("internal", false, 1)]
+        [TestCase("internal", false, 2)]
+        [TestCase("public", true, 0)]
+        [TestCase("public", false, 0)]
+        public void SelectedMetadataDoesNotExposeNonPublicTypes(string access, bool isEnum, int collectionDepth)
+        {
+            MockHelpers.LoadMockGenerator();
+            InputType type = isEnum
+                ? InputFactory.StringEnum("MonitorMode", [("Ready", "ready")], access: access, isExtensible: true)
+                : InputFactory.Model("Details", access: access);
+            for (int i = 0; i < collectionDepth; i++)
+            {
+                type = InputFactory.Array(type);
+            }
+            var input = InputFactory.Property("details", type);
+            var metadata = new LroStatusMetadataProvider("StartOperationMetadata", "Samples",
+                [new InputLroStatusMetadata(input, [input])], TypeSignatureModifiers.Public);
+
+            var property = metadata.Properties.Single();
+            Assert.AreEqual((access == "internal" ? MethodSignatureModifiers.Internal : MethodSignatureModifiers.Public) |
+                MethodSignatureModifiers.Virtual, property.Modifiers);
+            Assert.IsFalse(property.Body.HasSetter);
         }
 
         [TestCase(true)]

@@ -186,12 +186,16 @@ namespace Azure.Generator.Providers
 
         private PropertyProvider BuildProperty(InputLroStatusMetadata metadata)
         {
-            var property = new PropertyProvider(metadata.Property, this, isOutputOnly: true);
+            var property = new SelectedMetadataPropertyProvider(metadata.Property, this);
+            var access = metadata.Property.Access == "internal" || !property.Type.GetNestedElementType().IsPublic
+                ? MethodSignatureModifiers.Internal
+                : MethodSignatureModifiers.Public;
+            property.Update(modifiers: access | MethodSignatureModifiers.Virtual, body: new AutoPropertyBody(false));
             var type = property.Type.OutputType.WithNullable(true);
             if (_monitorModel is not null && ResolvePropertyPath(_monitorModel, metadata.PropertySegments) is { } path &&
                 ReadFromMonitorModel(path, type, metadata) is { } typedBody)
             {
-                property.Update(type: type, modifiers: property.Modifiers | MethodSignatureModifiers.Virtual, body: typedBody);
+                property.Update(type: type, body: typedBody);
                 return property;
             }
             var statements = new List<MethodBodyStatement>
@@ -212,8 +216,7 @@ namespace Azure.Generator.Providers
                     ],
                     null)
             };
-            property.Update(type: type, modifiers: property.Modifiers | MethodSignatureModifiers.Virtual,
-                body: new MethodPropertyBody(statements));
+            property.Update(type: type, body: new MethodPropertyBody(statements));
             return property;
         }
 
@@ -253,6 +256,18 @@ namespace Azure.Generator.Providers
                     element.Property("ValueKind").Equal(FrameworkEnumValue(JsonValueKind.Null)),
                     DefaultOf(type), value)
                 : value;
+        }
+
+        // The shared PropertyProvider derives setters from the selected property's owning model, which is absent
+        // for hidden monitors. Selected metadata is always read-only, so skip the owner-based setter analysis.
+        private sealed class SelectedMetadataPropertyProvider : PropertyProvider
+        {
+            public SelectedMetadataPropertyProvider(InputProperty inputProperty, TypeProvider enclosingType)
+                : base(inputProperty, enclosingType)
+            {
+            }
+
+            protected override bool PropertyHasSetter(CSharpType type, InputProperty inputProperty) => false;
         }
     }
 }
