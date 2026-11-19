@@ -166,6 +166,25 @@ stimuli:
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
 
+  - name: allow-new-parent-to-child-reference-between-test-projects
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. The existing test project `Azure.Widgets.Tests` in
+      `sdk/widgets/Azure.Widgets/tests/` adds a `ProjectReference` to the existing test helper
+      project `Azure.Widgets.Tests.Common` in the same folder so it can reuse shared fixtures.
+      Neither project is packable, and neither ships. There are no other changes. If there is
+      no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
   - name: same-type-different-concept-parameters-are-not-flagged
     prompt: >-
       First invoke the code-review skill. Then use it to review this synthetic new
