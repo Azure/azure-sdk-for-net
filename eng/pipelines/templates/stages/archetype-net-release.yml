@@ -62,9 +62,14 @@ stages:
           variables:
             - template: /eng/pipelines/templates/variables/globals.yml
             - template: /eng/pipelines/templates/variables/image.yml
-            - ${{ if and(eq(parameters.ServiceDirectory, 'template'), eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+            # Post-merge CI (IndividualCI) is an auto-release, so the AutoReleasePrepare stage exists. Pass its SDK PR on
+            # so completion updates the release plan linked to it. Manual releases have no SDK PR.
+            - ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
               - name: AutoReleaseSdkPullRequestUrl
                 value: $[ stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs['resolve.AutoReleaseSdkPullRequestUrl'] ]
+            - ${{ else }}:
+              - name: AutoReleaseSdkPullRequestUrl
+                value: ''
           displayName: 'Release: ${{artifact.name}}'
           ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
             # Auto-release path: only release when the merged PR is labeled and changed this package.
@@ -158,15 +163,45 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        - task: 1ES.PublishNuget@1
-                          displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }}
-                          inputs:
-                            packageParentPath: '$(Pipeline.Workspace)'
-                            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                            ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
-                              nuGetFeedType: external
-                              publishFeedCredentials: Nuget.org
-                            ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
+                        - ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
+                          - pwsh: |
+                              $source = '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}'
+                              $destination = '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
+                              Remove-Item -Recurse -Force $destination -ErrorAction SilentlyContinue
+                              New-Item -ItemType Directory -Path $destination | Out-Null
+                              $packages = @(Get-ChildItem -Path $source -Filter '*.nupkg' -File | Where-Object Name -NotLike '*.symbols.nupkg')
+                              if ($packages.Count -eq 0) {
+                                throw "No product NuGet packages found in $source"
+                              }
+                              $packages | Copy-Item -Destination $destination
+                            displayName: Stage NuGet packages for ESRP
+
+                          - task: EsrpRelease@14
+                            displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }} via ESRP
+                            inputs:
+                              ConnectedServiceName: 'Azure SDK PME Managed Identity'
+                              ClientId: '5f81938c-2544-4f1f-9251-dd9de5b8a81b'
+                              DomainTenantId: '975f013f-7f24-47e8-a7d3-abc4752bf346'
+                              UseManagedIdentity: true
+                              KeyVaultName: 'kv-azuresdk-codesign'
+                              SignCertName: 'azure-sdk-esrp-release-certificate'
+                              Intent: 'PackageDistribution'
+                              ContentType: 'NuGet'
+                              OrganizationName: 'azure-sdk'
+                              ContentSource: 'Folder'
+                              FolderLocation: '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
+                              WaitForReleaseCompletion: true
+                              Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                              Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                              ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
+                              MainPublisher: 'ESRPRELPACMAN'
+
+                        - ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
+                          - task: 1ES.PublishNuget@1
+                            displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }}
+                            inputs:
+                              packageParentPath: '$(Pipeline.Workspace)'
+                              packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                               publishVstsFeed: ${{ parameters.PublicFeed }}
 
                         - task: 1ES.PublishNuget@1
@@ -231,15 +266,22 @@ stages:
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
+                    # Log whether this is an auto-release or a manual release, and the auto-release SDK PR.
+                    - pwsh: |
+                        $type = if ($env:BUILD_REASON -eq 'IndividualCI') { 'auto-release' } else { 'manual release' }
+                        $pr = if ($env:AUTO_RELEASE_SDK_PR) { $env:AUTO_RELEASE_SDK_PR } else { 'none' }
+                        Write-Host "Release type: $type"
+                        Write-Host "Auto-release SDK PR: $pr"
+                      displayName: Show release type and auto-release SDK PR
+                      env:
+                        BUILD_REASON: $(Build.Reason)
+                        AUTO_RELEASE_SDK_PR: $(AutoReleaseSdkPullRequestUrl)
                     - template: /eng/common/pipelines/templates/steps/mark-release-completion.yml
                       parameters:
                         ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
                         PackageArtifactName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
-                        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
-                          ReleasePlanId: ${{ parameters.ReleasePlanId }}
-                          ${{ if and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-                            SdkPullRequest: $(AutoReleaseSdkPullRequestUrl)
+                        ReleasePlanId: ${{ parameters.ReleasePlanId }}
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS

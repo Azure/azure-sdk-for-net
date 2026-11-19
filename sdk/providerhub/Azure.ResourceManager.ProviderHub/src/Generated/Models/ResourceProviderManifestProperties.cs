@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _enableTenantLinkedNotification;
+        private protected bool _enableTenantLinkedNotificationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifestProperties"/>. </summary>
         public ResourceProviderManifestProperties()
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="notifications"> The notifications. </param>
         /// <param name="linkedNotificationRules"> The linked notification rules. </param>
         /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
-        /// <param name="dstsConfiguration"> The dsts configuration. </param>
         /// <param name="notificationOptions"> Notification options. </param>
         /// <param name="resourceHydrationAccounts"> resource hydration accounts. </param>
         /// <param name="notificationSettings"> Notification settings. </param>
@@ -66,8 +67,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="legacyNamespace"> Legacy namespace. </param>
         /// <param name="legacyRegistrations"> Legacy registrations. </param>
         /// <param name="customManifestVersion"> Custom manifest version. </param>
+        /// <param name="dstsConfiguration"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ProviderDstsConfiguration dstsConfiguration, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, ProviderDstsConfiguration dstsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -85,11 +87,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Metadata = metadata;
             TemplateDeploymentOptions = templateDeploymentOptions;
             GlobalNotificationEndpoints = globalNotificationEndpoints;
-            EnableTenantLinkedNotification = enableTenantLinkedNotification;
+            _enableTenantLinkedNotification = enableTenantLinkedNotification;
             Notifications = notifications;
             LinkedNotificationRules = linkedNotificationRules;
             ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
-            DstsConfiguration = dstsConfiguration;
             NotificationOptions = notificationOptions;
             ResourceHydrationAccounts = resourceHydrationAccounts;
             NotificationSettings = notificationSettings;
@@ -100,6 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LegacyNamespace = legacyNamespace;
             LegacyRegistrations = legacyRegistrations;
             CustomManifestVersion = customManifestVersion;
+            DstsConfiguration = dstsConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -177,7 +179,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
 
         /// <summary> The enable tenant linked notification. </summary>
-        public bool? EnableTenantLinkedNotification { get; set; }
+        public bool? EnableTenantLinkedNotification
+        {
+            get
+            {
+                return _enableTenantLinkedNotification;
+            }
+            set
+            {
+                _enableTenantLinkedNotification = value;
+                _enableTenantLinkedNotificationIsDefined = true;
+            }
+        }
 
         /// <summary> The notifications. </summary>
         public IList<ProviderNotification> Notifications { get; }
@@ -187,9 +200,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The resource provider authorization rules. </summary>
         internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; set; }
-
-        /// <summary> The dsts configuration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; set; }
 
         /// <summary> Notification options. </summary>
         public ProviderNotificationOption? NotificationOptions { get; set; }

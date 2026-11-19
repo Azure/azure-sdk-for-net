@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DynatraceSingleSignOnResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DynatraceSingleSignOnResourceListResult(value ?? new ChangeTrackingList<DynatraceSingleSignOnData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

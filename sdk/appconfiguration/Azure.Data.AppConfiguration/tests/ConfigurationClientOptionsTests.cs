@@ -70,6 +70,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // staging is an explicitly recognized host
                 yield return new TestCaseData("https://contoso.appconfig-staging.azure.com", "https://appconfig-staging.azure.com/.default");
                 yield return new TestCaseData("https://contoso.appconfig-staging.azure.com/", "https://appconfig-staging.azure.com/.default");
+                yield return new TestCaseData("https://contoso.s1.westus2.appconfig-stage.azure.com", "https://appconfig-staging.azure.com/.default");
                 // derived audience for hosts that do not match a well-known cloud, anchored on the exact appconfig/azconfig marker
                 yield return new TestCaseData("https://contoso.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
                 // derived audience is anchored on the appconfig/azconfig marker, so any leading labels (such as the store name) are ignored

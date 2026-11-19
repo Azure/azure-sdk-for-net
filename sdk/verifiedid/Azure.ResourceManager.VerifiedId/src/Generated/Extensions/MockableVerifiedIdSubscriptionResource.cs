@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.VerifiedId.Mocking
 
         private ClientDiagnostics AuthoritiesClientDiagnostics => _authoritiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VerifiedId.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Authorities AuthoritiesRestClient => _authoritiesRestClient ??= new Authorities(AuthoritiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-01-26-preview");
+        private Authorities AuthoritiesRestClient => _authoritiesRestClient ??= new Authorities(AuthoritiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.VerifiedId/authorities", out string apiVersion) ? apiVersion : "2024-01-26-preview");
 
         /// <summary>
         /// List Authority resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.VerifiedId.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new AuthoritiesGetBySubscriptionAsyncCollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
+            return new AsyncPageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new VerifiedIdAuthorityDataAsync0CollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.VerifiedId.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new AuthoritiesGetBySubscriptionCollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
+            return new PageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new VerifiedIdAuthorityData0CollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
         }
     }
 }

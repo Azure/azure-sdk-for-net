@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             AccessReviewDecisionInsightType @type = default;
+            bool insightCreatedOnIsDefined = false;
             DateTimeOffset? insightCreatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("insightCreatedDateTime"u8))
                 {
+                    insightCreatedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         insightCreatedOn = null;
@@ -137,7 +139,10 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownAccessReviewDecisionInsightProperties(@type, insightCreatedOn, additionalBinaryDataProperties);
+            return new UnknownAccessReviewDecisionInsightProperties(@type, insightCreatedOn, additionalBinaryDataProperties)
+            {
+                _insightCreatedOnIsDefined = insightCreatedOnIsDefined
+            };
         }
     }
 }

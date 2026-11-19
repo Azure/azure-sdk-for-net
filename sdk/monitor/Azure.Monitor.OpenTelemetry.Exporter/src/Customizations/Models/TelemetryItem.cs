@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private static volatile string? s_cloudRoleInstanceOverride;
         private static volatile string? s_componentVersionOverride;
 
-        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
+        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float fallbackSampleRate) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                     if (locationIp != null)
                     {
-                        Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
+                        Tags[ContextTagKeys.AiLocationIP.ToString()] = locationIp;
                     }
                 }
             }
@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                 if (microsoftClientIp != null)
                 {
-                    Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp;
+                    Tags[ContextTagKeys.AiLocationIP.ToString()] = microsoftClientIp;
                 }
             }
 
@@ -95,7 +95,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
 
-            if (sampleRate != 100f)
+            // The sampler records the rate each span was actually sampled at, which differs from the
+            // configured ratio under rate-limited sampling and for children of a sampled parent.
+            var sampleRate = SampleRateHelper.TryGetSampleRate(activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftSampleRate], out var spanSampleRate)
+                ? spanSampleRate
+                : fallbackSampleRate;
+
+            if (SampleRateHelper.IsReportable(sampleRate))
             {
                 SampleRate = sampleRate;
             }
@@ -161,7 +167,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 if (logContext.MicrosoftClientIp != null)
                 {
-                    Tags[ContextTagKeys.AiLocationIp.ToString()] = logContext.MicrosoftClientIp;
+                    Tags[ContextTagKeys.AiLocationIP.ToString()] = logContext.MicrosoftClientIp;
                 }
 
                 if (logContext.EndUserPseudoId != null)
@@ -223,6 +229,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             InstrumentationKey = instrumentationKey;
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
+
+            if (logContext.SampleRate is float sampleRate && SampleRateHelper.IsReportable(sampleRate))
+            {
+                SampleRate = sampleRate;
+            }
         }
 
         public TelemetryItem(DateTime time, AzureMonitorResource? resource, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))

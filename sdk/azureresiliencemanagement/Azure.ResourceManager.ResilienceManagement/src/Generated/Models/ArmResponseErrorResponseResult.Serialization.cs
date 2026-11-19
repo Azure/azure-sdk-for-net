@@ -131,13 +131,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ErrorResponse body = default;
+            ErrorResult body = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("body"u8))
                 {
-                    body = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    body = ErrorResult.DeserializeErrorResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

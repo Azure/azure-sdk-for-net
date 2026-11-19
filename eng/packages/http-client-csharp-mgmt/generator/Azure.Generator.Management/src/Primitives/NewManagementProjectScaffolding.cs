@@ -95,18 +95,36 @@ namespace Azure.Generator.Management.Primitives
             return template.Replace(PackageNamePlaceholder, packageName, StringComparison.Ordinal);
         }
 
+        /// <inheritdoc/>
+        protected override string GetTestProjectFileContent()
+            => GetTestProjectContent(ManagementClientGenerator.Instance.Configuration.PackageName);
+
         /// <summary>
-        /// Gets the content for the test project .csproj file.
+        /// Gets the content for the test project .csproj file. Management test dependencies
+        /// are supplied by the repository targets; other projects need explicit references.
         /// </summary>
         protected virtual string GetTestProjectContent(string packageName)
         {
             return $"""
                 <Project Sdk="Microsoft.NET.Sdk">
+                  <PropertyGroup>
+                    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+                    <IsTestProject>true</IsTestProject>
+                  </PropertyGroup>
+
                   <ItemGroup>
+                    <ProjectReference Include="$(AzureCoreTestFramework)" Condition="'$(IsMgmtLibrary)' != 'true'" />
                     <ProjectReference Include="..\src\{packageName}.csproj" />
                   </ItemGroup>
+
+                  <ItemGroup Condition="'$(IsMgmtLibrary)' != 'true' and '$(IsStorageTest)' != 'true'">
+                    <PackageReference Include="NUnit" />
+                    <PackageReference Include="NUnit3TestAdapter" />
+                    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+                    <PackageReference Include="Moq" />
+                  </ItemGroup>
                 </Project>
-                """;
+                """ + "\n";
         }
 
         private static string ReadEmbeddedResource(string resourceName)

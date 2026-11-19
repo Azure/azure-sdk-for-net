@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Internal;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
@@ -15,8 +16,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Core.Tasks;
 
@@ -32,12 +35,15 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 public static class ResilientTaskServiceCollectionExtensions
 {
     /// <summary>
-    /// Sets up the resilient-tasks services, optionally supplying the hosted-storage credential.
+    /// Registers the lazy resilient-task services, optionally supplying the hosted-storage credential.
     /// Calling <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> directly also performs this
-    /// setup on first use, so this method only needs to be called explicitly to supply a hosted
-    /// credential. The credential may be supplied before or after task registrations while composing
-    /// the service collection. A <see cref="TokenCredential"/> registered directly in the service
-    /// collection is also supported; when both forms are used they must resolve to the same instance.
+    /// setup on first use, but neither registration path enables execution or recovery. Call
+    /// <see cref="ResilientTaskEnablementExtensions.SetResilientTasksEnabled(IServiceCollection, bool)"/>
+    /// before host startup to opt in. This method only needs to be called explicitly to supply a
+    /// hosted credential. The credential may be supplied before or after task registrations while
+    /// composing the service collection. A <see cref="TokenCredential"/> registered directly in the
+    /// service collection is also supported; when both forms are used they must resolve to the same
+    /// instance.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
@@ -118,8 +124,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// <see cref="TaskDefinition{TInput, TOutput}"/> handle bound to it. The handle is also
     /// registered as a keyed singleton service — keyed by <paramref name="name"/> — so it can be
     /// resolved later with <see cref="ResilientTaskServiceProviderExtensions.GetResilientTask{TInput, TOutput}(IServiceProvider, string)"/>.
-    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method sets up
-    /// the resilient-tasks services if they are not already present.
+    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method registers
+    /// the lazy resilient-task services if they are not already present; it does not enable them.
     /// </summary>
     /// <typeparam name="TInput">The task input type.</typeparam>
     /// <typeparam name="TOutput">The task output type.</typeparam>
@@ -256,8 +262,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// returns a typed <see cref="TaskDefinition{TInput, TOutput}"/> handle bound to it. The handle
     /// is also registered as a keyed singleton service — keyed by <paramref name="name"/> — so it
     /// can be resolved later with <see cref="ResilientTaskServiceProviderExtensions.GetResilientTask{TInput, TOutput}(IServiceProvider, string)"/>.
-    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method sets up
-    /// the resilient-tasks services if they are not already present.
+    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method registers
+    /// the lazy resilient-task services if they are not already present; it does not enable them.
     /// </summary>
     /// <typeparam name="TInput">The task input type.</typeparam>
     /// <typeparam name="TOutput">The task output type.</typeparam>
@@ -432,11 +438,7 @@ public static class ResilientTaskServiceCollectionExtensions
     {
         services.AddKeyedSingleton<TaskDefinition<TInput, TOutput>>(
             name,
-            (serviceProvider, _) =>
-            {
-                _ = serviceProvider.GetRequiredService<TaskEngine>();
-                return definition;
-            });
+            (_, _) => definition);
     }
 
     /// <summary>
@@ -493,7 +495,7 @@ public static class ResilientTaskServiceCollectionExtensions
         TokenCredential? credential,
         Uri? endpoint = null)
     {
-        // Resilient-tasks services are set up once per process. Everything below uses
+        // Resilient-tasks services are set up once per service collection. Everything below uses
         // TryAddSingleton (first-wins), but AddHostedService is NOT idempotent — a second call
         // would register a duplicate TaskDurabilityService, running the recovery scan twice. Guard
         // the whole method: on a repeat call, register nothing further and hand back a registrar over
@@ -525,82 +527,34 @@ public static class ResilientTaskServiceCollectionExtensions
             return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
         }
 
+        ResilientTaskEnablementState enablement =
+            ResilientTaskEnablementExtensions.GetOrCreateState(services);
+        services.AddOptions<ResilientTaskOptions>();
+
         var registry = new TaskRegistry();
         services.TryAddSingleton(registry);
 
-        var engineAccessor = new TaskEngineAccessor();
+        var engineAccessor = new TaskEngineAccessor(enablement);
         services.TryAddSingleton(engineAccessor);
 
         var environment = new TaskHostEnvironment(credential, endpoint);
         services.TryAddSingleton(environment);
         services.AddAgentEventStreams();
 
-        // The store is environment-selected: filesystem-backed locally, hosted in Foundry.
-        services.TryAddSingleton<ITaskStore>(sp =>
-        {
-            return TaskStoreSelector.Create(hostedFactory: () =>
+        ServiceDescriptor defaultStoreDescriptor =
+            ServiceDescriptor.Singleton<ITaskStore>(CreateDefaultTaskStore);
+        services.TryAdd(defaultStoreDescriptor);
+        services.TryAddSingleton<TaskStoreFactory>(sp =>
+            new TaskStoreFactory(() =>
             {
-                var env = sp.GetRequiredService<TaskHostEnvironment>();
-                TokenCredential? cred = env.Endpoint is not null
-                    ? env.Credential
-                    : sp.GetService<TokenCredential>() ?? env.Credential;
-                if (cred is null)
-                {
-                    throw new InvalidOperationException(
-                        "A TokenCredential is required for hosted task storage. Call " +
-                        "AddResilientTasks(credential) or register TokenCredential while composing " +
-                        "services when running in a hosted environment.");
-                }
-
-                if (env.Endpoint is null)
-                {
-                    // Without explicit endpoint-bound settings, publish the provider's effective
-                    // credential onto the shared holder and reject any explicit/DI mismatch.
-                    env.AttachConfiguration(cred, endpoint: null);
-                }
-
-                Uri? configuredEndpoint = env.Endpoint;
-                string? environmentEndpoint = FoundryEnvironment.ProjectEndpoint;
-                if (configuredEndpoint is null && string.IsNullOrWhiteSpace(environmentEndpoint))
-                {
-                    throw new InvalidOperationException(
-                        "FoundryEnvironment.ProjectEndpoint (FOUNDRY_PROJECT_ENDPOINT) is required for hosted task storage.");
-                }
-
-                if (configuredEndpoint is null
-                    && !Uri.TryCreate(environmentEndpoint, UriKind.Absolute, out configuredEndpoint))
-                {
-                    throw new InvalidOperationException(
-                        "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
-                }
-
-                // Base URL is `{FOUNDRY_PROJECT_ENDPOINT}/tasks` — the project endpoint already
-                // targets the storage surface, so no extra `/storage` segment is added (matches the
-                // Foundry task-storage client that runs against the live backend).
-                var storageBaseUri = new Uri(
-                    configuredEndpoint.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/");
-
-                var options = new HostedTaskStoreClientOptions();
-
-                var registry = sp.GetService<ServerVersionRegistry>();
-                if (registry is not null)
-                {
-                    options.AddPolicy(new ServerVersionPolicy(registry), HttpPipelinePosition.PerCall);
-                }
-
-                var loggerFactory = sp.GetService<ILoggerFactory>();
-                var logger = loggerFactory?.CreateLogger<HostedTaskStoreLoggingPolicy>()
-                    ?? (ILogger)NullLogger.Instance;
-                options.AddPolicy(new HostedTaskStoreLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
-
-                const string FoundryStorageScope = "https://ai.azure.com/.default";
-                var pipeline = HttpPipelineBuilder.Build(
-                    options,
-                    new BearerTokenAuthenticationPolicy(cred, FoundryStorageScope));
-
-                return new HostedTaskStore(pipeline, storageBaseUri);
-            });
-        });
+                bool hasInjectedStore = services.Any(
+                    descriptor =>
+                        descriptor.ServiceType == typeof(ITaskStore)
+                        && !ReferenceEquals(descriptor, defaultStoreDescriptor));
+                return hasInjectedStore
+                    ? (sp.GetRequiredService<ITaskStore>(), false)
+                    : (CreateDefaultTaskStore(sp), true);
+            }));
 
         // Resolve the canonical registry actually held by the container: TryAddSingleton is a
         // no-op if one was already registered, so the registrar must wrap that instance (not the
@@ -610,6 +564,11 @@ public static class ResilientTaskServiceCollectionExtensions
 
         services.TryAddSingleton<TaskEngine>(sp =>
         {
+            if (MemorySnapshotSettings.ReadEnabled())
+            {
+                return sp.GetRequiredService<SnapshotTaskRuntime>().RequireEngine();
+            }
+
             ITaskStore store = sp.GetRequiredService<ITaskStore>();
             TaskRegistry reg = sp.GetRequiredService<TaskRegistry>();
             ILoggerFactory? loggerFactory = sp.GetService<ILoggerFactory>();
@@ -624,7 +583,8 @@ public static class ResilientTaskServiceCollectionExtensions
                 sessionId,
                 sp.GetRequiredService<AgentEventStreamRegistry>(),
                 logger,
-                sp.GetRequiredService<IServiceScopeFactory>());
+                sp.GetRequiredService<IServiceScopeFactory>(),
+                sp.GetRequiredService<ResilientTaskEnablementState>());
 
             // Late-bind the engine so a TaskDefinition (created at registration time, before the
             // container existed) can resolve it at invocation time. The engine is always resolved
@@ -649,12 +609,93 @@ public static class ResilientTaskServiceCollectionExtensions
                 sp.GetRequiredService<TaskEngine>(),
                 scanInterval: null,
                 shutdownGrace: null,
-                logger);
+                logger,
+                sp.GetRequiredService<ResilientTaskEnablementState>());
         });
-        services.AddHostedService(sp => sp.GetRequiredService<TaskDurabilityService>());
+        services.TryAddSingleton<DisabledTaskDurabilityService>(sp =>
+        {
+            ILoggerFactory? loggerFactory = sp.GetService<ILoggerFactory>();
+            ILogger logger = loggerFactory?.CreateLogger(TaskTelemetry.Category)
+                ?? NullLogger.Instance;
+            return new DisabledTaskDurabilityService(logger);
+        });
+        services.TryAddSingleton<SnapshotTaskRuntime>();
+        services.AddSingleton<ISnapshotLifecycleParticipant>(
+            sp => sp.GetRequiredService<SnapshotTaskRuntime>());
+        services.AddSingleton<IHostedService>(sp =>
+        {
+            bool enabled = sp.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled;
+            sp.GetRequiredService<ResilientTaskEnablementState>().SetConfigured(enabled);
+            if (!enabled)
+            {
+                return sp.GetRequiredService<DisabledTaskDurabilityService>();
+            }
+
+            return MemorySnapshotSettings.ReadEnabled()
+                ? sp.GetRequiredService<SnapshotTaskRuntime>()
+                : sp.GetRequiredService<TaskDurabilityService>();
+        });
 
         return new DefaultResilientTaskBuilder(canonical, canonicalAccessor);
     }
+
+    private static ITaskStore CreateDefaultTaskStore(IServiceProvider sp)
+        => TaskStoreSelector.Create(hostedFactory: () =>
+        {
+            var env = sp.GetRequiredService<TaskHostEnvironment>();
+            TokenCredential? cred = env.Endpoint is not null
+                ? env.Credential
+                : sp.GetService<TokenCredential>() ?? env.Credential;
+            if (cred is null)
+            {
+                throw new InvalidOperationException(
+                    "A TokenCredential is required for hosted task storage. Call " +
+                    "AddResilientTasks(credential) or register TokenCredential while composing " +
+                    "services when running in a hosted environment.");
+            }
+
+            if (env.Endpoint is null)
+            {
+                env.AttachConfiguration(cred, endpoint: null);
+            }
+
+            Uri? configuredEndpoint = env.Endpoint;
+            string? environmentEndpoint = FoundryEnvironment.ProjectEndpoint;
+            if (configuredEndpoint is null && string.IsNullOrWhiteSpace(environmentEndpoint))
+            {
+                throw new InvalidOperationException(
+                    "FoundryEnvironment.ProjectEndpoint (FOUNDRY_PROJECT_ENDPOINT) is required for hosted task storage.");
+            }
+
+            if (configuredEndpoint is null
+                && !Uri.TryCreate(environmentEndpoint, UriKind.Absolute, out configuredEndpoint))
+            {
+                throw new InvalidOperationException(
+                    "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
+            }
+
+            var storageBaseUri = new Uri(
+                configuredEndpoint.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/");
+            var options = new HostedTaskStoreClientOptions();
+            var registry = sp.GetService<ServerVersionRegistry>();
+            if (registry is not null)
+            {
+                options.AddPolicy(new ServerVersionPolicy(registry), HttpPipelinePosition.PerCall);
+            }
+
+            var loggerFactory = sp.GetService<ILoggerFactory>();
+            var logger = loggerFactory?.CreateLogger<HostedTaskStoreLoggingPolicy>()
+                ?? (ILogger)NullLogger.Instance;
+            options.AddPolicy(
+                new HostedTaskStoreLoggingPolicy(logger),
+                HttpPipelinePosition.PerRetry);
+
+            const string FoundryStorageScope = "https://ai.azure.com/.default";
+            var pipeline = HttpPipelineBuilder.Build(
+                options,
+                new BearerTokenAuthenticationPolicy(cred, FoundryStorageScope));
+            return new HostedTaskStore(pipeline, storageBaseUri);
+        });
 
     private static (string AgentName, string SessionId) ResolveScope()
     {

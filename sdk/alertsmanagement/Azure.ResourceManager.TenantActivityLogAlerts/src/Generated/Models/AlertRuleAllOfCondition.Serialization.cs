@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertRuleAllOfCondition(allOf, additionalBinaryDataProperties);
+            return new AlertRuleAllOfCondition(allOf ?? new ChangeTrackingList<TenantActivityLogAlertAnyOfOrLeafCondition>(), additionalBinaryDataProperties);
         }
     }
 }

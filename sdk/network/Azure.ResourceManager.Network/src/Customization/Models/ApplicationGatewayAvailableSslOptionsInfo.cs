@@ -4,36 +4,47 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Keep the released model in Models: only the replacement *Data resource type is generated.
     /// <summary> Compatibility type for available SSL options info. </summary>
-    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData, IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>, IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This model is deprecated and it will be removed in a future version. Please use ApplicationGatewayAvailableSslOptionsInfoData instead.")]
+    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         public ApplicationGatewayAvailableSslOptionsInfo()
         {
-            PredefinedPolicies = new List<WritableSubResource>();
-            AvailableCipherSuites = new List<ApplicationGatewaySslCipherSuite>();
-            AvailableProtocols = new List<ApplicationGatewaySslProtocol>();
+            PredefinedPolicies = new ChangeTrackingList<WritableSubResource>();
+            AvailableCipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
+            AvailableProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
         }
 
-        internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, string type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols)
-            : base(id, name, type, location, tags, default)
+        // Adapt the generated resource result to the released model using the base's native metadata storage.
+        internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols)
+            : this(id, name, resourceType, location, tags ?? new ChangeTrackingDictionary<string, string>(), default,
+                new List<WritableSubResource>(predefinedPolicies ?? Array.Empty<WritableSubResource>()), defaultPolicy,
+                new List<ApplicationGatewaySslCipherSuite>(availableCipherSuites ?? Array.Empty<ApplicationGatewaySslCipherSuite>()),
+                new List<ApplicationGatewaySslProtocol>(availableProtocols ?? Array.Empty<ApplicationGatewaySslProtocol>()))
         {
-            PredefinedPolicies = new List<WritableSubResource>(predefinedPolicies ?? Array.Empty<WritableSubResource>());
-            AvailableCipherSuites = new List<ApplicationGatewaySslCipherSuite>(availableCipherSuites ?? Array.Empty<ApplicationGatewaySslCipherSuite>());
-            AvailableProtocols = new List<ApplicationGatewaySslProtocol>(availableProtocols ?? Array.Empty<ApplicationGatewaySslProtocol>());
+        }
+
+        internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IList<ApplicationGatewaySslCipherSuite> availableCipherSuites, IList<ApplicationGatewaySslProtocol> availableProtocols)
+            : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
+        {
+            PredefinedPolicies = predefinedPolicies;
+            AvailableCipherSuites = availableCipherSuites;
+            AvailableProtocols = availableProtocols;
             DefaultPolicy = defaultPolicy;
         }
 
-        internal static ApplicationGatewayAvailableSslOptionsInfo FromData(global::Azure.ResourceManager.Network.ApplicationGatewayAvailableSslOptionsInfoData data, string subscriptionId = null)
+        // Retain the legacy response shape and policy identifiers while preferring the service's typed metadata.
+        internal static ApplicationGatewayAvailableSslOptionsInfo FromData(ApplicationGatewayAvailableSslOptionsInfoData data, string subscriptionId = null)
         {
             if (data is null)
             {
@@ -48,12 +59,9 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             string name = data.Name ?? "default";
-            string type = data.Type ?? "Microsoft.Network/applicationGatewayAvailableSslOptions";
-            return new ApplicationGatewayAvailableSslOptionsInfo(data.Id, name, type, data.Location, data.Tags, predefinedPolicies, data.DefaultPolicy, data.AvailableCipherSuites, data.AvailableProtocols);
+            ResourceType resourceType = data.ResourceType ?? new ResourceType("Microsoft.Network/applicationGatewayAvailableSslOptions");
+            return new ApplicationGatewayAvailableSslOptionsInfo(data.Id, name, resourceType, data.Location, data.Tags, predefinedPolicies, data.DefaultPolicy, data.AvailableCipherSuites, data.AvailableProtocols);
         }
-
-        /// <summary> The resource type. </summary>
-        public new ResourceType ResourceType => Type;
 
         private static string GetNameFromId(ResourceIdentifier id)
         {
@@ -67,29 +75,24 @@ namespace Azure.ResourceManager.Network.Models
             return slashIndex >= 0 ? value.Substring(slashIndex + 1) : value;
         }
 
+        // This legacy model has no generated partial; its adapter converts native policy IDs to released resource references.
         /// <summary> Predefined policies. </summary>
         [WirePath("properties.predefinedPolicies")]
         public IList<WritableSubResource> PredefinedPolicies { get; }
 
+        // The generated DefaultPolicy belongs to the replacement *Data model, not this retained legacy contract.
         /// <summary> Default policy. </summary>
         [WirePath("properties.defaultPolicy")]
         public ApplicationGatewaySslPolicyName? DefaultPolicy { get; set; }
 
+        // Keep the legacy factory/adapter's cipher suite storage; only the replacement *Data model is generated.
         /// <summary> Available cipher suites. </summary>
         [WirePath("properties.availableCipherSuites")]
         public IList<ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get; }
 
+        // Keep the legacy factory/adapter's protocol storage; only the replacement *Data model is generated.
         /// <summary> Available protocols. </summary>
         [WirePath("properties.availableProtocols")]
         public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; }
-
-        ApplicationGatewayAvailableSslOptionsInfo IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new ApplicationGatewayAvailableSslOptionsInfo();
-        void IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
-        ApplicationGatewayAvailableSslOptionsInfo IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => new ApplicationGatewayAvailableSslOptionsInfo();
-        string IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        BinaryData IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
-
-        /// <summary> Writes the model as JSON. </summary>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
     }
 }

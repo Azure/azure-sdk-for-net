@@ -236,7 +236,6 @@
                 "$id": "20",
                 "name": "getBlob",
                 "isExactName": false,
-                "resourceName": "BlobOperations",
                 "accessibility": "public",
                 "parameters": [
                   {

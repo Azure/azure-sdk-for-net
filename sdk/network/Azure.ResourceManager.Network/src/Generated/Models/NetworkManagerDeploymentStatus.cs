@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatus"/>. </summary>
         /// <param name="commitOn"> Commit Time. </param>
         /// <param name="region"> Region Name. </param>
-        /// <param name="deploymentStatus"> Deployment Status. </param>
+        /// <param name="deploymentState"> Deployment Status. </param>
         /// <param name="configurationIds"> List of configuration ids. </param>
         /// <param name="deploymentType"> Configuration Deployment Type. </param>
         /// <param name="errorMessage"> Error Message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, NetworkManagerDeploymentState? deploymentStatus, IReadOnlyList<string> configurationIds, NetworkConfigurationDeploymentType? deploymentType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, NetworkManagerDeploymentState? deploymentState, IReadOnlyList<string> configurationIds, NetworkConfigurationDeploymentType? deploymentType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommitOn = commitOn;
             Region = region;
-            DeploymentStatus = deploymentStatus;
+            DeploymentState = deploymentState;
             ConfigurationIds = configurationIds;
             DeploymentType = deploymentType;
             ErrorMessage = errorMessage;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Deployment Status. </summary>
         [WirePath("deploymentStatus")]
-        public NetworkManagerDeploymentState? DeploymentStatus { get; }
+        public NetworkManagerDeploymentState? DeploymentState { get; }
 
         /// <summary> List of configuration ids. </summary>
         [WirePath("configurationIds")]

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EventCategoryCollection(value, nextLink, additionalBinaryDataProperties);
+            return new EventCategoryCollection(value ?? new ChangeTrackingList<MonitorLocalizableString>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

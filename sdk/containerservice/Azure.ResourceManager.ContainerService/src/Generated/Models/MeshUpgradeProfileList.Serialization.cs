@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MeshUpgradeProfileList(value, nextLink, additionalBinaryDataProperties);
+            return new MeshUpgradeProfileList(value ?? new ChangeTrackingList<MeshUpgradeProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GitHubRepositoryData, GitHubRepositoryResource>(new GitHubReposGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GitHubRepositoryData, GitHubRepositoryResource>(new GitHubRepositoryDataAsyncCollectionResultOfT(
                 _gitHubReposRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GitHubRepositoryData, GitHubRepositoryResource>(new GitHubReposGetAllCollectionResultOfT(
+            return new PageableWrapper<GitHubRepositoryData, GitHubRepositoryResource>(new GitHubRepositoryDataCollectionResultOfT(
                 _gitHubReposRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

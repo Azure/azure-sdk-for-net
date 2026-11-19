@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GenericBackupDataSourceSettings(objectType, additionalBinaryDataProperties, resourceSelectors);
+            return new GenericBackupDataSourceSettings(objectType, additionalBinaryDataProperties, resourceSelectors ?? new ChangeTrackingList<string>());
         }
     }
 }

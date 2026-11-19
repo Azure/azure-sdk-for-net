@@ -139,14 +139,16 @@ public class AgentTelephonyTests : AgentsTestBase
         Assert.That(targets.TransferTargets, Is.Empty, "A freshly created agent must have no configured transfer targets.");
 
         TelephonyTransferTarget newTarget = new(
-            name: "sales_desk",
             description: "Transfers to the sales desk for pricing questions.",
-            destination: new PSTNTelephonyTransferDestination("+14255550123"));
+            destination: new PstnTelephonyTransferDestination("+14255550123"))
+        {
+            Name = "sales_desk",
+        };
 
         TelephonyTransferTargets replaced = await telephonyClient.ReplaceTelephonyTransferTargetsAsync(agentName, "*", [newTarget], CancellationToken.None);
         Assert.That(replaced.TransferTargets, Has.Count.EqualTo(1));
         Assert.That(replaced.TransferTargets[0].Name, Is.EqualTo("sales_desk"));
-        Assert.That(replaced.TransferTargets[0].Destination, Is.InstanceOf<PSTNTelephonyTransferDestination>());
+        Assert.That(replaced.TransferTargets[0].Destination, Is.InstanceOf<PstnTelephonyTransferDestination>());
 
         TelephonyTransferTargets confirmed = await telephonyClient.GetTelephonyTransferTargetsAsync(agentName, CancellationToken.None);
         Assert.That(confirmed.TransferTargets, Has.Count.EqualTo(1));

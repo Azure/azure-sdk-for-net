@@ -1,5 +1,6 @@
 ---
 safe-outputs:
+  report-failed-jobs: false
   report-incomplete:
     max: 1
     create-issue: false
@@ -14,7 +15,7 @@ jobs:
       output_types: ${{ steps.validate.outputs.output_types }}
     steps:
       - name: Download terminal agent output
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           pattern: "{agent,agent-output-fallback}"
           merge-multiple: true

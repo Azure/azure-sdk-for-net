@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecuritySettingListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SecuritySettingListResult(value ?? new ChangeTrackingList<HciClusterSecuritySettingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

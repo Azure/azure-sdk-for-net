@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccessConnectorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AccessConnectorListResult(value ?? new ChangeTrackingList<DatabricksAccessConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

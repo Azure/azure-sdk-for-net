@@ -208,7 +208,7 @@ Synchronous sample:
 ```C# Snippet:Sample_WaitForSession_CodeAgentReminderTool_Sync
 string prompt = "Please remind me to go to lunch after one minute.";
 DateTimeOffset responseTime;
-ProjectAgentSession session = projectClient.AgentAdministrationClient.CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session = projectClient.AgentAdministrationClient.CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
 {
     Thread.Sleep(500);
@@ -224,7 +224,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_WaitForSession_CodeAgentReminderTool_Async
 string prompt = "Please remind me to go to lunch after one minute.";
 DateTimeOffset responseTime;
-ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
 {
     await Task.Delay(500);

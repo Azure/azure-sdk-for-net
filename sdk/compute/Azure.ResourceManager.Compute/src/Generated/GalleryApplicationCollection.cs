@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(GalleryApplicationResource.ResourceType, out string galleryApplicationApiVersion);
             _galleryApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryApplicationResource.ResourceType.Namespace, Diagnostics);
-            _galleryApplicationsRestClient = new GalleryApplications(_galleryApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, galleryApplicationApiVersion ?? "2025-12-03");
+            _galleryApplicationsRestClient = new GalleryApplications(_galleryApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, galleryApplicationApiVersion ?? "2026-03-03");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationsGetByGalleryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationDataAsyncCollectionResultOfT(
                 _galleryApplicationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationsGetByGalleryCollectionResultOfT(
+            return new PageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationDataCollectionResultOfT(
                 _galleryApplicationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>

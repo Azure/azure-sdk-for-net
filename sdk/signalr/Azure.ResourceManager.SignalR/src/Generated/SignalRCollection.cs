@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SignalRCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SignalRResource.ResourceType, out string signalRApiVersion);
             _signalRResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRResource.ResourceType.Namespace, Diagnostics);
-            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRApiVersion ?? "2025-01-01-preview");
+            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SignalRService/signalR", out string signalRResourcesApiVersionOverride) ? signalRResourcesApiVersionOverride : "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetByResourceGroupAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SignalRCollection.GetAll"), data => new SignalRResource(Client, data));
+            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRDataAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SignalRCollection.GetAll"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetByResourceGroupCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SignalRCollection.GetAll"), data => new SignalRResource(Client, data));
+            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRDataCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SignalRCollection.GetAll"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>

@@ -86,7 +86,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="ResamplingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResamplingMethod?(string value) => value == null ? null : new ResamplingMethod(value);
+        public static implicit operator ResamplingMethod?(string value) => value == null ? (ResamplingMethod?)null : new ResamplingMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

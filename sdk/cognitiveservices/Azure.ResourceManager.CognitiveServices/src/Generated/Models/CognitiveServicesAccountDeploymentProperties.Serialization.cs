@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model, options);
             }
+            if (Optional.IsDefined(ContextCacheContainerId))
+            {
+                writer.WritePropertyName("contextCacheContainerId"u8);
+                writer.WriteStringValue(ContextCacheContainerId);
+            }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
@@ -155,15 +160,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("spilloverDeploymentName"u8);
                 writer.WriteStringValue(SpilloverDeploymentName);
             }
-            if (Optional.IsDefined(ServiceTier))
+            if (Optional.IsDefined(ServiceTier, _serviceTierIsDefined))
             {
-                writer.WritePropertyName("serviceTier"u8);
-                writer.WriteStringValue(ServiceTier.Value.ToString());
+                if (ServiceTier != null)
+                {
+                    writer.WritePropertyName("serviceTier"u8);
+                    writer.WriteStringValue(ServiceTier.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("serviceTier"u8);
+                }
             }
-            if (Optional.IsDefined(DeploymentState))
+            if (Optional.IsDefined(DeploymentState, _deploymentStateIsDefined))
             {
-                writer.WritePropertyName("deploymentState"u8);
-                writer.WriteStringValue(DeploymentState.Value.ToString());
+                if (DeploymentState != null)
+                {
+                    writer.WritePropertyName("deploymentState"u8);
+                    writer.WriteStringValue(DeploymentState.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("deploymentState"u8);
+                }
             }
             if (Optional.IsDefined(Routing))
             {
@@ -214,6 +233,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default;
             CognitiveServicesAccountDeploymentModel model = default;
+            string contextCacheContainerId = default;
             CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default;
             IReadOnlyDictionary<string, string> capabilities = default;
             string raiPolicyName = default;
@@ -225,7 +245,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             DeploymentCapacitySettings capacitySettings = default;
             string parentDeploymentName = default;
             string spilloverDeploymentName = default;
+            bool serviceTierIsDefined = false;
             CognitiveServicesDeploymentServiceTier? serviceTier = default;
+            bool deploymentStateIsDefined = false;
             CognitiveServicesDeploymentState? deploymentState = default;
             CognitiveServicesDeploymentRouting routing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -247,6 +269,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("contextCacheContainerId"u8))
+                {
+                    contextCacheContainerId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scaleSettings"u8))
@@ -355,6 +382,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("serviceTier"u8))
                 {
+                    serviceTierIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         serviceTier = null;
@@ -365,6 +393,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("deploymentState"u8))
                 {
+                    deploymentStateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         deploymentState = null;
@@ -390,6 +419,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
+                contextCacheContainerId,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,
@@ -404,7 +434,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serviceTier,
                 deploymentState,
                 routing,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _serviceTierIsDefined = serviceTierIsDefined,
+                _deploymentStateIsDefined = deploymentStateIsDefined
+            };
         }
     }
 }

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            ResourceIdentifier resourceId = default;
             string configurationDescription = default;
             string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("configurationDescription"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new EffectiveSecurityAdminRule(
-                id,
+                resourceId,
                 configurationDescription,
                 ruleCollectionDescription,
                 ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),

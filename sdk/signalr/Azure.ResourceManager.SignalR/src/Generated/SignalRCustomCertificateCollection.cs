@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new SignalRCustomCertificateDataAsyncCollectionResultOfT(
                 _customCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new SignalRCustomCertificateDataCollectionResultOfT(
                 _customCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

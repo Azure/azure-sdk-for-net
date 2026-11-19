@@ -96,13 +96,28 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(MitigationRules))
+            {
+                writer.WritePropertyName("mitigationRules"u8);
+                writer.WriteStartArray();
+                foreach (DdosMitigationRule item in MitigationRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIpConfiguration"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in FrontEndIPConfiguration)
+                foreach (WritableSubResource item in FrontEndIPConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +181,8 @@ namespace Azure.ResourceManager.Network.Models
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IList<DdosDetectionRule> detectionRules = default;
-            IList<NetworkSubResource> frontEndIPConfiguration = default;
+            IList<DdosMitigationRule> mitigationRules = default;
+            IList<WritableSubResource> frontEndIPConfiguration = default;
             IReadOnlyList<WritableSubResource> publicIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -203,16 +219,37 @@ namespace Azure.ResourceManager.Network.Models
                     detectionRules = array;
                     continue;
                 }
+                if (prop.NameEquals("mitigationRules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DdosMitigationRule> array = new List<DdosMitigationRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DdosMitigationRule.DeserializeDdosMitigationRule(item, options));
+                    }
+                    mitigationRules = array;
+                    continue;
+                }
                 if (prop.NameEquals("frontEndIpConfiguration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     frontEndIPConfiguration = array;
                     continue;
@@ -247,7 +284,8 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 provisioningState,
                 detectionRules ?? new ChangeTrackingList<DdosDetectionRule>(),
-                frontEndIPConfiguration ?? new ChangeTrackingList<NetworkSubResource>(),
+                mitigationRules ?? new ChangeTrackingList<DdosMitigationRule>(),
+                frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>(),
                 publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
                 additionalBinaryDataProperties);
         }

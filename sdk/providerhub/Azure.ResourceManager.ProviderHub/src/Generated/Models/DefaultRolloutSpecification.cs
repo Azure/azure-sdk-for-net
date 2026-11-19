@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerRegistration"> The provider registration. </param>
         /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
         /// <param name="autoProvisionConfig"> The auto provisioning config. </param>
+        /// <param name="manifestCheckinSpecification"> The manifest checkin specification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutSpecification(ExpeditedRolloutDefinition expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultRolloutSpecification(ExpeditedRolloutDefinition expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, ManifestCheckinSpecification manifestCheckinSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpeditedRollout = expeditedRollout;
             Canary = canary;
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
             AutoProvisionConfig = autoProvisionConfig;
+            ManifestCheckinSpecification = manifestCheckinSpecification;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -79,6 +81,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The auto provisioning config. </summary>
         public DefaultRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
+
+        /// <summary> The manifest checkin specification. </summary>
+        public ManifestCheckinSpecification ManifestCheckinSpecification { get; set; }
 
         /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
         public bool? IsExpeditedRolloutEnabled

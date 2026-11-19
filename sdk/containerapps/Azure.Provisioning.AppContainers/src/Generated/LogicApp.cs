@@ -19,7 +19,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new LogicApp. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -85,7 +85,7 @@ namespace Azure.Provisioning.AppContainers
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

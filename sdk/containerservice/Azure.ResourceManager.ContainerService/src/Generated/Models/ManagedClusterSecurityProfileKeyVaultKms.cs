@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileKeyVaultKms"/>. </summary>
         /// <param name="isEnabled"> Whether to enable Azure Key Vault key management service. The default is false. </param>
-        /// <param name="keyId"> Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty. </param>
+        /// <param name="keyId"> The identifier of the Azure Key Vault key. For more information, see [Azure Key Vault key identifiers](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name). This property is required when Azure Key Vault key management service is enabled and must be omitted when the service is disabled. Starting with API versions 2026-07-01 and 2026-07-02-preview, a versioned key identifier uses the legacy KMS experience, while an unversioned key identifier uses the new KMS experience. For more information, see [KMS data encryption concepts](https://learn.microsoft.com/en-us/azure/aks/kms-data-encryption-concepts). </param>
         /// <param name="keyVaultNetworkAccess"> Network access of the key vault. Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </param>
         /// <param name="keyVaultResourceId"> Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this field is required and must be a valid resource ID. When keyVaultNetworkAccess is `Public`, leave the field empty. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
 
-        /// <summary> Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty. </summary>
+        /// <summary> The identifier of the Azure Key Vault key. For more information, see [Azure Key Vault key identifiers](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name). This property is required when Azure Key Vault key management service is enabled and must be omitted when the service is disabled. Starting with API versions 2026-07-01 and 2026-07-02-preview, a versioned key identifier uses the legacy KMS experience, while an unversioned key identifier uses the new KMS experience. For more information, see [KMS data encryption concepts](https://learn.microsoft.com/en-us/azure/aks/kms-data-encryption-concepts). </summary>
         [WirePath("keyId")]
         public string KeyId { get; set; }
 

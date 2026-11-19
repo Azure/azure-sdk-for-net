@@ -9,11 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    /// <summary> Benefit scope response property. </summary>
+    /// <summary> The SavingsPlanValidateResult. </summary>
     public partial class SavingsPlanValidateResult : IJsonModel<SavingsPlanValidateResult>
     {
         /// <param name="data"> The data to parse. </param>
@@ -56,6 +57,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SavingsPlanValidateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SavingsPlanValidateResult"/> from. </param>
+        internal static SavingsPlanValidateResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSavingsPlanValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SavingsPlanValidateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -74,20 +82,20 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsValid))
+            if (Optional.IsCollectionDefined(Benefits))
             {
-                writer.WritePropertyName("valid"u8);
-                writer.WriteBooleanValue(IsValid.Value);
+                writer.WritePropertyName("benefits"u8);
+                writer.WriteStartArray();
+                foreach (SavingsPlanValidationDetail item in Benefits)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReasonCode))
+            if (Optional.IsDefined(NextLink))
             {
-                writer.WritePropertyName("reasonCode"u8);
-                writer.WriteStringValue(ReasonCode);
-            }
-            if (Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,29 +139,28 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            bool? isValid = default;
-            string reasonCode = default;
-            string reason = default;
+            IList<SavingsPlanValidationDetail> benefits = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("valid"u8))
+                if (prop.NameEquals("benefits"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isValid = prop.Value.GetBoolean();
+                    List<SavingsPlanValidationDetail> array = new List<SavingsPlanValidationDetail>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SavingsPlanValidationDetail.DeserializeSavingsPlanValidationDetail(item, options));
+                    }
+                    benefits = array;
                     continue;
                 }
-                if (prop.NameEquals("reasonCode"u8))
+                if (prop.NameEquals("nextLink"u8))
                 {
-                    reasonCode = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("reason"u8))
-                {
-                    reason = prop.Value.GetString();
+                    nextLink = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SavingsPlanValidateResult(isValid, reasonCode, reason, additionalBinaryDataProperties);
+            return new SavingsPlanValidateResult(benefits ?? new ChangeTrackingList<SavingsPlanValidationDetail>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

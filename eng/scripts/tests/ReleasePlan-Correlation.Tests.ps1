@@ -1,6 +1,6 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
-# Validate template-only completion correlation without running a release pipeline.
+# Validate optional manual IDs without running a release pipeline.
 #Requires -Version 7.0
 
 . (Join-Path $PSScriptRoot '../../common/scripts/Helpers/PSModule-Helpers.ps1')
@@ -23,8 +23,6 @@ BeforeAll {
     $script:client = $script:documents[1]
     $script:release = $script:documents[2]
     $script:pilotCondition = '${{ if eq(parameters.ServiceDirectory, ''template'') }}'
-    $script:autoCondition = '${{ if and(eq(variables[''Build.Reason''], ''IndividualCI''), eq(variables[''Build.SourceBranch''], ''refs/heads/main'')) }}'
-    $script:autoPilotCondition = '${{ if and(eq(parameters.ServiceDirectory, ''template''), eq(variables[''Build.Reason''], ''IndividualCI''), eq(variables[''Build.SourceBranch''], ''refs/heads/main'')) }}'
     $script:existingAutoCondition = '${{ if eq(variables[''Build.Reason''], ''IndividualCI'') }}'
 
     function Find-PipelineNode {
@@ -59,7 +57,7 @@ BeforeAll {
     $script:completionCalls = @(Find-PipelineNode $script:release 'template' '/eng/common/pipelines/templates/steps/mark-release-completion.yml')
 }
 
-Describe 'Template-only completion correlation' -Tag 'UnitTest' {
+Describe 'Manual release-plan ID forwarding' -Tag 'UnitTest' {
     It 'exposes optional string IDs with zero defaults at every entry point' {
         foreach ($document in @($script:entry, $script:client)) {
             $parameter = @($document.parameters | Where-Object name -eq 'ReleasePlanId')
@@ -80,30 +78,27 @@ Describe 'Template-only completion correlation' -Tag 'UnitTest' {
         $script:completionCalls.Count | Should -Be 1
         $script:entry.extends.parameters.ReleasePlanId | Should -BeExactly '${{ parameters.ReleasePlanId }}'
         $script:releaseCalls[0].parameters.ReleasePlanId | Should -BeExactly '${{ parameters.ReleasePlanId }}'
-        $script:completionCalls[0].parameters[$script:pilotCondition].ReleasePlanId | Should -BeExactly '${{ parameters.ReleasePlanId }}'
+        $script:completionCalls[0].parameters.ReleasePlanId | Should -BeExactly '${{ parameters.ReleasePlanId }}'
     }
 
-    It 'never passes new shared-completion arguments outside the template guard' {
+    It 'adds only the manual ID to the existing shared completion contract' {
         $parameters = $script:completionCalls[0].parameters
-        $parameters.Contains('ReleasePlanId') | Should -BeFalse
+        $parameters.Contains('ReleasePlanId') | Should -BeTrue
         $parameters.Contains('SdkPullRequest') | Should -BeFalse
-        (@($parameters.Keys | Sort-Object) -join '|') | Should -BeExactly ((@('ConfigFileDir', 'PackageArtifactName', 'SourceRootPath', $script:pilotCondition) | Sort-Object) -join '|')
-        $pilot = $parameters[$script:pilotCondition]
-        $pilot.Contains('SdkPullRequest') | Should -BeFalse
-        (@($pilot.Keys | Sort-Object) -join '|') | Should -BeExactly ((@('ReleasePlanId', $script:autoCondition) | Sort-Object) -join '|')
-        $pilot[$script:autoCondition].SdkPullRequest | Should -BeExactly '$(AutoReleaseSdkPullRequestUrl)'
+        (@($parameters.Keys | Sort-Object) -join '|') | Should -BeExactly 'ConfigFileDir|PackageArtifactName|ReleasePlanId|SourceRootPath'
     }
 
-    It 'binds the exact stage output only for template IndividualCI on main' {
+    It 'preserves the existing automatic SDK PR binding for all services' {
         $script:releaseStages.Count | Should -Be 1
         $stage = $script:releaseStages[0]
-        $bindings = @($stage.variables | Where-Object { $_.Contains($script:autoPilotCondition) })
+        $bindings = @($stage.variables | Where-Object { $_.Contains($script:existingAutoCondition) })
         $bindings.Count | Should -Be 1
-        $variables = @($bindings[0][$script:autoPilotCondition])
+        $variables = @($bindings[0][$script:existingAutoCondition])
         $variables.Count | Should -Be 1
         $variables[0].name | Should -BeExactly 'AutoReleaseSdkPullRequestUrl'
         $variables[0].value | Should -BeExactly '$[ stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs[''resolve.AutoReleaseSdkPullRequestUrl''] ]'
-        @(Find-PipelineNode $script:release 'name' 'AutoReleaseSdkPullRequestUrl').Count | Should -Be 1
+        @(Find-PipelineNode $script:release 'name' 'AutoReleaseSdkPullRequestUrl').Count | Should -Be 2
+        @($stage.variables | Where-Object { $_.Contains('${{ else }}') })[0]['${{ else }}'][0].value | Should -BeExactly ''
         @($stage[$script:existingAutoCondition].dependsOn) -join '|' | Should -BeExactly 'Signing|AutoReleasePrepare'
         $stage['${{ else }}'].dependsOn | Should -BeExactly 'Signing'
     }
@@ -116,17 +111,18 @@ Describe 'Template-only completion correlation' -Tag 'UnitTest' {
     }
 
     It 'preserves raw string <Id> through all handoffs without rounding' -ForEach @(
-        @{ Id = '0' }, @{ Id = '35307' }, @{ Id = '2147483647' }, @{ Id = '100.6' }
+        @{ Id = '0' }, @{ Id = '35307' }, @{ Id = '2147483647' }, @{ Id = '100.6' },
+        @{ Id = "0'; Write-Output 'probe'; #" }, @{ Id = '$(Write-Output probe)' }
     ) {
         foreach ($expression in @(
             $script:entry.extends.parameters.ReleasePlanId,
             $script:releaseCalls[0].parameters.ReleasePlanId,
-            $script:completionCalls[0].parameters[$script:pilotCondition].ReleasePlanId
+            $script:completionCalls[0].parameters.ReleasePlanId
         )) {
             $expression.Replace('${{ parameters.ReleasePlanId }}', $Id) | Should -BeExactly $Id
         }
         # Parsing a quoted queue value must retain its original text too.
-        $queued = "ReleasePlanId: '$Id'" | ConvertFrom-Yaml
+        $queued = ConvertFrom-Yaml (ConvertTo-Yaml @{ ReleasePlanId = $Id })
         ($queued.ReleasePlanId -is [string]) | Should -BeTrue
         $queued.ReleasePlanId | Should -BeExactly $Id
     }
@@ -214,11 +210,11 @@ Describe 'Template-only completion correlation' -Tag 'UnitTest' {
         $publish[0].templateContext.isProduction | Should -BeTrue
         $pushes = @(Find-PipelineNode $publish[0] 'task' '1ES.PublishNuget@1')
         $pushes.Count | Should -Be 2
-        $pushes[0].inputs.packagesToPush | Should -BeExactly '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-        $pushes[0].inputs['${{ if eq(parameters.PublicFeed, ''Nuget.org'') }}'].publishFeedCredentials | Should -BeExactly 'Nuget.org'
-        $pushes[0].inputs['${{ if ne(parameters.PublicFeed, ''Nuget.org'') }}'].publishVstsFeed | Should -BeExactly '${{ parameters.PublicFeed }}'
+        $pushes[0].inputs.packagesToPush | Should -BeExactly '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+        $pushes[0].inputs.publishVstsFeed | Should -BeExactly '${{ parameters.PublicFeed }}'
         $pushes[1].inputs.packagesToPush | Should -BeExactly '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
         $pushes[1].inputs.publishVstsFeed | Should -BeExactly '${{ parameters.DevFeed }}'
+        @(Find-PipelineNode $publish[0] 'task' 'EsrpRelease@14').Count | Should -Be 1
         $uploads = @(Find-PipelineNode $stage 'job' 'UploadSymbols')
         $uploads[0].condition | Should -BeExactly 'and(succeeded(), ne(variables[''Skip.SymbolsUpload''], ''true''))'
         $completion = $script:completionCalls[0].parameters

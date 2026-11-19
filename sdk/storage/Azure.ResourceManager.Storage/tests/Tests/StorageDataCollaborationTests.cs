@@ -217,6 +217,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsNotNull(connector.Data.Properties);
             Assert.AreEqual("Test connector", connector.Data.Properties.Description);
             Assert.IsNotNull(connector.Data.Properties.UniqueId);
+            Assert.IsNotEmpty(connector.Data.Properties.CreationTime);
             Assert.AreEqual(StorageConnectorDataSourceType.AzureDataShare, connector.Data.Properties.DataSourceType);
 
             //get connector

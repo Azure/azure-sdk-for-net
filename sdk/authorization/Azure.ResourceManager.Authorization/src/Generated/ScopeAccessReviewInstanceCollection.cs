@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewInstanceData, ScopeAccessReviewInstanceResource>(new ScopeAccessReviewInstancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AccessReviewInstanceData, ScopeAccessReviewInstanceResource>(new AccessReviewInstanceDataAsync0CollectionResultOfT(
                 _scopeAccessReviewInstancesRestClient,
                 Id.Parent.ToString(),
                 Id.Name,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewInstanceData, ScopeAccessReviewInstanceResource>(new ScopeAccessReviewInstancesGetAllCollectionResultOfT(
+            return new PageableWrapper<AccessReviewInstanceData, ScopeAccessReviewInstanceResource>(new AccessReviewInstanceData0CollectionResultOfT(
                 _scopeAccessReviewInstancesRestClient,
                 Id.Parent.ToString(),
                 Id.Name,

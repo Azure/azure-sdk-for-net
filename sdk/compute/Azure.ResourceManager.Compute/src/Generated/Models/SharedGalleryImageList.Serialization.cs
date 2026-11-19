@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedGalleryImageList(value, nextLink, additionalBinaryDataProperties);
+            return new SharedGalleryImageList(value ?? new ChangeTrackingList<SharedGalleryImageData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

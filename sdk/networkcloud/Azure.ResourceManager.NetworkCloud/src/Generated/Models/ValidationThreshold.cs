@@ -39,14 +39,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Selection of how the type evaluation is applied to the cluster calculation. </summary>
-        public ValidationThresholdGrouping Grouping { get; set; }
-
-        /// <summary> Selection of how the threshold should be evaluated. </summary>
-        public ValidationThresholdType ThresholdType { get; set; }
-
-        /// <summary> The numeric threshold value. </summary>
-        public long Value { get; set; }
     }
 }

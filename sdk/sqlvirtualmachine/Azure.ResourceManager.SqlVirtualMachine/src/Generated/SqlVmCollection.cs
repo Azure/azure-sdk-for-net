@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlVmCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SqlVmResource.ResourceType, out string sqlVmApiVersion);
             _sqlVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmResource.ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmApiVersion ?? "2023-10-01");
+            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetByResourceGroupAsyncCollectionResultOfT(_sqlVirtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmCollection.GetAll"), data => new SqlVmResource(Client, data));
+            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVmDataAsyncCollectionResultOfT(_sqlVirtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmCollection.GetAll"), data => new SqlVmResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetByResourceGroupCollectionResultOfT(_sqlVirtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmCollection.GetAll"), data => new SqlVmResource(Client, data));
+            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVmDataCollectionResultOfT(_sqlVirtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmCollection.GetAll"), data => new SqlVmResource(Client, data));
         }
 
         /// <summary>

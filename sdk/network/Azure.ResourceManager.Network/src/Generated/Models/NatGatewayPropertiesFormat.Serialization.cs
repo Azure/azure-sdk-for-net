@@ -85,9 +85,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("publicIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIPAddresses)
+                foreach (WritableSubResource item in PublicIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,9 +100,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("publicIpAddressesV6"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIPAddressesV6)
+                foreach (WritableSubResource item in PublicIPAddressesV6)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,9 +115,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("publicIpPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIPPrefixes)
+                foreach (WritableSubResource item in PublicIPPrefixes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,9 +130,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("publicIpPrefixesV6"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIPPrefixesV6)
+                foreach (WritableSubResource item in PublicIPPrefixesV6)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -204,10 +224,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int? idleTimeoutInMinutes = default;
-            IList<NetworkSubResource> publicIPAddresses = default;
-            IList<NetworkSubResource> publicIPAddressesV6 = default;
-            IList<NetworkSubResource> publicIPPrefixes = default;
-            IList<NetworkSubResource> publicIPPrefixesV6 = default;
+            IList<WritableSubResource> publicIPAddresses = default;
+            IList<WritableSubResource> publicIPAddressesV6 = default;
+            IList<WritableSubResource> publicIPPrefixes = default;
+            IList<WritableSubResource> publicIPPrefixesV6 = default;
             IReadOnlyList<WritableSubResource> subnets = default;
             NetworkSubResource sourceVirtualNetwork = default;
             NetworkSubResource serviceGateway = default;
@@ -232,10 +252,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     publicIPAddresses = array;
                     continue;
@@ -246,10 +273,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     publicIPAddressesV6 = array;
                     continue;
@@ -260,10 +294,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     publicIPPrefixes = array;
                     continue;
@@ -274,10 +315,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     publicIPPrefixesV6 = array;
                     continue;
@@ -355,10 +403,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new NatGatewayPropertiesFormat(
                 idleTimeoutInMinutes,
-                publicIPAddresses ?? new ChangeTrackingList<NetworkSubResource>(),
-                publicIPAddressesV6 ?? new ChangeTrackingList<NetworkSubResource>(),
-                publicIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
-                publicIPPrefixesV6 ?? new ChangeTrackingList<NetworkSubResource>(),
+                publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPAddressesV6 ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPPrefixesV6 ?? new ChangeTrackingList<WritableSubResource>(),
                 subnets ?? new ChangeTrackingList<WritableSubResource>(),
                 sourceVirtualNetwork,
                 serviceGateway,

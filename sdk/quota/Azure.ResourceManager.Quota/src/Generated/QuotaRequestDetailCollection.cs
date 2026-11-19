@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestDetailDataAsyncCollectionResultOfT(
                 _quotaRequestStatusRestClient,
                 Id.ToString(),
                 filter,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllCollectionResultOfT(
+            return new PageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestDetailDataCollectionResultOfT(
                 _quotaRequestStatusRestClient,
                 Id.ToString(),
                 filter,

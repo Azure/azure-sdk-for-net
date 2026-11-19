@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Converts a string to a <see cref="QueryAnswerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryAnswerType?(string value) => value == null ? null : new QueryAnswerType(value);
+        public static implicit operator QueryAnswerType?(string value) => value == null ? (QueryAnswerType?)null : new QueryAnswerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

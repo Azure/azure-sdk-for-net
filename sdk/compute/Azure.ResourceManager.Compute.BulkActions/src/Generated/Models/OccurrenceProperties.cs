@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Properties of a scheduled action occurrence. </summary>
+    /// <summary> Properties of a recurring bulk action occurrence. </summary>
     public partial class OccurrenceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

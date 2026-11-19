@@ -10,7 +10,12 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A browser automation tool stored in a toolbox. </summary>
+    /// <summary>
+    /// A browser automation tool stored in a toolbox.
+    /// BrowserAutomationPreviewToolboxTool is deprecated.
+    /// Please use BrowserAutomationToolboxTool instead.
+    /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+    /// </summary>
     public partial class BrowserAutomationPreviewToolboxTool : ToolboxTool, IJsonModel<BrowserAutomationPreviewToolboxTool>
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewToolboxTool"/> for deserialization. </summary>
@@ -144,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     toolConfigs = dictionary;
@@ -152,7 +157,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
-                    toolParameters = ModelReaderWriter.Read<BrowserAutomationToolOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    toolParameters = ModelReaderWriter.Read<BrowserAutomationToolOptions>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,13 +26,9 @@ namespace Azure.ResourceManager.AlertProcessingRules
     [ModelReaderWriterBuildable(typeof(AlertProcessingRuleRemoveAllGroupsAction))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRuleResource))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRuleSchedule))]
-    [ModelReaderWriterBuildable(typeof(AlertProcessingRulesList))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRuleWeeklyRecurrence))]
     [ModelReaderWriterBuildable(typeof(DailyRecurrence))]
-    [ModelReaderWriterBuildable(typeof(PatchProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownAlertProcessingRuleAction))]
-    [ModelReaderWriterBuildable(typeof(UnknownAlertProcessingRuleRecurrence))]
     public partial class AzureResourceManagerAlertProcessingRulesContext : ModelReaderWriterContext
     {
     }

@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 azureResourcesToExclude ?? new ChangeTrackingList<string>(),
                 terraformResourcesToExclude ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties,
-                resourceIds,
+                resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 resourceName,
                 resourceType,
                 namePattern,

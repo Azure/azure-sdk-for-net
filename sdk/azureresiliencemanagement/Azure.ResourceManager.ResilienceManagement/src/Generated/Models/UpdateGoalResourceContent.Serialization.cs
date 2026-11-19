@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> Request model for update goal resource. </summary>
+    /// <summary> Request body for updating goal resources. </summary>
     public partial class UpdateGoalResourceContent : IJsonModel<UpdateGoalResourceContent>
     {
         /// <summary> Initializes a new instance of <see cref="UpdateGoalResourceContent"/> for deserialization. </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UpdateGoalResourceContent(resources, additionalBinaryDataProperties);
+            return new UpdateGoalResourceContent(resources ?? new ChangeTrackingList<GoalMembersData>(), additionalBinaryDataProperties);
         }
     }
 }

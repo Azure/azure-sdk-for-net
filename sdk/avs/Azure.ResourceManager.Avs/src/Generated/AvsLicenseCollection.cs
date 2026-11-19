@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsLicenseData, AvsLicenseResource>(new LicensesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsLicenseData, AvsLicenseResource>(new AvsLicenseDataAsyncCollectionResultOfT(
                 _licensesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsLicenseData, AvsLicenseResource>(new LicensesGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsLicenseData, AvsLicenseResource>(new AvsLicenseDataCollectionResultOfT(
                 _licensesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

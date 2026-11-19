@@ -29,6 +29,10 @@
   When set in Azure DevOps, also exports the variable as an output variable
   (##vso[task.setvariable ...;isOutput=true]) for downstream jobs/stages.
 
+.PARAMETER TokenRequest
+  Optional JSON object restricting the installation token's repositories and permissions.
+  Defaults to GITHUB_TOKEN_REQUEST. When omitted, retains the installation's default scope.
+
 .OUTPUTS
   Sets environment variables in the current process and exports them to the CI system:
   - Azure DevOps: sets secret pipeline variables via ##vso logging commands
@@ -43,7 +47,8 @@ param(
   [string[]] $InstallationTokenOwners = @("Azure"),
   [string] $VariableNamePrefix = "GH_TOKEN",
   [switch] $AlwaysUseOwnerSuffix,
-  [switch] $ExportAsOutputVariable
+  [switch] $ExportAsOutputVariable,
+  [string] $TokenRequest = $env:GITHUB_TOKEN_REQUEST
 )
 
 $ErrorActionPreference = 'Stop'
@@ -210,16 +215,53 @@ function New-GitHubInstallationToken {
     [Parameter(Mandatory)] [string] $Jwt,
     [Parameter(Mandatory)] [string] $InstallationId,
     [Parameter(Mandatory)] [string] $ApiBase,
-    [Parameter(Mandatory)] [string] $ApiVersion
+    [Parameter(Mandatory)] [string] $ApiVersion,
+    [hashtable] $TokenRequest = @{}
   )
   $headers = Get-Headers -Jwt $Jwt -ApiVersion $ApiVersion
   $uri = "$ApiBase/app/installations/$InstallationId/access_tokens"
-  $resp = Invoke-RestMethod -Method Post -Headers $headers -Uri $uri -TimeoutSec 30 -MaximumRetryCount 3
-  if (!$resp.token) { throw "Failed to obtain installation access token for installation $InstallationId." }
-  return $resp.token
+  $request = @{
+    Method = 'Post'
+    Headers = $headers
+    Uri = $uri
+    TimeoutSec = 30
+    MaximumRetryCount = 3
+  }
+  if ($TokenRequest.Count -gt 0) {
+    $request.Body = ConvertTo-Json -InputObject $TokenRequest -Depth 5 -Compress
+    $request.ContentType = 'application/json'
+  }
+
+  $resp = Invoke-RestMethod @request
+  $token = Get-PropertyValue -InputObject $resp -PropertyName 'token'
+  if (!$token) { throw "Failed to obtain installation access token for installation $InstallationId." }
+
+  $requestedPermissions = Get-PropertyValue -InputObject $TokenRequest -PropertyName 'permissions'
+  if ($requestedPermissions) {
+    $grantedPermissions = Get-PropertyValue -InputObject $resp -PropertyName 'permissions'
+    foreach ($permission in $requestedPermissions.Keys) {
+      if ((Get-PropertyValue -InputObject $grantedPermissions -PropertyName $permission) -ne $requestedPermissions[$permission]) {
+        throw "Installation token did not grant requested permission '$permission': '$($requestedPermissions[$permission])'."
+      }
+    }
+  }
+  return $token
 }
 
 function Invoke-LoginToGitHub {
+  param(
+    [string] $TokenRequest,
+    [string] $VariableNamePrefix = 'GH_TOKEN'
+  )
+
+  $tokenRequestBody = @{}
+  if ($TokenRequest) {
+    $tokenRequestBody = ConvertFrom-Json -InputObject $TokenRequest -AsHashtable
+    if ($tokenRequestBody -isnot [System.Collections.IDictionary]) {
+      throw 'TokenRequest must be a JSON object.'
+    }
+  }
+
   Write-Host "Generating GitHub App JWT by signing via Azure Key Vault (no key export)..."
   $jwt = New-GitHubAppJwt -VaultName $KeyVaultName -KeyName $KeyName -AppId $GitHubAppId
 
@@ -232,7 +274,7 @@ function Invoke-LoginToGitHub {
     Write-Host "Installation ID resolved: $installationId"
 
     Write-Host "Exchanging JWT for installation access token..."
-    $installationToken = New-GitHubInstallationToken -Jwt $jwt -InstallationId $installationId -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion
+    $installationToken = New-GitHubInstallationToken -Jwt $jwt -InstallationId $installationId -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion -TokenRequest $tokenRequestBody
 
     $variableName = $VariableNamePrefix
     if ($AlwaysUseOwnerSuffix -or $InstallationTokenOwners.Count -gt 1) {
@@ -278,4 +320,4 @@ if ($env:PESTER_TEST_RUN -eq 'true') {
   return
 }
 
-Invoke-LoginToGitHub
+Invoke-LoginToGitHub -TokenRequest $TokenRequest -VariableNamePrefix $VariableNamePrefix

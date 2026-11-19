@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HybridComputePrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HybridComputePrivateLinkResourceListResult(value ?? new ChangeTrackingList<HybridComputePrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

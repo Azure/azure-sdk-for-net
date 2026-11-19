@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridContainerServiceAgentPoolData, HybridContainerServiceAgentPoolResource>(new AgentPoolsGetByProvisionedClusterAsyncCollectionResultOfT(_agentPoolsRestClient, Id.Parent.ToString(), context, "HybridContainerServiceAgentPoolCollection.GetAll"), data => new HybridContainerServiceAgentPoolResource(Client, data));
+            return new AsyncPageableWrapper<HybridContainerServiceAgentPoolData, HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolDataAsyncCollectionResultOfT(_agentPoolsRestClient, Id.Parent.ToString(), context, "HybridContainerServiceAgentPoolCollection.GetAll"), data => new HybridContainerServiceAgentPoolResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridContainerServiceAgentPoolData, HybridContainerServiceAgentPoolResource>(new AgentPoolsGetByProvisionedClusterCollectionResultOfT(_agentPoolsRestClient, Id.Parent.ToString(), context, "HybridContainerServiceAgentPoolCollection.GetAll"), data => new HybridContainerServiceAgentPoolResource(Client, data));
+            return new PageableWrapper<HybridContainerServiceAgentPoolData, HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolDataCollectionResultOfT(_agentPoolsRestClient, Id.Parent.ToString(), context, "HybridContainerServiceAgentPoolCollection.GetAll"), data => new HybridContainerServiceAgentPoolResource(Client, data));
         }
 
         /// <summary>

@@ -63,7 +63,6 @@ public sealed class EffectiveOptionsProtocolTests
                 configureAfterResponsesServices: services =>
                     services.Configure<ResponsesServerOptions>(options =>
                     {
-                        options.ResilientBackground = true;
                         options.SteerableConversations = true;
                     }));
             using HttpClient client = factory.CreateClient();
@@ -128,8 +127,8 @@ public sealed class EffectiveOptionsProtocolTests
         TaskCompletionSource steeredEntered,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "agent");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "agent" };
+        yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
 
         if (context.IsSteeredTurn)
         {
@@ -142,7 +141,7 @@ public sealed class EffectiveOptionsProtocolTests
         }
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(1, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = 1, Response = response };
     }
 
     private static StringContent Json(object value)

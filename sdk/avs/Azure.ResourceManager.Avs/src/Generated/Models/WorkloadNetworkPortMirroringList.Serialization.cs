@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadNetworkPortMirroringList(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadNetworkPortMirroringList(value ?? new ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

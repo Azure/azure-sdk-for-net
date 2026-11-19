@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LicenseProfilesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LicenseProfilesListResult(value ?? new ChangeTrackingList<HybridComputeLicenseProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

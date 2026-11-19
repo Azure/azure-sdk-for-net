@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(ConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleProperties))]
     [ModelReaderWriterBuildable(typeof(HighAvailabilityValidationEstimation))]
     [ModelReaderWriterBuildable(typeof(ImportSourceProperties))]

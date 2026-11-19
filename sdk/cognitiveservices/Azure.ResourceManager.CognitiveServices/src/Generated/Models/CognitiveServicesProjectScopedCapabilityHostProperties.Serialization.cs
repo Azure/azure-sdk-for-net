@@ -76,63 +76,91 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             if (Optional.IsCollectionDefined(AiServicesConnections))
             {
-                writer.WritePropertyName("aiServicesConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in AiServicesConnections)
+                if (AiServicesConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("aiServicesConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in AiServicesConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("aiServicesConnections"u8);
+                }
             }
             if (Optional.IsCollectionDefined(VectorStoreConnections))
             {
-                writer.WritePropertyName("vectorStoreConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in VectorStoreConnections)
+                if (VectorStoreConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("vectorStoreConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in VectorStoreConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vectorStoreConnections"u8);
+                }
             }
             if (Optional.IsCollectionDefined(StorageConnections))
             {
-                writer.WritePropertyName("storageConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in StorageConnections)
+                if (StorageConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("storageConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in StorageConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("storageConnections"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ThreadStorageConnections))
             {
-                writer.WritePropertyName("threadStorageConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in ThreadStorageConnections)
+                if (ThreadStorageConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("threadStorageConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in ThreadStorageConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("threadStorageConnections"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -181,10 +209,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            IList<string> aiServicesConnections = default;
-            IList<string> vectorStoreConnections = default;
-            IList<string> storageConnections = default;
-            IList<string> threadStorageConnections = default;
+            IList<string> aiServicesConnections = new ChangeTrackingList<string>();
+            IList<string> vectorStoreConnections = new ChangeTrackingList<string>();
+            IList<string> storageConnections = new ChangeTrackingList<string>();
+            IList<string> threadStorageConnections = new ChangeTrackingList<string>();
             CapabilityHostProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,6 +221,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        aiServicesConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -214,6 +243,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        vectorStoreConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -235,6 +265,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        storageConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -256,6 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        threadStorageConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -288,10 +320,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             return new CognitiveServicesProjectScopedCapabilityHostProperties(
-                aiServicesConnections ?? new ChangeTrackingList<string>(),
-                vectorStoreConnections ?? new ChangeTrackingList<string>(),
-                storageConnections ?? new ChangeTrackingList<string>(),
-                threadStorageConnections ?? new ChangeTrackingList<string>(),
+                aiServicesConnections,
+                vectorStoreConnections,
+                storageConnections,
+                threadStorageConnections,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

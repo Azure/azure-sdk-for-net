@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier ProximityPlacementGroupId
+        public virtual ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier HostGroupId
+        public virtual ResourceIdentifier HostGroupId
         {
             get
             {

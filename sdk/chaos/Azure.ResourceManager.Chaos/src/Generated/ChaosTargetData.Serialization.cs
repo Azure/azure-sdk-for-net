@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Chaos
                 name,
                 resourceType,
                 systemData,
-                properties,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 location,
                 additionalBinaryDataProperties);
         }

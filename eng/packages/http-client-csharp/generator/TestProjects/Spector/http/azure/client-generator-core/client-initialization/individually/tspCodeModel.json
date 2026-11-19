@@ -195,7 +195,6 @@
             "$id": "17",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithPath",
             "accessibility": "public",
             "parameters": [
               {
@@ -335,7 +334,6 @@
             "$id": "27",
             "name": "getStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithPath",
             "accessibility": "public",
             "parameters": [
               {
@@ -461,7 +459,6 @@
             "$id": "33",
             "name": "deleteStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithPath",
             "accessibility": "public",
             "parameters": [
               {
@@ -583,7 +580,6 @@
             "$id": "41",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithQuery",
             "accessibility": "public",
             "parameters": [
               {
@@ -720,7 +716,6 @@
             "$id": "51",
             "name": "getStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithQuery",
             "accessibility": "public",
             "parameters": [
               {
@@ -843,7 +838,6 @@
             "$id": "57",
             "name": "deleteStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithQuery",
             "accessibility": "public",
             "parameters": [
               {
@@ -962,7 +956,6 @@
             "$id": "65",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithHeader",
             "accessibility": "public",
             "parameters": [
               {
@@ -1099,7 +1092,6 @@
             "$id": "75",
             "name": "getStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithHeader",
             "accessibility": "public",
             "parameters": [
               {
@@ -1167,7 +1159,6 @@
             "$id": "79",
             "name": "deleteStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithHeader",
             "accessibility": "public",
             "parameters": [
               {
@@ -1286,7 +1277,6 @@
             "$id": "87",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithMultiple",
             "accessibility": "public",
             "parameters": [
               {
@@ -1469,7 +1459,6 @@
             "$id": "101",
             "name": "getStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithMultiple",
             "accessibility": "public",
             "parameters": [
               {
@@ -1563,7 +1552,6 @@
             "$id": "107",
             "name": "deleteStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithMultiple",
             "accessibility": "public",
             "parameters": [
               {
@@ -1711,7 +1699,6 @@
             "$id": "117",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithMixed",
             "accessibility": "public",
             "parameters": [
               {
@@ -1896,7 +1883,6 @@
             "$id": "131",
             "name": "getStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithMixed",
             "accessibility": "public",
             "parameters": [
               {
@@ -2013,7 +1999,6 @@
             "$id": "139",
             "name": "deleteStandalone",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithMixed",
             "accessibility": "public",
             "parameters": [
               {
@@ -2181,7 +2166,6 @@
             "$id": "151",
             "name": "withAliasedName",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithParamAlias",
             "accessibility": "public",
             "parameters": [
               {
@@ -2273,7 +2257,6 @@
             "$id": "157",
             "name": "withOriginalName",
             "isExactName": false,
-            "resourceName": "IndividuallyNestedWithParamAlias",
             "accessibility": "public",
             "parameters": [
               {

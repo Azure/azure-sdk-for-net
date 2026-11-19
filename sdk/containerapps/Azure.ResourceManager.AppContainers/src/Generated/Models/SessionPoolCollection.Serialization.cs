@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SessionPoolCollection(value, nextLink, additionalBinaryDataProperties);
+            return new SessionPoolCollection(value ?? new ChangeTrackingList<SessionPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

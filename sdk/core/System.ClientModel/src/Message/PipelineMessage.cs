@@ -80,11 +80,17 @@ public class PipelineMessage : IDisposable
     /// Gets or sets the <see cref="CancellationToken"/> used for the duration
     /// of the call to <see cref="ClientPipeline.Send(PipelineMessage)"/>.
     /// </summary>
+    /// <remarks>
+    /// The token can be set by applying <see cref="RequestOptions"/> or
+    /// overridden by calling
+    /// <see cref="ClientPipeline.Send(PipelineMessage, CancellationToken)"/>
+    /// or <see cref="ClientPipeline.SendAsync(PipelineMessage, CancellationToken)"/>.
+    /// </remarks>
     public CancellationToken CancellationToken
     {
         get;
 
-        // Set internally by RequestOptions.Apply
+        // Set internally by RequestOptions.Apply and ClientPipeline.Send/SendAsync.
         protected internal set;
     }
 

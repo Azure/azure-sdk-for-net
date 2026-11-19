@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VariableListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VariableListResult(value ?? new ChangeTrackingList<VariableData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

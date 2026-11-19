@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new GalleryResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GalleryResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries", resourceVersion ?? "2025-12-03")
+        public GalleryResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries", resourceVersion ?? "2026-03-03")
         {
         }
 
@@ -173,6 +173,23 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the SoftDeletePolicy. </summary>
+        public SoftDeletePolicy SoftDeletePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeletePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryProperties();
+                }
+                Properties.SoftDeletePolicy = value;
+            }
+        }
+
         /// <summary> Gets the SharingStatus. </summary>
         public SharingStatus SharingStatus
         {
@@ -192,23 +209,6 @@ namespace Azure.Provisioning.Compute
                     Properties = new GalleryProperties();
                 }
                 return Properties.IdentifierUniqueName;
-            }
-        }
-
-        /// <summary> Gets or sets the IsSoftDeleteEnabled. </summary>
-        public BicepValue<bool> IsSoftDeleteEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsSoftDeleteEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryProperties();
-                }
-                Properties.IsSoftDeleteEnabled = value;
             }
         }
 
@@ -247,6 +247,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-03". </summary>
+            public static readonly string V2026_03_03 = "2026-03-03";
             /// <summary> API version "2025-12-03". </summary>
             public static readonly string V2025_12_03 = "2025-12-03";
             /// <summary> API version "2025-03-03". </summary>

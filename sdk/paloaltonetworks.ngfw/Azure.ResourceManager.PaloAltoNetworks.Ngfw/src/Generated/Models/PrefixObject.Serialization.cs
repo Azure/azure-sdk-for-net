@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             return new PrefixObject(
                 description,
-                prefixList,
+                prefixList ?? new ChangeTrackingList<string>(),
                 eTag,
                 auditComment,
                 provisioningState,

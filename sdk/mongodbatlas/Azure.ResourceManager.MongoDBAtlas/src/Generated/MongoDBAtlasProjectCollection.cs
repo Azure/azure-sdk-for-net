@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new ProjectsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new MongoDBAtlasProjectDataAsyncCollectionResultOfT(
                 _projectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new ProjectsGetAllCollectionResultOfT(
+            return new PageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new MongoDBAtlasProjectDataCollectionResultOfT(
                 _projectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

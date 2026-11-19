@@ -19,12 +19,12 @@ namespace Azure.Provisioning.Storage
         private BicepValue<string> _name;
         private SystemData _systemData;
         private QueueServicePropertiesProperties _queueServiceProperties;
-        private ResourceReference<StorageAccount> _parent;
+        private ProvisioningResourceReference<StorageAccount> _parent;
 
         /// <summary> Creates a new QueueService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public QueueService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/queueServices", resourceVersion ?? "2025-06-01")
+        public QueueService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/queueServices", resourceVersion ?? "2026-06-01")
         {
         }
 
@@ -38,13 +38,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -113,7 +118,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _queueServiceProperties = DefineModelProperty<QueueServicePropertiesProperties>(nameof(QueueServiceProperties), new string[] { "properties" });
-            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<StorageAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -133,6 +138,12 @@ namespace Azure.Provisioning.Storage
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2025-08-01". </summary>
+            public static readonly string V2025_08_01 = "2025-08-01";
             /// <summary> API version "2025-06-01". </summary>
             public static readonly string V2025_06_01 = "2025-06-01";
         }

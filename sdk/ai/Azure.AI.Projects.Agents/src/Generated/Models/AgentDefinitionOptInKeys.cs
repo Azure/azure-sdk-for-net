@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Feature opt-in keys for agent definition operations supporting conditional preview features. </summary>
-    public enum AgentDefinitionOptInKeys
+    internal enum AgentDefinitionOptInKeys
     {
         /// <summary> WorkflowAgentsV1Preview. </summary>
         WorkflowAgentsV1Preview,
@@ -20,6 +20,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> GithubCopilotV1Preview. </summary>
         GithubCopilotV1Preview,
         /// <summary> SkillsV1Preview. </summary>
-        SkillsV1Preview
+        SkillsV1Preview,
+        /// <summary> The Microsoft Copilot V1 preview feature opt-in. </summary>
+        MicrosoftCopilotV1Preview
     }
 }

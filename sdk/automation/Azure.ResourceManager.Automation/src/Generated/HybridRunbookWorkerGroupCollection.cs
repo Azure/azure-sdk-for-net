@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridRunbookWorkerGroupData, HybridRunbookWorkerGroupResource>(new HybridRunbookWorkerGroupGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridRunbookWorkerGroupData, HybridRunbookWorkerGroupResource>(new HybridRunbookWorkerGroupDataAsyncCollectionResultOfT(
                 _hybridRunbookWorkerGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridRunbookWorkerGroupData, HybridRunbookWorkerGroupResource>(new HybridRunbookWorkerGroupGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<HybridRunbookWorkerGroupData, HybridRunbookWorkerGroupResource>(new HybridRunbookWorkerGroupDataCollectionResultOfT(
                 _hybridRunbookWorkerGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

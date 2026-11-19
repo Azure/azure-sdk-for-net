@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new ConnectorDryrunsGetDryrunAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new LinkerDryrunDataAsyncCollectionResultOfT(
                 _connectorDryrunsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new ConnectorDryrunsGetDryrunCollectionResultOfT(
+            return new PageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new LinkerDryrunDataCollectionResultOfT(
                 _connectorDryrunsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

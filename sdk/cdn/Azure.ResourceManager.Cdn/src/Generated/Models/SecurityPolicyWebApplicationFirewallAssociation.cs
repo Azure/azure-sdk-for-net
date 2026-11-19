@@ -22,16 +22,19 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             Domains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
             PatternsToMatch = new ChangeTrackingList<string>();
+            Routes = new ChangeTrackingList<CdnResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewallAssociation"/>. </summary>
         /// <param name="domains"> List of domains. </param>
         /// <param name="patternsToMatch"> List of paths. </param>
+        /// <param name="routes"> List of routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyWebApplicationFirewallAssociation(IList<FrontDoorActivatedResourceInfo> domains, IList<string> patternsToMatch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityPolicyWebApplicationFirewallAssociation(IList<FrontDoorActivatedResourceInfo> domains, IList<string> patternsToMatch, IList<CdnResourceReference> routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domains = domains;
             PatternsToMatch = patternsToMatch;
+            Routes = routes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +45,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> List of paths. </summary>
         [WirePath("patternsToMatch")]
         public IList<string> PatternsToMatch { get; }
+
+        /// <summary> List of routes. </summary>
+        [WirePath("routes")]
+        public IList<CdnResourceReference> Routes { get; }
     }
 }

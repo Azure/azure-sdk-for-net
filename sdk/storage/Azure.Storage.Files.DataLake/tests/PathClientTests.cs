@@ -361,6 +361,39 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        [Test]
+        public void GenerateSas_BuilderPathWithIgnorableUnicode_IsRejected()
+        {
+            string fileSystemName = "filesystem";
+            string path = "canary";
+            string spoofedPath = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(path, spoofedPath, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(path, spoofedPath, StringComparison.Ordinal));
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(new Uri("https://account.dfs.core.windows.net"))
+            {
+                FileSystemName = fileSystemName,
+                DirectoryOrFilePath = path
+            };
+
+            DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(
+                dataLakeUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(DataLakeSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                FileSystemName = fileSystemName,
+                Path = spoofedPath,
+            };
+
+            TestHelper.AssertExpectedException(
+                () => pathClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. DataLakeSasBuilder.Path does not match Path in the Client. DataLakeSasBuilder.Path must either be left empty or match the Path in the Client"));
+        }
+
         [RecordedTest]
         public void GenerateSas_BuilderWrongPath()
         {

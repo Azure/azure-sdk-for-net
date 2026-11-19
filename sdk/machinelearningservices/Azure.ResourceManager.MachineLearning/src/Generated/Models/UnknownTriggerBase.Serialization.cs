@@ -112,7 +112,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool endTimeIsDefined = false;
             string endTime = default;
+            bool startTimeIsDefined = false;
             string startTime = default;
             string timeZone = default;
             MachineLearningTriggerType triggerType = default;
@@ -121,6 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endTime = null;
@@ -131,6 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startTime = null;
@@ -154,7 +158,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownTriggerBase(endTime, startTime, timeZone, triggerType, additionalBinaryDataProperties);
+            return new UnknownTriggerBase(endTime, startTime, timeZone, triggerType, additionalBinaryDataProperties)
+            {
+                _endTimeIsDefined = endTimeIsDefined,
+                _startTimeIsDefined = startTimeIsDefined
+            };
         }
     }
 }

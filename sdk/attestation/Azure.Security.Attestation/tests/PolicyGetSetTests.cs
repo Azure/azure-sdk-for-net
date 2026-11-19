@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Azure.Security.Attestation;
-using System.Security.Cryptography;
-using System.Text;
-using System.Security.Cryptography.X509Certificates;
+using NUnit.Framework;
 
 namespace Azure.Security.Attestation.Tests
 {
@@ -55,15 +55,15 @@ namespace Azure.Security.Attestation.Tests
 "authorizationrules {" +
 "c:[type==\"$is-debuggable\"] && [value==true] => deny();" +
 "=> permit();" +
-"};"+
+"};" +
 "issuancerules {" +
-"    c:[type==\"$is-debuggable\"] => issue(type=\"NotDebuggable\", value=c.value);"+
-"    c:[type==\"$is-debuggable\"] => issue(type=\"is-debuggable\", value=c.value);"+
-"    c:[type==\"$sgx-mrsigner\"] => issue(type=\"sgx-mrsigner\", value=c.value);"+
-"    c:[type==\"$sgx-mrenclave\"] => issue(type=\"sgx-mrenclave\", value=c.value);"+
-"    c:[type==\"$product-id\"] => issue(type=\"product-id\", value=c.value);"+
-"    c:[type==\"$svn\"] => issue(type=\"svn\", value=c.value);"+
-"    c:[type==\"$tee\"] => issue(type=\"tee\", value=c.value);"+
+"    c:[type==\"$is-debuggable\"] => issue(type=\"NotDebuggable\", value=c.value);" +
+"    c:[type==\"$is-debuggable\"] => issue(type=\"is-debuggable\", value=c.value);" +
+"    c:[type==\"$sgx-mrsigner\"] => issue(type=\"sgx-mrsigner\", value=c.value);" +
+"    c:[type==\"$sgx-mrenclave\"] => issue(type=\"sgx-mrenclave\", value=c.value);" +
+"    c:[type==\"$product-id\"] => issue(type=\"product-id\", value=c.value);" +
+"    c:[type==\"$svn\"] => issue(type=\"svn\", value=c.value);" +
+"    c:[type==\"$tee\"] => issue(type=\"tee\", value=c.value);" +
 "};";
 
         private async Task ResetAttestationPolicy(AttestationAdministrationClient adminClient, AttestationType attestationType, bool isSecuredToken, bool isIsolated)

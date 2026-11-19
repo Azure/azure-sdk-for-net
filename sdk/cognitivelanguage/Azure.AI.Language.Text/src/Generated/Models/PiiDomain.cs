@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="PiiDomain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PiiDomain?(string value) => value == null ? null : new PiiDomain(value);
+        public static implicit operator PiiDomain?(string value) => value == null ? (PiiDomain?)null : new PiiDomain(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

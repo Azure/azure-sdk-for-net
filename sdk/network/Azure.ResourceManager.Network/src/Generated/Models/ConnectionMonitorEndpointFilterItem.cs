@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilterItem"/>. </summary>
-        /// <param name="type"> The type of item included in the filter. Currently only 'AgentAddress' is supported. </param>
+        /// <param name="itemType"> The type of item included in the filter. Currently only 'AgentAddress' is supported. </param>
         /// <param name="address"> The address of the filter item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorEndpointFilterItem(ConnectionMonitorEndpointFilterItemType? @type, string address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorEndpointFilterItem(ConnectionMonitorEndpointFilterItemType? itemType, string address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ItemType = itemType;
             Address = address;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of item included in the filter. Currently only 'AgentAddress' is supported. </summary>
         [WirePath("type")]
-        public ConnectionMonitorEndpointFilterItemType? Type { get; set; }
+        public ConnectionMonitorEndpointFilterItemType? ItemType { get; set; }
 
         /// <summary> The address of the filter item. </summary>
         [WirePath("address")]

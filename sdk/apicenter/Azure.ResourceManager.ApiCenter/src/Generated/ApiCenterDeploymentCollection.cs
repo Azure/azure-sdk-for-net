@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new DeploymentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new ApiCenterDeploymentDataAsyncCollectionResultOfT(
                 _deploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new DeploymentsGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new ApiCenterDeploymentDataCollectionResultOfT(
                 _deploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

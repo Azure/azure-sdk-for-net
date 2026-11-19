@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NfsAccessPolicy(name, accessRules, additionalBinaryDataProperties);
+            return new NfsAccessPolicy(name, accessRules ?? new ChangeTrackingList<NfsAccessRule>(), additionalBinaryDataProperties);
         }
     }
 }

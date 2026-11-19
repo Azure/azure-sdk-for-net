@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Models;
@@ -25,6 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// bespoke Responses recovery/steering machinery.
 /// </para>
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponsesResilientTaskHandler
     : IResilientTaskHandler<ResponseTaskInput, ResponseTaskOutput>
 {
@@ -73,9 +75,9 @@ internal sealed class ResponsesResilientTaskHandler
         CreateResponse request = payload.Request;
         string responseId = payload.ResponseId;
 
-        bool isBackground = request.Background == true;
-        bool isStreaming = request.Stream == true;
-        bool store = request.Store != false;
+        bool isBackground = request.BackgroundModeEnabled == true;
+        bool isStreaming = request.StreamingEnabled == true;
+        bool store = request.StoredOutputEnabled != false;
         bool isRecovery = ctx.EntryMode == EntryMode.Recovered;
 
         var platformContext = new PlatformContext(payload.UserIdKey, payload.CallId);
@@ -157,7 +159,7 @@ internal sealed class ResponsesResilientTaskHandler
             pendingInputCountProvider: () => ctx.PendingInputCount);
 
         if (!isRecovery
-            && _tracker.TryGet(responseId, out ResponseExecution? existing)
+            && _tracker.TryGet(responseId, platformContext, out ResponseExecution? existing)
             && existing is not null)
         {
             // The endpoint pre-created this execution to bridge response.created back to the caller.
@@ -177,13 +179,12 @@ internal sealed class ResponsesResilientTaskHandler
             return ResponseTaskOutput.Completed(responseId, existing.Response?.Status);
         }
 
-        var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
+        var execution = _tracker.Create(responseId, platformContext, isBackground, isStreaming, store);
         execution.TaskStreamWriter = ctx.Stream;
         execution.AgentSessionId = payload.AgentSessionId;
-        execution.UserIdKey = payload.UserIdKey;
         if (persisted is not null)
         {
-            execution.RecoveredOutputWatermark = persisted.Output?.Count ?? 0;
+            execution.RecoveredOutputWatermark = persisted.OutputItems?.Count ?? 0;
         }
 
         ResponseContextImpl context = BuildContext();
@@ -200,7 +201,7 @@ internal sealed class ResponsesResilientTaskHandler
         }
         finally
         {
-            _tracker.TryEvict(responseId);
+            _tracker.TryEvict(execution);
         }
 
         return ResponseTaskOutput.Completed(responseId, execution.Response?.Status);
@@ -236,7 +237,7 @@ internal sealed class ResponsesResilientTaskHandler
         });
 
         CancellationToken providerCt =
-            await _cancellationProvider.GetResponseCancellationTokenAsync(execution.ResponseId)
+            await _cancellationProvider.GetResponseCancellationTokenAsync(execution.LifecycleId)
                 .ConfigureAwait(false);
 
         using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(

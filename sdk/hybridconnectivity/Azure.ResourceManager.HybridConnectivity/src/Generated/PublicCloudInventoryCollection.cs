@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(PublicCloudInventoryResource.ResourceType, out string publicCloudInventoryApiVersion);
             _inventoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudInventoryResource.ResourceType.Namespace, Diagnostics);
-            _inventoryRestClient = new Inventory(_inventoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudInventoryApiVersion ?? "2024-12-01");
+            _inventoryRestClient = new Inventory(_inventoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudInventoryApiVersion ?? "2027-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationAsyncCollectionResultOfT(_inventoryRestClient, Id.Parent.ToString(), Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new PublicCloudInventoryDataAsyncCollectionResultOfT(_inventoryRestClient, Id.Parent.ToString(), Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationCollectionResultOfT(_inventoryRestClient, Id.Parent.ToString(), Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
+            return new PageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new PublicCloudInventoryDataCollectionResultOfT(_inventoryRestClient, Id.Parent.ToString(), Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

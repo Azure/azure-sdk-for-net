@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageApplianceRunReadCommandsContent(commands, limitTimeSeconds, additionalBinaryDataProperties);
+            return new StorageApplianceRunReadCommandsContent(commands ?? new ChangeTrackingList<StorageApplianceCommandSpecification>(), limitTimeSeconds, additionalBinaryDataProperties);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PersistentAgentThread> CreateThread(IEnumerable<ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateThreadRequest spreadModel = new CreateThreadRequest(messages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            CreateThreadContent spreadModel = new CreateThreadContent(messages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = CreateThread(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((PersistentAgentThread)result, result);
         }
@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PersistentAgentThread>> CreateThreadAsync(IEnumerable<ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateThreadRequest spreadModel = new CreateThreadRequest(messages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            CreateThreadContent spreadModel = new CreateThreadContent(messages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = await CreateThreadAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PersistentAgentThread)result, result);
         }
@@ -256,7 +256,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            UpdateThreadRequest spreadModel = new UpdateThreadRequest(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            UpdateThreadContent spreadModel = new UpdateThreadContent(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = UpdateThread(threadId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((PersistentAgentThread)result, result);
         }
@@ -277,7 +277,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            UpdateThreadRequest spreadModel = new UpdateThreadRequest(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            UpdateThreadContent spreadModel = new UpdateThreadContent(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = await UpdateThreadAsync(threadId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PersistentAgentThread)result, result);
         }

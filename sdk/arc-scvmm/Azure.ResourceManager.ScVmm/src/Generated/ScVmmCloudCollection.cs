@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmCloudCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ScVmmCloudResource.ResourceType, out string scVmmCloudApiVersion);
             _cloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmCloudResource.ResourceType.Namespace, Diagnostics);
-            _cloudsRestClient = new Clouds(_cloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmCloudApiVersion ?? "2025-03-13");
+            _cloudsRestClient = new Clouds(_cloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/clouds", out string cloudsApiVersionOverride) ? cloudsApiVersionOverride : "2025-03-13");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetByResourceGroupAsyncCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new ScVmmCloudDataAsyncCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetByResourceGroupCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
+            return new PageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new ScVmmCloudDataCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>

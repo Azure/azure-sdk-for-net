@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceManagerGroupProperties(description, displayName, memberResourceNames, additionalBinaryDataProperties);
+            return new WorkspaceManagerGroupProperties(description, displayName, memberResourceNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

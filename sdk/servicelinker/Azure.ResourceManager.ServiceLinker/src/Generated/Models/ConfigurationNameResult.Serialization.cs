@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConfigurationNameResult(value, nextLink, additionalBinaryDataProperties);
+            return new ConfigurationNameResult(value ?? new ChangeTrackingList<LinkerConfigurationNameItem>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

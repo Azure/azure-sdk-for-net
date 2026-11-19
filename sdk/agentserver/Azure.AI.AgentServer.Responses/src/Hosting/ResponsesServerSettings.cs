@@ -16,8 +16,8 @@ namespace Azure.AI.AgentServer.Responses;
 /// <para>
 /// The inherited <see cref="ClientSettings.Credential"/> / <see cref="ClientSettings.CredentialProvider"/>
 /// bind the identity used for BOTH Foundry response storage and resilient-task storage from the same
-/// section, so the two can never diverge. <see cref="Endpoint"/> replaces the
-/// <c>FOUNDRY_PROJECT_ENDPOINT</c> environment-variable read, and the option flags below replace the
+/// section, so the two can never diverge. <see cref="Endpoint"/> overrides the platform's
+/// <c>FOUNDRY_PROJECT_ENDPOINT</c> environment variable, and the option flags below replace the
 /// <see cref="ResponsesServerOptions"/> shape when the host binds from configuration.
 /// </para>
 /// </summary>
@@ -26,8 +26,8 @@ public class ResponsesServerSettings : ClientSettings
 {
     /// <summary>
     /// Gets or sets the Azure AI Foundry project endpoint used for response and task storage.
-    /// Replaces the <c>FOUNDRY_PROJECT_ENDPOINT</c> environment variable. Required in hosted
-    /// environments.
+    /// Overrides the platform's <c>FOUNDRY_PROJECT_ENDPOINT</c> environment variable. In hosted
+    /// environments it defaults to that variable when not configured.
     /// </summary>
     public Uri? Endpoint { get; set; }
 
@@ -53,7 +53,8 @@ public class ResponsesServerSettings : ClientSettings
 
     /// <summary>
     /// Gets or sets whether in-flight conversations accept steering (mid-turn additional input).
-    /// Mirrors <see cref="ResponsesServerOptions.SteerableConversations"/>.
+    /// Mirrors <see cref="ResponsesServerOptions.SteerableConversations"/>. Either Responses
+    /// feature flag automatically enables the Core resilient-task runtime.
     /// </summary>
     public bool SteerableConversations { get; set; }
 
@@ -63,7 +64,8 @@ public class ResponsesServerSettings : ClientSettings
     /// <see cref="ResponsesServerOptions.ResponseAcceptor"/>. Not configuration-bindable; set it
     /// via the <c>configureSettings</c> callback.
     /// </summary>
-    public Func<Models.CreateResponse, ResponseContext, Models.ResponseObject>? ResponseAcceptor { get; set; }
+    [Experimental("OPENAI001")]
+    public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 
     /// <summary>
     /// Binds the configuration values above from the given section. The inherited credential

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Redis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisFirewallRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RedisFirewallRuleListResult(value ?? new ChangeTrackingList<RedisFirewallRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

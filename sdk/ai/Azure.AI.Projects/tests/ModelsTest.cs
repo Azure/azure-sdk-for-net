@@ -6,8 +6,11 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -89,7 +92,7 @@ public class ModelsTest : ProjectsClientTestBase
         Assert.That(updatedModel.Tags["test1"], Is.EqualTo("test1 value"));
         Assert.That(updatedModel.Tags, Has.Count.EqualTo(2));
         // Get credentials
-        ModelCredentialRequest credentialRequest = new(blob);
+        ModelCredentialContent credentialRequest = new(blob);
         DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
         Assert.That(modelCredential.BlobReference.Credential.SasUri, Is.Not.Null);
         // Delete (temporary workaround for 5317570)
@@ -144,6 +147,46 @@ public class ModelsTest : ProjectsClientTestBase
         //Assert.That(models, Has.Count.EqualTo(1));
         //Assert.That(models[0].Name, Is.EqualTo($"{MODEL_NAME}1"));
         //Assert.That(models[0].Version, Is.EqualTo("1"));
+    }
+
+    [RecordedTest]
+    public void Precancelled_async_upload_does_not_send_a_request()
+    {
+        var transport = new MockPipelineTransport(_ =>
+            throw new InvalidOperationException("Cancellation must prevent any request."))
+        {
+            ExpectSyncPipeline = false,
+        };
+        AIProjectClient client = new(new Uri("https://example.test/api/projects/p"),
+            new MockCredential(), new AIProjectClientOptions
+            {
+                Transport = transport,
+                EnableDistributedTracing = false
+            });
+        string directory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(directory);
+        using var cancellation = new CancellationTokenSource();
+        cancellation.Cancel();
+        try
+        {
+            Assert.ThrowsAsync<OperationCanceledException>(async () =>
+            {
+                try
+                {
+                    await client.Models.UploadModelAsync(directory, "model", "1", cancellation.Token);
+                }
+                catch (TargetInvocationException exception)
+                    when (exception.InnerException is OperationCanceledException cancelled)
+                {
+                    throw cancelled;
+                }
+            });
+            Assert.That(transport.Requests, Is.Empty);
+        }
+        finally
+        {
+            Directory.Delete(directory);
+        }
     }
 
     #region Helpers

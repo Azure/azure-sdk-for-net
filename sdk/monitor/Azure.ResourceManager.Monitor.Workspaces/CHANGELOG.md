@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2026-11-03)
+
+### Features Added
+
+- Added support for managing metric namespaces and metric configurations in Azure Monitor Workspaces.
+- Added support for managing trace containers in Azure Monitor Workspaces and trace associations at resource, resource group, and subscription scopes.
 
 ## 1.0.0 (2026-06-16)
 

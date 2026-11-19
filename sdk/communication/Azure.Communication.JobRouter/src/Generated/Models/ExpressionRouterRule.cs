@@ -14,6 +14,11 @@ namespace Azure.Communication.JobRouter
     public partial class ExpressionRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of <see cref="ExpressionRouterRule"/>. </summary>
+        internal ExpressionRouterRule() : base(RouterRuleKind.Expression)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressionRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="language"> The expression language to compile to and execute. </param>

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Initializes a new instance of <see cref="ProtectedItemProperties"/>. </summary>
         /// <param name="resourceName"> The Name of the commvault protected item. </param>
-        /// <param name="lastBackUpTime"> The Commvault Protected Item backup time. </param>
-        /// <param name="resourceGroup"> The resource group of the protected item. </param>
+        /// <param name="lastBackupTime"> The Commvault Protected Item backup time. </param>
+        /// <param name="resourceGroupName"> The resource group of the protected item. </param>
         /// <param name="location"> The location of the protected item. </param>
         /// <param name="vmGuid"> The GUID of VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectedItemProperties(string resourceName, long lastBackUpTime, string resourceGroup, AzureLocation location, string vmGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectedItemProperties(string resourceName, long lastBackupTime, string resourceGroupName, AzureLocation location, string vmGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceName = resourceName;
-            LastBackUpTime = lastBackUpTime;
-            ResourceGroup = resourceGroup;
+            LastBackupTime = lastBackupTime;
+            ResourceGroupName = resourceGroupName;
             Location = location;
             VmGuid = vmGuid;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string ResourceName { get; }
 
         /// <summary> The Commvault Protected Item backup time. </summary>
-        public long LastBackUpTime { get; }
+        public long LastBackupTime { get; }
 
         /// <summary> The resource group of the protected item. </summary>
-        public string ResourceGroup { get; }
+        public string ResourceGroupName { get; }
 
         /// <summary> The location of the protected item. </summary>
         public AzureLocation Location { get; }

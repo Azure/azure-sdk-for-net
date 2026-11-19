@@ -5,10 +5,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Extensions;
+using Azure.Generator.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -37,6 +40,11 @@ namespace Azure.Generator.Providers
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
         private static readonly ParameterProvider ScopeParameter =
             new("diagnosticScope", $"The diagnostic scope name.", new CSharpType(typeof(string)));
+        private static readonly ParameterProvider CancellationTokenParameter =
+            new("cancellationToken", $"The cancellation token to use.", typeof(CancellationToken));
+        private static readonly ParameterProvider EnumerationCancellationTokenParameter =
+            new("cancellationToken", $"The cancellation token to use.", typeof(CancellationToken),
+                attributes: [new AttributeStatement(typeof(EnumeratorCancellationAttribute))]);
 
         private readonly bool _isProtocol;
         private readonly FieldProvider _scopeField;
@@ -86,7 +94,9 @@ namespace Azure.Generator.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            return [BuildAsPagesMethod(), BuildGetNextResponseMethod()];
+            return IsAsync
+                ? [BuildAsPagesMethod(), BuildAsPagesAsyncMethod(), BuildGetNextResponseMethod()]
+                : [BuildAsPagesMethod(), BuildGetNextResponseMethod()];
         }
 
         private MethodProvider BuildAsPagesMethod()
@@ -94,9 +104,7 @@ namespace Azure.Generator.Providers
             var signature = new MethodSignature(
                 "AsPages",
                 $"Gets the pages of {Name} as an enumerable collection.",
-                IsAsync
-                    ? MethodSignatureModifiers.Async | MethodSignatureModifiers.Public | MethodSignatureModifiers.Override
-                    : MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
                 IsAsync ?
                     new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)) :
                     new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)),
@@ -106,8 +114,23 @@ namespace Azure.Generator.Providers
             return
                 new MethodProvider(
                     signature,
-                    BuildAsPagesMethodBody(),
+                    IsAsync
+                        ? Return(This.Invoke("AsPagesAsync", [ContinuationTokenParameter, PageSizeHintParameter,
+                            RequestOptionsField.NullConditional().Property(nameof(RequestContext.CancellationToken)).NullCoalesce(Default)]))
+                        : BuildAsPagesMethodBody(),
                     this);
+        }
+
+        private MethodProvider BuildAsPagesAsyncMethod()
+        {
+            var signature = new MethodSignature(
+                "AsPagesAsync",
+                null,
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Async,
+                new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)),
+                null,
+                [ContinuationTokenParameter, PageSizeHintParameter, EnumerationCancellationTokenParameter]);
+            return new MethodProvider(signature, BuildAsPagesMethodBody(), this);
         }
 
         private MethodBodyStatement[] BuildAsPagesMethodBody()
@@ -129,7 +152,9 @@ namespace Azure.Generator.Providers
             {
                 // Get the response
                 Declare("response", new CSharpType(typeof(Response), isNullable: true),
-                    This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, nextPageVariable], IsAsync),
+                    This.Invoke(_getNextResponseMethodName, IsAsync
+                        ? [PageSizeHintParameter, nextPageVariable, EnumerationCancellationTokenParameter]
+                        : [PageSizeHintParameter, nextPageVariable], IsAsync),
                     out var responseVariable),
                 // Early exit if response is null
                 new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() },
@@ -246,7 +271,9 @@ namespace Azure.Generator.Providers
             var statements = new List<MethodBodyStatement>
             {
                 Declare("response", new CSharpType(typeof(Response), isNullable: true),
-                    This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, Null], IsAsync),
+                    This.Invoke(_getNextResponseMethodName, IsAsync
+                        ? [PageSizeHintParameter, Null, EnumerationCancellationTokenParameter]
+                        : [PageSizeHintParameter, Null], IsAsync),
                     out var responseVariable),
                 Declare("result", ResponseModelType, responseVariable.CastTo(ResponseModelType), out var resultVariable),
             };
@@ -276,7 +303,9 @@ namespace Azure.Generator.Providers
                 IsAsync ? MethodSignatureModifiers.Private | MethodSignatureModifiers.Async : MethodSignatureModifiers.Private,
                 IsAsync ? new CSharpType(typeof(ValueTask<>), new CSharpType(typeof(Response), isNullable: true)) : new CSharpType(typeof(Response), isNullable: true),
                 null,
-                [PageSizeHintParameter, nextPageParameter]);
+                IsAsync
+                    ? [PageSizeHintParameter, nextPageParameter, CancellationTokenParameter]
+                    : [PageSizeHintParameter, nextPageParameter]);
 
             var bodyStatements = new List<MethodBodyStatement>();
 
@@ -309,7 +338,10 @@ namespace Azure.Generator.Providers
             }
 
             TryExpression BuildTryExpression()
-                => new TryExpression(Return(ClientField.Property("Pipeline").Invoke(IsAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, RequestOptionsField], IsAsync)));
+                => new TryExpression(IsAsync
+                    ? new HttpPipelineProvider(ClientField.Property("Pipeline")).SendMessageAsync(
+                        messageVariable.ToApi<HttpMessageApi>(), RequestOptionsField.AsValueExpression.ToApi<HttpRequestOptionsApi>(), CancellationTokenParameter)
+                    : Return(ClientField.Property("Pipeline").Invoke("ProcessMessage", [messageVariable, RequestOptionsField])));
 
             return new MethodProvider(signature, bodyStatements.ToArray(), this);
         }

@@ -24,11 +24,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DataDiskImageEncryption"/>. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="securityProfile"> This property specifies the security profile of a data disk image. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
-        internal DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int lun) : base(diskEncryptionSetId, additionalBinaryDataProperties)
+        internal DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataDiskImageSecurityProfile securityProfile, int lun) : base(diskEncryptionSetId, additionalBinaryDataProperties)
         {
+            SecurityProfile = securityProfile;
             Lun = lun;
         }
+
+        /// <summary> This property specifies the security profile of a data disk image. </summary>
+        public DataDiskImageSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </summary>
         public int Lun { get; set; }

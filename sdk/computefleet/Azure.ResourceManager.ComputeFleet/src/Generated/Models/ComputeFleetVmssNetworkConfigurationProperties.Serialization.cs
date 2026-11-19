@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 isFpgaEnabled,
                 networkSecurityGroup,
                 dnsSettings,
-                ipConfigurations,
+                ipConfigurations ?? new ChangeTrackingList<ComputeFleetVmssIPConfiguration>(),
                 isIPForwardingEnabled,
                 deleteOption,
                 auxiliaryMode,

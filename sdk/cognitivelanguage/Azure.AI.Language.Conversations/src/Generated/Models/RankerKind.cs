@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="RankerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RankerKind?(string value) => value == null ? null : new RankerKind(value);
+        public static implicit operator RankerKind?(string value) => value == null ? (RankerKind?)null : new RankerKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

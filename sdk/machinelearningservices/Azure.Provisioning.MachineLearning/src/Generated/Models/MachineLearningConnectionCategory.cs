@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Category of the connection. </summary>
@@ -22,14 +24,17 @@ namespace Azure.Provisioning.MachineLearning
         Snowflake = 4,
         /// <summary> AzureKeyVault. </summary>
         AzureKeyVault = 5,
-        /// <summary> AzureSqlDb. </summary>
-        AzureSqlDb = 6,
+        /// <summary> AzureSqlDB. </summary>
+        [DataMember(Name = "AzureSqlDb")]
+        AzureSqlDB = 6,
         /// <summary> AzureSynapseAnalytics. </summary>
         AzureSynapseAnalytics = 7,
-        /// <summary> AzureMySqlDb. </summary>
-        AzureMySqlDb = 8,
-        /// <summary> AzurePostgresDb. </summary>
-        AzurePostgresDb = 9,
+        /// <summary> AzureMySqlDB. </summary>
+        [DataMember(Name = "AzureMySqlDb")]
+        AzureMySqlDB = 8,
+        /// <summary> AzurePostgresDB. </summary>
+        [DataMember(Name = "AzurePostgresDb")]
+        AzurePostgresDB = 9,
         /// <summary> ADLSGen2. </summary>
         ADLSGen2 = 10,
         /// <summary> AzureContainerAppEnvironment. </summary>
@@ -54,14 +59,17 @@ namespace Azure.Provisioning.MachineLearning
         AzureStorageAccount = 20,
         /// <summary> AzureOneLake. </summary>
         AzureOneLake = 21,
-        /// <summary> CosmosDb. </summary>
-        CosmosDb = 22,
-        /// <summary> CosmosDbMongoDbApi. </summary>
-        CosmosDbMongoDbApi = 23,
+        /// <summary> CosmosDB. </summary>
+        [DataMember(Name = "CosmosDb")]
+        CosmosDB = 22,
+        /// <summary> CosmosDBMongoDBApi. </summary>
+        [DataMember(Name = "CosmosDbMongoDbApi")]
+        CosmosDBMongoDBApi = 23,
         /// <summary> AzureDataExplorer. </summary>
         AzureDataExplorer = 24,
-        /// <summary> AzureMariaDb. </summary>
-        AzureMariaDb = 25,
+        /// <summary> AzureMariaDB. </summary>
+        [DataMember(Name = "AzureMariaDb")]
+        AzureMariaDB = 25,
         /// <summary> AzureDatabricksDeltaLake. </summary>
         AzureDatabricksDeltaLake = 26,
         /// <summary> AzureSqlMi. </summary>
@@ -90,8 +98,9 @@ namespace Azure.Provisioning.MachineLearning
         Impala = 38,
         /// <summary> Informix. </summary>
         Informix = 39,
-        /// <summary> MariaDb. </summary>
-        MariaDb = 40,
+        /// <summary> MariaDB. </summary>
+        [DataMember(Name = "MariaDb")]
+        MariaDB = 40,
         /// <summary> MicrosoftAccess. </summary>
         MicrosoftAccess = 41,
         /// <summary> MySql. </summary>
@@ -132,10 +141,12 @@ namespace Azure.Provisioning.MachineLearning
         Cassandra = 59,
         /// <summary> Couchbase. </summary>
         Couchbase = 60,
-        /// <summary> MongoDbV2. </summary>
-        MongoDbV2 = 61,
-        /// <summary> MongoDbAtlas. </summary>
-        MongoDbAtlas = 62,
+        /// <summary> MongoDBV2. </summary>
+        [DataMember(Name = "MongoDbV2")]
+        MongoDBV2 = 61,
+        /// <summary> MongoDBAtlas. </summary>
+        [DataMember(Name = "MongoDbAtlas")]
+        MongoDBAtlas = 62,
         /// <summary> AmazonS3Compatible. </summary>
         AmazonS3Compatible = 63,
         /// <summary> FileServer. </summary>

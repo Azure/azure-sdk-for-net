@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    /// <summary> An certificate resource belonging to a catalog resource. </summary>
+    /// <summary> A certificate resource belonging to a catalog resource. </summary>
     public partial class SphereCertificateData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -25,7 +25,12 @@
     <Exec Command="dotnet build $(MSBuildThisFileDirectory)packages/plugins/client/Client.Plugin/" />
   </Target>
 
-  <Target Name="GenerateCode" Condition="'$(TypeSpecInput)' != ''" DependsOnTargets="InstallTspClient;BuildPlugin">
+  <!-- Only the unbranded emitter package includes client-plugin. Keep BuildPlugin available for explicit builds. -->
+  <Target Name="BuildPluginIfNeeded"
+          Condition="Exists('$(TypeSpecInput)') AND $([System.IO.File]::ReadAllText('$(TypeSpecInput)').Contains('eng/http-client-csharp-emitter-package.json'))"
+          DependsOnTargets="BuildPlugin" />
+
+  <Target Name="GenerateCode" Condition="'$(TypeSpecInput)' != ''" DependsOnTargets="InstallTspClient;BuildPluginIfNeeded">
     <Error Text="You used skipped sync but didn't have the TempTypeSpecFiles in your project directory.  Please run 'dotnet build /t:GenerateCode /p:SaveInputs=true' without SkipSync first at least once" Condition="'$(SkipSync)' == 'true' AND !Exists('$(MSBuildProjectDirectory)/../TempTypeSpecFiles')" />
     <Exec Condition="'$(SkipSync)' == 'true'" Command="$(_TypeSpecProjectGenerateCommand) $(_SaveInputs) $(_TypespecAdditionalOptions) $(_Trace)"/>
     <Exec Condition="'$(SkipSync)' != 'true'" Command="$(_TypeSpecProjectSyncAndGenerateCommand) $(_SaveInputs) $(_LocalSpecRepo) $(_TypespecAdditionalOptions) $(_Trace)"/>

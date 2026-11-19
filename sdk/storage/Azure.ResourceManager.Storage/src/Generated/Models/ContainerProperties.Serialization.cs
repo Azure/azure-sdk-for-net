@@ -180,6 +180,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("enableNfsV3AllSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3AllSquash.Value);
             }
+            if (Optional.IsDefined(BlobAccessPointConfiguration))
+            {
+                writer.WritePropertyName("blobAccessPointConfiguration"u8);
+                writer.WriteObjectValue(BlobAccessPointConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -241,6 +246,7 @@ namespace Azure.ResourceManager.Storage.Models
             ImmutableStorageWithVersioning immutableStorageWithVersioning = default;
             bool? enableNfsV3RootSquash = default;
             bool? enableNfsV3AllSquash = default;
+            BlobAccessPointConfigurationConnection blobAccessPointConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -419,6 +425,15 @@ namespace Azure.ResourceManager.Storage.Models
                     enableNfsV3AllSquash = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("blobAccessPointConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobAccessPointConfiguration = BlobAccessPointConfigurationConnection.DeserializeBlobAccessPointConfigurationConnection(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -444,6 +459,7 @@ namespace Azure.ResourceManager.Storage.Models
                 immutableStorageWithVersioning,
                 enableNfsV3RootSquash,
                 enableNfsV3AllSquash,
+                blobAccessPointConfiguration,
                 additionalBinaryDataProperties);
         }
     }

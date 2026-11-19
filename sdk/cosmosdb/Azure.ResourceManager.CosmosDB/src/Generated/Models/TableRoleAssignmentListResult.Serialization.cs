@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TableRoleAssignmentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TableRoleAssignmentListResult(value ?? new ChangeTrackingList<CosmosDBTableRoleAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

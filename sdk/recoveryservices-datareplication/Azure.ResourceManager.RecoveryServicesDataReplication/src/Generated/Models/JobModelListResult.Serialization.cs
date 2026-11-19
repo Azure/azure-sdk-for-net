@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JobModelListResult(value, nextLink, additionalBinaryDataProperties);
+            return new JobModelListResult(value ?? new ChangeTrackingList<DataReplicationJobData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

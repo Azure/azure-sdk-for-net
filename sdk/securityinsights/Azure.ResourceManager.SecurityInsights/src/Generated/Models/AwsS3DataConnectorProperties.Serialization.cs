@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AwsS3DataConnectorProperties(destinationTable, sqsUrls, roleArn, dataTypes, additionalBinaryDataProperties);
+            return new AwsS3DataConnectorProperties(destinationTable, sqsUrls ?? new ChangeTrackingList<string>(), roleArn, dataTypes, additionalBinaryDataProperties);
         }
     }
 }

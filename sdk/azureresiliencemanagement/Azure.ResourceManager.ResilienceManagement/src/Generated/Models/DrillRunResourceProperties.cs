@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Properties of a Drill Run resource. </summary>
-    public partial class DrillRunResourceProperties : JobResourceProperties
+    public partial class DrillRunResourceProperties : ResilienceManagementJobResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="DrillRunResourceProperties"/>. </summary>
         internal DrillRunResourceProperties() : base(JobResourceType.DrillRun)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="jobResourceType"> Discriminator for the JobResource object hierarchy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the Drill Run Resource. </param>
-        internal DrillRunResourceProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
+        internal DrillRunResourceProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, ResilienceManagementJobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<ResilienceManagementJobRetryDetails> retryDetails, ResilienceManagementJobExtendedInfo jobExtendedInfo, IReadOnlyList<ResilienceManagementJobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
         }

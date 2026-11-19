@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteLinkedBackendData, StaticSiteBuildLinkedBackendResource>(new StaticSiteLinkedBackendARMResourceOperationGroupGetLinkedBackendsForBuildAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteLinkedBackendData, StaticSiteBuildLinkedBackendResource>(new StaticSiteLinkedBackendDataAsync0CollectionResultOfT(
                 _staticSiteLinkedBackendARMResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteLinkedBackendData, StaticSiteBuildLinkedBackendResource>(new StaticSiteLinkedBackendARMResourceOperationGroupGetLinkedBackendsForBuildCollectionResultOfT(
+            return new PageableWrapper<StaticSiteLinkedBackendData, StaticSiteBuildLinkedBackendResource>(new StaticSiteLinkedBackendData0CollectionResultOfT(
                 _staticSiteLinkedBackendARMResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

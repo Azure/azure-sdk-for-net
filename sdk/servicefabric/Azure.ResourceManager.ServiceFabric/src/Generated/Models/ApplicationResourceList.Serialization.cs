@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationResourceList(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationResourceList(value ?? new ChangeTrackingList<ServiceFabricApplicationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

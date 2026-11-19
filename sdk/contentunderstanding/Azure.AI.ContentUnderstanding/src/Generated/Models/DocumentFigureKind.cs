@@ -56,7 +56,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Converts a string to a <see cref="DocumentFigureKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentFigureKind?(string value) => value == null ? null : new DocumentFigureKind(value);
+        public static implicit operator DocumentFigureKind?(string value) => value == null ? (DocumentFigureKind?)null : new DocumentFigureKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

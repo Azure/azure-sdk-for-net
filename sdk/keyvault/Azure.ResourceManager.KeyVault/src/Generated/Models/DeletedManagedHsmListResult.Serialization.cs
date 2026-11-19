@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeletedManagedHsmListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DeletedManagedHsmListResult(value ?? new ChangeTrackingList<DeletedManagedHsmData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

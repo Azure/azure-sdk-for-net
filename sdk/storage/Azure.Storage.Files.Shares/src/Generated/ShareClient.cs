@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Files.Shares

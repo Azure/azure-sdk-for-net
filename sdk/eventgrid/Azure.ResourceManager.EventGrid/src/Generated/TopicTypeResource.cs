@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new TopicTypesGetEventTypesAsyncCollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
+            return new EventTypeUnderTopicAsync0CollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new TopicTypesGetEventTypesCollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
+            return new EventTypeUnderTopic0CollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
         }
     }
 }

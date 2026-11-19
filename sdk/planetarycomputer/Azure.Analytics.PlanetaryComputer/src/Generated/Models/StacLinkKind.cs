@@ -106,7 +106,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="StacLinkKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StacLinkKind?(string value) => value == null ? null : new StacLinkKind(value);
+        public static implicit operator StacLinkKind?(string value) => value == null ? (StacLinkKind?)null : new StacLinkKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

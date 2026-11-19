@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    /// <summary> Benefit scope response property. </summary>
+    /// <summary> The SavingsPlanValidateResult. </summary>
     public partial class SavingsPlanValidateResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,28 +20,24 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResult"/>. </summary>
         internal SavingsPlanValidateResult()
         {
+            Benefits = new ChangeTrackingList<SavingsPlanValidationDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResult"/>. </summary>
-        /// <param name="isValid"> Indicates if the provided input was valid. </param>
-        /// <param name="reasonCode"> Failure reason code if the provided input was invalid. </param>
-        /// <param name="reason"> Failure reason if the provided input was invalid. </param>
+        /// <param name="benefits"></param>
+        /// <param name="nextLink"> Url to get the next page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanValidateResult(bool? isValid, string reasonCode, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavingsPlanValidateResult(IList<SavingsPlanValidationDetail> benefits, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsValid = isValid;
-            ReasonCode = reasonCode;
-            Reason = reason;
+            Benefits = benefits;
+            NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Indicates if the provided input was valid. </summary>
-        public bool? IsValid { get; }
+        /// <summary> Gets the Benefits. </summary>
+        public IList<SavingsPlanValidationDetail> Benefits { get; }
 
-        /// <summary> Failure reason code if the provided input was invalid. </summary>
-        public string ReasonCode { get; }
-
-        /// <summary> Failure reason if the provided input was invalid. </summary>
-        public string Reason { get; }
+        /// <summary> Url to get the next page. </summary>
+        public string NextLink { get; }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PremierAddOnOfferListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PremierAddOnOfferListResult(value ?? new ChangeTrackingList<PremierAddOnOffer>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

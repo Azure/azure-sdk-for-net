@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningFeatureStoreEntityContainerData, MachineLearningFeatureStoreEntityContainerResource>(new FeaturestoreEntityContainersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningFeatureStoreEntityContainerData, MachineLearningFeatureStoreEntityContainerResource>(new MachineLearningFeatureStoreEntityContainerDataAsyncCollectionResultOfT(
                 _featurestoreEntityContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningFeatureStoreEntityContainerData, MachineLearningFeatureStoreEntityContainerResource>(new FeaturestoreEntityContainersGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningFeatureStoreEntityContainerData, MachineLearningFeatureStoreEntityContainerResource>(new MachineLearningFeatureStoreEntityContainerDataCollectionResultOfT(
                 _featurestoreEntityContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

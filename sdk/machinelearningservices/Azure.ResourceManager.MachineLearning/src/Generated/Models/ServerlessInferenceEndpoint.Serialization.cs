@@ -76,19 +76,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers"u8);
-                writer.WriteStartObject();
-                foreach (var item in Headers)
+                if (Headers != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("headers"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Headers)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("headers"u8);
+                }
             }
             if (options.Format != "W")
             {
@@ -137,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IReadOnlyDictionary<string, string> headers = default;
+            IReadOnlyDictionary<string, string> headers = new ChangeTrackingDictionary<string, string>();
             Uri uri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -146,6 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        headers = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -173,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServerlessInferenceEndpoint(headers ?? new ChangeTrackingDictionary<string, string>(), uri, additionalBinaryDataProperties);
+            return new ServerlessInferenceEndpoint(headers, uri, additionalBinaryDataProperties);
         }
     }
 }

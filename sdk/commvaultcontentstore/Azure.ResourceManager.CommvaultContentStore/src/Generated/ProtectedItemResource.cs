@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(ResourceType, out string protectedItemApiVersion);
             _protectedItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ResourceType.Namespace, Diagnostics);
-            _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectedItemApiVersion ?? "2026-07-03-preview");
+            _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectedItemApiVersion ?? "2026-11-03");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RestorePoints>> GetRestorePointsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProtectedItemRestorePoints>> GetRestorePointsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _protectedItemsClientDiagnostics.CreateScope("ProtectedItemResource.GetRestorePoints");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRestorePointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RestorePoints> response = Response.FromValue(RestorePoints.FromResponse(result), result);
+                Response<ProtectedItemRestorePoints> response = Response.FromValue(ProtectedItemRestorePoints.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestorePoints> GetRestorePoints(CancellationToken cancellationToken = default)
+        public virtual Response<ProtectedItemRestorePoints> GetRestorePoints(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _protectedItemsClientDiagnostics.CreateScope("ProtectedItemResource.GetRestorePoints");
             scope.Start();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRestorePointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RestorePoints> response = Response.FromValue(RestorePoints.FromResponse(result), result);
+                Response<ProtectedItemRestorePoints> response = Response.FromValue(ProtectedItemRestorePoints.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

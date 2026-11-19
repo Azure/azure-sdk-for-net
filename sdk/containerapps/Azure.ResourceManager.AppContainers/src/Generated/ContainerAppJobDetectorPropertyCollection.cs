@@ -36,9 +36,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppJobDetectorPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppJobDetectorPropertyResource.ResourceType, out string containerAppJobDetectorPropertyApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2026-07-01");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

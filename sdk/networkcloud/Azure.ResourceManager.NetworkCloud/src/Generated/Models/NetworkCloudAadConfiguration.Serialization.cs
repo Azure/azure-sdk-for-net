@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkCloudAadConfiguration(adminGroupObjectIds, additionalBinaryDataProperties);
+            return new NetworkCloudAadConfiguration(adminGroupObjectIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

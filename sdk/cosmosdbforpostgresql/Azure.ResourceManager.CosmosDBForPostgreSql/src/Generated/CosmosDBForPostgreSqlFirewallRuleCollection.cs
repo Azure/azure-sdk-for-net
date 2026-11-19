@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleDataAsyncCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterCollectionResultOfT(
+            return new PageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleDataCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

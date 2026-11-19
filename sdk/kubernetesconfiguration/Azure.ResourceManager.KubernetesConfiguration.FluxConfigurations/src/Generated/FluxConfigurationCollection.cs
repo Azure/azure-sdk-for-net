@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FluxConfigurationData, FluxConfigurationResource>(new FluxConfigurationInterfaceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FluxConfigurationData, FluxConfigurationResource>(new FluxConfigurationDataAsyncCollectionResultOfT(
                 _fluxConfigurationInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FluxConfigurationData, FluxConfigurationResource>(new FluxConfigurationInterfaceGetAllCollectionResultOfT(
+            return new PageableWrapper<FluxConfigurationData, FluxConfigurationResource>(new FluxConfigurationDataCollectionResultOfT(
                 _fluxConfigurationInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OpenShiftVersionData, OpenShiftVersionResource>(new OpenShiftVersionsGetAllAsyncCollectionResultOfT(_openShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftVersionCollection.GetAll"), data => new OpenShiftVersionResource(Client, data));
+            return new AsyncPageableWrapper<OpenShiftVersionData, OpenShiftVersionResource>(new OpenShiftVersionDataAsyncCollectionResultOfT(_openShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftVersionCollection.GetAll"), data => new OpenShiftVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OpenShiftVersionData, OpenShiftVersionResource>(new OpenShiftVersionsGetAllCollectionResultOfT(_openShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftVersionCollection.GetAll"), data => new OpenShiftVersionResource(Client, data));
+            return new PageableWrapper<OpenShiftVersionData, OpenShiftVersionResource>(new OpenShiftVersionDataCollectionResultOfT(_openShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftVersionCollection.GetAll"), data => new OpenShiftVersionResource(Client, data));
         }
 
         /// <summary>

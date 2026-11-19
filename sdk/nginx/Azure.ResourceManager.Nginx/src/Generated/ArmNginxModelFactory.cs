@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="skuName"> Name of the SKU. </param>
         /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties = default, string skuName = default)
+        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties, string skuName)
         {
             return new NginxDeploymentData(
                 id,
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="userPreferredEmail"> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </param>
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxStorageAccount loggingStorageAccount, int? scalingCapacity, string userPreferredEmail = default)
+        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxStorageAccount loggingStorageAccount, int? scalingCapacity, string userPreferredEmail)
         {
             return new NginxDeploymentProperties(
                 provisioningState,

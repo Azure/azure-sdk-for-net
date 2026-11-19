@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Kusto
 {
     /// <summary>
     /// Class representing an data connection.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoEventHubDataConnection"/>, <see cref="KustoIotHubDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="EventGridDataConnectionWithManagedIdentity"/>, and <see cref="EventHubDataConnectionWithManagedIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EventGridDataConnectionWithManagedIdentity"/>, <see cref="EventHubDataConnectionWithManagedIdentity"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoEventHubDataConnection"/>, and <see cref="KustoIotHubDataConnection"/>.
     /// </summary>
     public partial class KustoDataConnection : ProvisionableResource
     {
@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Kusto
         private SystemData _systemData;
         private BicepValue<AzureLocation> _location;
         private BicepValue<DataConnectionKind> _kind;
-        private ResourceReference<KustoDatabase> _parent;
+        private ProvisioningResourceReference<KustoDatabase> _parent;
 
         /// <summary> Creates a new KustoDataConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Kusto
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _kind = DefineProperty<DataConnectionKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
-            _parent = DefineResource<KustoDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<KustoDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

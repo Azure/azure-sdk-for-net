@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SwapResource List with single entry to represent slot type on the specified cloud service. </summary>
-    public partial class SwapResourceListResult : IJsonModel<SwapResourceListResult>
+    internal partial class SwapResourceListResult : IJsonModel<SwapResourceListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

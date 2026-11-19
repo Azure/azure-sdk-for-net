@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Resources to remove from a scheduled action. </summary>
+    /// <summary> Resources to remove from a recurring bulk action. </summary>
     public partial class ResourceDetachRequestContent : IJsonModel<ResourceDetachRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceDetachRequestContent"/> for deserialization. </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceDetachRequestContent(resources, additionalBinaryDataProperties);
+            return new ResourceDetachRequestContent(resources ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsAsyncCollectionResultOfT(
+            return new TopLevelDomainLegalAgreementAsyncCollectionResultOfT(
                 _topLevelDomainsRestClient,
                 Id.SubscriptionId,
                 Id.Name,
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsCollectionResultOfT(
+            return new TopLevelDomainLegalAgreementCollectionResultOfT(
                 _topLevelDomainsRestClient,
                 Id.SubscriptionId,
                 Id.Name,

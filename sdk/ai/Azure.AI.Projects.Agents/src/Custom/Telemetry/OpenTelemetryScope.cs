@@ -7,13 +7,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.Core;
 using static Azure.AI.Projects.Agents.Telemetry.OpenTelemetryConstants;
 
@@ -21,6 +24,8 @@ namespace Azure.AI.Projects.Agents.Telemetry
 {
     internal class OpenTelemetryScope : IDisposable
     {
+        private const int MaxVoiceAgentInstructionsLength = 4096;
+
         internal enum OpenTelemetryScopeType
         {
             Unknown,
@@ -70,6 +75,57 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
         private int _hasEnded = 0;
         private readonly OpenTelemetryScopeType _scopeType;
+        private readonly bool _isVoiceAgentOperation;
+
+        private void RecordVoiceAgentResponse(PipelineResponse response, bool bufferResponse)
+        {
+            if (!s_enableTelemetry || Volatile.Read(ref _hasEnded) != 0)
+            {
+                return;
+            }
+
+            _activity?.SetTag(HttpResponseStatusCodeKey, response.Status);
+            if (response.IsError)
+            {
+                _errorType = response.Status.ToString(CultureInfo.InvariantCulture);
+            }
+            else if (bufferResponse)
+            {
+                // Never buffer or consume a protocol caller's streaming response for telemetry.
+                try
+                {
+                    using JsonDocument document = JsonDocument.Parse(response.Content);
+                    JsonElement root = document.RootElement;
+                    if (root.ValueKind == JsonValueKind.Object)
+                    {
+                        _response = new RecordedResponse(false);
+                        if (root.TryGetProperty("id", out JsonElement id) && id.ValueKind == JsonValueKind.String)
+                        {
+                            _response.AgentId = id.GetString();
+                        }
+                        if (root.TryGetProperty("name", out JsonElement name) && name.ValueKind == JsonValueKind.String)
+                        {
+                            SetTagMaybe(GenAiAgentNameKey, name.GetString());
+                        }
+                        if (root.TryGetProperty("version", out JsonElement version) && version.ValueKind == JsonValueKind.String)
+                        {
+                            _response.Version = version.GetString();
+                        }
+                        else if (root.TryGetProperty("versions", out JsonElement versions) && versions.ValueKind == JsonValueKind.Object &&
+                            versions.TryGetProperty("latest", out JsonElement latest) && latest.ValueKind == JsonValueKind.Object &&
+                            latest.TryGetProperty("version", out version) && version.ValueKind == JsonValueKind.String)
+                        {
+                            _response.Version = version.GetString();
+                        }
+                    }
+                }
+                catch (JsonException)
+                {
+                    // A malformed protocol response must not turn a successful HTTP call into a failure.
+                    SetTagMaybe(VoiceAgentTelemetryErrorTypeKey, typeof(JsonException).FullName);
+                }
+            }
+        }
 
         /// <summary>
         /// Initializes GenAI telemetry by checking the GenAI-specific feature flag and
@@ -130,16 +186,37 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 ModelSerializationExtensions.WireOptions,
                 AzureAIProjectsAgentsContext.Default
             );
-            string operationName = OperationNameValueCreateAgent + " " + creationOptions.Name;
-            var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent);
-            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            // The create-request deserialization hook does not populate Definition. Recover voice
+            // metadata without changing the existing telemetry for other agent definitions.
+            ProjectsAgentDefinition definition = creationOptions.Definition ?? ReadVoiceAgentDefinition(binaryData);
+#pragma warning disable AAIP001
+            bool isVoiceAgent = definition is VoiceAgentDefinition;
+#pragma warning restore AAIP001
+            string operationName = isVoiceAgent ? OperationNameValueCreateAgent : OperationNameValueCreateAgent + " " + creationOptions.Name;
+            var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent, isVoiceAgent);
+            if (!isVoiceAgent && scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
             {
                 return null;
             }
 
-            SetAgentDefinitionTelemetryTags(scope, creationOptions.Definition, creationOptions.Name);
+            SetAgentDefinitionTelemetryTags(scope, definition, creationOptions.Name);
 
             return scope;
+        }
+
+        private static ProjectsAgentDefinition ReadVoiceAgentDefinition(BinaryData content)
+        {
+            using JsonDocument document = JsonDocument.Parse(content);
+            if (document.RootElement.TryGetProperty("definition", out JsonElement definition) &&
+                definition.ValueKind == JsonValueKind.Object &&
+                definition.TryGetProperty("kind", out JsonElement kind) &&
+                kind.ValueKind == JsonValueKind.String && kind.ValueEquals("voice"))
+            {
+#pragma warning disable AAIP001
+                return VoiceAgentDefinition.DeserializeVoiceAgentDefinition(definition, ModelSerializationExtensions.WireOptions);
+#pragma warning restore AAIP001
+            }
+            return null;
         }
 
         /// <summary>
@@ -168,9 +245,12 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 AzureAIProjectsAgentsContext.Default
             );
 
-            string operationName = OperationNameValueCreateAgent + " " + agentName;
-            var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent);
-            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+#pragma warning disable AAIP001
+            bool isVoiceAgent = updateOptions.Definition is VoiceAgentDefinition;
+#pragma warning restore AAIP001
+            string operationName = isVoiceAgent ? OperationNameValueCreateAgent : OperationNameValueCreateAgent + " " + agentName;
+            var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent, isVoiceAgent);
+            if (!isVoiceAgent && scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
             {
                 return null;
             }
@@ -199,16 +279,125 @@ namespace Azure.AI.Projects.Agents.Telemetry
             using var memoryStream = new MemoryStream();
             content.WriteTo(memoryStream, CancellationToken.None);
             memoryStream.Position = 0;
-            BinaryData binaryData = BinaryData.FromStream(memoryStream);
+            BinaryData binaryData = null;
+            if (content is MultiPartFormDataBinaryContent multiPartFormContent)
+            {
+                string boundary = null;
+                if (multiPartFormContent.HttpContent is MultipartFormDataContent httpContent)
+                {
+                    boundary = httpContent.Headers.ContentType?.Parameters
+                        .FirstOrDefault(x => string.Equals(x.Name, "boundary", StringComparison.InvariantCultureIgnoreCase))
+                        .Value?.Trim('"');
+                }
+                if (string.IsNullOrEmpty(boundary))
+                {
+                    return null;
+                }
+                else
+                {
+                    // We cannot just parse MultipartFormDataContent, because its parts cannot be deserialized
+                    // to stream in sync manner due to netstandard2.0 limitation.
+                    byte[] btBoundary = Encoding.UTF8.GetBytes($"--{boundary}");
+                    string strContent = "Content-Type: application/json";
+                    byte[] readBuffer = new byte[Math.Max(btBoundary.Length, 1000)];
+                    List<byte> arJson = [];
+                    int read = memoryStream.Read(readBuffer, 0, readBuffer.Length);
+                    bool withinBoundaries = false, badContentType=false, withinContentType=false, doneReading=false;
+                    LinkedList<byte> window = new();
+                    byte symbolBeforeWindow = (byte)'\n'; // At the begin of stream, assume that the last symbol is LF.
+                    while (read > 0)
+                    {
+                        for (int i = 0; i < read; i++)
+                        {
+                            window.AddLast(readBuffer[i]);
+                            if (window.Count > btBoundary.Length)
+                            {
+                                symbolBeforeWindow = window.First();
+                                window.RemoveFirst();
+                            }
+                            // If we see the boundary, reset or exit;
+                            if (window.Count == btBoundary.Length)
+                            {
+                                if (Enumerable.SequenceEqual(window, btBoundary) && symbolBeforeWindow == (byte)'\n')
+                                {
+                                    if (withinContentType && !badContentType)
+                                    {
+                                        // We have already found the json.
+                                        doneReading = true;
+                                        break;
+                                    }
+                                    withinBoundaries = true;
+                                    withinContentType = false;
+                                    badContentType = false;
+                                    window.Clear();
+                                }
+                            }
+                            // If we are within boundary, search for "Content-Type:" and check if it is application/json.
+                            // If it is not, wait for other boundary.
+                            if (withinBoundaries && !withinContentType && window.Count > strContent.Length)
+                            {
+                                string testContent = Encoding.UTF8.GetString([..window]);
+                                int contentTypeIndex = testContent.IndexOf("Content-Type: ");
+                                if (contentTypeIndex >=0 && testContent.Length - contentTypeIndex > strContent.Length)
+                                {
+                                    withinContentType = true;
+                                    badContentType = !testContent.Contains(strContent);
+                                    if (!badContentType)
+                                    {
+                                        for (int j = contentTypeIndex + strContent.Length; j < window.Count; j++)
+                                        {
+                                            arJson.Add(window.ElementAt(j));
+                                        }
+                                    }
+                                    window.Clear();
+                                }
+                            }
+                            // The application/json was found; keep recording json.
+                            else if (withinContentType && !badContentType)
+                            {
+                                arJson.Add(readBuffer[i]);
+                            }
+                        }
+                        if (doneReading)
+                        {
+                            break;
+                        }
+                        read = memoryStream.Read(readBuffer, 0, readBuffer.Length);
+                    }
+                    string jsonPart = Encoding.UTF8.GetString([..arJson]);
+                    int jsonStart = jsonPart.IndexOf('{');
+                    int jsonEnd = jsonPart.LastIndexOf('}');
+                    if (jsonStart > 0 && jsonStart < jsonEnd)
+                    {
+                        binaryData = BinaryData.FromString(jsonPart.Substring(jsonStart, jsonEnd - jsonStart + 1));
+                    }
+                    else
+                    {
+                        // Invalid json.
+                        return null;
+                    }
+                }
+                if (binaryData == null)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                binaryData = BinaryData.FromStream(memoryStream);
+            }
             ProjectsAgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<ProjectsAgentVersionCreationOptions>(
                 binaryData,
                 ModelSerializationExtensions.WireOptions,
                 AzureAIProjectsAgentsContext.Default
             );
 
-            string operationName = OperationNameValueCreateAgent + " " + agentName;
-            var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent);
-            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+#pragma warning disable AAIP001
+            bool isVoiceAgent = creationOptions.Definition is VoiceAgentDefinition;
+#pragma warning restore AAIP001
+            string operationName = isVoiceAgent ? OperationNameValueCreateAgent : OperationNameValueCreateAgent + " " + agentName;
+            var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent, isVoiceAgent);
+            if (!isVoiceAgent && scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
             {
                 return null;
             }
@@ -219,7 +408,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         }
 
         /// <summary>
-        /// Sets telemetry tags and events for agent definition, handling PromptAgentDefinition, WorkflowAgentDefinition, and HostedAgentDefinition.
+        /// Sets telemetry tags and events for the agent definition.
         /// </summary>
         /// <param name="scope">The OpenTelemetryScope instance to set tags on.</param>
         /// <param name="agentDefinition">The agent definition to process.</param>
@@ -246,33 +435,21 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     scope.SetTagMaybe(GenAiRequestReasoningSummary, reasoningOptions.ReasoningSummaryVerbosity);
                 }
 
-                // Add instructions event or attribute (if instructions exist)
-                if (!string.IsNullOrEmpty(promptAgentDefinition.Instructions))
-                {
-                    string instructionsJson = JsonSerializer.Serialize(
-                        new[] { new EventContent(s_traceContent ? promptAgentDefinition.Instructions : null) },
-                        EventsContext.Default.EventContentArray
-                    );
-
-                    if (s_useMessageEvents)
-                    {
-                        ActivityTagsCollection messageTags = new() {
-                            { GenAiProviderNameKey, GenAiProviderNameValue},
-                            { GenAiEventContent, instructionsJson }
-                        };
-
-                        scope._activity?.AddEvent(
-                            new ActivityEvent(EventNameSystemMessage, tags: messageTags)
-                        );
-                    }
-                    else
-                    {
-                        // Attribute-based: set system instructions as a span attribute
-                        scope._activity?.SetTag(EventNameSystemMessage, instructionsJson);
-                    }
-                }
+                RecordSystemInstructions(scope, promptAgentDefinition.Instructions);
             }
 #pragma warning disable AAIP001
+            else if (agentDefinition is VoiceAgentDefinition voiceAgentDefinition)
+            {
+                scope.SetTagMaybe(GenAiRequestModelKey, voiceAgentDefinition.Model);
+                if (s_traceContent && !string.IsNullOrEmpty(voiceAgentDefinition.Instructions))
+                {
+                    string instructions = voiceAgentDefinition.Instructions;
+                    RecordSystemInstructions(scope, instructions.Length > MaxVoiceAgentInstructionsLength
+                        ? instructions.Substring(0, MaxVoiceAgentInstructionsLength)
+                        : instructions);
+                }
+            }
+#pragma warning disable CS0618 // Preserve telemetry for legacy workflow agents.
             else if (agentDefinition is WorkflowAgentDefinition workflowAgentDefinition)
             {
                 // Handle workflow agent
@@ -307,6 +484,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     new ActivityEvent(EventNameAgentWorkflow, tags: workflowTags)
                 );
             }
+#pragma warning restore CS0618
 #pragma warning restore AAIP001
             // Check for ImageBasedHostedAgentDefinition BEFORE checking for HostedAgentDefinition
             // since ImageBasedHostedAgentDefinition inherits from HostedAgentDefinition
@@ -315,7 +493,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 // Handle image-based hosted agent - add all hosted-specific attributes including image
                 scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, imageBasedHostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration.Image);
+                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration?.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (imageBasedHostedAgentDefinition.Versions != null &&
@@ -329,29 +507,39 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     scope.SetTagMaybe(GenAiAgentHostedProtocolVersion, protocolVersion.Version);
                 }
             }
-            else if (agentDefinition is HostedAgentDefinition hostedAgentDefinition)
-            {
-                // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
-                scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
-                scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.ContainerConfiguration.Image);
-
-                // Extract protocol and version from ContainerProtocolVersions if available
-                if (hostedAgentDefinition.Versions != null &&
-                    hostedAgentDefinition.Versions.Count > 0)
-                {
-                    var protocolVersion = hostedAgentDefinition.Versions[0];
-
-                    // Set protocol name (convert enum to lowercase string for consistency with Python)
-                    string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
-                    scope.SetTagMaybe(GenAiAgentHostedProtocol, protocolName);
-                    scope.SetTagMaybe(GenAiAgentHostedProtocolVersion, protocolVersion.Version);
-                }
-            }
             else
             {
                 // Unknown agent type - set minimal attributes
                 scope.SetTagMaybe(GenAiRequestModelKey, "unknown");
+            }
+        }
+
+        private static void RecordSystemInstructions(OpenTelemetryScope scope, string instructions)
+        {
+            if (string.IsNullOrEmpty(instructions))
+            {
+                return;
+            }
+
+            string instructionsJson = JsonSerializer.Serialize(
+                new[] { new EventContent(s_traceContent ? instructions : null) },
+                EventsContext.Default.EventContentArray
+            );
+
+            if (s_useMessageEvents)
+            {
+                ActivityTagsCollection messageTags = new() {
+                    { GenAiProviderNameKey, GenAiProviderNameValue},
+                    { GenAiEventContent, instructionsJson }
+                };
+
+                scope._activity?.AddEvent(
+                    new ActivityEvent(EventNameSystemMessage, tags: messageTags)
+                );
+            }
+            else
+            {
+                scope._activity?.SetTag(EventNameSystemMessage, instructionsJson);
             }
         }
 
@@ -370,10 +558,17 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
             // Check for workflow agent
 #pragma warning disable AAIP001
+            if (agentDefinition is VoiceAgentDefinition)
+            {
+                return AgentTypeVoice;
+            }
+
+#pragma warning disable CS0618 // Preserve telemetry for legacy workflow agents.
             if (agentDefinition is WorkflowAgentDefinition)
             {
                 return AgentTypeWorkflow;
             }
+#pragma warning restore CS0618
 #pragma warning restore AAIP001
             // Check for prompt agent
             if (agentDefinition is DeclarativeAgentDefinition)
@@ -385,8 +580,9 @@ namespace Azure.AI.Projects.Agents.Telemetry
             return AgentTypeUnknown;
         }
 
-        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName = null)
+        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName = null, bool isVoiceAgentOperation = false)
         {
+            _isVoiceAgentOperation = isVoiceAgentOperation;
             _scopeType = activityName switch
             {
                 var n when n == OperationNameValueCreateAgent => OpenTelemetryScopeType.CreateAgent,
@@ -408,6 +604,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
             // suppress nested client activities from generated code.
             _activity?.SetCustomProperty("az.sdk.scope", bool.TrueString);
+            if (isVoiceAgentOperation)
+            {
+                _activity?.SetCustomProperty("scm.sdk.scope", bool.TrueString);
+            }
 
             // Record the request to telemetry.
             _commonTags = new TagList()
@@ -421,6 +621,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
             {
                 _commonTags.Add(ServerPortKey, endpoint.Port);
             }
+            if (isVoiceAgentOperation)
+            {
+                _commonTags.Add(VoiceAgentOperationKey, operationName.Substring(operationName.LastIndexOf('.') + 1));
+            }
 
             // Set tags for reporting them to console.
             foreach (KeyValuePair<string, object> kv in _commonTags)
@@ -431,9 +635,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
             _duration = Stopwatch.StartNew();
         }
 
-        public void RecordCreateAgentResponse(ClientResult response)
+        public void RecordCreateAgentResponse(ClientResult response, bool bufferResponse = true)
         {
-            if (s_enableTelemetry)
+            if (_isVoiceAgentOperation)
+            {
+                RecordVoiceAgentResponse(response.GetRawResponse(), bufferResponse);
+            }
+            else if (s_enableTelemetry)
             {
                 ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
@@ -442,9 +650,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
         }
 
-        public void RecordUpdateAgentResponse(ClientResult response)
+        public void RecordUpdateAgentResponse(ClientResult response, bool bufferResponse = true)
         {
-            if (s_enableTelemetry)
+            if (_isVoiceAgentOperation)
+            {
+                RecordVoiceAgentResponse(response.GetRawResponse(), bufferResponse);
+            }
+            else if (s_enableTelemetry)
             {
                 ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
@@ -454,9 +666,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
         }
 
-        public void RecordCreateAgentVersionResponse(ClientResult response)
+        public void RecordCreateAgentVersionResponse(ClientResult response, bool bufferResponse = true)
         {
-            if (s_enableTelemetry)
+            if (_isVoiceAgentOperation)
+            {
+                RecordVoiceAgentResponse(response.GetRawResponse(), bufferResponse);
+            }
+            else if (s_enableTelemetry)
             {
                 ProjectsAgentVersion agentVersion = response.ToProjectAgentsResult<ProjectsAgentVersion>();
                 _response = new RecordedResponse(s_traceContent);
@@ -473,15 +689,30 @@ namespace Azure.AI.Projects.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                if (e is RequestFailedException requestFailed && requestFailed.Status != 0)
+                if (_isVoiceAgentOperation && e is OperationCanceledException)
+                {
+                    RecordCancellation();
+                    return;
+                }
+
+                if (_isVoiceAgentOperation && e is ClientResultException clientResult && clientResult.Status > 0)
+                {
+                    _errorType = clientResult.Status.ToString(CultureInfo.InvariantCulture);
+                    _activity?.SetTag(HttpResponseStatusCodeKey, clientResult.Status);
+                }
+                else if (e is RequestFailedException requestFailed && requestFailed.Status != 0)
                 {
                     _errorType = requestFailed.Status.ToString();
+                    if (_isVoiceAgentOperation)
+                    {
+                        _activity?.SetTag(HttpResponseStatusCodeKey, requestFailed.Status);
+                    }
                 }
                 else
                 {
                     _errorType = e?.GetType()?.FullName ?? "error";
                 }
-                _exception = e;
+                _exception = _isVoiceAgentOperation ? null : e;
             }
         }
 
@@ -492,7 +723,15 @@ namespace Azure.AI.Projects.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                _errorType = typeof(TaskCanceledException).FullName;
+                if (_isVoiceAgentOperation)
+                {
+                    _errorType = null;
+                    _activity?.SetTag(VoiceAgentCancelledKey, true);
+                }
+                else
+                {
+                    _errorType = typeof(TaskCanceledException).FullName;
+                }
                 _exception = null;
             }
         }
@@ -504,7 +743,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         {
             TagList finalTags = _commonTags;
 
-            if (_errorType == null && !IsResponseValid(_response))
+            if (!_isVoiceAgentOperation && _errorType == null && !IsResponseValid(_response))
             {
                 // If there is no response and no error, it is an unexpected error.
                 _errorType = "error";
@@ -514,7 +753,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             {
                 finalTags.Add(ErrorTypeKey, _errorType);
                 _activity?.SetTag(ErrorTypeKey, _errorType);
-                _activity?.SetStatus(ActivityStatusCode.Error, _exception?.Message);
+                _activity?.SetStatus(ActivityStatusCode.Error, _isVoiceAgentOperation ? null : _exception?.Message);
             }
 
             if (_response == null)
@@ -567,6 +806,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 output_tags.Add(GenAiUsageOutputTokensKey, "output");
                 s_tokens.Record(_response.CompletionTokens.Value, output_tags);
             }
+            if (_isVoiceAgentOperation)
+            {
+                s_duration.Record(_duration.Elapsed.TotalSeconds, finalTags);
+            }
         }
 
         public void Dispose()
@@ -574,9 +817,14 @@ namespace Azure.AI.Projects.Agents.Telemetry
             // check if the scope has already ended
             if (s_enableTelemetry && Interlocked.Exchange(ref _hasEnded, 1) == 0)
             {
-                //_response ??= _buffer?.ToResponse();
-                End();
-                _activity?.Dispose();
+                try
+                {
+                    End();
+                }
+                finally
+                {
+                    _activity?.Dispose();
+                }
             }
         }
 

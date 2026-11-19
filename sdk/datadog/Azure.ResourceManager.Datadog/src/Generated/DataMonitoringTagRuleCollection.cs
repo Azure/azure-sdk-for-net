@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new DataMonitoringTagRuleDataAsyncCollectionResultOfT(
                 _tagRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new DataMonitoringTagRuleDataCollectionResultOfT(
                 _tagRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

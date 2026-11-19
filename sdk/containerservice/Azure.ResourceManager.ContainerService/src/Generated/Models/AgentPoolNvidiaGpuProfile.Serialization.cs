@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> NVIDIA-specific GPU settings. </summary>
-    public partial class AgentPoolNvidiaGpuProfile : IJsonModel<AgentPoolNvidiaGpuProfile>
+    internal partial class AgentPoolNvidiaGpuProfile : IJsonModel<AgentPoolNvidiaGpuProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,16 +79,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("managementMode"u8);
                 writer.WriteStringValue(ManagementMode.Value.ToString());
             }
-            if (Optional.IsDefined(DriverMode))
-            {
-                writer.WritePropertyName("driverMode"u8);
-                writer.WriteStringValue(DriverMode.Value.ToString());
-            }
-            if (Optional.IsDefined(MigStrategy))
-            {
-                writer.WritePropertyName("migStrategy"u8);
-                writer.WriteStringValue(MigStrategy.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,8 +122,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             GpuManagementMode? managementMode = default;
-            NvidiaDriverMode? driverMode = default;
-            MultiInstanceGpuStrategy? migStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,30 +134,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     managementMode = new GpuManagementMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("driverMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    driverMode = new NvidiaDriverMode(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("migStrategy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    migStrategy = new MultiInstanceGpuStrategy(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentPoolNvidiaGpuProfile(managementMode, driverMode, migStrategy, additionalBinaryDataProperties);
+            return new AgentPoolNvidiaGpuProfile(managementMode, additionalBinaryDataProperties);
         }
     }
 }

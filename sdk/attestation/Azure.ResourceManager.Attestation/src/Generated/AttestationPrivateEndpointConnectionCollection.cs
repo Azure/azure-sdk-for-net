@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new AttestationPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new AttestationPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

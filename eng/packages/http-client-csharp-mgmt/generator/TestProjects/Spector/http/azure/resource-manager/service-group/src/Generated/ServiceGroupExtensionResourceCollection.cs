@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceGroupExtensionResourceData, ServiceGroupExtensionResource>(new ServiceGroupExtensionResourcesAsyncCollectionResultOfT(_serviceGroupExtensionResourcesRestClient, Id.Name, context, "ServiceGroupExtensionResourceCollection.GetAll"), data => new ServiceGroupExtensionResource(Client, data));
+            return new AsyncPageableWrapper<ServiceGroupExtensionResourceData, ServiceGroupExtensionResource>(new ServiceGroupExtensionResourceDataAsyncCollectionResultOfT(_serviceGroupExtensionResourcesRestClient, Id.Name, context, "ServiceGroupExtensionResourceCollection.GetAll"), data => new ServiceGroupExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceGroupExtensionResourceData, ServiceGroupExtensionResource>(new ServiceGroupExtensionResourcesGetByServiceGroupCollectionResultOfT(_serviceGroupExtensionResourcesRestClient, Id.Name, context, "ServiceGroupExtensionResourceCollection.GetAll"), data => new ServiceGroupExtensionResource(Client, data));
+            return new PageableWrapper<ServiceGroupExtensionResourceData, ServiceGroupExtensionResource>(new ServiceGroupExtensionResourceDataCollectionResultOfT(_serviceGroupExtensionResourcesRestClient, Id.Name, context, "ServiceGroupExtensionResourceCollection.GetAll"), data => new ServiceGroupExtensionResource(Client, data));
         }
 
         /// <summary>

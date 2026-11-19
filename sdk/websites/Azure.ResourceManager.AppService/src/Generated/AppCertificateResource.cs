@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string appCertificateApiVersion);
             _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appCertificateApiVersion ?? "2026-03-15");
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/certificates", out string certificatesApiVersionOverride) ? certificatesApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 

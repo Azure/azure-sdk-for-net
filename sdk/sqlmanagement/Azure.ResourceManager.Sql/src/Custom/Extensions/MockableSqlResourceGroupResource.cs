@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             return new AsyncPageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             return new PageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-            => GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            => GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-            => GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            => GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-            return GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-            return GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
         }
 
         /// <summary>

@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DisksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DevTestLabDiskDataAsyncCollectionResultOfT(
                 _disksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DisksGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DevTestLabDiskDataCollectionResultOfT(
                 _disksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

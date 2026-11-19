@@ -20,13 +20,14 @@ using OpenTelemetry.PersistentStorage.FileSystem;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
-    /// Offline storage and back-off state, partitioned by ingestion endpoint. The directory is derived
-    /// from the endpoint, not the other way round, so a partition is only reopened when that endpoint
-    /// is routed again. The instrumentation key is not part of the path because it already travels
-    /// inside each serialized envelope.
+    /// Offline storage and back-off state, partitioned by route (ingestion endpoint and AAD flag). The
+    /// directory is derived from the route, so a partition is only reopened when that route is used
+    /// again. Instrumentation-key routes keep their existing directories, so older backlogs still drain.
     /// </summary>
     internal sealed class MultiEndpointStorage : IDisposable
     {
+        /// <summary>Prefixed to an AAD route's endpoint before hashing it into a directory name.</summary>
+        internal const string AadPartitionKeyPrefix = "aad|";
         /// <summary>
         /// Appended to the host's storage directory to form a sibling root. Partitions must not be
         /// nested inside it: <c>DirectorySizeTracker</c> sums subdirectories recursively, so a routed
@@ -70,31 +71,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </summary>
         private const long EvictionRecountIntervalMilliseconds = 1000;
 
-        private readonly ConcurrentDictionary<string, EndpointStorage> _partitions = new(StringComparer.Ordinal);
+        private readonly ConcurrentDictionary<(string IngestionEndpoint, bool IsAad), EndpointStorage> _partitions = new();
         private readonly ApplicationInsightsRestClient _restClient;
+        private readonly ApplicationInsightsRestClient? _aadRestClient;
         private readonly ConnectionVars _connectionVars;
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
         private readonly string _rootDirectory;
         private readonly long _maxSizeBytes;
-        private readonly bool _isAadEnabled;
         private readonly object _createLock = new();
         private readonly object _evictLock = new();
+        // Not disposed: a write in progress may still hold it when the store is disposed.
+        private readonly ReaderWriterLockSlim _budgetLock = new();
         private readonly Stopwatch _clock = Stopwatch.StartNew();
         private long _currentSizeBytes;
         private long _lastRecountMilliseconds;
         private volatile bool _disposed;
 
+        /// <remarks><paramref name="aadRestClient"/> is null without a credential; no AAD partition is then created.</remarks>
         internal MultiEndpointStorage(
             ApplicationInsightsRestClient restClient,
+            ApplicationInsightsRestClient? aadRestClient,
             ConnectionVars connectionVars,
-            bool isAadEnabled,
             string rootDirectory,
             long maxSizeBytes,
             NetworkSdkStatsManager? networkSdkStatsManager)
         {
             _restClient = restClient;
+            _aadRestClient = aadRestClient;
             _connectionVars = connectionVars;
-            _isAadEnabled = isAadEnabled;
             _rootDirectory = rootDirectory;
             _maxSizeBytes = maxSizeBytes;
             _networkSdkStatsManager = networkSdkStatsManager;
@@ -119,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// eviction cannot help with - a removed directory, a full disk, a denied ACL - and deleting
         /// the backlog for those destroys other endpoints' telemetry without saving this batch.
         /// </remarks>
-        internal bool TryCreateBlobWithinBudget(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, string requestingEndpoint, out PersistentBlob? blob)
+        internal bool TryCreateBlobWithinBudget(PersistentBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, string requestingEndpoint, out PersistentBlob? blob)
         {
             blob = null;
 
@@ -131,61 +135,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
             RecountIfStale(RecountIntervalMilliseconds);
 
-            if (TryReserve(buffer.Length))
+            // Writes share the gate through completion, so a recount cannot discard bytes reserved
+            // for a file that has not reached disk yet. Different partitions still write concurrently.
+            _budgetLock.EnterReadLock();
+            try
             {
-                return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                if (TryReserve(buffer.Length))
+                {
+                    return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                }
+            }
+            finally
+            {
+                _budgetLock.ExitReadLock();
             }
 
             // Being over budget is the one moment the total has to be trusted, so re-derive it on a
             // much shorter leash before anything is refused or deleted on the strength of it.
             RecountIfStale(EvictionRecountIntervalMilliseconds);
 
-            if (TryReserve(buffer.Length))
+            _budgetLock.EnterReadLock();
+            try
             {
-                return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
-            }
-
-            var reserved = false;
-
-            // Serialized: two writers selecting the same blob would both measure it, both see their
-            // delete succeed - File.Delete does not fail on a file that is already gone - and both
-            // credit its bytes back, leaving the total below what is actually on disk.
-            lock (_evictLock)
-            {
-                // Inside the lock: computed outside, another writer could take the room this
-                // measured, leaving the eviction below paid for and the write still refused.
-                var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
-                var candidates = SelectOldest(MaxBlobsToEvict);
-
-                long evictable = 0;
-                for (int i = 0; i < candidates.Count; i++)
+                if (TryReserve(buffer.Length))
                 {
-                    evictable += FileLength(candidates[i].Path);
+                    return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
                 }
 
-                // Deleting everything on offer would still leave the write refused, so delete nothing.
-                if (evictable < shortfall)
-                {
-                    return false;
-                }
+                var reserved = false;
 
-                for (int i = 0; i < candidates.Count && !reserved; i++)
+                // Serialized: two writers selecting the same blob would both measure it, both see their
+                // delete succeed - File.Delete does not fail on a file that is already gone - and both
+                // credit its bytes back, leaving the total below what is actually on disk.
+                lock (_evictLock)
                 {
-                    // Checked before each delete, not after: room may have appeared while this writer
-                    // waited for the lock, and evicting first would spend a blob to discover that.
-                    reserved = TryReserve(buffer.Length);
+                    // Inside the lock: computed outside, another writer could take the room this
+                    // measured, leaving the eviction below paid for and the write still refused.
+                    var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
+                    var candidates = SelectOldest(MaxBlobsToEvict);
 
-                    if (!reserved)
+                    long evictable = 0;
+                    for (int i = 0; i < candidates.Count; i++)
                     {
-                        TryEvict(candidates[i], requestingEndpoint);
+                        evictable += FileLength(candidates[i].Path);
+                    }
+
+                    // Deleting everything on offer would still leave the write refused, so delete nothing.
+                    if (evictable < shortfall)
+                    {
+                        return false;
+                    }
+
+                    for (int i = 0; i < candidates.Count && !reserved; i++)
+                    {
+                        // Checked before each delete, not after: room may have appeared while this writer
+                        // waited for the lock, and evicting first would spend a blob to discover that.
                         reserved = TryReserve(buffer.Length);
+
+                        if (!reserved)
+                        {
+                            TryEvict(candidates[i], requestingEndpoint);
+                            reserved = TryReserve(buffer.Length);
+                        }
                     }
                 }
-            }
 
-            // Outside the lock: the write is the slow part, and holding it here would serialize
-            // every partition's failure path behind one disk write.
-            return reserved && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                // Outside the eviction lock: the write is the slow part, and holding it here would
+                // serialize every partition's failure path behind one disk write.
+                return reserved && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+            }
+            finally
+            {
+                _budgetLock.ExitReadLock();
+            }
         }
 
         /// <summary>
@@ -211,19 +233,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             }
         }
 
-        private bool TryCreateBlob(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
+        private bool TryCreateBlob(PersistentBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
         {
-            var created = leasePeriodMilliseconds > 0
-                ? inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), leasePeriodMilliseconds, out blob)
-                : inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), out blob);
-
-            if (!created)
+            var created = false;
+            try
             {
-                // Give the reservation back; nothing was written.
-                Interlocked.Add(ref _currentSizeBytes, -buffer.Length);
-            }
+                created = leasePeriodMilliseconds > 0
+                    ? inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), leasePeriodMilliseconds, out blob)
+                    : inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), out blob);
 
-            return created;
+                return created;
+            }
+            finally
+            {
+                if (!created)
+                {
+                    // Give the reservation back; nothing was written.
+                    Interlocked.Add(ref _currentSizeBytes, -buffer.Length);
+                }
+            }
         }
 
         /// <summary>
@@ -251,15 +279,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return;
             }
 
-            if (TryCalculateRootSize(out var size))
+            _budgetLock.EnterWriteLock();
+            try
             {
-                // Sampled after the walk, not before: a write that landed while the walk was running
-                // has already added itself to the total, and the walk may have counted it as well.
-                // Correcting against the later sample errs towards a brief overshoot rather than
-                // towards evicting telemetry that is still wanted.
-                var current = Interlocked.Read(ref _currentSizeBytes);
-
-                Interlocked.Add(ref _currentSizeBytes, size - current);
+                if (TryCalculateRootSize(out var size))
+                {
+                    Interlocked.Exchange(ref _currentSizeBytes, size);
+                }
+            }
+            finally
+            {
+                _budgetLock.ExitWriteLock();
             }
         }
 
@@ -434,7 +464,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         }
 
         /// <summary>
-        /// Names the endpoint that owned an evicted blob. The directory is a one-way hash, so a
+        /// Names the route that owned an evicted blob. The directory is a one-way hash, so a
         /// partition left by an earlier run can only be reported by its directory name.
         /// </summary>
         private string DescribeOwner(string path)
@@ -445,7 +475,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             {
                 if (string.Equals(partition.Value.Directory, directory, StringComparison.Ordinal))
                 {
-                    return partition.Key;
+                    return EndpointRouting.DescribeRoute(partition.Key.IngestionEndpoint, partition.Key.IsAad);
                 }
             }
 
@@ -471,11 +501,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         }
 
         /// <summary>
-        /// Returns the partition for an endpoint, creating it on first use. Returns
+        /// Returns the partition for a route, creating it on first use. Returns
         /// <see langword="null"/> when the partition cannot be created, in which case the caller
         /// transmits without a persistence fallback.
         /// </summary>
-        internal EndpointStorage? TryGet(string ingestionEndpoint)
+        internal EndpointStorage? TryGet(string ingestionEndpoint, bool isAad = false)
         {
             // Checked first: Dispose empties the dictionary before tearing partitions down, so a
             // hit after this point cannot be on one that is already disposed.
@@ -484,23 +514,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return null;
             }
 
-            if (_partitions.TryGetValue(ingestionEndpoint, out var existing))
+            // Nothing could drain an AAD partition without a token, so one is never created.
+            var restClient = isAad ? _aadRestClient : _restClient;
+            if (restClient == null)
+            {
+                return null;
+            }
+
+            var key = (ingestionEndpoint, isAad);
+
+            if (_partitions.TryGetValue(key, out var existing))
             {
                 return existing;
             }
 
             lock (_createLock)
             {
-                if (_partitions.TryGetValue(ingestionEndpoint, out existing))
+                if (_partitions.TryGetValue(key, out existing))
                 {
                     return existing;
                 }
+
+                var route = EndpointRouting.DescribeRoute(ingestionEndpoint, isAad);
 
                 if (_disposed || _partitions.Count >= MaxEndpointPartitions)
                 {
                     if (!_disposed)
                     {
-                        AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCapReached(ingestionEndpoint, MaxEndpointPartitions);
+                        AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCapReached(route, MaxEndpointPartitions);
                     }
 
                     return null;
@@ -508,29 +549,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
                 try
                 {
-                    var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(ingestionEndpoint));
+                    var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(isAad ? AadPartitionKeyPrefix + ingestionEndpoint : ingestionEndpoint));
 
                     // A backstop only. The shared budget is enforced by BudgetedBlobProvider, which is
                     // the only handle handed out, because this cap cannot see across partitions.
                     var innerProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
-                    var blobProvider = new BudgetedBlobProvider(this, innerProvider, ingestionEndpoint);
+                    var blobProvider = new BudgetedBlobProvider(this, innerProvider, route);
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
-                    var transmissionStateManager = new TransmissionStateManager(ingestionEndpoint);
+                    var transmissionStateManager = new TransmissionStateManager(route);
 
                     var created = new EndpointStorage(
                         directory,
                         innerProvider,
                         blobProvider,
                         transmissionStateManager,
-                        new TransmitFromStorageHandler(_restClient, blobProvider, transmissionStateManager, _connectionVars, _isAadEnabled, _networkSdkStatsManager, directory, trackUri));
+                        new TransmitFromStorageHandler(restClient, blobProvider, transmissionStateManager, _connectionVars, isAad, _networkSdkStatsManager, directory, trackUri, route));
 
-                    _partitions[ingestionEndpoint] = created;
+                    _partitions[key] = created;
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(_connectionVars.InstrumentationKey, directory);
 
                     // The directory is a one-way hash, so without this there is no way to tell which
-                    // endpoint a partition on disk belongs to.
-                    AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCreated(ingestionEndpoint, directory);
+                    // route a partition on disk belongs to.
+                    AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCreated(route, directory);
 
                     return created;
                 }

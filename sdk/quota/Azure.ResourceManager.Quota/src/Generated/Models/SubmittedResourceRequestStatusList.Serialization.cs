@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubmittedResourceRequestStatusList(value, nextLink, additionalBinaryDataProperties);
+            return new SubmittedResourceRequestStatusList(value ?? new ChangeTrackingList<GroupQuotaRequestStatusData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

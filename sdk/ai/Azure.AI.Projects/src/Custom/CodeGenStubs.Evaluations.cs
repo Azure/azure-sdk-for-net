@@ -101,11 +101,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("UnknownTrigger")] internal partial class UnknownTrigger { }
 
 // Mark experimental classes if they cannot be marked automatically.
-[CodeGenType("ProjectEvaluatorsGetLatestVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsCollectionResult { }
-[CodeGenType("ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult { }
 [CodeGenType("ProjectInsightsGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllAsyncCollectionResult { }
-[CodeGenType("ProjectEvaluatorsGetVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsAsyncCollectionResult { }
-[CodeGenType("ProjectEvaluatorsGetVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsCollectionResult { }
 [CodeGenType("ProjectInsightsGetAllCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllCollectionResult { }
 [CodeGenType("EvaluationTaxonomiesGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllAsyncCollectionResult { }
 [CodeGenType("EvaluationTaxonomiesGetAllCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllCollectionResult { }

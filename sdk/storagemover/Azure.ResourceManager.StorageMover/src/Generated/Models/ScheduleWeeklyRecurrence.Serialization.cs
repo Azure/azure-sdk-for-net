@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScheduleWeeklyRecurrence(startTime, endTime, additionalBinaryDataProperties, days);
+            return new ScheduleWeeklyRecurrence(startTime, endTime, additionalBinaryDataProperties, days ?? new ChangeTrackingList<ScheduleDayOfWeek>());
         }
     }
 }

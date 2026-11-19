@@ -43,9 +43,11 @@ Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation
 Update the content of an existing message:
 
 ```C# Snippet:WebPubSubChatUpdateMessage
-var updatedMessage = new WebPubSubChatMessage(
-    "user1",
-    new WebPubSubChatMessageContent { Text = "Updated message text" });
+var updatedMessage = new WebPubSubChatMessage
+{
+    CreatedBy = "user1",
+    Content = new WebPubSubChatMessageContent { Text = "Updated message text" },
+};
 
 client.UpdateMessage(
     room.DefaultConversation,

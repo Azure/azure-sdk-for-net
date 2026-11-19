@@ -263,9 +263,9 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             return new PermissionError(
                 resourceId,
-                missingPermissions,
-                requiredPermissions,
-                recommendedRoles,
+                missingPermissions ?? new ChangeTrackingList<string>(),
+                requiredPermissions ?? new ChangeTrackingList<string>(),
+                recommendedRoles ?? new ChangeTrackingList<string>(),
                 identity,
                 errorMessage,
                 additionalBinaryDataProperties);

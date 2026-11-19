@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ConnectToTargetSqlDBSyncTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBSyncTaskProperties"/>. </summary>
-        public ConnectToTargetSqlDBSyncTaskProperties() : base(DataMigrationTaskType.ConnectToTargetSqlDbSync)
+        public ConnectToTargetSqlDBSyncTaskProperties() : base(DataMigrationTaskType.ConnectToTargetSqlDBSync)
         {
             Output = new ChangeTrackingList<ConnectToTargetSqlDBTaskOutput>();
         }

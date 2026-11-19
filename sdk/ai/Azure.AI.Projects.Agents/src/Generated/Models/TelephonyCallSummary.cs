@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="providerCallId"> The provider-assigned call identifier, when available. </param>
         /// <param name="callerNumber"> The caller's phone number, when supplied by the provider. </param>
-        /// <param name="providerNumber"> The Teams Phone Extension or Twilio number that received the call. </param>
+        /// <param name="providerNumber"> The Teams Phone extensibility or Twilio number that received the call. </param>
         /// <param name="status"> The lifecycle status of the call. </param>
         /// <param name="phase"> The provider-neutral lifecycle phase reached by the call. </param>
         /// <param name="startedOn"> The Unix timestamp (in seconds) for when the inbound webhook was received. </param>
@@ -43,13 +43,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="mediaConnectedOn"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
         /// <param name="agentSessionReadyOn"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
         /// <param name="endedOn"> The Unix timestamp (in seconds) for when the call ended. </param>
-        /// <param name="durationMs"> The call duration. </param>
+        /// <param name="duration"> The call duration. </param>
         /// <param name="endReason"> The service-generated reason that this single call ended, rather than the outcome of an overall outbound call job. Additional string codes may be returned. </param>
         /// <param name="providerStatusCode"> The provider status code associated with the terminal result. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the terminal result. </param>
         /// <param name="providerMessage"> The provider message associated with the terminal result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallSummary(string id, TelephonyProvider provider, string providerCallId, string callerNumber, string providerNumber, TelephonyCallStatus status, TelephonyCallPhase phase, DateTimeOffset startedOn, DateTimeOffset? answeredOn, DateTimeOffset? mediaConnectedOn, DateTimeOffset? agentSessionReadyOn, DateTimeOffset? endedOn, TimeSpan? durationMs, TelephonyCallEndReason? endReason, int? providerStatusCode, int? providerSubCode, string providerMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallSummary(string id, TelephonyProvider provider, string providerCallId, string callerNumber, string providerNumber, TelephonyCallStatus status, TelephonyCallPhase phase, DateTimeOffset startedOn, DateTimeOffset? answeredOn, DateTimeOffset? mediaConnectedOn, DateTimeOffset? agentSessionReadyOn, DateTimeOffset? endedOn, TimeSpan? duration, TelephonyCallEndReason? endReason, int? providerStatusCode, int? providerSubCode, string providerMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Provider = provider;
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects.Agents
             MediaConnectedOn = mediaConnectedOn;
             AgentSessionReadyOn = agentSessionReadyOn;
             EndedOn = endedOn;
-            DurationMs = durationMs;
+            Duration = duration;
             EndReason = endReason;
             ProviderStatusCode = providerStatusCode;
             ProviderSubCode = providerSubCode;
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The caller's phone number, when supplied by the provider. </summary>
         public string CallerNumber { get; }
 
-        /// <summary> The Teams Phone Extension or Twilio number that received the call. </summary>
+        /// <summary> The Teams Phone extensibility or Twilio number that received the call. </summary>
         public string ProviderNumber { get; }
 
         /// <summary> The lifecycle status of the call. </summary>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
         public DateTimeOffset? EndedOn { get; }
 
         /// <summary> The call duration. </summary>
-        public TimeSpan? DurationMs { get; }
+        public TimeSpan? Duration { get; }
 
         /// <summary> The service-generated reason that this single call ended, rather than the outcome of an overall outbound call job. Additional string codes may be returned. </summary>
         public TelephonyCallEndReason? EndReason { get; }

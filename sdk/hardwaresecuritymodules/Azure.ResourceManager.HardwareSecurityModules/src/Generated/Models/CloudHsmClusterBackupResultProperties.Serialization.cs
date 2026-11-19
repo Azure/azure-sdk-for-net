@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             string statusDetails = default;
             ResponseError error = default;
             DateTimeOffset? startOn = default;
+            bool endOnIsDefined = false;
             DateTimeOffset? endOn = default;
             string jobId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,6 +160,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endOn = null;
@@ -200,7 +202,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 jobId,
                 additionalBinaryDataProperties,
                 azureStorageBlobContainerUri,
-                backupId);
+                backupId)
+            {
+                _endOnIsDefined = endOnIsDefined
+            };
         }
     }
 }

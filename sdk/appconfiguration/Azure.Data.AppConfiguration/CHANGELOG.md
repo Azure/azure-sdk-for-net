@@ -1,14 +1,10 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.11.2 (2026-11-19)
 
 ### Other Changes
+
+- Improved Microsoft Entra ID authentication audience inference for additional App Configuration endpoint formats.
 
 ## 1.11.1 (2026-08-18)
 

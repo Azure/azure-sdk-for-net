@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IpamPoolList(value, nextLink, additionalBinaryDataProperties);
+            return new IpamPoolList(value ?? new ChangeTrackingList<IpamPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

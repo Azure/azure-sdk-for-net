@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 blobPathBeginsWith,
                 blobPathEndsWith,
                 ignoreEmptyBlobs,
-                events,
+                events ?? new ChangeTrackingList<DataFactoryBlobEventType>(),
                 scope,
                 additionalBinaryDataProperties);
         }

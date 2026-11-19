@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScopedResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ScopedResourceListResult(value ?? new ChangeTrackingList<MonitorPrivateLinkScopedResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

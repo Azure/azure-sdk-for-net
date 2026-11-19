@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/privateAccesses/", false);
             uri.AppendPath(privateAccessName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/privateAccesses/", false);
             uri.AppendPath(privateAccessName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/privateAccesses/", false);
             uri.AppendPath(privateAccessName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/privateAccesses/", false);
             uri.AppendPath(privateAccessName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/privateAccesses", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (continuationToken != null)
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
@@ -176,10 +161,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,10 +178,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Chaos/privateAccesses", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (continuationToken != null)
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
@@ -224,10 +203,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,10 +224,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/providers/Microsoft.Chaos/privateAccesses/", false);
             uri.AppendPath(privateAccessName, true);
             uri.AppendPath("/privateLinkResources", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

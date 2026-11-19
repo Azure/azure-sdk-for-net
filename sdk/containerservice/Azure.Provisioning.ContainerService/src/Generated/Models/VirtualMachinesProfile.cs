@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerService
@@ -21,7 +20,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the Scale. </summary>
-        internal AgentPoolScaleProfile Scale
+        public AgentPoolScaleProfile Scale
         {
             get
             {
@@ -32,23 +31,6 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 AssignOrReplace(ref _scale, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Manual. </summary>
-        public BicepList<ManualScaleProfile> ScaleManual
-        {
-            get
-            {
-                return Scale is null ? default : Scale.Manual;
-            }
-            set
-            {
-                if (Scale is null)
-                {
-                    Scale = new AgentPoolScaleProfile();
-                }
-                Scale.Manual = value;
             }
         }
 

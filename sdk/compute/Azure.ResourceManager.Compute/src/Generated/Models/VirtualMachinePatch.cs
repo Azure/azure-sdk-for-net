@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier AvailabilitySetId
+        public virtual ResourceIdentifier AvailabilitySetId
         {
             get
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier VirtualMachineScaleSetId
+        public virtual ResourceIdentifier VirtualMachineScaleSetId
         {
             get
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier ProximityPlacementGroupId
+        public virtual ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier HostId
+        public virtual ResourceIdentifier HostId
         {
             get
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier HostGroupId
+        public virtual ResourceIdentifier HostGroupId
         {
             get
             {

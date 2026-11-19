@@ -4,18 +4,16 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported write modes for data generation job outputs. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct DataGenerationJobOutputWriteMode : IEquatable<DataGenerationJobOutputWriteMode>
     {
         private readonly string _value;
-        /// <summary> Default behavior. Create the next dataset version using only newly generated rows, replacing the previous version's rows in the new version. </summary>
+        /// <summary> Default behavior. Write newly generated output without merging it with an existing output. For dataset outputs, creates the next dataset version using only newly generated rows. </summary>
         private const string OverwriteValue = "overwrite";
-        /// <summary> Applicable only for trace data generation jobs that output evaluation datasets. Create the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. </summary>
+        /// <summary> Merge newly generated output into an existing output. For trace data generation jobs that output evaluation datasets, creates the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. For fine-tuning file outputs, merges into the file identified by `merge_file_id`. </summary>
         private const string MergeValue = "merge";
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobOutputWriteMode"/>. </summary>
@@ -28,10 +26,10 @@ namespace Azure.AI.Projects
             _value = value;
         }
 
-        /// <summary> Default behavior. Create the next dataset version using only newly generated rows, replacing the previous version's rows in the new version. </summary>
+        /// <summary> Default behavior. Write newly generated output without merging it with an existing output. For dataset outputs, creates the next dataset version using only newly generated rows. </summary>
         public static DataGenerationJobOutputWriteMode Overwrite { get; } = new DataGenerationJobOutputWriteMode(OverwriteValue);
 
-        /// <summary> Applicable only for trace data generation jobs that output evaluation datasets. Create the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. </summary>
+        /// <summary> Merge newly generated output into an existing output. For trace data generation jobs that output evaluation datasets, creates the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. For fine-tuning file outputs, merges into the file identified by `merge_file_id`. </summary>
         public static DataGenerationJobOutputWriteMode Merge { get; } = new DataGenerationJobOutputWriteMode(MergeValue);
 
         /// <summary> Determines if two <see cref="DataGenerationJobOutputWriteMode"/> values are the same. </summary>

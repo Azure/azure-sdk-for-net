@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InboundEndpointProperties(ipConfigurations, provisioningState, resourceGuid, additionalBinaryDataProperties);
+            return new InboundEndpointProperties(ipConfigurations ?? new ChangeTrackingList<InboundEndpointIPConfiguration>(), provisioningState, resourceGuid, additionalBinaryDataProperties);
         }
     }
 }

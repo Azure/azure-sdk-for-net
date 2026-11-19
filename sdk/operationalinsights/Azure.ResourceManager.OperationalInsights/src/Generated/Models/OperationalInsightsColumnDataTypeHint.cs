@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         private const string ArmPathValue = "armPath";
         /// <summary> A standard V4/V6 ip address following the standard shape, x.x.x.x/y:y:y:y:y:y:y:y. </summary>
         private const string IPValue = "ip";
+        /// <summary> A vector of single-precision floating-point values used for semantic / similarity search. </summary>
+        private const string Vector16Value = "vector16";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsColumnDataTypeHint"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> A standard V4/V6 ip address following the standard shape, x.x.x.x/y:y:y:y:y:y:y:y. </summary>
         public static OperationalInsightsColumnDataTypeHint IP { get; } = new OperationalInsightsColumnDataTypeHint(IPValue);
+
+        /// <summary> A vector of single-precision floating-point values used for semantic / similarity search. </summary>
+        public static OperationalInsightsColumnDataTypeHint Vector16 { get; } = new OperationalInsightsColumnDataTypeHint(Vector16Value);
 
         /// <summary> Determines if two <see cref="OperationalInsightsColumnDataTypeHint"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

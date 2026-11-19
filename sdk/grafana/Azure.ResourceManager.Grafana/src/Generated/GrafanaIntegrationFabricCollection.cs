@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricDataAsyncCollectionResultOfT(
                 _integrationFabricsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllCollectionResultOfT(
+            return new PageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricDataCollectionResultOfT(
                 _integrationFabricsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

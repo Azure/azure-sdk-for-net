@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworksGetDhcpAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpDataAsyncCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworksGetDhcpCollectionResultOfT(
+            return new PageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpDataCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

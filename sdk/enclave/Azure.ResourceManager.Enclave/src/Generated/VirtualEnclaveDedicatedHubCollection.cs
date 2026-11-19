@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveDedicatedHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualEnclaveDedicatedHubResource.ResourceType, out string virtualEnclaveDedicatedHubApiVersion);
             _dedicatedHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", VirtualEnclaveDedicatedHubResource.ResourceType.Namespace, Diagnostics);
-            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveDedicatedHubApiVersion ?? "2026-04-01");
+            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Mission/communities/dedicatedHubs", out string dedicatedHubApiVersionOverride) ? dedicatedHubApiVersionOverride : "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new DedicatedHubGetByCommunityResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new VirtualEnclaveDedicatedHubDataAsyncCollectionResultOfT(
                 _dedicatedHubRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new DedicatedHubGetByCommunityResourceCollectionResultOfT(
+            return new PageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new VirtualEnclaveDedicatedHubDataCollectionResultOfT(
                 _dedicatedHubRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementWorkspaceLinksResource"/> and their operations.
     /// Each <see cref="ApiManagementWorkspaceLinksResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="ApiManagementWorkspaceLinksCollection"/> instance call the GetApiManagementWorkspaceLinks method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get a <see cref="ApiManagementWorkspaceLinksCollection"/> instance call the GetAllApiManagementWorkspaceLinks method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementWorkspaceLinksCollection : ArmCollection, IEnumerable<ApiManagementWorkspaceLinksResource>, IAsyncEnumerable<ApiManagementWorkspaceLinksResource>
     {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementWorkspaceLinksData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementWorkspaceLinksData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksDataAsyncCollectionResultOfT(
                 _apiManagementWorkspaceLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementWorkspaceLinksData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementWorkspaceLinksData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksDataCollectionResultOfT(
                 _apiManagementWorkspaceLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

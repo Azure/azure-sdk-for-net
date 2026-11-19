@@ -15,8 +15,8 @@ namespace Azure.AI.Projects.Agents
         private readonly string _value;
         /// <summary> The Foundry telephony gateway supplied the observation. </summary>
         private const string GatewayValue = "gateway";
-        /// <summary> Microsoft Teams Phone Extension supplied the observation. </summary>
-        private const string TeamsPhoneExtensionValue = "teams_phone_extension";
+        /// <summary> Microsoft Teams Phone extensibility supplied the observation. </summary>
+        private const string TeamsPhoneExtensibilityValue = "teams_phone_extensibility";
         /// <summary> Twilio supplied the observation. </summary>
         private const string TwilioValue = "twilio";
         /// <summary> The voice-agent runtime supplied the observation. </summary>
@@ -35,8 +35,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The Foundry telephony gateway supplied the observation. </summary>
         public static TelephonyCallLifecycleEventSource Gateway { get; } = new TelephonyCallLifecycleEventSource(GatewayValue);
 
-        /// <summary> Microsoft Teams Phone Extension supplied the observation. </summary>
-        public static TelephonyCallLifecycleEventSource TeamsPhoneExtension { get; } = new TelephonyCallLifecycleEventSource(TeamsPhoneExtensionValue);
+        /// <summary> Microsoft Teams Phone extensibility supplied the observation. </summary>
+        public static TelephonyCallLifecycleEventSource TeamsPhoneExtensibility { get; } = new TelephonyCallLifecycleEventSource(TeamsPhoneExtensibilityValue);
 
         /// <summary> Twilio supplied the observation. </summary>
         public static TelephonyCallLifecycleEventSource Twilio { get; } = new TelephonyCallLifecycleEventSource(TwilioValue);

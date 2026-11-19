@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunityPropertiesFormat"/>. </summary>
-        internal BgpServiceCommunityPropertiesFormat()
+        public BgpServiceCommunityPropertiesFormat()
         {
             BgpCommunities = new ChangeTrackingList<BgpCommunity>();
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The name of the bgp community. e.g. Skype. </summary>
         [WirePath("serviceName")]
-        public string ServiceName { get; }
+        public string ServiceName { get; set; }
 
         /// <summary> A list of bgp communities. </summary>
         [WirePath("bgpCommunities")]

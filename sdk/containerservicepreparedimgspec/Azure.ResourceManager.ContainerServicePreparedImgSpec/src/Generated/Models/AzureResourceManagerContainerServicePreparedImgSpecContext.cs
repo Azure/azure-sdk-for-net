@@ -16,14 +16,12 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationData))]
-    [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationListResult))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationManagedIdentityProfile))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationPatch))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationProperties))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationResource))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationScript))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationVersionData))]
-    [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationVersionListResult))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationVersionResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerContainerServicePreparedImgSpecContext : ModelReaderWriterContext

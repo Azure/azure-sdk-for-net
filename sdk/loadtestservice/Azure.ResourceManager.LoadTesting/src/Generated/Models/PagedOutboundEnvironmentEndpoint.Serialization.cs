@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedOutboundEnvironmentEndpoint(value, nextLink, additionalBinaryDataProperties);
+            return new PagedOutboundEnvironmentEndpoint(value ?? new ChangeTrackingList<LoadTestingOutboundEnvironmentEndpoint>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PricingList(value, additionalBinaryDataProperties);
+            return new PricingList(value ?? new ChangeTrackingList<SecurityCenterPricingData>(), additionalBinaryDataProperties);
         }
     }
 }

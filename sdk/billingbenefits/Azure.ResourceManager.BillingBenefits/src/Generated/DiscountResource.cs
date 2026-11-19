@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
@@ -55,7 +56,13 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string discountApiVersion);
             _discountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _discountsRestClient = new Discounts(_discountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
+            _discountsRestClient = new Discounts(
+                _discountsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                discountApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _discountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
             _discountRestClient = new Discount(_discountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
@@ -629,10 +636,9 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -672,10 +678,9 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

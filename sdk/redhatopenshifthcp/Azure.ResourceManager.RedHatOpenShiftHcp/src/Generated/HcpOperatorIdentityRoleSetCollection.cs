@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             TryGetApiVersion(HcpOperatorIdentityRoleSetResource.ResourceType, out string hcpOperatorIdentityRoleSetApiVersion);
             _location = location;
             _hcpOperatorIdentityRoleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShiftHcp", HcpOperatorIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            _hcpOperatorIdentityRoleSetsRestClient = new HcpOperatorIdentityRoleSets(_hcpOperatorIdentityRoleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOperatorIdentityRoleSetApiVersion ?? "2026-09-01-preview");
+            _hcpOperatorIdentityRoleSetsRestClient = new HcpOperatorIdentityRoleSets(_hcpOperatorIdentityRoleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOperatorIdentityRoleSetApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetsGetAllAsyncCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
+            return new AsyncPageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetDataAsyncCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetsGetAllCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
+            return new PageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetDataCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

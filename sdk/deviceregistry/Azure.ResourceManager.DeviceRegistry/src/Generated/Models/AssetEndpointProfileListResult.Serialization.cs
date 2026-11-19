@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssetEndpointProfileListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AssetEndpointProfileListResult(value ?? new ChangeTrackingList<DeviceRegistryAssetEndpointProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

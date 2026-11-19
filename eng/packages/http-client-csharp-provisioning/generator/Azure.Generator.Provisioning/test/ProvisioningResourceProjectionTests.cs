@@ -172,7 +172,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void ReadOnlyExtensionResourceDoesNotExposeScopeMetadata()
+        public void ReadOnlyExtensionResourceExposesScopeMetadata()
         {
             var model = CreateModel("ReadOnlyExtension");
             var resource = CreateMetadata(
@@ -186,8 +186,8 @@ namespace Azure.Generator.Provisioning.Tests
             var provider = CreateResourceProvider(resource);
 
             Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
-            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.False);
-            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.False);
+            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
+            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
         }
 
         [Test]
@@ -211,6 +211,13 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(provider.ResourceProjection!.WritableScopes, Does.Contain(ResourceScope.Extension));
             Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
             Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
+            Assert.That(provider.Fields.Single(field => field.Name == "_scope").Type.Name,
+                Is.EqualTo("ProvisioningResourceReference"));
+            string generated = new TypeProviderWriter(provider).Write().Content;
+            Assert.That(generated, Does.Contain("DefineProperty<string>(nameof(Scope)"));
+            Assert.That(generated, Does.Not.Contain("DefineResource<"));
+            Assert.That(ProvisioningGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ProvisioningResourceReferenceProvider>().Count(), Is.EqualTo(1));
         }
 
         [Test]
@@ -700,7 +707,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndFixedName()
+        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndSettableDefaultName()
         {
             var parentModel = CreateModel("Parent");
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -727,9 +734,15 @@ namespace Azure.Generator.Provisioning.Tests
             var propertyInfo = ((IProvisioningPropertyInfo)providers[1]).GetProvisioningPropertyInfo(nameProperty);
 
             Assert.That(parentProperty.Type.FullyQualifiedName, Is.EqualTo(providers[0].Type.FullyQualifiedName));
+            Assert.That(providers[1].Fields.Single(field => field.Name == "_parent").Type.Name,
+                Is.EqualTo("ProvisioningResourceReference"));
+            string generated = new TypeProviderWriter(providers[1]).Write().Content;
+            Assert.That(generated, Does.Contain("DefineProperty<string>(nameof(Parent)"));
+            Assert.That(generated, Does.Contain("new string[] { \"parent\" })"));
+            Assert.That(generated, Does.Not.Contain("DefineResource<"));
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
-            Assert.That(propertyInfo.IsSettable, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.True);
             Assert.That(propertyInfo.DefaultValue, Is.EqualTo("default"));
         }
 
@@ -1182,7 +1195,6 @@ namespace Azure.Generator.Provisioning.Tests
             var methodName = $"{kind}Widget";
             var operation = new InputOperation(
                 methodName,
-                null,
                 string.Empty,
                 $"{methodName} description",
                 null,
@@ -1396,7 +1408,7 @@ namespace Azure.Generator.Provisioning.Tests
                 metadata.RbacRoles,
                 readableScopes,
                 writableScopes,
-                writableScopes.Contains(ResourceScope.Extension));
+                readableScopes.Contains(ResourceScope.Extension) || writableScopes.Contains(ResourceScope.Extension));
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)

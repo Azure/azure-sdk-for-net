@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogicalNetworkListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LogicalNetworkListResult(value ?? new ChangeTrackingList<HciVmLogicalNetworkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

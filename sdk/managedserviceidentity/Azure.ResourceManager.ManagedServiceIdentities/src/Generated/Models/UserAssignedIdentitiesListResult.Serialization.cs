@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UserAssignedIdentitiesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new UserAssignedIdentitiesListResult(value ?? new ChangeTrackingList<UserAssignedIdentityData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

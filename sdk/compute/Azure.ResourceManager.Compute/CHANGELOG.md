@@ -1,6 +1,6 @@
 # Release History
 
-## 1.18.0-beta.1 (Unreleased)
+## 1.20.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,28 @@
 
 ### Bugs Fixed
 
-- Fixed an infinite recursion issue in the `GetVirtualMachineImages` and `GetVirtualMachineImagesAsync` overloads that accept an `AzureLocation`.
-
 ### Other Changes
+
+## 1.19.0 (2026-10-30)
+
+### Features Added
+
+- Added `FlexPreferredVmSize` to `VirtualMachineData` and `VirtualMachinePatch` to support FlexProfile preferred VM sizes.
+- Added `PrivateIPAddressPrefixLength` to `VirtualMachineNetworkInterfaceIPConfiguration`, `VirtualMachineScaleSetIPConfiguration` and `VirtualMachineScaleSetUpdateIPConfiguration`.
+
+### Bugs Fixed
+
+- Fixed `CapacityReservationGroupResource` delete operations to poll the long-running operation until completion.
+
+## 1.18.0 (2026-10-12)
+
+### Features Added
+
+- Upgraded ComputeGallery API version to `2026-03-03`.
+
+### Bugs Fixed
+
+- Fixed an infinite recursion issue in the `GetVirtualMachineImages` and `GetVirtualMachineImagesAsync` overloads that accept an `AzureLocation`.
 
 ## 1.17.0 (2026-09-14)
 

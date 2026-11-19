@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LoadBalancerLoadBalancingRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LoadBalancerLoadBalancingRuleListResult(value ?? new ChangeTrackingList<LoadBalancingRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

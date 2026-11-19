@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(moboBrokerResources, additionalBinaryDataProperties);
+            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<SubResource>(), additionalBinaryDataProperties);
         }
     }
 }

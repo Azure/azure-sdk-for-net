@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceGroupExtensionResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceGroupExtensionResourceListResult(value ?? new ChangeTrackingList<ServiceGroupExtensionResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

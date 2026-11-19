@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new IPPrefixProperties(
                 annotation,
                 networkFabricId,
-                ipPrefixRules,
+                ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>(),
                 lastOperation,
                 configurationState,
                 provisioningState,

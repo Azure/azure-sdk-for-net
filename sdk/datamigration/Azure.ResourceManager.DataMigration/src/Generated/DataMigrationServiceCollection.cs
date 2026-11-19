@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(DataMigrationServiceResource.ResourceType, out string dataMigrationServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMigrationServiceApiVersion ?? "2025-09-01-preview");
+            _servicesRestClient = new Services(
+                _servicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dataMigrationServiceApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new DataMigrationServiceDataAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
+            return new PageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new DataMigrationServiceDataCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(RecoveryJobResource.ResourceType, out string recoveryJobApiVersion);
             _recoveryJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", RecoveryJobResource.ResourceType.Namespace, Diagnostics);
-            _recoveryJobsRestClient = new RecoveryJobs(_recoveryJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryJobApiVersion ?? "2026-04-01-preview");
+            _recoveryJobsRestClient = new RecoveryJobs(_recoveryJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryJobApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryJobData, RecoveryJobResource>(new RecoveryJobsGetAllAsyncCollectionResultOfT(_recoveryJobsRestClient, Id.Parent.Name, Id.Name, context, "RecoveryJobCollection.GetAll"), data => new RecoveryJobResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryJobData, RecoveryJobResource>(new RecoveryJobDataAsyncCollectionResultOfT(_recoveryJobsRestClient, Id.Parent.Name, Id.Name, context, "RecoveryJobCollection.GetAll"), data => new RecoveryJobResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryJobData, RecoveryJobResource>(new RecoveryJobsGetAllCollectionResultOfT(_recoveryJobsRestClient, Id.Parent.Name, Id.Name, context, "RecoveryJobCollection.GetAll"), data => new RecoveryJobResource(Client, data));
+            return new PageableWrapper<RecoveryJobData, RecoveryJobResource>(new RecoveryJobDataCollectionResultOfT(_recoveryJobsRestClient, Id.Parent.Name, Id.Name, context, "RecoveryJobCollection.GetAll"), data => new RecoveryJobResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

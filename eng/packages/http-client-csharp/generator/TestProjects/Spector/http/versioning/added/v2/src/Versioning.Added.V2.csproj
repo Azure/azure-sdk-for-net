@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Versioning.Added.V2 client library for developing .NET applications with rich experience.</Description>
+    <Description>The Versioning.Added.V2 client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Versioning.Added.V2</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Versioning.Added.V2</PackageTags>

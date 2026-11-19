@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task CreateOrUpdate()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Exist()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -70,6 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Get()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAll()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -89,6 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Delete()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");

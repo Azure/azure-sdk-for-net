@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             return new OtelTracesDirectDataSource(
-                streams,
+                streams ?? new ChangeTrackingList<KnownOtelTracesDirectDataSourceStreams>(),
                 enrichWithResourceAttributes ?? new ChangeTrackingList<string>(),
                 enrichWithReference,
                 shouldReplaceResourceIdWithReference,

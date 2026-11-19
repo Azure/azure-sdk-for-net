@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OperationalInsightsClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OperationalInsightsClusterResource.ResourceType, out string operationalInsightsClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsClusterApiVersion ?? "2025-07-01");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OperationalInsights/clusters", out string clustersApiVersionOverride) ? clustersApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
+            return new AsyncPageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new OperationalInsightsClusterDataAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
+            return new PageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new OperationalInsightsClusterDataCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

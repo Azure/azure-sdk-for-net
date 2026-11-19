@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal AdditionalDiskProperties AdditionalDiskProperties { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
+        public virtual ResourceIdentifier DiskEncryptionSetId
         {
             get
             {

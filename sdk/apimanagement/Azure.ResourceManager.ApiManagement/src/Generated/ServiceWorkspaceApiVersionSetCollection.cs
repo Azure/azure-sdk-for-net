@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new WorkspaceApiVersionSetGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new ApiVersionSetDataAsyncCollectionResultOfT(
                 _workspaceApiVersionSetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new WorkspaceApiVersionSetGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new ApiVersionSetDataCollectionResultOfT(
                 _workspaceApiVersionSetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

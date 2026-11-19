@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PowerPlatformPrivateLinkResourceData, PowerPlatformPrivateLinkResource>(new PrivateLinkResourcesGetByEnterprisePolicyAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PowerPlatformPrivateLinkResourceData, PowerPlatformPrivateLinkResource>(new PowerPlatformPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PowerPlatformPrivateLinkResourceData, PowerPlatformPrivateLinkResource>(new PrivateLinkResourcesGetByEnterprisePolicyCollectionResultOfT(
+            return new PageableWrapper<PowerPlatformPrivateLinkResourceData, PowerPlatformPrivateLinkResource>(new PowerPlatformPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

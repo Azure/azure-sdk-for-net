@@ -21,13 +21,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public CloudAccountProperties(MarketplaceDetails marketplace, CommvaultUserDetails user)
+        public CloudAccountProperties(CommvaultMarketplaceDetails marketplace, CommvaultUserDetails user)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
 
             Marketplace = marketplace;
             User = user;
+            RoleAssignmentsOnCreate = new ChangeTrackingList<CommvaultRoleAssignment>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudAccountProperties"/>. </summary>
@@ -35,22 +36,22 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="ssoUri"> SSO URL for the Commvault Cloud Account. </param>
-        /// <param name="backupAdminOnCcaCreate"> The backup administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </param>
-        /// <param name="multiPersonAuthorizationOnCcaCreate"> The multi-person authorization (MPA) administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </param>
+        /// <param name="company"> Optional company details for the cloud account. </param>
+        /// <param name="roleAssignmentsOnCreate"> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountProperties(MarketplaceDetails marketplace, CommvaultUserDetails user, ResourceProvisioningState? provisioningState, string ssoUri, CommvaultEntityInfo backupAdminOnCcaCreate, CommvaultEntityInfo multiPersonAuthorizationOnCcaCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountProperties(CommvaultMarketplaceDetails marketplace, CommvaultUserDetails user, ResourceProvisioningState? provisioningState, string ssoUri, CommvaultCompanyProfile company, IList<CommvaultRoleAssignment> roleAssignmentsOnCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
             ProvisioningState = provisioningState;
             SsoUri = ssoUri;
-            BackupAdminOnCcaCreate = backupAdminOnCcaCreate;
-            MultiPersonAuthorizationOnCcaCreate = multiPersonAuthorizationOnCcaCreate;
+            Company = company;
+            RoleAssignmentsOnCreate = roleAssignmentsOnCreate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace details of the resource. </summary>
-        public MarketplaceDetails Marketplace { get; set; }
+        public CommvaultMarketplaceDetails Marketplace { get; set; }
 
         /// <summary> Details of the user. </summary>
         public CommvaultUserDetails User { get; set; }
@@ -61,10 +62,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> SSO URL for the Commvault Cloud Account. </summary>
         public string SsoUri { get; }
 
-        /// <summary> The backup administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </summary>
-        public CommvaultEntityInfo BackupAdminOnCcaCreate { get; set; }
+        /// <summary> Optional company details for the cloud account. </summary>
+        public CommvaultCompanyProfile Company { get; set; }
 
-        /// <summary> The multi-person authorization (MPA) administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </summary>
-        public CommvaultEntityInfo MultiPersonAuthorizationOnCcaCreate { get; set; }
+        /// <summary> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </summary>
+        public IList<CommvaultRoleAssignment> RoleAssignmentsOnCreate { get; }
     }
 }

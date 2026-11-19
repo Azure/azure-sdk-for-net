@@ -1,0 +1,6 @@
+directory: specification/platformvalidation/resource-manager/Microsoft.PlatformValidation/PlatformValidation
+commit: f4b1d09cbfc1d1f918f0dddcba8e7b700a398f14
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

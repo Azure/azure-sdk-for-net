@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly ITransmitter _transmitter;
         private readonly IMultiEndpointTransmitter? _multiEndpointTransmitter;
         private readonly string _instrumentationKey;
-        private readonly float _sampleRate; // This value is recorded on TelemetryItem.SampleRate.
+        private readonly float _fallbackSampleRate; // Used for TelemetryItem.SampleRate when a span carries no microsoft.sample_rate attribute.
         private readonly bool _multiEndpointEnabled;
         private AzureMonitorResource? _resource;
         private EndpointRouteBatch? _routeBatch;
@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </remarks>
         internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter, bool multiEndpointEnabled)
         {
-            _sampleRate = (float)Math.Round(options.SamplingRatio * 100);
+            _fallbackSampleRate = SampleRateHelper.GetFallbackSampleRate(options);
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
             _multiEndpointEnabled = multiEndpointEnabled;
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                (var telemetryItems, var telemetrySchemaTypeCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey, _sampleRate);
+                (var telemetryItems, var telemetrySchemaTypeCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey, _fallbackSampleRate);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.AzureMonitorTraceExporter, false, CancellationToken.None).EnsureCompleted();
@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(batch, TraceResource, _sampleRate, routeBatch);
+                TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(batch, TraceResource, _fallbackSampleRate, routeBatch);
 
                 if (routeBatch.Count == 0)
                 {

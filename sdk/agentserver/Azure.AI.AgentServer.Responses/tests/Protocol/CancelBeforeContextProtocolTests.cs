@@ -31,6 +31,7 @@ public sealed class CancelBeforeContextProtocolTests
         };
         using var factory = new TestWebApplicationFactory(
             handler,
+            configureOptions: options => options.SteerableConversations = true,
             configureTestServices: services =>
             {
                 services.AddSingleton(state);
@@ -84,8 +85,8 @@ public sealed class CancelBeforeContextProtocolTests
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         state.ContextObservedClientCancellation.TrySetResult(context.IsClientCancelled);
-        var response = new ResponseObject(context.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
         await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
     }
 

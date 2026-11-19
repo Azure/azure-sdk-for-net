@@ -25,6 +25,7 @@ overrides:
       - aksadvancednetworking
       - aren
       - doesn
+      - dranet
       - iloveyou
       - karpenter
       - kata

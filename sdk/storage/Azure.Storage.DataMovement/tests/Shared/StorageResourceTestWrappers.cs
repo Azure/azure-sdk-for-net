@@ -19,21 +19,26 @@ public class InjectedFailureException : Exception { }
 public class StorageResourceItemFailureWrapper : StorageResourceItem
 {
     private readonly ScopeManager _throwScopeManager;
+    private readonly Func<Exception> _exceptionFactory;
     private readonly StorageResourceItem _inner;
 
-    public StorageResourceItemFailureWrapper(StorageResourceItem inner, ScopeManager throwScopeManager = default)
+    public StorageResourceItemFailureWrapper(
+        StorageResourceItem inner,
+        ScopeManager throwScopeManager = default,
+        Func<Exception> exceptionFactory = default)
     {
         _inner = inner;
         _throwScopeManager = throwScopeManager ?? new();
+        _exceptionFactory = exceptionFactory ?? (() => new InjectedFailureException());
     }
 
     public IDisposable ThrowScope() => _throwScopeManager.GetScope();
 
     private T ThrowOr<T>(T result) => _throwScopeManager.InScope
-        ? throw new InjectedFailureException()
+        ? throw _exceptionFactory()
         : result;
     private T ThrowOrDo<T>(Func<T> func) => _throwScopeManager.InScope
-        ? throw new InjectedFailureException()
+        ? throw _exceptionFactory()
         : func();
 
     #region Passthru
@@ -97,45 +102,56 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
 public class StorageResourceContainerFailureWrapper : StorageResourceContainer
 {
     private readonly ScopeManager _throwScopeManager;
+    private readonly Func<Exception> _exceptionFactory;
     private readonly StorageResourceContainer _inner;
 
-    public StorageResourceContainerFailureWrapper(StorageResourceContainer inner, ScopeManager throwScopeManager = default)
+    public StorageResourceContainerFailureWrapper(
+        StorageResourceContainer inner,
+        ScopeManager throwScopeManager = default,
+        Func<Exception> exceptionFactory = default)
     {
         _inner = inner;
         _throwScopeManager = throwScopeManager ?? new();
+        _exceptionFactory = exceptionFactory ?? (() => new InjectedFailureException());
     }
 
     public IDisposable ThrowScope() => _throwScopeManager.GetScope();
 
     private T ThrowOr<T>(T result) => _throwScopeManager.InScope
-        ? throw new InjectedFailureException()
+        ? throw _exceptionFactory()
         : result;
     private T ThrowOrDo<T>(Func<T> func) => _throwScopeManager.InScope
-        ? throw new InjectedFailureException()
+        ? throw _exceptionFactory()
         : func();
 
     protected internal override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
-        => ThrowOrDo(() => new StorageResourceItemFailureWrapper(_inner.GetStorageResourceReference(path, resourceId), _throwScopeManager));
+        => ThrowOrDo(() => new StorageResourceItemFailureWrapper(
+            _inner.GetStorageResourceReference(path, resourceId),
+            _throwScopeManager,
+            _exceptionFactory));
 
     protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
-        => ThrowOrDo(() => new StorageResourceContainerFailureWrapper(_inner.GetChildStorageResourceContainer(path), _throwScopeManager));
+        => ThrowOrDo(() => new StorageResourceContainerFailureWrapper(
+            _inner.GetChildStorageResourceContainer(path),
+            _throwScopeManager,
+            _exceptionFactory));
 
     protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(StorageResourceContainer destinationContainer = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (_throwScopeManager.InScope)
         {
-            throw new InjectedFailureException();
+            throw _exceptionFactory();
         }
 
         await foreach (StorageResource resource in _inner.GetStorageResourcesAsync(destinationContainer, cancellationToken))
         {
             if (resource is StorageResourceItem item)
             {
-                yield return new StorageResourceItemFailureWrapper(item, _throwScopeManager);
+                yield return new StorageResourceItemFailureWrapper(item, _throwScopeManager, _exceptionFactory);
             }
             else if (resource is StorageResourceContainer container)
             {
-                yield return new StorageResourceContainerFailureWrapper(container, _throwScopeManager);
+                yield return new StorageResourceContainerFailureWrapper(container, _throwScopeManager, _exceptionFactory);
             }
             else
             {

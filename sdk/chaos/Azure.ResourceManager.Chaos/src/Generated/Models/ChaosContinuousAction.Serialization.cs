@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 @type,
                 additionalBinaryDataProperties,
                 duration,
-                parameters,
+                parameters ?? new ChangeTrackingList<ChaosKeyValuePair>(),
                 selectorId);
         }
     }

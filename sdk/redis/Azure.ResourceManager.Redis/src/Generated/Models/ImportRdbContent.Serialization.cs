@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Redis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImportRdbContent(format, files, preferredDataArchiveAuthMethod, storageSubscriptionId, additionalBinaryDataProperties);
+            return new ImportRdbContent(format, files ?? new ChangeTrackingList<string>(), preferredDataArchiveAuthMethod, storageSubscriptionId, additionalBinaryDataProperties);
         }
     }
 }

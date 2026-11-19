@@ -55,7 +55,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="TileMatrixCornerOfOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TileMatrixCornerOfOrigin?(string value) => value == null ? null : new TileMatrixCornerOfOrigin(value);
+        public static implicit operator TileMatrixCornerOfOrigin?(string value) => value == null ? (TileMatrixCornerOfOrigin?)null : new TileMatrixCornerOfOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -57,6 +58,16 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EvaluatorGenerationInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="evaluatorGenerationInputs"> The <see cref="EvaluatorGenerationInputs"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(EvaluatorGenerationInputs evaluatorGenerationInputs)
+        {
+            if (evaluatorGenerationInputs == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(evaluatorGenerationInputs, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

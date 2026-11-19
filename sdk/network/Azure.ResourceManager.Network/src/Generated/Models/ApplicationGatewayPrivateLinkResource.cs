@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayPrivateLinkResource : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
+        public ApplicationGatewayPrivateLinkResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the application gateway private link resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayPrivateLinkResourceProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayPrivateLinkResourceProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
-        public ApplicationGatewayPrivateLinkResource() : this(default)
-        {
-        }
-
         /// <summary> Properties of the application gateway private link resource. </summary>
         [WirePath("properties")]
-        internal ApplicationGatewayPrivateLinkResourceProperties Properties { get; }
+        internal ApplicationGatewayPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -58,7 +58,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredMembers;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredMembers;
             }
         }
 
@@ -68,7 +72,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredZoneNames;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredZoneNames;
             }
         }
     }

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchPrivateEndpointConnectionData, BatchPrivateEndpointConnectionResource>(new PrivateEndpointConnectionGetByBatchAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BatchPrivateEndpointConnectionData, BatchPrivateEndpointConnectionResource>(new BatchPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchPrivateEndpointConnectionData, BatchPrivateEndpointConnectionResource>(new PrivateEndpointConnectionGetByBatchAccountCollectionResultOfT(
+            return new PageableWrapper<BatchPrivateEndpointConnectionData, BatchPrivateEndpointConnectionResource>(new BatchPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

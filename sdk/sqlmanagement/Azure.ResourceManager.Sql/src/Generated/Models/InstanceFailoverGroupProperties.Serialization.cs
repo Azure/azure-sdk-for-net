@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Sql.Models
                 readOnlyEndpoint,
                 replicationRole,
                 replicationState,
-                partnerRegions,
-                managedInstancePairs,
+                partnerRegions ?? new ChangeTrackingList<PartnerRegionInfo>(),
+                managedInstancePairs ?? new ChangeTrackingList<ManagedInstancePairInfo>(),
                 additionalBinaryDataProperties);
         }
     }

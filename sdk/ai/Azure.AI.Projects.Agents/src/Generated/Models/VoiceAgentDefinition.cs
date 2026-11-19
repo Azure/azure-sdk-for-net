@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -40,11 +38,12 @@ namespace Azure.AI.Projects.Agents
         /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
         /// transcription. These values are session defaults; a client may override supported fields when connecting.
         /// </param>
+        /// <param name="soundscape"> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </param>
         /// <param name="outputModalities">
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
         /// when an avatar is configured.
         /// </param>
-        /// <param name="maxOutputTokens"> The maximum output-token count for one response. </param>
+        /// <param name="internalMaxOutputTokens"> The maximum output-token count for one response. </param>
         /// <param name="include"> Additional fields to include in service outputs. </param>
         /// <param name="interimResponse"> Interim-response settings for latency and tool execution. </param>
         /// <param name="avatar"> Optional avatar configuration. These values are session defaults and may be overridden when connecting. </param>
@@ -53,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         /// `system` (service-managed session controls), and `toolbox`. Server-side tools such as `web_search`,
         /// `azure_ai_search`, and `openapi` are provided through a toolbox rather than declared directly.
         /// </param>
-        /// <param name="toolChoice">
+        /// <param name="internalToolChoice">
         /// How the model chooses tools for generated responses. `none` prevents tool calls, `auto` lets the model decide,
         /// `required` requires at least one tool call, and a specific function or MCP tool can be selected with an object.
         /// Defaults to `auto`.
@@ -61,6 +60,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="structuredInputs"> Set of structured inputs that participate in prompt template substitution, rendered per session before the live session starts. </param>
         /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
         /// <param name="store">
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
         /// `false` (privacy-safe: off by default). When `true`, Foundry persists the full conversation — the transcript/event
@@ -69,7 +69,7 @@ namespace Azure.AI.Projects.Agents
         /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
         /// is not part of the persisted conversation content.
         /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData maxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfiguration greeting, VoiceAgentAudioConfiguration audio, VoiceAgentSoundscapeConfiguration soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfiguration interimResponse, VoiceAgentAvatarConfiguration avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfiguration subagentConfig, VoiceAgentPostCallConfiguration postCall, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ModelType = modelType;
             Model = model;
@@ -77,16 +77,18 @@ namespace Azure.AI.Projects.Agents
             Instructions = instructions;
             Greeting = greeting;
             Audio = audio;
+            Soundscape = soundscape;
             OutputModalities = outputModalities;
-            MaxOutputTokens = maxOutputTokens;
+            InternalMaxOutputTokens = internalMaxOutputTokens;
             Include = include;
             InterimResponse = interimResponse;
             Avatar = avatar;
             Tools = tools;
-            ToolChoice = toolChoice;
+            InternalToolChoice = internalToolChoice;
             ParallelToolCalls = parallelToolCalls;
             StructuredInputs = structuredInputs;
             SubagentConfig = subagentConfig;
+            PostCall = postCall;
             Store = store;
         }
 
@@ -103,13 +105,16 @@ namespace Azure.AI.Projects.Agents
         public string Instructions { get; set; }
 
         /// <summary> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </summary>
-        public VoiceAgentGreetingConfig Greeting { get; set; }
+        public VoiceAgentGreetingConfiguration Greeting { get; set; }
 
         /// <summary>
         /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
         /// transcription. These values are session defaults; a client may override supported fields when connecting.
         /// </summary>
-        public VoiceAgentAudioConfig Audio { get; set; }
+        public VoiceAgentAudioConfiguration Audio { get; set; }
+
+        /// <summary> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </summary>
+        public VoiceAgentSoundscapeConfiguration Soundscape { get; set; }
 
         /// <summary>
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
@@ -117,55 +122,14 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         public IList<VoiceOutputModality> OutputModalities { get; }
 
-        /// <summary>
-        /// The maximum output-token count for one response.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="int"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> "inf". </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData MaxOutputTokens { get; set; }
-
         /// <summary> Additional fields to include in service outputs. </summary>
         public IList<VoiceAgentSessionIncludeOption> Include { get; }
 
         /// <summary> Interim-response settings for latency and tool execution. </summary>
-        public VoiceAgentInterimResponseConfig InterimResponse { get; set; }
+        public VoiceAgentInterimResponseConfiguration InterimResponse { get; set; }
 
         /// <summary> Optional avatar configuration. These values are session defaults and may be overridden when connecting. </summary>
-        public VoiceAgentAvatarConfig Avatar { get; set; }
+        public VoiceAgentAvatarConfiguration Avatar { get; set; }
 
         /// <summary>
         /// The tools the voice agent may use. Supported tool kinds are `function` (executed by the client), `mcp`,
@@ -174,58 +138,6 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         public IList<VoiceAgentTool> Tools { get; }
 
-        /// <summary>
-        /// How the model chooses tools for generated responses. `none` prevents tool calls, `auto` lets the model decide,
-        /// `required` requires at least one tool call, and a specific function or MCP tool can be selected with an object.
-        /// Defaults to `auto`.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> "none". </description>
-        /// </item>
-        /// <item>
-        /// <description> "auto". </description>
-        /// </item>
-        /// <item>
-        /// <description> "required". </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="RealtimeCustomFunctionToolChoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="RealtimeCustomMcpToolChoice"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ToolChoice { get; set; }
-
         /// <summary> Whether the model may call multiple tools in parallel. </summary>
         public bool? ParallelToolCalls { get; set; }
 
@@ -233,7 +145,10 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }
 
         /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
-        public VoiceAgentSubagentConfig SubagentConfig { get; set; }
+        public VoiceAgentSubagentConfiguration SubagentConfig { get; set; }
+
+        /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>
+        public VoiceAgentPostCallConfiguration PostCall { get; set; }
 
         /// <summary>
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
