@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SourceVersion))
             {
                 writer.WritePropertyName("sourceVersion"u8);
-                writer.WriteStringValue(SourceVersion);
+                SerializeSourceVersion(writer, options);
             }
             if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
-                writer.WriteStringValue(TargetVersion);
+                SerializeTargetVersion(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,19 +127,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            string sourceVersion = default;
-            string targetVersion = default;
+            PostgreSqlFlexibleServerVersion? sourceVersion = default;
+            PostgreSqlFlexibleServerVersion? targetVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceVersion"u8))
                 {
-                    sourceVersion = prop.Value.GetString();
+                    DeserializeSourceVersion(prop, ref sourceVersion);
                     continue;
                 }
                 if (prop.NameEquals("targetVersion"u8))
                 {
-                    targetVersion = prop.Value.GetString();
+                    DeserializeTargetVersion(prop, ref targetVersion);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,7 +15,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Properties of a server. </summary>
     internal partial class ServerPropertiesForPatch : IJsonModel<ServerPropertiesForPatch>
     {
         /// <param name="data"> The data to parse. </param>
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                SerializeVersion(writer, options);
             }
             if (Optional.IsDefined(Storage))
             {
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            string version = default;
+            PostgreSqlFlexibleServerVersion? version = default;
             PostgreSqlFlexibleServerStorage storage = default;
             PostgreSqlFlexibleServerBackupProperties backup = default;
             PostgreSqlFlexibleServerHighAvailability highAvailability = default;
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    version = prop.Value.GetString();
+                    DeserializeVersion(prop, ref version);
                     continue;
                 }
                 if (prop.NameEquals("storage"u8))

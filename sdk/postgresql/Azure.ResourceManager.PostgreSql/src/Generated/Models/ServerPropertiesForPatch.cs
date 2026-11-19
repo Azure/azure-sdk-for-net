@@ -12,7 +12,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Properties of a server. </summary>
     internal partial class ServerPropertiesForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="fipsMode"> Indicates if FIPS (Federal Information Processing Standards) mode is enabled on the server. If not specified, the current value is preserved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, string version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, ResourceIdentifier sourceServerResourceId, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, FipsMode? fipsMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, ResourceIdentifier sourceServerResourceId, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, FipsMode? fipsMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -71,10 +70,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
         [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
-
-        /// <summary> Major version of PostgreSQL database engine. </summary>
-        [WirePath("version")]
-        public string Version { get; set; }
 
         /// <summary> Storage properties of a server. </summary>
         [WirePath("storage")]

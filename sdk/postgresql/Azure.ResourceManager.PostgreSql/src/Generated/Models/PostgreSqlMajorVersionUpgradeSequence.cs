@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,19 +25,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="sourceVersion"> The source PostgreSQL version. </param>
         /// <param name="targetVersion"> The target PostgreSQL version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMajorVersionUpgradeSequence(string sourceVersion, string targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlMajorVersionUpgradeSequence(PostgreSqlFlexibleServerVersion? sourceVersion, PostgreSqlFlexibleServerVersion? targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVersion = sourceVersion;
             TargetVersion = targetVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The source PostgreSQL version. </summary>
-        [WirePath("sourceVersion")]
-        public string SourceVersion { get; }
-
-        /// <summary> The target PostgreSQL version. </summary>
-        [WirePath("targetVersion")]
-        public string TargetVersion { get; }
     }
 }

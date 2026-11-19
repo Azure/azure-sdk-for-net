@@ -15,7 +15,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Properties of a server. </summary>
     internal partial class ServerProperties : IJsonModel<ServerProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                SerializeVersion(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MinorVersion))
             {
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            string version = default;
+            PostgreSqlFlexibleServerVersion? version = default;
             string minorVersion = default;
             PostgreSqlFlexibleServerState? state = default;
             string fullyQualifiedDomainName = default;
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    version = prop.Value.GetString();
+                    DeserializeVersion(prop, ref version);
                     continue;
                 }
                 if (prop.NameEquals("minorVersion"u8))

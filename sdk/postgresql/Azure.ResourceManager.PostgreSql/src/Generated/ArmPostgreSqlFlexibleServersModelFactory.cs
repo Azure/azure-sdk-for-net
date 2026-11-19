@@ -194,79 +194,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
-        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
-        /// <param name="state"> Possible states of a server. </param>
-        /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
-        /// <param name="storage"> Storage properties of a server. </param>
-        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
-        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
-        /// <param name="highAvailability"> High availability properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </param>
-        /// <param name="pointInTimeUtc"> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </param>
-        /// <param name="availabilityZone"> Availability zone of a server. </param>
-        /// <param name="replicationRole"> Role of the server in a replication set. </param>
-        /// <param name="replicaCapacity"> Maximum number of read replicas allowed for a server. </param>
-        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
-        /// <param name="createMode"> Creation mode of a new server. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
-        /// <param name="cluster"> Cluster properties of a server. </param>
-        /// <param name="fipsMode"> Indicates if FIPS (Federal Information Processing Standards) mode is enabled on the server. If not specified on create, it defaults to Disabled. </param>
-        /// <param name="sku"> Compute tier and size of a server. </param>
-        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string administratorLogin = default, string administratorLoginPassword = default, string version = default, string minorVersion = default, PostgreSqlFlexibleServerState? state = default, string fullyQualifiedDomainName = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, ResourceIdentifier sourceServerResourceId = default, DateTimeOffset? pointInTimeUtc = default, string availabilityZone = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, int? replicaCapacity = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerCreateMode? createMode = default, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default, PostgreSqlFlexibleServerClusterProperties cluster = default, FipsMode? fipsMode = default, PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlFlexibleServerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null && cluster is null && fipsMode is null ? default : new ServerProperties(
-                    administratorLogin,
-                    administratorLoginPassword,
-                    version,
-                    minorVersion,
-                    state,
-                    fullyQualifiedDomainName,
-                    storage,
-                    authConfig,
-                    dataEncryption,
-                    backup,
-                    network,
-                    highAvailability,
-                    maintenanceWindow,
-                    sourceServerResourceId,
-                    pointInTimeUtc,
-                    availabilityZone,
-                    replicationRole,
-                    replicaCapacity,
-                    replica,
-                    createMode,
-                    (privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
-                    cluster,
-                    fipsMode,
-                    default),
-                sku,
-                identity,
-                default);
-        }
-
         /// <summary> Storage properties of a server. </summary>
         /// <param name="storageSizeInGB"> Size of storage assigned to a server. </param>
         /// <param name="autoGrow"> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </param>
@@ -418,52 +345,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), principalId, identityType, tenantId, default);
         }
 
-        /// <param name="sku"> Compute tier and size of a server. </param>
-        /// <param name="identity"> Describes the identity of the application. </param>
-        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
-        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="storage"> Storage properties of a server. </param>
-        /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="highAvailability"> High availability properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
-        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="availabilityZone"> Availability zone of a server. </param>
-        /// <param name="createMode"> Update mode of an existing server. </param>
-        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. </param>
-        /// <param name="replicationRole"> Role of the server in a replication set. </param>
-        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
-        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
-        /// <param name="cluster"> Cluster properties of a server. </param>
-        /// <param name="fipsMode"> Indicates if FIPS (Federal Information Processing Standards) mode is enabled on the server. If not specified, the current value is preserved. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, string version = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, ResourceIdentifier sourceServerResourceId = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, FipsMode? fipsMode = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && sourceServerResourceId is null && replicationRole is null && replica is null && network is null && cluster is null && fipsMode is null ? default : new ServerPropertiesForPatch(
-                administratorLogin,
-                administratorLoginPassword,
-                version,
-                storage,
-                backup,
-                highAvailability,
-                maintenanceWindow,
-                authConfig,
-                dataEncryption,
-                availabilityZone,
-                createMode,
-                sourceServerResourceId,
-                replicationRole,
-                replica,
-                network,
-                cluster,
-                fipsMode,
-                default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
         /// <summary> PostgreSQL database engine restart parameters. </summary>
         /// <param name="restartWithFailover"> Indicates if restart the PostgreSQL database engine should failover or switch over from primary to standby. This only works if server has high availability enabled. </param>
         /// <param name="failoverMode"> Failover mode. </param>
@@ -487,7 +368,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Request model for starting a major version upgrade precheck. </summary>
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
         /// <returns> A new <see cref="Models.StartMajorVersionUpgradePrecheckContent"/> instance for mocking. </returns>
-        public static StartMajorVersionUpgradePrecheckContent StartMajorVersionUpgradePrecheckContent(string targetVersion = default)
+        public static StartMajorVersionUpgradePrecheckContent StartMajorVersionUpgradePrecheckContent(PostgreSqlFlexibleServerVersion targetVersion = default)
         {
             return new StartMajorVersionUpgradePrecheckContent(targetVersion, default);
         }
@@ -702,7 +583,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="targetVersion"> The target PostgreSQL major version for the upgrade. </param>
         /// <param name="policyDetails"> Array of policy validation details. </param>
         /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckProperties"/> instance for mocking. </returns>
-        public static MajorVersionUpgradePrecheckProperties MajorVersionUpgradePrecheckProperties(DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default, MajorVersionUpgradePrecheckResult precheckResult = default, string targetVersion = default, IEnumerable<MajorVersionUpgradePrecheckPolicyDetail> policyDetails = default)
+        public static MajorVersionUpgradePrecheckProperties MajorVersionUpgradePrecheckProperties(DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default, MajorVersionUpgradePrecheckResult precheckResult = default, PostgreSqlFlexibleServerVersion? targetVersion = default, IEnumerable<MajorVersionUpgradePrecheckPolicyDetail> policyDetails = default)
         {
             policyDetails ??= new ChangeTrackingList<MajorVersionUpgradePrecheckPolicyDetail>();
 
@@ -731,7 +612,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="sourceVersion"> The source PostgreSQL version. </param>
         /// <param name="targetVersion"> The target PostgreSQL version. </param>
         /// <returns> A new <see cref="Models.PostgreSqlMajorVersionUpgradeSequence"/> instance for mocking. </returns>
-        public static PostgreSqlMajorVersionUpgradeSequence PostgreSqlMajorVersionUpgradeSequence(string sourceVersion = default, string targetVersion = default)
+        public static PostgreSqlMajorVersionUpgradeSequence PostgreSqlMajorVersionUpgradeSequence(PostgreSqlFlexibleServerVersion? sourceVersion = default, PostgreSqlFlexibleServerVersion? targetVersion = default)
         {
             return new PostgreSqlMajorVersionUpgradeSequence(sourceVersion, targetVersion, default);
         }
@@ -1357,7 +1238,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="identity"> User assigned managed identities assigned to the server. </param>
         /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
         /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"></param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
         /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
         /// <param name="state"> Possible states of a server. </param>
         /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
@@ -1376,7 +1257,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="createMode"> Creation mode of a new server. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, Models.PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, int? storageSizeInGB, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServerCreateMode? createMode)
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, int? storageSizeInGB, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServerCreateMode? createMode)
         {
             return new PostgreSqlFlexibleServerData(
                 id,
@@ -1385,10 +1266,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                administratorLogin is null && administratorLoginPassword is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storageSizeInGB is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replicationRole is null && replicaCapacity is null && createMode is null ? default : new ServerProperties(
+                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storageSizeInGB is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replicationRole is null && replicaCapacity is null && createMode is null ? default : new ServerProperties(
                     administratorLogin,
                     administratorLoginPassword,
-                    default,
+                    version,
                     minorVersion,
                     state,
                     fullyQualifiedDomainName,
@@ -1441,7 +1322,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="identity"> User assigned managed identities assigned to the server. </param>
         /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
         /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"></param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
         /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
         /// <param name="state"> Possible states of a server. </param>
         /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
@@ -1462,7 +1343,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, Models.PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections)
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections)
         {
             return new PostgreSqlFlexibleServerData(
                 id,
@@ -1471,10 +1352,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                administratorLogin is null && administratorLoginPassword is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null ? default : new ServerProperties(
+                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null ? default : new ServerProperties(
                     administratorLogin,
                     administratorLoginPassword,
-                    default,
+                    version,
                     minorVersion,
                     state,
                     fullyQualifiedDomainName,
@@ -1512,7 +1393,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="identity"> User assigned managed identities assigned to the server. </param>
         /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
         /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"></param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
         /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
         /// <param name="state"> Possible states of a server. </param>
         /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
@@ -1534,7 +1415,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, Models.PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, PostgreSqlFlexibleServerClusterProperties cluster)
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, PostgreSqlFlexibleServerClusterProperties cluster)
         {
             return new PostgreSqlFlexibleServerData(
                 id,
@@ -1543,10 +1424,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                administratorLogin is null && administratorLoginPassword is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null && cluster is null ? default : new ServerProperties(
+                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null && cluster is null ? default : new ServerProperties(
                     administratorLogin,
                     administratorLoginPassword,
-                    default,
+                    version,
                     minorVersion,
                     state,
                     fullyQualifiedDomainName,

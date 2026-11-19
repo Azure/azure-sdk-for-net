@@ -1,12 +1,17 @@
 # Release History
 
-## 1.5.0-beta.3 (Unreleased)
+## 1.5.0 (Unreleased)
 
 ### Features Added
+
+- Upgraded API version to `2026-10-01`.
+- Added FIPS mode, immutable backups, and storage auto-grow threshold and increment settings.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Preserved PostgreSQL version types and JSON string serialization when upgrading the service API.
 
 ### Other Changes
 
@@ -215,7 +220,7 @@ Polishing since last public beta release:
 - Prepended `PostgreSql` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

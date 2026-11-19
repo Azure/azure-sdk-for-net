@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
@@ -93,8 +94,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [CodeGenMember("Version")]
         [WirePath("properties.version")]
-        public string Version
+        public PostgreSqlFlexibleServerVersion? Version
         {
             get
             {

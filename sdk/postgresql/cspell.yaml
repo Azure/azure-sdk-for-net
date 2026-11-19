@@ -8,3 +8,8 @@ overrides:
       - Apsara
       - DBRDS
       - SSDLRS
+      - Entras
+      - pgflexrg
+      - pgflexserver
+      - pgflexserverrep
+      - pgflexserverssdv

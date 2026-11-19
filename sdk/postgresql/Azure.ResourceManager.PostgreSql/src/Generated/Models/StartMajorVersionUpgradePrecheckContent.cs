@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -19,25 +18,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckContent"/>. </summary>
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetVersion"/> is null. </exception>
-        public StartMajorVersionUpgradePrecheckContent(string targetVersion)
+        public StartMajorVersionUpgradePrecheckContent(PostgreSqlFlexibleServerVersion targetVersion)
         {
-            Argument.AssertNotNull(targetVersion, nameof(targetVersion));
-
             TargetVersion = targetVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckContent"/>. </summary>
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartMajorVersionUpgradePrecheckContent(string targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StartMajorVersionUpgradePrecheckContent(PostgreSqlFlexibleServerVersion targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetVersion = targetVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The target major version to upgrade to. </summary>
-        [WirePath("targetVersion")]
-        public string TargetVersion { get; }
     }
 }
