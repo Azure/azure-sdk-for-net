@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="seedingMode"> Specifies how the secondary replica will be initially seeded. AUTOMATIC enables direct seeding. This method will seed the secondary replica over the network. This method does not require you to backup and restore a copy of the primary database on the replica. MANUAL specifies manual seeding (default). This method requires you to create a backup of the database on the primary replica and manually restore that backup on the secondary replica. </param>
         /// <param name="seedingModeDescription"> Describes seeding mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityGroupConfigure(string endpointName, string endpointUri, SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode, string certificateName, string endpointConnectLogin, ArcSqlServerAvailabilityMode? availabilityMode, string availabilityModeDescription, ArcSqlServerFailoverMode? failoverMode, string failoverModeDescription, int? sessionTimeoutInSeconds, PrimaryAllowConnections? primaryAllowConnections, string primaryRoleAllowConnectionsDescription, SecondaryAllowConnections? secondaryAllowConnections, string secondaryRoleAllowConnectionsDescription, DateTimeOffset? replicaCreateOn, DateTimeOffset? replicaModifyOn, int? backupPriority, string readOnlyRoutingUri, string readWriteRoutingUri, SeedingMode? seedingMode, string seedingModeDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilityGroupConfigure(string endpointName, Uri endpointUri, SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode, string certificateName, string endpointConnectLogin, ArcSqlServerAvailabilityMode? availabilityMode, string availabilityModeDescription, ArcSqlServerFailoverMode? failoverMode, string failoverModeDescription, int? sessionTimeoutInSeconds, PrimaryAllowConnections? primaryAllowConnections, string primaryRoleAllowConnectionsDescription, SecondaryAllowConnections? secondaryAllowConnections, string secondaryRoleAllowConnectionsDescription, DateTimeOffset? replicaCreateOn, DateTimeOffset? replicaModifyOn, int? backupPriority, Uri readOnlyRoutingUri, Uri readWriteRoutingUri, SeedingMode? seedingMode, string seedingModeDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointName = endpointName;
             EndpointUri = endpointUri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string EndpointName { get; set; }
 
         /// <summary> Mirroring endpoint URL of availability group replica. </summary>
-        public string EndpointUri { get; set; }
+        public Uri EndpointUri { get; set; }
 
         /// <summary> Permitted authentication modes for the mirroring endpoint. </summary>
         public SqlMirroringEndpointAuthenticationType? EndpointAuthenticationMode { get; set; }
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.ArcData.Models
         public int? BackupPriority { get; set; }
 
         /// <summary> Connectivity endpoint (URL) of the read only availability replica. </summary>
-        public string ReadOnlyRoutingUri { get; set; }
+        public Uri ReadOnlyRoutingUri { get; set; }
 
         /// <summary> Connectivity endpoint (URL) of the read write availability replica. </summary>
-        public string ReadWriteRoutingUri { get; set; }
+        public Uri ReadWriteRoutingUri { get; set; }
 
         /// <summary> Specifies how the secondary replica will be initially seeded. AUTOMATIC enables direct seeding. This method will seed the secondary replica over the network. This method does not require you to backup and restore a copy of the primary database on the replica. MANUAL specifies manual seeding (default). This method requires you to create a backup of the database on the primary replica and manually restore that backup on the secondary replica. </summary>
         public SeedingMode? SeedingMode { get; set; }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcData.Models
             if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUri);
+                writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndpointAuthenticationMode))
             {
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.ArcData.Models
             if (Optional.IsDefined(ReadOnlyRoutingUri))
             {
                 writer.WritePropertyName("readOnlyRoutingUrl"u8);
-                writer.WriteStringValue(ReadOnlyRoutingUri);
+                writer.WriteStringValue(ReadOnlyRoutingUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReadWriteRoutingUri))
             {
                 writer.WritePropertyName("readWriteRoutingUrl"u8);
-                writer.WriteStringValue(ReadWriteRoutingUri);
+                writer.WriteStringValue(ReadWriteRoutingUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SeedingMode))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             string endpointName = default;
-            string endpointUri = default;
+            Uri endpointUri = default;
             SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode = default;
             string certificateName = default;
             string endpointConnectLogin = default;
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.ArcData.Models
             DateTimeOffset? replicaCreateOn = default;
             DateTimeOffset? replicaModifyOn = default;
             int? backupPriority = default;
-            string readOnlyRoutingUri = default;
-            string readWriteRoutingUri = default;
+            Uri readOnlyRoutingUri = default;
+            Uri readWriteRoutingUri = default;
             SeedingMode? seedingMode = default;
             string seedingModeDescription = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -252,7 +252,11 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("endpointUrl"u8))
                 {
-                    endpointUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("endpointAuthenticationMode"u8))
@@ -368,12 +372,20 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("readOnlyRoutingUrl"u8))
                 {
-                    readOnlyRoutingUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    readOnlyRoutingUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("readWriteRoutingUrl"u8))
                 {
-                    readWriteRoutingUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    readWriteRoutingUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("seedingMode"u8))

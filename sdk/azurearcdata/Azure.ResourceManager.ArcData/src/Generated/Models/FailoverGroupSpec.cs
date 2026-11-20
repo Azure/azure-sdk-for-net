@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="partnerSyncMode"> The partner sync mode of the SQL managed instance. </param>
         /// <param name="role"> The role of the SQL managed instance in this failover group. </param>
         /// <param name="additionalProperties"></param>
-        internal FailoverGroupSpec(string sharedName, string sourceMI, string partnerMI, string partnerMirroringUri, string partnerMirroringCert, FailoverGroupPartnerSyncMode? partnerSyncMode, InstanceFailoverGroupRole role, IDictionary<string, BinaryData> additionalProperties)
+        internal FailoverGroupSpec(string sharedName, string sourceMI, string partnerMI, Uri partnerMirroringUri, string partnerMirroringCert, FailoverGroupPartnerSyncMode? partnerSyncMode, InstanceFailoverGroupRole role, IDictionary<string, BinaryData> additionalProperties)
         {
             SharedName = sharedName;
             SourceMI = sourceMI;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string PartnerMI { get; set; }
 
         /// <summary> The mirroring endpoint URL of the partner SQL managed instance. </summary>
-        public string PartnerMirroringUri { get; set; }
+        public Uri PartnerMirroringUri { get; set; }
 
         /// <summary> The mirroring endpoint public certificate for the partner SQL managed instance. Only PEM format is supported. </summary>
         public string PartnerMirroringCert { get; set; }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ArcData.Models
             if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUri);
+                writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndpointAuthenticationMode))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ArcData.Models
             if (Optional.IsDefined(SecondaryRoleReadOnlyRoutingUri))
             {
                 writer.WritePropertyName("secondaryRoleReadOnlyRoutingUrl"u8);
-                writer.WriteStringValue(SecondaryRoleReadOnlyRoutingUri);
+                writer.WriteStringValue(SecondaryRoleReadOnlyRoutingUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PrimaryRoleAllowConnections))
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string serverInstance = default;
             string endpointName = default;
-            string endpointUri = default;
+            Uri endpointUri = default;
             SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode = default;
             string certificateName = default;
             string endpointConnectLogin = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ArcData.Models
             SeedingMode? seedingMode = default;
             int? backupPriority = default;
             SecondaryAllowConnections? secondaryRoleAllowConnections = default;
-            string secondaryRoleReadOnlyRoutingUri = default;
+            Uri secondaryRoleReadOnlyRoutingUri = default;
             PrimaryAllowConnections? primaryRoleAllowConnections = default;
             IList<string> primaryRoleReadOnlyRoutingList = default;
             int? sessionTimeoutInSeconds = default;
@@ -231,7 +231,11 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("endpointUrl"u8))
                 {
-                    endpointUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("endpointAuthenticationMode"u8))
@@ -300,7 +304,11 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("secondaryRoleReadOnlyRoutingUrl"u8))
                 {
-                    secondaryRoleReadOnlyRoutingUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secondaryRoleReadOnlyRoutingUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("primaryRoleAllowConnections"u8))

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ArcData.Models
             if (Optional.IsDefined(PartnerMirroringUri))
             {
                 writer.WritePropertyName("partnerMirroringURL"u8);
-                writer.WriteStringValue(PartnerMirroringUri);
+                writer.WriteStringValue(PartnerMirroringUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PartnerMirroringCert))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string sharedName = default;
             string sourceMI = default;
             string partnerMI = default;
-            string partnerMirroringUri = default;
+            Uri partnerMirroringUri = default;
             string partnerMirroringCert = default;
             FailoverGroupPartnerSyncMode? partnerSyncMode = default;
             InstanceFailoverGroupRole role = default;
@@ -177,7 +177,11 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("partnerMirroringURL"u8))
                 {
-                    partnerMirroringUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerMirroringUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("partnerMirroringCert"u8))
