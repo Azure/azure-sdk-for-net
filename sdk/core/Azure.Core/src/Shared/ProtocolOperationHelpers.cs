@@ -12,6 +12,23 @@ namespace Azure.Core
 {
     internal static class ProtocolOperationHelpers
     {
+        /// <summary>
+        /// Gets the latest status-monitor response of <paramref name="operation"/>, or its raw response when the operation does not track one.
+        /// </summary>
+        public static Response? GetStatusMonitorResponse(Operation operation)
+            => operation is IStatusMonitorOperation monitor ? monitor.GetStatusMonitorResponse() : operation.GetRawResponse();
+
+        public static TOperation WrapWithMetadata<TOperation>(Operation operation, Func<Operation, Func<Response?>, TOperation> createOperation)
+            where TOperation : Operation
+            => createOperation(operation, () => GetStatusMonitorResponse(operation));
+
+        public static TOperation ConvertWithMetadata<TFrom, TTo, TOperation>(Operation<TFrom> operation, Func<Response, TTo> convertFunc, ClientDiagnostics diagnostics, string scopeName,
+            Func<Operation<TTo>, Func<Response?>, TOperation> createOperation)
+            where TFrom : notnull
+            where TTo : notnull
+            where TOperation : Operation
+            => createOperation(Convert(operation, convertFunc, diagnostics, scopeName), () => GetStatusMonitorResponse(operation));
+
         public static Operation<TTo> Convert<TFrom, TTo>(Operation<TFrom> operation, Func<Response, TTo> convertFunc, ClientDiagnostics diagnostics, string scopeName)
             where TFrom : notnull
             where TTo : notnull
@@ -51,7 +68,7 @@ namespace Azure.Core
             return operation;
         }
 
-        private class ConvertOperation<TFrom, TTo> : Operation<TTo>
+        private class ConvertOperation<TFrom, TTo> : Operation<TTo>, IStatusMonitorOperation
             where TFrom : notnull
             where TTo : notnull
         {
@@ -78,6 +95,7 @@ namespace Azure.Core
             public override bool HasCompleted => _operation.HasCompleted;
             public override RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
             public override Response GetRawResponse() => _operation.GetRawResponse();
+            Response? IStatusMonitorOperation.GetStatusMonitorResponse() => GetStatusMonitorResponse(_operation);
 
             public override Response UpdateStatus(CancellationToken cancellationToken = default)
             {
@@ -218,5 +236,11 @@ namespace Azure.Core
                 return scope;
             }
         }
+    }
+
+    /// <summary>Exposes the latest successful status-monitor response of a long-running operation.</summary>
+    internal interface IStatusMonitorOperation
+    {
+        Response? GetStatusMonitorResponse();
     }
 }

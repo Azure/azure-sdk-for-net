@@ -7,12 +7,102 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
     public class ProtocolOperationTests
     {
+        [TestCase("Succeeded", true)]
+        [TestCase("Succeeded", false)]
+        [TestCase("Failed", true)]
+        [TestCase("Canceled", false)]
+        public async Task TracksLatestStatusMonitorResponse(string status, bool isAsync)
+        {
+            using var initial = new MockResponse(202);
+            initial.AddHeader("Operation-Location", "https://test/jobs/job-1/status");
+            initial.AddHeader("Location", "https://test/resources/r");
+            initial.SetContent("""{"status":"NotStarted","progress":0}""");
+            using var monitor = new MockResponse(200);
+            monitor.SetContent($$"""{"status":"{{status}}","progress":100}""");
+            using var final = new MockResponse(200);
+            final.SetContent("""{"name":"r"}""");
+            var pipeline = new HttpPipeline(new MockTransport(initial, monitor, final));
+            using var message = pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Post;
+            message.Request.Uri.Reset(new Uri("https://test/jobs"));
+            var diagnostics = new ClientDiagnostics(ClientOptions.Default);
+            var operation = isAsync
+                ? await ProtocolOperationHelpers.ProcessMessageAsync(pipeline, message, diagnostics, "test", OperationFinalStateVia.Location, null, WaitUntil.Started)
+                : ProtocolOperationHelpers.ProcessMessage(pipeline, message, diagnostics, "test", OperationFinalStateVia.Location, null, WaitUntil.Started);
+            var converted = ProtocolOperationHelpers.Convert(operation, r => r.Content.ToString(), diagnostics, "test");
+            Assert.AreSame(initial, ProtocolOperationHelpers.GetStatusMonitorResponse(converted));
+
+            if (status == "Succeeded")
+            {
+                await converted.UpdateStatusAsync();
+                Assert.AreSame(final, converted.GetRawResponse());
+            }
+            else
+            {
+                Assert.ThrowsAsync<RequestFailedException>(async () => await converted.UpdateStatusAsync());
+            }
+
+            Assert.IsTrue(converted.HasCompleted);
+            Assert.AreSame(monitor, ProtocolOperationHelpers.GetStatusMonitorResponse(operation));
+            Assert.AreSame(monitor, ProtocolOperationHelpers.GetStatusMonitorResponse(converted));
+        }
+
+        [Test]
+        public void HttpErrorPollKeepsLastStatusMonitorResponse()
+        {
+            using var initial = new MockResponse(202);
+            initial.AddHeader("Operation-Location", "https://test/jobs/job-1/status");
+            using var running = new MockResponse(200);
+            running.SetContent("""{"status":"Running"}""");
+            using var error = new MockResponse(500);
+            var pipeline = new HttpPipeline(new MockTransport(running, error));
+            using var request = new MockRequest() { Method = RequestMethod.Post };
+            request.Uri.Reset(new Uri("https://test/jobs"));
+            var operation = new ProtocolOperation<BinaryData>(new ClientDiagnostics(ClientOptions.Default), pipeline, request, initial,
+                OperationFinalStateVia.OperationLocation, "test", r => r.Content);
+            var token = operation.GetRehydrationToken();
+
+            operation.UpdateStatus();
+            Assert.Throws<RequestFailedException>(() => operation.UpdateStatus());
+
+            Assert.AreSame(running, ProtocolOperationHelpers.GetStatusMonitorResponse(operation));
+            Assert.AreEqual(token, operation.GetRehydrationToken());
+        }
+
+        [Test]
+        public void MetadataWrappersFallBackToRawResponseForCustomOperations()
+        {
+            using var response = new MockResponse(200);
+            var source = new Mock<Operation<int>>();
+            source.Setup(o => o.GetRawResponse()).Returns(response);
+            Func<Response> converted = null;
+            Func<Response> wrapped = null;
+
+            var conversion = ProtocolOperationHelpers.ConvertWithMetadata<int, string, Operation<string>>(source.Object, _ => "value",
+                new ClientDiagnostics(ClientOptions.Default), "test", (inner, getMonitor) =>
+                {
+                    converted = getMonitor;
+                    return inner;
+                });
+            var wrapping = ProtocolOperationHelpers.WrapWithMetadata<Operation>(source.Object, (inner, getMonitor) =>
+            {
+                wrapped = getMonitor;
+                return inner;
+            });
+
+            Assert.AreSame(response, converted());
+            Assert.AreSame(response, wrapped());
+            Assert.AreSame(response, ProtocolOperationHelpers.GetStatusMonitorResponse(conversion));
+            Assert.AreSame(source.Object, wrapping);
+        }
+
         [Test]
         public void GetRehydrationToken()
         {

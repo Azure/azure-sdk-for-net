@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
@@ -559,6 +561,107 @@ namespace Azure.Generator.Tests.Visitors
                     && m.Signature.Parameters.All(p => p.Name != "context"));
             Assert.IsNotNull(convenienceMethod);
             return (visitor, convenienceMethod!);
+        }
+
+        private static (InputLongRunningServiceMethod Lro, InputClient Client, InputModelType[] Models) CreateStatusMetadataInput(bool hasResult)
+        {
+            var createdOn = InputFactory.Property("createdOn", new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String),
+                isRequired: true, isReadOnly: true, wireName: "createdDateTime");
+            var succeeded = InputFactory.Property("succeeded", InputPrimitiveType.Int32, isRequired: true, isReadOnly: true);
+            var statisticsModel = InputFactory.Model("JobStatistics", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json, properties: [succeeded]);
+            var statistics = InputFactory.Property("statistics", statisticsModel, isReadOnly: true);
+            var errors = InputFactory.Property("errors", InputFactory.Array(InputPrimitiveType.String), isReadOnly: true);
+            var id = InputFactory.Property("id", InputPrimitiveType.String, isRequired: true, isReadOnly: true);
+            var missing = InputFactory.Property("missing", InputPrimitiveType.String);
+            var monitor = InputFactory.Model("JobStatus", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [id, createdOn, statistics, errors]);
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null, monitor,
+                [
+                    new InputLroStatusMetadata(createdOn, [createdOn]),
+                    new InputLroStatusMetadata(succeeded, [statistics, succeeded]),
+                    new InputLroStatusMetadata(errors, [errors]),
+                    // Conflicts with Operation.Id and an unresolvable selection are skipped rather than generated.
+                    new InputLroStatusMetadata(id, [id]),
+                    new InputLroStatusMetadata(missing, [missing]),
+                ]);
+            var result = hasResult ? InputFactory.Model("JobResult") : null;
+            var lro = InputFactory.LongRunningServiceMethod("startJob", InputFactory.Operation("startJob"),
+                response: InputFactory.ServiceMethodResponse(result, null), longRunningServiceMetadata: metadata);
+            var ordinary = InputFactory.LongRunningServiceMethod("ordinary", InputFactory.Operation("ordinary"));
+            return (lro, InputFactory.Client("TestClient", methods: [lro, ordinary]),
+                result is null ? [monitor, statisticsModel] : [monitor, statisticsModel, result]);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void StatusMetadataOperationIsInternalAndKeepsReturnTypes(bool hasResult)
+        {
+            var (lro, inputClient, models) = CreateStatusMetadataInput(hasResult);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient], inputModels: () => models);
+            var output = plugin.Object.OutputLibrary;
+            new TestLroVisitor().InvokeVisitLibrary(output);
+            var client = output.TypeProviders.OfType<ClientProvider>().Single();
+            var operation = output.TypeProviders.OfType<LroOperationProvider>().Single();
+
+            Assert.AreEqual("StartJobOperation", operation.Name);
+            Assert.IsTrue(operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Internal));
+            Assert.IsFalse(operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            Assert.IsFalse(output.TypeProviders.Any(t => t.Name.EndsWith("Metadata") || t.Name.EndsWith("RawOperation")));
+            Assert.AreEqual(8, client.Methods.Count);
+            foreach (var method in client.Methods.OfType<ScmMethodProvider>())
+            {
+                var returnType = method.Signature.ReturnType!;
+                if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                {
+                    returnType = returnType.Arguments[0];
+                }
+                Assert.AreEqual("Operation", returnType.Name);
+                var body = method.BodyStatements!.ToDisplayString();
+                var wrapped = method.Kind != ScmMethodKind.Protocol && method.ServiceMethod == lro;
+                Assert.AreEqual(wrapped, body.Contains(hasResult ? "ConvertWithMetadata" : "WrapWithMetadata"), body);
+                Assert.AreEqual(wrapped, body.Contains("new global::Samples.StartJobOperation(operation, getStatusMonitorResponse)"), body);
+            }
+
+            var metadata = operation.Properties.Where(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Virtual)).ToArray();
+            CollectionAssert.AreEqual(new[] { "CreatedOn", "Succeeded", "Errors" }, metadata.Select(p => p.Name));
+            Assert.AreEqual(new CSharpType(typeof(DateTimeOffset), isNullable: true), metadata[0].Type);
+            Assert.AreEqual(new CSharpType(typeof(int), isNullable: true), metadata[1].Type);
+            Assert.IsTrue(metadata.All(p => !p.Body.HasSetter && p.Modifiers.HasFlag(MethodSignatureModifiers.Public)));
+            StringAssert.Contains("return this.GetStatusMonitorModel()?.Statistics?.Succeeded;", ((MethodPropertyBody)metadata[1].Body).Getter!.ToDisplayString());
+            StringAssert.Contains("IsCollectionDefined(value)", ((MethodPropertyBody)metadata[2].Body).Getter!.ToDisplayString());
+
+            var getModel = operation.Methods.Single(m => m.Signature.Name == "GetStatusMonitorModel").BodyStatements!.ToDisplayString();
+            StringAssert.Contains("object.ReferenceEquals(cache.Item1, response)", getModel);
+            StringAssert.Contains("global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Samples.Models.JobStatus>(response.Content", getModel);
+            StringAssert.Contains("catch (global::System.Exception)", getModel);
+            Assert.IsFalse(operation.Methods.Any(m => m.Signature.Name.Contains("Rehydrat") && m.Signature.Name != "GetRehydrationToken"));
+            var waits = operation.Methods.Where(m => m.Signature.Name.StartsWith("WaitForCompletion")).ToArray();
+            Assert.AreEqual(hasResult ? 12 : 6, waits.Length);
+            Assert.IsTrue(waits.All(m => m.BodyExpression!.ToDisplayString().StartsWith($"_operation.{m.Signature.Name}(")));
+        }
+
+        [Test]
+        public async Task StatusMetadataOperationCanBeRenamedAndMadePublic()
+        {
+            var (_, inputClient, models) = CreateStatusMetadataInput(hasResult: true);
+            var plugin = await MockHelpers.LoadMockGeneratorAsync(clients: () => [inputClient], inputModels: () => models,
+                compilation: () => Helpers.GetCompilationFromDirectoryAsync());
+            var output = plugin.Object.OutputLibrary;
+            new TestLroVisitor().InvokeVisitLibrary(output);
+            var client = output.TypeProviders.OfType<ClientProvider>().Single();
+            var operation = output.TypeProviders.OfType<LroOperationProvider>().Single();
+
+            Assert.AreEqual("JobOperation", operation.Type.Name);
+            Assert.IsTrue(operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            foreach (var method in client.Methods.OfType<ScmMethodProvider>().Where(m => m.Signature.Name.StartsWith("StartJob")))
+            {
+                var returnType = method.Signature.ReturnType!;
+                if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                {
+                    returnType = returnType.Arguments[0];
+                }
+                Assert.AreEqual(method.Kind == ScmMethodKind.Protocol ? "Operation" : "JobOperation", returnType.Name);
+            }
         }
 
         private class TestLroVisitor : LroVisitor
