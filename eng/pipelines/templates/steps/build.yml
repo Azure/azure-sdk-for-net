@@ -17,11 +17,11 @@ parameters:
 
 steps:
   - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-      parameters:
-        Paths:
-          - "/*"
-          - "!SessionRecords"
+    - checkout: self
+      fetchFilter: tree:0
+      fetchTags: true
+      fetchDepth: 0
+      sparseCheckoutPatterns: '/* !/*/ /eng /.config /* !SessionRecords'
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
   - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
     parameters:
