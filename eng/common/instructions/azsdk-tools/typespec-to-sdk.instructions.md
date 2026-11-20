@@ -21,6 +21,16 @@ Pre-requisites:
 
 As a first step, you must prompt the user to understand the intention of SDK generation. Based on the user input, you can either run SDK generation locally or use SDK generation pipeline.
 
+### API version selection
+
+If the user requests a specific API version, confirm it exists at the spec commit to be generated, then compare it with the latest version on `main` and in the target TypeSpec snapshot (for example, using the `Versions` enum or `service.yaml`). Do not infer version ordering from presence or absence on `main`. If the target version or ordering cannot be determined, ask the user rather than guessing.
+
+If the requested version is older than the latest on `main` or is not the latest in the target snapshot, explain that unpinned SDK emitters resolve to the latest version in the TypeSpec project, so they may not generate the requested version. Before generating locally or through the pipeline:
+
+1. Guide the user to set the same `api-version` under every configured SDK language emitter in `tspconfig.yaml`: C#, Java, JavaScript/TypeScript, Python, and Go where configured. Use the project's actual C# emitter and preserve all other emitter options. Pinning only some emitters is not sufficient.
+2. Keep the pins in the original spec PR. After that PR is merged and SDKs for the pinned version are generated and released, tell the user to submit a follow-up PR removing the `api-version` settings from all emitters. Otherwise SDKs will continue targeting the older version, and later spec PRs can fail `StaleApiVersionPin`.
+3. If a management-plane PR adds multiple API versions, note that `MultipleNewApiVersions` generally requires its SDK emitters to target the oldest newly added version. See the [TypeSpec Validation wiki](https://github.com/Azure/azure-rest-api-specs/wiki/TypeSpec-Validation#adding-multiple-api-versions-in-one-pull-request) for the complete workflow and rule exceptions.
+
 Generate SDK locally in cases below:
 - If the user wants to walk through each SDK generation step locally. This approach requires user to have the setup for each language to generate SDK locally. User can create a pull request for each language after completing all the steps in SDK generation successfully to get the generated SDK reviewed and merged.
 - If SDK or client.tsp customizations are needed before creating a pull request.
