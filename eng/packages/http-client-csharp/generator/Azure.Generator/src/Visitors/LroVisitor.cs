@@ -33,6 +33,13 @@ namespace Azure.Generator.Visitors
             ClientProvider client,
             ScmMethodProviderCollection? methods)
         {
+            if (serviceMethod is InputLongRunningPagingServiceMethod paging && paging.LongRunningServiceMetadata.OperationId.Count > 0)
+            {
+                AzureClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "AZLRO001",
+                    $"Selected LRO operation IDs are not supported for paged operation '{paging.Name}'.",
+                    paging.CrossLanguageDefinitionId);
+            }
             if (serviceMethod is InputLongRunningServiceMethod { Response.Type: InputModelType responseModel } lroServiceMethod)
             {
                 AddFromLroResponseMethod(responseModel, lroServiceMethod, client);
@@ -346,6 +353,23 @@ namespace Azure.Generator.Visitors
                         expression.Arguments[1],
                         scmMethod.Signature.Parameters[0]
                     ]);
+                var operation = ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(serviceMethod, client);
+                if (operation is not null)
+                {
+                    // Wrap the protocol operation so that Operation.Id returns the selected @lroOperationId value.
+                    var response = new VariableExpression(typeof(Response), "response");
+                    expression.Update(
+                        methodName: expression.CallAsAsync ? "ProcessMessageWithMonitorAsync" : "ProcessMessageWithMonitor",
+                        arguments:
+                        [
+                            .. expression.Arguments,
+                            new FuncExpression([response.Declaration], operation.ResultType is null
+                                ? New.Instance(typeof(VoidValue))
+                                : response.Property(nameof(Response.Content))),
+                            operation.CreateFactory()
+                        ],
+                        typeArguments: [operation.ResultType ?? typeof(VoidValue), operation.Type]);
+                }
             }
 
             return expression;

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -12,6 +13,52 @@ namespace Azure.Core.Tests
 {
     public class NextLinkOperationImplementationTests
     {
+        [TestCase(true, "Succeeded")]
+        [TestCase(false, "Succeeded")]
+        [TestCase(true, "Failed")]
+        [TestCase(false, "Canceled")]
+        public async Task ObservesMonitorResponseBeforeFinalResult(bool async, string status)
+        {
+            var monitorResponse = new MockResponse(200);
+            monitorResponse.SetContent($$"""{"status":"{{status}}","progress":100}""");
+            var finalResponse = new MockResponse(200);
+            finalResponse.SetContent("""{"value":"result"}""");
+            var pipeline = new HttpPipeline(new MockTransport(monitorResponse, finalResponse), default);
+            var initialResponse = new MockResponse(202);
+            initialResponse.AddHeader("Operation-Location", "https://test/operations/job-123?api-version=1");
+            var observed = new List<Response>();
+            var operation = NextLinkOperationImplementation.Create(
+                pipeline, RequestMethod.Post, new Uri("https://test/resource"), initialResponse,
+                OperationFinalStateVia.OriginalUri, statusMonitorResponseReceived: observed.Add);
+
+            var state = await operation.UpdateStateAsync(async, default);
+
+            Assert.AreEqual(1, observed.Count);
+            Assert.AreSame(monitorResponse, observed[0]);
+            Assert.AreSame(status == "Succeeded" ? finalResponse : monitorResponse, state.RawResponse);
+            Assert.AreEqual(status == "Succeeded", state.HasSucceeded);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteNotFoundDoesNotReplaceMonitorResponse(bool async)
+        {
+            var notFound = new MockResponse(404);
+            var pipeline = new HttpPipeline(new MockTransport(notFound), default);
+            var initialResponse = new MockResponse(202);
+            initialResponse.AddHeader("Location", "https://test/resource");
+            var observed = new List<Response>();
+            var operation = NextLinkOperationImplementation.Create(
+                pipeline, RequestMethod.Delete, new Uri("https://test/resource"), initialResponse,
+                OperationFinalStateVia.Location, statusMonitorResponseReceived: observed.Add);
+
+            var state = await operation.UpdateStateAsync(async, default);
+
+            Assert.IsTrue(state.HasSucceeded);
+            Assert.AreEqual(204, state.RawResponse.Status);
+            Assert.IsEmpty(observed);
+        }
+
         [Test]
         public void ConstructRehydrationToken()
         {

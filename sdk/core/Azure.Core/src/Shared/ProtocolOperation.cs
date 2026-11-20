@@ -10,16 +10,16 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class ProtocolOperation<T> : Operation<T>, IOperation<T> where T : notnull
+    internal class ProtocolOperation<T> : Operation<T>, IOperation<T>, IPollingUriOperation where T : notnull
     {
         private readonly Func<Response, T> _resultSelector;
         private readonly OperationInternal<T> _operation;
         private readonly IOperation _nextLinkOperation;
 
-        internal ProtocolOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName, Func<Response, T> resultSelector)
+        internal ProtocolOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName, Func<Response, T> resultSelector, Action<Response>? statusMonitorResponseReceived = null)
         {
             _resultSelector = resultSelector;
-            _nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            _nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, statusMonitorResponseReceived: statusMonitorResponseReceived);
             _operation = new OperationInternal<T>(this, clientDiagnostics, response, scopeName);
         }
 
@@ -46,6 +46,8 @@ namespace Azure.Core
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.RawResponse;
+
+        Uri? IPollingUriOperation.GetPollingUri(string? pollingLinkHeader) => NextLinkOperationImplementation.GetPollingUri(_nextLinkOperation, pollingLinkHeader);
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
