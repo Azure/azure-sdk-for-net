@@ -19,13 +19,21 @@ as written; these checks are a starting point, not the full set.
 - PascalCase for types, members, namespaces; camelCase for parameters and locals
 - No abbreviations or acronym soup; acronyms of 2 letters stay upper (`IO`), 3+ are Pascal
   (`Http`, `Xml`, `Uri`). `Id` and `Vm` are explicit naming exceptions
+- For Cryptographic (or other) algorithm names follow the same Pascal case acronym naming
+  conventions:
+  - Advanced Encryption Standard (AES) is `Aes`.
+  - Elliptic Curve Digital Signature Algorithm (ECDSA) is `ECDsa` (two-letter acronym followed
+    by a three-letter acronym).
+  - Elliptic Curve Diffie-Hellman (ECDH) is `ECDiffieHellman` (avoiding the four concurrent
+    capital letters required by a two-letter acronym following a two-letter acronym).
 - Before recommending expansion of an unfamiliar acronym, check domain documentation and usage
   for the intended audience. Personal unfamiliarity or search-result ranking is not enough
 - No Hungarian notation; no type names in member names
 - No generic/vague names — `OperationResponse`, `DataCollection`, `Manager`, `Helper`,
   `Utility`, `Info` are smells
 - Assess public type names in normal unqualified use. Add domain context when needed for meaning,
-  not a mechanical provider prefix. Assess enum members with their enclosing enum
+  not a mechanical provider prefix such as `Microsoft` or `Azure`; retain a provider name when
+  it actually identifies the domain concept. Assess enum members with their enclosing enum
 - Async methods end in `Async`; `Try*` methods return `bool` with an `out` result
 - Boolean members read affirmatively (`IsEnabled`, not `IsNotDisabled`)
 - Numeric durations or time intervals with fixed units name those units, consistently with the
@@ -44,6 +52,9 @@ as written; these checks are a starting point, not the full set.
 `api/*.cs` listing. Do **not** raise them on `internal`, `private`, or `private protected`
 declarations, or on local variables. If an internal declaration is the *cause* of a bad public
 name, anchor the comment on the public member and reference the internal one as the cause.
+
+**Boolean properties and parameters** read affirmatively and start with a verb such as `Is`,
+`Can`, or `Has` (`IsEnabled`/`isEnabled`, not `IsNotDisabled`/`isNotDisabled`).
 
 **Naming analyzers run only on shipping client libraries, and many projects opt out.**
 `EnableClientSdkAnalyzers` defaults on only when `IsShippingClientLibrary` is true
@@ -76,7 +87,8 @@ What they cover:
 - **`Definition` and `Operation` are narrow, reserved suffixes, not general-purpose ones.**
   `*Definition` should be removed unless the plain noun would actually collide with another
   resource's type in the same namespace. `*Operation` is reserved for types that inherit
-  `Operation<T>`; a plain data/info model should not borrow it (rename to `*Data` or similar).
+  `Operation<T>` or the non-generic `Operation`; a plain data model should not borrow it (use a
+  descriptive domain name or a suitable transport suffix instead).
   Both are only partially covered by `AZC0030`–`AZC0033`, which is type-scoped and frequently
   suppressed via `DisableEnhancedAnalysis` (see above) — treat this as the hand-review backstop
   for exactly the projects where the analyzer can't help.
@@ -92,6 +104,11 @@ What they cover:
   its own public method, so a newly-generated one is pure surface noise, not a legitimate API.
   This is not a license to hunt for pre-existing occurrences in files the PR does not touch —
   flag it only when the PR's own diff introduces or regenerates it.
+- **Do not expose a generated ARM `GetOperationStatus`/`GetOperationStatusAsync` method solely
+  for LRO polling.** The SDK's `ArmOperation`/`Operation<T>` already manages polling. Check the
+  actual operation and contract, not just its name: a distinct customer-facing status operation
+  is not automatically redundant. Apply this to newly introduced or newly exposed methods, not
+  already-shipped APIs; preserve GA compatibility.
 - **A PUT/PATCH body parameter this PR is newly adding should be required, not optional.** The
   body is the entire resource or patch payload — there is no meaningful "no body" call for a
   brand-new operation. Applies only to an operation the PR introduces. Do **not** suggest
@@ -112,9 +129,13 @@ What they cover:
   `*Address`, `*Uri`) — those are the same bug wearing a different name. A `string` shadow of a
   `Uri` property (public `internalConsentLink` parameter next to `Uri ConsentLink`) is 🔴.
 - **`DateTimeOffset` members end in `On` — except under `sdk/ai`, where they end in `At`.**
-  `StartTime` → `StartedOn` repo-wide, `StartedAt` under `sdk/ai`. Prefer the past-participle
-  verb form (`Created`/`Updated`/`Started`/`Expires`), not the noun (`CreationOn`). Applies to
-  public properties and parameters. Never use `DateTime` on the public surface.
+  `StartTime` → `StartedOn` repo-wide, `StartedAt` under `sdk/ai`. Prefer a meaningful verb form
+  (`Created`/`Updated`/`Started` for completed events, `Expires` for a future event), not the
+  noun (`CreationOn`). Applies to public properties and parameters. Never use `DateTime` on the
+  public surface.
+- **Spell an entity-tag property `ETag`** when it represents an actual entity tag; use
+  `Azure.ETag` for its semantic type. Do not infer this from a name alone or retype a generic
+  raw-header dictionary. See [semantic value types](repository-rules.md#semantic-value-types).
 - **No `Response` suffix — use `Result`.** Applies to public **types**, properties, methods, and
   parameters. Exception: a type deriving from a third-party base whose own convention is
   `...ResponseItem` (e.g. `OpenAI.Responses.ResponseItem`) keeps the base's suffix —
@@ -134,7 +155,10 @@ What they cover:
 
   It is **not** a generic replacement suffix for a body/wire payload model. A type that
   implements `IJsonModel<T>`/`IPersistableModel<T>` — i.e. it serializes as one request or
-  response body — must not be named `*Options`. When cleaning up a bad suffix (`*Parameters`,
+  response body — must not be named `*Options`. For an otherwise invalid `*Options` model,
+  replace `Options` with `Config` in both management and data-plane libraries; this is a
+  specific suffix convention, not permission to abbreviate `configuration` elsewhere. Do not
+  rename actual client options or method options bags. When cleaning up a bad suffix (`*Parameters`,
   `*Resource`, `*Request`) on a payload model, do **not** land on `*Options` — use the default
   payload suffix convention below. To tell them apart in the `api/*.cs` listing: payload models
   spell out `: System.ClientModel.Primitives.IJsonModel<T>`; a real options bag appears as a
@@ -150,16 +174,20 @@ What they cover:
   - So "round-trip" alone never justifies `Content`. Ask first whether the type names a domain
     concept. Only reach for `Content`/`Result` when the answer is no and the type is a pure
     payload wrapper.
-  - These are soft defaults — use them *unless there is a significantly better option*. What
-    is **not** acceptable as a substitute: `Options`, `Parameters`, `Request`, `Response`,
-    `Resource`.
+  - These are soft defaults — use them *unless there is a significantly better option* or the
+    `Options`-to-`Config` convention above applies. What is **not** acceptable as a substitute:
+    `Options`, `Parameters`, `Request`, `Response`, `Resource`.
   - To classify usage from the `api/*.cs` listing: a **public constructor** means the type is
     used as input, a method on the package's `*ModelFactory` means it is used as output, and
     both together mean round-trip.
 - **Management request-body models follow their actual role and HTTP contract.** Use `Patch`
   for a dedicated PATCH partial-update model and `Content` for a dedicated PUT/POST wrapper.
   Resource-data models retain `Data`. Do not infer the verb from a method name or rename a
-  reusable domain model merely because it is used as a request body.
+  reusable domain model merely because it is used as a request body. A model used as a property
+  inside a PATCH body is not itself a patch merely because of its parent. If the property is
+  replaced as a whole, name its model for its own role: retain a descriptive domain noun, or
+  use `Content` for a dedicated input wrapper; use `Patch` only for actual partial-update
+  semantics.
 - **Do not redefine an ARM common type this PR is newly introducing on the public surface of an
   `Azure.ResourceManager.*` package.** Each of these names is reserved for the shared framework
   type; a new declaration using one of them is a duplication bug, not a coincidence. When the
@@ -195,6 +223,10 @@ What they cover:
   collection/grouping concept from the service domain, not a resource collection. A plain
   settings/config/payload model named `*Data` or `*Collection` without the matching base
   misrepresents itself as resource-trio state.
+- For an incorrectly named `*Resource` model, use a descriptive domain noun; use `Data` only
+  for a resource-data subtype, not a generic `Info` fallback. For a non-resource `*Collection`,
+  `Group` or `List` can be appropriate if it describes the domain and does not collide; retain
+  established domain terms such as `MongoDBCollection`.
 - **Expand single-word and abbreviated names.** `AZC0012` only covers types — apply the same
   standard to public properties and parameters. Also expand abbreviations the analyzer never
   sees, on types *and* members: `auth` → `authentication`, `agentRef` → `agent`, `params` →
@@ -206,7 +238,10 @@ What they cover:
   Apply [H1](review-quality.md#h1--no-breaking-changes) before recommending further renames; a
   naming cleanup does not waive GA compatibility
 - For a duration concept abbreviated `TTL`, prefer `TimeToLive` and apply the shared numeric-unit
-  guidance rather than a universal unit suffix. A hop count is not a duration.
+  guidance rather than a universal unit suffix. A hop count is not a duration. `Interval` or
+  `Duration` may describe a duration regardless of its wire format or CLR type; do not strip
+  the suffix solely because the value is not an ISO 8601 string. Fixed-unit numbers still name
+  their units, for example `MonitoringIntervalInSeconds`.
 - **Parameter names must be consistent and descriptive within a scope** (all methods on a
   client, all public constructors + the model-factory method for a type, all overloads of a
   method).
