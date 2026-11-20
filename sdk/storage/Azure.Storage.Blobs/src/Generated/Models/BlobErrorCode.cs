@@ -25,6 +25,10 @@ namespace Azure.Storage.Blobs.Models
         private const string AuthenticationFailedValue = "AuthenticationFailed";
         /// <summary> Authorization failure. </summary>
         private const string AuthorizationFailureValue = "AuthorizationFailure";
+        /// <summary> The specified Blob Access Point configuration name was not found. </summary>
+        private const string BlobAccessPointConfigurationNameNotFoundValue = "BlobAccessPointConfigurationNameNotFound";
+        /// <summary> The specified unique ID does not match the named Blob Access Point configuration. </summary>
+        private const string BlobAccessPointConfigurationUniqueIdMismatchValue = "BlobAccessPointConfigurationUniqueIdMismatch";
         /// <summary> Condition headers not supported. </summary>
         private const string ConditionHeadersNotSupportedValue = "ConditionHeadersNotSupported";
         /// <summary> Condition not met. </summary>
@@ -79,6 +83,8 @@ namespace Azure.Storage.Blobs.Models
         private const string MultipleConditionHeadersNotSupportedValue = "MultipleConditionHeadersNotSupported";
         /// <summary> No authentication information. </summary>
         private const string NoAuthenticationInformationValue = "NoAuthenticationInformation";
+        /// <summary> The operation is not supported for a Blob Access Point container. </summary>
+        private const string OperationNotSupportedForBlobAccessPointValue = "OperationNotSupportedForBlobAccessPoint";
         /// <summary> Operation timed out. </summary>
         private const string OperationTimedOutValue = "OperationTimedOut";
         /// <summary> Out of range input. </summary>
@@ -273,6 +279,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Authorization failure. </summary>
         public static BlobErrorCode AuthorizationFailure { get; } = new BlobErrorCode(AuthorizationFailureValue);
 
+        /// <summary> The specified Blob Access Point configuration name was not found. </summary>
+        public static BlobErrorCode BlobAccessPointConfigurationNameNotFound { get; } = new BlobErrorCode(BlobAccessPointConfigurationNameNotFoundValue);
+
+        /// <summary> The specified unique ID does not match the named Blob Access Point configuration. </summary>
+        public static BlobErrorCode BlobAccessPointConfigurationUniqueIdMismatch { get; } = new BlobErrorCode(BlobAccessPointConfigurationUniqueIdMismatchValue);
+
         /// <summary> Condition headers not supported. </summary>
         public static BlobErrorCode ConditionHeadersNotSupported { get; } = new BlobErrorCode(ConditionHeadersNotSupportedValue);
 
@@ -353,6 +365,9 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> No authentication information. </summary>
         public static BlobErrorCode NoAuthenticationInformation { get; } = new BlobErrorCode(NoAuthenticationInformationValue);
+
+        /// <summary> The operation is not supported for a Blob Access Point container. </summary>
+        public static BlobErrorCode OperationNotSupportedForBlobAccessPoint { get; } = new BlobErrorCode(OperationNotSupportedForBlobAccessPointValue);
 
         /// <summary> Operation timed out. </summary>
         public static BlobErrorCode OperationTimedOut { get; } = new BlobErrorCode(OperationTimedOutValue);

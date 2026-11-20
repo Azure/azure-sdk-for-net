@@ -1311,7 +1311,50 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
             IDictionary<string, string> metadata = default,
-            bool? hasLegalHold = default)
+            bool? hasLegalHold = default,
+            bool? isBlobAccessPointContainer = default,
+            string blobAccessPointConfigurationName = default,
+            string blobAccessPointConfigurationUniqueId = default)
+        {
+            return new BlobContainerProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                LeaseStatus = leaseStatus,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                Metadata = metadata,
+                HasLegalHold = hasLegalHold,
+                IsBlobAccessPointContainer = isBlobAccessPointContainer,
+                BlobAccessPointConfigurationName = blobAccessPointConfigurationName,
+                BlobAccessPointConfigurationUniqueId = blobAccessPointConfigurationUniqueId,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerProperties BlobContainerProperties(
+            DateTimeOffset lastModified,
+            ETag eTag,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            PublicAccessType? publicAccess,
+            bool? hasImmutabilityPolicy,
+            LeaseStatus? leaseStatus,
+            string defaultEncryptionScope,
+            bool? preventEncryptionScopeOverride,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays,
+            IDictionary<string, string> metadata,
+            bool? hasLegalHold)
         {
             return new BlobContainerProperties()
             {

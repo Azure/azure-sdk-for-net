@@ -663,9 +663,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerInfo> containerResponse = _containerClient.Create(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    options.ToBlobContainerCreateOptions(),
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
@@ -725,9 +723,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerInfo> containerResponse = await _containerClient.CreateAsync(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    options.ToBlobContainerCreateOptions(),
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -943,9 +939,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobContainerInfo> containerResponse = _containerClient.CreateIfNotExists(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    options.ToBlobContainerCreateOptions(),
                     cancellationToken: cancellationToken);
 
                 if (containerResponse == default)
@@ -1008,9 +1002,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobContainerInfo> containerResponse = await _containerClient.CreateIfNotExistsAsync(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    options.ToBlobContainerCreateOptions(),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (containerResponse == default)

@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, RequestContext context)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, string blobAccessPointConfigurationName, string blobAccessPointConfigurationUniqueId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -56,6 +56,14 @@ namespace Azure.Storage.Blobs
             if (preventEncryptionScopeOverride != null)
             {
                 request.Headers.SetValue("x-ms-deny-encryption-scope-override", TypeFormatters.ConvertToString(preventEncryptionScopeOverride));
+            }
+            if (blobAccessPointConfigurationName != null)
+            {
+                request.Headers.SetValue("x-ms-blob-access-point-configuration-name", blobAccessPointConfigurationName);
+            }
+            if (blobAccessPointConfigurationUniqueId != null)
+            {
+                request.Headers.SetValue("x-ms-blob-access-point-configuration-unique-id", blobAccessPointConfigurationUniqueId);
             }
             return message;
         }

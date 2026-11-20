@@ -82,6 +82,24 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? PreventEncryptionScopeOverride { get; internal set; }
 
         /// <summary>
+        /// Indicates whether the file system is a Blob Access Point container.
+        /// <c>null</c> if the service did not return this value.
+        /// </summary>
+        public bool? IsBlobAccessPointContainer { get; internal set; }
+
+        /// <summary>
+        /// The name of the Blob Access Point configuration bound to the file system.
+        /// <c>null</c> if the file system is not a Blob Access Point container.
+        /// </summary>
+        public string BlobAccessPointConfigurationName { get; internal set; }
+
+        /// <summary>
+        /// The unique ID of the Blob Access Point configuration bound to the file system.
+        /// <c>null</c> if the file system is not a Blob Access Point container.
+        /// </summary>
+        public string BlobAccessPointConfigurationUniqueId { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileSystemProperties instances.
         /// You can use BlobsModelFactory.FileSystemProperties instead.
         /// </summary>
