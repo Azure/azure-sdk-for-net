@@ -13,14 +13,14 @@ model endpoint whose owner has explicitly enabled this draft contract. Apply
 the result to a **fresh per-call** `System.ClientModel.Primitives.RequestOptions`,
 for example:
 
-```csharp
-#pragma warning disable AAAS005 // Opt in to the experimental draft contract.
-var options = new System.ClientModel.Primitives.RequestOptions();
-foreach (var header in FoundryAgentRequestContext.Current.ModelAttributionHeaders())
-{
-    options.SetHeader(header.Key, header.Value);
-}
-// Pass options to the model SDK's per-call protocol operation.
+```C# Snippet:Core_OriginalSubject_ModelAttribution
+#pragma warning disable AAAS005
+            var options = new System.ClientModel.Primitives.RequestOptions();
+            foreach (var header in FoundryAgentRequestContext.Current.ModelAttributionHeaders())
+            {
+                options.SetHeader(header.Key, header.Value);
+            }
+            // Pass options to the model SDK's per-call protocol operation.
 #pragma warning restore AAAS005
 ```
 
@@ -36,10 +36,26 @@ The existing `PlatformHeaders()` method remains call-ID-only.
 
 This draft requires owner and security review before rollout. The SDK does not
 implement receiver verification or enforce attribution. It does not persist the
-subject in its Responses recovery payload. Recovered tasks, detached work, and
-queued non-streaming Responses steering turns do not retain attribution; a
-WebSocket's subject is fixed for its connection. Do not rely on these paths for
-attributed model calls. Custom providers must not persist the subject.
+subject in its Responses recovery payload. Recovered tasks and queued
+non-streaming Responses steering turns do not retain attribution; a WebSocket's
+subject is fixed for its connection. Do not rely on these paths for attributed
+model calls. Custom providers must not persist the subject.
+
+`FoundryAgentRequestContext` uses `AsyncLocal`. Its value flows into child tasks
+created during a request, including `Task.Run`; restoring the parent context
+when the request ends does **not** clear the copy inherited by detached work.
+Detached work is unsupported for attribution and must not make attributed model
+calls. If detached work must not inherit the request context, suppress execution
+context flow while scheduling it:
+
+```C# Snippet:Core_OriginalSubject_SuppressContextFlow
+using (ExecutionContext.SuppressFlow())
+{
+    _ = Task.Run(DetachedWorkAsync);
+}
+```
+
+Do not await the detached task inside the suppression scope.
 
 The Core middleware currently rejects malformed subject metadata on **all**
 requests using HTTP 400, including health endpoints and WebSocket upgrade

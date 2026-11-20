@@ -170,6 +170,8 @@ public class OriginalSubjectTests
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         Assert.That(response.Headers.GetValues("x-platform-error-source"), Does.Contain("platform"));
         Assert.That(response.Headers.GetValues("x-platform-error-detail"), Does.Contain("invalid_original_subject"));
+        Assert.That(response.Headers.GetValues(PlatformHeaders.RequestId), Is.Not.Empty);
+        Assert.That(response.Headers.GetValues(PlatformHeaders.ServerVersion), Is.Not.Empty);
         Assert.That(FoundryAgentRequestContext.Current.OriginalSubject, Is.Null);
     }
 }

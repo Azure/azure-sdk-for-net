@@ -81,6 +81,27 @@ public class PlatformContextEndpointTests
         Assert.That(responses[2].GetProperty("ambientSubject").ValueKind, Is.EqualTo(JsonValueKind.Null));
     }
 
+    [TestCase("POST", "/invocations")]
+    [TestCase("GET", "/invocations/inv-123")]
+    [TestCase("POST", "/invocations/inv-123/cancel")]
+    public async Task InvocationEndpoints_MalformedOriginalSubjectReturnsBadRequestWithoutCoreMiddleware(
+        string method, string path)
+    {
+        using var env = await StartAsync<IsolationCapturingHandler>();
+        using var request = new HttpRequestMessage(new HttpMethod(method), path);
+        if (path == "/invocations")
+        {
+            request.Content = new StringContent("{}");
+        }
+        request.Headers.TryAddWithoutValidation("x-ms-original-subject", "oid=invalid");
+
+        using var response = await env.Client.SendAsync(request);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(response.Headers.GetValues(PlatformHeaders.ErrorSource), Does.Contain("platform"));
+        Assert.That(response.Headers.GetValues(PlatformHeaders.ErrorDetail), Does.Contain("invalid_original_subject"));
+    }
+
     [Test]
     public async Task GetInvocation_IsolationHeaders_FlowToHandler()
     {
