@@ -15,37 +15,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> The object representing a firmware analysis password hash result resource. </summary>
     public partial class PasswordHashResult : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PasswordHashResult"/>. </summary>
         public PasswordHashResult()
@@ -53,47 +24,147 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PasswordHashResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="passwordHashId"> ID for password hash. </param>
-        /// <param name="filePath"> File path of the password hash. </param>
-        /// <param name="salt"> Salt of the password hash. </param>
-        /// <param name="hash"> Hash of the password. </param>
-        /// <param name="context"> Context of password hash. </param>
-        /// <param name="username"> User name of password hash. </param>
-        /// <param name="algorithm"> Algorithm of the password hash. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PasswordHash properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            PasswordHashId = passwordHashId;
-            FilePath = filePath;
-            Salt = salt;
-            Hash = hash;
-            Context = context;
-            Username = username;
-            Algorithm = algorithm;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal PasswordHash Properties { get; set; }
+
         /// <summary> ID for password hash. </summary>
-        public string PasswordHashId { get; set; }
+        public string PasswordHashId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PasswordHashId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PasswordHash();
+                }
+                Properties.PasswordHashId = value;
+            }
+        }
+
         /// <summary> File path of the password hash. </summary>
-        public string FilePath { get; set; }
+        public string FilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PasswordHash();
+                }
+                Properties.FilePath = value;
+            }
+        }
+
         /// <summary> Salt of the password hash. </summary>
-        public string Salt { get; set; }
+        public string Salt
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Salt;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PasswordHash();
+                }
+                Properties.Salt = value;
+            }
+        }
+
         /// <summary> Hash of the password. </summary>
-        public string Hash { get; set; }
+        public string Hash
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hash;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PasswordHash();
+                }
+                Properties.Hash = value;
+            }
+        }
+
         /// <summary> Context of password hash. </summary>
-        public string Context { get; set; }
+        public string Context
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Context;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PasswordHash();
+                }
+                Properties.Context = value;
+            }
+        }
+
         /// <summary> User name of password hash. </summary>
-        public string Username { get; set; }
+        public string Username
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Username;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PasswordHash();
+                }
+                Properties.Username = value;
+            }
+        }
+
         /// <summary> Algorithm of the password hash. </summary>
-        public string Algorithm { get; set; }
+        public string Algorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Algorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PasswordHash();
+                }
+                Properties.Algorithm = value;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        public FirmwareProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
