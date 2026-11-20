@@ -667,7 +667,8 @@ try {
 
         if ($deployment.ProvisioningState -ne 'Succeeded') {
             HandleDeploymentFailure $deployment
-            exit 1
+            # A terminating error propagates through nested script calls, unlike exit 1.
+            throw "Deployment '$($deployment.DeploymentName)' failed with state '$($deployment.ProvisioningState)' and CorrelationId '$($deployment.CorrelationId)'."
         }
 
         Write-Host "Deployment '$($deployment.DeploymentName)' has CorrelationId '$($deployment.CorrelationId)'"
