@@ -115,6 +115,8 @@ What they cover:
   `StartTime` → `StartedOn` repo-wide, `StartedAt` under `sdk/ai`. Prefer the past-participle
   verb form (`Created`/`Updated`/`Started`/`Expires`), not the noun (`CreationOn`). Applies to
   public properties and parameters. Never use `DateTime` on the public surface.
+- **Boolean properties and parameters start with a verb**, such as `Is`, `Can`, or `Has`
+  (for example, the property `IsEnabled` and the parameter `isEnabled`).
 - **No `Response` suffix — use `Result`.** Applies to public **types**, properties, methods, and
   parameters. Exception: a type deriving from a third-party base whose own convention is
   `...ResponseItem` (e.g. `OpenAI.Responses.ResponseItem`) keeps the base's suffix —
