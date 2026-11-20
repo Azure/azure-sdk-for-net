@@ -789,3 +789,13 @@ or in-repo path. Entries that map to no service directory are owned by `sdk/core
   replaces, or stops generating a member; each is used in hundreds of libraries. Excluding a
   file from compilation, suppressing the resulting warning, or editing emitter config to get
   the same effect works until the next regeneration and hides the intent from whoever runs it 🟡
+
+## Code-Review Skill
+
+- <a name="skill-rule-anchors" href="#skill-rule-anchors">§</a> **Every rule in `.github/skills/code-review/references/` starts with its own `§` anchor**,
+  `<a name="<id>" href="#<id>">§</a>`, so reviews and discussions can link to it. A rule the PR
+  adds without one cannot be linked 🟡. The name is lowercase, starts with its section's prefix,
+  and is unique across the reference files. Renaming an anchor breaks every existing link to it,
+  and reusing a deleted rule's name sends those links to the wrong rule 🟡. A rule is a bullet,
+  bold-led paragraph, or table row that states its own requirement; sub-bullets and numbered
+  steps that only explain it share its anchor.
