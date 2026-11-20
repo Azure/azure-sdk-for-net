@@ -65,7 +65,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RoutineAttemptSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineAttemptSource?(string value) => value == null ? null : new RoutineAttemptSource(value);
+        public static implicit operator RoutineAttemptSource?(string value) => value == null ? (RoutineAttemptSource?)null : new RoutineAttemptSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

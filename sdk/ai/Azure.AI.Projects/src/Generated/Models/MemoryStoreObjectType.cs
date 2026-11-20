@@ -57,7 +57,7 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Converts a string to a <see cref="MemoryStoreObjectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MemoryStoreObjectType?(string value) => value == null ? null : new MemoryStoreObjectType(value);
+        public static implicit operator MemoryStoreObjectType?(string value) => value == null ? (MemoryStoreObjectType?)null : new MemoryStoreObjectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -5,28 +5,28 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Reference to a versioned Foundry Dataset. </summary>
-    public partial class DatasetReference
+    public partial class VersionedDatasetReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VersionedDatasetReference"/>. </summary>
         /// <param name="name"> Dataset name. </param>
         /// <param name="version"> Dataset version. </param>
-        internal DatasetReference(string name, string version)
+        internal VersionedDatasetReference(string name, string version)
         {
             Name = name;
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VersionedDatasetReference"/>. </summary>
         /// <param name="name"> Dataset name. </param>
         /// <param name="version"> Dataset version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetReference(string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VersionedDatasetReference(string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

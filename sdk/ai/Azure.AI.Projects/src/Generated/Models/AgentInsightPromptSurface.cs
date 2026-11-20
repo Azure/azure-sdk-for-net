@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="AgentInsightPromptSurface"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentInsightPromptSurface?(string value) => value == null ? null : new AgentInsightPromptSurface(value);
+        public static implicit operator AgentInsightPromptSurface?(string value) => value == null ? (AgentInsightPromptSurface?)null : new AgentInsightPromptSurface(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

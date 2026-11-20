@@ -17,6 +17,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("ClusterTokenUsage")] public partial class ClusterTokenUsage { }
 [CodeGenType("CronTrigger")] public partial class CronTrigger { }
 [CodeGenType("DailyRecurrenceSchedule")] public partial class DailyRecurrenceSchedule { }
+[CodeGenType("DatasetReference")] public partial class VersionedDatasetReference { }
 [CodeGenType("Dimension")] public partial class EvaluationsDimension { }
 [CodeGenType("EndpointBasedEvaluatorDefinition")] public partial class EndpointBasedEvaluatorDefinition { }
 [CodeGenType("EvalResult")] public partial class EvalResult { }
@@ -80,6 +81,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("RecurrenceType")] internal readonly partial struct RecurrenceType { }
 [CodeGenType("RedTeam")] public partial class RedTeam { }
 [CodeGenType("RiskCategory")] public readonly partial struct RiskCategory { }
+[CodeGenType("RubricBasedEvaluatorDefinition")] public partial class RubricBasedEvaluatorDefinition { }
 [CodeGenType("SampleType")] internal readonly partial struct SampleType { }
 [CodeGenType("ScheduleProvisioningStatus")] public readonly partial struct ScheduleProvisioningStatus { }
 [CodeGenType("ScheduleRun")] public partial class ScheduleRun { }
@@ -87,6 +89,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("RedTeamTargetConfig")] public abstract partial class TargetConfig { }
 [CodeGenType("TaxonomyCategory")] public partial class TaxonomyCategory { }
 [CodeGenType("TaxonomySubCategory")] public partial class TaxonomySubCategory { }
+[CodeGenType("TracesEvaluatorGenerationJobSource")] public partial class TracesEvaluatorGenerationJobSource { }
 [CodeGenType("TriggerType")] internal readonly partial struct TriggerType { }
 [CodeGenType("UnknownEvaluationRuleAction")] internal partial class UnknownEvaluationRuleAction { }
 [CodeGenType("UnknownEvaluationTarget")] internal partial class UnknownEvaluationTarget { }

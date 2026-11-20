@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
             writer.WritePropertyName("occurred_at"u8);
-            writer.WriteNumberValue(OccurredOn, "U");
+            writer.WriteNumberValue(OccurredAt, "U");
             if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects
             }
             string code = default;
             string message = default;
-            DateTimeOffset occurredOn = default;
+            DateTimeOffset occurredAt = default;
             IDictionary<string, BinaryData> details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("occurred_at"u8))
                 {
-                    occurredOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    occurredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("details"u8))
@@ -194,7 +194,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentInsightSuspension(code, message, occurredOn, details ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
+            return new AgentInsightSuspension(code, message, occurredAt, details ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

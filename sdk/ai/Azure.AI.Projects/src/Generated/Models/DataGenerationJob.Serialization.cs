@@ -123,12 +123,12 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedOn, "U");
+                writer.WriteNumberValue(CreatedAt, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
+            if (options.Format != "W" && Optional.IsDefined(FinishedAt))
             {
                 writer.WritePropertyName("finished_at"u8);
-                writer.WriteNumberValue(FinishedOn.Value, "U");
+                writer.WriteNumberValue(FinishedAt.Value, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

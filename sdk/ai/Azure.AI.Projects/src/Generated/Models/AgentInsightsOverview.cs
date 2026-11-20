@@ -18,24 +18,24 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AgentInsightsOverview"/>. </summary>
         /// <param name="content"> The overview content. </param>
         /// <param name="source"> Where the effective overview came from. </param>
-        /// <param name="updatedOn"> The time when this overview was last updated. </param>
-        internal AgentInsightsOverview(string content, AgentInsightOverviewSource source, DateTimeOffset updatedOn)
+        /// <param name="updatedAt"> The time when this overview was last updated. </param>
+        internal AgentInsightsOverview(string content, AgentInsightOverviewSource source, DateTimeOffset updatedAt)
         {
             Content = content;
             Source = source;
-            UpdatedOn = updatedOn;
+            UpdatedAt = updatedAt;
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentInsightsOverview"/>. </summary>
         /// <param name="content"> The overview content. </param>
         /// <param name="source"> Where the effective overview came from. </param>
-        /// <param name="updatedOn"> The time when this overview was last updated. </param>
+        /// <param name="updatedAt"> The time when this overview was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightsOverview(string content, AgentInsightOverviewSource source, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsightsOverview(string content, AgentInsightOverviewSource source, DateTimeOffset updatedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Source = source;
-            UpdatedOn = updatedOn;
+            UpdatedAt = updatedAt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.AI.Projects
         public AgentInsightOverviewSource Source { get; }
 
         /// <summary> The time when this overview was last updated. </summary>
-        public DateTimeOffset UpdatedOn { get; }
+        public DateTimeOffset UpdatedAt { get; }
     }
 }
