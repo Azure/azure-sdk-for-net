@@ -21,7 +21,7 @@ namespace SignalRServiceExtension.Tests.Utils
 {
     internal static class TestHelpers
     {
-        public static IHost NewHost(Type type, SignalRConfigProvider ext = null, Dictionary<string, string> configuration = null, ILoggerProvider loggerProvider = null)
+        public static IHost NewHost(Type type, SignalRConfigProvider ext = null, Dictionary<string, string> configuration = null, ILoggerProvider loggerProvider = null, Action<IServiceCollection> configureServices = null)
         {
             var builder = new HostBuilder()
                 .ConfigureServices(services =>
@@ -39,6 +39,7 @@ namespace SignalRServiceExtension.Tests.Utils
                     webJobsBuilder.AddSignalR();
                     webJobsBuilder.UseHostId(Guid.NewGuid().ToString("n"));
                     webJobsBuilder.Services.AddSingleton<IEndpointRouter>(new TestRouter());
+                    configureServices?.Invoke(webJobsBuilder.Services);
                 })
                 .ConfigureLogging(logging =>
                 {

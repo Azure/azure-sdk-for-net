@@ -8,8 +8,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Common;
+using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Azure.WebJobs.Host;
@@ -24,6 +29,7 @@ using SignalRServiceExtension.Tests.Utils;
 using SignalRServiceExtension.Tests.Utils.Loggings;
 using Xunit;
 using Xunit.Abstractions;
+using Constants = Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
 namespace SignalRServiceExtension.Tests
 {
@@ -108,7 +114,7 @@ namespace SignalRServiceExtension.Tests
             _output = output;
         }
 
-        [Theory(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64511")]
+        [Theory]
         [MemberData(nameof(SignalRAttributeTestData))]
         public Task SignalRAttributeConnectionStringSettingFacts(Type classType, Dictionary<string, string> configDict)
             => ConnectionStringSettingFacts(classType, configDict);
@@ -135,6 +141,21 @@ namespace SignalRServiceExtension.Tests
             var task = CreateTestTask(typeof(SignalRConnectionInfoFunctions), null);
             var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() => task);
             Assert.IsType<InvalidOperationException>(exception.GetBaseException());
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public async Task SimulateSendingMessage_PropagatesNetworkExceptions(bool aggregate)
+        {
+            var httpException = new HttpRequestException("Synthetic send failure; no network request was made.");
+            var exception = new AzureSignalRRuntimeException(DefaultEndpoint, aggregate ? new AggregateException(httpException) : httpException);
+            var collector = new Mock<IAsyncCollector<SignalRMessage>>(MockBehavior.Strict);
+            collector.Setup(c => c.AddAsync(It.IsAny<SignalRMessage>(), default)).Returns(Task.FromException(exception));
+
+            Assert.Same(exception, await Assert.ThrowsAsync<AzureSignalRRuntimeException>(() => SimulateSendingMessage(collector.Object)));
+            collector.Verify(c => c.AddAsync(It.IsAny<SignalRMessage>(), default), Times.Once);
+            collector.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -197,32 +218,90 @@ namespace SignalRServiceExtension.Tests
 
         private static async Task SimulateSendingMessage(IAsyncCollector<SignalRMessage> signalRMessages)
         {
-            try
-            {
-                await signalRMessages.AddAsync(
-                    new SignalRMessage
-                    {
-                        UserId = DefaultUserId,
-                        GroupName = "",
-                        Target = "newMessage",
-                        Arguments = new[] { "message" }
-                    });
-            }
-            catch (AzureSignalRException ex) when (ex.InnerException is HttpRequestException)
-            {
-                // ignore, since we don't really connect to Azure SignalR Service
-            }
-            catch
-            {
-                throw;
-            }
+            await signalRMessages.AddAsync(
+                new SignalRMessage
+                {
+                    UserId = DefaultUserId,
+                    GroupName = "",
+                    Target = "newMessage",
+                    Arguments = new[] { "message" }
+                });
         }
 
-        private Task CreateTestTask(Type classType, Dictionary<string, string> configuration)
+        private async Task CreateTestTask(Type classType, Dictionary<string, string> configuration)
         {
-            var host = TestHelpers.NewHost(classType, configuration: configuration, loggerProvider: new XunitLoggerProvider(_output));
-            return Task.WhenAll(from method in classType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
-                                select host.GetJobHost().CallAsync($"{classType.Name}.{method.Name}"));
+            var router = new Mock<TestRouter> { CallBase = true };
+            var client = new Mock<IClientProxy>(MockBehavior.Strict);
+            client.Setup(c => c.SendCoreAsync("newMessage", It.Is<object[]>(args => args.Length == 1 && (string)args[0] == "message"), default))
+                .Returns(Task.CompletedTask);
+            var clients = new Mock<IHubClients>(MockBehavior.Strict);
+            clients.Setup(c => c.User(DefaultUserId)).Returns(client.Object);
+            using var host = TestHelpers.NewHost(classType, configuration: configuration, loggerProvider: new XunitLoggerProvider(_output), configureServices: services =>
+            {
+                services.AddSingleton<IEndpointRouter>(router.Object);
+                services.AddSingleton<IServiceManagerStore>(provider => new TestServiceManagerStore(
+                    ActivatorUtilities.CreateInstance<ServiceManagerStore>(provider), configuration, clients.Object));
+            });
+            var methods = classType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            var expectedMethodNames = classType == typeof(SignalRFunctionsWithMultiKeys) || classType == typeof(SignalRConnectionInfoFunctionsWithMultiKeys)
+                ? new[] { "Func1", "Func2" }
+                : new[] { "Func" };
+            Assert.Equal(expectedMethodNames, methods.Select(method => method.Name).OrderBy(name => name));
+            await Task.WhenAll(methods.Select(method => host.GetJobHost().CallAsync($"{classType.Name}.{method.Name}")));
+
+            var expectedSends = TestClassTypesForSignalRAttribute.Contains(classType) ? expectedMethodNames.Length : 0;
+            var expectedNegotiations = TestClassTypesForSignalRConnectionInfoAttribute.Contains(classType) ? expectedMethodNames.Length : 0;
+            clients.Verify(c => c.User(DefaultUserId), Times.Exactly(expectedSends));
+            client.Verify(c => c.SendCoreAsync("newMessage", It.Is<object[]>(args => args.Length == 1 && (string)args[0] == "message"), default), Times.Exactly(expectedSends));
+            router.Verify(r => r.GetNegotiateEndpoint(It.IsAny<HttpContext>(), It.IsAny<IEnumerable<ServiceEndpoint>>()), Times.Exactly(expectedNegotiations));
+            clients.VerifyNoOtherCalls();
+            client.VerifyNoOtherCalls();
+            router.VerifyNoOtherCalls();
+        }
+
+        private static ServiceManagerStore GetConfiguredServiceManagerStore() =>
+            ((TestServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).Inner;
+
+        private sealed class TestServiceManagerStore : IServiceManagerStore
+        {
+            private readonly Dictionary<string, string> _configuration;
+            private readonly IHubClients _clients;
+
+            public ServiceManagerStore Inner { get; }
+
+            public TestServiceManagerStore(ServiceManagerStore inner, Dictionary<string, string> configuration, IHubClients clients)
+            {
+                Inner = inner;
+                _configuration = configuration;
+                _clients = clients;
+            }
+
+            public IInternalServiceHubContextStore GetOrAddByConnectionStringKey(string connectionStringKey)
+            {
+                var store = Inner.GetOrAddByConnectionStringKey(connectionStringKey);
+                var mock = new Mock<IInternalServiceHubContextStore>(MockBehavior.Strict);
+                mock.Setup(s => s.GetAsync(It.IsAny<string>()))
+                    .Returns((string hubName) => new ValueTask<IServiceHubContext>(GetAsync(store, hubName, connectionStringKey)));
+                return mock.Object;
+            }
+
+            private async Task<IServiceHubContext> GetAsync(IInternalServiceHubContextStore store, string hubName, string connectionStringKey)
+            {
+                Assert.Equal(DefaultHubName, hubName);
+                var context = (ServiceHubContext)await store.GetAsync(hubName);
+                Assert.Equal(_configuration[connectionStringKey], Assert.Single(context.GetServiceEndpoints()).ConnectionString);
+
+                // Transient sends bypass the endpoint router. Replace only remote clients, retaining real store creation and negotiation.
+                var mock = new Mock<ServiceHubContext>(MockBehavior.Strict);
+                mock.SetupGet(c => c.Clients).Returns(_clients);
+                mock.Setup(c => c.NegotiateAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()))
+                    .Returns((NegotiationOptions options, CancellationToken token) => context.NegotiateAsync(options, token));
+                return mock.Object;
+            }
+
+            public void Dispose() => Inner.Dispose();
+
+            public ValueTask DisposeAsync() => Inner.DisposeAsync();
         }
 
         #region SignalRAttributeTests
@@ -232,7 +311,7 @@ namespace SignalRServiceExtension.Tests
             public async Task Func([SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(AttrConnStrConfigKey));
+                Assert.NotNull(GetConfiguredServiceManagerStore().GetByConfigurationKey(AttrConnStrConfigKey));
             }
         }
 
@@ -241,7 +320,7 @@ namespace SignalRServiceExtension.Tests
             public async Task Func([SignalR(HubName = DefaultHubName)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
+                Assert.NotNull(GetConfiguredServiceManagerStore().GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
             }
         }
 
@@ -250,13 +329,13 @@ namespace SignalRServiceExtension.Tests
             public async Task Func1([SignalR(HubName = DefaultHubName, ConnectionStringSetting = Constants.AzureSignalRConnectionStringName)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
+                Assert.NotNull(GetConfiguredServiceManagerStore().GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
             }
 
             public async Task Func2([SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(AttrConnStrConfigKey));
+                Assert.NotNull(GetConfiguredServiceManagerStore().GetByConfigurationKey(AttrConnStrConfigKey));
             }
         }
 
