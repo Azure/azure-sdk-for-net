@@ -1335,6 +1335,9 @@ namespace Azure.Storage.Blobs
                 ETag = new ETag(containerPropertiesInternal.ETag),
                 Metadata = metadata.ToMetadata(),
                 HasImmutableStorageWithVersioning = containerPropertiesInternal.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault(),
+                IsBlobAccessPointContainer = containerPropertiesInternal.IsBlobAccessPointContainer,
+                BlobAccessPointConfigurationName = containerPropertiesInternal.BlobAccessPointConfigurationName,
+                BlobAccessPointConfigurationUniqueId = containerPropertiesInternal.BlobAccessPointConfigurationUniqueId,
             };
         }
 
@@ -1362,7 +1365,10 @@ namespace Azure.Storage.Blobs
                 Metadata = response.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadataValue)
                     ? metadataValue.ToMetadata()
                     : null,
-                HasImmutableStorageWithVersioning = response.Headers.TryGetValue("x-ms-immutable-storage-with-versioning-enabled", out bool? immutableStorage) && immutableStorage.GetValueOrDefault()
+                HasImmutableStorageWithVersioning = response.Headers.TryGetValue("x-ms-immutable-storage-with-versioning-enabled", out bool? immutableStorage) && immutableStorage.GetValueOrDefault(),
+                IsBlobAccessPointContainer = response.Headers.TryGetValue("x-ms-is-blob-access-point-container", out bool? isBlobAccessPointContainer) ? isBlobAccessPointContainer : null,
+                BlobAccessPointConfigurationName = response.Headers.TryGetValue("x-ms-blob-access-point-configuration-name", out string blobAccessPointConfigurationName) ? blobAccessPointConfigurationName : null,
+                BlobAccessPointConfigurationUniqueId = response.Headers.TryGetValue("x-ms-blob-access-point-configuration-unique-id", out string blobAccessPointConfigurationUniqueId) ? blobAccessPointConfigurationUniqueId : null,
             };
         }
 

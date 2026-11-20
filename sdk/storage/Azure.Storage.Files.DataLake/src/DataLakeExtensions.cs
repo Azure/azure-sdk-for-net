@@ -42,7 +42,10 @@ namespace Azure.Storage.Files.DataLake
                     DeletedOn = containerProperties.DeletedOn,
                     RemainingRetentionDays = containerProperties.RemainingRetentionDays,
                     DefaultEncryptionScope = containerProperties.DefaultEncryptionScope,
-                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
+                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride,
+                    IsBlobAccessPointContainer = containerProperties.IsBlobAccessPointContainer,
+                    BlobAccessPointConfigurationName = containerProperties.BlobAccessPointConfigurationName,
+                    BlobAccessPointConfigurationUniqueId = containerProperties.BlobAccessPointConfigurationUniqueId
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties, string encryptionContext, string accessControlList) =>
@@ -1097,6 +1100,16 @@ namespace Azure.Storage.Files.DataLake
                 PreventEncryptionScopeOverride = encryptionScopeOptions.PreventEncryptionScopeOverride
             };
         }
+
+        internal static BlobContainerCreateOptions ToBlobContainerCreateOptions(this DataLakeFileSystemCreateOptions options) =>
+            new BlobContainerCreateOptions
+            {
+                PublicAccessType = (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                Metadata = options?.Metadata,
+                EncryptionScopeOptions = options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                BlobAccessPointConfigurationName = options?.BlobAccessPointConfigurationName,
+                BlobAccessPointConfigurationUniqueId = options?.BlobAccessPointConfigurationUniqueId
+            };
 
         internal static Blobs.Models.CustomerProvidedKey? ToBlobCustomerProvidedKey(this DataLake.Models.DataLakeCustomerProvidedKey? dataLakeCustomerProvidedKey)
         {

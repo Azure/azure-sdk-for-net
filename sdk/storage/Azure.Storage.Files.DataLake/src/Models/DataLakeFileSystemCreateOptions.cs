@@ -36,5 +36,18 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional encryption scope options to set for this file system.
         /// </summary>
         public DataLakeFileSystemEncryptionScopeOptions EncryptionScopeOptions { get; set; }
+
+        /// <summary>
+        /// Optional. The name of the Blob Access Point configuration to bind to the file system.
+        /// The binding cannot be changed after the file system is created.
+        /// </summary>
+        public string BlobAccessPointConfigurationName { get; set; }
+
+        /// <summary>
+        /// Optional. The unique ID of the Blob Access Point configuration to bind to the file system.
+        /// When supplied together with <see cref="BlobAccessPointConfigurationName"/>, the service
+        /// validates that both identify the same configuration.
+        /// </summary>
+        public string BlobAccessPointConfigurationUniqueId { get; set; }
     }
 }

@@ -82,6 +82,21 @@ namespace Azure.Storage.Blobs.Models
         public bool HasImmutableStorageWithVersioning { get; internal set; }
 
         /// <summary>
+        /// Indicates whether the container is a Blob Access Point container.
+        /// </summary>
+        public bool? IsBlobAccessPointContainer { get; internal set; }
+
+        /// <summary>
+        /// The name of the Blob Access Point configuration bound to the container.
+        /// </summary>
+        public string BlobAccessPointConfigurationName { get; internal set; }
+
+        /// <summary>
+        /// The unique ID of the Blob Access Point configuration bound to the container.
+        /// </summary>
+        public string BlobAccessPointConfigurationUniqueId { get; internal set; }
+
+        /// <summary>
         /// Creates a new BlobContainerProperties instance.
         /// </summary>
         internal BlobContainerProperties()

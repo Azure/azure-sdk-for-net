@@ -1818,7 +1818,7 @@ namespace Azure.Storage.Blobs
 
         #region CreateBlobContainer
         /// <summary>
-        /// The <see cref="CreateBlobContainer"/> operation creates a new
+        /// The <see cref="CreateBlobContainer(string, PublicAccessType, Metadata, CancellationToken)"/> operation creates a new
         /// blob container under the specified account. If the container with the
         /// same name already exists, the operation fails.
         ///
@@ -1844,6 +1844,103 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> referencing the
+        /// newly created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BlobContainerClient> CreateBlobContainer(
+            string blobContainerName,
+            PublicAccessType publicAccessType = PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobContainerClient container = GetBlobContainerClient(blobContainerName);
+            Response<BlobContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
+            return Response.FromValue(container, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateBlobContainerAsync(string, PublicAccessType, Metadata, CancellationToken)"/> operation creates a new
+        /// blob container under the specified account. If the container with the
+        /// same name already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="blobContainerName">
+        /// The name of the container to create.
+        /// </param>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the container may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// specifies full public read access for container and blob data.
+        /// Clients can enumerate blobs within the container via anonymous
+        /// request, but cannot enumerate containers within the storage
+        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// read access for blobs.  Blob data within this container can be
+        /// read via anonymous request, but container data is not available.
+        /// Clients cannot enumerate blobs within the container via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> referencing the
+        /// newly created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<BlobContainerClient>> CreateBlobContainerAsync(
+            string blobContainerName,
+            PublicAccessType publicAccessType = PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobContainerClient container = GetBlobContainerClient(blobContainerName);
+            Response<BlobContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(container, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateBlobContainer(string, BlobContainerCreateOptions, CancellationToken)"/>
+        /// operation creates a new blob container under the specified account. If the container with the
+        /// same name already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="blobContainerName">
+        /// The name of the container to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters for creating the container.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1862,18 +1959,17 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContainerClient> CreateBlobContainer(
             string blobContainerName,
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            Metadata metadata = default,
+            BlobContainerCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             BlobContainerClient container = GetBlobContainerClient(blobContainerName);
-            Response<BlobContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
+            Response<BlobContainerInfo> response = container.Create(options, cancellationToken);
             return Response.FromValue(container, response.GetRawResponse());
         }
 
         /// <summary>
-        /// The <see cref="CreateBlobContainerAsync"/> operation creates a new
-        /// blob container under the specified account. If the container with the
+        /// The <see cref="CreateBlobContainerAsync(string, BlobContainerCreateOptions, CancellationToken)"/>
+        /// operation creates a new blob container under the specified account. If the container with the
         /// same name already exists, the operation fails.
         ///
         /// For more information, see
@@ -1883,21 +1979,8 @@ namespace Azure.Storage.Blobs
         /// <param name="blobContainerName">
         /// The name of the container to create.
         /// </param>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the container may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
-        /// specifies full public read access for container and blob data.
-        /// Clients can enumerate blobs within the container via anonymous
-        /// request, but cannot enumerate containers within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
-        /// read access for blobs.  Blob data within this container can be
-        /// read via anonymous request, but container data is not available.
-        /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  <see cref="PublicAccessType.None"/> specifies that the
-        /// container data is private to the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this container.
+        /// <param name="options">
+        /// Optional parameters for creating the container.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1916,12 +1999,11 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContainerClient>> CreateBlobContainerAsync(
             string blobContainerName,
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            Metadata metadata = default,
+            BlobContainerCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             BlobContainerClient container = GetBlobContainerClient(blobContainerName);
-            Response<BlobContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
+            Response<BlobContainerInfo> response = await container.CreateAsync(options, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(container, response.GetRawResponse());
         }
         #endregion CreateBlobContainer

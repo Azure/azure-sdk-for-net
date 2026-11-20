@@ -58,16 +58,18 @@ namespace Azure.Storage.Blobs
         /// <param name="access"> The public access setting for the container. </param>
         /// <param name="defaultEncryptionScope"> Specifies the default encryption scope to set on the container and use for all future requests. </param>
         /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
+        /// <param name="blobAccessPointConfigurationName"> The name of the Blob Access Point configuration to bind to the container at creation. If the unique ID is omitted, the service resolves and stores it. The binding cannot be changed after creation. </param>
+        /// <param name="blobAccessPointConfigurationUniqueId"> The unique ID of the Blob Access Point configuration to bind to the container at creation. When supplied with the configuration name, the service validates that both identify the same configuration. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, RequestContext context)
+        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, string blobAccessPointConfigurationName, string blobAccessPointConfigurationUniqueId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, context);
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, blobAccessPointConfigurationName, blobAccessPointConfigurationUniqueId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -90,16 +92,18 @@ namespace Azure.Storage.Blobs
         /// <param name="access"> The public access setting for the container. </param>
         /// <param name="defaultEncryptionScope"> Specifies the default encryption scope to set on the container and use for all future requests. </param>
         /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
+        /// <param name="blobAccessPointConfigurationName"> The name of the Blob Access Point configuration to bind to the container at creation. If the unique ID is omitted, the service resolves and stores it. The binding cannot be changed after creation. </param>
+        /// <param name="blobAccessPointConfigurationUniqueId"> The unique ID of the Blob Access Point configuration to bind to the container at creation. When supplied with the configuration name, the service validates that both identify the same configuration. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, string blobAccessPointConfigurationName, string blobAccessPointConfigurationUniqueId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, context);
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, blobAccessPointConfigurationName, blobAccessPointConfigurationUniqueId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -115,11 +119,13 @@ namespace Azure.Storage.Blobs
         /// <param name="access"> The public access setting for the container. </param>
         /// <param name="defaultEncryptionScope"> Specifies the default encryption scope to set on the container and use for all future requests. </param>
         /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
+        /// <param name="blobAccessPointConfigurationName"> The name of the Blob Access Point configuration to bind to the container at creation. If the unique ID is omitted, the service resolves and stores it. The binding cannot be changed after creation. </param>
+        /// <param name="blobAccessPointConfigurationUniqueId"> The unique ID of the Blob Access Point configuration to bind to the container at creation. When supplied with the configuration name, the service validates that both identify the same configuration. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, string blobAccessPointConfigurationName = default, string blobAccessPointConfigurationUniqueId = default, CancellationToken cancellationToken = default)
         {
-            return Create(timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, cancellationToken.ToRequestContext());
+            return Create(timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, blobAccessPointConfigurationName, blobAccessPointConfigurationUniqueId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new container in the specified account. If the container with the same name already exists, the operation fails. </summary>
@@ -128,11 +134,13 @@ namespace Azure.Storage.Blobs
         /// <param name="access"> The public access setting for the container. </param>
         /// <param name="defaultEncryptionScope"> Specifies the default encryption scope to set on the container and use for all future requests. </param>
         /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
+        /// <param name="blobAccessPointConfigurationName"> The name of the Blob Access Point configuration to bind to the container at creation. If the unique ID is omitted, the service resolves and stores it. The binding cannot be changed after creation. </param>
+        /// <param name="blobAccessPointConfigurationUniqueId"> The unique ID of the Blob Access Point configuration to bind to the container at creation. When supplied with the configuration name, the service validates that both identify the same configuration. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, string blobAccessPointConfigurationName = default, string blobAccessPointConfigurationUniqueId = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, blobAccessPointConfigurationName, blobAccessPointConfigurationUniqueId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

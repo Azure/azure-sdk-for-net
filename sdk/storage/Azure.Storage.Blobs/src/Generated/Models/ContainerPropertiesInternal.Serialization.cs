@@ -176,6 +176,24 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteValue(IsImmutableStorageWithVersioningEnabled.Value);
                 writer.WriteEndElement();
             }
+            if (Optional.IsDefined(IsBlobAccessPointContainer))
+            {
+                writer.WriteStartElement("IsBlobAccessPointContainer");
+                writer.WriteValue(IsBlobAccessPointContainer.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(BlobAccessPointConfigurationName))
+            {
+                writer.WriteStartElement("BlobAccessPointConfigurationName");
+                writer.WriteValue(BlobAccessPointConfigurationName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(BlobAccessPointConfigurationUniqueId))
+            {
+                writer.WriteStartElement("BlobAccessPointConfigurationUniqueId");
+                writer.WriteValue(BlobAccessPointConfigurationUniqueId);
+                writer.WriteEndElement();
+            }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
@@ -200,6 +218,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset? deletedOn = default;
             int? remainingRetentionDays = default;
             bool? isImmutableStorageWithVersioningEnabled = default;
+            bool? isBlobAccessPointContainer = default;
+            string blobAccessPointConfigurationName = default;
+            string blobAccessPointConfigurationUniqueId = default;
 
             foreach (var child in element.Elements())
             {
@@ -269,6 +290,21 @@ namespace Azure.Storage.Blobs.Models
                     isImmutableStorageWithVersioningEnabled = (bool?)child;
                     continue;
                 }
+                if (localName == "IsBlobAccessPointContainer")
+                {
+                    isBlobAccessPointContainer = (bool?)child;
+                    continue;
+                }
+                if (localName == "BlobAccessPointConfigurationName")
+                {
+                    blobAccessPointConfigurationName = (string)child;
+                    continue;
+                }
+                if (localName == "BlobAccessPointConfigurationUniqueId")
+                {
+                    blobAccessPointConfigurationUniqueId = (string)child;
+                    continue;
+                }
             }
             return new ContainerPropertiesInternal(
                 lastModified,
@@ -283,7 +319,10 @@ namespace Azure.Storage.Blobs.Models
                 preventEncryptionScopeOverride,
                 deletedOn,
                 remainingRetentionDays,
-                isImmutableStorageWithVersioningEnabled);
+                isImmutableStorageWithVersioningEnabled,
+                isBlobAccessPointContainer,
+                blobAccessPointConfigurationName,
+                blobAccessPointConfigurationUniqueId);
         }
 
         /// <param name="writer"> The XML writer. </param>

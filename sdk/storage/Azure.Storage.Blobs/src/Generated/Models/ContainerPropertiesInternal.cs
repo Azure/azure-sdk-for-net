@@ -34,7 +34,10 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="deletedOn"> The date-time the container was deleted. </param>
         /// <param name="remainingRetentionDays"> The remaining retention days of the container. </param>
         /// <param name="isImmutableStorageWithVersioningEnabled"> Whether immutable storage with versioning is enabled. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
+        /// <param name="isBlobAccessPointContainer"> Indicates whether this is a Blob Access Point container. Omitted for ordinary containers. </param>
+        /// <param name="blobAccessPointConfigurationName"> The name of the Blob Access Point configuration bound to the container. Omitted for ordinary containers. </param>
+        /// <param name="blobAccessPointConfigurationUniqueId"> The unique ID of the Blob Access Point configuration bound to the container. Omitted for ordinary containers. </param>
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled, bool? isBlobAccessPointContainer, string blobAccessPointConfigurationName, string blobAccessPointConfigurationUniqueId)
         {
             LastModified = lastModified;
             ETag = eTag;
@@ -49,6 +52,9 @@ namespace Azure.Storage.Blobs.Models
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
+            IsBlobAccessPointContainer = isBlobAccessPointContainer;
+            BlobAccessPointConfigurationName = blobAccessPointConfigurationName;
+            BlobAccessPointConfigurationUniqueId = blobAccessPointConfigurationUniqueId;
         }
 
         /// <summary> The date-time that the container was last modified. </summary>
@@ -89,5 +95,14 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Whether immutable storage with versioning is enabled. </summary>
         public bool? IsImmutableStorageWithVersioningEnabled { get; }
+
+        /// <summary> Indicates whether this is a Blob Access Point container. Omitted for ordinary containers. </summary>
+        public bool? IsBlobAccessPointContainer { get; }
+
+        /// <summary> The name of the Blob Access Point configuration bound to the container. Omitted for ordinary containers. </summary>
+        public string BlobAccessPointConfigurationName { get; }
+
+        /// <summary> The unique ID of the Blob Access Point configuration bound to the container. Omitted for ordinary containers. </summary>
+        public string BlobAccessPointConfigurationUniqueId { get; }
     }
 }
