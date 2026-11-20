@@ -283,6 +283,7 @@ For TypeSpec changes, also apply the support and targetability checks under Gene
 | Entity tags | Prefer `ETag`, preserving opaque values and protocol semantics; do not retype a generic raw-header dictionary. |
 | Azure resource locations, including collection elements | Prefer `AzureLocation`, not for URLs, addresses, or arbitrary geographic values. |
 | Numeric sizes | Use a numeric type that fits the contract; SKU names and formatted quantities are not automatically numbers. |
+| Numeric durations in fixed units (`durationMs`, `ttlInSeconds`, timeouts, retention periods) | `TimeSpan` is preferred for durations. Prefer TypeSpec `duration` with a numeric `@encode` such as `@encode(DurationKnownEncoding.seconds, int32)` so the SDK exposes `TimeSpan`. Specific units are acceptable when they give users a better way to select the quantity in the supported units, for example when the service accepts only whole units. Do not try to tell timeouts apart from other durations by name or context. Report unexplained fixed-unit numeric durations in new or changed API. |
 | ISO 8601 durations | Use TypeSpec `duration` only when its supported .NET mapping faithfully preserves the contract, including any calendar-dependent meaning. |
 | Constant-format durations | Use supported `DurationConstant` encoding rather than default ISO serialization; otherwise use a contract-preserving customization. |
 

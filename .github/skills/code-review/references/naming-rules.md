@@ -29,7 +29,9 @@ as written; these checks are a starting point, not the full set.
 - Async methods end in `Async`; `Try*` methods return `bool` with an `out` result
 - Boolean members read affirmatively (`IsEnabled`, not `IsNotDisabled`)
 - Numeric durations or time intervals with fixed units name those units, consistently with the
-  contract and conversion logic. This does not apply to `TimeSpan` or explicitly selectable units
+  contract and conversion logic. This does not apply to `TimeSpan` or explicitly selectable units.
+  Naming the unit does not justify the numeric type; `TimeSpan` is preferred for durations (see
+  [Semantic Value Types](repository-rules.md#semantic-value-types))
 
 **Enum naming**
 - Use singular names for non-flags enums; plural names are appropriate, not mandatory, for flags
@@ -205,8 +207,9 @@ What they cover:
   (`Auth`/`auth`). **Always check the whole family, not just the type in front of you.**
   Apply [H1](review-quality.md#h1--no-breaking-changes) before recommending further renames; a
   naming cleanup does not waive GA compatibility
-- For a duration concept abbreviated `TTL`, prefer `TimeToLive` and apply the shared numeric-unit
-  guidance rather than a universal unit suffix. A hop count is not a duration.
+- For a duration concept abbreviated `TTL`, prefer `TimeToLive`. Prefer a `TimeSpan` type over a
+  unit suffix such as `TimeToLiveInSeconds`; if fixed units are kept, apply the shared
+  numeric-unit guidance. A hop count is not a duration.
 - **Parameter names must be consistent and descriptive within a scope** (all methods on a
   client, all public constructors + the model-factory method for a type, all overloads of a
   method).
