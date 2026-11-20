@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="SampleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SampleType?(string value) => value == null ? null : new SampleType(value);
+        public static implicit operator SampleType?(string value) => value == null ? (SampleType?)null : new SampleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

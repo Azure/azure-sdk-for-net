@@ -120,6 +120,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void CustomerCountsCountMetricEnvelopesRatherThanMeasurements()
+        {
+            var routeBatch = Convert(
+                Measure(100, Ikey("ikey-a"), Endpoint(EastUs)),
+                Measure(200, Ikey("ikey-a"), Endpoint(EastUs)),
+                Measure(300, Ikey("ikey-a"), Endpoint(EastUs), Tag("series", "second")),
+                Measure(400, Ikey("ikey-b"), Endpoint(EastUs)),
+                Measure(500, Ikey("ikey-a"), Endpoint(WestUs), IngestionAuth("aad")),
+                Measure(600, Ikey("unrouted")));
+
+            Assert.Equal(2, routeBatch.Count);
+            var group = Groups(routeBatch).Single(g => g.IngestionEndpoint == EastUs);
+            Assert.Equal(3, group.TelemetryItems.Count);
+            Assert.Equal(2, group.ItemCountsByInstrumentationKey.Count);
+            Assert.Equal(2, group.ItemCountsByInstrumentationKey["ikey-a"]);
+            Assert.Equal(1, group.ItemCountsByInstrumentationKey["ikey-b"]);
+            var aadGroup = Groups(routeBatch).Single(g => g.IsAad);
+            Assert.Equal(new KeyValuePair<string, int>("ikey-a", 1),
+                Assert.Single(aadGroup.ItemCountsByInstrumentationKey));
+        }
+
+        [Fact]
         public void AnUnrecognizedIngestionAuthIsAnInstrumentationKeyRoute()
         {
             var routeBatch = Convert(Measure(1, Ikey("ikey-a"), Endpoint(EastUs), IngestionAuth("entra")));

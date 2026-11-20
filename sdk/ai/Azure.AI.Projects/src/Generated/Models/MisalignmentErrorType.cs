@@ -54,7 +54,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="MisalignmentErrorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MisalignmentErrorType?(string value) => value == null ? null : new MisalignmentErrorType(value);
+        public static implicit operator MisalignmentErrorType?(string value) => value == null ? (MisalignmentErrorType?)null : new MisalignmentErrorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

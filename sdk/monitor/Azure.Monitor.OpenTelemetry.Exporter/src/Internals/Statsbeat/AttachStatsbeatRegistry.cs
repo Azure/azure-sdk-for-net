@@ -53,15 +53,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     continue;
                 }
 
-                string? previousKey = null;
-                foreach (var item in group.TelemetryItems)
+                foreach (var key in group.InstrumentationKeys)
                 {
-                    var key = item.InstrumentationKey;
-                    if (string.IsNullOrEmpty(key) || ReferenceEquals(key, previousKey))
+                    if (string.IsNullOrEmpty(key))
                     {
                         continue;
                     }
-                    previousKey = key;
                     ObserveKey(registry, key, now, isEu);
                 }
             }

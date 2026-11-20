@@ -6,17 +6,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The execution context that produced this tool call.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DirectToolCallCallerParam"/> and <see cref="ProgramToolCallCallerParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownToolCallCallerParam))]
-    public abstract partial class ToolCallCallerParam : IJsonModel<ToolCallCallerParam>
+    /// <summary> The execution context that produced this tool call. </summary>
+    internal partial class ToolCallCallerParam : IJsonModel<ToolCallCallerParam>
     {
         /// <summary> Initializes a new instance of <see cref="ToolCallCallerParam"/> for deserialization. </summary>
         internal ToolCallCallerParam()
@@ -125,17 +122,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            ToolCallCallerParamType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "direct":
-                        return DirectToolCallCallerParam.DeserializeDirectToolCallCallerParam(element, options);
-                    case "program":
-                        return ProgramToolCallCallerParam.DeserializeProgramToolCallCallerParam(element, options);
+                    @type = new ToolCallCallerParamType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return UnknownToolCallCallerParam.DeserializeUnknownToolCallCallerParam(element, options);
+            return new ToolCallCallerParam(@type, additionalBinaryDataProperties);
         }
     }
 }

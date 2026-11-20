@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="EvaluationRuleActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluationRuleActionType?(string value) => value == null ? null : new EvaluationRuleActionType(value);
+        public static implicit operator EvaluationRuleActionType?(string value) => value == null ? (EvaluationRuleActionType?)null : new EvaluationRuleActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

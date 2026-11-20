@@ -40,7 +40,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="additionalInfo"> Additional structured information about the failure. </param>
         /// <param name="debugInfo"> Diagnostic information supplied by the service for troubleshooting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiError(string code, string message, string @param, string @type, MisalignmentErrorDetailsResource misalignment, IList<ApiError> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiError(string code, string message, string @param, string @type, object misalignment, IList<ApiError> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -77,7 +77,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; set; }
 
         /// <summary> Gets or sets the Misalignment. </summary>
-        public MisalignmentErrorDetailsResource Misalignment { get; set; }
+        public object Misalignment { get; set; }
 
         /// <summary> Additional errors that contributed to this failure. </summary>
         public IList<ApiError> Details { get; }

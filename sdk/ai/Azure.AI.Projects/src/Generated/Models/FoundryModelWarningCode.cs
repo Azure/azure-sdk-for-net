@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="FoundryModelWarningCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FoundryModelWarningCode?(string value) => value == null ? null : new FoundryModelWarningCode(value);
+        public static implicit operator FoundryModelWarningCode?(string value) => value == null ? (FoundryModelWarningCode?)null : new FoundryModelWarningCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

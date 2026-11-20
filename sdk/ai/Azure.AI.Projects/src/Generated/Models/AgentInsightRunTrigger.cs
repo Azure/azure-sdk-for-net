@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="AgentInsightRunTrigger"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentInsightRunTrigger?(string value) => value == null ? null : new AgentInsightRunTrigger(value);
+        public static implicit operator AgentInsightRunTrigger?(string value) => value == null ? (AgentInsightRunTrigger?)null : new AgentInsightRunTrigger(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

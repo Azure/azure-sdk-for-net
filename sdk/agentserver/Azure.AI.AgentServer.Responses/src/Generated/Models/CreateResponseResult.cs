@@ -320,10 +320,10 @@ namespace Azure.AI.AgentServer.Responses
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="ToolChoiceOptions"/>. </description>
+        /// <description> <see cref="object"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ToolChoiceParam"/>. </description>
+        /// <description> <see cref="ResponseToolChoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
