@@ -31,7 +31,9 @@ as written; these checks are a starting point, not the full set.
 - <a name="fdg-naming-async-and-try" href="#fdg-naming-async-and-try">§</a> Async methods end in `Async`; `Try*` methods return `bool` with an `out` result
 - <a name="fdg-naming-booleans" href="#fdg-naming-booleans">§</a> Boolean members read affirmatively (`IsEnabled`, not `IsNotDisabled`)
 - <a name="fdg-naming-duration-units" href="#fdg-naming-duration-units">§</a> Numeric durations or time intervals with fixed units name those units, consistently with the
-  contract and conversion logic. This does not apply to `TimeSpan` or explicitly selectable units
+  contract and conversion logic. This does not apply to `TimeSpan` or explicitly selectable units.
+  Naming the unit does not justify the numeric type; `TimeSpan` is preferred for durations (see
+  [Semantic Value Types](repository-rules.md#semantic-types-fixed-unit-durations))
 
 **Enum naming**
 - <a name="fdg-naming-enum-plurality" href="#fdg-naming-enum-plurality">§</a> Use singular names for non-flags enums; plural names are appropriate, not mandatory, for flags
@@ -207,8 +209,9 @@ What they cover:
   (`Auth`/`auth`). **Always check the whole family, not just the type in front of you.**
   Apply [H1](review-quality.md#h1--no-breaking-changes) before recommending further renames; a
   naming cleanup does not waive GA compatibility
-- <a name="naming-time-to-live" href="#naming-time-to-live">§</a> For a duration concept abbreviated `TTL`, prefer `TimeToLive` and apply the shared numeric-unit
-  guidance rather than a universal unit suffix. A hop count is not a duration.
+- <a name="naming-time-to-live" href="#naming-time-to-live">§</a> For a duration concept abbreviated `TTL`, prefer `TimeToLive`. Prefer a `TimeSpan` type over a
+  unit suffix such as `TimeToLiveInSeconds`; if fixed units are kept, apply the shared
+  numeric-unit guidance. A hop count is not a duration.
 - <a name="naming-parameter-consistency" href="#naming-parameter-consistency">§</a> **Parameter names must be consistent and descriptive within a scope** (all methods on a
   client, all public constructors + the model-factory method for a type, all overloads of a
   method).
