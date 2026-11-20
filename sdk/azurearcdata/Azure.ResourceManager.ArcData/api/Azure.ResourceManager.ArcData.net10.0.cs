@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourceProperties SqlServerAvailabilityGroupResourceProperties(string availabilityGroupId = null, string serverName = null, string instanceName = null, string vmId = null, System.DateTimeOffset? collectionOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.AvailabilityGroupInfo info = null, Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePropertiesReplicas replicas = null, Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePropertiesDatabases databases = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePropertiesDatabases SqlServerAvailabilityGroupResourcePropertiesDatabases(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlAvailabilityGroupDatabaseReplicaResourceProperties> value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePropertiesReplicas SqlServerAvailabilityGroupResourcePropertiesReplicas(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlAvailabilityGroupReplicaResourceProperties> value = null, string nextLink = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJob SqlServerBackgroundJob(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState? state = default(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState?), Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobExecutionState? executionState = default(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobExecutionState?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus? lastExecutionStatus = default(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus?), System.DateTimeOffset? lastExecutionOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextExecutionOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJob SqlServerBackgroundJob(Azure.ResourceManager.ArcData.Models.State? state = default(Azure.ResourceManager.ArcData.Models.State?), Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobExecutionState? executionState = default(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobExecutionState?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus? lastExecutionStatus = default(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus?), System.DateTimeOffset? lastExecutionOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextExecutionOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerBackupPolicy SqlServerBackupPolicy(int? retentionPeriodDays = default(int?), int? fullBackupDays = default(int?), Azure.ResourceManager.ArcData.Models.DifferentialBackupHours? differentialBackupHours = default(Azure.ResourceManager.ArcData.Models.DifferentialBackupHours?), int? transactionLogBackupMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerDatabaseConfig SqlServerDatabaseConfig(bool? isAutoCloseOn = default(bool?), bool? isAutoShrinkOn = default(bool?), bool? isAutoCreateStatsOn = default(bool?), bool? isAutoUpdateStatsOn = default(bool?), bool? isRemoteDataArchiveEnabled = default(bool?), bool? isMemoryOptimizationEnabled = default(bool?), bool? isEncrypted = default(bool?), bool? isTrustworthyOn = default(bool?), bool? isHekatonFilesOn = default(bool?), int? numberOfHekatonFiles = default(int?)) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerDatabaseData SqlServerDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourceProperties properties = null) { throw null; }
@@ -1255,8 +1255,8 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesBackupInformation SqlServerDatabaseResourcePropertiesBackupInformation(System.DateTimeOffset? lastFullBackup = default(System.DateTimeOffset?), System.DateTimeOffset? lastLogBackup = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerEsuLicenseData SqlServerEsuLicenseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicensePatch SqlServerEsuLicensePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan billingPlan = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion version = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion), string uniqueId = null, int physicalCores = 0, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState activationState = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState), Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType scopeType = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan? billingPlan = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan?), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion? version = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion?), string uniqueId = null, int? physicalCores = default(int?), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState? activationState = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState?), Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType? scopeType = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType?), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan billingPlan = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion version = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion), string uniqueId = null, int physicalCores = 0, Azure.ResourceManager.ArcData.Models.State activationState = default(Azure.ResourceManager.ArcData.Models.State), Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType scopeType = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan? billingPlan = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan?), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion? version = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion?), string uniqueId = null, int? physicalCores = default(int?), Azure.ResourceManager.ArcData.Models.State? activationState = default(Azure.ResourceManager.ArcData.Models.State?), Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType? scopeType = default(Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType?), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerInstanceData SqlServerInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerInstanceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceJob SqlServerInstanceJob(string id = null, string instanceName = null, Azure.ResourceManager.ArcData.Models.SqlServerJobStatus? jobStatus = default(Azure.ResourceManager.ArcData.Models.SqlServerJobStatus?), string jobException = null, Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJob backgroundJob = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SequencerAction> sequencerActions = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceJobsResult SqlServerInstanceJobsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlServerInstanceJob> jobs = null) { throw null; }
@@ -3225,7 +3225,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus? LastExecutionStatus { get { throw null; } }
         public System.DateTimeOffset? NextExecutionOn { get { throw null; } }
         public System.DateTimeOffset? StartsOn { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState? State { get { throw null; } }
+        public Azure.ResourceManager.ArcData.Models.State? State { get { throw null; } }
         protected virtual Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJob JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJob PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3272,27 +3272,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus left, Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobLastExecutionStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SqlServerBackgroundJobState : System.IEquatable<Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SqlServerBackgroundJobState(string value) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState Completed { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState Faulted { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState Suspended { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState left, Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState left, Azure.ResourceManager.ArcData.Models.SqlServerBackgroundJobState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SqlServerBackupPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerBackupPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerBackupPolicy>
@@ -3460,24 +3439,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlServerEntraIdentityType left, Azure.ResourceManager.ArcData.Models.SqlServerEntraIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SqlServerEsuLicenseActivationState : System.IEquatable<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SqlServerEsuLicenseActivationState(string value) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState Active { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState Inactive { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState Terminated { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState left, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState left, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class SqlServerEsuLicensePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicensePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicensePatch>
     {
         public SqlServerEsuLicensePatch() { }
@@ -3495,9 +3456,9 @@ namespace Azure.ResourceManager.ArcData.Models
     }
     public partial class SqlServerEsuLicenseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties>
     {
-        public SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan billingPlan, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion version, int physicalCores, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState activationState, Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType scopeType) { }
+        public SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan billingPlan, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion version, int physicalCores, Azure.ResourceManager.ArcData.Models.State activationState, Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType scopeType) { }
         public System.DateTimeOffset? ActivatedOn { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState ActivationState { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.State ActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan BillingPlan { get { throw null; } set { } }
         public int PhysicalCores { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType ScopeType { get { throw null; } set { } }
@@ -3519,7 +3480,7 @@ namespace Azure.ResourceManager.ArcData.Models
     {
         public SqlServerEsuLicenseUpdateProperties() { }
         public System.DateTimeOffset? ActivatedOn { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState? ActivationState { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.State? ActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.SqlServerLicenseBillingPlan? BillingPlan { get { throw null; } set { } }
         public int? PhysicalCores { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.SqlServerLicenseScopeType? ScopeType { get { throw null; } set { } }
@@ -4203,6 +4164,30 @@ namespace Azure.ResourceManager.ArcData.Models
         public static implicit operator Azure.ResourceManager.ArcData.Models.SqlVersion (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ArcData.Models.SqlVersion? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlVersion left, Azure.ResourceManager.ArcData.Models.SqlVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct State : System.IEquatable<Azure.ResourceManager.ArcData.Models.State>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public State(string value) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.State Active { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Completed { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Deleted { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Enabled { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Faulted { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Inactive { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Suspended { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.State Terminated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArcData.Models.State other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArcData.Models.State left, Azure.ResourceManager.ArcData.Models.State right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.State (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.State? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArcData.Models.State left, Azure.ResourceManager.ArcData.Models.State right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class UploadServicePrincipal : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.UploadServicePrincipal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.UploadServicePrincipal>

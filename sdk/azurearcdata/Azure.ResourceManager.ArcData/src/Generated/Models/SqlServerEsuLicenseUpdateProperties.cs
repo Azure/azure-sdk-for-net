@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="terminatedOn"> The timestamp of the termination of the SqlServerEsuLicense in ISO 8601 date-time format. </param>
         /// <param name="tenantId"> The tenantId the SQL Server ESU license resource subscription resides in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerEsuLicenseUpdateProperties(SqlServerLicenseBillingPlan? billingPlan, SqlServerEsuLicenseVersion? version, string uniqueId, int? physicalCores, SqlServerEsuLicenseActivationState? activationState, SqlServerLicenseScopeType? scopeType, DateTimeOffset? activatedOn, DateTimeOffset? terminatedOn, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerEsuLicenseUpdateProperties(SqlServerLicenseBillingPlan? billingPlan, SqlServerEsuLicenseVersion? version, string uniqueId, int? physicalCores, State? activationState, SqlServerLicenseScopeType? scopeType, DateTimeOffset? activatedOn, DateTimeOffset? terminatedOn, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPlan = billingPlan;
             Version = version;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public int? PhysicalCores { get; set; }
 
         /// <summary> The activation state of the license. </summary>
-        public SqlServerEsuLicenseActivationState? ActivationState { get; set; }
+        public State? ActivationState { get; set; }
 
         /// <summary> The Azure scope to which the license will apply. </summary>
         public SqlServerLicenseScopeType? ScopeType { get; set; }
