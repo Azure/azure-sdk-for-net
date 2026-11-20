@@ -265,8 +265,8 @@ try {
                 $null = Select-AzSubscription -Subscription $SubscriptionId
 
                 $exitActions += {
-                    Log "Selecting previous subscription '$currentSubcriptionId'"
-                    $null = Select-AzSubscription -Subscription $currentSubcriptionId
+                    Log "Selecting previous subscription '$currentSubscriptionId'"
+                    $null = Select-AzSubscription -Subscription $currentSubscriptionId
                 }
 
                 # Update the context.
