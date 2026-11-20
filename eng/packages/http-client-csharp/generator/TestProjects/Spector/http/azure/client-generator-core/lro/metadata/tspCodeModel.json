@@ -1744,22 +1744,7 @@
                 "$ref": "23"
               }
             },
-            "resultPath": "result",
-            "pollingResponseModel": {
-              "$ref": "23"
-            },
-            "statusMetadata": [
-              {
-                "property": {
-                  "$ref": "27"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "27"
-                  }
-                ]
-              }
-            ]
+            "resultPath": "result"
           }
         },
         {
@@ -2112,82 +2097,7 @@
                 "$ref": "39"
               }
             },
-            "resultPath": "result",
-            "pollingResponseModel": {
-              "$ref": "39"
-            },
-            "statusMetadata": [
-              {
-                "property": {
-                  "$ref": "50"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "50"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "52"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "52"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "54"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "54"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "62"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "62"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "41"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "41"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "44"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "44"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "47"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "47"
-                  }
-                ]
-              }
-            ]
+            "resultPath": "result"
           }
         },
         {
@@ -2355,82 +2265,7 @@
                 "$ref": "39"
               }
             },
-            "resultPath": "result",
-            "pollingResponseModel": {
-              "$ref": "39"
-            },
-            "statusMetadata": [
-              {
-                "property": {
-                  "$ref": "50"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "50"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "52"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "52"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "54"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "54"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "62"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "62"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "41"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "41"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "44"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "44"
-                  }
-                ]
-              },
-              {
-                "property": {
-                  "$ref": "47"
-                },
-                "propertySegments": [
-                  {
-                    "$ref": "47"
-                  }
-                ]
-              }
-            ]
+            "resultPath": "result"
           }
         }
       ],

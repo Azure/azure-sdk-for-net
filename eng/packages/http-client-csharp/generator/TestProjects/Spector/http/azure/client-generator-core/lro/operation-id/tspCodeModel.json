@@ -1004,9 +1004,6 @@
               }
             },
             "resultPath": "result",
-            "pollingResponseModel": {
-              "$ref": "17"
-            },
             "operationId": [
               {
                 "$id": "66",
@@ -1303,9 +1300,6 @@
               }
             },
             "resultPath": "result",
-            "pollingResponseModel": {
-              "$ref": "23"
-            },
             "operationId": [
               {
                 "$id": "84",
@@ -1623,9 +1617,6 @@
               }
             },
             "resultPath": "result",
-            "pollingResponseModel": {
-              "$ref": "31"
-            },
             "operationId": [
               {
                 "$id": "103",

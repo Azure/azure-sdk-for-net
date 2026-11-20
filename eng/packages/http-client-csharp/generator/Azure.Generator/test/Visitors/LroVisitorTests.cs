@@ -36,7 +36,7 @@ namespace Azure.Generator.Tests.Visitors
         {
             var id = InputFactory.Property("id", InputPrimitiveType.String, wireName: "jobId");
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                [], [new InputLroOperationIdPropertyMetadata(id, [id])]);
+                [new InputLroOperationIdPropertyMetadata(id, [id])]);
             var response = hasResult ? InputFactory.Model("Result") : null;
             var lro = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"),
                 response: InputFactory.ServiceMethodResponse(response, null), longRunningServiceMetadata: metadata);
@@ -136,7 +136,7 @@ namespace Azure.Generator.Tests.Visitors
 
         private static LroOperationProvider CreateOperationWithPollingLink(InputOperationLink location, InputPathParameter parameter, out Func<string> diagnostics)
         {
-            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null, [],
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
                 [new InputLroOperationIdPathMetadata(location, parameter, $"/jobs{{{parameter.SerializedName}}}/status")]);
             var method = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
             var inputClient = InputFactory.Client("TestClient", methods: [method]);
@@ -157,7 +157,7 @@ namespace Azure.Generator.Tests.Visitors
         {
             var id = InputFactory.Property("id", InputPrimitiveType.String);
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                [], [new InputLroOperationIdPropertyMetadata(id, [id])]);
+                [new InputLroOperationIdPropertyMetadata(id, [id])]);
             var first = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
             var second = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
             var firstClient = InputFactory.Client("FirstClient", methods: [first]);
@@ -178,7 +178,7 @@ namespace Azure.Generator.Tests.Visitors
         {
             var property = InputFactory.Property("id", InputPrimitiveType.String);
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                [], hasOperationId ? [new InputLroOperationIdPropertyMetadata(property, [property])] : []);
+                hasOperationId ? [new InputLroOperationIdPropertyMetadata(property, [property])] : []);
             var paging = new InputLongRunningPagingServiceMethod(
                 "list", "public", [], null, null, InputFactory.Operation("list"), [],
                 InputFactory.ServiceMethodResponse(null, null), null, false, true, true, "Test.list",
