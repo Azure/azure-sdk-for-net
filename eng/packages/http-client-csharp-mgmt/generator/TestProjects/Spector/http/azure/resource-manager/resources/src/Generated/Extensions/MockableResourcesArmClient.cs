@@ -53,7 +53,15 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> Returns a <see cref="SingletonTrackedResource"/> object. </returns>
         public virtual SingletonTrackedResource GetSingletonTrackedResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SingletonTrackedResource.ValidateResourceId(id);
+            if (id.ResourceType == SingletonTrackedResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SingletonTrackedResource(Client, id);
         }
 

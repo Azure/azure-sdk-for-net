@@ -203,6 +203,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         }
 
         /// <summary>
+        /// Get a singleton under a subscription location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/locationSingletons/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocationSingletonOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocationSingletonResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="LocationSingletonResource"/> object. </returns>
+        public virtual LocationSingletonResource GetLocationSingleton()
+        {
+            return new LocationSingletonResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "locations", "current"));
+        }
+
+        /// <summary>
         /// List Foo resources by subscription ID
         /// <list type="bullet">
         /// <item>
