@@ -544,6 +544,19 @@ floor customers must satisfy and a node in their restore graph.
   become ordinary package dependencies at pack time; and generator references carrying
   `ReferenceOutputAssembly="false"` with `PackAsAnalyzer="true"`, which bundle a DLL rather
   than declare a dependency
+- **A shipping `src` project must not depend on a package whose ID extends its own**
+  (`Azure.X` → `Azure.X.Y`). A dotted ID tells customers `Azure.X.Y` builds on `Azure.X`, and
+  that is how the repo layers everywhere else (`Azure.Messaging.EventHubs.Processor` →
+  `Azure.Messaging.EventHubs`, `Azure.Provisioning.*` → `Azure.Provisioning`). The reverse
+  edge makes the specific package the foundation of the general one. The child can never
+  reference the parent without a cycle, so anything the two share gets pushed down into the
+  child, and once both ship stable, undoing it is a breaking change 🟡. Recommend flipping the
+  edge — the child-named package builds on the parent, the way `Azure.ResourceManager.*`
+  extends `ArmClient` — or renaming the dependency so its ID no longer extends the
+  dependent's. A new metapackage is a finding too. Not a finding: references that publish no
+  dependency (`PrivateAssets="all"`, or `ReferenceOutputAssembly="false"` generator bundling
+  such as `System.ClientModel` → `System.ClientModel.SourceGeneration`); and an edge already
+  on `main` that the PR leaves unchanged, which is also not precedent for adding another
 
 **Target frameworks follow from the project's name — they are not authored.**
 `eng/Directory.Build.Common.props` classifies every project by naming convention, and that
