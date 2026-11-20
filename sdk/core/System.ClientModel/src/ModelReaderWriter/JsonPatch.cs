@@ -177,6 +177,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
     /// <param name="value">The value to set.</param>
+    [CLSCompliant(false)]
     public void Set(ReadOnlySpan<byte> jsonPath, sbyte value)
     {
         SetInternal(jsonPath, new(value));
@@ -208,6 +209,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
     /// <param name="value">The value to set.</param>
+    [CLSCompliant(false)]
     public void Set(ReadOnlySpan<byte> jsonPath, uint value)
     {
         SetInternal(jsonPath, new(value));
@@ -218,6 +220,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
     /// <param name="value">The value to set.</param>
+    [CLSCompliant(false)]
     public void Set(ReadOnlySpan<byte> jsonPath, ulong value)
     {
         SetInternal(jsonPath, new(value));
@@ -228,6 +231,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
     /// <param name="value">The value to set.</param>
+    [CLSCompliant(false)]
     public void Set(ReadOnlySpan<byte> jsonPath, ushort value)
     {
         SetInternal(jsonPath, new(value));
@@ -502,6 +506,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
+    [CLSCompliant(false)]
     public sbyte GetInt8(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
@@ -563,6 +568,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
+    [CLSCompliant(false)]
     public uint GetUInt32(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
@@ -583,6 +589,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
+    [CLSCompliant(false)]
     public ulong GetUInt64(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
@@ -603,6 +610,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
+    [CLSCompliant(false)]
     public ushort GetUInt16(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue) || encodedValue.Kind == ValueKind.Removed)
@@ -880,6 +888,7 @@ public partial struct JsonPatch
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <param name="value">The value if found.</param>
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
+    [CLSCompliant(false)]
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out sbyte value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
@@ -938,6 +947,7 @@ public partial struct JsonPatch
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <param name="value">The value if found.</param>
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
+    [CLSCompliant(false)]
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out uint value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
@@ -957,6 +967,7 @@ public partial struct JsonPatch
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <param name="value">The value if found.</param>
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
+    [CLSCompliant(false)]
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ulong value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
@@ -976,6 +987,7 @@ public partial struct JsonPatch
     /// <param name="jsonPath">The JSON path of the value to get.</param>
     /// <param name="value">The value if found.</param>
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
+    [CLSCompliant(false)]
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ushort value)
     {
         if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
@@ -1192,6 +1204,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
+    [CLSCompliant(false)]
     public void Append(ReadOnlySpan<byte> arrayPath, sbyte value)
     {
         EncodedValue encodedValue = new(value);
@@ -1229,6 +1242,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
+    [CLSCompliant(false)]
     public void Append(ReadOnlySpan<byte> arrayPath, uint value)
     {
         EncodedValue encodedValue = new(value);
@@ -1241,6 +1255,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
+    [CLSCompliant(false)]
     public void Append(ReadOnlySpan<byte> arrayPath, ulong value)
     {
         EncodedValue encodedValue = new(value);
@@ -1253,6 +1268,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
+    [CLSCompliant(false)]
     public void Append(ReadOnlySpan<byte> arrayPath, ushort value)
     {
         EncodedValue encodedValue = new(value);
