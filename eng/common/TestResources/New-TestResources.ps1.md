@@ -55,6 +55,8 @@ If no service principal is specified, a new one will be created and assigned the
 
 This script runs in the context of credentials already specified in Connect-AzAccount
 or those specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
+If no subscription is specified, it signs in to the TME tenant if necessary and uses the
+Azure SDK Test Resources - TME subscription. Specify `-SubscriptionId` to use another subscription.
 
 ## EXAMPLES
 
