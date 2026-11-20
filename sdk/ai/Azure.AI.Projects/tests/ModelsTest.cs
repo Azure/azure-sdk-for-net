@@ -92,8 +92,8 @@ public class ModelsTest : ProjectsClientTestBase
         Assert.That(updatedModel.Tags["test1"], Is.EqualTo("test1 value"));
         Assert.That(updatedModel.Tags, Has.Count.EqualTo(2));
         // Get credentials
-        ModelCredentialContent credentialRequest = new(blob);
-        DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
+        ModelCredentialContent credentialContent = new(blob);
+        DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialContent: credentialContent);
         Assert.That(modelCredential.BlobReference.Credential.SasUri, Is.Not.Null);
         // Delete (temporary workaround for 5317570)
         await projectClient.Models.DeleteModelVersionAsync($"{MODEL_NAME}1", MODEL_VERSION);

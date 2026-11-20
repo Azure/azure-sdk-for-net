@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0 (2026-11-18)
+## 3.0.0 (2026-11-19)
 
 ### Features Added
 - Uploading of models now can be cancelled.
@@ -44,6 +44,11 @@
 - `AIProjectClient.GetAIProjectMemoryStoresClient()` also now requires suppression of `AAIP001`. The current `AzureAIProjectsModelFactory.MemoryStoreOperationUsage` overload is experimental as well; its signature differs from the 2.0.x overload.
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
 - The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
+- The `AzureAIModelTarget` property `SamplingParams` was renamed to `SamplingParameters` and now uses `ModelSamplingParams` from `Azure.AI.Projects.Agents`. The corresponding `AzureAIProjectsModelFactory.AzureAIModelTarget` parameter was renamed from `samplingParams` to `samplingParameters`.
+- `InputFileContentParam` and `InputTextContentParam` classes were removed.
+- `ResponseUsageInputTokensDetails` and `ResponseUsageOutputTokensDetails` were removed: `MemoryStoreOperationUsage.InputTokensDetails` and `OutputTokensDetails` now return `OpenAI.Responses.ResponseInputTokenUsageDetails` and `ResponseOutputTokenUsageDetails`.
+- `Azure.AI.Projects.Memory.MemorySearchResultOptions` was removed: `MemorySearchOptions.ResultOptions` is now `Azure.AI.Extensions.OpenAI.MemorySearchResultOptions`.
+- `OpenAI.AgentObjectType` was removed.
 - The `Azure.AI.Projects.Agents` dependency has renamed agent models and members used by project clients. For example, replace `VersionRefIndicator` with `VersionReferenceIndicator` and `VoiceAgentAudioConfig` with `VoiceAgentAudioConfiguration`. See the `Azure.AI.Projects.Agents` changelog for the complete list.
 - Renamed `Azure.AI.Projects.DatasetReference` to `Azure.AI.Projects.Evaluation.VersionedDatasetReference` and renamed the corresponding model-factory method.
 - Moved `RubricBasedEvaluatorDefinition` and `TracesEvaluatorGenerationJobSource` from `Azure.AI.Projects` to `Azure.AI.Projects.Evaluation`.
@@ -51,6 +56,7 @@
 - Changed `EvaluationsDimension.Weight` and the corresponding constructor/model-factory parameters from `int` to `int?` to support null weights.
 - Removed `AgentInsightsV1Preview` from `FoundryFeaturesOptInKeys`.
 - The `AzureAIModelTarget` property `SamplingParams` was renamed to `samplingParameters`.
+- Added `[Experimental("AAIP002")]` to `AzureAIProjectsModelFactory.AzureAIAgentTarget(string, string, IEnumerable<ToolDescription>)`, which shipped without the attribute in 2.0.x. Using it now requires suppressing the `AAIP002` diagnostic.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

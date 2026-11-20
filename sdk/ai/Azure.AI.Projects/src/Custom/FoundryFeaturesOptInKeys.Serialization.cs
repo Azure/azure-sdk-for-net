@@ -6,7 +6,12 @@ using System;
 
 namespace Azure.AI.Projects
 {
-    // TODO: Remove this class After 3.0.0 release.
+    // This file was added here to introduce breaking change by removing
+    // AgentInsightsV1Preview. The next version of a typespec does not contain
+    // this flag. This file needs to be removed after the Azure.AI.Projects
+    // v. 3.0.0 will be released and the code should be re generated using
+    // the latest typespes. This will result in correct generated file, which will not introduce
+    // breaking changes post 3.0.0.
     internal static partial class FoundryFeaturesOptInKeysExtensions
     {
         /// <param name="value"> The value to serialize. </param>
