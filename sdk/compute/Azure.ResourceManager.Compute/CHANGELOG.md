@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an `ArgumentNullException` when clearing the disk controller type on virtual machine scale set storage profiles.
+
 ### Other Changes
 
 ## 1.19.0 (2026-10-30)
