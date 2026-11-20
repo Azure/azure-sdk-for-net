@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="GenerationWarningType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GenerationWarningType?(string value) => value == null ? null : new GenerationWarningType(value);
+        public static implicit operator GenerationWarningType?(string value) => value == null ? (GenerationWarningType?)null : new GenerationWarningType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
