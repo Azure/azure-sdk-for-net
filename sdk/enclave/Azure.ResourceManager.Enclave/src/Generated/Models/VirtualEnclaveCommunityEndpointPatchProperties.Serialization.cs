@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
@@ -91,6 +92,21 @@ namespace Azure.ResourceManager.Enclave.Models
                 writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(SyncTo))
+            {
+                writer.WritePropertyName("syncTo"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in SyncTo)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +151,7 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection = default;
             VirtualEnclaveUpdateMode? updateMode = default;
+            IList<ResourceIdentifier> syncTo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,12 +174,33 @@ namespace Azure.ResourceManager.Enclave.Models
                     updateMode = new VirtualEnclaveUpdateMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("syncTo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    syncTo = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualEnclaveCommunityEndpointPatchProperties(ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>(), updateMode, additionalBinaryDataProperties);
+            return new VirtualEnclaveCommunityEndpointPatchProperties(ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>(), updateMode, syncTo ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

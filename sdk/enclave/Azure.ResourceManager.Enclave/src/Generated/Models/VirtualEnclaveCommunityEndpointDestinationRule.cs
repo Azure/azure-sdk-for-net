@@ -28,15 +28,17 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="destinationType"> Destination Type. </param>
         /// <param name="protocols"> Protocols. Options specified by Endpoint Protocol Enum. </param>
         /// <param name="transitHubResourceId"> Transit Hub Resource Id. </param>
+        /// <param name="direction"> The direction of traffic for this rule. Defaults to Outbound if not specified. </param>
         /// <param name="endpointRuleName"> Endpoint Rule Name. </param>
         /// <param name="destination"> Destination address. Can include multiple CIDR/IP Addresses or fqdn tags or fqdns (for community endpoint) separated by commas. </param>
         /// <param name="ports"> Port. Can include multiple ports separated by commas or a range indicated by a hyphen. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityEndpointDestinationRule(VirtualEnclaveCommunityEndpointDestinationType? destinationType, IList<VirtualEnclaveCommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityEndpointDestinationRule(VirtualEnclaveCommunityEndpointDestinationType? destinationType, IList<VirtualEnclaveCommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, RuleDirection? direction, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationType = destinationType;
             Protocols = protocols;
             TransitHubResourceId = transitHubResourceId;
+            Direction = direction;
             EndpointRuleName = endpointRuleName;
             Destination = destination;
             Ports = ports;
@@ -51,6 +53,9 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Transit Hub Resource Id. </summary>
         public ResourceIdentifier TransitHubResourceId { get; set; }
+
+        /// <summary> The direction of traffic for this rule. Defaults to Outbound if not specified. </summary>
+        public RuleDirection? Direction { get; set; }
 
         /// <summary> Endpoint Rule Name. </summary>
         public string EndpointRuleName { get; set; }

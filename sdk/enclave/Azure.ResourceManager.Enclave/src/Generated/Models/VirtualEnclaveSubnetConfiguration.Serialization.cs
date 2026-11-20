@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.Enclave.Models
                 writer.WritePropertyName("networkSecurityGroupResourceId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupResourceId);
             }
+            if (Optional.IsDefined(SubnetPurpose))
+            {
+                writer.WritePropertyName("subnetPurpose"u8);
+                writer.WriteStringValue(SubnetPurpose.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.Enclave.Models
             string subnetDelegation = default;
             string addressPrefix = default;
             ResourceIdentifier networkSecurityGroupResourceId = default;
+            SubnetPurpose? subnetPurpose = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,6 +199,15 @@ namespace Azure.ResourceManager.Enclave.Models
                     networkSecurityGroupResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("subnetPurpose"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetPurpose = new SubnetPurpose(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -205,6 +220,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 subnetDelegation,
                 addressPrefix,
                 networkSecurityGroupResourceId,
+                subnetPurpose,
                 additionalBinaryDataProperties);
         }
     }

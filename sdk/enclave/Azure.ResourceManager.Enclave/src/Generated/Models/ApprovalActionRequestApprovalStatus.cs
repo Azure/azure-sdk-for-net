@@ -11,11 +11,13 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The approval status for an approval action request. </summary>
     public readonly partial struct ApprovalActionRequestApprovalStatus : IEquatable<ApprovalActionRequestApprovalStatus>
     {
         private readonly string _value;
+        /// <summary> The request is approved. </summary>
         private const string ApprovedValue = "Approved";
+        /// <summary> The request is rejected. </summary>
         private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="ApprovalActionRequestApprovalStatus"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the Approved. </summary>
+        /// <summary> The request is approved. </summary>
         public static ApprovalActionRequestApprovalStatus Approved { get; } = new ApprovalActionRequestApprovalStatus(ApprovedValue);
 
-        /// <summary> Gets the Rejected. </summary>
+        /// <summary> The request is rejected. </summary>
         public static ApprovalActionRequestApprovalStatus Rejected { get; } = new ApprovalActionRequestApprovalStatus(RejectedValue);
 
         /// <summary> Determines if two <see cref="ApprovalActionRequestApprovalStatus"/> values are the same. </summary>

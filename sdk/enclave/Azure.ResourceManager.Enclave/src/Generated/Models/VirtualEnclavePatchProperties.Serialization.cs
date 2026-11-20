@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Enclave.Models
     /// <summary> Virtual Enclave Patchable Properties. </summary>
     public partial class VirtualEnclavePatchProperties : IJsonModel<VirtualEnclavePatchProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclavePatchProperties"/> for deserialization. </summary>
-        internal VirtualEnclavePatchProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VirtualEnclavePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,8 +75,6 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 throw new FormatException($"The model {nameof(VirtualEnclavePatchProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("enclaveVirtualNetwork"u8);
-            writer.WriteObjectValue(EnclaveVirtualNetwork, options);
             if (Optional.IsDefined(IsBastionEnabled))
             {
                 writer.WritePropertyName("bastionEnabled"u8);
@@ -122,6 +115,26 @@ namespace Azure.ResourceManager.Enclave.Models
                 writer.WritePropertyName("governedServiceList"u8);
                 writer.WriteStartArray();
                 foreach (VirtualEnclaveGovernedService item in GovernedServiceList)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AddressSpaces))
+            {
+                writer.WritePropertyName("addressSpaces"u8);
+                writer.WriteStartArray();
+                foreach (AddressSpaceEntry item in AddressSpaces)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SubnetConfigurations))
+            {
+                writer.WritePropertyName("subnetConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (VirtualEnclaveSubnetConfiguration item in SubnetConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -194,13 +207,14 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            EnclaveVirtualNetwork enclaveVirtualNetwork = default;
             bool? isBastionEnabled = default;
             VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility = default;
             VirtualEnclaveRbacInheritanceMode? rbacInheritance = default;
             IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default;
             IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default;
             IList<VirtualEnclaveGovernedService> governedServiceList = default;
+            IList<AddressSpaceEntry> addressSpaces = default;
+            IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations = default;
             EnclaveDefaultSettingsPatch enclaveDefaultSettings = default;
             VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default;
             ResourceIdentifier dedicatedHubResourceId = default;
@@ -209,11 +223,6 @@ namespace Azure.ResourceManager.Enclave.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enclaveVirtualNetwork"u8))
-                {
-                    enclaveVirtualNetwork = EnclaveVirtualNetwork.DeserializeEnclaveVirtualNetwork(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("bastionEnabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -283,6 +292,34 @@ namespace Azure.ResourceManager.Enclave.Models
                     governedServiceList = array;
                     continue;
                 }
+                if (prop.NameEquals("addressSpaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AddressSpaceEntry> array = new List<AddressSpaceEntry>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AddressSpaceEntry.DeserializeAddressSpaceEntry(item, options));
+                    }
+                    addressSpaces = array;
+                    continue;
+                }
+                if (prop.NameEquals("subnetConfigurations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VirtualEnclaveSubnetConfiguration> array = new List<VirtualEnclaveSubnetConfiguration>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(VirtualEnclaveSubnetConfiguration.DeserializeVirtualEnclaveSubnetConfiguration(item, options));
+                    }
+                    subnetConfigurations = array;
+                    continue;
+                }
                 if (prop.NameEquals("enclaveDefaultSettings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -334,13 +371,14 @@ namespace Azure.ResourceManager.Enclave.Models
                 }
             }
             return new VirtualEnclavePatchProperties(
-                enclaveVirtualNetwork,
                 isBastionEnabled,
                 workloadResourceVisibility,
                 rbacInheritance,
                 enclaveRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 workloadRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 governedServiceList ?? new ChangeTrackingList<VirtualEnclaveGovernedService>(),
+                addressSpaces ?? new ChangeTrackingList<AddressSpaceEntry>(),
+                subnetConfigurations ?? new ChangeTrackingList<VirtualEnclaveSubnetConfiguration>(),
                 enclaveDefaultSettings,
                 maintenanceModeConfiguration,
                 dedicatedHubResourceId,

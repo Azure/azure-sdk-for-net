@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/communityEndpoints/", false);
             uri.AppendPath(communityEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/communityEndpoints/", false);
             uri.AppendPath(communityEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/communityEndpoints/", false);
             uri.AppendPath(communityEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath(communityName, true);
             uri.AppendPath("/communityEndpoints/", false);
             uri.AppendPath(communityEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath("/providers/Microsoft.Mission/communities/", false);
             uri.AppendPath(communityName, true);
             uri.AppendPath("/communityEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-10-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath("/providers/Microsoft.Mission/communities/", false);
             uri.AppendPath(communityName, true);
             uri.AppendPath("/communityEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-10-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath("/communityEndpoints/", false);
             uri.AppendPath(communityEndpointName, true);
             uri.AppendPath("/handleApprovalCreation", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Enclave
             uri.AppendPath("/communityEndpoints/", false);
             uri.AppendPath(communityEndpointName, true);
             uri.AppendPath("/handleApprovalDeletion", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -264,6 +264,29 @@ namespace Azure.ResourceManager.Enclave
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSyncRequest(Guid subscriptionId, string resourceGroupName, string communityName, string communityEndpointName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Mission/communities/", false);
+            uri.AppendPath(communityName, true);
+            uri.AppendPath("/communityEndpoints/", false);
+            uri.AppendPath(communityEndpointName, true);
+            uri.AppendPath("/sync", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

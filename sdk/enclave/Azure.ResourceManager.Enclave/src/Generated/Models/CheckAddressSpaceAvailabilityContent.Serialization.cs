@@ -92,8 +92,16 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             writer.WritePropertyName("communityResourceId"u8);
             writer.WriteStringValue(CommunityResourceId);
-            writer.WritePropertyName("enclaveVirtualNetwork"u8);
-            writer.WriteObjectValue(EnclaveVirtualNetwork, options);
+            if (Optional.IsDefined(PrefixLength))
+            {
+                writer.WritePropertyName("prefixLength"u8);
+                writer.WriteNumberValue(PrefixLength.Value);
+            }
+            if (Optional.IsDefined(AddressSpace))
+            {
+                writer.WritePropertyName("addressSpace"u8);
+                writer.WriteStringValue(AddressSpace);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +145,8 @@ namespace Azure.ResourceManager.Enclave.Models
                 return null;
             }
             ResourceIdentifier communityResourceId = default;
-            EnclaveVirtualNetwork enclaveVirtualNetwork = default;
+            int? prefixLength = default;
+            string addressSpace = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,9 +155,18 @@ namespace Azure.ResourceManager.Enclave.Models
                     communityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("enclaveVirtualNetwork"u8))
+                if (prop.NameEquals("prefixLength"u8))
                 {
-                    enclaveVirtualNetwork = EnclaveVirtualNetwork.DeserializeEnclaveVirtualNetwork(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    prefixLength = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("addressSpace"u8))
+                {
+                    addressSpace = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +174,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CheckAddressSpaceAvailabilityContent(communityResourceId, enclaveVirtualNetwork, additionalBinaryDataProperties);
+            return new CheckAddressSpaceAvailabilityContent(communityResourceId, prefixLength, addressSpace, additionalBinaryDataProperties);
         }
     }
 }

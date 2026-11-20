@@ -20,32 +20,34 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Initializes a new instance of <see cref="CheckAddressSpaceAvailabilityContent"/>. </summary>
         /// <param name="communityResourceId"> Resource Id of the Community. </param>
-        /// <param name="enclaveVirtualNetwork"> Information about the enclave virtual network. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityResourceId"/> or <paramref name="enclaveVirtualNetwork"/> is null. </exception>
-        public CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId, EnclaveVirtualNetwork enclaveVirtualNetwork)
+        /// <exception cref="ArgumentNullException"> <paramref name="communityResourceId"/> is null. </exception>
+        public CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId)
         {
             Argument.AssertNotNull(communityResourceId, nameof(communityResourceId));
-            Argument.AssertNotNull(enclaveVirtualNetwork, nameof(enclaveVirtualNetwork));
 
             CommunityResourceId = communityResourceId;
-            EnclaveVirtualNetwork = enclaveVirtualNetwork;
         }
 
         /// <summary> Initializes a new instance of <see cref="CheckAddressSpaceAvailabilityContent"/>. </summary>
         /// <param name="communityResourceId"> Resource Id of the Community. </param>
-        /// <param name="enclaveVirtualNetwork"> Information about the enclave virtual network. </param>
+        /// <param name="prefixLength"> CIDR prefix length (e.g., 22, 23, 24). Determines the size of the address space to check. </param>
+        /// <param name="addressSpace"> Specific CIDR address space to check availability for. If omitted, RP checks for any available space of the given prefixLength. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId, EnclaveVirtualNetwork enclaveVirtualNetwork, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CheckAddressSpaceAvailabilityContent(ResourceIdentifier communityResourceId, int? prefixLength, string addressSpace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommunityResourceId = communityResourceId;
-            EnclaveVirtualNetwork = enclaveVirtualNetwork;
+            PrefixLength = prefixLength;
+            AddressSpace = addressSpace;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource Id of the Community. </summary>
         public ResourceIdentifier CommunityResourceId { get; }
 
-        /// <summary> Information about the enclave virtual network. </summary>
-        public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; }
+        /// <summary> CIDR prefix length (e.g., 22, 23, 24). Determines the size of the address space to check. </summary>
+        public int? PrefixLength { get; set; }
+
+        /// <summary> Specific CIDR address space to check availability for. If omitted, RP checks for any available space of the given prefixLength. </summary>
+        public string AddressSpace { get; set; }
     }
 }

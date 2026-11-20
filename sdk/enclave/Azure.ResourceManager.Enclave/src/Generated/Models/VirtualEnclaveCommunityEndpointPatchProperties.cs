@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
@@ -26,16 +27,19 @@ namespace Azure.ResourceManager.Enclave.Models
             Argument.AssertNotNull(ruleCollection, nameof(ruleCollection));
 
             RuleCollection = ruleCollection.ToList();
+            SyncTo = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointPatchProperties"/>. </summary>
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
+        /// <param name="syncTo"> Array of ARM resource IDs of destination communities to synchronize this endpoint's rules to. The RP creates and manages the destination CEPs automatically within each community. Maximum 100 destinations per source endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityEndpointPatchProperties(IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityEndpointPatchProperties(IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection, VirtualEnclaveUpdateMode? updateMode, IList<ResourceIdentifier> syncTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
             UpdateMode = updateMode;
+            SyncTo = syncTo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,5 +48,8 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Whether update mode is automatic or manual. </summary>
         public VirtualEnclaveUpdateMode? UpdateMode { get; set; }
+
+        /// <summary> Array of ARM resource IDs of destination communities to synchronize this endpoint's rules to. The RP creates and manages the destination CEPs automatically within each community. Maximum 100 destinations per source endpoint. </summary>
+        public IList<ResourceIdentifier> SyncTo { get; }
     }
 }

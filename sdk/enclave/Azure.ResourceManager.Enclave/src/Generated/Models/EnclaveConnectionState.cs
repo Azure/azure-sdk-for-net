@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Enclave.Models
         private const string ConnectedValue = "Connected";
         /// <summary> EnclaveConnectionState Type Disconnected. </summary>
         private const string DisconnectedValue = "Disconnected";
+        /// <summary> A topology reconciliation is applying NSG rule changes for this connection. </summary>
+        private const string ReconcilingValue = "Reconciling";
+        /// <summary> Sticky health state after at least 3 consecutive non-full-success reconciliations. </summary>
+        private const string DegradedValue = "Degraded";
 
         /// <summary> Initializes a new instance of <see cref="EnclaveConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -60,6 +64,12 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> EnclaveConnectionState Type Disconnected. </summary>
         public static EnclaveConnectionState Disconnected { get; } = new EnclaveConnectionState(DisconnectedValue);
+
+        /// <summary> A topology reconciliation is applying NSG rule changes for this connection. </summary>
+        public static EnclaveConnectionState Reconciling { get; } = new EnclaveConnectionState(ReconcilingValue);
+
+        /// <summary> Sticky health state after at least 3 consecutive non-full-success reconciliations. </summary>
+        public static EnclaveConnectionState Degraded { get; } = new EnclaveConnectionState(DegradedValue);
 
         /// <summary> Determines if two <see cref="EnclaveConnectionState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

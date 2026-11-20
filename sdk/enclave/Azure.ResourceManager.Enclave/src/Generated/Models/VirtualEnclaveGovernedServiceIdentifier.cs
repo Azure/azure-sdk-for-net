@@ -45,6 +45,8 @@ namespace Azure.ResourceManager.Enclave.Models
         private const string ServiceBusValue = "ServiceBus";
         /// <summary> Service identifier for Storage. </summary>
         private const string StorageValue = "Storage";
+        /// <summary> Service identifier for Azure Local. </summary>
+        private const string AzureLocalValue = "AzureLocal";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveGovernedServiceIdentifier"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -100,6 +102,9 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Service identifier for Storage. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier Storage { get; } = new VirtualEnclaveGovernedServiceIdentifier(StorageValue);
+
+        /// <summary> Service identifier for Azure Local. </summary>
+        public static VirtualEnclaveGovernedServiceIdentifier AzureLocal { get; } = new VirtualEnclaveGovernedServiceIdentifier(AzureLocalValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveGovernedServiceIdentifier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

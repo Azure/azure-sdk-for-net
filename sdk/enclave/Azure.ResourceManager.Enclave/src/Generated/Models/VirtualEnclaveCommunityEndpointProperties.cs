@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Enclave.Models
 
             RuleCollection = ruleCollection.ToList();
             ResourceCollection = new ChangeTrackingList<ResourceIdentifier>();
+            SyncTo = new ChangeTrackingList<ResourceIdentifier>();
+            SyncDestinationStatuses = new ChangeTrackingList<SyncDestinationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointProperties"/>. </summary>
@@ -35,13 +37,23 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="resourceCollection"> List of resource ids created by community endpoint. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
+        /// <param name="syncTo"> Array of ARM resource IDs of destination communities to synchronize this endpoint's rules to. The RP creates and manages the destination CEPs automatically within each community. Maximum 100 destinations per source endpoint. </param>
+        /// <param name="syncFrom"> ARM resource ID of the source Community Endpoint that manages this endpoint's rules via synchronization. This property is read-only and set by the RP on destination CEPs created by the sync process. </param>
+        /// <param name="syncStatus"> The synchronization status of this Community Endpoint. Tracks sync state independently of provisioningState. </param>
+        /// <param name="syncDestinationStatuses"> Per-destination synchronization status. Only populated on source CEPs that have syncTo configured. </param>
+        /// <param name="syncPerformedBy"> Information about the principal who last configured or modified syncTo. Set by the RP and surfaced for audit transparency. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityEndpointProperties(IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityEndpointProperties(IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, VirtualEnclaveUpdateMode? updateMode, IList<ResourceIdentifier> syncTo, ResourceIdentifier syncFrom, SyncStatus? syncStatus, IReadOnlyList<SyncDestinationStatus> syncDestinationStatuses, SyncPerformedBy syncPerformedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
             ResourceCollection = resourceCollection;
             ProvisioningState = provisioningState;
             UpdateMode = updateMode;
+            SyncTo = syncTo;
+            SyncFrom = syncFrom;
+            SyncStatus = syncStatus;
+            SyncDestinationStatuses = syncDestinationStatuses;
+            SyncPerformedBy = syncPerformedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,5 +68,20 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Whether update mode is automatic or manual. </summary>
         public VirtualEnclaveUpdateMode? UpdateMode { get; set; }
+
+        /// <summary> Array of ARM resource IDs of destination communities to synchronize this endpoint's rules to. The RP creates and manages the destination CEPs automatically within each community. Maximum 100 destinations per source endpoint. </summary>
+        public IList<ResourceIdentifier> SyncTo { get; }
+
+        /// <summary> ARM resource ID of the source Community Endpoint that manages this endpoint's rules via synchronization. This property is read-only and set by the RP on destination CEPs created by the sync process. </summary>
+        public ResourceIdentifier SyncFrom { get; }
+
+        /// <summary> The synchronization status of this Community Endpoint. Tracks sync state independently of provisioningState. </summary>
+        public SyncStatus? SyncStatus { get; }
+
+        /// <summary> Per-destination synchronization status. Only populated on source CEPs that have syncTo configured. </summary>
+        public IReadOnlyList<SyncDestinationStatus> SyncDestinationStatuses { get; }
+
+        /// <summary> Information about the principal who last configured or modified syncTo. Set by the RP and surfaced for audit transparency. </summary>
+        public SyncPerformedBy SyncPerformedBy { get; }
     }
 }
