@@ -260,6 +260,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The TCP idle timeout for the Azure Firewall, in minutes. Valid values range from 4 to 64, inclusive. </summary>
+        [WirePath("properties.tcpIdleTimeoutInMinutes")]
+        public int? TcpIdleTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TcpIdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.TcpIdleTimeoutInMinutes = value;
+            }
+        }
+
         /// <summary> Resource ID. </summary>
         [WirePath("properties.virtualHub.id")]
         public ResourceIdentifier VirtualHubId

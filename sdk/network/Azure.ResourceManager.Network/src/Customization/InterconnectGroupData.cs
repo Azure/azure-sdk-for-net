@@ -1,0 +1,56 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using Azure.ResourceManager.Network.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.Network
+{
+    // Remove this customization when https://github.com/Azure/azure-rest-api-specs/pull/47722 is merged and used for regeneration.
+    public partial class InterconnectGroupData
+    {
+        // Retain nested wire storage while exposing the consolidated spec's flattened members.
+        [CodeGenMember("Properties")]
+        internal InterconnectGroupPropertiesFormat Properties { get; set; }
+
+        /// <summary> Scope of interconnect group resource. </summary>
+        [WirePath("properties.scope")]
+        public InterconnectGroupScope? Scope
+        {
+            get => Properties?.Scope;
+            set
+            {
+                Properties ??= new InterconnectGroupPropertiesFormat(default, new ChangeTrackingList<InterconnectGroupSubgroupData>(), default, default, default, default);
+                Properties.Scope = value;
+            }
+        }
+
+        /// <summary> A list of subgroups of the interconnect group. </summary>
+        // Reading an absent collection must not create the properties wire envelope.
+        [WirePath("properties.subgroups")]
+        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups =>
+            Properties?.Subgroups ?? Array.Empty<InterconnectGroupSubgroupData>();
+
+        /// <summary> The provisioning state of the interconnect group resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState => Properties?.ProvisioningState;
+
+        /// <summary> The resource GUID property of the interconnect group resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid => Properties?.ResourceGuid;
+
+        /// <summary> The subgroup profile of the interconnect group resource. </summary>
+        [WirePath("properties.subgroupProfile")]
+        public SubgroupProfile SubgroupProfile
+        {
+            get => Properties?.SubgroupProfile;
+            set
+            {
+                Properties ??= new InterconnectGroupPropertiesFormat(default, new ChangeTrackingList<InterconnectGroupSubgroupData>(), default, default, default, default);
+                Properties.SubgroupProfile = value;
+            }
+        }
+    }
+}

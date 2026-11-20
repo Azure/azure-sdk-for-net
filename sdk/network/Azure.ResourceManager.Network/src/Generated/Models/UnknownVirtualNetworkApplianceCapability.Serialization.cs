@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Network.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            VirtualNetworkApplianceCapabilityKind kind = default;
             VirtualNetworkApplianceCapabilityProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VirtualNetworkApplianceCapabilityKind kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -156,6 +156,11 @@ namespace Azure.ResourceManager.Network.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new VirtualNetworkApplianceCapabilityKind(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -163,11 +168,6 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     properties = VirtualNetworkApplianceCapabilityProperties.DeserializeVirtualNetworkApplianceCapabilityProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("kind"u8))
-                {
-                    kind = new VirtualNetworkApplianceCapabilityKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
+                kind,
                 properties,
-                additionalBinaryDataProperties,
-                kind);
+                additionalBinaryDataProperties);
         }
     }
 }

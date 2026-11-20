@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tapConfigurations"> A list of TapConfigurations of the network interface. </param>
         /// <param name="dnsSettings"> The DNS settings in network interface. </param>
         /// <param name="macAddress"> The MAC address of the network interface. </param>
+        /// <param name="networkAdapterIndex"> The index of the physical network adapter. </param>
         /// <param name="primary"> Whether this is a primary network interface on a virtual machine. </param>
         /// <param name="vnetEncryptionSupported"> Whether the virtual machine this nic is attached to supports encryption. </param>
         /// <param name="defaultOutboundConnectivityEnabled"> Whether default outbound connectivity for nic was configured or not. </param>
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="auxiliaryMode"> Auxiliary mode of Network Interface resource. </param>
         /// <param name="auxiliarySku"> Auxiliary sku of Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterfacePropertiesFormat(NetworkSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? vnetEncryptionSupported, bool? defaultOutboundConnectivityEnabled, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, NetworkSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkInterfacePropertiesFormat(NetworkSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, int? networkAdapterIndex, bool? primary, bool? vnetEncryptionSupported, bool? defaultOutboundConnectivityEnabled, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, NetworkSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachine = virtualMachine;
             NetworkSecurityGroup = networkSecurityGroup;
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             TapConfigurations = tapConfigurations;
             DnsSettings = dnsSettings;
             MacAddress = macAddress;
+            NetworkAdapterIndex = networkAdapterIndex;
             Primary = primary;
             VnetEncryptionSupported = vnetEncryptionSupported;
             DefaultOutboundConnectivityEnabled = defaultOutboundConnectivityEnabled;
@@ -106,6 +108,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The MAC address of the network interface. </summary>
         [WirePath("macAddress")]
         public string MacAddress { get; }
+
+        /// <summary> The index of the physical network adapter. </summary>
+        [WirePath("networkAdapterIndex")]
+        public int? NetworkAdapterIndex { get; set; }
 
         /// <summary> Whether this is a primary network interface on a virtual machine. </summary>
         [WirePath("primary")]
