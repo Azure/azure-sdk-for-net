@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Cooldown applied to the fallback-to-bearer sentinel after any fallback-eligible
-        /// CreateSession failure (5xx, 403, or 400 FeatureNotEnabled).
+        /// CreateSession failure (5xx, 403, 400 FeatureNotEnabled, or 404 ContainerNotFound).
         /// </summary>
         private static readonly TimeSpan FallbackCooldown = TimeSpan.FromMinutes(5);
 
@@ -117,8 +117,9 @@ namespace Azure.Storage.Blobs.Models
         /// <inheritdoc />
         internal override bool IsRequestEligible(HttpMessage message)
         {
-            // Only GET blob requests are eligible for session tokens.
-            if (message.Request.Method != RequestMethod.Get)
+            // Only GET and HEAD blob requests are eligible for session tokens.
+            if (message.Request.Method != RequestMethod.Get
+                && message.Request.Method != RequestMethod.Head)
             {
                 return false;
             }
@@ -232,16 +233,18 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Determines whether a CreateSession failure is eligible for fallback-to-bearer,
         /// and if so, the cooldown for which the fallback is cached. Transient server
-        /// errors (5xx) and permission/feature-level failures (403, or 400 FeatureNotEnabled)
-        /// all use the same cooldown.
+        /// errors (5xx), permission/feature-level failures (403, or 400 FeatureNotEnabled),
+        /// and missing containers (404 ContainerNotFound) all use the same cooldown.
         /// </summary>
         private static bool TryGetFallbackCooldown(RequestFailedException ex, out TimeSpan cooldown)
         {
-            // 5xx, 403 Forbidden, or 400 FeatureNotEnabled -> fallback to bearer.
+            // Fall back to bearer so the original request retains its response classification.
             if (ex.Status >= (int)HttpStatusCode.InternalServerError
                 || ex.Status == (int)HttpStatusCode.Forbidden
                 || (ex.Status == (int)HttpStatusCode.BadRequest
-                    && string.Equals(ex.ErrorCode, FeatureNotEnabled, StringComparison.OrdinalIgnoreCase)))
+                    && string.Equals(ex.ErrorCode, FeatureNotEnabled, StringComparison.OrdinalIgnoreCase))
+                || (ex.Status == (int)HttpStatusCode.NotFound
+                    && string.Equals(ex.ErrorCode, BlobErrorCode.ContainerNotFound.ToString(), StringComparison.OrdinalIgnoreCase)))
             {
                 cooldown = FallbackCooldown;
                 return true;
