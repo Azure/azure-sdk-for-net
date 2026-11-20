@@ -5,11 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Azure.WebJobs.Host;
@@ -108,7 +106,7 @@ namespace SignalRServiceExtension.Tests
             _output = output;
         }
 
-        [Theory(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64511")]
+        [Theory]
         [MemberData(nameof(SignalRAttributeTestData))]
         public Task SignalRAttributeConnectionStringSettingFacts(Type classType, Dictionary<string, string> configDict)
             => ConnectionStringSettingFacts(classType, configDict);
@@ -127,6 +125,15 @@ namespace SignalRServiceExtension.Tests
             var task = CreateTestTask(typeof(SignalRFunctions), null);
             var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() => task);
             Assert.IsType<InvalidOperationException>(exception.GetBaseException());
+        }
+
+        [Fact]
+        public async Task SignalRAttribute_WrongBoundClientIsDetected()
+        {
+            _curConfigDict = DiffConfigKeyDiffConnStrConfigDict;
+            var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() =>
+                CreateTestTask(typeof(SignalRFunctionsWithMismatchedKey), _curConfigDict));
+            Assert.IsType<Xunit.Sdk.EqualException>(exception.GetBaseException());
         }
 
         [Fact]
@@ -195,27 +202,17 @@ namespace SignalRServiceExtension.Tests
             Assert.Equal(_curConfigDict[expectedConfigurationKey], actualConnectionString);
         }
 
-        private static async Task SimulateSendingMessage(IAsyncCollector<SignalRMessage> signalRMessages)
+        private static async Task AssertOutputBindingConnectionString(IAsyncCollector<SignalRMessage> signalRMessages, string expectedConfigurationKey)
         {
-            try
-            {
-                await signalRMessages.AddAsync(
-                    new SignalRMessage
-                    {
-                        UserId = DefaultUserId,
-                        GroupName = "",
-                        Target = "newMessage",
-                        Arguments = new[] { "message" }
-                    });
-            }
-            catch (AzureSignalRException ex) when (ex.InnerException is HttpRequestException)
-            {
-                // ignore, since we don't really connect to Azure SignalR Service
-            }
-            catch
-            {
-                throw;
-            }
+            var collector = Assert.IsType<SignalRAsyncCollector<SignalRMessage>>(signalRMessages);
+            var store = Assert.IsType<ServiceManagerStore>(StaticServiceHubContextStore.ServiceManagerStore);
+            Assert.NotNull(store.GetByConfigurationKey(expectedConfigurationKey));
+
+            var clientField = typeof(SignalRAsyncCollector<SignalRMessage>).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.NotNull(clientField);
+            var client = Assert.IsType<AzureSignalRClient>(clientField.GetValue(collector));
+            var connectionInfo = await client.GetClientConnectionInfoAsync(DefaultUserId, null, null, null);
+            UpdateFunctionOutConnectionString(connectionInfo, expectedConfigurationKey);
         }
 
         private Task CreateTestTask(Type classType, Dictionary<string, string> configuration)
@@ -231,8 +228,7 @@ namespace SignalRServiceExtension.Tests
         {
             public async Task Func([SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
-                await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(AttrConnStrConfigKey));
+                await AssertOutputBindingConnectionString(signalRMessages, AttrConnStrConfigKey);
             }
         }
 
@@ -240,8 +236,7 @@ namespace SignalRServiceExtension.Tests
         {
             public async Task Func([SignalR(HubName = DefaultHubName)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
-                await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
+                await AssertOutputBindingConnectionString(signalRMessages, Constants.AzureSignalRConnectionStringName);
             }
         }
 
@@ -249,14 +244,23 @@ namespace SignalRServiceExtension.Tests
         {
             public async Task Func1([SignalR(HubName = DefaultHubName, ConnectionStringSetting = Constants.AzureSignalRConnectionStringName)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
-                await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
+                await AssertOutputBindingConnectionString(signalRMessages, Constants.AzureSignalRConnectionStringName);
             }
 
             public async Task Func2([SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
-                await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(AttrConnStrConfigKey));
+                await AssertOutputBindingConnectionString(signalRMessages, AttrConnStrConfigKey);
+            }
+        }
+
+        public class SignalRFunctionsWithMismatchedKey
+        {
+            public async Task Func(
+                [SignalR(HubName = DefaultHubName)] IAsyncCollector<SignalRMessage> defaultMessages,
+                [SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> attributeMessages)
+            {
+                Assert.IsType<SignalRAsyncCollector<SignalRMessage>>(attributeMessages);
+                await AssertOutputBindingConnectionString(defaultMessages, AttrConnStrConfigKey);
             }
         }
 

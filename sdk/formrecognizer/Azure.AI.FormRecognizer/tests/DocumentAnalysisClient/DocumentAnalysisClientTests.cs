@@ -31,12 +31,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Creates a fake <see cref="DocumentAnalysisClient" />.
         /// </summary>
         /// <returns>The fake <see cref="DocumentAnalysisClient" />.</returns>
-        private DocumentAnalysisClient CreateClient()
+        private DocumentAnalysisClient CreateClient(DocumentAnalysisClientOptions options = default)
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, new DocumentAnalysisClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
+            options ??= new DocumentAnalysisClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } };
+            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, options);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
-        private DocumentAnalysisClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
+        private DocumentAnalysisClient CreateInstrumentedClient(DocumentAnalysisClientOptions options = default) => InstrumentClient(CreateClient(options));
 
         #region Client
 
@@ -87,22 +88,39 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Throws<ArgumentNullException>(() => new DocumentAnalysisClient(endpoint, default(AzureKeyCredential), new DocumentAnalysisClientOptions()));
         }
 
-        [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task DocumentAnalysisClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(0)]
+        [TestCase(502)]
+        public void DocumentAnalysisClientThrowsOnRequestFailure(int status)
         {
-            var client = CreateInstrumentedClient();
+            var transport = new MockTransport(_ => status == 0
+                ? throw new RequestFailedException(0, "Connection failed.")
+                : new MockResponse(status))
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
+            var client = CreateInstrumentedClient(new DocumentAnalysisClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            });
 
-            try
+            async Task AnalyzeDocumentAsync()
             {
                 using var stream = new MemoryStream(Array.Empty<byte>());
                 await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream);
             }
-            catch (AggregateException ex)
+
+            if (status == 0)
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                var exception = Assert.ThrowsAsync<AggregateException>(AnalyzeDocumentAsync);
+                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(4));
+                Assert.That(exception.InnerExceptions.All(ex => ex is RequestFailedException { Status: 0 }), Is.True);
             }
+            else
+            {
+                Assert.That(Assert.ThrowsAsync<RequestFailedException>(AnalyzeDocumentAsync).Status, Is.EqualTo(status));
+            }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         #endregion

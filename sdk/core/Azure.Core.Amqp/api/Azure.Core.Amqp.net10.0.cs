@@ -95,4 +95,10 @@ namespace Azure.Core.Amqp
         Body = 5,
         Footer = 6,
     }
+    public partial class AmqpUtf8String
+    {
+        internal AmqpUtf8String() { }
+        public System.ReadOnlyMemory<byte> Bytes { get { throw null; } }
+        public static Azure.Core.Amqp.AmqpUtf8String FromBytes(System.ReadOnlyMemory<byte> bytes) { throw null; }
+    }
 }
