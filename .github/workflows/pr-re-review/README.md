@@ -29,7 +29,7 @@ The `pr-re-review-replay` artifact holds `replay-result.json`, and the job summa
 
 - `outcome`: `would-publish`, `blocked` (a review the guard would have refused), `incomplete` (`report_incomplete` or another incomplete-work output), or `no-review`.
 - `coverage` and `readCoverage`: the publication guard's checks, evaluated against the replayed history and files.
-- `contaminated` and `contamination`: tool calls that read the pull request, its history, or code at any other commit. They can reveal what happened after the cutoff, such as the fixes, so do not score a contaminated run.
+- `contaminated` and `contamination`: tool calls that read the pull request, its history, or code at any other commit. They can reveal what happened after the cutoff, such as the fixes, so do not score a contaminated run unless every flagged call failed and returned nothing.
 - `items`: everything the agent submitted, including the review body and inline comments to score.
 
 The `agent` artifact's `aw_info.json` records the model the run used. Compare only replays that ran on the same model.
@@ -37,5 +37,6 @@ The `agent` artifact's `aw_info.json` records the model the run used. Compare on
 ## Limits
 
 - Thread resolution and outdated states, and the text of the pull request, comments, and reviews, are as they are now, not as they were at the cutoff. GitHub keeps no history for them.
+- The contamination check recognizes the tool calls and shell forms agents use, including command substitutions and unquoted heredocs in a `safeoutputs` command, but it does not parse every shell construct, so a clean result is not proof.
 - Replays count toward the workflow's daily AI-credit limit, which live re-reviews share. A live re-review uses about 50 to 110 credits of the default 5,000, so dispatch replays in small batches.
 - Keep the expected findings for a replay out of `.github`. The agent can read the `.github` checkout, and a replay that sees the answers measures nothing.
