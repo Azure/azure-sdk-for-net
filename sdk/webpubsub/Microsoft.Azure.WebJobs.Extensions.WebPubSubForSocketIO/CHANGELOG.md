@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed OData filter operator precedence when sending to multiple rooms with `ExceptRooms`.
+
 ### Other Changes
 
 ## 1.0.0 (2025-11-15)
