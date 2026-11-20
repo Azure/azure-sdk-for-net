@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ContainerService
         private IdentityBindingManagedIdentityProfile _managedIdentity;
         private IdentityBindingOidcIssuerProfile _oidcIssuer;
         private BicepValue<ManagedClusterIdentityBindingProvisioningState> _provisioningState;
+        private BicepList<ManagedClusterIdentityBindingAllowedSubject> _allowedSubjects;
 
         /// <summary> Creates a new ManagedClusterIdentityBindingProperties. </summary>
         public ManagedClusterIdentityBindingProperties()
@@ -58,6 +59,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the AllowedSubjects. </summary>
+        public BicepList<ManagedClusterIdentityBindingAllowedSubject> AllowedSubjects
+        {
+            get
+            {
+                Initialize();
+                return _allowedSubjects;
+            }
+            set
+            {
+                Initialize();
+                _allowedSubjects.Assign(value);
+            }
+        }
+
         /// <summary> Gets the OidcIssuerUri. </summary>
         public BicepValue<Uri> OidcIssuerUri
         {
@@ -74,6 +90,7 @@ namespace Azure.Provisioning.ContainerService
             _managedIdentity = DefineModelProperty<IdentityBindingManagedIdentityProfile>(nameof(ManagedIdentity), new string[] { "managedIdentity" }, isRequired: true);
             _oidcIssuer = DefineModelProperty<IdentityBindingOidcIssuerProfile>(nameof(OidcIssuer), new string[] { "oidcIssuer" }, isOutput: true);
             _provisioningState = DefineProperty<ManagedClusterIdentityBindingProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _allowedSubjects = DefineListProperty<ManagedClusterIdentityBindingAllowedSubject>(nameof(AllowedSubjects), new string[] { "allowedSubjects" });
             DefineAdditionalProperties();
         }
 

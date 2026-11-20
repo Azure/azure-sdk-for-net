@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _httpProxy;
         private BicepValue<string> _httpsProxy;
         private BicepList<string> _noProxy;
+        private BicepList<string> _effectiveNoProxy;
         private BicepValue<string> _trustedCA;
         private BicepValue<bool> _isHttpProxyEnabled;
 
@@ -69,6 +70,16 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets the EffectiveNoProxy. </summary>
+        public BicepList<string> EffectiveNoProxy
+        {
+            get
+            {
+                Initialize();
+                return _effectiveNoProxy;
+            }
+        }
+
         /// <summary> Gets or sets the TrustedCA. </summary>
         public BicepValue<string> TrustedCA
         {
@@ -106,6 +117,7 @@ namespace Azure.Provisioning.ContainerService
             _httpProxy = DefineProperty<string>(nameof(HttpProxy), new string[] { "httpProxy" });
             _httpsProxy = DefineProperty<string>(nameof(HttpsProxy), new string[] { "httpsProxy" });
             _noProxy = DefineListProperty<string>(nameof(NoProxy), new string[] { "noProxy" });
+            _effectiveNoProxy = DefineListProperty<string>(nameof(EffectiveNoProxy), new string[] { "effectiveNoProxy" }, isOutput: true);
             _trustedCA = DefineProperty<string>(nameof(TrustedCA), new string[] { "trustedCa" });
             _isHttpProxyEnabled = DefineProperty<bool>(nameof(IsHttpProxyEnabled), new string[] { "enabled" });
             DefineAdditionalProperties();

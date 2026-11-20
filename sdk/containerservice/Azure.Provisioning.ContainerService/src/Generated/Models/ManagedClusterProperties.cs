@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ContainerService
     {
         private BicepValue<string> _provisioningState;
         private ContainerServicePowerState _powerState;
+        private ContainerServiceCreationData _creationData;
         private BicepValue<int> _maxAgentPools;
         private BicepValue<string> _kubernetesVersion;
         private BicepValue<string> _currentKubernetesVersion;
@@ -37,6 +38,8 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<bool> _isRbacEnabled;
         private BicepValue<KubernetesSupportPlan> _supportPlan;
         private BicepValue<bool> _isFipsEnabled;
+        private BicepValue<bool> _enableNodeHardening;
+        private BicepValue<bool> _isNamespaceResourcesEnabled;
         private ContainerServiceNetworkProfile _networkProfile;
         private ManagedClusterAadProfile _aadProfile;
         private ManagedClusterAutoUpgradeProfile _autoUpgradeProfile;
@@ -60,8 +63,13 @@ namespace Azure.Provisioning.ContainerService
         private ManagedClusterNodeProvisioningProfile _nodeProvisioningProfile;
         private ManagedClusterBootstrapProfile _bootstrapProfile;
         private ManagedClusterAIToolchainOperatorProfile _aiToolchainOperatorProfile;
+        private ManagedClusterAgentSandboxProfile _agentSandboxProfile;
+        private ManagedClusterPodSnapshotProfile _podSnapshotProfile;
         private SchedulerProfile _schedulerProfile;
         private ManagedClusterHostedSystemProfile _hostedSystemProfile;
+        private ManagedClusterHealthMonitorProfile _healthMonitorProfile;
+        private ManagedClusterControlPlaneScalingProfile _controlPlaneScalingProfile;
+        private NodeDisruptionProfile _nodeDisruptionProfile;
         private ManagedClusterStatus _status;
 
         /// <summary> Creates a new ManagedClusterProperties. </summary>
@@ -86,6 +94,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 return _powerState;
+            }
+        }
+
+        /// <summary> Gets or sets the CreationData. </summary>
+        internal ContainerServiceCreationData CreationData
+        {
+            get
+            {
+                Initialize();
+                return _creationData;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _creationData, value);
             }
         }
 
@@ -364,6 +387,36 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the EnableNodeHardening. </summary>
+        public BicepValue<bool> EnableNodeHardening
+        {
+            get
+            {
+                Initialize();
+                return _enableNodeHardening;
+            }
+            set
+            {
+                Initialize();
+                _enableNodeHardening.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the IsNamespaceResourcesEnabled. </summary>
+        public BicepValue<bool> IsNamespaceResourcesEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isNamespaceResourcesEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isNamespaceResourcesEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the NetworkProfile. </summary>
         public ContainerServiceNetworkProfile NetworkProfile
         {
@@ -410,7 +463,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the UpgradeSettings. </summary>
-        internal ClusterUpgradeSettings UpgradeSettings
+        public ClusterUpgradeSettings UpgradeSettings
         {
             get
             {
@@ -704,6 +757,36 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the AgentSandboxProfile. </summary>
+        internal ManagedClusterAgentSandboxProfile AgentSandboxProfile
+        {
+            get
+            {
+                Initialize();
+                return _agentSandboxProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _agentSandboxProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the PodSnapshotProfile. </summary>
+        internal ManagedClusterPodSnapshotProfile PodSnapshotProfile
+        {
+            get
+            {
+                Initialize();
+                return _podSnapshotProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _podSnapshotProfile, value);
+            }
+        }
+
         /// <summary> Gets or sets the SchedulerProfile. </summary>
         internal SchedulerProfile SchedulerProfile
         {
@@ -734,6 +817,51 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the HealthMonitorProfile. </summary>
+        public ManagedClusterHealthMonitorProfile HealthMonitorProfile
+        {
+            get
+            {
+                Initialize();
+                return _healthMonitorProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _healthMonitorProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the ControlPlaneScalingProfile. </summary>
+        internal ManagedClusterControlPlaneScalingProfile ControlPlaneScalingProfile
+        {
+            get
+            {
+                Initialize();
+                return _controlPlaneScalingProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _controlPlaneScalingProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the NodeDisruptionProfile. </summary>
+        internal NodeDisruptionProfile NodeDisruptionProfile
+        {
+            get
+            {
+                Initialize();
+                return _nodeDisruptionProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _nodeDisruptionProfile, value);
+            }
+        }
+
         /// <summary> Gets or sets the Status. </summary>
         internal ManagedClusterStatus Status
         {
@@ -758,6 +886,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the SourceResourceId. </summary>
+        public BicepValue<ResourceIdentifier> CreationDataSourceResourceId
+        {
+            get
+            {
+                return CreationData is null ? default : CreationData.SourceResourceId;
+            }
+            set
+            {
+                if (CreationData is null)
+                {
+                    CreationData = new ContainerServiceCreationData();
+                }
+                CreationData.SourceResourceId = value;
+            }
+        }
+
         /// <summary> Gets or sets the RestrictionLevel. </summary>
         public BicepValue<ManagedClusterNodeResourceGroupRestrictionLevel> NodeResourceGroupRestrictionLevel
         {
@@ -772,23 +917,6 @@ namespace Azure.Provisioning.ContainerService
                     NodeResourceGroupProfile = new ManagedClusterNodeResourceGroupProfile();
                 }
                 NodeResourceGroupProfile.RestrictionLevel = value;
-            }
-        }
-
-        /// <summary> Gets or sets the OverrideSettings. </summary>
-        public UpgradeOverrideSettings UpgradeOverrideSettings
-        {
-            get
-            {
-                return UpgradeSettings is null ? default : UpgradeSettings.OverrideSettings;
-            }
-            set
-            {
-                if (UpgradeSettings is null)
-                {
-                    UpgradeSettings = new ClusterUpgradeSettings();
-                }
-                UpgradeSettings.OverrideSettings = value;
             }
         }
 
@@ -826,6 +954,40 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IsAgentSandboxProfileEnabled. </summary>
+        public BicepValue<bool> IsAgentSandboxProfileEnabled
+        {
+            get
+            {
+                return AgentSandboxProfile is null ? default : AgentSandboxProfile.IsAgentSandboxProfileEnabled;
+            }
+            set
+            {
+                if (AgentSandboxProfile is null)
+                {
+                    AgentSandboxProfile = new ManagedClusterAgentSandboxProfile();
+                }
+                AgentSandboxProfile.IsAgentSandboxProfileEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IsPodSnapshotProfileEnabled. </summary>
+        public BicepValue<bool> IsPodSnapshotProfileEnabled
+        {
+            get
+            {
+                return PodSnapshotProfile is null ? default : PodSnapshotProfile.IsPodSnapshotProfileEnabled;
+            }
+            set
+            {
+                if (PodSnapshotProfile is null)
+                {
+                    PodSnapshotProfile = new ManagedClusterPodSnapshotProfile();
+                }
+                PodSnapshotProfile.IsPodSnapshotProfileEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the SchedulerConfigMode. </summary>
         public BicepValue<SchedulerConfigMode> UpstreamSchedulerConfigMode
         {
@@ -840,6 +1002,40 @@ namespace Azure.Provisioning.ContainerService
                     SchedulerProfile = new SchedulerProfile();
                 }
                 SchedulerProfile.UpstreamSchedulerConfigMode = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ScalingSize. </summary>
+        public BicepValue<ManagedClusterControlPlaneScalingSize> ScalingSize
+        {
+            get
+            {
+                return ControlPlaneScalingProfile is null ? default : ControlPlaneScalingProfile.ScalingSize;
+            }
+            set
+            {
+                if (ControlPlaneScalingProfile is null)
+                {
+                    ControlPlaneScalingProfile = new ManagedClusterControlPlaneScalingProfile();
+                }
+                ControlPlaneScalingProfile.ScalingSize = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NodeDisruptionPolicy. </summary>
+        public BicepValue<AgentPoolNodeDisruptionPolicy> NodeDisruptionPolicy
+        {
+            get
+            {
+                return NodeDisruptionProfile is null ? default : NodeDisruptionProfile.NodeDisruptionPolicy;
+            }
+            set
+            {
+                if (NodeDisruptionProfile is null)
+                {
+                    NodeDisruptionProfile = new NodeDisruptionProfile();
+                }
+                NodeDisruptionProfile.NodeDisruptionPolicy = value;
             }
         }
 
@@ -862,6 +1058,7 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _powerState = DefineModelProperty<ContainerServicePowerState>(nameof(PowerState), new string[] { "powerState" }, isOutput: true);
+            _creationData = DefineModelProperty<ContainerServiceCreationData>(nameof(CreationData), new string[] { "creationData" });
             _maxAgentPools = DefineProperty<int>(nameof(MaxAgentPools), new string[] { "maxAgentPools" }, isOutput: true);
             _kubernetesVersion = DefineProperty<string>(nameof(KubernetesVersion), new string[] { "kubernetesVersion" });
             _currentKubernetesVersion = DefineProperty<string>(nameof(CurrentKubernetesVersion), new string[] { "currentKubernetesVersion" }, isOutput: true);
@@ -882,6 +1079,8 @@ namespace Azure.Provisioning.ContainerService
             _isRbacEnabled = DefineProperty<bool>(nameof(IsRbacEnabled), new string[] { "enableRBAC" });
             _supportPlan = DefineProperty<KubernetesSupportPlan>(nameof(SupportPlan), new string[] { "supportPlan" });
             _isFipsEnabled = DefineProperty<bool>(nameof(IsFipsEnabled), new string[] { "enableFIPS" });
+            _enableNodeHardening = DefineProperty<bool>(nameof(EnableNodeHardening), new string[] { "enableNodeHardening" });
+            _isNamespaceResourcesEnabled = DefineProperty<bool>(nameof(IsNamespaceResourcesEnabled), new string[] { "enableNamespaceResources" });
             _networkProfile = DefineModelProperty<ContainerServiceNetworkProfile>(nameof(NetworkProfile), new string[] { "networkProfile" });
             _aadProfile = DefineModelProperty<ManagedClusterAadProfile>(nameof(AadProfile), new string[] { "aadProfile" });
             _autoUpgradeProfile = DefineModelProperty<ManagedClusterAutoUpgradeProfile>(nameof(AutoUpgradeProfile), new string[] { "autoUpgradeProfile" });
@@ -905,8 +1104,13 @@ namespace Azure.Provisioning.ContainerService
             _nodeProvisioningProfile = DefineModelProperty<ManagedClusterNodeProvisioningProfile>(nameof(NodeProvisioningProfile), new string[] { "nodeProvisioningProfile" });
             _bootstrapProfile = DefineModelProperty<ManagedClusterBootstrapProfile>(nameof(BootstrapProfile), new string[] { "bootstrapProfile" });
             _aiToolchainOperatorProfile = DefineModelProperty<ManagedClusterAIToolchainOperatorProfile>(nameof(AiToolchainOperatorProfile), new string[] { "aiToolchainOperatorProfile" });
+            _agentSandboxProfile = DefineModelProperty<ManagedClusterAgentSandboxProfile>(nameof(AgentSandboxProfile), new string[] { "agentSandboxProfile" });
+            _podSnapshotProfile = DefineModelProperty<ManagedClusterPodSnapshotProfile>(nameof(PodSnapshotProfile), new string[] { "podSnapshotProfile" });
             _schedulerProfile = DefineModelProperty<SchedulerProfile>(nameof(SchedulerProfile), new string[] { "schedulerProfile" });
             _hostedSystemProfile = DefineModelProperty<ManagedClusterHostedSystemProfile>(nameof(HostedSystemProfile), new string[] { "hostedSystemProfile" });
+            _healthMonitorProfile = DefineModelProperty<ManagedClusterHealthMonitorProfile>(nameof(HealthMonitorProfile), new string[] { "healthMonitorProfile" });
+            _controlPlaneScalingProfile = DefineModelProperty<ManagedClusterControlPlaneScalingProfile>(nameof(ControlPlaneScalingProfile), new string[] { "controlPlaneScalingProfile" });
+            _nodeDisruptionProfile = DefineModelProperty<NodeDisruptionProfile>(nameof(NodeDisruptionProfile), new string[] { "nodeDisruptionProfile" });
             _status = DefineModelProperty<ManagedClusterStatus>(nameof(Status), new string[] { "status" });
             DefineAdditionalProperties();
         }

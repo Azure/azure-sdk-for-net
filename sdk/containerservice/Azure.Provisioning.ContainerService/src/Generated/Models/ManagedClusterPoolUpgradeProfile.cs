@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _name;
         private BicepValue<ContainerServiceOSType> _osType;
         private BicepList<ManagedClusterPoolUpgradeProfileUpgradesItem> _upgrades;
+        private BicepList<KubernetesVersionComponents> _componentsByReleases;
 
         /// <summary> Creates a new ManagedClusterPoolUpgradeProfile. </summary>
         public ManagedClusterPoolUpgradeProfile()
@@ -63,6 +64,16 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets the ComponentsByReleases. </summary>
+        public BicepList<KubernetesVersionComponents> ComponentsByReleases
+        {
+            get
+            {
+                Initialize();
+                return _componentsByReleases;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterPoolUpgradeProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -71,6 +82,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _osType = DefineProperty<ContainerServiceOSType>(nameof(OSType), new string[] { "osType" });
             _upgrades = DefineListProperty<ManagedClusterPoolUpgradeProfileUpgradesItem>(nameof(Upgrades), new string[] { "upgrades" });
+            _componentsByReleases = DefineListProperty<KubernetesVersionComponents>(nameof(ComponentsByReleases), new string[] { "componentsByReleases" });
             DefineAdditionalProperties();
         }
 

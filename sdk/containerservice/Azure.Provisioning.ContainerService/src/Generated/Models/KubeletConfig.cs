@@ -24,6 +24,12 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<int> _containerLogMaxSizeInMB;
         private BicepValue<int> _containerLogMaxFiles;
         private BicepValue<int> _podMaxPids;
+        private BicepValue<ContainerServiceSeccompDefault> _seccompDefault;
+        private KubeletReservedResources _kubeReserved;
+        private KubeletHardEvictionThreshold _hardEvictionThreshold;
+        private SoftEvictionThreshold _softEvictionThreshold;
+        private SoftEvictionGracePeriod _softEvictionGracePeriod;
+        private BicepValue<int> _evictionMaxPodGracePeriodInSeconds;
 
         /// <summary> Creates a new KubeletConfig. </summary>
         public KubeletConfig()
@@ -195,6 +201,96 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the SeccompDefault. </summary>
+        public BicepValue<ContainerServiceSeccompDefault> SeccompDefault
+        {
+            get
+            {
+                Initialize();
+                return _seccompDefault;
+            }
+            set
+            {
+                Initialize();
+                _seccompDefault.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the KubeReserved. </summary>
+        public KubeletReservedResources KubeReserved
+        {
+            get
+            {
+                Initialize();
+                return _kubeReserved;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _kubeReserved, value);
+            }
+        }
+
+        /// <summary> Gets or sets the HardEvictionThreshold. </summary>
+        public KubeletHardEvictionThreshold HardEvictionThreshold
+        {
+            get
+            {
+                Initialize();
+                return _hardEvictionThreshold;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _hardEvictionThreshold, value);
+            }
+        }
+
+        /// <summary> Gets or sets the SoftEvictionThreshold. </summary>
+        public SoftEvictionThreshold SoftEvictionThreshold
+        {
+            get
+            {
+                Initialize();
+                return _softEvictionThreshold;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _softEvictionThreshold, value);
+            }
+        }
+
+        /// <summary> Gets or sets the SoftEvictionGracePeriod. </summary>
+        public SoftEvictionGracePeriod SoftEvictionGracePeriod
+        {
+            get
+            {
+                Initialize();
+                return _softEvictionGracePeriod;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _softEvictionGracePeriod, value);
+            }
+        }
+
+        /// <summary> Gets or sets the EvictionMaxPodGracePeriodInSeconds. </summary>
+        public BicepValue<int> EvictionMaxPodGracePeriodInSeconds
+        {
+            get
+            {
+                Initialize();
+                return _evictionMaxPodGracePeriodInSeconds;
+            }
+            set
+            {
+                Initialize();
+                _evictionMaxPodGracePeriodInSeconds.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for KubeletConfig. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -210,6 +306,12 @@ namespace Azure.Provisioning.ContainerService
             _containerLogMaxSizeInMB = DefineProperty<int>(nameof(ContainerLogMaxSizeInMB), new string[] { "containerLogMaxSizeMB" });
             _containerLogMaxFiles = DefineProperty<int>(nameof(ContainerLogMaxFiles), new string[] { "containerLogMaxFiles" });
             _podMaxPids = DefineProperty<int>(nameof(PodMaxPids), new string[] { "podMaxPids" });
+            _seccompDefault = DefineProperty<ContainerServiceSeccompDefault>(nameof(SeccompDefault), new string[] { "seccompDefault" });
+            _kubeReserved = DefineModelProperty<KubeletReservedResources>(nameof(KubeReserved), new string[] { "kubeReserved" });
+            _hardEvictionThreshold = DefineModelProperty<KubeletHardEvictionThreshold>(nameof(HardEvictionThreshold), new string[] { "hardEvictionThreshold" });
+            _softEvictionThreshold = DefineModelProperty<SoftEvictionThreshold>(nameof(SoftEvictionThreshold), new string[] { "softEvictionThreshold" });
+            _softEvictionGracePeriod = DefineModelProperty<SoftEvictionGracePeriod>(nameof(SoftEvictionGracePeriod), new string[] { "softEvictionGracePeriod" });
+            _evictionMaxPodGracePeriodInSeconds = DefineProperty<int>(nameof(EvictionMaxPodGracePeriodInSeconds), new string[] { "evictionMaxPodGracePeriodInSeconds" });
             DefineAdditionalProperties();
         }
 

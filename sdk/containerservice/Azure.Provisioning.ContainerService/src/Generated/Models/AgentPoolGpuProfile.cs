@@ -11,9 +11,11 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> GPU settings for the Agent Pool. </summary>
-    internal partial class AgentPoolGpuProfile : ProvisionableConstruct
+    public partial class AgentPoolGpuProfile : ProvisionableConstruct
     {
         private BicepValue<AgentPoolGpuDriver> _driver;
+        private BicepValue<AgentPoolGpuDriverType> _driverType;
+        private AgentPoolNvidiaGpuProfile _nvidia;
 
         /// <summary> Creates a new AgentPoolGpuProfile. </summary>
         public AgentPoolGpuProfile()
@@ -35,11 +37,43 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the DriverType. </summary>
+        public BicepValue<AgentPoolGpuDriverType> DriverType
+        {
+            get
+            {
+                Initialize();
+                return _driverType;
+            }
+            set
+            {
+                Initialize();
+                _driverType.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Nvidia. </summary>
+        public AgentPoolNvidiaGpuProfile Nvidia
+        {
+            get
+            {
+                Initialize();
+                return _nvidia;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _nvidia, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AgentPoolGpuProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _driver = DefineProperty<AgentPoolGpuDriver>(nameof(Driver), new string[] { "driver" });
+            _driverType = DefineProperty<AgentPoolGpuDriverType>(nameof(DriverType), new string[] { "driverType" });
+            _nvidia = DefineModelProperty<AgentPoolNvidiaGpuProfile>(nameof(Nvidia), new string[] { "nvidia" });
             DefineAdditionalProperties();
         }
 

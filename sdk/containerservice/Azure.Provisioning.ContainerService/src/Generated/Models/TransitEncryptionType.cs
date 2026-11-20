@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Configures pod-to-pod encryption. This can be enabled only on Cilium-based clusters. If not specified, the default value is None. </summary>
@@ -12,7 +14,10 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Enable WireGuard encryption. Refer to https://docs.cilium.io/en/latest/security/network/encryption-wireguard/ on use cases and implementation details. </summary>
         WireGuard = 0,
+        /// <summary> Enables mTLS authentication and encryption for pod-to-pod traffic within the cluster. Refer to https://aka.ms/acnsciliummtls for relevant documentation. </summary>
+        [DataMember(Name = "mTLS")]
+        ClientCertificateAuthentication = 1,
         /// <summary> Disable Transit encryption. </summary>
-        None = 1
+        None = 2
     }
 }

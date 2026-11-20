@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -26,7 +27,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ContainerServiceAgentPool. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerServiceAgentPool(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2026-07-01")
+        public ContainerServiceAgentPool(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2026-09-02-preview")
         {
         }
 
@@ -478,6 +479,40 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the UpgradeStrategy. </summary>
+        public BicepValue<AgentPoolUpgradeStrategy> UpgradeStrategy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeStrategy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.UpgradeStrategy = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IsOSDiskFullCachingEnabled. </summary>
+        public BicepValue<bool> IsOSDiskFullCachingEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsOSDiskFullCachingEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.IsOSDiskFullCachingEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the UpgradeSettings. </summary>
         public AgentPoolUpgradeSettings UpgradeSettings
         {
@@ -492,6 +527,23 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
                 Properties.UpgradeSettings = value;
+            }
+        }
+
+        /// <summary> Gets or sets the UpgradeSettingsBlueGreen. </summary>
+        public AgentPoolBlueGreenUpgradeSettings UpgradeSettingsBlueGreen
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeSettingsBlueGreen;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.UpgradeSettingsBlueGreen = value;
             }
         }
 
@@ -658,6 +710,23 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
                 Properties.NodeTaints = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NodeInitializationTaints. </summary>
+        public BicepList<string> NodeInitializationTaints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeInitializationTaints;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.NodeInitializationTaints = value;
             }
         }
 
@@ -848,6 +917,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the GpuProfile. </summary>
+        public AgentPoolGpuProfile GpuProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GpuProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.GpuProfile = value;
+            }
+        }
+
         /// <summary> Gets or sets the VirtualMachineNodesStatus. </summary>
         public BicepList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus
         {
@@ -933,23 +1019,6 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Driver. </summary>
-        public BicepValue<AgentPoolGpuDriver> GpuDriver
-        {
-            get
-            {
-                return Properties is null ? default : Properties.GpuDriver;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterAgentPoolProfileProperties();
-                }
-                Properties.GpuDriver = value;
-            }
-        }
-
         /// <summary> Gets or sets the PublicIPPrefixSize. </summary>
         public BicepValue<int> GatewayPublicIPPrefixSize
         {
@@ -1014,6 +1083,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the PreparedImageSpecificationId. </summary>
+        public BicepValue<ResourceIdentifier> PreparedImageSpecificationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreparedImageSpecificationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.PreparedImageSpecificationId = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerServiceAgentPool. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -1047,6 +1133,13 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-09-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_02_PREVIEW = "2026-09-02-preview";
+            /// <summary> API version "2026-09-01". </summary>
+            public static readonly string V2026_09_01 = "2026-09-01";
+            /// <summary> API version "2026-08-01". </summary>
+            public static readonly string V2026_08_01 = "2026-08-01";
             /// <summary> API version "2026-07-01". </summary>
             public static readonly string V2026_07_01 = "2026-07-01";
             /// <summary> API version "2026-06-01". </summary>

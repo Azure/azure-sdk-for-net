@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -21,13 +22,14 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ManagedClusterIdentityBindingProperties _properties;
+        private BicepValue<string> _managedBy;
         private BicepValue<ETag> _eTag;
         private ProvisioningResourceReference<ContainerServiceManagedCluster> _parent;
 
         /// <summary> Creates a new ManagedClusterIdentityBinding. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ManagedClusterIdentityBinding(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/identityBindings", resourceVersion ?? "2026-07-01")
+        public ManagedClusterIdentityBinding(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/identityBindings", resourceVersion ?? "2026-09-02-preview")
         {
         }
 
@@ -81,6 +83,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ManagedBy. </summary>
+        public BicepValue<string> ManagedBy
+        {
+            get
+            {
+                Initialize();
+                return _managedBy;
+            }
+            set
+            {
+                Initialize();
+                _managedBy.Assign(value);
+            }
+        }
+
         /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
@@ -114,6 +131,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedClusterIdentityBindingProperties>(nameof(Properties), new string[] { "properties" });
+            _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _parent = new ProvisioningResourceReference<ContainerServiceManagedCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
@@ -140,6 +158,13 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-09-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_02_PREVIEW = "2026-09-02-preview";
+            /// <summary> API version "2026-09-01". </summary>
+            public static readonly string V2026_09_01 = "2026-09-01";
+            /// <summary> API version "2026-08-01". </summary>
+            public static readonly string V2026_08_01 = "2026-08-01";
             /// <summary> API version "2026-07-01". </summary>
             public static readonly string V2026_07_01 = "2026-07-01";
             /// <summary> API version "2026-06-01". </summary>

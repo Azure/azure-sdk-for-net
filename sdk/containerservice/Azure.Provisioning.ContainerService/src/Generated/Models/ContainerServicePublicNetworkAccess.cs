@@ -13,6 +13,8 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Inbound/Outbound to the managedCluster is allowed. </summary>
         Enabled = 0,
         /// <summary> Inbound traffic to managedCluster is disabled, traffic from managedCluster is allowed. </summary>
-        Disabled = 1
+        Disabled = 1,
+        /// <summary> Inbound/Outbound traffic is managed by Microsoft.Network/NetworkSecurityPerimeters. </summary>
+        SecuredByPerimeter = 2
     }
 }

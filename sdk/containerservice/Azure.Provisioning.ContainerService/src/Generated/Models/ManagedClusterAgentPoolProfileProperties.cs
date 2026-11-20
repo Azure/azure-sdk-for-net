@@ -38,7 +38,10 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _orchestratorVersion;
         private BicepValue<string> _currentOrchestratorVersion;
         private BicepValue<string> _nodeImageVersion;
+        private BicepValue<AgentPoolUpgradeStrategy> _upgradeStrategy;
+        private BicepValue<bool> _isOSDiskFullCachingEnabled;
         private AgentPoolUpgradeSettings _upgradeSettings;
+        private AgentPoolBlueGreenUpgradeSettings _upgradeSettingsBlueGreen;
         private BicepValue<string> _provisioningState;
         private ContainerServicePowerState _powerState;
         private BicepList<string> _availabilityZones;
@@ -50,6 +53,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepDictionary<string> _tags;
         private BicepDictionary<string> _nodeLabels;
         private BicepList<string> _nodeTaints;
+        private BicepList<string> _nodeInitializationTaints;
         private BicepValue<ResourceIdentifier> _proximityPlacementGroupId;
         private KubeletConfig _kubeletConfig;
         private LinuxOSConfig _linuxOSConfig;
@@ -70,6 +74,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepList<AgentPoolVirtualMachineNodes> _virtualMachineNodesStatus;
         private AgentPoolStatus _status;
         private LocalDnsProfile _localDnsProfile;
+        private PreparedImageSpecificationProfile _preparedImageSpecificationProfile;
 
         /// <summary> Creates a new ManagedClusterAgentPoolProfileProperties. </summary>
         public ManagedClusterAgentPoolProfileProperties()
@@ -411,6 +416,36 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the UpgradeStrategy. </summary>
+        public BicepValue<AgentPoolUpgradeStrategy> UpgradeStrategy
+        {
+            get
+            {
+                Initialize();
+                return _upgradeStrategy;
+            }
+            set
+            {
+                Initialize();
+                _upgradeStrategy.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the IsOSDiskFullCachingEnabled. </summary>
+        public BicepValue<bool> IsOSDiskFullCachingEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isOSDiskFullCachingEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isOSDiskFullCachingEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the UpgradeSettings. </summary>
         public AgentPoolUpgradeSettings UpgradeSettings
         {
@@ -423,6 +458,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 AssignOrReplace(ref _upgradeSettings, value);
+            }
+        }
+
+        /// <summary> Gets or sets the UpgradeSettingsBlueGreen. </summary>
+        public AgentPoolBlueGreenUpgradeSettings UpgradeSettingsBlueGreen
+        {
+            get
+            {
+                Initialize();
+                return _upgradeSettingsBlueGreen;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _upgradeSettingsBlueGreen, value);
             }
         }
 
@@ -583,6 +633,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _nodeTaints.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the NodeInitializationTaints. </summary>
+        public BicepList<string> NodeInitializationTaints
+        {
+            get
+            {
+                Initialize();
+                return _nodeInitializationTaints;
+            }
+            set
+            {
+                Initialize();
+                _nodeInitializationTaints.Assign(value);
             }
         }
 
@@ -782,7 +847,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the GpuProfile. </summary>
-        internal AgentPoolGpuProfile GpuProfile
+        public AgentPoolGpuProfile GpuProfile
         {
             get
             {
@@ -886,6 +951,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the PreparedImageSpecificationProfile. </summary>
+        internal PreparedImageSpecificationProfile PreparedImageSpecificationProfile
+        {
+            get
+            {
+                Initialize();
+                return _preparedImageSpecificationProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _preparedImageSpecificationProfile, value);
+            }
+        }
+
         /// <summary> Gets or sets the Code. </summary>
         public BicepValue<ContainerServiceStateCode> PowerStateCode
         {
@@ -934,23 +1014,6 @@ namespace Azure.Provisioning.ContainerService
                     WindowsProfile = new AgentPoolWindowsProfile();
                 }
                 WindowsProfile.IsOutboundNatDisabled = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Driver. </summary>
-        public BicepValue<AgentPoolGpuDriver> GpuDriver
-        {
-            get
-            {
-                return GpuProfile is null ? default : GpuProfile.Driver;
-            }
-            set
-            {
-                if (GpuProfile is null)
-                {
-                    GpuProfile = new AgentPoolGpuProfile();
-                }
-                GpuProfile.Driver = value;
             }
         }
 
@@ -1018,6 +1081,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the PreparedImageSpecificationId. </summary>
+        public BicepValue<ResourceIdentifier> PreparedImageSpecificationId
+        {
+            get
+            {
+                return PreparedImageSpecificationProfile is null ? default : PreparedImageSpecificationProfile.PreparedImageSpecificationId;
+            }
+            set
+            {
+                if (PreparedImageSpecificationProfile is null)
+                {
+                    PreparedImageSpecificationProfile = new PreparedImageSpecificationProfile();
+                }
+                PreparedImageSpecificationProfile.PreparedImageSpecificationId = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterAgentPoolProfileProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -1045,7 +1125,10 @@ namespace Azure.Provisioning.ContainerService
             _orchestratorVersion = DefineProperty<string>(nameof(OrchestratorVersion), new string[] { "orchestratorVersion" });
             _currentOrchestratorVersion = DefineProperty<string>(nameof(CurrentOrchestratorVersion), new string[] { "currentOrchestratorVersion" }, isOutput: true);
             _nodeImageVersion = DefineProperty<string>(nameof(NodeImageVersion), new string[] { "nodeImageVersion" });
+            _upgradeStrategy = DefineProperty<AgentPoolUpgradeStrategy>(nameof(UpgradeStrategy), new string[] { "upgradeStrategy" });
+            _isOSDiskFullCachingEnabled = DefineProperty<bool>(nameof(IsOSDiskFullCachingEnabled), new string[] { "enableOSDiskFullCaching" });
             _upgradeSettings = DefineModelProperty<AgentPoolUpgradeSettings>(nameof(UpgradeSettings), new string[] { "upgradeSettings" });
+            _upgradeSettingsBlueGreen = DefineModelProperty<AgentPoolBlueGreenUpgradeSettings>(nameof(UpgradeSettingsBlueGreen), new string[] { "upgradeSettingsBlueGreen" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _powerState = DefineModelProperty<ContainerServicePowerState>(nameof(PowerState), new string[] { "powerState" });
             _availabilityZones = DefineListProperty<string>(nameof(AvailabilityZones), new string[] { "availabilityZones" });
@@ -1057,6 +1140,7 @@ namespace Azure.Provisioning.ContainerService
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _nodeLabels = DefineDictionaryProperty<string>(nameof(NodeLabels), new string[] { "nodeLabels" });
             _nodeTaints = DefineListProperty<string>(nameof(NodeTaints), new string[] { "nodeTaints" });
+            _nodeInitializationTaints = DefineListProperty<string>(nameof(NodeInitializationTaints), new string[] { "nodeInitializationTaints" });
             _proximityPlacementGroupId = DefineProperty<ResourceIdentifier>(nameof(ProximityPlacementGroupId), new string[] { "proximityPlacementGroupID" });
             _kubeletConfig = DefineModelProperty<KubeletConfig>(nameof(KubeletConfig), new string[] { "kubeletConfig" });
             _linuxOSConfig = DefineModelProperty<LinuxOSConfig>(nameof(LinuxOSConfig), new string[] { "linuxOSConfig" });
@@ -1077,6 +1161,7 @@ namespace Azure.Provisioning.ContainerService
             _virtualMachineNodesStatus = DefineListProperty<AgentPoolVirtualMachineNodes>(nameof(VirtualMachineNodesStatus), new string[] { "virtualMachineNodesStatus" });
             _status = DefineModelProperty<AgentPoolStatus>(nameof(Status), new string[] { "status" });
             _localDnsProfile = DefineModelProperty<LocalDnsProfile>(nameof(LocalDnsProfile), new string[] { "localDNSProfile" });
+            _preparedImageSpecificationProfile = DefineModelProperty<PreparedImageSpecificationProfile>(nameof(PreparedImageSpecificationProfile), new string[] { "preparedImageSpecificationProfile" });
             DefineAdditionalProperties();
         }
 

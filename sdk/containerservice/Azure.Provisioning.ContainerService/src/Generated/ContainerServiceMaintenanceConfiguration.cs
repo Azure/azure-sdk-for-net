@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ContainerServiceMaintenanceConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerServiceMaintenanceConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2026-07-01")
+        public ContainerServiceMaintenanceConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2026-09-02-preview")
         {
         }
 
@@ -127,6 +128,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the MaintenanceWindowId. </summary>
+        public BicepValue<ResourceIdentifier> MaintenanceWindowId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindowId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceConfigurationProperties();
+                }
+                Properties.MaintenanceWindowId = value;
+            }
+        }
+
         /// <summary> Gets or sets the MaintenanceWindow. </summary>
         public ContainerServiceMaintenanceWindow MaintenanceWindow
         {
@@ -172,6 +190,13 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-09-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_02_PREVIEW = "2026-09-02-preview";
+            /// <summary> API version "2026-09-01". </summary>
+            public static readonly string V2026_09_01 = "2026-09-01";
+            /// <summary> API version "2026-08-01". </summary>
+            public static readonly string V2026_08_01 = "2026-08-01";
             /// <summary> API version "2026-07-01". </summary>
             public static readonly string V2026_07_01 = "2026-07-01";
             /// <summary> API version "2026-06-01". </summary>

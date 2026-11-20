@@ -15,8 +15,10 @@ namespace Azure.Provisioning.ContainerService
     public partial class AgentPoolNetworkProfile : ProvisionableConstruct
     {
         private BicepList<ContainerServiceIPTag> _nodePublicIPTags;
+        private BicepList<ResourceIdentifier> _nodePublicIPPrefixIDs;
         private BicepList<AgentPoolNetworkPortRange> _allowedHostPorts;
         private BicepList<ResourceIdentifier> _applicationSecurityGroups;
+        private BicepList<AgentPoolNetworkInterface> _secondaryNetworkInterfaces;
         private DRANETProfile _dranet;
 
         /// <summary> Creates a new AgentPoolNetworkProfile. </summary>
@@ -36,6 +38,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _nodePublicIPTags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the NodePublicIPPrefixIDs. </summary>
+        public BicepList<ResourceIdentifier> NodePublicIPPrefixIDs
+        {
+            get
+            {
+                Initialize();
+                return _nodePublicIPPrefixIDs;
+            }
+            set
+            {
+                Initialize();
+                _nodePublicIPPrefixIDs.Assign(value);
             }
         }
 
@@ -66,6 +83,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _applicationSecurityGroups.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the SecondaryNetworkInterfaces. </summary>
+        public BicepList<AgentPoolNetworkInterface> SecondaryNetworkInterfaces
+        {
+            get
+            {
+                Initialize();
+                return _secondaryNetworkInterfaces;
+            }
+            set
+            {
+                Initialize();
+                _secondaryNetworkInterfaces.Assign(value);
             }
         }
 
@@ -106,8 +138,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _nodePublicIPTags = DefineListProperty<ContainerServiceIPTag>(nameof(NodePublicIPTags), new string[] { "nodePublicIPTags" });
+            _nodePublicIPPrefixIDs = DefineListProperty<ResourceIdentifier>(nameof(NodePublicIPPrefixIDs), new string[] { "nodePublicIPPrefixIDs" });
             _allowedHostPorts = DefineListProperty<AgentPoolNetworkPortRange>(nameof(AllowedHostPorts), new string[] { "allowedHostPorts" });
             _applicationSecurityGroups = DefineListProperty<ResourceIdentifier>(nameof(ApplicationSecurityGroups), new string[] { "applicationSecurityGroups" });
+            _secondaryNetworkInterfaces = DefineListProperty<AgentPoolNetworkInterface>(nameof(SecondaryNetworkInterfaces), new string[] { "secondaryNetworkInterfaces" });
             _dranet = DefineModelProperty<DRANETProfile>(nameof(Dranet), new string[] { "dranet" });
             DefineAdditionalProperties();
         }

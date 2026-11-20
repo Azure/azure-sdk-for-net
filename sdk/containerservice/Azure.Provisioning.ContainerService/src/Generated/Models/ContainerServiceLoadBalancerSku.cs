@@ -12,11 +12,14 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> The load balancer sku for the managed cluster. The default is 'standard'. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </summary>
     public enum ContainerServiceLoadBalancerSku
     {
+        /// <summary> Use a service Load Balancer, with native pod-level load balancing. This SKU is specifically built to scale for container-based workloads, with a single instance utilized for each application. For more information, see https://aka.ms/aks/container-native-slb. </summary>
+        [DataMember(Name = "service")]
+        Service = 0,
         /// <summary> Use a a standard Load Balancer. This is the recommended Load Balancer SKU. For more information about on working with the load balancer in the managed cluster, see the [standard Load Balancer](https://docs.microsoft.com/azure/aks/load-balancer-standard) article. </summary>
         [DataMember(Name = "standard")]
-        Standard = 0,
+        Standard = 1,
         /// <summary> Use a basic Load Balancer with limited functionality. </summary>
         [DataMember(Name = "basic")]
-        Basic = 1
+        Basic = 2
     }
 }

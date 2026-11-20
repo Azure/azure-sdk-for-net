@@ -5,15 +5,22 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> network properties of the machine. </summary>
-    internal partial class ContainerServiceMachineNetworkProperties : ProvisionableConstruct
+    public partial class ContainerServiceMachineNetworkProperties : ProvisionableConstruct
     {
         private BicepList<ContainerServiceMachineIPAddress> _ipAddresses;
+        private BicepValue<ResourceIdentifier> _vnetSubnetId;
+        private BicepValue<ResourceIdentifier> _podSubnetId;
+        private BicepValue<PodIPAllocationMode> _podIPAllocationMode;
+        private BicepValue<bool> _isNodePublicIPEnabled;
+        private BicepValue<ResourceIdentifier> _nodePublicIPPrefixId;
+        private BicepList<ContainerServiceIPTag> _nodePublicIPTags;
 
         /// <summary> Creates a new ContainerServiceMachineNetworkProperties. </summary>
         public ContainerServiceMachineNetworkProperties()
@@ -30,11 +37,107 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the VnetSubnetId. </summary>
+        public BicepValue<ResourceIdentifier> VnetSubnetId
+        {
+            get
+            {
+                Initialize();
+                return _vnetSubnetId;
+            }
+            set
+            {
+                Initialize();
+                _vnetSubnetId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PodSubnetId. </summary>
+        public BicepValue<ResourceIdentifier> PodSubnetId
+        {
+            get
+            {
+                Initialize();
+                return _podSubnetId;
+            }
+            set
+            {
+                Initialize();
+                _podSubnetId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PodIPAllocationMode. </summary>
+        public BicepValue<PodIPAllocationMode> PodIPAllocationMode
+        {
+            get
+            {
+                Initialize();
+                return _podIPAllocationMode;
+            }
+            set
+            {
+                Initialize();
+                _podIPAllocationMode.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the IsNodePublicIPEnabled. </summary>
+        public BicepValue<bool> IsNodePublicIPEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isNodePublicIPEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isNodePublicIPEnabled.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the NodePublicIPPrefixId. </summary>
+        public BicepValue<ResourceIdentifier> NodePublicIPPrefixId
+        {
+            get
+            {
+                Initialize();
+                return _nodePublicIPPrefixId;
+            }
+            set
+            {
+                Initialize();
+                _nodePublicIPPrefixId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the NodePublicIPTags. </summary>
+        public BicepList<ContainerServiceIPTag> NodePublicIPTags
+        {
+            get
+            {
+                Initialize();
+                return _nodePublicIPTags;
+            }
+            set
+            {
+                Initialize();
+                _nodePublicIPTags.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerServiceMachineNetworkProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _ipAddresses = DefineListProperty<ContainerServiceMachineIPAddress>(nameof(IPAddresses), new string[] { "ipAddresses" }, isOutput: true);
+            _vnetSubnetId = DefineProperty<ResourceIdentifier>(nameof(VnetSubnetId), new string[] { "vnetSubnetID" });
+            _podSubnetId = DefineProperty<ResourceIdentifier>(nameof(PodSubnetId), new string[] { "podSubnetID" });
+            _podIPAllocationMode = DefineProperty<PodIPAllocationMode>(nameof(PodIPAllocationMode), new string[] { "podIPAllocationMode" });
+            _isNodePublicIPEnabled = DefineProperty<bool>(nameof(IsNodePublicIPEnabled), new string[] { "enableNodePublicIP" });
+            _nodePublicIPPrefixId = DefineProperty<ResourceIdentifier>(nameof(NodePublicIPPrefixId), new string[] { "nodePublicIPPrefixID" });
+            _nodePublicIPTags = DefineListProperty<ContainerServiceIPTag>(nameof(NodePublicIPTags), new string[] { "nodePublicIPTags" });
             DefineAdditionalProperties();
         }
 

@@ -15,6 +15,10 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> User agent pools are primarily for hosting your application pods. </summary>
         User = 1,
         /// <summary> Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway. </summary>
-        Gateway = 2
+        Gateway = 2,
+        /// <summary> ManagedSystem is a system pool managed by AKS. The pool scales dynamically according to cluster usage, and has additional automated monitoring and healing capabilities. There can only be one ManagedSystem pool, and it is recommended to delete all other system pools for the best experience. </summary>
+        ManagedSystem = 3,
+        /// <summary> Machines agent pools are dedicated to hosting machines. Only limited operations, such as creation and deletion, are allowed at the pool level. Please use the machine APIs to manage the full machine lifecycle. </summary>
+        Machines = 4
     }
 }

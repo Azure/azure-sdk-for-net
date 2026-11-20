@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Settings for upgrading a cluster. </summary>
-    internal partial class ClusterUpgradeSettings : ProvisionableConstruct
+    public partial class ClusterUpgradeSettings : ProvisionableConstruct
     {
         private UpgradeOverrideSettings _overrideSettings;
+        private UpgradeGateSettings _upgradeGateSettings;
 
         /// <summary> Creates a new ClusterUpgradeSettings. </summary>
         public ClusterUpgradeSettings()
@@ -34,11 +36,44 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the UpgradeGateSettings. </summary>
+        internal UpgradeGateSettings UpgradeGateSettings
+        {
+            get
+            {
+                Initialize();
+                return _upgradeGateSettings;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _upgradeGateSettings, value);
+            }
+        }
+
+        /// <summary> Gets or sets the IsEnabled. </summary>
+        public BicepValue<bool> UpgradeGateIsEnabled
+        {
+            get
+            {
+                return UpgradeGateSettings is null ? default : UpgradeGateSettings.IsEnabled;
+            }
+            set
+            {
+                if (UpgradeGateSettings is null)
+                {
+                    UpgradeGateSettings = new UpgradeGateSettings();
+                }
+                UpgradeGateSettings.IsEnabled = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ClusterUpgradeSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _overrideSettings = DefineModelProperty<UpgradeOverrideSettings>(nameof(OverrideSettings), new string[] { "overrideSettings" });
+            _upgradeGateSettings = DefineModelProperty<UpgradeGateSettings>(nameof(UpgradeGateSettings), new string[] { "upgradeGateSettings" });
             DefineAdditionalProperties();
         }
 

@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _kubernetesVersion;
         private BicepValue<ContainerServiceOSType> _osType;
         private BicepList<AgentPoolUpgradeProfilePropertiesUpgradesItem> _upgrades;
+        private BicepList<KubernetesVersionComponents> _componentsByReleases;
         private BicepList<AgentPoolRecentlyUsedVersion> _recentlyUsedVersions;
         private BicepValue<string> _latestNodeImageVersion;
 
@@ -54,6 +55,16 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets the ComponentsByReleases. </summary>
+        public BicepList<KubernetesVersionComponents> ComponentsByReleases
+        {
+            get
+            {
+                Initialize();
+                return _componentsByReleases;
+            }
+        }
+
         /// <summary> Gets the RecentlyUsedVersions. </summary>
         public BicepList<AgentPoolRecentlyUsedVersion> RecentlyUsedVersions
         {
@@ -81,6 +92,7 @@ namespace Azure.Provisioning.ContainerService
             _kubernetesVersion = DefineProperty<string>(nameof(KubernetesVersion), new string[] { "kubernetesVersion" });
             _osType = DefineProperty<ContainerServiceOSType>(nameof(OSType), new string[] { "osType" });
             _upgrades = DefineListProperty<AgentPoolUpgradeProfilePropertiesUpgradesItem>(nameof(Upgrades), new string[] { "upgrades" });
+            _componentsByReleases = DefineListProperty<KubernetesVersionComponents>(nameof(ComponentsByReleases), new string[] { "componentsByReleases" });
             _recentlyUsedVersions = DefineListProperty<AgentPoolRecentlyUsedVersion>(nameof(RecentlyUsedVersions), new string[] { "recentlyUsedVersions" }, isOutput: true);
             _latestNodeImageVersion = DefineProperty<string>(nameof(LatestNodeImageVersion), new string[] { "latestNodeImageVersion" });
             DefineAdditionalProperties();
