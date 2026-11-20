@@ -1,6 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Internal;
 using System.IO;
 using System.Threading;
@@ -27,160 +28,91 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         }
 
         [Test]
-        public async Task CancellationToken()
+        public void CancellationToken()
         {
             using UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader();
             long length = reader.Length;
-            using MemoryStream stream = new MemoryStream();
+            using CancellationOnFirstWriteStream stream = new CancellationOnFirstWriteStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
-            var task = Task.Run(() => reader.CopyTo(stream, tokenSource.Token));
-            bool exceptionThrown = false;
-            try
-            {
-                while (stream.Position == 0)
-                { } // wait for the stream to start filling
-                tokenSource.Cancel();
-                await task;
-            }
-            catch (OperationCanceledException)
-            {
-                exceptionThrown = true;
-            }
-            Assert.IsTrue(exceptionThrown);
+
+            stream.OnFirstWrite = tokenSource.Cancel;
+
+            Assert.Throws<OperationCanceledException>(() => reader.CopyTo(stream, tokenSource.Token));
             Assert.Greater(stream.Length, 0);
             Assert.Less(stream.Length, length);
         }
 
         [Test]
-        public async Task CancellationTokenAsync()
+        public void CancellationTokenAsync()
         {
             using UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader();
             long length = reader.Length;
-            using MemoryStream stream = new MemoryStream();
+            using CancellationOnFirstWriteStream stream = new CancellationOnFirstWriteStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
-            var task = Task.Run(() => reader.CopyToAsync(stream, tokenSource.Token));
-            bool exceptionThrown = false;
-            try
-            {
-                while (stream.Position == 0)
-                { } // wait for the stream to start filling
-                tokenSource.Cancel();
-                await task;
-            }
-            catch (OperationCanceledException)
-            {
-                exceptionThrown = true;
-            }
-            Assert.IsTrue(exceptionThrown);
+
+            stream.OnFirstWrite = tokenSource.Cancel;
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await reader.CopyToAsync(stream, tokenSource.Token));
             Assert.Greater(stream.Length, 0);
             Assert.Less(stream.Length, length);
         }
 
         [Test]
-        public async Task DisposeWhileCopy()
+        public void DisposeWhileCopy()
         {
-            using MemoryStream stream = new MemoryStream();
+            using CancellationOnFirstWriteStream stream = new CancellationOnFirstWriteStream();
             using MemoryStream stream2 = new MemoryStream();
 
             UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
+            stream.OnFirstWrite = reader.Dispose;
 
-            //start the first copy before disposing
-            var copyTask = StartAsyncTask(() => reader.CopyTo(stream, default));
+            reader.CopyTo(stream, default);
 
-            //wait for copy to start
-            while (stream.Position == 0)
-            {
-                Thread.Sleep(0);
-            }
-
-            //start the dispose task
-            var disposeTask = StartAsyncTask(reader.Dispose);
-
-            //make sure the dispose bit has been flipped
-            while (!UnsafeBufferSequenceHelper.IsDisposedField.GetValue(reader)!.Equals(true))
-            {
-                Thread.Sleep(0);
-            }
-            var copyTask2 = StartAsyncTask(() =>
-            {
-                Assert.Throws<ObjectDisposedException>(() => reader.CopyTo(stream2, default));
-            });
-
-            //wait for all tasks to complete
-            await copyTask2;
-            await disposeTask;
-            await copyTask;
+            Assert.Throws<ObjectDisposedException>(() => reader.CopyTo(stream2, default));
             VerifyStreams(stream.GetBuffer(), stream.Position, stream2.Position);
-        }
-
-        [Test]
-        public async Task DisposeWhileGetBinaryData()
-        {
-            BinaryData? data = null;
-            BinaryData? data2 = null;
-
-            UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
-
-            //start the first copy before disposing
-            var copyTask = StartAsyncTask(() => data = reader.ToBinaryData());
-
-            Thread.Sleep(10);
-
-            //start the dispose task
-            var disposeTask = StartAsyncTask(reader.Dispose);
-
-            //make sure the dispose bit has been flipped
-            while (!UnsafeBufferSequenceHelper.IsDisposedField.GetValue(reader)!.Equals(true))
-            {
-                Thread.Sleep(0);
-            }
-            var copyTask2 = StartAsyncTask(() =>
-            {
-                Assert.Throws<ObjectDisposedException>(() => data2 = reader.ToBinaryData());
-            });
-
-            //wait for all tasks to complete
-            await copyTask2;
-            await disposeTask;
-            await copyTask;
-            VerifyStreams(data!.ToArray(), data.ToMemory().Length, data2 is null ? 0 : data2.ToMemory().Length);
         }
 
         [Test]
         public async Task DisposeWhileCopyAsync()
         {
-            using MemoryStream stream = new MemoryStream();
+            using CancellationOnFirstWriteStream stream = new CancellationOnFirstWriteStream();
             using MemoryStream stream2 = new MemoryStream();
 
             UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
+            stream.OnFirstWrite = reader.Dispose;
 
-            //start the first copy before disposing
-            var copyTask = StartAsyncTask(async () => await reader.CopyToAsync(stream, default));
+            await reader.CopyToAsync(stream, default);
 
-            //wait for copy to start
-            while (stream.Position == 0)
-            {
-                Thread.Sleep(0);
-            }
-
-            //start the dispose task
-            var disposeTask = StartAsyncTask(reader.Dispose);
-
-            //make sure the dispose bit has been flipped
-            while (!UnsafeBufferSequenceHelper.IsDisposedField.GetValue(reader)!.Equals(true))
-            {
-                Thread.Sleep(0);
-            }
-            var copyTask2 = StartAsyncTask(() =>
-            {
-                Assert.ThrowsAsync<ObjectDisposedException>(async () => await reader.CopyToAsync(stream2, default));
-            });
-
-            //wait for all tasks to complete
-            await copyTask2;
-            await disposeTask;
-            await copyTask;
+            Assert.ThrowsAsync<ObjectDisposedException>(() => reader.CopyToAsync(stream2, default));
             VerifyStreams(stream.GetBuffer(), stream.Position, stream2.Position);
+        }
+
+        [Test]
+        public void DisposeWhileGetBinaryDataDuringAllocation()
+        {
+            UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
+
+            // Dispose after the length has been calculated and while the destination stream is being allocated.
+            Assert.Throws<ObjectDisposedException>(() => reader.ToBinaryData(capacity =>
+            {
+                reader.Dispose();
+                return new MemoryStream(capacity);
+            }));
+            Assert.Throws<ObjectDisposedException>(() => reader.ToBinaryData());
+        }
+
+        [Test]
+        public void DisposeWhileGetBinaryDataDuringCopy()
+        {
+            UnsafeBufferSequence.Reader reader = UnsafeBufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
+
+            // Dispose from within the first write performed by ToBinaryData's internal copy.
+            BinaryData data = reader.ToBinaryData(capacity => new CancellationOnFirstWriteStream(capacity) { OnFirstWrite = reader.Dispose });
+
+            Assert.Greater(data.ToMemory().Length, 0);
+            Assert.Less(data.ToMemory().Length, _bufferSize);
+            Assert.AreEqual(0xFF, data.ToMemory().Span[0]);
+            Assert.Throws<ObjectDisposedException>(() => reader.ToBinaryData());
         }
 
         private void VerifyStreams(byte[] buffer, long written1, long written2)
@@ -199,29 +131,41 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.AreEqual(0, written2);
         }
 
-        private Task StartAsyncTask(Func<Task> func)
+        private class CancellationOnFirstWriteStream : MemoryStream
         {
-            var task = Task.Factory.StartNew(func);
-            ValidateTaskStarted(task);
-            return task;
-        }
+            private bool _didWrite;
 
-        private Task StartAsyncTask(Action action)
-        {
-            var task = Task.Factory.StartNew(action);
-            ValidateTaskStarted(task);
-            return task;
-        }
-
-        private static void ValidateTaskStarted(Task task)
-        {
-            //validate the task is running
-            while (task.Status != TaskStatus.Running)
+            public CancellationOnFirstWriteStream()
             {
-                Thread.Sleep(0);
             }
-            Assert.AreEqual(TaskStatus.Running, task.Status);
-            Assert.IsFalse(task.IsCompleted);
+
+            public CancellationOnFirstWriteStream(int capacity)
+                : base(capacity)
+            {
+            }
+
+            public Action? OnFirstWrite { get; set; }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                base.Write(buffer, offset, count);
+                CancelAfterFirstWrite();
+            }
+
+            public override async Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                await base.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+                CancelAfterFirstWrite();
+            }
+
+            private void CancelAfterFirstWrite()
+            {
+                if (!_didWrite)
+                {
+                    _didWrite = true;
+                    OnFirstWrite?.Invoke();
+                }
+            }
         }
     }
 }
