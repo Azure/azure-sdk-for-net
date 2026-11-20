@@ -483,7 +483,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="MdeOnboardingDataResource"/> object. </returns>
         public virtual MdeOnboardingDataResource GetMdeOnboardingDataResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MdeOnboardingDataResource.ValidateResourceId(id);
+            if (id.ResourceType == MdeOnboardingDataResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new MdeOnboardingDataResource(Client, id);
         }
 
@@ -618,7 +626,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="DevOpsConfigurationResource"/> object. </returns>
         public virtual DevOpsConfigurationResource GetDevOpsConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             DevOpsConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == DevOpsConfigurationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DevOpsConfigurationResource(Client, id);
         }
 
@@ -1036,7 +1052,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
         public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             AdvancedThreatProtectionSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == AdvancedThreatProtectionSettingResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new AdvancedThreatProtectionSettingResource(Client, id);
         }
 
@@ -1090,7 +1114,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
         public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             IotSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
+            if (id.ResourceType == IotSecuritySolutionAnalyticsModelResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new IotSecuritySolutionAnalyticsModelResource(Client, id);
         }
 
@@ -1180,7 +1212,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
         public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
+            if (id.ResourceType == ServerVulnerabilityAssessmentResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ServerVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -1197,7 +1237,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SensitivitySettingResource"/> object. </returns>
         public virtual SensitivitySettingResource GetSensitivitySettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SensitivitySettingResource.ValidateResourceId(id);
+            if (id.ResourceType == SensitivitySettingResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new SensitivitySettingResource(Client, id);
         }
 
@@ -1206,7 +1254,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> object. </returns>
         public virtual SqlVulnerabilityAssessmentSettingsResource GetSqlVulnerabilityAssessmentSettingsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SqlVulnerabilityAssessmentSettingsResource.ValidateResourceId(id);
+            if (id.ResourceType == SqlVulnerabilityAssessmentSettingsResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SqlVulnerabilityAssessmentSettingsResource(Client, id);
         }
 

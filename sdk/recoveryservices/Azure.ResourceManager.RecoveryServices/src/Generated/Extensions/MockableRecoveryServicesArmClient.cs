@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServices;
@@ -49,7 +50,15 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource"/> object. </returns>
         public virtual RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             RecoveryServicesVaultExtendedInfoResource.ValidateResourceId(id);
+            if (id.ResourceType == RecoveryServicesVaultExtendedInfoResource.ResourceType && !string.Equals(id.Name, "vaultExtendedInfo", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "vaultExtendedInfo"), nameof(id));
+            }
             return new RecoveryServicesVaultExtendedInfoResource(Client, id);
         }
 

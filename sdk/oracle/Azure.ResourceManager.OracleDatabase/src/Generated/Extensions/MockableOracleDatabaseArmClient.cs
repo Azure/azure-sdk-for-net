@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.OracleDatabase;
@@ -76,7 +77,15 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleSubscriptionResource"/> object. </returns>
         public virtual OracleSubscriptionResource GetOracleSubscriptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             OracleSubscriptionResource.ValidateResourceId(id);
+            if (id.ResourceType == OracleSubscriptionResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new OracleSubscriptionResource(Client, id);
         }
 

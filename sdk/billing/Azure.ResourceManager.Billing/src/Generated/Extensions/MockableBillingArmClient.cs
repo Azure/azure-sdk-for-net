@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Billing;
@@ -193,7 +194,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingCustomerPolicyResource"/> object. </returns>
         public virtual BillingCustomerPolicyResource GetBillingCustomerPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BillingCustomerPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == BillingCustomerPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BillingCustomerPolicyResource(Client, id);
         }
 
@@ -211,7 +220,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfilePolicyResource"/> object. </returns>
         public virtual BillingProfilePolicyResource GetBillingProfilePolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BillingProfilePolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == BillingProfilePolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BillingProfilePolicyResource(Client, id);
         }
 
@@ -220,7 +237,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BillingAccountPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == BillingAccountPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BillingAccountPolicyResource(Client, id);
         }
 
@@ -229,7 +254,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="SubscriptionPolicyResource"/> object. </returns>
         public virtual SubscriptionPolicyResource GetSubscriptionPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SubscriptionPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == SubscriptionPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SubscriptionPolicyResource(Client, id);
         }
 
@@ -364,7 +397,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
         public virtual BillingPropertyResource GetBillingPropertyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BillingPropertyResource.ValidateResourceId(id);
+            if (id.ResourceType == BillingPropertyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BillingPropertyResource(Client, id);
         }
 

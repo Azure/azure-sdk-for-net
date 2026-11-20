@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ScVmm;
@@ -85,7 +86,15 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmVirtualMachineInstanceResource"/> object. </returns>
         public virtual ScVmmVirtualMachineInstanceResource GetScVmmVirtualMachineInstanceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ScVmmVirtualMachineInstanceResource.ValidateResourceId(id);
+            if (id.ResourceType == ScVmmVirtualMachineInstanceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScVmmVirtualMachineInstanceResource(Client, id);
         }
 
@@ -102,7 +111,15 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmHybridIdentityMetadataResource"/> object. </returns>
         public virtual ScVmmHybridIdentityMetadataResource GetScVmmHybridIdentityMetadataResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ScVmmHybridIdentityMetadataResource.ValidateResourceId(id);
+            if (id.ResourceType == ScVmmHybridIdentityMetadataResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScVmmHybridIdentityMetadataResource(Client, id);
         }
 
@@ -119,7 +136,15 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> Returns a <see cref="ScVmmGuestAgentResource"/> object. </returns>
         public virtual ScVmmGuestAgentResource GetScVmmGuestAgentResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ScVmmGuestAgentResource.ValidateResourceId(id);
+            if (id.ResourceType == ScVmmGuestAgentResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScVmmGuestAgentResource(Client, id);
         }
 

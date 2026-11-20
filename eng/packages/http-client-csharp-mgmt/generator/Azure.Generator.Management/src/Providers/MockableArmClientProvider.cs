@@ -9,7 +9,9 @@ using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -117,15 +119,38 @@ namespace Azure.Generator.Management.Providers
                 $"Returns a {resource.Type:C} object.",
                 [idParameter]);
 
-            var body = new MethodBodyStatement[]
+            var body = new List<MethodBodyStatement>();
+            var singletonName = resource.SingletonResourceName;
+            var hasSingletonName = singletonName is not null && singletonName.IndexOfAny(['{', '}', '?', '#']) < 0;
+            if (hasSingletonName)
             {
-                Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate(),
-                Return(New.Instance(resource.Type,
-                    [
-                        This.As<ArmResource>().Client(),
-                        idParameter
-                    ]))
-            };
+                body.Add(new IfStatement(idParameter.Equal(Null))
+                {
+                    Throw(New.Instance(typeof(ArgumentNullException), Nameof(idParameter)))
+                });
+            }
+
+            body.Add(Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate());
+
+            if (hasSingletonName)
+            {
+                var nameMatches = StringSnippets.Equals(
+                    idParameter.Property(nameof(ResourceIdentifier.Name)).As<string>(),
+                    Literal(singletonName!).As<string>(),
+                    StringComparison.OrdinalIgnoreCase);
+                body.Add(new IfStatement(
+                    idParameter.As<ResourceIdentifier>().ResourceType().Equal(Static(resource.Type).Property("ResourceType"))
+                        .And(Not(nameMatches)))
+                {
+                    Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid singleton resource name {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.Name)), Literal(singletonName!)), wrapInNameOf: true))
+                });
+            }
+
+            body.Add(Return(New.Instance(resource.Type,
+                [
+                    This.As<ArmResource>().Client(),
+                    idParameter
+                ])));
 
             return new MethodProvider(signature, body, this);
         }

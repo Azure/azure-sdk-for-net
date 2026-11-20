@@ -98,7 +98,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="ReplicationEligibilityResultResource"/> object. </returns>
         public virtual ReplicationEligibilityResultResource GetReplicationEligibilityResultResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ReplicationEligibilityResultResource.ValidateResourceId(id);
+            if (id.ResourceType == ReplicationEligibilityResultResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ReplicationEligibilityResultResource(Client, id);
         }
 

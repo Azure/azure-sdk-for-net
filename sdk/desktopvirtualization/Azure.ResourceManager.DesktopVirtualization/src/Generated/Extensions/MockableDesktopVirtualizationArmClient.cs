@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization;
@@ -157,7 +158,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="ActiveSessionHostConfigurationResource"/> object. </returns>
         public virtual ActiveSessionHostConfigurationResource GetActiveSessionHostConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ActiveSessionHostConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == ActiveSessionHostConfigurationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ActiveSessionHostConfigurationResource(Client, id);
         }
 
@@ -166,7 +175,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="SessionHostManagementResource"/> object. </returns>
         public virtual SessionHostManagementResource GetSessionHostManagementResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SessionHostManagementResource.ValidateResourceId(id);
+            if (id.ResourceType == SessionHostManagementResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SessionHostManagementResource(Client, id);
         }
 
@@ -175,7 +192,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="SessionHostConfigurationResource"/> object. </returns>
         public virtual SessionHostConfigurationResource GetSessionHostConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SessionHostConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == SessionHostConfigurationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SessionHostConfigurationResource(Client, id);
         }
     }

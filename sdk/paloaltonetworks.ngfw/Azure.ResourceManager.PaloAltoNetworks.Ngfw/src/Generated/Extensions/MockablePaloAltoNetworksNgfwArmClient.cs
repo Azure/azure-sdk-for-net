@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="CustomCaptureConfigurationsFirewallResource"/> object. </returns>
         public virtual CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewallResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CustomCaptureConfigurationsFirewallResource.ValidateResourceId(id);
+            if (id.ResourceType == CustomCaptureConfigurationsFirewallResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CustomCaptureConfigurationsFirewallResource(Client, id);
         }
 
@@ -40,7 +49,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LogIngestionSettingsResource"/> object. </returns>
         public virtual LogIngestionSettingsResource GetLogIngestionSettingsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             LogIngestionSettingsResource.ValidateResourceId(id);
+            if (id.ResourceType == LogIngestionSettingsResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new LogIngestionSettingsResource(Client, id);
         }
 
@@ -121,7 +138,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="MetricsObjectFirewallResource"/> object. </returns>
         public virtual MetricsObjectFirewallResource GetMetricsObjectFirewallResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MetricsObjectFirewallResource.ValidateResourceId(id);
+            if (id.ResourceType == MetricsObjectFirewallResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new MetricsObjectFirewallResource(Client, id);
         }
 
@@ -130,7 +155,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public virtual PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             PaloAltoNetworksFirewallStatusResource.ValidateResourceId(id);
+            if (id.ResourceType == PaloAltoNetworksFirewallStatusResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new PaloAltoNetworksFirewallStatusResource(Client, id);
         }
 

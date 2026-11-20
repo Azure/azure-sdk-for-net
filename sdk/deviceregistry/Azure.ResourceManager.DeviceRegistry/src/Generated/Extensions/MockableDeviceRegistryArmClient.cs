@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceRegistry;
@@ -67,7 +68,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
         public virtual CredentialResource GetCredentialResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CredentialResource.ValidateResourceId(id);
+            if (id.ResourceType == CredentialResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CredentialResource(Client, id);
         }
 

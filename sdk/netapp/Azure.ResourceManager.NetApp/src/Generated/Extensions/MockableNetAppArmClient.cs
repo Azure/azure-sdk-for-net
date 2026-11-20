@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp;
@@ -202,7 +203,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="RegionInfoResource"/> object. </returns>
         public virtual RegionInfoResource GetRegionInfoResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             RegionInfoResource.ValidateResourceId(id);
+            if (id.ResourceType == RegionInfoResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new RegionInfoResource(Client, id);
         }
 

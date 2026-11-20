@@ -266,7 +266,15 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="ScopeAccessReviewDefaultSettingResource"/> object. </returns>
         public virtual ScopeAccessReviewDefaultSettingResource GetScopeAccessReviewDefaultSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ScopeAccessReviewDefaultSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == ScopeAccessReviewDefaultSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScopeAccessReviewDefaultSettingResource(Client, id);
         }
 
@@ -960,7 +968,15 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewDefaultSettingResource"/> object. </returns>
         public virtual AccessReviewDefaultSettingResource GetAccessReviewDefaultSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             AccessReviewDefaultSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == AccessReviewDefaultSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new AccessReviewDefaultSettingResource(Client, id);
         }
 

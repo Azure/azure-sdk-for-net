@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Subscription;
@@ -40,7 +41,15 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TenantPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == TenantPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TenantPolicyResource(Client, id);
         }
 
@@ -49,7 +58,15 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             BillingAccountPolicyResource.ValidateResourceId(id);
+            if (id.ResourceType == BillingAccountPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BillingAccountPolicyResource(Client, id);
         }
 
@@ -66,7 +83,15 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
         public virtual TargetDirectoryResultResource GetTargetDirectoryResultResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             TargetDirectoryResultResource.ValidateResourceId(id);
+            if (id.ResourceType == TargetDirectoryResultResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TargetDirectoryResultResource(Client, id);
         }
     }

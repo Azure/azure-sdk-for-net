@@ -170,7 +170,15 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="ServiceDiagnosticSettingResource"/> object. </returns>
         public virtual ServiceDiagnosticSettingResource GetServiceDiagnosticSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ServiceDiagnosticSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == ServiceDiagnosticSettingResource.ResourceType && !string.Equals(id.Name, "service", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "service"), nameof(id));
+            }
             return new ServiceDiagnosticSettingResource(Client, id);
         }
 
@@ -241,7 +249,15 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             VmInsightsOnboardingStatusResource.ValidateResourceId(id);
+            if (id.ResourceType == VmInsightsOnboardingStatusResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new VmInsightsOnboardingStatusResource(Client, id);
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
@@ -67,7 +68,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CosmosDBSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == CosmosDBSqlDatabaseThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CosmosDBSqlDatabaseThroughputSettingResource(Client, id);
         }
 
@@ -76,7 +85,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CosmosDBSqlContainerThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == CosmosDBSqlContainerThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CosmosDBSqlContainerThroughputSettingResource(Client, id);
         }
 
@@ -148,7 +165,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource"/> object. </returns>
         public virtual MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MongoDBDatabaseThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == MongoDBDatabaseThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new MongoDBDatabaseThroughputSettingResource(Client, id);
         }
 
@@ -157,7 +182,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource"/> object. </returns>
         public virtual MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             MongoDBCollectionThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == MongoDBCollectionThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new MongoDBCollectionThroughputSettingResource(Client, id);
         }
 
@@ -202,7 +235,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource"/> object. </returns>
         public virtual CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CosmosTableThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == CosmosTableThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CosmosTableThroughputSettingResource(Client, id);
         }
 
@@ -238,7 +279,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource"/> object. </returns>
         public virtual CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == CassandraKeyspaceThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CassandraKeyspaceThroughputSettingResource(Client, id);
         }
 
@@ -247,7 +296,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource"/> object. </returns>
         public virtual CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CassandraTableThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == CassandraTableThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CassandraTableThroughputSettingResource(Client, id);
         }
 
@@ -256,7 +313,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource"/> object. </returns>
         public virtual CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             CassandraViewThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == CassandraViewThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new CassandraViewThroughputSettingResource(Client, id);
         }
 
@@ -310,7 +375,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource"/> object. </returns>
         public virtual GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             GremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == GremlinDatabaseThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new GremlinDatabaseThroughputSettingResource(Client, id);
         }
 
@@ -319,7 +392,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource"/> object. </returns>
         public virtual GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             GremlinGraphThroughputSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == GremlinGraphThroughputSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new GremlinGraphThroughputSettingResource(Client, id);
         }
 

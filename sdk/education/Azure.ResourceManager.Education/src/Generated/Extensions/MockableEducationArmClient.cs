@@ -35,7 +35,15 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <returns> Returns a <see cref="GrantDetailsResource"/> object. </returns>
         public virtual GrantDetailsResource GetGrantDetailsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             GrantDetailsResource.ValidateResourceId(id);
+            if (id.ResourceType == GrantDetailsResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new GrantDetailsResource(Client, id);
         }
 
@@ -52,7 +60,15 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <returns> Returns a <see cref="EducationLabResource"/> object. </returns>
         public virtual EducationLabResource GetEducationLabResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             EducationLabResource.ValidateResourceId(id);
+            if (id.ResourceType == EducationLabResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new EducationLabResource(Client, id);
         }
 

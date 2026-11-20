@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.WorkloadsSapMonitor;
@@ -49,7 +50,15 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
         /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitorResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SapLandscapeMonitorResource.ValidateResourceId(id);
+            if (id.ResourceType == SapLandscapeMonitorResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SapLandscapeMonitorResource(Client, id);
         }
 

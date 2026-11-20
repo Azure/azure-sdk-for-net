@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement;
@@ -220,7 +221,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceProductWikiResource"/> object. </returns>
         public virtual ServiceProductWikiResource GetServiceProductWikiResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ServiceProductWikiResource.ValidateResourceId(id);
+            if (id.ResourceType == ServiceProductWikiResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ServiceProductWikiResource(Client, id);
         }
 
@@ -301,7 +310,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ApiManagementPortalSignInSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == ApiManagementPortalSignInSettingResource.ResourceType && !string.Equals(id.Name, "signin", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "signin"), nameof(id));
+            }
             return new ApiManagementPortalSignInSettingResource(Client, id);
         }
 
@@ -310,7 +327,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ApiManagementPortalSignUpSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == ApiManagementPortalSignUpSettingResource.ResourceType && !string.Equals(id.Name, "signup", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "signup"), nameof(id));
+            }
             return new ApiManagementPortalSignUpSettingResource(Client, id);
         }
 
@@ -319,7 +344,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
         public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ApiManagementPortalDelegationSettingResource.ValidateResourceId(id);
+            if (id.ResourceType == ApiManagementPortalDelegationSettingResource.ResourceType && !string.Equals(id.Name, "delegation", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "delegation"), nameof(id));
+            }
             return new ApiManagementPortalDelegationSettingResource(Client, id);
         }
 
@@ -535,7 +568,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceApiWikiResource"/> object. </returns>
         public virtual ServiceApiWikiResource GetServiceApiWikiResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ServiceApiWikiResource.ValidateResourceId(id);
+            if (id.ResourceType == ServiceApiWikiResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ServiceApiWikiResource(Client, id);
         }
 

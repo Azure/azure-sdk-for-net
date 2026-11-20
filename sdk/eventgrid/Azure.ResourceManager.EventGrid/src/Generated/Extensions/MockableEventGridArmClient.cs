@@ -224,7 +224,15 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
         public virtual PartnerConfigurationResource GetPartnerConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             PartnerConfigurationResource.ValidateResourceId(id);
+            if (id.ResourceType == PartnerConfigurationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new PartnerConfigurationResource(Client, id);
         }
 
@@ -287,7 +295,15 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="ExtensionTopicResource"/> object. </returns>
         public virtual ExtensionTopicResource GetExtensionTopicResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             ExtensionTopicResource.ValidateResourceId(id);
+            if (id.ResourceType == ExtensionTopicResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ExtensionTopicResource(Client, id);
         }
 

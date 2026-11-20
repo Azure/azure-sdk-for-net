@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedServiceIdentities;
@@ -31,7 +32,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public virtual SystemAssignedIdentityResource GetSystemAssignedIdentityResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             SystemAssignedIdentityResource.ValidateResourceId(id);
+            if (id.ResourceType == SystemAssignedIdentityResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new SystemAssignedIdentityResource(Client, id);
         }
 

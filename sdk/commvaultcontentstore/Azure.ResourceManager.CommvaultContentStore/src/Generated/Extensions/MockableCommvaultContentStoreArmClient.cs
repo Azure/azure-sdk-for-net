@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CommvaultContentStore;
@@ -76,7 +77,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <returns> Returns a <see cref="RoleMappingResource"/> object. </returns>
         public virtual RoleMappingResource GetRoleMappingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             RoleMappingResource.ValidateResourceId(id);
+            if (id.ResourceType == RoleMappingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new RoleMappingResource(Client, id);
         }
     }
