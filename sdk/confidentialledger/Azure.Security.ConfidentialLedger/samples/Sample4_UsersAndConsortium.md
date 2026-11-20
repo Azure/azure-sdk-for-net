@@ -8,9 +8,11 @@ You can add or update a user in the confidential ledger by providing an AAD obje
 
 ```C# Snippet:ConfidentialLedger_NewUser
 string newUserAadObjectId = "<some AAD user or service principal object Id>";
-ledgerClient.CreateOrUpdateLedgerUser(
+LedgerUserMultipleRoles newUser = ledgerClient.CreateOrUpdateLedgerUser(
     newUserAadObjectId,
-    RequestContent.Create(new { assignedRoles = new[] { "Reader" } }));
+    new LedgerUserMultipleRoles(new[] { ConfidentialLedgerUserRoleName.Reader })).Value;
+
+Console.WriteLine($"User {newUser.UserId} has roles: {string.Join(", ", newUser.AssignedRoles)}");
 ```
 
 ## Get consortium members, constitution and enclave quotes

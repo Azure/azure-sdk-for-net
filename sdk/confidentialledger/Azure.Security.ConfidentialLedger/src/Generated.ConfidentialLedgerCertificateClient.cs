@@ -7,6 +7,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -102,6 +103,32 @@ namespace Azure.Security.ConfidentialLedger.Certificate
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LedgerIdentityInformation> GetLedgerIdentityInformation(string ledgerId, CancellationToken cancellationToken = default)
+        {
+            Response result = GetLedgerIdentity(ledgerId, new RequestContext { CancellationToken = cancellationToken });
+            return Response.FromValue((LedgerIdentityInformation)result, result);
+        }
+
+        /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LedgerIdentityInformation>> GetLedgerIdentityInformationAsync(string ledgerId, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetLedgerIdentityAsync(ledgerId, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+            return Response.FromValue((LedgerIdentityInformation)result, result);
         }
 
         internal HttpMessage CreateGetLedgerIdentityRequest(string ledgerId, RequestContext context)

@@ -4,11 +4,19 @@
 
 ### Features Added
 
+- Added typed `PostLedgerEntry`/`PostLedgerEntryAsync` overloads that accept a `LedgerEntry` and return `Operation<LedgerWriteResult>`. When the operation completes, `Value.TransactionId`, `Value.CollectionId` and `Value.State` are populated, so callers no longer need to parse the response JSON or read the `x-ms-ccf-transaction-id` header.
+- Added typed merge-patch overloads that accept and return models: `CreateOrUpdateUser(string, LedgerUser)`, `CreateOrUpdateLedgerUser(string, LedgerUserMultipleRoles)`, `UpdateRuntimeOptionsStable(JsRuntimeOptions)` and `UpdateUserDefinedRoleStable(UserDefinedRoles)`, each with an async counterpart. Only properties that are set are sent, matching JSON merge-patch semantics.
+- Added the `LedgerIdentityInformation` model and `ConfidentialLedgerCertificateClient.GetLedgerIdentityInformation`/`GetLedgerIdentityInformationAsync` methods that return `Response<LedgerIdentityInformation>`. The existing `GetLedgerIdentity`/`GetLedgerIdentityAsync` methods are unchanged and still return the raw `Response`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed `LedgerWriteResult.TransactionId` always being `null` when it is returned from the typed `CreateLedgerEntry`/`CreateLedgerEntryAsync` methods. It is now populated from the `x-ms-ccf-transaction-id` response header.
+
 ### Other Changes
+
+- Updated the README and samples to use the typed model methods instead of parsing JSON responses.
 
 ## 2.0.0-beta.6 (2026-10-15)
 
