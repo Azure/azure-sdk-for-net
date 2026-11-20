@@ -1,6 +1,6 @@
 # Release History
 
-## 5.13.0-beta.1 (Unreleased)
+## 5.13.0 (2026-11-16)
 
 ### Acknowledgments
 
@@ -8,16 +8,17 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
+- Fixed a null-reference failure when an `EventProcessor` subclass calls `ListPartitionIdsAsync` before processing has started.  The method now queries the service when partition information has not been initialized. ([#55481](https://github.com/Azure/azure-sdk-for-net/pull/55481))
 - Fixed a bug where `EventHubBufferedProducerClient` could get stuck during `FlushAsync` or `CloseAsync` until `MaximumWaitTime` elapsed.
 - Fixed retry classification for web socket failures with nested causes.  On modern .NET, a transient network failure during a web socket connection attempt surfaces as a `WebSocketException` that wraps an `HttpRequestException`, which wraps the meaningful `IOException` or `SocketException`.  The retry policy previously inspected only one level of nesting and treated these failures as terminal.  The policy now unwraps nested wrapper exceptions to a bounded depth, so transient failures such as a connection reset use the configured retries.  Terminal socket failures, such as host-not-found and host-unreachable, are not retried at any supported depth.  A host-unreachable failure on an established connection is now terminal.  Earlier versions retried it. ([#61868](https://github.com/Azure/azure-sdk-for-net/issues/61868))
 
 ### Other Changes
+
+- Added a .NET 10 target alongside the existing .NET 8 and .NET Standard 2.0 targets.
+- Updated the `Azure.Core` dependency to 1.65.0 and `System.Threading.Channels` to 10.0.10.
+- Consolidated AMQP batch stream conversion with the shared `Azure.Core.Amqp` implementation. ([#60654](https://github.com/Azure/azure-sdk-for-net/pull/60654))
 
 ## 5.12.2 (2025-06-12)
 
