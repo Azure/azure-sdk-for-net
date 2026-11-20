@@ -1,5 +1,7 @@
 # Azure SDK for .NET Repository Review Rules
 
+<!-- § anchors are shared permalinks: never rename or reuse one, and give each new rule a unique name using its section's prefix. -->
+
 Layered **on top of** `review-quality.md`. Where these conflict with general guidance, these
 repository rules win. The hard rules in `review-quality.md` (no breaking changes and the .NET
 Framework Design Guidelines) still apply unconditionally.
@@ -20,7 +22,7 @@ Supporting documents, fetch when the diff touches their area:
 | Azure.Core requirements | <https://azure.github.io/azure-sdk/general_azurecore.html> |
 | Standard method verbs (the .NET page's Markdown source only `include`s this table) | <https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/tables/net_standard_verbs.yaml> |
 
-**How to use them:** do not try to read a whole document. Identify which areas the diff
+<a name="guidelines-how-to-use" href="#guidelines-how-to-use">§</a> **How to use them:** do not try to read a whole document. Identify which areas the diff
 touches (client shape, models, LRO, paging, versioning, packaging, dependencies…), then fetch
 the matching section and check against it. Fetch a page's Markdown source, not its HTML:
 `https://azure.github.io/azure-sdk/<lang>_<page>.html` is
@@ -29,13 +31,13 @@ its heading `{#id}` or requirement `id="…"`, and cite it as the page link plus
 When the guidelines and this file disagree, the published guidelines win unless this file names the
 requirement it supersedes. Report any other discrepancy so this file can be corrected.
 
-Precedence within the guidelines themselves: **more specific beats more general**. Where the
+<a name="guidelines-precedence" href="#guidelines-precedence">§</a> Precedence within the guidelines themselves: **more specific beats more general**. Where the
 .NET SDK guidelines explicitly address a point, they win over both the general Azure SDK
 guidelines and the .NET Framework Design Guidelines (for example,
 `dotnet-service-return-model-collections`). Elsewhere the Framework Design Guidelines apply,
 ahead of the general Azure SDK guidelines.
 
-The guidelines' design principles, in priority order: **Idiomatic, Consistent, Approachable,
+<a name="guidelines-design-principles" href="#guidelines-design-principles">§</a> The guidelines' design principles, in priority order: **Idiomatic, Consistent, Approachable,
 Dependable.** Productivity is the primary value; completeness, extensibility, and performance
 are secondary. Use this to break ties — an API that is smaller and more obvious beats one
 that is more capable.
@@ -49,24 +51,24 @@ an analyzer rollout. It is not the reviewer's job to police what may be changed 
 It is the reviewer's job to notice when a change reaches past one library and to review it
 on that basis.
 
-- **Surface every change outside a single `sdk/<area>` and state its reach.** "This changes
+- <a name="shared-config-reach" href="#shared-config-reach">§</a> **Surface every change outside a single `sdk/<area>` and state its reach.** "This changes
   X for every library in the repo" is the useful observation; "this doesn't belong in your
   PR" is not. Reach that looks deliberate and correct → ℹ️; broader than the PR's stated
   purpose → 🟡; one library's convenience degrading the others → 🔴
-- **A new file under `sdk/<area>` that silently overrides root configuration is the
+- <a name="shared-config-silent-overrides" href="#shared-config-silent-overrides">§</a> **A new file under `sdk/<area>` that silently overrides root configuration is the
   dangerous case** — nothing fails, CI stays green, and only review catches it. Ask whether
   the setting already exists at the root and what the local copy is diverging from. Applies
   to any such file, not a fixed list 🟡
-- Standalone projects under the root `/samples` tree are exempt from the override rules —
+- <a name="shared-config-standalone-samples" href="#shared-config-standalone-samples">§</a> Standalone projects under the root `/samples` tree are exempt from the override rules —
   they are exported and built outside the repository, so carrying their own configuration
   is expected. Judge whether the content is genuinely needed standalone ℹ️
-- **Any csproj property that overrides a repo-wide default gets surfaced, with its
+- <a name="shared-config-csproj-overrides" href="#shared-config-csproj-overrides">§</a> **Any csproj property that overrides a repo-wide default gets surfaced, with its
   justification.** `eng/Directory.Build.Common.props` sets these centrally so every library
   moves together; a local override opts one library out of that. A *different* value is a
   decision — `LangVersion` `12` holds the library back from newer language features,
   `preview` opts into unstable ones. Raise every override and quote the stated reason so the
   human reviewer can judge it; no stated reason is itself the finding 🟡
-- **A csproj property that restates the central value verbatim is still an override.**
+- <a name="shared-config-restated-defaults" href="#shared-config-restated-defaults">§</a> **A csproj property that restates the central value verbatim is still an override.**
   `<LangVersion>latest</LangVersion>` changes nothing today, but when the central default
   changes, this library silently keeps the old one 🔴. Delete it, after confirming the project
   gets that value without the line — central props are evaluated before the project body, and
@@ -74,10 +76,10 @@ on that basis.
   `<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>` that follows a local
   `<RequiredTargetFrameworks>` is what applies that override. If the line came from
   `sdk/template` or generator scaffolding, say so; the source needs the same fix
-- C# and PowerShell are the only languages the repository has tooling and process to keep
+- <a name="shared-config-languages" href="#shared-config-languages">§</a> C# and PowerShell are the only languages the repository has tooling and process to keep
   safe and current. A script in another language, or a build entry point outside standard
   .NET tooling, adds a supply-chain surface with no owner and no freshness story 🟡
-- A nested `.gitignore` must not restate a rule the root `.gitignore` already has. An
+- <a name="shared-config-nested-gitignore" href="#shared-config-nested-gitignore">§</a> A nested `.gitignore` must not restate a rule the root `.gitignore` already has. An
   unanchored root rule applies at every depth, so the duplicate does nothing except go stale
   when the root changes. Genuinely local entries are fine — duplicated ones are the finding.
   Standalone samples are exempt: they are consumed outside the repository, where the root
@@ -87,25 +89,25 @@ on that basis.
 
 ## CODEOWNERS and Labels
 
-- **A new library needs a `.github/CODEOWNERS` entry that covers its path, and nothing in CI
+- <a name="codeowners-new-library" href="#codeowners-new-library">§</a> **A new library needs a `.github/CODEOWNERS` entry that covers its path, and nothing in CI
   checks for one.** The codeowners linter only runs on PRs that touch `.github/CODEOWNERS`,
   and no build step verifies package ownership. A path that matches only the `/sdk/`
   catch-all leaves the library with the core team as reviewers and no issue-support routing.
   Ask for the entry in this PR, in the area it belongs to and placed per the ordering rule
   below 🟡
-- **Ordering decides ownership: the last matching pattern wins, so a specific path placed
+- <a name="codeowners-ordering" href="#codeowners-ordering">§</a> **Ordering decides ownership: the last matching pattern wins, so a specific path placed
   above a broader one is dead.** The file's own header states the rule — less specific
   earlier, more specific later. `/sdk/foo/Azure.Foo.Core/` listed above a plain `/sdk/foo/`
   is silently overridden and its named owner owns nothing. No linter check and no baseline
   category covers ordering, so check every added path against the entries *below* it 🟡
-- **Lines added to `.github/CODEOWNERS_baseline_errors.txt` are suppressed linter failures.**
+- <a name="codeowners-baseline-errors" href="#codeowners-baseline-errors">§</a> **Lines added to `.github/CODEOWNERS_baseline_errors.txt` are suppressed linter failures.**
   The linter regenerates a baseline from the target branch and filters only pre-existing
   errors, so a *new* violation still fails the build — which makes adding a line to this file
   the way to get one through. It already carries hundreds of suppressions, mostly invalid or
   non-public owner accounts. Treat an added entry as the finding and ask what real failure it
   is hiding 🟡
 
-Owner account validity, team membership, public org visibility, and `PRLabel:` /
+<a name="codeowners-linter-validated" href="#codeowners-linter-validated">§</a> Owner account validity, team membership, public org visibility, and `PRLabel:` /
 `ServiceLabel:` names are all validated by the codeowners linter against live GitHub data.
 Do not re-check them by hand.
 
@@ -113,43 +115,43 @@ Do not re-check them by hand.
 
 ## Breaking Changes (repo-specific detection)
 
-**Establish the affected API's GA contract before checking compatibility**, as required by H1.
+<a name="breaking-ga-baseline" href="#breaking-ga-baseline">§</a> **Establish the affected API's GA contract before checking compatibility**, as required by H1.
 `ApiCompatVersion` selects the released assembly used by the repository's compatibility checks.
 Use that baseline when configured and verify that the particular API and contract shipped GA.
 Recover prior metadata or other released GA artifacts when needed; absence from one baseline
 or missing metadata is not proof that an API never shipped.
 
-**Checked-in API listings describe the candidate surface, not its release history.** Every
+<a name="breaking-api-listings" href="#breaking-api-listings">§</a> **Checked-in API listings describe the candidate surface, not its release history.** Every
 shipping package has
 `sdk/<service>/<Package>/api/<Package>.netstandard2.0.cs` plus per-TFM variants
 (`.net8.0.cs`, `.net10.0.cs`, `.net462.cs`, `.net472.cs`).
 
 - Use listing diffs to locate in-scope changes, then check actual compatibility with the
   affected GA contract. No added, removed, or modified line is a finding by itself
-- The public API must be **identical across all TFMs**. A member present in `.net8.0.cs` but
+- <a name="breaking-target-framework-parity" href="#breaking-target-framework-parity">§</a> The public API must be **identical across all TFMs**. A member present in `.net8.0.cs` but
   not `.netstandard2.0.cs` is a violation
 
 Also specific to this repo:
-- `ServiceVersion` enum: values are explicit and start at 1, `0` is reserved and must throw
+- <a name="breaking-service-version-enum" href="#breaking-service-version-enum">§</a> `ServiceVersion` enum: values are explicit and start at 1, `0` is reserved and must throw
   `ArgumentException`. Never renumber or remove a GA-shipped member
-- Incompatible changes to a model property's GA type or value-type nullability are breaks
-- Incompatible changes to a GA-shipped serialization contract are wire breaks even when the
+- <a name="breaking-property-types" href="#breaking-property-types">§</a> Incompatible changes to a model property's GA type or value-type nullability are breaks
+- <a name="breaking-wire-contract" href="#breaking-wire-contract">§</a> Incompatible changes to a GA-shipped serialization contract are wire breaks even when the
   C# API is unchanged
 
-**ApiCompat suppression baselines — `eng/apicompatbaselines/<Package>.xml`.** An entry suppresses
+<a name="breaking-api-compat-baselines" href="#breaking-api-compat-baselines">§</a> **ApiCompat suppression baselines — `eng/apicompatbaselines/<Package>.xml`.** An entry suppresses
 a compatibility diagnostic; establish the underlying API's GA history before classifying the
 difference as a break. Suppression and opt-out changes remain independent review findings.
 
-- Surface every entry the PR adds, even ones you judge acceptable — the approve/reject call
+- <a name="breaking-surface-baseline-entries" href="#breaking-surface-baseline-entries">§</a> Surface every entry the PR adds, even ones you judge acceptable — the approve/reject call
   is the human reviewer's, and they cannot make it if they never see it. Quote the stated
   justification in the finding, or note its absence 🟡
-- `ApiCompatVersionOptOut.txt` turns ApiCompat off for an entire package → 🔴
-- A local baseline file next to the project is hard-blocked by
+- <a name="breaking-api-compat-opt-out" href="#breaking-api-compat-opt-out">§</a> `ApiCompatVersionOptOut.txt` turns ApiCompat off for an entire package → 🔴
+- <a name="breaking-local-baselines" href="#breaking-local-baselines">§</a> A local baseline file next to the project is hard-blocked by
   `ValidateNoLocalApiCompatBaseline` — `ApiCompatBaseline.txt`,
   `ApiCompatBaseline.<tfm>.txt`, and `CompatibilitySuppressions.xml` all error out with a
   pointer to `eng/apicompatbaselines/<Project>.xml`. Seeing one is the finding
 
-**Stale baseline entries.** The build sets `ApiCompatPermitUnnecessarySuppressions=true`, so
+<a name="breaking-stale-baseline-entries" href="#breaking-stale-baseline-entries">§</a> **Stale baseline entries.** The build sets `ApiCompatPermitUnnecessarySuppressions=true`, so
 entries that no longer match a real diff accumulate silently and nothing will flag them.
 
 - The file name is the package name → its `.csproj` → its `sdk/<area>`. Attribution is
@@ -164,46 +166,46 @@ entries that no longer match a real diff accumulate silently and nothing will fl
 
 ## Client Design
 
-- Service clients are named `<Service>Client`, are **classes** (not structs), are
+- <a name="client-service-clients" href="#client-service-clients">§</a> Service clients are named `<Service>Client`, are **classes** (not structs), are
   **immutable**, and live in the package's root namespace
-- Service methods are `public virtual` — non-virtual public methods block mocking → 🔴
-- Convenience methods return `Task<Response<T>>`/`Task<Response>` on `Azure.Core` or
+- <a name="client-virtual-methods" href="#client-virtual-methods">§</a> Service methods are `public virtual` — non-virtual public methods block mocking → 🔴
+- <a name="client-return-types" href="#client-return-types">§</a> Convenience methods return `Task<Response<T>>`/`Task<Response>` on `Azure.Core` or
   `Task<ClientResult<T>>`/`Task<ClientResult>` on `System.ClientModel` — match whichever stack
   the library already uses, never mix them
-- A `protected` parameterless constructor exists for mocking on clients **and** subclients
-- Simplest constructor takes only the parameters required to connect to the service (an
+- <a name="client-mocking-constructor" href="#client-mocking-constructor">§</a> A `protected` parameterless constructor exists for mocking on clients **and** subclients
+- <a name="client-minimal-constructor" href="#client-minimal-constructor">§</a> Simplest constructor takes only the parameters required to connect to the service (an
   endpoint and credential, or a connection string) and uses **no default parameter values**.
   The constructor analyzers deliberately pass a trailing `options = null`, so CI won't flag it
-- Constructors must not read the client's own `virtual` properties — a mocked/uninitialized
+- <a name="client-constructor-virtual-reads" href="#client-constructor-virtual-reads">§</a> Constructors must not read the client's own `virtual` properties — a mocked/uninitialized
   virtual can return the wrong value. Use the parameter or a local instead
-- Options type is `<Client>Options : ClientOptions`, has **no default constructor**, and its
+- <a name="client-options" href="#client-options">§</a> Options type is `<Client>Options : ClientOptions`, has **no default constructor**, and its
   constructor takes `ServiceVersion version` as the **first** parameter defaulting to the
   latest
-- Subclients: no public constructor, created only via `Get<Resource>()` /
+- <a name="client-subclients" href="#client-subclients">§</a> Subclients: no public constructor, created only via `Get<Resource>()` /
   `Get<Group>Client()` factory methods on a parent, reuse the parent's `HttpPipeline`
-- Do not force callers to test `ServiceVersion` for feature availability — use the
+- <a name="client-feature-detection" href="#client-feature-detection">§</a> Do not force callers to test `ServiceVersion` for feature availability — use the
   tester-doer pattern (`CanX` property) or `Nullable<T>`
-- **Public interfaces are strongly discouraged and are generally rejected in architecture
+- <a name="client-public-interfaces" href="#client-public-interfaces">§</a> **Public interfaces are strongly discouraged and are generally rejected in architecture
   review.** An interface is a versioning liability: adding a member breaks every implementer.
   Use an abstract base class or a concrete type unless there is a stated reason the contract
   must be implementable by callers 🟡
-- **Nullable reference type annotations belong to core libraries, not service libraries.** There
+- <a name="client-nullable-annotations" href="#client-nullable-annotations">§</a> **Nullable reference type annotations belong to core libraries, not service libraries.** There
   is no central default, and only a small minority of projects opt in via `<Nullable>` — nearly
   all of them infrastructure: `Azure.Core`, `System.ClientModel`, `Azure.Provisioning`, the
   generators. A service library enabling it puts `?` annotations into a public contract the rest
   of the repo does not carry.
   This is about nullable *reference* types; `Nullable<T>` on a value type for feature detection
   is a separate, sanctioned pattern 🟡
-- **Do not invent an exception type where a well-known built-in fits.** A custom cancellation
+- <a name="client-built-in-exceptions" href="#client-built-in-exceptions">§</a> **Do not invent an exception type where a well-known built-in fits.** A custom cancellation
   exception instead of `OperationCanceledException`/`TaskCanceledException` forces callers to
   write Azure-specific catch blocks for a framework-standard condition 🟡
-- **A library picks one client stack and uses its abstractions throughout.** New AI/Foundry
+- <a name="client-single-stack" href="#client-single-stack">§</a> **A library picks one client stack and uses its abstractions throughout.** New AI/Foundry
   libraries build on `System.ClientModel` rather than `Azure.Core`, because their surface
   overlaps the `OpenAI` types — and that choice carries into authentication: the SCM
   token-provider abstraction, not `TokenCredential` 🟡
-- **Name the parameter for the abstraction it actually takes** — a token provider called
+- <a name="client-parameter-names" href="#client-parameter-names">§</a> **Name the parameter for the abstraction it actually takes** — a token provider called
   `credential` misdescribes its own type 🟡
-- **HTTP payload models the library defines implement `IJsonModel<T>`/`IPersistableModel<T>` with a
+- <a name="client-model-serialization" href="#client-model-serialization">§</a> **HTTP payload models the library defines implement `IJsonModel<T>`/`IPersistableModel<T>` with a
   source-generated `ModelReaderWriterContext`**, the serialization path
   `doc/dev/AotCompatibility.md` prescribes 🟡. Reflection-based `System.Text.Json` for the
   library's own models either trips the AOT analyzers or pushes `RequiresUnreferencedCode` onto
@@ -211,38 +213,38 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   through `RequestContent.Create`/`BinaryContent.Create` or `ModelReaderWriter`. The generator
   emits this; a hand-written library has to supply it. Types a protocol-specific serializer owns,
   such as AMQP-backed `ServiceBusMessage`, are out of scope
-- **A new path that requires `RequiresUnreferencedCode`/`RequiresDynamicCode` also ships an
+- <a name="client-aot-safe-alternative" href="#client-aot-safe-alternative">§</a> **A new path that requires `RequiresUnreferencedCode`/`RequiresDynamicCode` also ships an
   AOT-safe alternative with the same capability** 🟡. `doc/dev/AotCompatibility.md` calls this
   "critical". Annotating satisfies the analyzers and the CI AOT check, so review is the only gate.
   Name the alternative: for a caller-supplied `T`, a `BinaryData` or stream overload (as
   `Azure.Monitor.Ingestion`'s annotated `Upload<T>` has) or one taking `JsonTypeInfo<T>`; for a
   LINQ provider, a string or query-definition overload. Azure.Core's `JsonObjectSerializer` is
   itself annotated, so it is not an AOT-safe default
-- **Environment variables are not the mechanism to reach for** 🟡. A new setting should arrive
+- <a name="client-environment-variables" href="#client-environment-variables">§</a> **Environment variables are not the mechanism to reach for** 🟡. A new setting should arrive
   through the `ClientSettings` pattern and the host's configuration, not
   `Environment.GetEnvironmentVariable`. `Azure.Identity` reads env vars extensively because that
-  is what the SDK used to do — that is history, not a precedent to copy (see the changed-code
-  scope in `review-quality.md`)
-- **Configuration is public API surface, even though it never appears in an `api/*.cs` file.**
+  is what the SDK used to do — that is history, not a precedent to copy (see the
+  [changed-code scope](review-quality.md#scope-changed-code))
+- <a name="client-configuration-contract" href="#client-configuration-contract">§</a> **Configuration is public API surface, even though it never appears in an `api/*.cs` file.**
   A setting's name, section, type, and meaning are all things customers take a dependency on.
   Apply H1 to each setting's GA-shipped contract: an incompatible rename, removal, type change,
   or precedence change gets the same treatment as a signature break 🔴 — ApiCompat will not
   say a word about it. Beta-only and never-shipped settings are not frozen
-- **A `ClientSettings` type is the shape for all config/DI integration**, so the experience stays
+- <a name="client-settings" href="#client-settings">§</a> **A `ClientSettings` type is the shape for all config/DI integration**, so the experience stays
   consistent across the Azure SDKs. The generator emits it for a generated client; a hand-written
   client has to supply it deliberately, and that is where it gets missed. New libraries do not add
   the `Microsoft.Extensions.Azure` `*ClientBuilderExtensions` (`IAzureClientFactoryBuilder*`). That
   pattern is in maintenance mode: the generator emits it only for libraries that already ship it
   (#59506), because a shipped copy can't be removed without a break. This supersedes the published
   `dotnet-client-builder-*` requirements, so don't ask for it
-- **Configuration ships with a schema, or it ships without IntelliSense** 🟡. A
+- <a name="client-configuration-schema" href="#client-configuration-schema">§</a> **Configuration ships with a schema, or it ships without IntelliSense** 🟡. A
   `ConfigurationSchema.json` — `schema/` at the package root when hand-authored,
   `src/Generated/schema/` when generated — is auto-packed for any shipping client library and
   drives `appsettings.json` completion in VS and VS Code. It is opt-in purely by file existence:
   nothing errors when it is absent, so review is the only gate. Nearly every package exposing a
   `*ClientSettings` type ships one, and the few that do not are hand-authored integrations. Only
   one of the two locations should exist
-- **Anything constructible in code must be constructible from configuration and DI** 🟡. Apply
+- <a name="client-configuration-parity" href="#client-configuration-parity">§</a> **Anything constructible in code must be constructible from configuration and DI** 🟡. Apply
   this whenever the change adds a constructor or constructor parameter, an options property, a
   credential type, or newly supported values, identity kinds, or hosts for an existing one —
   including a capability that arrives with no `api/*.cs` change, such as through a dependency
@@ -277,14 +279,14 @@ For TypeSpec changes, also apply the support and targetability checks under Gene
 
 | Actual contract | Representation or fix guidance |
 |---|---|
-| Guaranteed UUID values | Prefer `Guid`; preserve opaque or non-UUID identifiers. |
-| ARM resource IDs | Prefer `ResourceIdentifier`, not for resource names or other identifiers. |
-| ARM resource types | Prefer `ResourceType`, not for generic categories or discriminators. |
-| Entity tags | Prefer `ETag`, preserving opaque values and protocol semantics; do not retype a generic raw-header dictionary. |
-| Azure resource locations, including collection elements | Prefer `AzureLocation`, not for URLs, addresses, or arbitrary geographic values. |
-| Numeric sizes | Use a numeric type that fits the contract; SKU names and formatted quantities are not automatically numbers. |
-| ISO 8601 durations | Use TypeSpec `duration` only when its supported .NET mapping faithfully preserves the contract, including any calendar-dependent meaning. |
-| Constant-format durations | Use supported `DurationConstant` encoding rather than default ISO serialization; otherwise use a contract-preserving customization. |
+| <a name="semantic-types-guid" href="#semantic-types-guid">§</a> Guaranteed UUID values | Prefer `Guid`; preserve opaque or non-UUID identifiers. |
+| <a name="semantic-types-resource-id" href="#semantic-types-resource-id">§</a> ARM resource IDs | Prefer `ResourceIdentifier`, not for resource names or other identifiers. |
+| <a name="semantic-types-resource-type" href="#semantic-types-resource-type">§</a> ARM resource types | Prefer `ResourceType`, not for generic categories or discriminators. |
+| <a name="semantic-types-etag" href="#semantic-types-etag">§</a> Entity tags | Prefer `ETag`, preserving opaque values and protocol semantics; do not retype a generic raw-header dictionary. |
+| <a name="semantic-types-location" href="#semantic-types-location">§</a> Azure resource locations, including collection elements | Prefer `AzureLocation`, not for URLs, addresses, or arbitrary geographic values. |
+| <a name="semantic-types-numeric-sizes" href="#semantic-types-numeric-sizes">§</a> Numeric sizes | Use a numeric type that fits the contract; SKU names and formatted quantities are not automatically numbers. |
+| <a name="semantic-types-iso-durations" href="#semantic-types-iso-durations">§</a> ISO 8601 durations | Use TypeSpec `duration` only when its supported .NET mapping faithfully preserves the contract, including any calendar-dependent meaning. |
+| <a name="semantic-types-constant-durations" href="#semantic-types-constant-durations">§</a> Constant-format durations | Use supported `DurationConstant` encoding rather than default ISO serialization; otherwise use a contract-preserving customization. |
 
 ## Analyzer Warnings and Suppressions
 
@@ -292,18 +294,18 @@ For TypeSpec changes, also apply the support and targetability checks under Gene
 is a judgment call that belongs to the human reviewer — not to the author, and not to this
 skill.** Be critical of every one.
 
-**Scope: only suppressions on lines the PR adds or modifies.** The changed-code scope in
-`review-quality.md` applies normally — do not mine existing suppressions in untouched code. A
-modified line that *widens* an existing suppression (scoped → whole-assembly, or a new code
-appended to an existing entry) is in scope.
+<a name="analyzers-scope" href="#analyzers-scope">§</a> **Scope: only suppressions on lines the PR adds or modifies.** The
+[changed-code scope](review-quality.md#scope-changed-code) applies normally — do not mine
+existing suppressions in untouched code. A modified line that *widens* an existing suppression
+(scoped → whole-assembly, or a new code appended to an existing entry) is in scope.
 
-For every suppression in scope, **report it for human judgment**. Never silently accept one.
+<a name="analyzers-report-every-suppression" href="#analyzers-report-every-suppression">§</a> For every suppression in scope, **report it for human judgment**. Never silently accept one.
 
-**Read `eng/analyzerallowlist/README.md` before commenting.** It is authoritative for the current
+<a name="analyzers-allowlist-readme" href="#analyzers-allowlist-readme">§</a> **Read `eng/analyzerallowlist/README.md` before commenting.** It is authoritative for the current
 mechanism and its enforcement is tightening over time. Do not assert from memory whether
 `<NoWarn>`, `#pragma warning disable`, or `[SuppressMessage]` is permitted — the answer changes.
 
-Ask for the highest rung the author can reach:
+<a name="analyzers-suppression-ladder" href="#analyzers-suppression-ladder">§</a> Ask for the highest rung the author can reach:
 
 1. **Fix the warning.** Always propose this first, and say concretely how.
 2. **Narrow the code** so the diagnostic stops firing — correct `[Experimental]` attribution, a
@@ -313,7 +315,7 @@ Ask for the highest rung the author can reach:
 4. **Whole-assembly entry** — a bare `nowarn:CODE` → 🔴. It silences the diagnostic across the
    assembly forever, including for types that do not exist yet.
 
-**Ownership gates — a diff touching any of these is automatically a finding.** Each of these
+<a name="analyzers-ownership-gates" href="#analyzers-ownership-gates">§</a> **Ownership gates — a diff touching any of these is automatically a finding.** Each of these
 paths carries a CODEOWNERS entry assigning it to the central .NET core team rather than to the
 service team, precisely to force this review; they compel a look, they do not reject anything.
 Check `.github/CODEOWNERS` for the current owners before naming anyone.
@@ -323,19 +325,19 @@ Check `.github/CODEOWNERS` for the current owners before naming anyone.
 - `/sdk/**/.editorconfig`
 - `/.vscode/` — includes `.vscode/cspell.json`
 
-- **A project- or service-level `.editorconfig` is not allowed** — align with the repository root
+- <a name="analyzers-local-editorconfig" href="#analyzers-local-editorconfig">§</a> **A project- or service-level `.editorconfig` is not allowed** — align with the repository root
   config instead. Any pre-existing instance that survives under `sdk/` is not precedent.
-- A `dotnet_diagnostic.<CODE>.severity = none|suggestion` downgrade in any `.editorconfig` is a
+- <a name="analyzers-severity-downgrades" href="#analyzers-severity-downgrades">§</a> A `dotnet_diagnostic.<CODE>.severity = none|suggestion` downgrade in any `.editorconfig` is a
   suppression by another name. Same ladder, same scrutiny.
 
-**Test projects.** `eng/NoWarnValidation.targets` gates on `'$(IsShippingClientLibrary)' == 'true'`,
+<a name="analyzers-test-project-nowarn" href="#analyzers-test-project-nowarn">§</a> **Test projects.** `eng/NoWarnValidation.targets` gates on `'$(IsShippingClientLibrary)' == 'true'`,
 so an entry added to a test project's `<NoWarn>` gets no validation against an allow-list —
 review is the only gate on *what gets suppressed* there, which matters more, not less. The
 sanctioned baseline is what `sdk/template/Azure.Template/tests` ships: **`CS1591` only**. Any
 other project-wide code in a test project's `<NoWarn>` gets raised. This is a gap in suppression
 validation, not a gap in analysis — see below for what actually still fires and fails the build.
 
-**What actually runs here.** The repo's own `Microsoft.CodeAnalysis.NetAnalyzers` package
+<a name="analyzers-what-runs" href="#analyzers-what-runs">§</a> **What actually runs here.** The repo's own `Microsoft.CodeAnalysis.NetAnalyzers` package
 reference (`EnableMicrosoftCodeAnalysisNetAnalyzers`) is added only when `IsShippingClientLibrary`
 is true — but it is not the only source of `CA` diagnostics. The .NET SDK bundles its own
 analyzers and enables them by default for any `net5.0+` target (`EnableNETAnalyzers`), independent
@@ -348,13 +350,13 @@ The repo sets no `AnalysisLevel`/`AnalysisMode`, and no `.editorconfig` anywhere
 `dotnet_diagnostic.CA*` severity, so whichever mechanism supplies a rule, it runs at its stock
 default severity. Three consequences:
 
-- **A test project loses the repo's own analyzer layer, not analysis itself.**
+- <a name="analyzers-test-project-analyzers" href="#analyzers-test-project-analyzers">§</a> **A test project loses the repo's own analyzer layer, not analysis itself.**
   `EnableClientSdkAnalyzers`, `EnableMicrosoftCodeAnalysisNetAnalyzers`, and
   `EnableBannedApiAnalyzers` are all gated on `IsShippingClientLibrary`, so `AZC` rules,
   banned-API checks, and this repo's pinned analyzer package versions don't apply — but the
   SDK-bundled analyzers and StyleCop still run and still fail the build. Check the specific
   rule's own gate before treating a test-project diagnostic as something CI won't already catch.
-- **`CA` diagnostics are real here, but a given ID's effective severity decides whether CI
+- <a name="analyzers-ca-severity" href="#analyzers-ca-severity">§</a> **`CA` diagnostics are real here, but a given ID's effective severity decides whether CI
   catches it — analyzer presence alone does not.** Plenty of `CA` codes genuinely are warnings
   at their stock default severity, and a `#pragma warning disable CA…` against one of those is a
   suppression and takes the same ladder above as an `AZC` code. But some rules that sound like
@@ -366,29 +368,29 @@ default severity. Three consequences:
   (its docs page, or a scratch build) — this is exactly why the Security section in
   `review-quality.md` flags weak crypto and insecure randomness unconditionally rather than
   deferring to CI.
-- **Taint/dataflow rules never run.** `CA3003` (file-path injection) and its `CA3xxx` siblings
+- <a name="analyzers-taint-rules" href="#analyzers-taint-rules">§</a> **Taint/dataflow rules never run.** `CA3003` (file-path injection) and its `CA3xxx` siblings
   are not enabled by default, nothing here opts them in, and the repo contains zero references
   to them. CodeQL would cover some of this but is wired only to the internal build, never to
   public PR validation. So for untrusted input reaching a path, a URL, a process invocation, or
   a deserializer, **review is the only gate** — see Correctness and Security in the global rules.
 
-**A spelling dictionary entry is a suppression too.** Adding a word makes a warning go away; the
+<a name="analyzers-spelling-entries" href="#analyzers-spelling-entries">§</a> **A spelling dictionary entry is a suppression too.** Adding a word makes a warning go away; the
 only question is whether the word is right. Two failure modes matter:
 
-- **A word added to silence a misspelling in a public API name, a parameter, or a doc comment
+- <a name="analyzers-spelling-typos" href="#analyzers-spelling-typos">§</a> **A word added to silence a misspelling in a public API name, a parameter, or a doc comment
   that ships.** The typo then becomes permanent and customer-visible. Read what the word actually
   is before accepting it 🔴. CI will not catch this: the spell check runs on changed files only
   and is configured to warn rather than fail (`ContinueOnError` defaults to `true` and `ci.yml`
   does not override it), and `eng/scripts/spell-check-public-api.ps1` — the one thing that scans
   `api/*.cs` — is wired as the cspell upgrade validator, so it runs only when cspell's
   `package-lock.json` changes
-- **A word added in the wrong place.** New words belong in `sdk/<service>/cspell.yaml`, which
+- <a name="analyzers-spelling-placement" href="#analyzers-spelling-placement">§</a> **A word added in the wrong place.** New words belong in `sdk/<service>/cspell.yaml`, which
   `import`s `../../.vscode/cspell.json` and scopes its words with an `overrides.filename` glob.
   Root `.vscode/cspell.json` is CODEOWNERS-gated; move the entry into the service file unless the
   word is genuinely repo-wide 🟡. A package-level `cspell.json` is not the convention — a handful
   survive under `sdk/`, none with an `import` field, and they are not precedent
 
-**Trim/AOT suppressions are a sharper case than the ladder above.**
+<a name="analyzers-aot-suppressions" href="#analyzers-aot-suppressions">§</a> **Trim/AOT suppressions are a sharper case than the ladder above.**
 `[UnconditionalSuppressMessage]` is the only suppression form that survives into the compiled
 assembly — `#pragma warning disable` and `[SuppressMessage]` are stripped, and the trimmer,
 which operates on compiled assemblies, never sees them. That is why trim warnings require this
@@ -397,29 +399,29 @@ it silences `eng/scripts/compatibility/Check-AOT-Compatibility.ps1` — the PR g
 otherwise catch the problem. A wrong one fails nothing in CI; it ships and surfaces as a
 runtime failure inside a customer's trimmed or native-AOT app.
 
-- **A newly added `[UnconditionalSuppressMessage]` is a finding** 🔴. The escalation order here
+- <a name="analyzers-unconditional-suppress-message" href="#analyzers-unconditional-suppress-message">§</a> **A newly added `[UnconditionalSuppressMessage]` is a finding** 🔴. The escalation order here
   is not the allow-list ladder: eliminate the reflection → annotate with
   `DynamicallyAccessedMembers` → mark the path `RequiresUnreferencedCode` /
   `RequiresDynamicCode` **and ship an AOT-safe alternative** → suppress last.
   `doc/dev/AotCompatibility.md` is repo-authoritative and unusually blunt — suppression "masks
   real compatibility issues," "should be avoided," and "is rarely the right approach." Quote it
   rather than arguing the point yourself
-- A `Justification` has to establish why the code is *provably* safe — members pinned by
+- <a name="analyzers-aot-justification" href="#analyzers-aot-justification">§</a> A `Justification` has to establish why the code is *provably* safe — members pinned by
   `DynamicDependency`, or a path unreachable once trimmed. Restating the rule name, or "false
   positive," is not a justification 🟡
-- Scope it to the smallest artifact. The documented pattern is a local function wrapping the
+- <a name="analyzers-aot-suppression-scope" href="#analyzers-aot-suppression-scope">§</a> Scope it to the smallest artifact. The documented pattern is a local function wrapping the
   one offending call; on a whole class or a broad method it also silences warnings that do not
   exist yet 🟡
-- `<AotCompatOptOut>true</AotCompatOptOut>` disables the analyzers **and** the CI check for the
+- <a name="analyzers-aot-opt-out" href="#analyzers-aot-opt-out">§</a> `<AotCompatOptOut>true</AotCompatOptOut>` disables the analyzers **and** the CI check for the
   entire library; `<AotAnalyzersOptOut>true</AotAnalyzersOptOut>` keeps CI but blinds the
   author. Either appearing in a diff is a finding 🔴
-- Baselining AOT warnings is deliberately restricted to `sdk/core/` — the check script builds
+- <a name="analyzers-aot-baselines" href="#analyzers-aot-baselines">§</a> Baselining AOT warnings is deliberately restricted to `sdk/core/` — the check script builds
   the `ExpectedAotWarnings.txt` path by hardcoding that directory, so the same file added under
   any other package is inert. A non-core library cannot baseline its way out
-- The AOT defaults are set only when `IsShippingLibrary` is true, so non-shipping projects get
+- <a name="analyzers-aot-non-shipping" href="#analyzers-aot-non-shipping">§</a> The AOT defaults are set only when `IsShippingLibrary` is true, so non-shipping projects get
   no trim analysis at all — the same gap as the analyzer gate above, one property name over
 
-**Cite the consequence, not just the rule number.** A suppression argument is won on what the warning
+<a name="analyzers-cite-consequence" href="#analyzers-cite-consequence">§</a> **Cite the consequence, not just the rule number.** A suppression argument is won on what the warning
 protects against. Example: `AZC0150` means a `ModelReaderWriter.Read`/`Write` call is missing its
 `ModelReaderWriterContext` overload, so the library falls back to the reflection path and is no
 longer AOT/trim-safe — the fix is the context overload with a wired-up generated context.
@@ -429,24 +431,24 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 
 ## Implementation
 
-- All calls to the service go through the stack's pipeline type — `HttpPipeline` on
+- <a name="implementation-pipeline" href="#implementation-pipeline">§</a> All calls to the service go through the stack's pipeline type — `HttpPipeline` on
   `Azure.Core`, `ClientPipeline` on `System.ClientModel`. Hand-rolled `HttpClient` usage in a
   client library → 🔴
-- Failed service calls throw the stack's failure exception — `RequestFailedException` (or a
+- <a name="implementation-failure-exceptions" href="#implementation-failure-exceptions">§</a> Failed service calls throw the stack's failure exception — `RequestFailedException` (or a
   derived type) on `Azure.Core`, `ClientResultException` on `System.ClientModel` — never a
   generic exception
-- LROs return `Operation<T>`/`Operation` (`ArmOperation<T>`/`ArmOperation` on management
+- <a name="implementation-long-running-operations" href="#implementation-long-running-operations">§</a> LROs return `Operation<T>`/`Operation` (`ArmOperation<T>`/`ArmOperation` on management
   libraries). The current convention is a required `WaitUntil` first parameter with no
   `Start` prefix (e.g. `CreateOrUpdateAsync(WaitUntil, ...)`); the older `Start`-prefixed,
   no-`WaitUntil` form remains valid on already-published methods — don't flag it just for
   predating the newer convention
-- Paging methods return `Pageable<T>`/`AsyncPageable<T>` and are named `Get<Resource>s`
-- Model factories: `<Namespace>ModelFactory` static class for constructing otherwise
+- <a name="implementation-paging" href="#implementation-paging">§</a> Paging methods return `Pageable<T>`/`AsyncPageable<T>` and are named `Get<Resource>s`
+- <a name="implementation-model-factories" href="#implementation-model-factories">§</a> Model factories: `<Namespace>ModelFactory` static class for constructing otherwise
   read-only models in tests; new optional parameters go on a new overload, with the old one
   marked `[EditorBrowsable(EditorBrowsableState.Never)]`
-- Diagnostics scopes and distributed tracing follow the pipeline conventions; do not log
+- <a name="implementation-diagnostics" href="#implementation-diagnostics">§</a> Diagnostics scopes and distributed tracing follow the pipeline conventions; do not log
   secrets, credentials, or PII
-- `HashCode` does not exist on `netstandard2.0`, so a client library cannot call
+- <a name="implementation-hash-code" href="#implementation-hash-code">§</a> `HashCode` does not exist on `netstandard2.0`, so a client library cannot call
   `HashCode.Combine` directly. The repo's answer is the shared source file, linked as
   `<Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />`,
   which exposes the same `Combine` overloads. A new hand-rolled hash — or dropping
@@ -454,59 +456,59 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 
 ## Testing
 
-- **A new library needs live tests, a `tests.yml` pipeline definition, and a
+- <a name="testing-live-tests" href="#testing-live-tests">§</a> **A new library needs live tests, a `tests.yml` pipeline definition, and a
   test-resources template — all three.** They only work in combination: a
   `test-resources.json` with no live tests behind it provisions infrastructure nothing
   exercises, and live tests with no `tests.yml` never run. If the service does not exist
   yet, a time-boxed exception needs an issue on file with a committed date, after which
   releases block → 🔴
-- **Match the test framework to the client stack.** A library built on
+- <a name="testing-framework" href="#testing-framework">§</a> **Match the test framework to the client stack.** A library built on
   `System.ClientModel` uses `Microsoft.ClientModel.TestFramework`; one built on
   `Azure.Core` uses `Azure.Core.TestFramework`. Reaching across loses record/playback
   alignment with sibling libraries and drags the wrong stack into the test surface. Each
   framework's `README.md` under `sdk/core` is the reference → 🟡
-- **Tests that never run in CI are not tests.** A new project that only runs on a
+- <a name="testing-ci-coverage" href="#testing-ci-coverage">§</a> **Tests that never run in CI are not tests.** A new project that only runs on a
   developer's machine, or cases marked so the matrix skips them, needs a stated reason.
   CI plus nightly against the full target matrix is where the claim actually gets made 🟡
 
 ## Packaging, Versioning, Dependencies
 
-- Assembly name, root namespace, and NuGet package id all match
-- Version bumps: patch for bug fixes only — **no new public API in a patch release**; minor
+- <a name="packaging-names" href="#packaging-names">§</a> Assembly name, root namespace, and NuGet package id all match
+- <a name="packaging-version-bumps" href="#packaging-version-bumps">§</a> Version bumps: patch for bug fixes only — **no new public API in a patch release**; minor
   or major for new API or a new service API version
-- **`CHANGELOG.md` reflects the PR's public changes.** New or changed public API or
+- <a name="packaging-changelog" href="#packaging-changelog">§</a> **`CHANGELOG.md` reflects the PR's public changes.** New or changed public API or
   customer-visible behavior must be described in the current entry 🟡. If nothing public
   or behavioral changes, as in a post-release version bump, an empty entry is correct. PR
   builds only check that the entry exists; the release pipeline rejects an empty one
-- A management library's major-version increase needs explicit .NET architecture approval for
+- <a name="packaging-management-major-version" href="#packaging-management-major-version">§</a> A management library's major-version increase needs explicit .NET architecture approval for
   a coordinated management SDK major release. This coordination does not waive compatibility
   requirements.
-- Dependencies limited to `Azure.*` from this repo, `System.*` from the .NET team,
+- <a name="packaging-allowed-dependencies" href="#packaging-allowed-dependencies">§</a> Dependencies limited to `Azure.*` from this repo, `System.*` from the .NET team,
   Architecture-Board-approved `Microsoft.*`, and your own team's packages. Anything else →
   🔴 and needs Architecture Board approval. `Newtonsoft.Json` is not allowed — use
   `System.Text.Json`
-- Do not publicly expose types from dependencies unless those types also follow these
+- <a name="packaging-exposed-dependency-types" href="#packaging-exposed-dependency-types">§</a> Do not publicly expose types from dependencies unless those types also follow these
   guidelines
-- Avoid native dependencies — `dotnet-problems-native-dependencies` is a SHOULD NOT, not a
+- <a name="packaging-native-dependencies" href="#packaging-native-dependencies">§</a> Avoid native dependencies — `dotnet-problems-native-dependencies` is a SHOULD NOT, not a
   ban. Surface every one the PR adds, even ones you judge acceptable, so a human makes the
   call. Quote the stated reason, or note its absence, and ask which platforms its native
   assets cover — on any other, calls into it fail at runtime 🟡
 
-**A library added from the template carries placeholder content that builds cleanly.**
+<a name="packaging-template-placeholders" href="#packaging-template-placeholders">§</a> **A library added from the template carries placeholder content that builds cleanly.**
 Nothing fails, so the only thing standing between a placeholder and a published package is
 review.
 
-- **A library's first `<Version>` is a prerelease.** A new package introduced at a stable
+- <a name="packaging-first-version" href="#packaging-first-version">§</a> **A library's first `<Version>` is a prerelease.** A new package introduced at a stable
   `1.0.0` skips the beta period that exists to let its public surface change without a
   breaking-change process. If nothing is published under that package id yet, the version in
   the PR should carry a `-beta.N` suffix 🟡. The `ValidateReleaseNotes` build target already
   fails a changelog heading that does not match `<Version>`, so judge the version, not the
   heading
-- **`<Description>` and `<AssemblyTitle>` are customer-facing** — the description is what
+- <a name="packaging-description" href="#packaging-description">§</a> **`<Description>` and `<AssemblyTitle>` are customer-facing** — the description is what
   renders on the package's nuget.org page. The template ships `Azure Widget Analytics client
   library for .NET`; a library still carrying that text, or a description auto-generated from
   the service spec that reads as machine output, publishes it to customers 🟡
-- **`Microsoft.Template` in an `AssemblyInfo.cs` is template content that shipped** 🔴. The
+- <a name="packaging-template-namespace" href="#packaging-template-namespace">§</a> **`Microsoft.Template` in an `AssemblyInfo.cs` is template content that shipped** 🔴. The
   template's own comment says to replace the value "and uncomment", but the attribute is
   already uncommented — so a library that never touched the file still declares
   `[assembly: AzureResourceProviderNamespace("Microsoft.Template")]` and nothing fails.
@@ -516,16 +518,16 @@ review.
   carry it too (`Azure.Search.Documents` → `Microsoft.Search`), and a sibling library in the
   same `sdk/<service>/` directory usually already has the right value
 
-**A shipping library has no `.nuspec` — its `PackageReference` items *are* the package's
+<a name="packaging-dependency-list" href="#packaging-dependency-list">§</a> **A shipping library has no `.nuspec` — its `PackageReference` items *are* the package's
 declared dependency list.** Every direct reference in a `src` project becomes a version
 floor customers must satisfy and a node in their restore graph.
 
-- **A package already reaching you transitively does not need a direct reference.** Adding
+- <a name="packaging-transitive-references" href="#packaging-transitive-references">§</a> **A package already reaching you transitively does not need a direct reference.** Adding
   one publishes a dependency edge that buys customers nothing and freezes an implementation
   detail of the package you actually depend on into your own contract — you now can't drop
   it when the package below you does. Nothing in the build catches this, so it is on the
   reviewer: ask what the direct reference is for 🟡
-- Wanting a newer version is not the reason **when the package is already a direct
+- <a name="packaging-newer-version-references" href="#packaging-newer-version-references">§</a> Wanting a newer version is not the reason **when the package is already a direct
   reference elsewhere** — the version resolves from `eng/centralpackagemanagement` either
   way, so that belongs in a per-package override file, not a second direct reference. This
   repo does not set `CentralPackageTransitivePinningEnabled`, though, so a central/override
@@ -534,9 +536,9 @@ floor customers must satisfy and a node in their restore graph.
   reference. Confirm the stated reason is a real minimum-version requirement, not just
   "newer is nicer," before asking for it to be removed in favor of an override-file bump —
   an override can't pin a package the project doesn't directly reference
-- A dependency that should never reach customers — analyzers, source generators, build-time
+- <a name="packaging-private-assets" href="#packaging-private-assets">§</a> A dependency that should never reach customers — analyzers, source generators, build-time
   tooling — needs `PrivateAssets="all"`. Without it, it ships as a real dependency 🟡
-- A `src` project taking a `ProjectReference` on a shipping library **in a different
+- <a name="packaging-cross-service-references" href="#packaging-cross-service-references">§</a> A `src` project taking a `ProjectReference` on a shipping library **in a different
   `sdk/<service>/` directory** couples two independent release trains — the package cannot
   publish until the referenced one does, and it builds against code no customer can consume
   yet 🟡. Use a `PackageReference` instead. Not a finding: references within a single service
@@ -545,7 +547,7 @@ floor customers must satisfy and a node in their restore graph.
   `ReferenceOutputAssembly="false"` with `PackAsAnalyzer="true"`, which bundle a DLL rather
   than declare a dependency
 
-**Target frameworks follow from the project's name — they are not authored.**
+<a name="packaging-target-frameworks" href="#packaging-target-frameworks">§</a> **Target frameworks follow from the project's name — they are not authored.**
 `eng/Directory.Build.Common.props` classifies every project by naming convention, and that
 classification selects `SupportsNetStandard20`, then `RequiredTargetFrameworks`, then
 `TargetFrameworks`. Every classification is conditioned on the property being empty, so the
@@ -559,91 +561,91 @@ convention is the default and anything explicit overrides it.
 | ends with `.Tests` / `.Samples` / `.Perf` / `.Stress` | Runnable project |
 | path contains `/tests/` | `IsTestSupportProject` |
 
-- **An explicitly declared type switch means the project's name does not match what the
+- <a name="packaging-project-type-switch" href="#packaging-project-type-switch">§</a> **An explicitly declared type switch means the project's name does not match what the
   project is.** The naming convention is the mechanism; declaring the type is the escape
   hatch. Surface it and ask whether renaming the project is the better fix. It is sometimes
   genuinely unavoidable — `Microsoft.Azure.Core.NewtonsoftJson` is a client library that
   cannot be named `Azure.*` — so this is a question for the human reviewer, not an automatic
   rejection 🟡
-- A declaration only takes effect above the `<Import>` that chains to the parent
+- <a name="packaging-type-switch-placement" href="#packaging-type-switch-placement">§</a> A declaration only takes effect above the `<Import>` that chains to the parent
   `Directory.Build.props`. Below that import, or in the csproj body, the common props has
   already chosen the target frameworks, so the switch silently fails to move them — while
   `.targets`-time consumers do see it, leaving the project inconsistent with itself 🟡
-- **Surface every change the PR makes to `TargetFrameworks` or `RequiredTargetFrameworks`,
+- <a name="packaging-target-framework-changes" href="#packaging-target-framework-changes">§</a> **Surface every change the PR makes to `TargetFrameworks` or `RequiredTargetFrameworks`,
   including an append.** These are derived; setting one directly says the classification is
   wrong. An append such as `$(RequiredTargetFrameworks);netstandard2.1` is narrower than a
   replacement but is still a deliberate divergence. Raise both and let the human reviewer
   judge 🟡
-- Literal target-framework lists, and conditions testing `'$(TargetFramework)' == 'net8.0'`,
+- <a name="packaging-literal-target-frameworks" href="#packaging-literal-target-frameworks">§</a> Literal target-framework lists, and conditions testing `'$(TargetFramework)' == 'net8.0'`,
   must be hand-updated every time repository targets move. Use the property, and
   `$([MSBuild]::IsTargetFrameworkCompatible(...))` for conditions 🟡
 
-**Package feeds — `NuGet.Config` / `nuget.config`.** NuGet merges configuration up the
+<a name="packaging-feeds" href="#packaging-feeds">§</a> **Package feeds — `NuGet.Config` / `nuget.config`.** NuGet merges configuration up the
 directory tree, so a nested file silently changes restore for everything beneath it. Judge
 the content, not whether the file exists.
 
-- A private or internal feed → 🔴. It fails for non-Microsoft contributors, and packages in
+- <a name="packaging-private-feeds" href="#packaging-private-feeds">§</a> A private or internal feed → 🔴. It fails for non-Microsoft contributors, and packages in
   Microsoft-owned repositories must come from approved sources. The public azure-sdk dev
   feed is the sanctioned way to consume prerelease bits
-- An added feed with no `<packageSourceMapping>` restricting it to specific package
+- <a name="packaging-feed-source-mapping" href="#packaging-feed-source-mapping">§</a> An added feed with no `<packageSourceMapping>` restricting it to specific package
   patterns → 🟡, a package-substitution risk
-- A standalone sample without `<clear />` does not restore identically outside the
+- <a name="packaging-sample-feed-clear" href="#packaging-sample-feed-clear">§</a> A standalone sample without `<clear />` does not restore identically outside the
   repository 🟡
-- An added feed with no stated condition for its removal 🟡
+- <a name="packaging-feed-removal" href="#packaging-feed-removal">§</a> An added feed with no stated condition for its removal 🟡
 
-**Changes to central package entries — `eng/centralpackagemanagement`.** `NU1010` blocks
+<a name="packaging-central-entries" href="#packaging-central-entries">§</a> **Changes to central package entries — `eng/centralpackagemanagement`.** `NU1010` blocks
 referencing a package that has no central entry, so the PR editing these files is where the
 dependency decision actually gets made — and the only place review can catch it.
 
-- **A version change should land on the latest stable release.** Anything older needs a
+- <a name="packaging-latest-stable" href="#packaging-latest-stable">§</a> **A version change should land on the latest stable release.** Anything older needs a
   stated reason — a known regression, a downstream conflict, a framework floor. Without one
   the next person has to rediscover it, and the reviewer is left checking currency by hand 🟡
-- **A new entry is a new dependency for the entire repository.** Check that it still earns
+- <a name="packaging-new-central-entry" href="#packaging-new-central-entry">§</a> **A new entry is a new dependency for the entire repository.** Check that it still earns
   its place on every framework the consuming libraries target: as the BCL grows, a package
   that once filled a gap starts colliding with it. `System.Linq.Async` against .NET 10's
   built-in `System.Linq.AsyncEnumerable` is the current example — duplicate extension
   methods, ambiguous-call compile errors 🟡
-- **Which central file an entry lands in decides which projects can see it.** The support,
+- <a name="packaging-central-file" href="#packaging-central-file">§</a> **Which central file an entry lands in decides which projects can see it.** The support,
   integration, legacy, extensions, and generation files scope their entries by condition —
   test and sample packages are invisible to shipping libraries, which is why a library
   referencing a test package fails to restore. Putting a test-only package in the general
   file instead silently makes it an approved dependency for published packages. Each file
   states its own admission criteria in a header comment; check the entry against it 🟡
 
-**Central package management overrides —
+<a name="packaging-overrides" href="#packaging-overrides">§</a> **Central package management overrides —
 `eng/centralpackagemanagement/overrides/<Package>.Packages.props`.** Treat these like
 analyzer suppressions: the expected outcome is using the repo-standard central version.
 
 - The default position is *don't*. A version the whole repo shares is worth more than a
   local pin
-- Surface every override the PR adds, even ones you judge acceptable, and quote the stated
+- <a name="packaging-override-justification" href="#packaging-override-justification">§</a> Surface every override the PR adds, even ones you judge acceptable, and quote the stated
   justification so it can be evaluated. No justification, or one with no removal condition
   — "nobody can say when this goes away" — is itself the finding 🟡
-- A prerelease or alpha pin escalates; a stable library cannot ship on one
-- Placement is decided by scope, not duration: a package-specific exception stays in that
+- <a name="packaging-prerelease-pins" href="#packaging-prerelease-pins">§</a> A prerelease or alpha pin escalates; a stable library cannot ship on one
+- <a name="packaging-override-placement" href="#packaging-override-placement">§</a> Placement is decided by scope, not duration: a package-specific exception stays in that
   package's override file however long it lives. The central files are for versions the
   repo shares. The same override repeated across several package files is the signal that
   it belongs centrally
 
-**A package going GA — `<Version>` losing its `-beta` / `-alpha` / `-preview` suffix.**
+<a name="packaging-ga" href="#packaging-ga">§</a> **A package going GA — `<Version>` losing its `-beta` / `-alpha` / `-preview` suffix.**
 
-- When a PR flips a version to stable, resolve every dependency that project actually uses —
+- <a name="packaging-ga-prerelease-dependencies" href="#packaging-ga-prerelease-dependencies">§</a> When a PR flips a version to stable, resolve every dependency that project actually uses —
   the central entries it consumes plus its `overrides/<Package>.Packages.props` file — and
   confirm none is a prerelease. A stable package cannot ship on one 🔴
-- **This check is about what ships, not everything the project references.** Build-time-only
+- <a name="packaging-ga-build-tooling" href="#packaging-ga-build-tooling">§</a> **This check is about what ships, not everything the project references.** Build-time-only
   tooling marked `PrivateAssets="All"` — analyzers, source generators, API-generation
   packages like `Microsoft.Azure.AutoRest.CSharp` — never reaches the published dependency
   list, so a prerelease pin on one of those is not a violation. The automated prerelease
   guard in `eng/Directory.Build.Common.targets` excludes the same packages for the same
   reason — don't flag them just because the central file lists a prerelease version
-- This is a deliberate exception to reviewing only what the diff touches. The prerelease pin
+- <a name="packaging-ga-untouched-pins" href="#packaging-ga-untouched-pins">§</a> This is a deliberate exception to reviewing only what the diff touches. The prerelease pin
   will usually be older than the PR and untouched by it; the GA flip is what changed its
   status, so raise it and say that is why
-- **A prerelease dependency in a prerelease library is correct and expected** — `-beta`
+- <a name="packaging-prerelease-dependencies" href="#packaging-prerelease-dependencies">§</a> **A prerelease dependency in a prerelease library is correct and expected** — `-beta`
   depending on `-beta` is the normal pattern; do not flag it. The violation is only ever a
   *stable* library resolving to a prerelease. That arises two ways: the version flipping to
   GA (above), or a prerelease `PackageReference` added to an already-stable library 🔴
-- **Do not treat a green build as proof for the package half of this.** The repo has a guard
+- <a name="packaging-ga-green-build" href="#packaging-ga-green-build">§</a> **Do not treat a green build as proof for the package half of this.** The repo has a guard
   for exactly this scenario — `VerifyProjectReferencesReferences` in
   `eng/Directory.Build.Common.targets`, which runs only when the version is stable and the
   project is packable — but it reads `%(PackageReference.Version)`, and under Central Package
@@ -656,23 +658,23 @@ analyzer suppressions: the expected outcome is using the repo-standard central v
 
 Check these on every API-surface PR:
 
-- ⚠️ Too many types in the main namespace — type count drives perceived complexity
-- ⛔ Abstractions (interface **or** abstract class) that the SDK does not both return and
+- <a name="overlooked-namespace-size" href="#overlooked-namespace-size">§</a> ⚠️ Too many types in the main namespace — type count drives perceived complexity
+- <a name="overlooked-abstractions" href="#overlooked-abstractions">§</a> ⛔ Abstractions (interface **or** abstract class) that the SDK does not both return and
   consume
-- ⛔ Interfaces where an abstract class would do — interfaces are only justified by multiple
+- <a name="overlooked-interfaces" href="#overlooked-interfaces">§</a> ⛔ Interfaces where an abstract class would do — interfaces are only justified by multiple
   inheritance or struct implementers
-- ⛔ Generic/vague type names (`OperationResponse`, `DataCollection`)
-- ⚠️ Parameter types where the valid values aren't obvious — e.g. a `string` that only
+- <a name="overlooked-vague-names" href="#overlooked-vague-names">§</a> ⛔ Generic/vague type names (`OperationResponse`, `DataCollection`)
+- <a name="overlooked-parameter-values" href="#overlooked-parameter-values">§</a> ⚠️ Parameter types where the valid values aren't obvious — e.g. a `string` that only
   accepts certain values
-- ⛔ Empty types
+- <a name="overlooked-empty-types" href="#overlooked-empty-types">§</a> ⛔ Empty types
 
 ## Docs & Samples
 
-- Every public and protected type and member has XML doc comments
-- Package root has a consumer-focused `README.md`; contributor content goes in
+- <a name="docs-xml-comments" href="#docs-xml-comments">§</a> Every public and protected type and member has XML doc comments
+- <a name="docs-readme" href="#docs-readme">§</a> Package root has a consumer-focused `README.md`; contributor content goes in
   `CONTRIBUTING.md`. "Azure SDK" names the whole collection of packages — an individual
   package is a "client library," which is what the CI-enforced README title asserts
-- **README presence and shape are CI-enforced; the opt-out is the reviewable action.**
+- <a name="docs-readme-opt-out" href="#docs-readme-opt-out">§</a> **README presence and shape are CI-enforced; the opt-out is the reviewable action.**
   `eng/.docsettings.yml` drives DocWarden over every package README — title, and the
   required `Getting started`, `Key concepts`, `Examples`, `Troubleshooting`,
   `Next steps`, `Contributing` sections. A PR adding its package to
@@ -682,34 +684,34 @@ Check these on every API-surface PR:
 "Sample" means two different things here. Decide which one a change is before
 reviewing it.
 
-**Snippet samples** — a fragment the customer pastes into their own larger codebase.
+<a name="samples-snippets" href="#samples-snippets">§</a> **Snippet samples** — a fragment the customer pastes into their own larger codebase.
 They live inline in markdown: `samples/*.md`, a package `README.md`, or any other doc.
 
-- Every C# fence in markdown is backed by real compiled source, via
+- <a name="samples-compiled-snippets" href="#samples-compiled-snippets">§</a> Every C# fence in markdown is backed by real compiled source, via
   `#region Snippet:<UniqueName>` in a `.cs` file and a ` ```C# Snippet:<UniqueName> `
   fence in the markdown. Snippet names are unique repo-wide
-- A C# fence with no `Snippet:` tag is the thing to catch. CI regenerates tagged
+- <a name="samples-untagged-fences" href="#samples-untagged-fences">§</a> A C# fence with no `Snippet:` tag is the thing to catch. CI regenerates tagged
   snippets and fails on any diff, so a tagged snippet cannot be stale — an untagged
   fence is invisible to that tooling and rots silently → 🟡. Code that cannot compile
   against the current library — migration before/after, illustrative fragments in
   contributor docs — is the genuine exception
-- Library snippet sources live in `tests/Samples/*.cs`; the markdown showing them is
+- <a name="samples-snippet-layout" href="#samples-snippet-layout">§</a> Library snippet sources live in `tests/Samples/*.cs`; the markdown showing them is
   numbered `Sample<N>_*.md`, simplest → most complex, sync and async alongside each
   other. `sdk/template/Azure.Template` is the reference layout
 
-**Standalone samples** — a complete project the customer copies wholesale. These live
+<a name="samples-standalone" href="#samples-standalone">§</a> **Standalone samples** — a complete project the customer copies wholesale. These live
 in the repo-root `/samples/<area>` tree and are validated by building the folder, not
 by snippet tooling.
 
-- Self-contained by construction: `/samples` sets `ImportRepoCommonSettings=false` and
+- <a name="samples-inline-versions" href="#samples-inline-versions">§</a> Self-contained by construction: `/samples` sets `ImportRepoCommonSettings=false` and
   `ManagePackageVersionsCentrally=false`, redirecting `DirectoryPackagesPropsPath` at an
   empty file to block the repo's central versions. Inline `Version=` on
   `PackageReference` is therefore required here — the opposite of the rule in `src`
-- Nothing may tie the folder to this repo: no `ProjectReference` reaching into `sdk/`,
+- <a name="samples-self-contained" href="#samples-self-contained">§</a> Nothing may tie the folder to this repo: no `ProjectReference` reaching into `sdk/`,
   no reliance on repo `eng/` infrastructure, no relative links escaping the sample. The
   test is whether the folder still builds once copied out → 🔴
-- Each sample's `README.md` opens with MS Learn YAML front matter
-- A runnable console or web project under `sdk/<area>/<Package>/samples/` is in neither
+- <a name="samples-front-matter" href="#samples-front-matter">§</a> Each sample's `README.md` opens with MS Learn YAML front matter
+- <a name="samples-runnable-projects" href="#samples-runnable-projects">§</a> A runnable console or web project under `sdk/<area>/<Package>/samples/` is in neither
   category — either it's a snippet sample and belongs in markdown, or it's standalone
   and belongs in `/samples` → 🟡
 
@@ -719,20 +721,20 @@ An entry is only correct when the link is right and the world is wrong.
 
 **Entries the PR adds or modifies.**
 
-- **In-repo links never need an entry.** `Verify-Links.ps1` resolves
+- <a name="links-in-repo" href="#links-in-repo">§</a> **In-repo links never need an entry.** `Verify-Links.ps1` resolves
   `https://github.com/Azure/<repo>/blob|tree/<branch>/<path>` against the local clone.
   A failure means the path is wrong — fix the link. 🟡
-- **Links that already resolve are dead weight.** Verify with `GET`, never `HEAD` —
+- <a name="links-already-resolving" href="#links-already-resolving">§</a> **Links that already resolve are dead weight.** Verify with `GET`, never `HEAD` —
   nuget.org returns 404 to `HEAD` for packages that plainly exist. 🟡
-- **Only 400, 404, 11001, 11004 and -131073 count as failures.** An entry added because a
+- <a name="links-failure-codes" href="#links-failure-codes">§</a> **Only 400, 404, 11001, 11004 and -131073 count as failures.** An entry added because a
   link returned 403, 500, or timed out is unnecessary. 🟡
-- Legitimate: right link, unreachable world — package not yet published, path not yet on
+- <a name="links-legitimate-entries" href="#links-legitimate-entries">§</a> Legitimate: right link, unreachable world — package not yet published, path not yet on
   `main`, private repo, deliberately fake sample URL.
-- Every entry needs an end state: a comment giving either the removal trigger ("remove
+- <a name="links-end-state" href="#links-end-state">§</a> Every entry needs an end state: a comment giving either the removal trigger ("remove
   when X ships") or why it is permanent ("private repo", "fabricated URL"). "Nobody can
   say when this goes away" is the finding. 🟡
 
-**Re-verifying pre-existing entries — narrow changed-code-scope exception.**
+<a name="links-reverify-entries" href="#links-reverify-entries">§</a> **Re-verifying pre-existing entries — narrow changed-code-scope exception.**
 
 Every entry has an owning area. Attribute it from the URL — package name, doc namespace,
 or in-repo path. Entries that map to no service directory are owned by `sdk/core`.
@@ -745,30 +747,30 @@ or in-repo path. Entries that map to no service directory are owned by `sdk/core
 
 ## Generated Code
 
-- Do not hand-edit generated files. Changes to generated output belong in the
+- <a name="generated-hand-edits" href="#generated-hand-edits">§</a> Do not hand-edit generated files. Changes to generated output belong in the
   TypeSpec/Swagger input or in `Customization`/partial-class files
-- Autorest/TypeSpec config changes (`tspconfig.yaml`, `autorest.md`) should be accompanied by
+- <a name="generated-regeneration" href="#generated-regeneration">§</a> Autorest/TypeSpec config changes (`tspconfig.yaml`, `autorest.md`) should be accompanied by
   regenerated output in the same PR
-- **TypeSpec source belongs in `Azure/azure-rest-api-specs`, not in this repository.** One
+- <a name="generated-typespec-source" href="#generated-typespec-source">§</a> **TypeSpec source belongs in `Azure/azure-rest-api-specs`, not in this repository.** One
   artifact describes the service for every language; a copy checked in under `sdk/` forks that
   contract and starts drifting immediately. A `.tsp` file added under `sdk/` is a deliberate
   departure from that model — question it 🟡
-- **`tsp-location.yaml` must name `Azure/azure-rest-api-specs`, and source-repository validation
+- <a name="generated-tsp-location" href="#generated-tsp-location">§</a> **`tsp-location.yaml` must name `Azure/azure-rest-api-specs`, and source-repository validation
   does not run until GA** 🟡. `Verify-RestApiSpecLocation.ps1` runs only in the release
   pipeline and returns early for any prerelease version, so a `repo:` pointing at a personal
   fork survives the entire beta lifecycle — several libraries carry one. By GA that fork may
   be deleted or rewritten, leaving the library unregenerable from its stated source. Treat a
   renamed file (`_tsp-location.yaml`) the same way: it silently opts the library out of
   regeneration instead of recording why
-- **Prefer supported, targetable `client.tsp` customizations for TypeSpec-generated APIs**, in
+- <a name="generated-client-tsp" href="#generated-client-tsp">§</a> **Prefer supported, targetable `client.tsp` customizations for TypeSpec-generated APIs**, in
   both management and data-plane libraries. Verify the project's actual capabilities and that
   the target is addressable before recommending a decorator. Scope language-specific changes
   to their intended language. If unsupported or untargetable, use appropriate C# customization;
   edit hand-written C# directly.
-- If ordinary `clientName` normalization would alter a required enum-member spelling, a
+- <a name="generated-exact-client-name" href="#generated-exact-client-name">§</a> If ordinary `clientName` normalization would alter a required enum-member spelling, a
   C#-scoped `clientName` with `Azure.ClientGenerator.Core.exact("Tls1_0")` is an option when
   supported and targetable. Do not prescribe `exact` when ordinary naming already works.
-- **C# customizations also have designated mechanisms.** `[CodeGenType]`, `[CodeGenModel]`,
+- <a name="generated-csharp-customizations" href="#generated-csharp-customizations">§</a> **C# customizations also have designated mechanisms.** `[CodeGenType]`, `[CodeGenModel]`,
   `[CodeGenMember]`, `[CodeGenSuppress]`, and
   `[CodeGenSerialization]` in a partial-class or stubs file are how a library renames,
   replaces, or stops generating a member; each is used in hundreds of libraries. Excluding a
