@@ -343,7 +343,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Email. </summary>
         private const string EmailValue = "Email";
         /// <summary> URL. </summary>
-        private const string URLValue = "URL";
+        private const string UriValue = "URL";
         /// <summary> Age. </summary>
         private const string AgeValue = "Age";
         /// <summary> Phone Number. </summary>
@@ -369,9 +369,9 @@ namespace Azure.AI.Language.Text
         /// <summary> Sort Code. 6-digit number used in the UK to identify a specific bank and branch where a bank account is held. </summary>
         private const string SortCodeValue = "SortCode";
         /// <summary> PIN. </summary>
-        private const string PINValue = "PIN";
+        private const string PinValue = "PIN";
         /// <summary> VIN. </summary>
-        private const string VINValue = "VIN";
+        private const string VinValue = "VIN";
         /// <summary> VIN. </summary>
         private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
         /// <summary> License Plate. </summary>
@@ -391,7 +391,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Zip Code. </summary>
         private const string ZipCodeValue = "ZipCode";
         /// <summary> Card Verification Value. </summary>
-        private const string CVVValue = "CVV";
+        private const string CvvValue = "CVV";
         /// <summary> Expiration Date. </summary>
         private const string ExpirationDateValue = "ExpirationDate";
         /// <summary> CA Social Identification Number. </summary>
@@ -407,7 +407,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Airport. </summary>
         private const string AirportValue = "Airport";
         /// <summary> Geopolitical Entity. </summary>
-        private const string GPEValue = "GPE";
+        private const string GpeValue = "GPE";
 
         /// <summary> Initializes a new instance of <see cref="PiiCategoriesExclude"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -912,7 +912,7 @@ namespace Azure.AI.Language.Text
         public static PiiCategoriesExclude Email { get; } = new PiiCategoriesExclude(EmailValue);
 
         /// <summary> URL. </summary>
-        public static PiiCategoriesExclude URL { get; } = new PiiCategoriesExclude(URLValue);
+        public static PiiCategoriesExclude Uri { get; } = new PiiCategoriesExclude(UriValue);
 
         /// <summary> Age. </summary>
         public static PiiCategoriesExclude Age { get; } = new PiiCategoriesExclude(AgeValue);
@@ -951,10 +951,10 @@ namespace Azure.AI.Language.Text
         public static PiiCategoriesExclude SortCode { get; } = new PiiCategoriesExclude(SortCodeValue);
 
         /// <summary> PIN. </summary>
-        public static PiiCategoriesExclude PIN { get; } = new PiiCategoriesExclude(PINValue);
+        public static PiiCategoriesExclude Pin { get; } = new PiiCategoriesExclude(PinValue);
 
         /// <summary> VIN. </summary>
-        public static PiiCategoriesExclude VIN { get; } = new PiiCategoriesExclude(VINValue);
+        public static PiiCategoriesExclude Vin { get; } = new PiiCategoriesExclude(VinValue);
 
         /// <summary> VIN. </summary>
         public static PiiCategoriesExclude VehicleIdentificationNumber { get; } = new PiiCategoriesExclude(VehicleIdentificationNumberValue);
@@ -984,7 +984,7 @@ namespace Azure.AI.Language.Text
         public static PiiCategoriesExclude ZipCode { get; } = new PiiCategoriesExclude(ZipCodeValue);
 
         /// <summary> Card Verification Value. </summary>
-        public static PiiCategoriesExclude CVV { get; } = new PiiCategoriesExclude(CVVValue);
+        public static PiiCategoriesExclude Cvv { get; } = new PiiCategoriesExclude(CvvValue);
 
         /// <summary> Expiration Date. </summary>
         public static PiiCategoriesExclude ExpirationDate { get; } = new PiiCategoriesExclude(ExpirationDateValue);
@@ -1008,7 +1008,7 @@ namespace Azure.AI.Language.Text
         public static PiiCategoriesExclude Airport { get; } = new PiiCategoriesExclude(AirportValue);
 
         /// <summary> Geopolitical Entity. </summary>
-        public static PiiCategoriesExclude GPE { get; } = new PiiCategoriesExclude(GPEValue);
+        public static PiiCategoriesExclude Gpe { get; } = new PiiCategoriesExclude(GpeValue);
 
         /// <summary> Determines if two <see cref="PiiCategoriesExclude"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

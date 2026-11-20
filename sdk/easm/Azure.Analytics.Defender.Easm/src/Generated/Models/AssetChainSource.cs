@@ -15,9 +15,9 @@ namespace Azure.Analytics.Defender.Easm
     {
         private readonly string _value;
         /// <summary> discovery group. </summary>
-        private const string DISCOGROUPValue = "DISCO_GROUP";
+        private const string DiscoGroupValue = "DISCO_GROUP";
         /// <summary> asset. </summary>
-        private const string ASSETValue = "ASSET";
+        private const string AssetValue = "ASSET";
 
         /// <summary> Initializes a new instance of <see cref="AssetChainSource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,10 +30,10 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> discovery group. </summary>
-        public static AssetChainSource DISCOGROUP { get; } = new AssetChainSource(DISCOGROUPValue);
+        public static AssetChainSource DiscoGroup { get; } = new AssetChainSource(DiscoGroupValue);
 
         /// <summary> asset. </summary>
-        public static AssetChainSource ASSET { get; } = new AssetChainSource(ASSETValue);
+        public static AssetChainSource Asset { get; } = new AssetChainSource(AssetValue);
 
         /// <summary> Determines if two <see cref="AssetChainSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

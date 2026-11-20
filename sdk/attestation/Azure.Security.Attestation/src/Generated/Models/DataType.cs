@@ -20,7 +20,7 @@ namespace Azure.Security.Attestation
         /// interpreted by MAA. Refer to RFC 8259 for a description of JSON serialization
         /// standards for interoperability.
         /// </summary>
-        private const string JSONValue = "JSON";
+        private const string JsonValue = "JSON";
 
         /// <summary> Initializes a new instance of <see cref="DataType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,7 +37,7 @@ namespace Azure.Security.Attestation
         /// interpreted by MAA. Refer to RFC 8259 for a description of JSON serialization
         /// standards for interoperability.
         /// </summary>
-        public static DataType JSON { get; } = new DataType(JSONValue);
+        public static DataType Json { get; } = new DataType(JsonValue);
 
         /// <summary> Determines if two <see cref="DataType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

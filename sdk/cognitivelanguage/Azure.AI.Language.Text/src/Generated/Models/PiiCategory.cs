@@ -343,7 +343,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Email. </summary>
         private const string EmailValue = "Email";
         /// <summary> URL. </summary>
-        private const string URLValue = "URL";
+        private const string UriValue = "URL";
         /// <summary> Age. </summary>
         private const string AgeValue = "Age";
         /// <summary> Phone Number. </summary>
@@ -369,9 +369,9 @@ namespace Azure.AI.Language.Text
         /// <summary> Sort Code. 6-digit number used in the UK to identify a specific bank and branch where a bank account is held. </summary>
         private const string SortCodeValue = "SortCode";
         /// <summary> PIN. </summary>
-        private const string PINValue = "PIN";
+        private const string PinValue = "PIN";
         /// <summary> VIN. </summary>
-        private const string VINValue = "VIN";
+        private const string VinValue = "VIN";
         /// <summary> VIN. </summary>
         private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
         /// <summary> License Plate. </summary>
@@ -391,7 +391,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Zip Code. </summary>
         private const string ZipCodeValue = "ZipCode";
         /// <summary> Card Verification Value. </summary>
-        private const string CVVValue = "CVV";
+        private const string CvvValue = "CVV";
         /// <summary> Expiration Date. </summary>
         private const string ExpirationDateValue = "ExpirationDate";
         /// <summary> CA Social Identification Number. </summary>
@@ -407,7 +407,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Airport. </summary>
         private const string AirportValue = "Airport";
         /// <summary> Geopolitical Entity. </summary>
-        private const string GPEValue = "GPE";
+        private const string GpeValue = "GPE";
         /// <summary> All PII categories. </summary>
         private const string AllValue = "All";
         /// <summary> Default PII categories for the language. </summary>
@@ -916,7 +916,7 @@ namespace Azure.AI.Language.Text
         public static PiiCategory Email { get; } = new PiiCategory(EmailValue);
 
         /// <summary> URL. </summary>
-        public static PiiCategory URL { get; } = new PiiCategory(URLValue);
+        public static PiiCategory Uri { get; } = new PiiCategory(UriValue);
 
         /// <summary> Age. </summary>
         public static PiiCategory Age { get; } = new PiiCategory(AgeValue);
@@ -955,10 +955,10 @@ namespace Azure.AI.Language.Text
         public static PiiCategory SortCode { get; } = new PiiCategory(SortCodeValue);
 
         /// <summary> PIN. </summary>
-        public static PiiCategory PIN { get; } = new PiiCategory(PINValue);
+        public static PiiCategory Pin { get; } = new PiiCategory(PinValue);
 
         /// <summary> VIN. </summary>
-        public static PiiCategory VIN { get; } = new PiiCategory(VINValue);
+        public static PiiCategory Vin { get; } = new PiiCategory(VinValue);
 
         /// <summary> VIN. </summary>
         public static PiiCategory VehicleIdentificationNumber { get; } = new PiiCategory(VehicleIdentificationNumberValue);
@@ -988,7 +988,7 @@ namespace Azure.AI.Language.Text
         public static PiiCategory ZipCode { get; } = new PiiCategory(ZipCodeValue);
 
         /// <summary> Card Verification Value. </summary>
-        public static PiiCategory CVV { get; } = new PiiCategory(CVVValue);
+        public static PiiCategory Cvv { get; } = new PiiCategory(CvvValue);
 
         /// <summary> Expiration Date. </summary>
         public static PiiCategory ExpirationDate { get; } = new PiiCategory(ExpirationDateValue);
@@ -1012,7 +1012,7 @@ namespace Azure.AI.Language.Text
         public static PiiCategory Airport { get; } = new PiiCategory(AirportValue);
 
         /// <summary> Geopolitical Entity. </summary>
-        public static PiiCategory GPE { get; } = new PiiCategory(GPEValue);
+        public static PiiCategory Gpe { get; } = new PiiCategory(GpeValue);
 
         /// <summary> All PII categories. </summary>
         public static PiiCategory All { get; } = new PiiCategory(AllValue);

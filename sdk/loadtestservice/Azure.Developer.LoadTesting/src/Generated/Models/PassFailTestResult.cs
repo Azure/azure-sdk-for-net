@@ -15,11 +15,11 @@ namespace Azure.Developer.LoadTesting
     {
         private readonly string _value;
         /// <summary> Pass/fail criteria has passed. </summary>
-        private const string PASSEDValue = "PASSED";
+        private const string PassedValue = "PASSED";
         /// <summary> Pass/fail criteria is not applicable. </summary>
-        private const string NOTAPPLICABLEValue = "NOT_APPLICABLE";
+        private const string NotApplicableValue = "NOT_APPLICABLE";
         /// <summary> Pass/fail criteria has failed. </summary>
-        private const string FAILEDValue = "FAILED";
+        private const string FailedValue = "FAILED";
 
         /// <summary> Initializes a new instance of <see cref="PassFailTestResult"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,13 +32,13 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Pass/fail criteria has passed. </summary>
-        public static PassFailTestResult PASSED { get; } = new PassFailTestResult(PASSEDValue);
+        public static PassFailTestResult Passed { get; } = new PassFailTestResult(PassedValue);
 
         /// <summary> Pass/fail criteria is not applicable. </summary>
-        public static PassFailTestResult NOTAPPLICABLE { get; } = new PassFailTestResult(NOTAPPLICABLEValue);
+        public static PassFailTestResult NotApplicable { get; } = new PassFailTestResult(NotApplicableValue);
 
         /// <summary> Pass/fail criteria has failed. </summary>
-        public static PassFailTestResult FAILED { get; } = new PassFailTestResult(FAILEDValue);
+        public static PassFailTestResult Failed { get; } = new PassFailTestResult(FailedValue);
 
         /// <summary> Determines if two <see cref="PassFailTestResult"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

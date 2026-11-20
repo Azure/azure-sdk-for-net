@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         private readonly int _value;
         /// <summary> The retrieval completed successfully. </summary>
-        private const int OKValue = 200;
+        private const int OkValue = 200;
         /// <summary> The retrieval completed with partial results. </summary>
         private const int PartialContentValue = 206;
 
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> The retrieval completed successfully. </summary>
-        public static KnowledgeBaseRetrievalStatusCode OK { get; } = new KnowledgeBaseRetrievalStatusCode(OKValue);
+        public static KnowledgeBaseRetrievalStatusCode Ok { get; } = new KnowledgeBaseRetrievalStatusCode(OkValue);
 
         /// <summary> The retrieval completed with partial results. </summary>
         public static KnowledgeBaseRetrievalStatusCode PartialContent { get; } = new KnowledgeBaseRetrievalStatusCode(PartialContentValue);

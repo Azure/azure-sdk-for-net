@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Government issued ID category. </summary>
         private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
         /// <summary> Card verification value category. </summary>
-        private const string CVVValue = "CVV";
+        private const string CvvValue = "CVV";
         /// <summary> Health card number category. </summary>
         private const string HealthCardNumberValue = "HealthCardNumber";
         /// <summary> CA Social insurance number category. </summary>
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Location category. </summary>
         private const string LocationValue = "Location";
         /// <summary> GPE category. </summary>
-        private const string GPEValue = "GPE";
+        private const string GpeValue = "GPE";
         /// <summary> All categories. </summary>
         private const string AllValue = "All";
         /// <summary> Default categories. </summary>
@@ -150,7 +150,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static ConversationPiiCategories GovernmentIssuedId { get; } = new ConversationPiiCategories(GovernmentIssuedIdValue);
 
         /// <summary> Card verification value category. </summary>
-        public static ConversationPiiCategories CVV { get; } = new ConversationPiiCategories(CVVValue);
+        public static ConversationPiiCategories Cvv { get; } = new ConversationPiiCategories(CvvValue);
 
         /// <summary> Health card number category. </summary>
         public static ConversationPiiCategories HealthCardNumber { get; } = new ConversationPiiCategories(HealthCardNumberValue);
@@ -168,7 +168,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static ConversationPiiCategories Location { get; } = new ConversationPiiCategories(LocationValue);
 
         /// <summary> GPE category. </summary>
-        public static ConversationPiiCategories GPE { get; } = new ConversationPiiCategories(GPEValue);
+        public static ConversationPiiCategories Gpe { get; } = new ConversationPiiCategories(GpeValue);
 
         /// <summary> All categories. </summary>
         public static ConversationPiiCategories All { get; } = new ConversationPiiCategories(AllValue);

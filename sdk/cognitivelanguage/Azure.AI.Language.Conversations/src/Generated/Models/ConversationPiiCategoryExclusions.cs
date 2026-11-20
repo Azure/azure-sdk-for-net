@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Government issued ID category. </summary>
         private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
         /// <summary> Card verification value category. </summary>
-        private const string CVVValue = "CVV";
+        private const string CvvValue = "CVV";
         /// <summary> Health card number category. </summary>
         private const string HealthCardNumberValue = "HealthCardNumber";
         /// <summary> CA Social insurance number category. </summary>
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Location category. </summary>
         private const string LocationValue = "Location";
         /// <summary> GPE category. </summary>
-        private const string GPEValue = "GPE";
+        private const string GpeValue = "GPE";
 
         /// <summary> Initializes a new instance of <see cref="ConversationPiiCategoryExclusions"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -146,7 +146,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static ConversationPiiCategoryExclusions GovernmentIssuedId { get; } = new ConversationPiiCategoryExclusions(GovernmentIssuedIdValue);
 
         /// <summary> Card verification value category. </summary>
-        public static ConversationPiiCategoryExclusions CVV { get; } = new ConversationPiiCategoryExclusions(CVVValue);
+        public static ConversationPiiCategoryExclusions Cvv { get; } = new ConversationPiiCategoryExclusions(CvvValue);
 
         /// <summary> Health card number category. </summary>
         public static ConversationPiiCategoryExclusions HealthCardNumber { get; } = new ConversationPiiCategoryExclusions(HealthCardNumberValue);
@@ -164,7 +164,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static ConversationPiiCategoryExclusions Location { get; } = new ConversationPiiCategoryExclusions(LocationValue);
 
         /// <summary> GPE category. </summary>
-        public static ConversationPiiCategoryExclusions GPE { get; } = new ConversationPiiCategoryExclusions(GPEValue);
+        public static ConversationPiiCategoryExclusions Gpe { get; } = new ConversationPiiCategoryExclusions(GpeValue);
 
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

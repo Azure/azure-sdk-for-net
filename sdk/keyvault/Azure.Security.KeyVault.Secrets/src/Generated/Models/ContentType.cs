@@ -14,9 +14,9 @@ namespace Azure.Security.KeyVault.Secrets.Models
     {
         private readonly string _value;
         /// <summary> The PKCS#12 file format. </summary>
-        private const string PFXValue = "application/x-pkcs12";
+        private const string PfxValue = "application/x-pkcs12";
         /// <summary> The PEM file format. </summary>
-        private const string PEMValue = "application/x-pem-file";
+        private const string PemValue = "application/x-pem-file";
 
         /// <summary> Initializes a new instance of <see cref="ContentType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -26,10 +26,10 @@ namespace Azure.Security.KeyVault.Secrets.Models
         }
 
         /// <summary> The PKCS#12 file format. </summary>
-        public static ContentType PFX { get; } = new ContentType(PFXValue);
+        public static ContentType Pfx { get; } = new ContentType(PfxValue);
 
         /// <summary> The PEM file format. </summary>
-        public static ContentType PEM { get; } = new ContentType(PEMValue);
+        public static ContentType Pem { get; } = new ContentType(PemValue);
 
         /// <summary> Determines if two <see cref="ContentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

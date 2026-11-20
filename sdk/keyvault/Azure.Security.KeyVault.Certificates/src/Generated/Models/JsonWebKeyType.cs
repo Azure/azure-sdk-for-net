@@ -14,17 +14,17 @@ namespace Azure.Security.KeyVault.Certificates.Models
     {
         private readonly string _value;
         /// <summary> Elliptic Curve. </summary>
-        private const string ECValue = "EC";
+        private const string EcValue = "EC";
         /// <summary> Elliptic Curve with a private key which is not exportable from the HSM. </summary>
-        private const string ECHSMValue = "EC-HSM";
+        private const string EcHsmValue = "EC-HSM";
         /// <summary> RSA (https://tools.ietf.org/html/rfc3447). </summary>
-        private const string RSAValue = "RSA";
+        private const string RsaValue = "RSA";
         /// <summary> RSA with a private key which is not exportable from the HSM. </summary>
-        private const string RSAHSMValue = "RSA-HSM";
+        private const string RsaHsmValue = "RSA-HSM";
         /// <summary> Octet sequence (used to represent symmetric keys). </summary>
         private const string OctValue = "oct";
         /// <summary> Octet sequence with a private key which is not exportable from the HSM. </summary>
-        private const string OctHSMValue = "oct-HSM";
+        private const string OctHsmValue = "oct-HSM";
 
         /// <summary> Initializes a new instance of <see cref="JsonWebKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,22 +34,22 @@ namespace Azure.Security.KeyVault.Certificates.Models
         }
 
         /// <summary> Elliptic Curve. </summary>
-        public static JsonWebKeyType EC { get; } = new JsonWebKeyType(ECValue);
+        public static JsonWebKeyType Ec { get; } = new JsonWebKeyType(EcValue);
 
         /// <summary> Elliptic Curve with a private key which is not exportable from the HSM. </summary>
-        public static JsonWebKeyType ECHSM { get; } = new JsonWebKeyType(ECHSMValue);
+        public static JsonWebKeyType EcHsm { get; } = new JsonWebKeyType(EcHsmValue);
 
         /// <summary> RSA (https://tools.ietf.org/html/rfc3447). </summary>
-        public static JsonWebKeyType RSA { get; } = new JsonWebKeyType(RSAValue);
+        public static JsonWebKeyType Rsa { get; } = new JsonWebKeyType(RsaValue);
 
         /// <summary> RSA with a private key which is not exportable from the HSM. </summary>
-        public static JsonWebKeyType RSAHSM { get; } = new JsonWebKeyType(RSAHSMValue);
+        public static JsonWebKeyType RsaHsm { get; } = new JsonWebKeyType(RsaHsmValue);
 
         /// <summary> Octet sequence (used to represent symmetric keys). </summary>
         public static JsonWebKeyType Oct { get; } = new JsonWebKeyType(OctValue);
 
         /// <summary> Octet sequence with a private key which is not exportable from the HSM. </summary>
-        public static JsonWebKeyType OctHSM { get; } = new JsonWebKeyType(OctHSMValue);
+        public static JsonWebKeyType OctHsm { get; } = new JsonWebKeyType(OctHsmValue);
 
         /// <summary> Determines if two <see cref="JsonWebKeyType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

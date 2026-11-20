@@ -15,9 +15,9 @@ namespace Azure.Developer.LoadTesting
     {
         private readonly string _value;
         /// <summary> No request data will be collected. </summary>
-        private const string NONEValue = "NONE";
+        private const string NoneValue = "NONE";
         /// <summary> Request data will be collected in case of failed requests. </summary>
-        private const string ERRORSValue = "ERRORS";
+        private const string ErrorsValue = "ERRORS";
 
         /// <summary> Initializes a new instance of <see cref="RequestDataLevel"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,10 +30,10 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> No request data will be collected. </summary>
-        public static RequestDataLevel NONE { get; } = new RequestDataLevel(NONEValue);
+        public static RequestDataLevel None { get; } = new RequestDataLevel(NoneValue);
 
         /// <summary> Request data will be collected in case of failed requests. </summary>
-        public static RequestDataLevel ERRORS { get; } = new RequestDataLevel(ERRORSValue);
+        public static RequestDataLevel Errors { get; } = new RequestDataLevel(ErrorsValue);
 
         /// <summary> Determines if two <see cref="RequestDataLevel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

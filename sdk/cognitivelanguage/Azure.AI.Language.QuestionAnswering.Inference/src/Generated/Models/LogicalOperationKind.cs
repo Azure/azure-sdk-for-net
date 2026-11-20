@@ -15,9 +15,9 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     {
         private readonly string _value;
         /// <summary> 'AND' for using corresponding logical operation. </summary>
-        private const string ANDValue = "AND";
+        private const string AndValue = "AND";
         /// <summary> Set 'OR' for using corresponding logical operation. </summary>
-        private const string ORValue = "OR";
+        private const string OrValue = "OR";
 
         /// <summary> Initializes a new instance of <see cref="LogicalOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,10 +30,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> 'AND' for using corresponding logical operation. </summary>
-        public static LogicalOperationKind AND { get; } = new LogicalOperationKind(ANDValue);
+        public static LogicalOperationKind And { get; } = new LogicalOperationKind(AndValue);
 
         /// <summary> Set 'OR' for using corresponding logical operation. </summary>
-        public static LogicalOperationKind OR { get; } = new LogicalOperationKind(ORValue);
+        public static LogicalOperationKind Or { get; } = new LogicalOperationKind(OrValue);
 
         /// <summary> Determines if two <see cref="LogicalOperationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
