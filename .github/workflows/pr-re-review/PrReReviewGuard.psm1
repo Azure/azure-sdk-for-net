@@ -169,6 +169,30 @@ function Assert-PrReReviewOutput {
     return "Re-review coverage is complete: $line"
 }
 
+# The Copilot CLI replaces token-like text in tool output, such as a test's "Bearer <token>", with ******, so a part
+# holding such text never appears verbatim. Compare such a result line by line, letting ****** stand for the masked
+# text within a line. The first and last lines carry the part's markers, so they must still match exactly.
+function Test-PrReReviewMaskedRead {
+    param([Parameter(Mandatory)][AllowEmptyString()][string]$Result, [Parameter(Mandatory)][AllowEmptyString()][string]$Expected)
+
+    if (!$Result.Contains('******', [StringComparison]::Ordinal)) { return $false }
+    $expectedLines = $Expected.Split("`n")
+    if ($expectedLines.Count -lt 3) { return $false }
+    $resultLines = $Result.Split("`n")
+    $last = $expectedLines.Count - 1
+    for ($start = 0; $start + $last -lt $resultLines.Count; $start++) {
+        if ($resultLines[$start] -cne $expectedLines[0] -or $resultLines[$start + $last] -cne $expectedLines[$last]) { continue }
+        $matched = $true
+        for ($i = 1; $i -lt $last -and $matched; $i++) {
+            $line = $resultLines[$start + $i]
+            $matched = $line -ceq $expectedLines[$i] -or ($line.Contains('******', [StringComparison]::Ordinal) -and
+                $expectedLines[$i] -cmatch ('^' + (($line -split '\*{6}' | ForEach-Object { [regex]::Escape($_) }) -join '.+?') + '$'))
+        }
+        if ($matched) { return $true }
+    }
+    return $false
+}
+
 function Assert-PrReReviewReadCoverage {
     param(
         [AllowNull()]$AgentOutput,
@@ -216,7 +240,7 @@ function Assert-PrReReviewReadCoverage {
         foreach ($file in $files) {
             foreach ($chunk in $file.chunks) {
                 $expected = $chunk.content.TrimEnd([char[]]"`r`n")
-                if (!@($results | Where-Object { $_.Contains($expected, [StringComparison]::Ordinal) }).Count) {
+                if (!@($results | Where-Object { $_.Contains($expected, [StringComparison]::Ordinal) -or (Test-PrReReviewMaskedRead $_ $expected) }).Count) {
                     [string]$file.path
                     break
                 }

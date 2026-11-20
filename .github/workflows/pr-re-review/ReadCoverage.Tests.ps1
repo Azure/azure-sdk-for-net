@@ -166,6 +166,36 @@ Describe 'Assert-PrReReviewReadCoverage' {
         { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $completeLog } | Should -Not -Throw
     }
 
+    Context 'a part whose token-like text the CLI masked' {
+        BeforeEach {
+            $script:Masked = New-ReviewInputMarkers $script:Paths
+            $marker = $script:Masked.Files[2].marker
+            $script:Masked.Files[2].chunks = @(@{ content = "# Review input part 1 [$marker]`n+        Assert.That(authorization, Is.EqualTo(`"Bearer test-token`"));`n+        Assert.Pass();`n# End of part [$marker]`n" })
+            [IO.File]::WriteAllText($script:Masked.Path, (ConvertTo-Json -InputObject @{ headSha = 'abc1234'; files = $script:Masked.Files } -Depth 10))
+            $script:MaskedPart = $script:Masked.Files[2].chunks[0].content.Replace('Bearer test-token', '******')
+        }
+
+        It 'counts it as read when the rest of the part matches' {
+            $log = New-SessionLog @(
+                (New-ToolResult "$(New-PatchRead $script:Masked.Files[0])`n$(New-PatchRead $script:Masked.Files[1])")
+                (New-ToolResult "$script:MaskedPart<shellId: 7 completed with exit code 0>")
+            )
+            { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $script:Masked.Path -SessionLogPath $log } | Should -Not -Throw
+        }
+
+        It 'still counts it as unread when <Label>' -ForEach @(
+            @{ Label = 'the masking covers its end marker'; Edit = { param($Text, $Marker) $Text.Replace("# End of part [$Marker]", '# End of part [******]') } }
+            @{ Label = 'a line is missing'; Edit = { param($Text, $Marker) $Text.Replace("+        Assert.Pass();`n", '') } }
+        ) {
+            $log = New-SessionLog @(
+                (New-ToolResult "$(New-PatchRead $script:Masked.Files[0])`n$(New-PatchRead $script:Masked.Files[1])")
+                (New-ToolResult (& $Edit $script:MaskedPart $script:Masked.Files[2].marker))
+            )
+            { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $script:Masked.Path -SessionLogPath $log } |
+                Should -Throw -ExpectedMessage '*2 of 3*Azure.Widgets.net8.0.cs*'
+        }
+    }
+
     It 'leaves a run that submitted no review to terminal validation' {
         $markers = New-ReviewInputMarkers $script:Paths
         $output = New-AgentOutput @(@{ type = 'report_incomplete'; reason = 'Time limit close after 1 of 3 files.' })
