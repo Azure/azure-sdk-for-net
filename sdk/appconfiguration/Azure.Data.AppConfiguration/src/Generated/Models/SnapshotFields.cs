@@ -37,7 +37,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Description field. </summary>
         private const string DescriptionValue = "description";
         /// <summary> Etag field. </summary>
-        private const string EtagValue = "etag";
+        private const string ETagValue = "etag";
 
         /// <summary> Initializes a new instance of <see cref="SnapshotFields"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -63,6 +63,9 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Description field. </summary>
         public static SnapshotFields Description { get; } = new SnapshotFields(DescriptionValue);
+
+        /// <summary> Etag field. </summary>
+        public static SnapshotFields ETag { get; } = new SnapshotFields(ETagValue);
 
         /// <summary> Determines if two <see cref="SnapshotFields"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The client-server connection is lost. (EXCHANGE ONLINE PROTECTION). </summary>
         private const string ConnectionLostValue = "ConnectionLost";
         /// <summary> The client's IP address is blocked by IP filter or Private links configuration. </summary>
-        private const string IpForbiddenValue = "IpForbidden";
+        private const string IPForbiddenValue = "IpForbidden";
         /// <summary> The client exceeded one or more of the throttling limits that resulted in a connection termination by the service. </summary>
         private const string QuotaExceededValue = "QuotaExceeded";
         /// <summary> The connection got terminated due to an unexpected server error. </summary>
@@ -61,6 +61,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> The client-server connection is lost. (EXCHANGE ONLINE PROTECTION). </summary>
         public static EventGridMqttClientDisconnectionReason ConnectionLost { get; } = new EventGridMqttClientDisconnectionReason(ConnectionLostValue);
+
+        /// <summary> The client's IP address is blocked by IP filter or Private links configuration. </summary>
+        public static EventGridMqttClientDisconnectionReason IPForbidden { get; } = new EventGridMqttClientDisconnectionReason(IPForbiddenValue);
 
         /// <summary> The client exceeded one or more of the throttling limits that resulted in a connection termination by the service. </summary>
         public static EventGridMqttClientDisconnectionReason QuotaExceeded { get; } = new EventGridMqttClientDisconnectionReason(QuotaExceededValue);
