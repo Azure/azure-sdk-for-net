@@ -1,5 +1,5 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="Apache.Arrow" Version="22.1.0" />
+    <PackageVersion Include="Apache.Arrow" Version="23.0.0" />
   </ItemGroup>
 </Project>
