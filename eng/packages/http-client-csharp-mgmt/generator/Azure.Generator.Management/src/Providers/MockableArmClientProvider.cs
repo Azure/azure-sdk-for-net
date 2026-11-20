@@ -89,7 +89,7 @@ namespace Azure.Generator.Management.Providers
                 // parameter Name when wireInfo is null, so we must pass a non-null sentinel here. See issue #58484.
                 var scopeParameter = new ParameterProvider(
                     "scope",
-                    $"The scope that the resource will apply against.",
+                    ResourceHelpers.GetScopeParameterDescription(method.Scope, "The scope that the resource will apply against."),
                     typeof(ResourceIdentifier),
                     wireInfo: new WireInformation(SerializationFormat.Default, string.Empty),
                     validation: ParameterValidationType.AssertNotNull);
@@ -133,7 +133,7 @@ namespace Azure.Generator.Management.Providers
         private IList<MethodProvider> BuildMethodsForExtensionNonSingletonResource(ResourceClientProvider resource)
         {
             var result = new List<MethodProvider>();
-            var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
+            var scopeParameter = new ParameterProvider("scope", ResourceHelpers.GetScopeParameterDescription(resource.Scope, "The scope of the resource collection to get."), typeof(ResourceIdentifier));
             var extraParameters = resource.FactoryMethodSignature.Parameters;
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
@@ -200,7 +200,7 @@ namespace Azure.Generator.Management.Providers
         {
             var result = new List<MethodProvider>();
 
-            var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+            var scopeParameter = new ParameterProvider("scope", ResourceHelpers.GetScopeParameterDescription(resource.Scope, "The scope that the resource will apply against."), typeof(ResourceIdentifier));
             var extraParameters = resource.FactoryMethodSignature.Parameters;
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
