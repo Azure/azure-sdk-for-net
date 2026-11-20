@@ -39,7 +39,7 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
-    # Azure SDK Developer Playground subscription is assumed if not set
+    # Azure SDK Test Resources - TME subscription is assumed if not set
     [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $SubscriptionId,
@@ -248,15 +248,19 @@ try {
         $context = Get-AzContext;
         if (!$context) {
             Log 'User not logged in. Logging in now...'
-            $context = (Connect-AzAccount).Context
+            if ($SubscriptionId) {
+                $context = (Connect-AzAccount).Context
+            } else {
+                $context = (Connect-AzAccount -TenantId $wellKnownTMETenants[0]).Context
+            }
         }
 
-        $currentSubcriptionId = $context.Subscription.Id
+        $currentSubscriptionId = $context.Subscription.Id
 
-        # If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
+        # If no subscription was specified, use the Azure SDK Test Resources - TME subscription.
         # Ignore errors to leave the automatically selected subscription.
         if ($SubscriptionId) {
-            if ($currentSubcriptionId -ne $SubscriptionId) {
+            if ($currentSubscriptionId -ne $SubscriptionId) {
                 Log "Selecting subscription '$SubscriptionId'"
                 $null = Select-AzSubscription -Subscription $SubscriptionId
 
@@ -269,16 +273,14 @@ try {
                 $context = Get-AzContext
             }
         } else {
-            if ($context.Tenant.Name -like '*TME*') {
-                if ($currentSubscriptionId -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
-                    Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
-                    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore -WarningAction Ignore
-                    # Update the context.
-                    $context = Get-AzContext
-                }
-            } elseif ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
-                Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
-                $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore -WarningAction Ignore
+            if ($context.Tenant.Id -ne $wellKnownTMETenants[0]) {
+                Log 'User is not logged in to the TME tenant. Logging in now...'
+                $context = (Connect-AzAccount -TenantId $wellKnownTMETenants[0]).Context
+            }
+
+            if ($context.Subscription.Id -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
+                Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
+                $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore -WarningAction Ignore
                 # Update the context.
                 $context = Get-AzContext
             }
