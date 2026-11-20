@@ -6,7 +6,11 @@
 
 ### Breaking Changes
 
+- Removed the beta `IDisposable` implementations and virtual `Dispose` methods from `KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient`. Transport cleanup is automatic. Beta consumers must remove client `using` statements, explicit `Dispose` calls, and `Dispose` overrides or `base.Dispose()` calls in derived clients.
+
 ### Bugs Fixed
+
+- Fixed HTTP transport retention without requiring client disposal. Bearer requests share the default transport; certificate-bound requests use a bounded, automatically cleaned-up pool with request and response-stream leases. Custom transports remain supported for bearer tokens and fail explicitly for certificate-bound tokens.
 
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
 - Improved authentication challenge resource validation.

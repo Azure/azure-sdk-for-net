@@ -9,22 +9,22 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class KeyVaultEkmClientDisposalTests : ClientDisposalTestsBase<KeyVaultEkmClient, KeyVaultAdministrationClientOptions>
+    public class KeyVaultAccessControlClientLifetimeTests : ClientLifetimeTestsBase<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions>
     {
-        protected override KeyVaultEkmClient CreateClient(TokenCredential credential, KeyVaultAdministrationClientOptions options = null) =>
-            options == null ? new KeyVaultEkmClient(VaultUri, credential) : new KeyVaultEkmClient(VaultUri, credential, options);
+        protected override KeyVaultAccessControlClient CreateClient(TokenCredential credential, KeyVaultAdministrationClientOptions options = null) =>
+            options == null ? new KeyVaultAccessControlClient(VaultUri, credential) : new KeyVaultAccessControlClient(VaultUri, credential, options);
 
         protected override KeyVaultAdministrationClientOptions CreateOptions() => new();
 
-        protected override HttpPipeline GetPipeline(KeyVaultEkmClient client) => client.Pipeline;
+        protected override HttpPipeline GetPipeline(KeyVaultAccessControlClient client) => client.Pipeline;
 
         [Test]
-        public void DisposeIsSafeForAuthenticationPolicyConstructor()
+        public void AuthenticationPolicyConstructorDoesNotOwnTransport()
         {
             using DisposableMockTransport transport = new();
-            using KeyVaultEkmClient client = new(new BearerTokenAuthenticationPolicy(new MockCredential(), "scope"), VaultUri, new() { Transport = transport });
+            KeyVaultAccessControlClient client = new(new BearerTokenAuthenticationPolicy(new MockCredential(), "scope"), VaultUri, new() { Transport = transport });
 
-            DisposeRepeatedly(client, concurrent: true);
+            AssertCanSend(client.Pipeline);
 
             Assert.That(transport.DisposeCount, Is.Zero);
             Assert.That(client.Pipeline, Is.Not.InstanceOf<DisposableHttpPipeline>());
@@ -32,16 +32,16 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
 #pragma warning disable SCME0002 // Exercise the experimental settings constructor's different pipeline ownership.
         [Test]
-        public void DisposeIsSafeForSettingsConstructor()
+        public void SettingsConstructorDoesNotOwnTransport()
         {
             using DisposableMockTransport transport = new();
-            using KeyVaultEkmClient client = new(new KeyVaultEkmClientSettings
+            KeyVaultAccessControlClient client = new(new KeyVaultAccessControlClientSettings
             {
                 VaultBaseUrl = VaultUri,
                 Options = new() { Transport = transport }
             });
 
-            DisposeRepeatedly(client, concurrent: true);
+            AssertCanSend(client.Pipeline);
 
             Assert.That(transport.DisposeCount, Is.Zero);
             Assert.That(client.Pipeline, Is.Not.InstanceOf<DisposableHttpPipeline>());

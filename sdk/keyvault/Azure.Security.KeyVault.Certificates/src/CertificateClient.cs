@@ -29,12 +29,12 @@ namespace Azure.Security.KeyVault.Certificates
     /// wire payload shapes and public model surfaces are unchanged. Public
     /// method signatures, return types, exception contracts and recorded HTTP
     /// traffic match every previously shipped 4.x version of this package.
-    /// Reuse clients and call <see cref="Dispose"/> when their lifetime ends. The legacy
+    /// Reuse clients; disposing them is not required. The legacy
     /// hand-written transport layer (KeyVaultPipeline.SendRequest&lt;T&gt;)
     /// is retained only for DownloadCertificate because that API hits the
     /// Secrets endpoint, not the Certificates endpoint.
     /// </remarks>
-    public class CertificateClient : IDisposable
+    public class CertificateClient
     {
         internal const string CertificatesPath = "/certificates/";
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-certificates";
@@ -46,7 +46,6 @@ namespace Azure.Security.KeyVault.Certificates
         private readonly KeyVaultCertificatesClient _generated;
         private readonly ClientDiagnostics _diagnostics;
         private readonly Uri _vaultUri;
-        private DisposableHttpPipeline _ownedPipeline;
 
         // The hand-written pipeline is preserved purely for DownloadCertificate,
         // which fetches the managed secret behind the certificate from the Secrets
@@ -106,38 +105,24 @@ namespace Azure.Security.KeyVault.Certificates
             // flow through automatically. No field-by-field copy is needed - future
             // additions to ClientOptions are picked up for free.
             var authPolicy = new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification);
-            _ownedPipeline = HttpPipelineBuilder.Build(
-                options,
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options.CloneForPipeline(),
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [authPolicy],
-                transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
 
-            _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), _ownedPipeline, _diagnostics);
+            _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), pipeline, _diagnostics);
 
             // Reuse the same HttpPipeline (and api-version) for the legacy KeyVaultPipeline
             // wrapper that DownloadCertificate still depends on - so DownloadCertificate's
             // wire shape is byte-identical to prior releases.
-            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), _ownedPipeline, _diagnostics);
+            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, _diagnostics);
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="CertificateClient"/>.
         /// </summary>
         public virtual Uri VaultUri => _vaultUri;
-
-        /// <summary>
-        /// Releases the HTTP pipeline resources owned by this client.
-        /// </summary>
-        /// <remarks>
-        /// Reuse the client for its intended lifetime and dispose it after its operations, including long-running
-        /// operations and pageable enumeration, have completed. Caller-provided transports and credentials are not disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
-            GC.SuppressFinalize(this);
-        }
 
         #region StartCreateCertificate
 

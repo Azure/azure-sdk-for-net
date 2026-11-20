@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class KeyVaultSettingsClientDisposalTests : ClientDisposalTestsBase<KeyVaultSettingsClient, KeyVaultAdministrationClientOptions>
+    public class KeyVaultSettingsClientLifetimeTests : ClientLifetimeTestsBase<KeyVaultSettingsClient, KeyVaultAdministrationClientOptions>
     {
         protected override KeyVaultSettingsClient CreateClient(TokenCredential credential, KeyVaultAdministrationClientOptions options = null) =>
             options == null ? new KeyVaultSettingsClient(VaultUri, credential) : new KeyVaultSettingsClient(VaultUri, credential, options);
@@ -19,12 +19,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
         protected override HttpPipeline GetPipeline(KeyVaultSettingsClient client) => ReadField<KeyVaultRestClient>(client, "_restClient").Pipeline;
 
         [Test]
-        public void DisposeIsSafeForRestClientAuthenticationPolicyConstructor()
+        public void RestClientAuthenticationPolicyConstructorDoesNotOwnTransport()
         {
             using DisposableMockTransport transport = new();
-            using KeyVaultRestClient client = new(new BearerTokenAuthenticationPolicy(new MockCredential(), "scope"), VaultUri, new() { Transport = transport });
+            KeyVaultRestClient client = new(new BearerTokenAuthenticationPolicy(new MockCredential(), "scope"), VaultUri, new() { Transport = transport });
 
-            DisposeRepeatedly(client, concurrent: true);
+            AssertCanSend(client.Pipeline);
 
             Assert.That(transport.DisposeCount, Is.Zero);
             Assert.That(client.Pipeline, Is.Not.InstanceOf<DisposableHttpPipeline>());

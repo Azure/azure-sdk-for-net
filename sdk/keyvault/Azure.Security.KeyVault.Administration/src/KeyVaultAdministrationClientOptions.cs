@@ -15,6 +15,13 @@ namespace Azure.Security.KeyVault.Administration
     [CodeGenType("KeyVaultAccessControlClientOptions")]
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
+        internal KeyVaultAdministrationClientOptions CloneForPipeline()
+        {
+            var clone = (KeyVaultAdministrationClientOptions)MemberwiseClone();
+            clone.Transport = KeyVaultTransport.Create(Transport);
+            return clone;
+        }
+
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
 
         /// <summary>
