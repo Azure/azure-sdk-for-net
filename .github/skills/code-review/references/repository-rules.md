@@ -26,8 +26,8 @@ the matching section and check against it. Fetch a page's Markdown source, not i
 `https://azure.github.io/azure-sdk/<lang>_<page>.html` is
 `https://raw.githubusercontent.com/Azure/azure-sdk/main/docs/<lang>/<page>.md`. Find a section by
 its heading `{#id}` or requirement `id="…"`, and cite it as the page link plus `#<id>`.
-When the guidelines and this file disagree, the published guidelines win — report the
-discrepancy so this file can be corrected.
+When the guidelines and this file disagree, the published guidelines win unless this file names the
+requirement it supersedes. Report any other discrepancy so this file can be corrected.
 
 Precedence within the guidelines themselves: **more specific beats more general**. Where the
 .NET SDK guidelines explicitly address a point, they win over both the general Azure SDK
@@ -203,6 +203,21 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   token-provider abstraction, not `TokenCredential` 🟡
 - **Name the parameter for the abstraction it actually takes** — a token provider called
   `credential` misdescribes its own type 🟡
+- **HTTP payload models the library defines implement `IJsonModel<T>`/`IPersistableModel<T>` with a
+  source-generated `ModelReaderWriterContext`**, the serialization path
+  `doc/dev/AotCompatibility.md` prescribes 🟡. Reflection-based `System.Text.Json` for the
+  library's own models either trips the AOT analyzers or pushes `RequiresUnreferencedCode` onto
+  every method that sends or returns them, and a model without `IPersistableModel<T>` cannot go
+  through `RequestContent.Create`/`BinaryContent.Create` or `ModelReaderWriter`. The generator
+  emits this; a hand-written library has to supply it. Types a protocol-specific serializer owns,
+  such as AMQP-backed `ServiceBusMessage`, are out of scope
+- **A new path that requires `RequiresUnreferencedCode`/`RequiresDynamicCode` also ships an
+  AOT-safe alternative with the same capability** 🟡. `doc/dev/AotCompatibility.md` calls this
+  "critical". Annotating satisfies the analyzers and the CI AOT check, so review is the only gate.
+  Name the alternative: for a caller-supplied `T`, a `BinaryData` or stream overload (as
+  `Azure.Monitor.Ingestion`'s annotated `Upload<T>` has) or one taking `JsonTypeInfo<T>`; for a
+  LINQ provider, a string or query-definition overload. Azure.Core's `JsonObjectSerializer` is
+  itself annotated, so it is not an AOT-safe default
 - **Environment variables are not the mechanism to reach for** 🟡. A new setting should arrive
   through the `ClientSettings` pattern and the host's configuration, not
   `Environment.GetEnvironmentVariable`. `Azure.Identity` reads env vars extensively because that
@@ -215,7 +230,11 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   say a word about it. Beta-only and never-shipped settings are not frozen
 - **A `ClientSettings` type is the shape for all config/DI integration**, so the experience stays
   consistent across the Azure SDKs. The generator emits it for a generated client; a hand-written
-  client has to supply it deliberately, and that is where it gets missed
+  client has to supply it deliberately, and that is where it gets missed. New libraries do not add
+  the `Microsoft.Extensions.Azure` `*ClientBuilderExtensions` (`IAzureClientFactoryBuilder*`). That
+  pattern is in maintenance mode: the generator emits it only for libraries that already ship it
+  (#59506), because a shipped copy can't be removed without a break. This supersedes the published
+  `dotnet-client-builder-*` requirements, so don't ask for it
 - **Configuration ships with a schema, or it ships without IntelliSense** 🟡. A
   `ConfigurationSchema.json` — `schema/` at the package root when hand-authored,
   `src/Generated/schema/` when generated — is auto-packed for any shipping client library and

@@ -437,11 +437,11 @@ public class ResponseEventStream
     /// and an auto-generated item ID.
     /// </summary>
     /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the custom tool call output result.</returns>
-    public virtual OutputItemBuilder<OutputItemCustomToolCallOutput> AddOutputItemCustomToolCallOutput()
+    public virtual OutputItemBuilder<global::OpenAI.Responses.CustomToolCallOutputItem> AddOutputItemCustomToolCallOutput()
     {
         var outputIndex = _outputIndex++;
         var itemId = IdGenerator.NewCustomToolCallOutputItemId(_context.ResponseId);
-        return new OutputItemBuilder<OutputItemCustomToolCallOutput>(this, outputIndex, itemId);
+        return new OutputItemBuilder<global::OpenAI.Responses.CustomToolCallOutputItem>(this, outputIndex, itemId);
     }
 
     /// <summary>
@@ -804,8 +804,14 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, BinaryData output)
     {
         var builder = AddOutputItemCustomToolCallOutput();
-        var item = new OutputItemCustomToolCallOutput(callId, output, Models.FunctionCallOutputStatusEnum.Completed);
+        var item = new global::OpenAI.Responses.CustomToolCallOutputItem(callId, Array.Empty<global::OpenAI.Responses.ResponseContentPart>())
+        {
+            Status = global::OpenAI.Responses.CustomToolCallOutputStatus.Completed,
+        };
         item.Id = builder.ItemId;
+        // OpenAI's CustomToolCallOutputItem only models array output; patch the raw JSON so a
+        // string output keeps its wire form instead of being wrapped as an input_text part.
+        item.Patch.Set("$.output"u8, output);
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }

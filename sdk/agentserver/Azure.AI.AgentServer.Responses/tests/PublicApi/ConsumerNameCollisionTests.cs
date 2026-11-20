@@ -18,13 +18,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 /// </summary>
 public class ConsumerNameCollisionTests
 {
-    // Exposed by the public OutputItemCustomToolCall model; goes away once custom tool calls map to
-    // OpenAI.Responses.CustomToolCallItem / CustomToolCallOutputItem.
-    private static readonly HashSet<string> KnownCollisions = new(StringComparer.Ordinal)
-    {
-        "FunctionCallStatus",
-    };
-
     [Test]
     public void PublicTypes_DoNotCollideWithOpenAIOrExtensionsTypeNames()
     {
@@ -41,7 +34,6 @@ public class ConsumerNameCollisionTests
         var collisions = ownTypes
             .Select(t => t.Name)
             .Where(consumerVisibleNames.Contains)
-            .Where(name => !KnownCollisions.Contains(name))
             .Distinct()
             .OrderBy(name => name, StringComparer.Ordinal)
             .ToList();

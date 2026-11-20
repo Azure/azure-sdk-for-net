@@ -20,22 +20,18 @@ export OPTIMIZATION_CANDIDATE_ID="<your-candidate-id>"
 The client calls the optimization API with an env-var fallback
 (`OPTIMIZATION_CONFIG` inline JSON) when the API is unreachable:
 
+The snippet uses a test-only `StubCredential`; replace it with a `TokenCredential`
+configured for your Foundry project, such as `DefaultAzureCredential`.
+
 ```C# Snippet:Optimization_ReadMe_Load
-using Azure.AI.AgentServer.Optimization;
-using Azure.Identity;
+AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
-var client = new AgentOptimizationClient(
-    new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"),
-    new DefaultAzureCredential());
-
-string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
-CandidateDeployConfig? config = client.ResolveOptions(candidateId);
-
-if (config is not null)
+if (options is not null)
 {
-    Console.WriteLine($"Model: {config.Model}");
-    Console.WriteLine($"Instructions: {config.Instructions}");
-    Console.WriteLine($"Temperature: {config.Temperature}");
+    Console.WriteLine($"Instructions: {options.Instructions}");
+    Console.WriteLine($"Model: {options.Model}");
 }
 ```
 
@@ -46,9 +42,6 @@ source so the resolved config participates in the standard configuration
 pipeline:
 
 ```C# Snippet:Optimization_ReadMe_IConfiguration
-using Azure.AI.AgentServer.Optimization;
-using Microsoft.Extensions.Configuration;
-
 IConfiguration configuration = new ConfigurationBuilder()
     .AddOptimizationConfigSource("AgentOptimization")
     .Build();
@@ -67,10 +60,12 @@ The resolved `CandidateDeployConfig` is projected into the default
 Once resolved, use the config to set your agent's system prompt and model:
 
 ```C# Snippet:Optimization_Sample1_UseConfig
-CandidateDeployConfig? config = client.ResolveOptions(candidateId);
+AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+CandidateDeployConfig? options = client.ResolveOptions(candidateId);
 
-string instructions = config?.Instructions ?? "You are a helpful assistant.";
-string model = config?.Model ?? "gpt-4o-mini";
+string instructions = options?.Instructions ?? "You are a helpful assistant.";
+string model = options?.Model ?? "gpt-4o-mini";
 
 Console.WriteLine($"Using model: {model}");
 Console.WriteLine($"Instructions length: {instructions.Length} chars");

@@ -24,11 +24,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         private bool _instructionsIsDefined;
         private string _promptCacheKey;
         private bool _promptCacheKeyIsDefined;
-        private PromptCacheRetentionEnum? _promptCacheRetention;
+        private object _promptCacheRetention;
         private bool _promptCacheRetentionIsDefined;
-        private PromptCacheOptionsParam _promptCacheOptions;
+        private object _promptCacheOptions;
         private bool _promptCacheOptionsIsDefined;
-        private ServiceTierEnum? _serviceTier;
+        private object _serviceTier;
         private bool _serviceTierIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CompactResponseMethodPublicBody"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="serviceTier"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
 #pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
-        internal CompactResponseMethodPublicBody(string model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, PromptCacheRetentionEnum? promptCacheRetention, PromptCacheOptionsParam promptCacheOptions, ServiceTierEnum? serviceTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompactResponseMethodPublicBody(string model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, object promptCacheRetention, object promptCacheOptions, object serviceTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _input = input;
@@ -143,7 +143,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Gets the PromptCacheRetention. </summary>
-        public PromptCacheRetentionEnum? PromptCacheRetention
+        public object PromptCacheRetention
         {
             get
             {
@@ -152,7 +152,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Gets the PromptCacheOptions. </summary>
-        public PromptCacheOptionsParam PromptCacheOptions
+        public object PromptCacheOptions
         {
             get
             {
@@ -161,7 +161,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Gets the ServiceTier. </summary>
-        public ServiceTierEnum? ServiceTier
+        public object ServiceTier
         {
             get
             {

@@ -100,6 +100,27 @@ namespace SignalRServiceExtension.Tests
             resolver.GetInvocationContextResult = true;
         }
 
+        [Theory]
+        [InlineData("Internal binding configuration.")]
+        [InlineData("Internal binding configuration.\rSensitive details.")]
+        [InlineData("Internal binding configuration.\nSensitive details.")]
+        [InlineData("Internal binding configuration.\r\nSensitive details.")]
+        public async Task DispatcherExecutionFailureReturnsGenericInternalServerError(string exceptionMessage)
+        {
+            var dispatcher = new SignalRTriggerDispatcher(new TestRequestResolver());
+            var key = (hub: Guid.NewGuid().ToString(), category: "connections", @event: "connected");
+            var executorMock = new Mock<ITriggeredFunctionExecutor>();
+            executorMock.Setup(e => e.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new InvalidOperationException(exceptionMessage));
+            dispatcher.Map(key, new ExecutionContext { Executor = executorMock.Object, SignatureValidationOptions = null });
+
+            using var request = TestHelpers.CreateHttpRequestMessage(key.hub, key.category, key.@event, Guid.NewGuid().ToString());
+            using var response = await dispatcher.ExecuteAsync(request);
+
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal("Internal Server Error", response.ReasonPhrase);
+        }
+
         private class TestRequestResolver : IRequestResolver
         {
             public bool ValidateContentTypeResult { get; set; } = true;

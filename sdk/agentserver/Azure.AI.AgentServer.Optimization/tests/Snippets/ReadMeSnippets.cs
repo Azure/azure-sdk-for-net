@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
@@ -42,6 +43,19 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
             #endregion
 
             Assert.That(candidateId, Is.Not.Null);
+        }
+
+        [Test]
+        public void ReadOptionsFromConfiguration()
+        {
+            #region Snippet:Optimization_ReadMe_IConfiguration
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddOptimizationConfigSource("AgentOptimization")
+                .Build();
+
+            CandidateDeployConfig? config = configuration.GetOptimizationConfig();
+            Console.WriteLine($"Model: {config?.Model}");
+            #endregion
         }
 
         /// <summary>Stub credential for snippet compilation.</summary>
