@@ -17,6 +17,8 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
+    // Method-level ignores do not prevent the shared OneTimeSetUp from failing on subnet-policy recordings.
+    [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 Subnets =
             {
                 new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
+                new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
             },
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");

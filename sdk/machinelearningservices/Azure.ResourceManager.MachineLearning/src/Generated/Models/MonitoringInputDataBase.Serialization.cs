@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns"u8);
                 }
             }
-            if (_dataContextIsDefined || Optional.IsDefined(DataContext))
+            if (Optional.IsDefined(DataContext, _dataContextIsDefined))
             {
                 if (DataContext != null)
                 {

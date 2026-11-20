@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (_detailsIsDefined || Optional.IsDefined(Details))
+            if (Optional.IsDefined(Details, _detailsIsDefined))
             {
                 if (Details != null)
                 {

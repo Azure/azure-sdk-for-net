@@ -55,7 +55,7 @@ namespace Azure.Security.Attestation
 
         /// <summary> Converts a string to a <see cref="DataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataType?(string value) => value == null ? null : new DataType(value);
+        public static implicit operator DataType?(string value) => value == null ? (DataType?)null : new DataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -617,6 +617,26 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task ListSharesSegmentAsync_CreatedOn()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // Act
+            IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+
+            // Assert
+            ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
+            Assert.IsNotNull(shareItem);
+            Assert.IsNotNull(shareItem.Properties.ETag);
+            Assert.IsNotNull(shareItem.Properties.CreatedOn);
+        }
+
+        [RecordedTest]
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();

@@ -25,7 +25,6 @@
             "$id": "3",
             "name": "postIfMatch",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when only If-Match in header is defined.",
             "accessibility": "public",
             "parameters": [
@@ -120,7 +119,6 @@
             "$id": "9",
             "name": "postIfNoneMatch",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when only If-None-Match in header is defined.",
             "accessibility": "public",
             "parameters": [
@@ -215,7 +213,6 @@
             "$id": "15",
             "name": "headIfModifiedSince",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when only If-Modified-Since in header is defined.",
             "accessibility": "public",
             "parameters": [
@@ -326,7 +323,6 @@
             "$id": "23",
             "name": "postIfUnmodifiedSince",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when only If-Unmodified-Since in header is defined.",
             "accessibility": "public",
             "parameters": [

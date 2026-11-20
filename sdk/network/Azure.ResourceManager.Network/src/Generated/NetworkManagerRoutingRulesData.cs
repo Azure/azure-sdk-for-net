@@ -76,6 +76,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> Groups for configuration. </summary>
         [WirePath("properties.appliesTo")]
         public IList<NetworkManagerRoutingGroupItem> AppliesTo

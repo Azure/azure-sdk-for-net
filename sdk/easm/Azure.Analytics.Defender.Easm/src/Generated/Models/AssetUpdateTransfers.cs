@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="AssetUpdateTransfers"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssetUpdateTransfers?(string value) => value == null ? null : new AssetUpdateTransfers(value);
+        public static implicit operator AssetUpdateTransfers?(string value) => value == null ? (AssetUpdateTransfers?)null : new AssetUpdateTransfers(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAccountKeyDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private string _key;
-        internal bool _keyIsDefined;
+        private bool _keyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreSecrets"/>. </summary>
         public MachineLearningAccountKeyDatastoreSecrets() : base(SecretsType.AccountKey)

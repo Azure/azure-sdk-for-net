@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// <returns> An object representing collection of AIModels and their operations over a AIModelResource. </returns>
         public virtual AIModelCollection GetAIModels(AzureLocation location)
         {
-            return GetCachedClient(client => new AIModelCollection(client, Id, location));
+            return new AIModelCollection(Client, Id, location);
         }
 
         /// <summary>

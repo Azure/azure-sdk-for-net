@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(SecretStoreKeyVaultId);
             }
-            if (_keyVaultSecretNameIsDefined || Optional.IsDefined(KeyVaultSecretName))
+            if (Optional.IsDefined(KeyVaultSecretName, _keyVaultSecretNameIsDefined))
             {
                 if (KeyVaultSecretName != null)
                 {

@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _rateLimitQPS;
-        internal bool _rateLimitQPSIsDefined;
+        private bool _rateLimitQPSIsDefined;
         private int? _queryWindowInMin;
-        internal bool _queryWindowInMinIsDefined;
+        private bool _queryWindowInMinIsDefined;
         private int? _retryCount;
-        internal bool _retryCountIsDefined;
+        private bool _retryCountIsDefined;
         private int? _timeoutInSeconds;
-        internal bool _timeoutInSecondsIsDefined;
+        private bool _timeoutInSecondsIsDefined;
         private bool? _isPostPayloadJson;
-        internal bool _isPostPayloadJsonIsDefined;
+        private bool _isPostPayloadJsonIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RestApiPollerRequestConfig"/>. </summary>
         /// <param name="apiEndpoint"> The API endpoint. </param>

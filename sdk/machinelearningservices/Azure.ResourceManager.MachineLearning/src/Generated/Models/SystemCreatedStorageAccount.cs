@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private ArmResourceId _armResourceIdentifier;
-        internal bool _armResourceIdentifierIsDefined;
+        private bool _armResourceIdentifierIsDefined;
         private string _storageAccountName;
-        internal bool _storageAccountNameIsDefined;
+        private bool _storageAccountNameIsDefined;
         private string _storageAccountType;
-        internal bool _storageAccountTypeIsDefined;
+        private bool _storageAccountTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SystemCreatedStorageAccount"/>. </summary>
         public SystemCreatedStorageAccount()

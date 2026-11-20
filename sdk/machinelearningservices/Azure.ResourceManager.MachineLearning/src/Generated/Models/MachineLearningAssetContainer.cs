@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAssetContainer : MachineLearningResourceBase
     {
         private string _latestVersion;
-        internal bool _latestVersionIsDefined;
+        private protected bool _latestVersionIsDefined;
         private string _nextVersion;
-        internal bool _nextVersionIsDefined;
+        private protected bool _nextVersionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAssetContainer"/>. </summary>
         public MachineLearningAssetContainer()

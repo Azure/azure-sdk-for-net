@@ -36,29 +36,38 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the URI used to communicate with the service.
         /// </summary>
-        public Uri Endpoint { get; }
+        public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets whether this client can call <see cref="AttestTdxVm(AttestationRequest, CancellationToken)"/> and
+        /// <see cref="AttestTdxVmAsync(AttestationRequest, CancellationToken)"/>: <c>true</c> when it targets
+        /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later. When <c>false</c>, those methods throw <see cref="NotSupportedException"/>.
+        /// </summary>
+        public virtual bool CanAttestTdxVm { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
         public AttestationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AttestationClientOptions())
         {
-            Endpoint = endpoint;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
         public AttestationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             /*Argument.AssertNotNull(credential, nameof(credential));*/
             Argument.AssertNotNull(options, nameof(options));
+            AssertHttps(endpoint);
 
             // Add the authentication policy to our builder.
             _pipeline = HttpPipelineBuilder.Build(options, credential != null ? new BearerTokenAuthenticationPolicy(credential, DefaultScope) : null);
@@ -69,12 +78,13 @@ namespace Azure.Security.Attestation
             _options = options;
 
             Endpoint = endpoint;
+            CanAttestTdxVm = IsVersion2025_06_01OrLater(options.Version);
 
-            // Initialize the Rest Client.
-            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            // Initialize the Rest Client. The constructor uses the endpoint parameter rather than the virtual Endpoint property.
+            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
 
-            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
-            _openIdMetadataClient = new MetadataConfigurationRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _openIdMetadataClient = new MetadataConfigurationRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
         }
         /// <summary>
         /// Parameterless constructor for mocking.
@@ -158,7 +168,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -240,7 +250,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -265,7 +275,7 @@ namespace Azure.Security.Attestation
         /// The <see cref="AttestationRequest.Evidence"/> must be a TDX quote. TDX attestation requires
         /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later, and does not support <see cref="AttestationRequest.DraftPolicyForAttestation"/>.
         /// </remarks>
-        /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation.</exception>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation; see <see cref="CanAttestTdxVm"/>.</exception>
         /// <exception cref="ArgumentException"><see cref="AttestationRequest.DraftPolicyForAttestation"/> is set.</exception>
         public virtual AttestationResponse<AttestationResult> AttestTdxVm(AttestationRequest request, CancellationToken cancellationToken = default)
             => AttestTdxVmInternalAsync(request, false, cancellationToken).EnsureCompleted();
@@ -280,7 +290,7 @@ namespace Azure.Security.Attestation
         /// The <see cref="AttestationRequest.Evidence"/> must be a TDX quote. TDX attestation requires
         /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later, and does not support <see cref="AttestationRequest.DraftPolicyForAttestation"/>.
         /// </remarks>
-        /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation.</exception>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation; see <see cref="CanAttestTdxVm"/>.</exception>
         /// <exception cref="ArgumentException"><see cref="AttestationRequest.DraftPolicyForAttestation"/> is set.</exception>
         public virtual async Task<AttestationResponse<AttestationResult>> AttestTdxVmAsync(AttestationRequest request, CancellationToken cancellationToken = default)
             => await AttestTdxVmInternalAsync(request, true, cancellationToken).ConfigureAwait(false);
@@ -293,7 +303,7 @@ namespace Azure.Security.Attestation
             {
                 throw new ArgumentException("TDX attestation does not support a draft attestation policy.", nameof(request));
             }
-            if (string.CompareOrdinal(_options.Version, "2025-06-01") < 0)
+            if (!IsVersion2025_06_01OrLater(_options.Version))
             {
                 throw new NotSupportedException($"TDX attestation requires service version {AttestationClientOptions.ServiceVersion.V2025_06_01} or later.");
             }
@@ -424,7 +434,7 @@ namespace Azure.Security.Attestation
             if (_options.TokenOptions.ValidateToken)
             {
                 var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: isDraftPolicy).ConfigureAwait(false))
+                if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: isDraftPolicy).ConfigureAwait(false))
                 {
                     AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                 }
@@ -561,6 +571,20 @@ namespace Azure.Security.Attestation
             {
                 scope.Failed(ex);
                 throw;
+            }
+        }
+
+        // TDX attestation and TCB baselines were added in service version 2025-06-01.
+        internal static bool IsVersion2025_06_01OrLater(string version)
+            => string.CompareOrdinal(version, "2025-06-01") >= 0;
+
+        // The client fetches the certificates that validate tokens from the same endpoint that issues them, so the
+        // connection must be protected by TLS even when the client has no credential.
+        internal static void AssertHttps(Uri endpoint)
+        {
+            if (!string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"The attestation endpoint must use https, but '{endpoint}' does not.", nameof(endpoint));
             }
         }
 

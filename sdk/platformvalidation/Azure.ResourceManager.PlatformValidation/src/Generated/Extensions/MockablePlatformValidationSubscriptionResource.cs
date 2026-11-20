@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
 
         private ClientDiagnostics CloudValidationsClientDiagnostics => _cloudValidationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlatformValidation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudValidations CloudValidationsRestClient => _cloudValidationsRestClient ??= new CloudValidations(CloudValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
+        private CloudValidations CloudValidationsRestClient => _cloudValidationsRestClient ??= new CloudValidations(CloudValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PlatformValidation/cloudValidations", out string apiVersion) ? apiVersion : "2026-08-01-preview");
 
         private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlatformValidation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

@@ -71,6 +71,18 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 throw new FormatException($"The model {nameof(MisalignmentErrorDetailsResource)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(ReviewTarget, _reviewTargetIsDefined))
+            {
+                if (ReviewTarget != null)
+                {
+                    writer.WritePropertyName("review_target"u8);
+                    writer.WriteStringValue(ReviewTarget);
+                }
+                else
+                {
+                    writer.WriteNull("review_target"u8);
+                }
+            }
             if (Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("error_type"u8);
@@ -128,12 +140,25 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 return null;
             }
+            bool reviewTargetIsDefined = false;
+            string reviewTarget = default;
             MisalignmentErrorType? errorType = default;
             string detailedExplanation = default;
             MisalignmentSteer steer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("review_target"u8))
+                {
+                    reviewTargetIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        reviewTarget = null;
+                        continue;
+                    }
+                    reviewTarget = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("error_type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -162,7 +187,10 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MisalignmentErrorDetailsResource(errorType, detailedExplanation, steer, additionalBinaryDataProperties);
+            return new MisalignmentErrorDetailsResource(reviewTarget, errorType, detailedExplanation, steer, additionalBinaryDataProperties)
+            {
+                _reviewTargetIsDefined = reviewTargetIsDefined
+            };
         }
     }
 }

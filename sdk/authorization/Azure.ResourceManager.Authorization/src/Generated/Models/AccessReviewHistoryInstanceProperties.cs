@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _runOn;
-        internal bool _runOnIsDefined;
+        private bool _runOnIsDefined;
         private DateTimeOffset? _fulfilledOn;
-        internal bool _fulfilledOnIsDefined;
+        private bool _fulfilledOnIsDefined;
         private DateTimeOffset? _expiration;
-        internal bool _expirationIsDefined;
+        private bool _expirationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewHistoryInstanceProperties"/>. </summary>
         public AccessReviewHistoryInstanceProperties()

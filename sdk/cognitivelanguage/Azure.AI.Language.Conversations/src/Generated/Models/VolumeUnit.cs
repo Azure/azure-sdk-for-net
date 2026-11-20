@@ -182,7 +182,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="VolumeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeUnit?(string value) => value == null ? null : new VolumeUnit(value);
+        public static implicit operator VolumeUnit?(string value) => value == null ? (VolumeUnit?)null : new VolumeUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

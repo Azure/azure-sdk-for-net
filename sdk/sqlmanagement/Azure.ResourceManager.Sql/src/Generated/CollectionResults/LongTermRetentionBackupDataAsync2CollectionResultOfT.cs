@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -23,6 +25,8 @@ namespace Azure.ResourceManager.Sql
         private readonly string _longTermRetentionServerName;
         private readonly bool? _onlyLatestPerDatabase;
         private readonly string _databaseState;
+        private readonly string _skiptoken;
+        private readonly long? _top;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -33,9 +37,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LongTermRetentionBackupDataAsync2CollectionResultOfT(LongTermRetentionBackups client, Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LongTermRetentionBackupDataAsync2CollectionResultOfT(LongTermRetentionBackups client, Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, string skiptoken, long? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,6 +49,8 @@ namespace Azure.ResourceManager.Sql
             _longTermRetentionServerName = longTermRetentionServerName;
             _onlyLatestPerDatabase = onlyLatestPerDatabase;
             _databaseState = databaseState;
+            _skiptoken = skiptoken;
+            _top = top;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -51,12 +59,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LongTermRetentionBackupDataAsync2CollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<LongTermRetentionBackupData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IAsyncEnumerable<Page<LongTermRetentionBackupData>> AsPages(string continuationToken, int? pageSizeHint)
+        {
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async IAsyncEnumerable<Page<LongTermRetentionBackupData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -75,14 +91,23 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetLongTermRetentionBackupsWithServerRequest(nextLink, _subscriptionId, _locationName, _longTermRetentionServerName, _onlyLatestPerDatabase, _databaseState, _context) : _client.CreateGetLongTermRetentionBackupsWithServerRequest(_subscriptionId, _locationName, _longTermRetentionServerName, _onlyLatestPerDatabase, _databaseState, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetLongTermRetentionBackupsWithServerRequest(nextLink, _subscriptionId, _locationName, _longTermRetentionServerName, _onlyLatestPerDatabase, _databaseState, _skiptoken, _top, _context) : _client.CreateGetLongTermRetentionBackupsWithServerRequest(_subscriptionId, _locationName, _longTermRetentionServerName, _onlyLatestPerDatabase, _databaseState, _skiptoken, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (Exception e)
             {

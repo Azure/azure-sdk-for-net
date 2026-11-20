@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _appConfigurationId;
-        internal bool _appConfigurationIdIsDefined;
+        private bool _appConfigurationIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationStore"/>. </summary>
         public ConfigurationStore()

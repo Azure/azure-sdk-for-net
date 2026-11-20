@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class AzureAppConfigProperties : AzureResourceBaseProperties
     {
         private bool? _isConnectedWithKubernetesExtension;
-        internal bool _isConnectedWithKubernetesExtensionIsDefined;
+        private bool _isConnectedWithKubernetesExtensionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureAppConfigProperties"/>. </summary>
         public AzureAppConfigProperties() : base(AzureResourceType.AppConfig)

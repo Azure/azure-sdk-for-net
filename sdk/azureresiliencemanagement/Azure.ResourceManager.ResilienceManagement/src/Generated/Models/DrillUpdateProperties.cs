@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private HealthModelMonitoringProperties _healthModelMonitoringProperties;
-        internal bool _healthModelMonitoringPropertiesIsDefined;
+        private bool _healthModelMonitoringPropertiesIsDefined;
         private SliMonitoringProperties _sliMonitoringProperties;
-        internal bool _sliMonitoringPropertiesIsDefined;
+        private bool _sliMonitoringPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DrillUpdateProperties"/>. </summary>
         public DrillUpdateProperties()

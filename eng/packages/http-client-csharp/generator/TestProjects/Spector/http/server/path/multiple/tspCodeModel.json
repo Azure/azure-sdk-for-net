@@ -68,7 +68,6 @@
             "$id": "6",
             "name": "noOperationParams",
             "isExactName": false,
-            "resourceName": "Multiple",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -111,7 +110,6 @@
             "$id": "8",
             "name": "withOperationPathParam",
             "isExactName": false,
-            "resourceName": "Multiple",
             "accessibility": "public",
             "parameters": [
               {

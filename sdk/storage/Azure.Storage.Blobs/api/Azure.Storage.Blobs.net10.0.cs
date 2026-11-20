@@ -55,13 +55,14 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_10_06) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2027_03_07) { }
         public Azure.Storage.Blobs.Models.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Request100ContinueOptions Request100ContinueOptions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionOptions SessionOptions { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public bool TrimBlobNameSlashes { get { throw null; } set { } }
         public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
@@ -99,6 +100,8 @@ namespace Azure.Storage.Blobs
             V2026_04_06 = 30,
             V2026_06_06 = 31,
             V2026_10_06 = 32,
+            V2026_12_06 = 33,
+            V2027_03_07 = 34,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -200,6 +203,8 @@ namespace Azure.Storage.Blobs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.BlobContainerClient>> CreateBlobContainerAsync(string blobContainerName, Azure.Storage.Blobs.Models.PublicAccessType publicAccessType = Azure.Storage.Blobs.Models.PublicAccessType.None, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected static Azure.Storage.Blobs.BlobServiceClient CreateClient(System.Uri serviceUri, Azure.Storage.Blobs.BlobClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy authentication, Azure.Core.Pipeline.HttpPipeline pipeline) { throw null; }
         protected static Azure.Storage.Blobs.BlobServiceClient CreateClient(System.Uri serviceUri, Azure.Storage.Blobs.BlobClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy authentication, Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Storage.StorageSharedKeyCredential sharedKeyCredential, Azure.AzureSasCredential sasCredential, Azure.Core.TokenCredential tokenCredential) { throw null; }
+        protected static Azure.Storage.Blobs.Models.SessionProvider CreateContainerSessionProvider(System.Uri endpoint, Azure.Storage.Blobs.BlobClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy authentication, Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.TokenCredential tokenCredential) { throw null; }
+        protected static Azure.Core.Pipeline.HttpPipelinePolicy CreateSessionAuthenticationPolicy(System.Uri endpoint, Azure.Core.Pipeline.HttpPipelinePolicy fallbackAuthPolicy, Azure.Storage.Blobs.Models.SessionProvider sessionProvider, Azure.Storage.Blobs.Models.SessionOptions sessionOptions) { throw null; }
         public virtual Azure.Response DeleteBlobContainer(string blobContainerName, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBlobContainerAsync(string blobContainerName, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Blobs.Models.TaggedBlobItem> FindBlobsByTags(string tagFilterSqlExpression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -568,6 +573,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get { throw null; } }
         public string CopyStatusDescription { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public Azure.Storage.Blobs.Models.DownloadHint? DownloadHint { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
@@ -625,6 +631,7 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobDownloadToOptions() { }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
@@ -926,6 +933,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
@@ -1138,7 +1146,8 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobDownloadDetails BlobDownloadDetails(Azure.Storage.Blobs.Models.BlobType blobType, long contentLength, string contentType, byte[] contentHash, System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, long blobSequenceNumber, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Blobs.Models.CopyStatus copyStatus, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, Azure.Storage.Blobs.Models.LeaseState leaseState, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, string acceptRanges, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, byte[] blobContentHash, long tagCount, string versionId, bool isSealed, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> objectReplicationSourceProperties, string objectReplicationDestinationPolicy) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobDownloadDetails BlobDownloadDetails(Azure.Storage.Blobs.Models.BlobType blobType, long contentLength, string contentType, byte[] contentHash, System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, long blobSequenceNumber, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Blobs.Models.CopyStatus copyStatus, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, Azure.Storage.Blobs.Models.LeaseState leaseState, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, string acceptRanges, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, byte[] blobContentHash, long tagCount, string versionId, bool isSealed, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> objectReplicationSourceProperties, string objectReplicationDestinationPolicy, bool hasLegalHold, System.DateTimeOffset createdOn) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobDownloadDetails BlobDownloadDetails(Azure.Storage.Blobs.Models.BlobType blobType, long contentLength, string contentType, byte[] contentHash, System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, long blobSequenceNumber, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Blobs.Models.CopyStatus copyStatus, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, Azure.Storage.Blobs.Models.LeaseState leaseState, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, string acceptRanges, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, byte[] blobContentHash, long tagCount, string versionId, bool isSealed, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> objectReplicationSourceProperties, string objectReplicationDestinationPolicy, bool hasLegalHold, System.DateTimeOffset createdOn, Azure.ETag eTag) { throw null; }
-        public static Azure.Storage.Blobs.Models.BlobDownloadDetails BlobDownloadDetails(Azure.Storage.Blobs.Models.BlobType blobType = Azure.Storage.Blobs.Models.BlobType.Block, long contentLength = (long)0, string contentType = null, byte[] contentHash = null, System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, string> metadata = null, string contentRange = null, string contentEncoding = null, string cacheControl = null, string contentDisposition = null, string contentLanguage = null, long blobSequenceNumber = (long)0, System.DateTimeOffset copyCompletedOn = default(System.DateTimeOffset), string copyStatusDescription = null, string copyId = null, string copyProgress = null, System.Uri copySource = null, Azure.Storage.Blobs.Models.CopyStatus copyStatus = Azure.Storage.Blobs.Models.CopyStatus.Pending, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration = Azure.Storage.Blobs.Models.LeaseDurationType.Infinite, Azure.Storage.Blobs.Models.LeaseState leaseState = Azure.Storage.Blobs.Models.LeaseState.Available, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus = Azure.Storage.Blobs.Models.LeaseStatus.Locked, string acceptRanges = null, int blobCommittedBlockCount = 0, bool isServerEncrypted = false, string encryptionKeySha256 = null, string encryptionScope = null, byte[] blobContentHash = null, long tagCount = (long)0, string versionId = null, bool isSealed = false, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> objectReplicationSourceProperties = null, string objectReplicationDestinationPolicy = null, bool hasLegalHold = false, System.DateTimeOffset createdOn = default(System.DateTimeOffset), string accessTier = null, bool accessTierInferred = false, System.DateTimeOffset accessTierChangedOn = default(System.DateTimeOffset), string smartAccessTier = null, Azure.ETag eTag = default(Azure.ETag)) { throw null; }
+        public static Azure.Storage.Blobs.Models.BlobDownloadDetails BlobDownloadDetails(Azure.Storage.Blobs.Models.BlobType blobType, long contentLength, string contentType, byte[] contentHash, System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, long blobSequenceNumber, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Blobs.Models.CopyStatus copyStatus, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, Azure.Storage.Blobs.Models.LeaseState leaseState, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, string acceptRanges, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, byte[] blobContentHash, long tagCount, string versionId, bool isSealed, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> objectReplicationSourceProperties, string objectReplicationDestinationPolicy, bool hasLegalHold, System.DateTimeOffset createdOn, string accessTier, bool accessTierInferred, System.DateTimeOffset accessTierChangedOn, string smartAccessTier, Azure.ETag eTag) { throw null; }
+        public static Azure.Storage.Blobs.Models.BlobDownloadDetails BlobDownloadDetails(Azure.Storage.Blobs.Models.BlobType blobType = Azure.Storage.Blobs.Models.BlobType.Block, long contentLength = (long)0, string contentType = null, byte[] contentHash = null, System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, string> metadata = null, string contentRange = null, string contentEncoding = null, string cacheControl = null, string contentDisposition = null, string contentLanguage = null, long blobSequenceNumber = (long)0, System.DateTimeOffset copyCompletedOn = default(System.DateTimeOffset), string copyStatusDescription = null, string copyId = null, string copyProgress = null, System.Uri copySource = null, Azure.Storage.Blobs.Models.CopyStatus copyStatus = Azure.Storage.Blobs.Models.CopyStatus.Pending, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration = Azure.Storage.Blobs.Models.LeaseDurationType.Infinite, Azure.Storage.Blobs.Models.LeaseState leaseState = Azure.Storage.Blobs.Models.LeaseState.Available, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus = Azure.Storage.Blobs.Models.LeaseStatus.Locked, string acceptRanges = null, int blobCommittedBlockCount = 0, bool isServerEncrypted = false, string encryptionKeySha256 = null, string encryptionScope = null, byte[] blobContentHash = null, long tagCount = (long)0, string versionId = null, bool isSealed = false, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> objectReplicationSourceProperties = null, string objectReplicationDestinationPolicy = null, bool hasLegalHold = false, System.DateTimeOffset createdOn = default(System.DateTimeOffset), string accessTier = null, bool accessTierInferred = false, System.DateTimeOffset accessTierChangedOn = default(System.DateTimeOffset), string smartAccessTier = null, Azure.ETag eTag = default(Azure.ETag), Azure.Storage.Blobs.Models.DownloadHint? downloadHint = default(Azure.Storage.Blobs.Models.DownloadHint?)) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobDownloadDetails BlobDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, long blobSequenceNumber, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Blobs.Models.CopyStatus copyStatus, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, Azure.Storage.Blobs.Models.LeaseState leaseState, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, string acceptRanges, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, byte[] blobContentHash, long tagCount, string versionId, bool isSealed, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> objectReplicationSourceProperties, string objectReplicationDestinationPolicy) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobDownloadInfo BlobDownloadInfo(System.DateTimeOffset lastModified, long blobSequenceNumber, Azure.Storage.Blobs.Models.BlobType blobType, byte[] contentCrc64, string contentLanguage, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Blobs.Models.CopyStatus copyStatus, string contentDisposition, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, string cacheControl, Azure.Storage.Blobs.Models.LeaseState leaseState, string contentEncoding, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, byte[] contentHash, string acceptRanges, Azure.ETag eTag, int blobCommittedBlockCount, string contentRange, bool isServerEncrypted, string contentType, string encryptionKeySha256, long contentLength, byte[] blobContentHash, System.Collections.Generic.IDictionary<string, string> metadata, System.IO.Stream content, System.DateTimeOffset copyCompletionTime) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobDownloadInfo BlobDownloadInfo(System.DateTimeOffset lastModified, long blobSequenceNumber, Azure.Storage.Blobs.Models.BlobType blobType, byte[] contentCrc64, string contentLanguage, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Blobs.Models.CopyStatus copyStatus, string contentDisposition, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, string cacheControl, Azure.Storage.Blobs.Models.LeaseState leaseState, string contentEncoding, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, byte[] contentHash, string acceptRanges, Azure.ETag eTag, int blobCommittedBlockCount, string contentRange, bool isServerEncrypted, string contentType, string encryptionKeySha256, string encryptionScope, long contentLength, byte[] blobContentHash, System.Collections.Generic.IDictionary<string, string> metadata, System.IO.Stream content, System.DateTimeOffset copyCompletionTime) { throw null; }
@@ -1334,6 +1343,10 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
+    public partial class ContainerSessionProvider : Azure.Storage.Blobs.Models.SessionProvider
+    {
+        public ContainerSessionProvider(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
+    }
     public partial class CopyFromUriOperation : Azure.Operation<long>
     {
         protected CopyFromUriOperation() { }
@@ -1377,6 +1390,22 @@ namespace Azure.Storage.Blobs.Models
         None = 0,
         IncludeSnapshots = 1,
         OnlySnapshots = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DownloadHint : System.IEquatable<Azure.Storage.Blobs.Models.DownloadHint>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DownloadHint(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.DownloadHint Layout { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.DownloadHint other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.DownloadHint left, Azure.Storage.Blobs.Models.DownloadHint right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.DownloadHint (string value) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.DownloadHint? (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.DownloadHint left, Azure.Storage.Blobs.Models.DownloadHint right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum EncryptionAlgorithmType
     {
@@ -1438,6 +1467,12 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions Conditions { get { throw null; } set { } }
         public Azure.HttpRange? Range { get { throw null; } set { } }
         public string Snapshot { get { throw null; } set { } }
+    }
+    public enum LayoutAwareRouting
+    {
+        Auto = 0,
+        Disabled = 1,
+        Enabled = 2,
     }
     public enum LeaseDurationType
     {
@@ -1609,6 +1644,23 @@ namespace Azure.Storage.Blobs.Models
         Max = 0,
         Update = 1,
         Increment = 2,
+    }
+    public enum SessionMode
+    {
+        Auto = 0,
+        Disabled = 1,
+        Enabled = 2,
+    }
+    public partial class SessionOptions
+    {
+        public SessionOptions() { }
+        public string AccountName { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionMode SessionMode { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionProvider SessionProvider { get { throw null; } set { } }
+    }
+    public abstract partial class SessionProvider
+    {
+        internal SessionProvider() { }
     }
     public enum SkuName
     {
@@ -1936,7 +1988,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_10_06) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2027_03_07) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions

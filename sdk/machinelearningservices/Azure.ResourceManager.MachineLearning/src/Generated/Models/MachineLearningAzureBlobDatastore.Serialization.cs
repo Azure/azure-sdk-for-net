@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_resourceGroupIsDefined || Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup, _resourceGroupIsDefined))
             {
                 if (ResourceGroup != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceGroup"u8);
                 }
             }
-            if (_subscriptionIdIsDefined || Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId, _subscriptionIdIsDefined))
             {
                 if (SubscriptionId != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subscriptionId"u8);
                 }
             }
-            if (_accountNameIsDefined || Optional.IsDefined(AccountName))
+            if (Optional.IsDefined(AccountName, _accountNameIsDefined))
             {
                 if (AccountName != null)
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("accountName"u8);
                 }
             }
-            if (_containerNameIsDefined || Optional.IsDefined(ContainerName))
+            if (Optional.IsDefined(ContainerName, _containerNameIsDefined))
             {
                 if (ContainerName != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerName"u8);
                 }
             }
-            if (_endpointIsDefined || Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint, _endpointIsDefined))
             {
                 if (Endpoint != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint"u8);
                 }
             }
-            if (_protocolIsDefined || Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol, _protocolIsDefined))
             {
                 if (Protocol != null)
                 {

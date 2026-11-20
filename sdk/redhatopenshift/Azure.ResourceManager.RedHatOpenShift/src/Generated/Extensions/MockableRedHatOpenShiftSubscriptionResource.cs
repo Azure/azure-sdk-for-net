@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <returns> An object representing collection of OpenShiftVersions and their operations over a OpenShiftVersionResource. </returns>
         public virtual OpenShiftVersionCollection GetOpenShiftVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new OpenShiftVersionCollection(client, Id, location));
+            return new OpenShiftVersionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <returns> An object representing collection of OpenShiftPlatformWorkloadIdentityRoleSets and their operations over a OpenShiftPlatformWorkloadIdentityRoleSetResource. </returns>
         public virtual OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(AzureLocation location)
         {
-            return GetCachedClient(client => new OpenShiftPlatformWorkloadIdentityRoleSetCollection(client, Id, location));
+            return new OpenShiftPlatformWorkloadIdentityRoleSetCollection(Client, Id, location);
         }
 
         /// <summary>

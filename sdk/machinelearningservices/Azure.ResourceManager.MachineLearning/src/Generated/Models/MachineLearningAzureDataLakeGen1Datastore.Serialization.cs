@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_resourceGroupIsDefined || Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup, _resourceGroupIsDefined))
             {
                 if (ResourceGroup != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceGroup"u8);
                 }
             }
-            if (_subscriptionIdIsDefined || Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId, _subscriptionIdIsDefined))
             {
                 if (SubscriptionId != null)
                 {

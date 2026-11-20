@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> GPU settings for the Agent Pool. </summary>
         [WirePath("gpuProfile")]
-        internal AgentPoolGpuProfile GpuProfile { get; set; }
+        public AgentPoolGpuProfile GpuProfile { get; set; }
 
         /// <summary> Profile specific to a managed agent pool in Gateway mode. This field cannot be set if agent pool mode is not Gateway. </summary>
         [WirePath("gatewayProfile")]

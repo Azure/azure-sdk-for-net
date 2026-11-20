@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SmbAccessBasedEnumeration? _smbAccessBasedEnumeration;
-        internal bool _smbAccessBasedEnumerationIsDefined;
+        private bool _smbAccessBasedEnumerationIsDefined;
         private float? _throughputMibps;
-        internal bool _throughputMibpsIsDefined;
+        private bool _throughputMibpsIsDefined;
         private string _unixPermissions;
-        internal bool _unixPermissionsIsDefined;
+        private bool _unixPermissionsIsDefined;
         private int? _cloneProgress;
-        internal bool _cloneProgressIsDefined;
+        private bool _cloneProgressIsDefined;
         private string _provisionedAvailabilityZone;
-        internal bool _provisionedAvailabilityZoneIsDefined;
+        private bool _provisionedAvailabilityZoneIsDefined;
         private long? _inheritedSizeInBytes;
-        internal bool _inheritedSizeInBytesIsDefined;
+        private bool _inheritedSizeInBytesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumeProperties"/>. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="isSmbContinuouslyAvailable"> Enables continuously available share property for smb volume. Only applicable for SMB volume. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
         /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
@@ -110,6 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="avsDataStore"> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </param>
         /// <param name="dataStoreResourceId"> Data store resource unique identifier. </param>
         /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="asyncDirectoryDelete"> Async Directory Delete configuration for the volume. </param>
         /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
         /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
         /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </param>
@@ -135,8 +137,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
         /// <param name="language"> Language supported for volume. </param>
         /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
+        /// <param name="geoNamespaceProperties"> Geographic namespace properties for this volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeProperties(Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, NetAppVolumeExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, NetAppLdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, BreakthroughMode? breakthroughMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeProperties(Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, NetAppVolumeExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, SmbOplocks? smbOplocks, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, NetAppLdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, AsyncDirectoryDelete asyncDirectoryDelete, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, BreakthroughMode? breakthroughMode, VolumeNamespaceProperties geoNamespaceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileSystemId = fileSystemId;
             CreationToken = creationToken;
@@ -166,6 +169,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _smbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
             IsSmbContinuouslyAvailable = isSmbContinuouslyAvailable;
+            SmbOplocks = smbOplocks;
             _throughputMibps = throughputMibps;
             ActualThroughputMibps = actualThroughputMibps;
             EncryptionKeySource = encryptionKeySource;
@@ -182,6 +186,7 @@ namespace Azure.ResourceManager.NetApp.Models
             AvsDataStore = avsDataStore;
             DataStoreResourceId = dataStoreResourceId;
             IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
+            AsyncDirectoryDelete = asyncDirectoryDelete;
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
             MaximumNumberOfFiles = maximumNumberOfFiles;
@@ -200,6 +205,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _inheritedSizeInBytes = inheritedSizeInBytes;
             Language = language;
             BreakthroughMode = breakthroughMode;
+            GeoNamespaceProperties = geoNamespaceProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -305,6 +311,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Enables continuously available share property for smb volume. Only applicable for SMB volume. </summary>
         public bool? IsSmbContinuouslyAvailable { get; set; }
 
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbOplocks? SmbOplocks { get; set; }
+
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
         public float? ThroughputMibps
         {
@@ -386,6 +395,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Specifies if default quota is enabled for the volume. </summary>
         public bool? IsDefaultQuotaEnabled { get; set; }
 
+        /// <summary> Async Directory Delete configuration for the volume. </summary>
+        public AsyncDirectoryDelete AsyncDirectoryDelete { get; set; }
+
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
         public long? DefaultUserQuotaInKiBs { get; set; }
 
@@ -459,6 +471,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Specifies whether the volume operates in Breakthrough Mode. </summary>
         public BreakthroughMode? BreakthroughMode { get; set; }
 
+        /// <summary> Geographic namespace properties for this volume. </summary>
+        internal VolumeNamespaceProperties GeoNamespaceProperties { get; set; }
+
         /// <summary> Export policy rule. </summary>
         public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
@@ -469,6 +484,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     ExportPolicy = new NetAppVolumeExportPolicy();
                 }
                 return ExportPolicy.Rules;
+            }
+        }
+
+        /// <summary> Indicates whether this volume is designated as an origin for cache volumes. </summary>
+        public OriginVolume? GeoNamespaceOriginVolume
+        {
+            get
+            {
+                return GeoNamespaceProperties is null ? default : GeoNamespaceProperties.OriginVolume;
+            }
+            set
+            {
+                if (GeoNamespaceProperties is null)
+                {
+                    GeoNamespaceProperties = new VolumeNamespaceProperties();
+                }
+                GeoNamespaceProperties.OriginVolume = value;
             }
         }
     }

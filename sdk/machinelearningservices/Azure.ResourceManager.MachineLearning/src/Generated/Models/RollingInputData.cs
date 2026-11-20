@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class RollingInputData : MonitoringInputDataBase
     {
         private string _preprocessingComponentId;
-        internal bool _preprocessingComponentIdIsDefined;
+        private bool _preprocessingComponentIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RollingInputData"/>. </summary>
         /// <param name="columns"> Mapping of column names to special uses. </param>

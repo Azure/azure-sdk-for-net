@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class AccessReviewDecisionUserSignInInsightProperties : AccessReviewDecisionInsightProperties
     {
         private DateTimeOffset? _lastSignInOn;
-        internal bool _lastSignInOnIsDefined;
+        private bool _lastSignInOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionUserSignInInsightProperties"/>. </summary>
         public AccessReviewDecisionUserSignInInsightProperties() : base(AccessReviewDecisionInsightType.UserSignInInsight)

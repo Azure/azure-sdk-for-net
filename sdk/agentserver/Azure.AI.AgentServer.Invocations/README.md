@@ -153,7 +153,32 @@ For typed Voice endpoints, the SDK suppresses the generic ASP.NET Core request s
 
 ### Typed Voice relay
 
-`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
+`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over
+`/voice_conversation_engine` and the existing `/invocations_ws` transport. Registering
+with `AddVoice<THandler>()` exposes both routes; existing Voice applications keep
+the same startup code and legacy WS registration. Generic `AddInvocations()` raw
+WebSocket handlers do not expose CE. The application explicitly sends readiness,
+responses, output, completion, control, and error messages.
+
+To use standalone CE, declare `voice_conversation_engine` version `1.0.0` in the hosted
+agent definition. New-schema definitions use `protocol_versions`; legacy
+definitions use `container_protocol_versions`. The library does not create or
+modify these declarations, and registering the container route alone does not
+enable the public Foundry endpoint. CE does not require `invocations_ws`,
+`voiceLiveCompatible`, or `bridgeProtocolVersion` declarations. Existing legacy
+Agent manifests and metadata can remain unchanged.
+
+The Voice Agent configuration field `conversation_engine` is separate from the
+Hosted Agent protocol name and remains unchanged.
+
+Both routes reuse the same callbacks, transport limits, tracing, and cleanup;
+neither redirects to or falls back to the other. The Bridge message handshake
+remains `session.start.protocol_version="1.0"`, independent of the CE container
+protocol version `1.0.0`. Rebuild the container with a library build containing CE
+support, and deploy Foundry CE routing and CE-aware Voice Live before enabling a
+CE-declaring agent version. Local library tests do not establish deployment readiness.
+
+Caller interruptions use `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`. Voice Live senders must use the same event contract. Generic raw WebSocket handlers and application-owned cancellation/history are unchanged.
 
 The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
 
@@ -228,6 +253,8 @@ The Voice layer is deliberately a typed event relay:
 See [Typed Voice relay](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/SampleVoice1_TypedRelay.md) for a full sample with application-owned response tasks and cancellation.
 
 #### WebSocket configuration
+
+Bridge protocol remains `1.0`. `VoiceUserMessageEvent.ContentParts` preserves ordered `VoiceInputTextPart` and `VoiceInputDataPart` values; the existing `Content` property remains the text projection for existing handlers. Data is an application JSON object represented by copied `BinaryData`. Send `VoiceResponseOutputDataDoneMessage` after explicitly opening a response, and finish with `VoiceResponseDoneMessage`. A data item is atomic, cannot interrupt an unfinished text item, and produces no speech. For a successful operation with no output, explicitly send `VoiceResponseNoneMessage` with reason `acknowledged` after required persistence finishes. The relay never infers business completion. Update both the Bridge and library before using the extension; no version change or runtime negotiation is introduced.
 
 | Environment variable | Default | Description |
 |---|---|---|

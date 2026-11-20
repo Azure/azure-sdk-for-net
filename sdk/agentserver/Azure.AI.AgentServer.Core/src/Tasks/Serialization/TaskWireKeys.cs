@@ -56,6 +56,10 @@ internal static class TaskWireKeys
     public const string PayloadRetryAttempt = "retry_attempt";
     public const string PayloadSteering = "steering";
     public const string PayloadSchemaVersion = "schema_version";
+    public const string PayloadProtocolScope = "protocol_scope";
+    public const string ProtocolCore = "core";
+    public const string ProtocolInvocations = "invocations";
+    public const string ProtocolResponses = "responses";
 
     // Current task-document schema version stamped at create (spec §20/§38). Its presence
     // is REQUIRED: a stale in_progress record lacking it is legacy and MUST be deleted

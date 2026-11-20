@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (_versionIsDefined || Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version, _versionIsDefined))
             {
                 if (Version != null)
                 {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                     writer.WriteNull("configurationProtectedSettings"u8);
                 }
             }
-            if (options.Format != "W" && (_currentVersionIsDefined || Optional.IsDefined(CurrentVersion)))
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersion, _currentVersionIsDefined))
             {
                 if (CurrentVersion != null)
                 {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                     writer.WriteNull("statuses"u8);
                 }
             }
-            if (options.Format != "W" && (_errorInfoIsDefined || Optional.IsDefined(ErrorInfo)))
+            if (options.Format != "W" && Optional.IsDefined(ErrorInfo, _errorInfoIsDefined))
             {
                 if (ErrorInfo != null)
                 {

@@ -1996,7 +1996,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string skuName, ManagedServiceIdentity identity = default, AvsManagementCluster managementCluster = default, InternetConnectivityState? internet = default, IEnumerable<SingleSignOnIdentitySource> identitySources = default, PrivateCloudAvailabilityProperties availability = default, CustomerManagedEncryption encryption = default, AvsPrivateCloudProvisioningState? provisioningState = default, ExpressRouteCircuit circuit = default, AvsPrivateCloudEndpoints endpoints = default, string networkBlock = default, string managementNetwork = default, string provisioningNetwork = default, string vMotionNetwork = default, string vCenterPassword = default, string nsxtPassword = default, string vCenterCertificateThumbprint = default, string nsxtCertificateThumbprint = default, IEnumerable<ResourceIdentifier> externalCloudLinks = default, ExpressRouteCircuit secondaryCircuit = default, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default)
+        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string skuName, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IEnumerable<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IEnumerable<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised)
         {
             return new AvsPrivateCloudData(
                 id,
@@ -2088,7 +2088,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string sku, ManagedServiceIdentity identity = default, AvsManagementCluster managementCluster = default, InternetConnectivityState? internet = default, IEnumerable<SingleSignOnIdentitySource> identitySources = default, PrivateCloudAvailabilityProperties availability = default, CustomerManagedEncryption encryption = default, IEnumerable<string> extendedNetworkBlocks = default, AvsPrivateCloudProvisioningState? provisioningState = default, ExpressRouteCircuit circuit = default, AvsPrivateCloudEndpoints endpoints = default, string networkBlock = default, string managementNetwork = default, string provisioningNetwork = default, string vMotionNetwork = default, string vCenterPassword = default, string nsxtPassword = default, string vCenterCertificateThumbprint = default, string nsxtCertificateThumbprint = default, IEnumerable<ResourceIdentifier> externalCloudLinks = default, ExpressRouteCircuit secondaryCircuit = default, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default)
+        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IEnumerable<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IEnumerable<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IEnumerable<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised)
         {
             return new AvsPrivateCloudData(
                 id,
@@ -2226,7 +2226,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="faultDomain"></param>
         /// <returns> A new <see cref="Models.GeneralAvsHostProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain)
         {
             return new GeneralAvsHostProperties(
                 HostKind.General,
@@ -2249,7 +2249,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="faultDomain"></param>
         /// <returns> A new <see cref="Models.SpecializedAvsHostProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain)
         {
             return new SpecializedAvsHostProperties(
                 HostKind.Specialized,
@@ -2278,7 +2278,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="maintenanceReadiness"> Indicates whether the maintenance is ready to proceed. </param>
         /// <returns> A new <see cref="Models.AvsMaintenanceProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component = default, string displayName = default, int? clusterId = default, string infoLink = default, string impact = default, bool? isScheduledByMicrosoft = default, AvsMaintenanceState state = default, DateTimeOffset? scheduledStartOn = default, long? estimatedDurationInMinutes = default, AvsMaintenanceProvisioningState? provisioningState = default, IEnumerable<AvsMaintenanceManagementOperation> operations = default, AvsMaintenanceReadiness maintenanceReadiness = default)
+        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component, string displayName, int? clusterId, string infoLink, string impact, bool? isScheduledByMicrosoft, AvsMaintenanceState state, DateTimeOffset? scheduledStartOn, long? estimatedDurationInMinutes, AvsMaintenanceProvisioningState? provisioningState, IEnumerable<AvsMaintenanceManagementOperation> operations, AvsMaintenanceReadiness maintenanceReadiness)
         {
             return new AvsMaintenanceProperties(
                 component,
@@ -2305,7 +2305,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="constraints"> Constraints for scheduling maintenance. </param>
         /// <returns> A new <see cref="Models.AvsScheduleOperation"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsScheduleOperationConstraint> constraints = default)
+        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled, string disabledReason, IEnumerable<AvsScheduleOperationConstraint> constraints)
         {
             return new AvsScheduleOperation(
                 MaintenanceManagementOperationKind.Schedule,
@@ -2322,7 +2322,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="constraints"> Constraints for rescheduling maintenance. </param>
         /// <returns> A new <see cref="Models.AvsRescheduleOperation"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsRescheduleOperationConstraint> constraints = default)
+        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled, string disabledReason, IEnumerable<AvsRescheduleOperationConstraint> constraints)
         {
             return new AvsRescheduleOperation(
                 MaintenanceManagementOperationKind.Reschedule,
@@ -2466,7 +2466,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="status"> The operational status of the datastore. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsPrivateCloudDatastoreProvisioningState? provisioningState = default, ResourceIdentifier netAppVolumeId = default, DiskPoolVolume diskPoolVolume = default, ResourceIdentifier elasticSanVolumeTargetId = default, AvsPureStorageVolume pureStorageVolume = default, DatastoreStatus? status = default)
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, ResourceIdentifier elasticSanVolumeTargetId, AvsPureStorageVolume pureStorageVolume, DatastoreStatus? status)
         {
             return new AvsPrivateCloudDatastoreData(
                 id,

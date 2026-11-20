@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(OciRepositoryRef)} does not support writing '{format}' format.");
             }
-            if (_tagIsDefined || Optional.IsDefined(Tag))
+            if (Optional.IsDefined(Tag, _tagIsDefined))
             {
                 if (Tag != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("tag"u8);
                 }
             }
-            if (_semverIsDefined || Optional.IsDefined(Semver))
+            if (Optional.IsDefined(Semver, _semverIsDefined))
             {
                 if (Semver != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("semver"u8);
                 }
             }
-            if (_digestIsDefined || Optional.IsDefined(Digest))
+            if (Optional.IsDefined(Digest, _digestIsDefined))
             {
                 if (Digest != null)
                 {

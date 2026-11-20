@@ -82,7 +82,6 @@
             "$id": "7",
             "name": "sendApiVersion",
             "isExactName": false,
-            "resourceName": "ClientApiVersions",
             "doc": "Test api version parameter from clientApiVersions.",
             "accessibility": "public",
             "parameters": [

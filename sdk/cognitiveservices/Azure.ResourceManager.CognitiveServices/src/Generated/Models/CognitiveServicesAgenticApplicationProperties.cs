@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesAgenticApplicationProperties : CognitiveServicesResourceBase
     {
         private string _displayName;
-        internal bool _displayNameIsDefined;
+        private bool _displayNameIsDefined;
         private string _baseUri;
-        internal bool _baseUriIsDefined;
+        private bool _baseUriIsDefined;
         private CognitiveServicesAssignedIdentity _agentIdentityBlueprint;
-        internal bool _agentIdentityBlueprintIsDefined;
+        private bool _agentIdentityBlueprintIsDefined;
         private CognitiveServicesAssignedIdentity _defaultInstanceIdentity;
-        internal bool _defaultInstanceIdentityIsDefined;
+        private bool _defaultInstanceIdentityIsDefined;
         private CognitiveServicesApplicationAuthorizationPolicy _authorizationPolicy;
-        internal bool _authorizationPolicyIsDefined;
+        private bool _authorizationPolicyIsDefined;
         private CognitiveServicesApplicationTrafficRoutingPolicy _trafficRoutingPolicy;
-        internal bool _trafficRoutingPolicyIsDefined;
+        private bool _trafficRoutingPolicyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgenticApplicationProperties"/>. </summary>
         public CognitiveServicesAgenticApplicationProperties()

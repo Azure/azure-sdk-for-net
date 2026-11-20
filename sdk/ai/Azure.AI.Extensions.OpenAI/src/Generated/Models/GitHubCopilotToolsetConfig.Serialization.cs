@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> An enablement override for a GitHub Copilot built-in tool. </summary>
+    /// <summary> The legacy per-tool enablement override retained for compatibility. Use `MicrosoftCopilotToolsetConfig` for new integrations. </summary>
     public partial class GitHubCopilotToolsetConfig : IJsonModel<GitHubCopilotToolsetConfig>
     {
         /// <summary> Initializes a new instance of <see cref="GitHubCopilotToolsetConfig"/> for deserialization. </summary>

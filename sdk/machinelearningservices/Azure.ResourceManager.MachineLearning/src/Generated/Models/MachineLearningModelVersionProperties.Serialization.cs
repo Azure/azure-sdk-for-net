@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("flavors"u8);
                 }
             }
-            if (_jobNameIsDefined || Optional.IsDefined(JobName))
+            if (Optional.IsDefined(JobName, _jobNameIsDefined))
             {
                 if (JobName != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobName"u8);
                 }
             }
-            if (_modelTypeIsDefined || Optional.IsDefined(ModelType))
+            if (Optional.IsDefined(ModelType, _modelTypeIsDefined))
             {
                 if (ModelType != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (_stageIsDefined || Optional.IsDefined(Stage))
+            if (Optional.IsDefined(Stage, _stageIsDefined))
             {
                 if (Stage != null)
                 {

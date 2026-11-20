@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToString());
             }
-            if (_readOnlyIsDefined || Optional.IsDefined(ReadOnly))
+            if (Optional.IsDefined(ReadOnly, _readOnlyIsDefined))
             {
                 if (ReadOnly != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (_consistencyIsDefined || Optional.IsDefined(Consistency))
+            if (Optional.IsDefined(Consistency, _consistencyIsDefined))
             {
                 if (Consistency != null)
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("consistency"u8);
                 }
             }
-            if (_bindIsDefined || Optional.IsDefined(Bind))
+            if (Optional.IsDefined(Bind, _bindIsDefined))
             {
                 if (Bind != null)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("bind"u8);
                 }
             }
-            if (_volumeIsDefined || Optional.IsDefined(Volume))
+            if (Optional.IsDefined(Volume, _volumeIsDefined))
             {
                 if (Volume != null)
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("volume"u8);
                 }
             }
-            if (_tmpfsIsDefined || Optional.IsDefined(Tmpfs))
+            if (Optional.IsDefined(Tmpfs, _tmpfsIsDefined))
             {
                 if (Tmpfs != null)
                 {

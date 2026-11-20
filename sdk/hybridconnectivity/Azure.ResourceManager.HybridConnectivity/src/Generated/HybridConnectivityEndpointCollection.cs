@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(HybridConnectivityEndpointResource.ResourceType, out string hybridConnectivityEndpointApiVersion);
             _endpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", HybridConnectivityEndpointResource.ResourceType.Namespace, Diagnostics);
-            _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityEndpointApiVersion ?? "2024-12-01");
+            _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityEndpointApiVersion ?? "2027-01-01");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

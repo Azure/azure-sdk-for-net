@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            if (_locationIsDefined || Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location, _locationIsDefined))
             {
                 if (Location != null)
                 {

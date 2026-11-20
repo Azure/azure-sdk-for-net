@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private Gateway _gateway;
-        internal bool _gatewayIsDefined;
+        private bool _gatewayIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterProperties"/>. </summary>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>

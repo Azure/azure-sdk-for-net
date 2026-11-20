@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
         /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
+        public ApplicationGatewayFirewallRule(int ruleId)
+        {
+            RuleId = ruleId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
+        /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
         /// <param name="ruleIdString"> The string representation of the web application firewall rule identifier. </param>
         /// <param name="state"> The string representation of the web application firewall rule state. </param>
         /// <param name="action"> The string representation of the web application firewall rule action. </param>
@@ -38,8 +45,32 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The identifier of the web application firewall rule. </summary>
+        [WirePath("ruleId")]
+        public int RuleId { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule identifier. </summary>
+        [WirePath("ruleIdString")]
+        public string RuleIdString { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule state. </summary>
+        [WirePath("state")]
+        public ApplicationGatewayWafRuleStateType? State { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule action. </summary>
+        [WirePath("action")]
+        public ApplicationGatewayWafRuleActionType? Action { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule sensitivity. </summary>
+        [WirePath("sensitivity")]
+        public ApplicationGatewayWafRuleSensitivityType? Sensitivity { get; set; }
+
         /// <summary> OWASP CRS paranoia level of a managed rule. Applicable only for DRS and OWASP rules. </summary>
         [WirePath("paranoiaLevel")]
-        public ApplicationGatewayWafRuleParanoiaLevel? ParanoiaLevel { get; }
+        public ApplicationGatewayWafRuleParanoiaLevel? ParanoiaLevel { get; set; }
+
+        /// <summary> The description of the web application firewall rule. </summary>
+        [WirePath("description")]
+        public string Description { get; set; }
     }
 }

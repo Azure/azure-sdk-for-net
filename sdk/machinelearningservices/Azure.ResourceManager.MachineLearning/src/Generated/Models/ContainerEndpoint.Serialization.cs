@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (_publishedIsDefined || Optional.IsDefined(Published))
+            if (Optional.IsDefined(Published, _publishedIsDefined))
             {
                 if (Published != null)
                 {

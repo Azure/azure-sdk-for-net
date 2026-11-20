@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningComponentVersionProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_componentSpecIsDefined || Optional.IsDefined(ComponentSpec))
+            if (Optional.IsDefined(ComponentSpec, _componentSpecIsDefined))
             {
                 if (ComponentSpec != null)
                 {

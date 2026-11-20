@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (_featureWindowIsDefined || Optional.IsDefined(FeatureWindow))
+            if (Optional.IsDefined(FeatureWindow, _featureWindowIsDefined))
             {
                 if (FeatureWindow != null)
                 {

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningTableJobOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_assetNameIsDefined || Optional.IsDefined(AssetName))
+            if (Optional.IsDefined(AssetName, _assetNameIsDefined))
             {
                 if (AssetName != null)
                 {

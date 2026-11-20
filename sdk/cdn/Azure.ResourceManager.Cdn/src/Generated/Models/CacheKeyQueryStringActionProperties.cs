@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
     {
         private string _queryParameters;
-        internal bool _queryParametersIsDefined;
+        private bool _queryParametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>

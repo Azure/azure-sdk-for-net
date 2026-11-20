@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class WorkloadIdentityCredentialTests : CredentialTestBase<WorkloadIdentityCredentialOptions>
@@ -41,9 +40,7 @@ namespace Azure.Core.Tests.Identity
                 TenantId = TenantId,
                 ClientId = ClientId,
                 TokenFilePath = "/fake/path/token",
-#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
                 IsAzureProxyEnabled = isAzureProxyEnabled,
-#pragma warning restore AZID0002
                 MsalClient = mockConfidentialMsalClient,
                 Pipeline = CredentialPipeline.GetInstance(null)
             });

@@ -17,10 +17,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchContainerConfiguration"/>. </summary>
-        /// <param name="type"> The container technology to be used. </param>
-        public BatchContainerConfiguration(ContainerType @type)
+        public BatchContainerConfiguration()
         {
-            Type = @type;
             ContainerImageNames = new ChangeTrackingList<string>();
             ContainerRegistries = new ChangeTrackingList<ContainerRegistryReference>();
         }
@@ -36,6 +34,13 @@ namespace Azure.Compute.Batch
             ContainerImageNames = containerImageNames;
             ContainerRegistries = containerRegistries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchContainerConfiguration"/>. </summary>
+        /// <param name="type"> The container technology to be used. </param>
+        public BatchContainerConfiguration(ContainerType @type) : this()
+        {
+            Type = @type;
         }
 
         /// <summary> The container technology to be used. </summary>

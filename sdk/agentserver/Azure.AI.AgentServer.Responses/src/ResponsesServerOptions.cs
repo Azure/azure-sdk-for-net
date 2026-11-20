@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
@@ -76,10 +78,9 @@ public class ResponsesServerOptions
     /// forks are rejected with <c>409 conversation_fork_not_supported</c>, and overlapping
     /// turns are rejected with <c>409 conversation_locked</c>. When <see langword="false"/>
     /// (the default), steering is disabled.
-    /// Enabling steering requires the Core resilient-task runtime; set
-    /// <see cref="ResilientBackground"/> or call
-    /// <see cref="Azure.AI.AgentServer.Core.Tasks.ResilientTaskEnablementExtensions.SetResilientTasksEnabled(Microsoft.Extensions.DependencyInjection.IServiceCollection, bool)"/>
-    /// before host startup.
+    /// Enabling steering automatically opts the host into the Core resilient-task runtime.
+    /// <see cref="ResilientBackground"/> independently controls whether an interrupted
+    /// background handler is re-invoked after recovery.
     /// </summary>
     public bool SteerableConversations { get; set; }
 
@@ -87,12 +88,13 @@ public class ResponsesServerOptions
     /// Gets or sets an optional hook that customizes the <c>queued</c> envelope returned to the
     /// caller when a new turn is queued behind an active steerable conversation (the .NET port of
     /// Python's <c>@app.response_acceptor</c>). The hook receives the incoming
-    /// <see cref="Models.CreateResponse"/> request and the turn's <see cref="ResponseContext"/> and
-    /// returns the <see cref="Models.ResponseObject"/> surfaced to the HTTP caller. When
+    /// <see cref="CreateResponse"/> request and the turn's <see cref="ResponseContext"/> and
+    /// returns the <see cref="ResponseObject"/> surfaced to the HTTP caller. When
     /// <see langword="null"/> (the default) a minimal envelope
     /// (<c>status="queued"</c>, empty output) is returned. If the hook throws, the framework falls
     /// back to the default envelope and logs a warning. The returned object's status is normalized
-    /// to <see cref="Models.ResponseStatus.Queued"/> when unset.
+    /// to <see cref="ResponseStatus.Queued"/> when unset.
     /// </summary>
-    public Func<Models.CreateResponse, ResponseContext, Models.ResponseObject>? ResponseAcceptor { get; set; }
+    [Experimental("OPENAI001")]
+    public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 }

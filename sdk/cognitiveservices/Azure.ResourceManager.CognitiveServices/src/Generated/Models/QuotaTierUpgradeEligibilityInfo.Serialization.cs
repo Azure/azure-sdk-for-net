@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(QuotaTierUpgradeEligibilityInfo)} does not support writing '{format}' format.");
             }
-            if (_nextTierNameIsDefined || Optional.IsDefined(NextTierName))
+            if (Optional.IsDefined(NextTierName, _nextTierNameIsDefined))
             {
                 if (NextTierName != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("upgradeAvailabilityStatus"u8);
                 writer.WriteStringValue(UpgradeAvailabilityStatus.Value.ToString());
             }
-            if (_upgradeApplicableOnIsDefined || Optional.IsDefined(UpgradeApplicableOn))
+            if (Optional.IsDefined(UpgradeApplicableOn, _upgradeApplicableOnIsDefined))
             {
                 if (UpgradeApplicableOn != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("upgradeApplicableDate"u8);
                 }
             }
-            if (_upgradeUnavailabilityReasonIsDefined || Optional.IsDefined(UpgradeUnavailabilityReason))
+            if (Optional.IsDefined(UpgradeUnavailabilityReason, _upgradeUnavailabilityReasonIsDefined))
             {
                 if (UpgradeUnavailabilityReason != null)
                 {

@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="RelativeTo"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelativeTo?(string value) => value == null ? null : new RelativeTo(value);
+        public static implicit operator RelativeTo?(string value) => value == null ? (RelativeTo?)null : new RelativeTo(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

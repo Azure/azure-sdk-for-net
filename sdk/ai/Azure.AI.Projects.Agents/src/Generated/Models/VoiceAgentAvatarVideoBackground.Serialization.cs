@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoBackground)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ImageUrl))
+            if (Optional.IsDefined(ImageUri))
             {
                 writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl.AbsoluteUri);
+                writer.WriteStringValue(ImageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Color))
             {
@@ -122,7 +122,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            Uri imageUrl = default;
+            Uri imageUri = default;
             string color = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    imageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("color"u8))
@@ -146,7 +146,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentAvatarVideoBackground(imageUrl, color, additionalBinaryDataProperties);
+            return new VoiceAgentAvatarVideoBackground(imageUri, color, additionalBinaryDataProperties);
         }
     }
 }

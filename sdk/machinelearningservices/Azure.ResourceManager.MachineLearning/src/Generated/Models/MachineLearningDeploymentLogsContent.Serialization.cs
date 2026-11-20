@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType.Value.ToString());
             }
-            if (_tailIsDefined || Optional.IsDefined(Tail))
+            if (Optional.IsDefined(Tail, _tailIsDefined))
             {
                 if (Tail != null)
                 {

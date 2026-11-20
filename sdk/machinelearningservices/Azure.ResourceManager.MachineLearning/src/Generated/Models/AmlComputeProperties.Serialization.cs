@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("vmPriority"u8);
                 writer.WriteStringValue(VmPriority.Value.ToString());
             }
-            if (_virtualMachineImageIsDefined || Optional.IsDefined(VirtualMachineImage))
+            if (Optional.IsDefined(VirtualMachineImage, _virtualMachineImageIsDefined))
             {
                 if (VirtualMachineImage != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings, options);
             }
-            if (_userAccountCredentialsIsDefined || Optional.IsDefined(UserAccountCredentials))
+            if (Optional.IsDefined(UserAccountCredentials, _userAccountCredentialsIsDefined))
             {
                 if (UserAccountCredentials != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userAccountCredentials"u8);
                 }
             }
-            if (_subnetIsDefined || Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet, _subnetIsDefined))
             {
                 if (Subnet != null)
                 {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("errors"u8);
                 }
             }
-            if (options.Format != "W" && (_currentNodeCountIsDefined || Optional.IsDefined(CurrentNodeCount)))
+            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCount, _currentNodeCountIsDefined))
             {
                 if (CurrentNodeCount != null)
                 {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("currentNodeCount"u8);
                 }
             }
-            if (options.Format != "W" && (_targetNodeCountIsDefined || Optional.IsDefined(TargetNodeCount)))
+            if (options.Format != "W" && Optional.IsDefined(TargetNodeCount, _targetNodeCountIsDefined))
             {
                 if (TargetNodeCount != null)
                 {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetNodeCount"u8);
                 }
             }
-            if (options.Format != "W" && (_nodeStateCountsIsDefined || Optional.IsDefined(NodeStateCounts)))
+            if (options.Format != "W" && Optional.IsDefined(NodeStateCounts, _nodeStateCountsIsDefined))
             {
                 if (NodeStateCounts != null)
                 {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodeStateCounts"u8);
                 }
             }
-            if (_enableNodePublicIPIsDefined || Optional.IsDefined(EnableNodePublicIP))
+            if (Optional.IsDefined(EnableNodePublicIP, _enableNodePublicIPIsDefined))
             {
                 if (EnableNodePublicIP != null)
                 {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("enableNodePublicIp"u8);
                 }
             }
-            if (_propertyBagIsDefined || Optional.IsDefined(PropertyBag))
+            if (Optional.IsDefined(PropertyBag, _propertyBagIsDefined))
             {
                 if (PropertyBag != null)
                 {

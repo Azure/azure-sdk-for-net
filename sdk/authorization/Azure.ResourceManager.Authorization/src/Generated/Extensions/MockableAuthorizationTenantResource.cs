@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of AccessReviewInstancesAssignedForMyApprovals and their operations over a AccessReviewInstancesAssignedForMyApprovalResource. </returns>
         public virtual AccessReviewInstancesAssignedForMyApprovalCollection GetAccessReviewInstancesAssignedForMyApprovals(string scheduleDefinitionId)
         {
-            return GetCachedClient(client => new AccessReviewInstancesAssignedForMyApprovalCollection(client, Id, scheduleDefinitionId));
+            return new AccessReviewInstancesAssignedForMyApprovalCollection(Client, Id, scheduleDefinitionId);
         }
 
         /// <summary>

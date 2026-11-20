@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,7 +16,6 @@ namespace Azure.ResourceManager.NetApp.Models
     // properties; preserve them here for backward compatibility.
     public partial class NetAppAccountPatch : TrackedResourceData
     {
-        private EntraIdConfigPatch _entraIdConfig;
         private LdapConfiguration _ldapConfiguration;
 
         // ProvisioningState/DisableShowmount were read-only on the GA model. The new patch
@@ -41,8 +39,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Entra ID configuration. </summary>
         public EntraIdConfigPatch EntraIdConfig
         {
-            get => _entraIdConfig;
-            set => _entraIdConfig = value;
+            get => Properties?.EntraIdConfig;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                Properties.EntraIdConfig = value;
+            }
         }
 
         /// <summary> LDAP configuration. </summary>

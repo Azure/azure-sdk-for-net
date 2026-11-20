@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support writing '{format}' format.");
             }
-            if (_accessTokenIsDefined || Optional.IsDefined(AccessToken))
+            if (Optional.IsDefined(AccessToken, _accessTokenIsDefined))
             {
                 if (AccessToken != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("refreshAfterTimeUtc"u8);
                 writer.WriteNumberValue(RefreshAfterTimeUtc.Value);
             }
-            if (_tokenTypeIsDefined || Optional.IsDefined(TokenType))
+            if (Optional.IsDefined(TokenType, _tokenTypeIsDefined))
             {
                 if (TokenType != null)
                 {

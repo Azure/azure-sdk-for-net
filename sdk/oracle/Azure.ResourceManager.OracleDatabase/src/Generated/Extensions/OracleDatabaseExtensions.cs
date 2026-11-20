@@ -488,6 +488,114 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DatabaseEditionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDatabaseEditionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DatabaseEditionResource"/> object. </returns>
+        public static DatabaseEditionResource GetDatabaseEditionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOracleDatabaseArmClient(client).GetDatabaseEditionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseSystemShapeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetDatabaseSystemShapeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DatabaseSystemShapeResource"/> object. </returns>
+        public static DatabaseSystemShapeResource GetDatabaseSystemShapeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOracleDatabaseArmClient(client).GetDatabaseSystemShapeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GoldenGateConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetGoldenGateConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GoldenGateConnectionResource"/> object. </returns>
+        public static GoldenGateConnectionResource GetGoldenGateConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOracleDatabaseArmClient(client).GetGoldenGateConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AssignedDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetAssignedDeploymentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AssignedDeploymentResource"/> object. </returns>
+        public static AssignedDeploymentResource GetAssignedDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOracleDatabaseArmClient(client).GetAssignedDeploymentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GoldenGateDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetGoldenGateDeploymentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GoldenGateDeploymentResource"/> object. </returns>
+        public static GoldenGateDeploymentResource GetGoldenGateDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOracleDatabaseArmClient(client).GetGoldenGateDeploymentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AssignedConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseArmClient.GetAssignedConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AssignedConnectionResource"/> object. </returns>
+        public static AssignedConnectionResource GetAssignedConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOracleDatabaseArmClient(client).GetAssignedConnectionResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of CloudExadataInfrastructures in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -925,6 +1033,116 @@ namespace Azure.ResourceManager.OracleDatabase
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetOracleDBSystem(dbSystemName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of GoldenGateConnections in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.GetGoldenGateConnections()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of GoldenGateConnections and their operations over a GoldenGateConnectionResource. </returns>
+        public static GoldenGateConnectionCollection GetGoldenGateConnections(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetGoldenGateConnections();
+        }
+
+        /// <summary>
+        /// Get a GoldenGateConnection
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.GetGoldenGateConnectionAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="goldenGateConnectionName"> The name of the GoldenGateConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GoldenGateConnectionResource>> GetGoldenGateConnectionAsync(this ResourceGroupResource resourceGroupResource, string goldenGateConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetGoldenGateConnectionAsync(goldenGateConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a GoldenGateConnection
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.GetGoldenGateConnection(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="goldenGateConnectionName"> The name of the GoldenGateConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<GoldenGateConnectionResource> GetGoldenGateConnection(this ResourceGroupResource resourceGroupResource, string goldenGateConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetGoldenGateConnection(goldenGateConnectionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of GoldenGateDeployments in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.GetGoldenGateDeployments()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of GoldenGateDeployments and their operations over a GoldenGateDeploymentResource. </returns>
+        public static GoldenGateDeploymentCollection GetGoldenGateDeployments(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetGoldenGateDeployments();
+        }
+
+        /// <summary>
+        /// Get a GoldenGateDeployment
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.GetGoldenGateDeploymentAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="goldenGateDeploymentName"> The name of the GoldenGateDeployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GoldenGateDeploymentResource>> GetGoldenGateDeploymentAsync(this ResourceGroupResource resourceGroupResource, string goldenGateDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetGoldenGateDeploymentAsync(goldenGateDeploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a GoldenGateDeployment
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.GetGoldenGateDeployment(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="goldenGateDeploymentName"> The name of the GoldenGateDeployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<GoldenGateDeploymentResource> GetGoldenGateDeployment(this ResourceGroupResource resourceGroupResource, string goldenGateDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetGoldenGateDeployment(goldenGateDeploymentName, cancellationToken);
         }
 
         /// <summary>
@@ -1525,6 +1743,122 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
+        /// Gets a collection of DatabaseEditions in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDatabaseEditions(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of DatabaseEditions and their operations over a DatabaseEditionResource. </returns>
+        public static DatabaseEditionCollection GetDatabaseEditions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDatabaseEditions(location);
+        }
+
+        /// <summary>
+        /// Get a DatabaseEdition
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDatabaseEditionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databaseeditionname"> DatabaseEdition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DatabaseEditionResource>> GetDatabaseEditionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string databaseeditionname, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDatabaseEditionAsync(location, databaseeditionname, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DatabaseEdition
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDatabaseEdition(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databaseeditionname"> DatabaseEdition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DatabaseEditionResource> GetDatabaseEdition(this SubscriptionResource subscriptionResource, AzureLocation location, string databaseeditionname, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDatabaseEdition(location, databaseeditionname, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of DatabaseSystemShapes in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDatabaseSystemShapes(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of DatabaseSystemShapes and their operations over a DatabaseSystemShapeResource. </returns>
+        public static DatabaseSystemShapeCollection GetDatabaseSystemShapes(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDatabaseSystemShapes(location);
+        }
+
+        /// <summary>
+        /// Get a DatabaseSystemShape
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDatabaseSystemShapeAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databasesystemshapename"> DatabaseSystemShape name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DatabaseSystemShapeResource>> GetDatabaseSystemShapeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string databasesystemshapename, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDatabaseSystemShapeAsync(location, databasesystemshapename, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DatabaseSystemShape
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetDatabaseSystemShape(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databasesystemshapename"> DatabaseSystemShape name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DatabaseSystemShapeResource> GetDatabaseSystemShape(this SubscriptionResource subscriptionResource, AzureLocation location, string databasesystemshapename, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetDatabaseSystemShape(location, databasesystemshapename, cancellationToken);
+        }
+
+        /// <summary>
         /// List CloudExadataInfrastructure resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
@@ -1810,6 +2144,78 @@ namespace Azure.ResourceManager.OracleDatabase
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetOracleDBSystems(cancellationToken);
+        }
+
+        /// <summary>
+        /// List GoldenGateConnection resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetGoldenGateConnectionsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GoldenGateConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GoldenGateConnectionResource> GetGoldenGateConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetGoldenGateConnectionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List GoldenGateConnection resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetGoldenGateConnections(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GoldenGateConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GoldenGateConnectionResource> GetGoldenGateConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetGoldenGateConnections(cancellationToken);
+        }
+
+        /// <summary>
+        /// List GoldenGateDeployment resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetGoldenGateDeploymentsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GoldenGateDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GoldenGateDeploymentResource> GetGoldenGateDeploymentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetGoldenGateDeploymentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List GoldenGateDeployment resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseSubscriptionResource.GetGoldenGateDeployments(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GoldenGateDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GoldenGateDeploymentResource> GetGoldenGateDeployments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOracleDatabaseSubscriptionResource(subscriptionResource).GetGoldenGateDeployments(cancellationToken);
         }
     }
 }

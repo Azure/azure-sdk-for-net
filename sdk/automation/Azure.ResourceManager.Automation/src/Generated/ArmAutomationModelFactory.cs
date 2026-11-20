@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="isComposite"> Gets or sets type of module, if its composite or not. </param>
         /// <param name="eTag"> Gets or sets the etag of the resource. </param>
         /// <returns> A new <see cref="Automation.AutomationModuleData"/> instance for mocking. </returns>
-        public static AutomationModuleData AutomationModuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, bool? isGlobal, string version, long? sizeInBytes, int? activityCount, AutomationModuleProvisioningState? moduleProvisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite, ETag? eTag)
+        public static AutomationModuleData AutomationModuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? isGlobal = default, string version = default, long? sizeInBytes = default, int? activityCount = default, AutomationModuleProvisioningState? moduleProvisioningState = default, AutomationContentLink contentLink = default, AutomationModuleErrorInfo error = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, bool? isComposite = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <returns> A new <see cref="Automation.AutomationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AutomationPrivateEndpointConnectionData AutomationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, AutomationPrivateLinkServiceConnectionStateProperty connectionState, ResourceIdentifier privateEndpointId)
+        public static AutomationPrivateEndpointConnectionData AutomationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, AutomationPrivateLinkServiceConnectionStateProperty connectionState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new AutomationPrivateEndpointConnectionData(
                 id,
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="eTag"> Gets or sets the etag of the resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="Automation.AutomationAccountData"/> instance for mocking. </returns>
-        public static AutomationAccountData AutomationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutomationSku sku, string lastModifiedBy, AutomationAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, AutomationEncryptionProperties encryption, IEnumerable<AutomationPrivateEndpointConnectionData> privateEndpointConnections, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, Uri automationHybridServiceUri, ETag? eTag, ManagedServiceIdentity identity)
+        public static AutomationAccountData AutomationAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutomationSku sku = default, string lastModifiedBy = default, AutomationAccountState? state = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, AutomationEncryptionProperties encryption = default, IEnumerable<AutomationPrivateEndpointConnectionData> privateEndpointConnections = default, bool? isPublicNetworkAccessAllowed = default, bool? isLocalAuthDisabled = default, Uri automationHybridServiceUri = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runbookName"> Gets or sets the name of the runbook. </param>
         /// <param name="runtimeEnvironmentName"> Name of Runtime Environment. </param>
         /// <returns> A new <see cref="Models.AutomationJobCollectionItemData"/> instance for mocking. </returns>
-        public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? jobId, string startedBy, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn, string runbookName, string runtimeEnvironmentName = default)
+        public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? jobId = default, string startedBy = default, DateTimeOffset? createdOn = default, AutomationJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastModifiedOn = default, string provisioningState = default, string runOn = default, string runbookName = default, string runtimeEnvironmentName = default)
         {
             return new AutomationJobCollectionItemData(
                 id,
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="softwareUpdateName"> Name of the software update configuration triggered the software update configuration run. </param>
         /// <param name="jobId"> Id of the job associated with the software update configuration run. </param>
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationMachineRun"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, string softwareUpdateName, Guid? jobId)
+        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = default, ResourceIdentifier id = default, ResourceIdentifier targetComputerId = default, string targetComputerType = default, string status = default, string osType = default, Guid? correlationId = default, Guid? sourceComputerId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? configuredDuration = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, AutomationResponseError error = default, string softwareUpdateName = default, Guid? jobId = default)
         {
             return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && startOn is null && endOn is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
                 targetComputerId,
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
         /// <param name="softwareUpdateName"> Name of the software update configuration triggered the software update configuration run. </param>
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationRun"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks, string softwareUpdateName)
+        public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = default, ResourceIdentifier id = default, string status = default, TimeSpan? configuredDuration = default, string osType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? computerCount = default, int? failedCount = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, SoftwareUpdateConfigurationRunTasks tasks = default, string softwareUpdateName = default)
         {
             return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && startOn is null && endOn is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
                 softwareUpdateName is null ? default : new UpdateConfigurationNavigation(softwareUpdateName, default),
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="runbookName"> Gets or sets the name of the runbook. </param>
         /// <returns> A new <see cref="Automation.AutomationWebhookData"/> instance for mocking. </returns>
-        public static AutomationWebhookData AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, string runbookName)
+        public static AutomationWebhookData AutomationWebhookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, Uri uri = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastInvokedOn = default, IDictionary<string, string> parameters = default, string runOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, string description = default, string runbookName = default)
         {
             return new AutomationWebhookData(
                 id,
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="connectionTypeName"> Gets or sets the name of the connection type. </param>
         /// <returns> A new <see cref="Automation.AutomationConnectionData"/> instance for mocking. </returns>
-        public static AutomationConnectionData AutomationConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, string> fieldDefinitionValues, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, string connectionTypeName)
+        public static AutomationConnectionData AutomationConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IReadOnlyDictionary<string, string> fieldDefinitionValues = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, string connectionTypeName = default)
         {
             return new AutomationConnectionData(
                 id,
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="fieldDefinitionValues"> Gets or sets the field definition properties of the connection. </param>
         /// <param name="connectionTypeName"> Gets or sets the name of the connection type. </param>
         /// <returns> A new <see cref="Models.AutomationConnectionCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static AutomationConnectionCreateOrUpdateContent AutomationConnectionCreateOrUpdateContent(string name, string description, IDictionary<string, string> fieldDefinitionValues, string connectionTypeName)
+        public static AutomationConnectionCreateOrUpdateContent AutomationConnectionCreateOrUpdateContent(string name = default, string description = default, IDictionary<string, string> fieldDefinitionValues = default, string connectionTypeName = default)
         {
             return new AutomationConnectionCreateOrUpdateContent(name, description is null && connectionTypeName is null && fieldDefinitionValues is null ? default : new ConnectionCreateOrUpdateProperties(description, new ConnectionTypeAssociationProperty(connectionTypeName, default), fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), default), default);
         }
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="eTag"> Gets or sets the etag of the resource. </param>
         /// <returns> A new <see cref="Automation.DscConfigurationData"/> instance for mocking. </returns>
-        public static DscConfigurationData DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description, ETag? eTag)
+        public static DscConfigurationData DscConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DscConfigurationProvisioningState? provisioningState = default, int? jobCount = default, IDictionary<string, DscConfigurationParameterDefinition> parameters = default, AutomationContentSource source = default, DscConfigurationState? state = default, bool? isLogVerboseEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, int? nodeConfigurationCount = default, string description = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <returns> A new <see cref="Models.DscConfigurationCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(bool? isLogVerboseEnabled, bool? isLogProgressEnabled, AutomationContentSource source, IDictionary<string, DscConfigurationParameterDefinition> parameters, string description, string name, AzureLocation? location, IDictionary<string, string> tags)
+        public static DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(bool? isLogVerboseEnabled = default, bool? isLogProgressEnabled = default, AutomationContentSource source = default, IDictionary<string, DscConfigurationParameterDefinition> parameters = default, string description = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
         /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
         /// <returns> A new <see cref="Automation.DscNodeConfigurationData"/> instance for mocking. </returns>
-        public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired, string configurationName)
+        public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, string source = default, long? nodeCount = default, bool? isIncrementNodeConfigurationBuildRequired = default, string configurationName = default)
         {
             return new DscNodeConfigurationData(
                 id,
@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="scheduleName"> Gets or sets the name of the Schedule. </param>
         /// <param name="runbookName"> Gets or sets the name of the runbook. </param>
         /// <returns> A new <see cref="Automation.AutomationJobScheduleData"/> instance for mocking. </returns>
-        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? jobScheduleId, string runOn, IDictionary<string, string> parameters, string scheduleName, string runbookName)
+        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? jobScheduleId = default, string runOn = default, IDictionary<string, string> parameters = default, string scheduleName = default, string runbookName = default)
         {
             return new AutomationJobScheduleData(
                 id,
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="scheduleName"> Gets or sets the name of the Schedule. </param>
         /// <param name="runbookName"> Gets or sets the name of the runbook. </param>
         /// <returns> A new <see cref="Models.AutomationJobScheduleCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static AutomationJobScheduleCreateOrUpdateContent AutomationJobScheduleCreateOrUpdateContent(string runOn, IDictionary<string, string> parameters, string scheduleName, string runbookName)
+        public static AutomationJobScheduleCreateOrUpdateContent AutomationJobScheduleCreateOrUpdateContent(string runOn = default, IDictionary<string, string> parameters = default, string scheduleName = default, string runbookName = default)
         {
             return new AutomationJobScheduleCreateOrUpdateContent(scheduleName is null && runbookName is null && runOn is null && parameters is null ? default : new JobScheduleCreateProperties(new ScheduleAssociationProperty(scheduleName, default), new RunbookAssociationProperty(runbookName, default), runOn, parameters ?? new ChangeTrackingDictionary<string, string>(), default), default);
         }
@@ -1590,7 +1590,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <returns> A new <see cref="Models.AutomationAccountModuleCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static AutomationAccountModuleCreateOrUpdateContent AutomationAccountModuleCreateOrUpdateContent(AutomationContentLink contentLink, string name, AzureLocation? location, IDictionary<string, string> tags)
+        public static AutomationAccountModuleCreateOrUpdateContent AutomationAccountModuleCreateOrUpdateContent(AutomationContentLink contentLink = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1774,7 +1774,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="eTag"> Gets or sets the etag of the resource. </param>
         /// <returns> A new <see cref="Automation.AutomationRunbookData"/> instance for mocking. </returns>
-        public static AutomationRunbookData AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string runtimeEnvironment, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IEnumerable<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, ETag? eTag)
+        public static AutomationRunbookData AutomationRunbookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string runtimeEnvironment = default, AutomationRunbookType? runbookType = default, AutomationContentLink publishContentLink = default, RunbookState? state = default, bool? isLogVerboseEnabled = default, bool? isLogProgressEnabled = default, int? logActivityTrace = default, int? jobCount = default, IDictionary<string, RunbookParameterDefinition> parameters = default, IEnumerable<string> outputTypes = default, AutomationRunbookDraft draft = default, RunbookProvisioningState? provisioningState = default, string lastModifiedBy = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <returns> A new <see cref="Models.AutomationRunbookCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(bool? isLogVerboseEnabled, bool? isLogProgressEnabled, string runtimeEnvironment, AutomationRunbookType runbookType, AutomationRunbookDraft draft = default, AutomationContentLink publishContentLink = default, string description = default, int? logActivityTrace = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        public static AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(bool? isLogVerboseEnabled = default, bool? isLogProgressEnabled = default, string runtimeEnvironment = default, AutomationRunbookType runbookType = default, AutomationRunbookDraft draft = default, AutomationContentLink publishContentLink = default, string description = default, int? logActivityTrace = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2252,7 +2252,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="eTag"> Gets or sets the etag of the resource. </param>
         /// <returns> A new <see cref="Automation.AutomationWatcherData"/> instance for mocking. </returns>
-        public static AutomationWatcherData AutomationWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, ETag? eTag)
+        public static AutomationWatcherData AutomationWatcherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? executionFrequencyInSeconds = default, string scriptName = default, IDictionary<string, string> scriptParameters = default, string scriptRunOn = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, string description = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2296,7 +2296,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="deletedOn"> Gets the deletion time. </param>
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <returns> A new <see cref="Models.DeletedAutomationAccount"/> instance for mocking. </returns>
-        public static DeletedAutomationAccount DeletedAutomationAccount(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn, AzureLocation? location)
+        public static DeletedAutomationAccount DeletedAutomationAccount(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier automationAccountResourceId = default, string automationAccountId = default, string locationPropertiesLocation = default, DateTimeOffset? deletedOn = default, AzureLocation? location = default)
         {
             return new DeletedAutomationAccount(
                 id,
@@ -2318,7 +2318,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <returns> A new <see cref="Automation.AutomationPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationPrivateEndpointConnectionData AutomationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, AutomationPrivateLinkServiceConnectionStateProperty connectionState = default)
+        public static AutomationPrivateEndpointConnectionData AutomationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, AutomationPrivateLinkServiceConnectionStateProperty connectionState)
         {
             return new AutomationPrivateEndpointConnectionData(
                 id,
@@ -2350,7 +2350,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="isComposite"> Gets or sets type of module, if its composite or not. </param>
         /// <returns> A new <see cref="Automation.AutomationModuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationModuleData AutomationModuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, bool? isGlobal = default, string version = default, long? sizeInBytes = default, int? activityCount = default, ModuleProvisioningState? provisioningState = default, AutomationContentLink contentLink = default, AutomationModuleErrorInfo error = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, bool? isComposite = default)
+        public static AutomationModuleData AutomationModuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, bool? isGlobal, string version, long? sizeInBytes, int? activityCount, ModuleProvisioningState? provisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite)
         {
             return new AutomationModuleData(
                 id,
@@ -2389,7 +2389,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
         /// <returns> A new <see cref="Automation.DscNodeConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, string configurationName = default, string source = default, long? nodeCount = default, bool? isIncrementNodeConfigurationBuildRequired = default)
+        public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, string configurationName, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired)
         {
             return new DscNodeConfigurationData(
                 id,
@@ -2417,7 +2417,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="value"> Gets or sets the values of the job stream. </param>
         /// <returns> A new <see cref="Models.AutomationJobStream"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationJobStream AutomationJobStream(ResourceIdentifier id = default, string jobStreamId = default, DateTimeOffset? time = default, AutomationJobStreamType? streamType = default, string streamText = default, string summary = default, IReadOnlyDictionary<string, BinaryData> value = default)
+        public static AutomationJobStream AutomationJobStream(ResourceIdentifier id, string jobStreamId, DateTimeOffset? time, AutomationJobStreamType? streamType, string streamText, string summary, IReadOnlyDictionary<string, BinaryData> value)
         {
             return new AutomationJobStream(id, jobStreamId is null && time is null && streamType is null && streamText is null && summary is null && value is null ? default : new JobStreamProperties(
                 jobStreamId,
@@ -2439,7 +2439,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="value"> The values of the job stream. </param>
         /// <returns> A new <see cref="Models.SourceControlSyncJobStreamResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(ResourceIdentifier id = default, string sourceControlSyncJobStreamId = default, string summary = default, DateTimeOffset? time = default, SourceControlStreamType? streamType = default, string streamText = default, IReadOnlyDictionary<string, BinaryData> value = default)
+        public static SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(ResourceIdentifier id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
         {
             return new SourceControlSyncJobStreamResult(id, sourceControlSyncJobStreamId is null && summary is null && time is null && streamType is null && streamText is null && value is null ? default : new SourceControlSyncJobStreamByIdProperties(
                 sourceControlSyncJobStreamId,
@@ -2473,7 +2473,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="automationHybridServiceUri"> URL of automation hybrid service which is used for hybrid worker on-boarding. </param>
         /// <returns> A new <see cref="Automation.AutomationAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationAccountData AutomationAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, ManagedServiceIdentity identity = default, AutomationSku sku = default, string lastModifiedBy = default, AutomationAccountState? state = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, AutomationEncryptionProperties encryption = default, IEnumerable<AutomationPrivateEndpointConnectionData> privateEndpointConnections = default, bool? isPublicNetworkAccessAllowed = default, bool? isLocalAuthDisabled = default, Uri automationHybridServiceUri = default)
+        public static AutomationAccountData AutomationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, AutomationSku sku, string lastModifiedBy, AutomationAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, AutomationEncryptionProperties encryption, IEnumerable<AutomationPrivateEndpointConnectionData> privateEndpointConnections, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, Uri automationHybridServiceUri)
         {
             return new AutomationAccountData(
                 id,
@@ -2512,7 +2512,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationConnectionData AutomationConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string connectionTypeName = default, IReadOnlyDictionary<string, string> fieldDefinitionValues = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default)
+        public static AutomationConnectionData AutomationConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectionTypeName, IReadOnlyDictionary<string, string> fieldDefinitionValues, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
         {
             return new AutomationConnectionData(
                 id,
@@ -2536,7 +2536,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="fieldDefinitionValues"> Gets or sets the field definition properties of the connection. </param>
         /// <returns> A new <see cref="Models.AutomationConnectionCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationConnectionCreateOrUpdateContent AutomationConnectionCreateOrUpdateContent(string name = default, string description = default, string connectionTypeName = default, IDictionary<string, string> fieldDefinitionValues = default)
+        public static AutomationConnectionCreateOrUpdateContent AutomationConnectionCreateOrUpdateContent(string name, string description, string connectionTypeName, IDictionary<string, string> fieldDefinitionValues)
         {
             return new AutomationConnectionCreateOrUpdateContent(name, description is null && connectionTypeName is null && fieldDefinitionValues is null ? default : new ConnectionCreateOrUpdateProperties(description, new ConnectionTypeAssociationProperty(connectionTypeName, default), fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), default), default);
         }
@@ -2553,7 +2553,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="parameters"> Gets or sets the parameters of the job schedule. </param>
         /// <returns> A new <see cref="Automation.AutomationJobScheduleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? jobScheduleId = default, string scheduleName = default, string runbookName = default, string runOn = default, IReadOnlyDictionary<string, string> parameters = default)
+        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? jobScheduleId, string scheduleName, string runbookName, string runOn, IReadOnlyDictionary<string, string> parameters)
         {
             return new AutomationJobScheduleData(
                 id,
@@ -2577,7 +2577,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="parameters"> Gets or sets a list of job properties. </param>
         /// <returns> A new <see cref="Models.AutomationJobScheduleCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationJobScheduleCreateOrUpdateContent AutomationJobScheduleCreateOrUpdateContent(string scheduleName = default, string runbookName = default, string runOn = default, IDictionary<string, string> parameters = default)
+        public static AutomationJobScheduleCreateOrUpdateContent AutomationJobScheduleCreateOrUpdateContent(string scheduleName, string runbookName, string runOn, IDictionary<string, string> parameters)
         {
             return new AutomationJobScheduleCreateOrUpdateContent(scheduleName is null && runbookName is null && runOn is null && parameters is null ? default : new JobScheduleCreateProperties(new ScheduleAssociationProperty(scheduleName, default), new RunbookAssociationProperty(runbookName, default), runOn, parameters ?? new ChangeTrackingDictionary<string, string>(), default), default);
         }
@@ -2589,7 +2589,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <returns> A new <see cref="Models.AutomationAccountModuleCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationAccountModuleCreateOrUpdateContent AutomationAccountModuleCreateOrUpdateContent(string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default, AutomationContentLink contentLink = default)
+        public static AutomationAccountModuleCreateOrUpdateContent AutomationAccountModuleCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, AutomationContentLink contentLink)
         {
             return new AutomationAccountModuleCreateOrUpdateContent(contentLink is null ? default : new ModuleCreateOrUpdateProperties(contentLink, default), name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
@@ -2613,7 +2613,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationWatcherData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationWatcherData AutomationWatcherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? executionFrequencyInSeconds = default, string scriptName = default, IDictionary<string, string> scriptParameters = default, string scriptRunOn = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, string description = default)
+        public static AutomationWatcherData AutomationWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description)
         {
             return new AutomationWatcherData(
                 id,
@@ -2657,7 +2657,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.DscConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DscConfigurationData DscConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, DscConfigurationProvisioningState? provisioningState = default, int? jobCount = default, IDictionary<string, DscConfigurationParameterDefinition> parameters = default, AutomationContentSource source = default, DscConfigurationState? state = default, bool? isLogVerboseEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, int? nodeConfigurationCount = default, string description = default)
+        public static DscConfigurationData DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description)
         {
             return new DscConfigurationData(
                 id,
@@ -2693,7 +2693,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description of the configuration. </param>
         /// <returns> A new <see cref="Models.DscConfigurationCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default, bool? isLogVerboseEnabled = default, bool? isLogProgressEnabled = default, AutomationContentSource source = default, IDictionary<string, DscConfigurationParameterDefinition> parameters = default, string description = default)
+        public static DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, AutomationContentSource source, IDictionary<string, DscConfigurationParameterDefinition> parameters, string description)
         {
             return new DscConfigurationCreateOrUpdateContent(isLogVerboseEnabled is null && isLogProgressEnabled is null && source is null && parameters is null && description is null ? default : new DscConfigurationCreateOrUpdateProperties(
                 isLogVerboseEnabled,
@@ -2725,7 +2725,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="provisioningState"> The current provisioning state of the job. </param>
         /// <returns> A new <see cref="Automation.AutomationJobData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationJobData AutomationJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runbookName = default, string startedBy = default, string runOn = default, Guid? jobId = default, DateTimeOffset? createdOn = default, AutomationJobStatus? status = default, string statusDetails = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string exception = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastStatusModifiedOn = default, IDictionary<string, string> parameters = default, JobProvisioningState? provisioningState = default)
+        public static AutomationJobData AutomationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runbookName, string startedBy, string runOn, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState)
         {
             return new AutomationJobData(
                 id,
@@ -2768,7 +2768,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runOn"> Specifies the runOn group name where the job was executed. </param>
         /// <returns> A new <see cref="Models.AutomationJobCollectionItemData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runbookName = default, Guid? jobId = default, DateTimeOffset? createdOn = default, AutomationJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastModifiedOn = default, string provisioningState = default, string runOn = default)
+        public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runbookName, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn)
         {
             return new AutomationJobCollectionItemData(
                 id,
@@ -2809,7 +2809,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationRun"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = default, ResourceIdentifier id = default, string softwareUpdateName = default, string status = default, TimeSpan? configuredDuration = default, string osType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? computerCount = default, int? failedCount = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, SoftwareUpdateConfigurationRunTasks tasks = default)
+        public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, string softwareUpdateName, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks)
         {
             return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
                 softwareUpdateName is null ? default : new UpdateConfigurationNavigation(softwareUpdateName, default),
@@ -2849,7 +2849,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="error"> Details of provisioning error. </param>
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationMachineRun"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = default, ResourceIdentifier id = default, ResourceIdentifier targetComputerId = default, string targetComputerType = default, string softwareUpdateName = default, string status = default, string osType = default, Guid? correlationId = default, Guid? sourceComputerId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? configuredDuration = default, Guid? jobId = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, AutomationResponseError error = default)
+        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, string softwareUpdateName, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, Guid? jobId, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error)
         {
             return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
                 targetComputerId,
@@ -2896,7 +2896,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationRunbookData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationRunbookData AutomationRunbookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, AutomationRunbookType? runbookType = default, AutomationContentLink publishContentLink = default, RunbookState? state = default, bool? isLogVerboseEnabled = default, bool? isLogProgressEnabled = default, int? logActivityTrace = default, int? jobCount = default, IDictionary<string, RunbookParameterDefinition> parameters = default, IEnumerable<string> outputTypes = default, AutomationRunbookDraft draft = default, RunbookProvisioningState? provisioningState = default, string lastModifiedBy = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default)
+        public static AutomationRunbookData AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IEnumerable<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
         {
             return new AutomationRunbookData(
                 id,
@@ -2940,7 +2940,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="logActivityTrace"> Gets or sets the activity-level tracing options of the runbook. </param>
         /// <returns> A new <see cref="Models.AutomationRunbookCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default, bool? isLogVerboseEnabled = default, bool? isLogProgressEnabled = default, AutomationRunbookType runbookType = default, AutomationRunbookDraft draft = default, AutomationContentLink publishContentLink = default, string description = default, int? logActivityTrace = default)
+        public static AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, AutomationRunbookType runbookType, AutomationRunbookDraft draft, AutomationContentLink publishContentLink, string description, int? logActivityTrace)
         {
             return new AutomationRunbookCreateOrUpdateContent(new RunbookCreateOrUpdateProperties(
                 isLogVerboseEnabled,
@@ -2972,7 +2972,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationWebhookData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationWebhookData AutomationWebhookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, Uri uri = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastInvokedOn = default, IDictionary<string, string> parameters = default, string runbookName = default, string runOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, string description = default)
+        public static AutomationWebhookData AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, string runbookName, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description)
         {
             return new AutomationWebhookData(
                 id,
@@ -3007,7 +3007,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="deletedOn"> Gets the deletion time. </param>
         /// <returns> A new <see cref="Models.DeletedAutomationAccount"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeletedAutomationAccount DeletedAutomationAccount(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier automationAccountResourceId = default, string automationAccountId = default, string locationPropertiesLocation = default, DateTimeOffset? deletedOn = default)
+        public static DeletedAutomationAccount DeletedAutomationAccount(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn)
         {
             return new DeletedAutomationAccount(
                 id,

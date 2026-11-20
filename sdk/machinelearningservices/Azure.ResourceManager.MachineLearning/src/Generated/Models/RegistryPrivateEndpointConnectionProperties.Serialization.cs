@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("groupIds"u8);
                 }
             }
-            if (_privateEndpointIsDefined || Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint, _privateEndpointIsDefined))
             {
                 if (PrivateEndpoint != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateEndpoint"u8);
                 }
             }
-            if (_registryPrivateLinkServiceConnectionStateIsDefined || Optional.IsDefined(RegistryPrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(RegistryPrivateLinkServiceConnectionState, _registryPrivateLinkServiceConnectionStateIsDefined))
             {
                 if (RegistryPrivateLinkServiceConnectionState != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("registryPrivateLinkServiceConnectionState"u8);
                 }
             }
-            if (_provisioningStateIsDefined || Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState, _provisioningStateIsDefined))
             {
                 if (ProvisioningState != null)
                 {

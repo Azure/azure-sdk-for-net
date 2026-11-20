@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
         /// </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<ComputeFleetVmSizeProfile>();
 
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId)
         {
             return new ComputeFleetProperties(
                 provisioningState,

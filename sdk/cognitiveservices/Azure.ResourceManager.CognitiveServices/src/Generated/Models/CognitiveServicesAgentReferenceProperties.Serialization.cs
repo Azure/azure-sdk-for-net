@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesAgentReferenceProperties)} does not support writing '{format}' format.");
             }
-            if (_agentIdIsDefined || Optional.IsDefined(AgentId))
+            if (Optional.IsDefined(AgentId, _agentIdIsDefined))
             {
                 if (AgentId != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("agentId"u8);
                 }
             }
-            if (_agentNameIsDefined || Optional.IsDefined(AgentName))
+            if (Optional.IsDefined(AgentName, _agentNameIsDefined))
             {
                 if (AgentName != null)
                 {

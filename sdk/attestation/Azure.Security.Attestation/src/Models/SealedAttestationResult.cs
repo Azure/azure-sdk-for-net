@@ -12,7 +12,8 @@ namespace Azure.Security.Attestation
     /// The service encrypts the token to a key held in the virtual machine's TPM, so only that virtual machine can decrypt it,
     /// for example with the <see href="https://github.com/Azure/confidential-computing-cvm-guest-attestation">guest attestation library</see>.
     /// The decrypted token is an attestation token: read it with <see cref="AttestationToken.Deserialize(string)"/>, validate it with
-    /// <see cref="AttestationToken.ValidateToken(AttestationTokenValidationOptions, System.Collections.Generic.IReadOnlyList{AttestationSigner}, System.Threading.CancellationToken)"/>,
+    /// <see cref="AttestationToken.ValidateToken(AttestationTokenValidationOptions, System.Collections.Generic.IReadOnlyList{AttestationSigner}, System.Threading.CancellationToken)"/>
+    /// against the signing certificates returned by <see cref="AttestationClient.GetSigningCertificates(System.Threading.CancellationToken)"/>,
     /// and get its claims with <see cref="AttestationToken.GetBody{T}"/> and <see cref="AttestationResult"/>.
     /// </remarks>
     // Makes the generated model public, for AttestAzureGuest; the generator emits the accessibility declared here.

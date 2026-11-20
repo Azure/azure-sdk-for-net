@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (_nodeConfigurationIsDefined || Optional.IsDefined(NodeConfiguration))
+            if (Optional.IsDefined(NodeConfiguration, _nodeConfigurationIsDefined))
             {
                 if (NodeConfiguration != null)
                 {

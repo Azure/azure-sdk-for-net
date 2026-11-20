@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.Network
     /// <summary> Network routing rule. </summary>
     public partial class NetworkManagerRoutingRuleData : ResourceData, IJsonModel<NetworkManagerRoutingRuleData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkManagerRoutingRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkManagerRoutingRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkManagerRoutingRuleData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -38,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkManagerRoutingRuleData IPersistableModel<NetworkManagerRoutingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkManagerRoutingRuleData IPersistableModel<NetworkManagerRoutingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkManagerRoutingRuleData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkManagerRoutingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -108,7 +125,20 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkManagerRoutingRuleData IJsonModel<NetworkManagerRoutingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkManagerRoutingRuleData IJsonModel<NetworkManagerRoutingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkManagerRoutingRuleData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkManagerRoutingRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerRoutingRuleData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerRoutingRuleData(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

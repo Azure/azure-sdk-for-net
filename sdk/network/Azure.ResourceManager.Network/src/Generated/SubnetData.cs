@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -23,12 +24,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the subnet. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal SubnetData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, SubnetPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
+        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SubnetPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -152,6 +153,48 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
+        [WirePath("properties.ipConfigurations")]
+        public IReadOnlyList<NetworkIPConfiguration> IPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.IPConfigurations;
+            }
+        }
+
+        /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
+        [WirePath("properties.ipConfigurationProfiles")]
+        public IReadOnlyList<NetworkIPConfigurationProfile> IPConfigurationProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.IPConfigurationProfiles;
+            }
+        }
+
+        /// <summary> Array of IpAllocation which reference this subnet. </summary>
+        [WirePath("properties.ipAllocations")]
+        public IList<WritableSubResource> IPAllocations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.IPAllocations;
+            }
+        }
+
         /// <summary> An array of references to the external resources using subnet. </summary>
         [WirePath("properties.resourceNavigationLinks")]
         public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks
@@ -216,11 +259,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Enable or Disable apply network policies on private end point in the subnet. </summary>
         [WirePath("properties.privateEndpointNetworkPolicies")]
-        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicies
+        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicy
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicies;
+                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicy;
             }
             set
             {
@@ -228,17 +271,17 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new SubnetPropertiesFormat();
                 }
-                Properties.PrivateEndpointNetworkPolicies = value;
+                Properties.PrivateEndpointNetworkPolicy = value;
             }
         }
 
         /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>
         [WirePath("properties.privateLinkServiceNetworkPolicies")]
-        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicies
+        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicy
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicies;
+                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicy;
             }
             set
             {
@@ -246,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new SubnetPropertiesFormat();
                 }
-                Properties.PrivateLinkServiceNetworkPolicies = value;
+                Properties.PrivateLinkServiceNetworkPolicy = value;
             }
         }
 

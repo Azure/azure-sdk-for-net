@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
+        public virtual ResourceIdentifier DiskEncryptionSetId
         {
             get
             {

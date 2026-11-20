@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningServicePrincipalDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private string _clientSecret;
-        internal bool _clientSecretIsDefined;
+        private bool _clientSecretIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreSecrets"/>. </summary>
         public MachineLearningServicePrincipalDatastoreSecrets() : base(SecretsType.ServicePrincipal)

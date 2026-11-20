@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private RequestLogging _requestLogging;
-        internal bool _requestLoggingIsDefined;
+        private bool _requestLoggingIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DataCollector"/>. </summary>
         /// <param name="collections">

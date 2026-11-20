@@ -90,7 +90,7 @@ public partial class AgentAdministrationClient
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
             new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
-            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview"),
+            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -355,7 +355,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<ProjectsAgentVersion> GetAgentVersions(bool? includeDrafts, string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ProjectsAgentVersion> GetAgentVersions(string agentName, bool? includeDrafts, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -439,7 +439,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<ProjectsAgentVersion> GetAgentVersionsAsync(bool? includeDrafts, string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ProjectsAgentVersion> GetAgentVersionsAsync(string agentName, bool? includeDrafts, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -607,7 +607,7 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        CreateSessionContent spreadModel = new CreateSessionContent(agentSessionId, versionIndicator, default);
         ClientResult result = CreateSession(agentName, spreadModel, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
@@ -628,7 +628,7 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        CreateSessionContent spreadModel = new CreateSessionContent(agentSessionId, versionIndicator, default);
         ClientResult result = await CreateSessionAsync(agentName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
@@ -903,6 +903,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
     public virtual ClientResult<SessionLogEvent> GetSessionLogStream(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -941,6 +942,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<SessionLogEvent>> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -1040,7 +1042,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual BinaryData DownloadAgentCode(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<BinaryData> DownloadAgentCode(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
@@ -1051,7 +1053,7 @@ public partial class AgentAdministrationClient
         );
         BinaryData data = result.GetRawResponse().Content;
         FileHelper.SaveAndUnzipData(path, data);
-        return data;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary>
@@ -1075,7 +1077,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<BinaryData> DownloadAgentCodeAsync(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<BinaryData>> DownloadAgentCodeAsync(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
@@ -1086,7 +1088,7 @@ public partial class AgentAdministrationClient
         ).ConfigureAwait(false);
         BinaryData data = result.GetRawResponse().Content;
         FileHelper.SaveAndUnzipData(path, data);
-        return data;
+        return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
     }
 
     /// <summary> Gets the lazily-initialized agent toolboxes sub-client. </summary>
@@ -1145,7 +1147,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentContent body, CancellationToken cancellationToken = default)
     {
         return GenerateAgent(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
@@ -1162,7 +1164,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentContent body, CancellationToken cancellationToken = default)
     {
         return await GenerateAgentAsync(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
@@ -1170,7 +1172,7 @@ public partial class AgentAdministrationClient
         ).ConfigureAwait(false);
     }
     /// <summary> Initializes a new instance of AgentOptimizationJobCandidates. </summary>
-    public virtual AgentOptimizationJobCandidates GetAgentOptimizationJobCandidatesClient()
+    public virtual AgentOptimizationJobCandidates GetAgentOptimizationJobCandidates()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobCandidates) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobCandidates, new AgentOptimizationJobCandidates(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobCandidates;
     }

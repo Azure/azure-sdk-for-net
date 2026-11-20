@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _instanceType;
-        internal bool _instanceTypeIsDefined;
+        private bool _instanceTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SparkResourceConfiguration"/>. </summary>
         public SparkResourceConfiguration()

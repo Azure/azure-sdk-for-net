@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("managedNetworkKind"u8);
                 writer.WriteStringValue(ManagedNetworkKind.Value.ToString());
             }
-            if (options.Format != "W" && (_firewallPublicIPAddressIsDefined || Optional.IsDefined(FirewallPublicIPAddress)))
+            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIPAddress, _firewallPublicIPAddressIsDefined))
             {
                 if (FirewallPublicIPAddress != null)
                 {

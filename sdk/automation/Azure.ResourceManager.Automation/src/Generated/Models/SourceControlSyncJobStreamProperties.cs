@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _time;
-        internal bool _timeIsDefined;
+        private bool _timeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStreamProperties"/>. </summary>
         internal SourceControlSyncJobStreamProperties()

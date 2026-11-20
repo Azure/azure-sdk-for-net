@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _value;
-        internal bool _valueIsDefined;
+        private bool _valueIsDefined;
         private string _keyVaultReferenceIdentity;
-        internal bool _keyVaultReferenceIdentityIsDefined;
+        private bool _keyVaultReferenceIdentityIsDefined;
         private string _description;
-        internal bool _descriptionIsDefined;
+        private bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SourceConfiguration"/>. </summary>
         internal SourceConfiguration()

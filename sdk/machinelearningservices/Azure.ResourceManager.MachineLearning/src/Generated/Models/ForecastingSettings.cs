@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _countryOrRegionForHolidays;
-        internal bool _countryOrRegionForHolidaysIsDefined;
+        private bool _countryOrRegionForHolidaysIsDefined;
         private int? _cvStepSize;
-        internal bool _cvStepSizeIsDefined;
+        private bool _cvStepSizeIsDefined;
         private string _frequency;
-        internal bool _frequencyIsDefined;
+        private bool _frequencyIsDefined;
         private TargetLags _targetLags;
-        internal bool _targetLagsIsDefined;
+        private bool _targetLagsIsDefined;
         private TargetRollingWindowSize _targetRollingWindowSize;
-        internal bool _targetRollingWindowSizeIsDefined;
+        private bool _targetRollingWindowSizeIsDefined;
         private string _timeColumnName;
-        internal bool _timeColumnNameIsDefined;
+        private bool _timeColumnNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         public ForecastingSettings()

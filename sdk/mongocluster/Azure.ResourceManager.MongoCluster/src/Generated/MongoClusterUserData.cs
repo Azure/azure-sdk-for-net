@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary> Represents a Mongo cluster user. </summary>
+    /// <summary> Represents a DocumentDB cluster user. </summary>
     public partial class MongoClusterUserData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

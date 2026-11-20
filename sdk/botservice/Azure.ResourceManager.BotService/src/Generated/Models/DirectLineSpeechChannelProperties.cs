@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _cognitiveServiceRegion;
-        internal bool _cognitiveServiceRegionIsDefined;
+        private bool _cognitiveServiceRegionIsDefined;
         private string _cognitiveServiceSubscriptionKey;
-        internal bool _cognitiveServiceSubscriptionKeyIsDefined;
+        private bool _cognitiveServiceSubscriptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DirectLineSpeechChannelProperties"/>. </summary>
         public DirectLineSpeechChannelProperties()

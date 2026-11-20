@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.PlatformValidation
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudValidationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cloudValidationApiVersion);
             _cloudValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlatformValidation", ResourceType.Namespace, Diagnostics);
-            _cloudValidationsRestClient = new CloudValidations(_cloudValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudValidationApiVersion ?? "2026-08-01-preview");
+            _cloudValidationsRestClient = new CloudValidations(_cloudValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PlatformValidation/cloudValidations", out string cloudValidationsApiVersionOverride) ? cloudValidationsApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 

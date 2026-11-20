@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support writing '{format}' format.");
             }
-            if (_acrAccountNameIsDefined || Optional.IsDefined(AcrAccountName))
+            if (Optional.IsDefined(AcrAccountName, _acrAccountNameIsDefined))
             {
                 if (AcrAccountName != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountName"u8);
                 }
             }
-            if (_acrAccountSkuIsDefined || Optional.IsDefined(AcrAccountSku))
+            if (Optional.IsDefined(AcrAccountSku, _acrAccountSkuIsDefined))
             {
                 if (AcrAccountSku != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountSku"u8);
                 }
             }
-            if (_armResourceIdentifierIsDefined || Optional.IsDefined(ArmResourceIdentifier))
+            if (Optional.IsDefined(ArmResourceIdentifier, _armResourceIdentifierIsDefined))
             {
                 if (ArmResourceIdentifier != null)
                 {

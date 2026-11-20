@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _uri;
-        internal bool _uriIsDefined;
+        private bool _uriIsDefined;
         private string _containerName;
-        internal bool _containerNameIsDefined;
+        private bool _containerNameIsDefined;
         private long? _timeoutInSeconds;
-        internal bool _timeoutInSecondsIsDefined;
+        private bool _timeoutInSecondsIsDefined;
         private long? _syncIntervalInSeconds;
-        internal bool _syncIntervalInSecondsIsDefined;
+        private bool _syncIntervalInSecondsIsDefined;
         private string _accountKey;
-        internal bool _accountKeyIsDefined;
+        private bool _accountKeyIsDefined;
         private string _sasToken;
-        internal bool _sasTokenIsDefined;
+        private bool _sasTokenIsDefined;
         private string _localAuthRef;
-        internal bool _localAuthRefIsDefined;
+        private bool _localAuthRefIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobPatch"/>. </summary>
         public AzureBlobPatch()

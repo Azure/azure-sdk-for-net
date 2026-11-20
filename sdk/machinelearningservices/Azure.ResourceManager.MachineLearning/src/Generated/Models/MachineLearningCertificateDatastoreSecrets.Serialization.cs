@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_certificateIsDefined || Optional.IsDefined(Certificate))
+            if (Optional.IsDefined(Certificate, _certificateIsDefined))
             {
                 if (Certificate != null)
                 {

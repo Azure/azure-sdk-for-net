@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _keyValue;
-        internal bool _keyValueIsDefined;
+        private bool _keyValueIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointKeyRegenerateContent"/>. </summary>
         /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>

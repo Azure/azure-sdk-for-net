@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (_targetColumnIsDefined || Optional.IsDefined(TargetColumn))
+            if (Optional.IsDefined(TargetColumn, _targetColumnIsDefined))
             {
                 if (TargetColumn != null)
                 {

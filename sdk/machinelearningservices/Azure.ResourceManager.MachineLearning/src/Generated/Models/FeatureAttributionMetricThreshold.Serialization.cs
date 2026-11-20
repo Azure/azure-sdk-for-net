@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("metric"u8);
             writer.WriteStringValue(Metric.ToString());
-            if (_thresholdIsDefined || Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(Threshold, _thresholdIsDefined))
             {
                 if (Threshold != null)
                 {

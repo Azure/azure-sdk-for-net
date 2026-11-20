@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _retentionInDays;
-        internal bool _retentionInDaysIsDefined;
+        private bool _retentionInDaysIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceProperties"/>. </summary>
         public WorkspaceProperties()

@@ -2802,7 +2802,6 @@
                 "$id": "237",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Boolean",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -2901,7 +2900,6 @@
                 "$id": "241",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Boolean",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -3091,7 +3089,6 @@
                 "$id": "251",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -3190,7 +3187,6 @@
                 "$id": "255",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -3380,7 +3376,6 @@
                 "$id": "265",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -3479,7 +3474,6 @@
                 "$id": "269",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -3669,7 +3663,6 @@
                 "$id": "279",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Int",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -3768,7 +3761,6 @@
                 "$id": "283",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Int",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -3958,7 +3950,6 @@
                 "$id": "293",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Float",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -4057,7 +4048,6 @@
                 "$id": "297",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Float",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -4247,7 +4237,6 @@
                 "$id": "307",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Decimal",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -4346,7 +4335,6 @@
                 "$id": "311",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Decimal",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -4536,7 +4524,6 @@
                 "$id": "321",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Decimal128",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -4635,7 +4622,6 @@
                 "$id": "325",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Decimal128",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -4825,7 +4811,6 @@
                 "$id": "335",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -4924,7 +4909,6 @@
                 "$id": "339",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -5114,7 +5098,6 @@
                 "$id": "349",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -5213,7 +5196,6 @@
                 "$id": "353",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -5403,7 +5385,6 @@
                 "$id": "363",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Enum",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -5502,7 +5483,6 @@
                 "$id": "367",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Enum",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -5692,7 +5672,6 @@
                 "$id": "377",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ExtensibleEnum",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -5791,7 +5770,6 @@
                 "$id": "381",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ExtensibleEnum",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -5981,7 +5959,6 @@
                 "$id": "391",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Model",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -6080,7 +6057,6 @@
                 "$id": "395",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Model",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -6270,7 +6246,6 @@
                 "$id": "405",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "CollectionsString",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -6369,7 +6344,6 @@
                 "$id": "409",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "CollectionsString",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -6559,7 +6533,6 @@
                 "$id": "419",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "CollectionsInt",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -6658,7 +6631,6 @@
                 "$id": "423",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "CollectionsInt",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -6848,7 +6820,6 @@
                 "$id": "433",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -6947,7 +6918,6 @@
                 "$id": "437",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -7137,7 +7107,6 @@
                 "$id": "447",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "DictionaryString",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -7236,7 +7205,6 @@
                 "$id": "451",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "DictionaryString",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -7426,7 +7394,6 @@
                 "$id": "461",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Never",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -7525,7 +7492,6 @@
                 "$id": "465",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Never",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -7715,7 +7681,6 @@
                 "$id": "475",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnknownString",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -7814,7 +7779,6 @@
                 "$id": "479",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnknownString",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -8004,7 +7968,6 @@
                 "$id": "489",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnknownInt",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -8103,7 +8066,6 @@
                 "$id": "493",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnknownInt",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -8293,7 +8255,6 @@
                 "$id": "503",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnknownDict",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -8392,7 +8353,6 @@
                 "$id": "507",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnknownDict",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -8582,7 +8542,6 @@
                 "$id": "517",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnknownArray",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -8681,7 +8640,6 @@
                 "$id": "521",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnknownArray",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -8871,7 +8829,6 @@
                 "$id": "531",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StringLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -8970,7 +8927,6 @@
                 "$id": "535",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "StringLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -9160,7 +9116,6 @@
                 "$id": "545",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "IntLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -9259,7 +9214,6 @@
                 "$id": "549",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "IntLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -9449,7 +9403,6 @@
                 "$id": "559",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "FloatLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -9548,7 +9501,6 @@
                 "$id": "563",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "FloatLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -9738,7 +9690,6 @@
                 "$id": "573",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "BooleanLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -9837,7 +9788,6 @@
                 "$id": "577",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "BooleanLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -10027,7 +9977,6 @@
                 "$id": "587",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnionStringLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -10126,7 +10075,6 @@
                 "$id": "591",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnionStringLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -10316,7 +10264,6 @@
                 "$id": "601",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnionIntLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -10415,7 +10362,6 @@
                 "$id": "605",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnionIntLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -10605,7 +10551,6 @@
                 "$id": "615",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnionFloatLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -10704,7 +10649,6 @@
                 "$id": "619",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnionFloatLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [
@@ -10894,7 +10838,6 @@
                 "$id": "629",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnionEnumValue",
                 "doc": "Get call",
                 "accessibility": "public",
                 "parameters": [
@@ -10993,7 +10936,6 @@
                 "$id": "633",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnionEnumValue",
                 "doc": "Put operation",
                 "accessibility": "public",
                 "parameters": [

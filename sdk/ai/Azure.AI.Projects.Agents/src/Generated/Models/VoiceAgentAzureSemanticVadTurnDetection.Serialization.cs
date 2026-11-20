@@ -10,11 +10,11 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Azure semantic voice activity detection. </summary>
-    public partial class VoiceAgentAzureSemanticVadTurnDetection : VoiceAgentTurnDetectionConfig, IJsonModel<VoiceAgentAzureSemanticVadTurnDetection>
+    public partial class VoiceAgentAzureSemanticVadTurnDetection : VoiceAgentTurnDetectionConfiguration, IJsonModel<VoiceAgentAzureSemanticVadTurnDetection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentTurnDetectionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceAgentTurnDetectionConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAzureSemanticVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -76,20 +76,20 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Optional.IsDefined(PrefixPaddingMs))
+            if (Optional.IsDefined(PrefixPadding))
             {
                 writer.WritePropertyName("prefix_padding_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(PrefixPaddingMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(PrefixPadding.Value.TotalMilliseconds)));
             }
-            if (Optional.IsDefined(SilenceDurationMs))
+            if (Optional.IsDefined(SilenceDuration))
             {
                 writer.WritePropertyName("silence_duration_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(SilenceDurationMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(SilenceDuration.Value.TotalMilliseconds)));
             }
-            if (Optional.IsDefined(IdleTimeoutMs))
+            if (Optional.IsDefined(IdleTimeout))
             {
                 writer.WritePropertyName("idle_timeout_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeoutMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeout.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(EndOfUtteranceDetection, _endOfUtteranceDetectionIsDefined))
             {
@@ -103,25 +103,25 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("end_of_utterance_detection"u8);
                 }
             }
-            if (Optional.IsDefined(SpeechDurationMs))
+            if (Optional.IsDefined(SpeechDuration))
             {
                 writer.WritePropertyName("speech_duration_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(SpeechDurationMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(SpeechDuration.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(RemoveFillerWords))
             {
                 writer.WritePropertyName("remove_filler_words"u8);
                 writer.WriteBooleanValue(RemoveFillerWords.Value);
             }
-            if (Optional.IsDefined(CreateResponse))
+            if (Optional.IsDefined(CreateResponseEnabled))
             {
                 writer.WritePropertyName("create_response"u8);
-                writer.WriteBooleanValue(CreateResponse.Value);
+                writer.WriteBooleanValue(CreateResponseEnabled.Value);
             }
-            if (Optional.IsDefined(InterruptResponse))
+            if (Optional.IsDefined(InterruptResponseEnabled))
             {
                 writer.WritePropertyName("interrupt_response"u8);
-                writer.WriteBooleanValue(InterruptResponse.Value);
+                writer.WriteBooleanValue(InterruptResponseEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Languages))
             {
@@ -146,7 +146,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceAgentTurnDetectionConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAzureSemanticVadTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -169,15 +169,15 @@ namespace Azure.AI.Projects.Agents
             bool? autoTruncate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             float? threshold = default;
-            TimeSpan? prefixPaddingMs = default;
-            TimeSpan? silenceDurationMs = default;
-            TimeSpan? idleTimeoutMs = default;
+            TimeSpan? prefixPadding = default;
+            TimeSpan? silenceDuration = default;
+            TimeSpan? idleTimeout = default;
             bool endOfUtteranceDetectionIsDefined = false;
             VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default;
-            TimeSpan? speechDurationMs = default;
+            TimeSpan? speechDuration = default;
             bool? removeFillerWords = default;
-            bool? createResponse = default;
-            bool? interruptResponse = default;
+            bool? createResponseEnabled = default;
+            bool? interruptResponseEnabled = default;
             IList<string> languages = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,7 +210,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    prefixPaddingMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    prefixPadding = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("silence_duration_ms"u8))
@@ -219,7 +219,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    silenceDurationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    silenceDuration = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("idle_timeout_ms"u8))
@@ -228,7 +228,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    idleTimeoutMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    idleTimeout = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("end_of_utterance_detection"u8))
@@ -248,7 +248,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    speechDurationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    speechDuration = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("remove_filler_words"u8))
@@ -266,7 +266,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    createResponse = prop.Value.GetBoolean();
+                    createResponseEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("interrupt_response"u8))
@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    interruptResponse = prop.Value.GetBoolean();
+                    interruptResponseEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("languages"u8))
@@ -309,14 +309,14 @@ namespace Azure.AI.Projects.Agents
                 autoTruncate,
                 additionalBinaryDataProperties,
                 threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
-                idleTimeoutMs,
+                prefixPadding,
+                silenceDuration,
+                idleTimeout,
                 endOfUtteranceDetection,
-                speechDurationMs,
+                speechDuration,
                 removeFillerWords,
-                createResponse,
-                interruptResponse,
+                createResponseEnabled,
+                interruptResponseEnabled,
                 languages ?? new ChangeTrackingList<string>())
             {
                 _endOfUtteranceDetectionIsDefined = endOfUtteranceDetectionIsDefined

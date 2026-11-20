@@ -67,6 +67,51 @@ public class TaskOrphanStreamSweepTests
     }
 
     [Test]
+    [NonParallelizable]
+    public async Task DefaultFileReplayDirectoryParticipatesInOrphanSweep()
+    {
+        const string StateRootVariable = "AGENTSERVER_STATE_ROOT";
+        string? previous = Environment.GetEnvironmentVariable(StateRootVariable);
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-orphan-default-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            Environment.SetEnvironmentVariable(StateRootVariable, root);
+            var options = new AgentEventStreamOptions();
+            options.UseFileBackedReplay();
+            using var registry = new InMemoryEventStreamRegistry(options);
+            var taskRegistry = (ITaskEventStreamRegistry)registry;
+            AgentEventStream orphan =
+                await taskRegistry.GetOrCreateTaskStreamAsync("task", "orphan");
+            await orphan.EmitAsync(
+                new SseItem<string>("first")
+                {
+                    EventId = "1",
+                });
+
+            int failures = await taskRegistry.CloseOrphanTaskStreamsAsync(
+                (_, _) => new ValueTask<bool>(true));
+            List<string> events = await ReadToEndAsync(orphan);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(failures, Is.Zero);
+                Assert.That(events, Is.EqualTo(new[] { "first" }));
+            });
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(StateRootVariable, previous);
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+    }
+
+    [Test]
     public void SweepIsNoOpForNonPersistentBacking()
     {
         using TaskTestHost host = TaskTestHost.Create(configureStreams: o => o.UseInMemoryReplay(TimeSpan.FromMinutes(1)));

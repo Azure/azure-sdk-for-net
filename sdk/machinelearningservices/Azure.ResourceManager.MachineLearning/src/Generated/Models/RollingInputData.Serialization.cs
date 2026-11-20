@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(RollingInputData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_preprocessingComponentIdIsDefined || Optional.IsDefined(PreprocessingComponentId))
+            if (Optional.IsDefined(PreprocessingComponentId, _preprocessingComponentIdIsDefined))
             {
                 if (PreprocessingComponentId != null)
                 {

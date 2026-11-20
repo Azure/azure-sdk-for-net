@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// An action for the delivery rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnEdgeAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="FrontDoorUrlSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/>, and <see cref="UriSigningAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnEdgeAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/>, and <see cref="UriSigningAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeliveryRuleAction))]
     public abstract partial class DeliveryRuleAction : IJsonModel<DeliveryRuleAction>
@@ -137,8 +137,6 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeliveryRuleResponseHeaderAction.DeserializeDeliveryRuleResponseHeaderAction(element, options);
                     case "RouteConfigurationOverride":
                         return DeliveryRuleRouteConfigurationOverrideAction.DeserializeDeliveryRuleRouteConfigurationOverrideAction(element, options);
-                    case "AfdUrlSigning":
-                        return FrontDoorUrlSigningAction.DeserializeFrontDoorUrlSigningAction(element, options);
                     case "OriginGroupOverride":
                         return OriginGroupOverrideAction.DeserializeOriginGroupOverrideAction(element, options);
                     case "UrlRedirect":

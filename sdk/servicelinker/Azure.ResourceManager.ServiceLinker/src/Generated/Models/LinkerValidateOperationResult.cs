@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private ValidateResult _properties;
-        internal bool _propertiesIsDefined;
+        private bool _propertiesIsDefined;
         private string _status;
-        internal bool _statusIsDefined;
+        private bool _statusIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LinkerValidateOperationResult"/>. </summary>
         internal LinkerValidateOperationResult()

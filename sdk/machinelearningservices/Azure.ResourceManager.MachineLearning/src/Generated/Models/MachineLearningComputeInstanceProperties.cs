@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private ResourceId _subnet;
-        internal bool _subnetIsDefined;
+        private bool _subnetIsDefined;
         private MachineLearningComputeInstanceSshSettings _sshSettings;
-        internal bool _sshSettingsIsDefined;
+        private bool _sshSettingsIsDefined;
         private MachineLearningComputeInstanceAuthorizationType? _computeInstanceAuthorizationType;
-        internal bool _computeInstanceAuthorizationTypeIsDefined;
+        private bool _computeInstanceAuthorizationTypeIsDefined;
         private bool? _enableSSO;
-        internal bool _enableSSOIsDefined;
+        private bool _enableSSOIsDefined;
         private PersonalComputeInstanceSettings _personalComputeInstanceSettings;
-        internal bool _personalComputeInstanceSettingsIsDefined;
+        private bool _personalComputeInstanceSettingsIsDefined;
         private SetupScripts _setupScriptsSettings;
-        internal bool _setupScriptsSettingsIsDefined;
+        private bool _setupScriptsSettingsIsDefined;
         private MachineLearningComputeInstanceLastOperation _lastOperation;
-        internal bool _lastOperationIsDefined;
+        private bool _lastOperationIsDefined;
         private ComputeSchedules _schedules;
-        internal bool _schedulesIsDefined;
+        private bool _schedulesIsDefined;
         private bool? _enableNodePublicIP;
-        internal bool _enableNodePublicIPIsDefined;
+        private bool _enableNodePublicIPIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceProperties"/>. </summary>
         public MachineLearningComputeInstanceProperties()

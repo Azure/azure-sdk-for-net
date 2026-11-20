@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _cert;
-        internal bool _certIsDefined;
+        private bool _certIsDefined;
         private string _key;
-        internal bool _keyIsDefined;
+        private bool _keyIsDefined;
         private string _cname;
-        internal bool _cnameIsDefined;
+        private bool _cnameIsDefined;
         private string _leafDomainLabel;
-        internal bool _leafDomainLabelIsDefined;
+        private bool _leafDomainLabelIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfiguration"/>. </summary>
         public MachineLearningSslConfiguration()

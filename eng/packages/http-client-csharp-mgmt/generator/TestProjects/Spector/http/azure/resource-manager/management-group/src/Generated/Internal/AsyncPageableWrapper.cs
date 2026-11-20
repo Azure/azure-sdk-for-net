@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 
@@ -32,9 +34,19 @@ namespace Azure.ResourceManager.ManagementGroup
         /// <param name="continuationToken"> A continuation token from a previous response. </param>
         /// <param name="pageSizeHint"> An optional hint to specify the desired size of each page. </param>
         /// <returns> An enumerable of pages containing converted items of type U. </returns>
-        public override async IAsyncEnumerable<Page<U>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IAsyncEnumerable<Page<U>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            await foreach (Page<T> page in _source.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+            return AsPagesAsync(continuationToken, pageSizeHint, default);
+        }
+
+        /// <summary> Converts the pages from AsyncPageable to Page. </summary>
+        /// <param name="continuationToken"> A continuation token from a previous response. </param>
+        /// <param name="pageSizeHint"> An optional hint to specify the desired size of each page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An enumerable of pages containing converted items of type U. </returns>
+        private async IAsyncEnumerable<Page<U>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            await foreach (Page<T> page in _source.AsPages(continuationToken, pageSizeHint).WithCancellation(cancellationToken).ConfigureAwait(false))
             {
                 List<U> convertedItems = new List<U>();
                 foreach (T item in page.Values)

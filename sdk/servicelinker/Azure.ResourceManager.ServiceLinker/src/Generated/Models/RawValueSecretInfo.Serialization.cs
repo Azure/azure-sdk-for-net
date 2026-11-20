@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_valueIsDefined || Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value, _valueIsDefined))
             {
                 if (Value != null)
                 {

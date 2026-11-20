@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(HybridConnectivityServiceConfigurationResource.ResourceType, out string hybridConnectivityServiceConfigurationApiVersion);
             _serviceConfigurationResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", HybridConnectivityServiceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _serviceConfigurationResourcesRestClient = new ServiceConfigurationResources(_serviceConfigurationResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityServiceConfigurationApiVersion ?? "2024-12-01");
+            _serviceConfigurationResourcesRestClient = new ServiceConfigurationResources(_serviceConfigurationResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityServiceConfigurationApiVersion ?? "2027-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

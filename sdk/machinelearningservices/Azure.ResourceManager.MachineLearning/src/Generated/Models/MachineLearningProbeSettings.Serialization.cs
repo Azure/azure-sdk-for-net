@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (_initialDelayIsDefined || Optional.IsDefined(InitialDelay))
+            if (Optional.IsDefined(InitialDelay, _initialDelayIsDefined))
             {
                 if (InitialDelay != null)
                 {

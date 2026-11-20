@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _intellectualPropertyPublisher;
-        internal bool _intellectualPropertyPublisherIsDefined;
+        private bool _intellectualPropertyPublisherIsDefined;
         private ArmResourceId _managedResourceGroup;
-        internal bool _managedResourceGroupIsDefined;
+        private bool _managedResourceGroupIsDefined;
         private ManagedResourceGroupSettings _managedResourceGroupSettings;
-        internal bool _managedResourceGroupSettingsIsDefined;
+        private bool _managedResourceGroupSettingsIsDefined;
         private string _publicNetworkAccess;
-        internal bool _publicNetworkAccessIsDefined;
+        private bool _publicNetworkAccessIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RegistryProperties"/>. </summary>
         public RegistryProperties()

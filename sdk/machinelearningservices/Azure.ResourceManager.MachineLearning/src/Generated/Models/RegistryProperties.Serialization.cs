@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("discoveryUrl"u8);
                 writer.WriteStringValue(DiscoveryUri.AbsoluteUri);
             }
-            if (_intellectualPropertyPublisherIsDefined || Optional.IsDefined(IntellectualPropertyPublisher))
+            if (Optional.IsDefined(IntellectualPropertyPublisher, _intellectualPropertyPublisherIsDefined))
             {
                 if (IntellectualPropertyPublisher != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("intellectualPropertyPublisher"u8);
                 }
             }
-            if (_managedResourceGroupIsDefined || Optional.IsDefined(ManagedResourceGroup))
+            if (Optional.IsDefined(ManagedResourceGroup, _managedResourceGroupIsDefined))
             {
                 if (ManagedResourceGroup != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("managedResourceGroup"u8);
                 }
             }
-            if (_managedResourceGroupSettingsIsDefined || Optional.IsDefined(ManagedResourceGroupSettings))
+            if (Optional.IsDefined(ManagedResourceGroupSettings, _managedResourceGroupSettingsIsDefined))
             {
                 if (ManagedResourceGroupSettings != null)
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("registryPrivateEndpointConnections"u8);
                 }
             }
-            if (_publicNetworkAccessIsDefined || Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess, _publicNetworkAccessIsDefined))
             {
                 if (PublicNetworkAccess != null)
                 {

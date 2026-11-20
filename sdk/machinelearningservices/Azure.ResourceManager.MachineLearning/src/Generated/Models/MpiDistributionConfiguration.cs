@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MpiDistributionConfiguration : MachineLearningDistributionConfiguration
     {
         private int? _processCountPerInstance;
-        internal bool _processCountPerInstanceIsDefined;
+        private bool _processCountPerInstanceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MpiDistributionConfiguration"/>. </summary>
         public MpiDistributionConfiguration() : base(DistributionType.Mpi)

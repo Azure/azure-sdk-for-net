@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (_startTimeIsDefined || Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime, _startTimeIsDefined))
             {
                 if (StartTime != null)
                 {

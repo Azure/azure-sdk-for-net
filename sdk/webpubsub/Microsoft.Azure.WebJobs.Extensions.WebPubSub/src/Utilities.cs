@@ -246,7 +246,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        public static string GetFunctionKey(string hub, WebPubSubEventType type, string eventName, WebPubSubTriggerAcceptedClientProtocols clientProtocol = WebPubSubTriggerAcceptedClientProtocols.All) => $"{hub}.{type}.{eventName}.{clientProtocol}";
+        public static WebPubSubTriggerKey GetFunctionKey(string hub, WebPubSubEventType type, string eventName, WebPubSubTriggerAcceptedClientProtocols clientProtocol = WebPubSubTriggerAcceptedClientProtocols.All) => new(hub, type, eventName, clientProtocol);
 
         private static Dictionary<string, BinaryData> GetStatesFromJson(JObject response)
         {

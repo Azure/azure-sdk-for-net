@@ -120,10 +120,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("ended_at"u8);
                 writer.WriteNumberValue(EndedOn.Value, "U");
             }
-            if (Optional.IsDefined(DurationMs))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(DurationMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(Duration.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(EndReason))
             {
@@ -199,7 +199,7 @@ namespace Azure.AI.Projects.Agents
             DateTimeOffset? mediaConnectedOn = default;
             DateTimeOffset? agentSessionReadyOn = default;
             DateTimeOffset? endedOn = default;
-            TimeSpan? durationMs = default;
+            TimeSpan? duration = default;
             TelephonyCallEndReason? endReason = default;
             int? providerStatusCode = default;
             int? providerSubCode = default;
@@ -289,7 +289,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    durationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    duration = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("end_reason"u8))
@@ -342,7 +342,7 @@ namespace Azure.AI.Projects.Agents
                 mediaConnectedOn,
                 agentSessionReadyOn,
                 endedOn,
-                durationMs,
+                duration,
                 endReason,
                 providerStatusCode,
                 providerSubCode,

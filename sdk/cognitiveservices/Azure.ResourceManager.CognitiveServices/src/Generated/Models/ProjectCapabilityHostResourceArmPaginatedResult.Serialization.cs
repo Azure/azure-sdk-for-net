@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(ProjectCapabilityHostResourceArmPaginatedResult)} does not support writing '{format}' format.");
             }
-            if (_nextLinkIsDefined || Optional.IsDefined(NextLink))
+            if (Optional.IsDefined(NextLink, _nextLinkIsDefined))
             {
                 if (NextLink != null)
                 {

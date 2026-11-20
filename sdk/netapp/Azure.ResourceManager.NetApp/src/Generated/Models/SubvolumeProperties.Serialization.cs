@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (_sizeIsDefined || Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size, _sizeIsDefined))
             {
                 if (Size != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("size"u8);
                 }
             }
-            if (_parentPathIsDefined || Optional.IsDefined(ParentPath))
+            if (Optional.IsDefined(ParentPath, _parentPathIsDefined))
             {
                 if (ParentPath != null)
                 {

@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("reRegisterSubscriptionMetadata"u8);
                 writer.WriteObjectValue(ReRegisterSubscriptionMetadata, options);
             }
-            if (_isTenantLinkedNotificationEnabledIsDefined || Optional.IsDefined(IsTenantLinkedNotificationEnabled))
+            if (Optional.IsDefined(IsTenantLinkedNotificationEnabled, _isTenantLinkedNotificationEnabledIsDefined))
             {
                 if (IsTenantLinkedNotificationEnabled != null)
                 {

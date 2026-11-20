@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _pendingUploadId;
-        internal bool _pendingUploadIdIsDefined;
+        private bool _pendingUploadIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadRequestDto"/>. </summary>
         public PendingUploadRequestDto()

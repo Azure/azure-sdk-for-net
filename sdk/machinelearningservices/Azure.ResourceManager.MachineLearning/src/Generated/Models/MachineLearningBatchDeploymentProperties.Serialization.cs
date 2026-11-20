@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_computeIsDefined || Optional.IsDefined(Compute))
+            if (Optional.IsDefined(Compute, _computeIsDefined))
             {
                 if (Compute != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute"u8);
                 }
             }
-            if (_deploymentConfigurationIsDefined || Optional.IsDefined(DeploymentConfiguration))
+            if (Optional.IsDefined(DeploymentConfiguration, _deploymentConfigurationIsDefined))
             {
                 if (DeploymentConfiguration != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("miniBatchSize"u8);
                 writer.WriteNumberValue(MiniBatchSize.Value);
             }
-            if (_modelIsDefined || Optional.IsDefined(Model))
+            if (Optional.IsDefined(Model, _modelIsDefined))
             {
                 if (Model != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (_resourcesIsDefined || Optional.IsDefined(Resources))
+            if (Optional.IsDefined(Resources, _resourcesIsDefined))
             {
                 if (Resources != null)
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resources"u8);
                 }
             }
-            if (_retrySettingsIsDefined || Optional.IsDefined(RetrySettings))
+            if (Optional.IsDefined(RetrySettings, _retrySettingsIsDefined))
             {
                 if (RetrySettings != null)
                 {

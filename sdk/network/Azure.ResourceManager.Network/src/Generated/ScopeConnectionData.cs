@@ -48,6 +48,24 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Tenant ID. </summary>
+        [WirePath("properties.tenantId")]
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScopeConnectionProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
+
         /// <summary> Resource ID. </summary>
         [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId

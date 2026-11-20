@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _privateIPAddressPrefixLength;
-        internal bool _privateIPAddressPrefixLengthIsDefined;
+        private bool _privateIPAddressPrefixLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationPropertiesFormat"/>. </summary>
         public NetworkInterfaceIPConfigurationPropertiesFormat()

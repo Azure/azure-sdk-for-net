@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("statuses"u8);
                 }
             }
-            if (options.Format != "W" && (_repositoryPublicKeyIsDefined || Optional.IsDefined(RepositoryPublicKey)))
+            if (options.Format != "W" && Optional.IsDefined(RepositoryPublicKey, _repositoryPublicKeyIsDefined))
             {
                 if (RepositoryPublicKey != null)
                 {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("repositoryPublicKey"u8);
                 }
             }
-            if (options.Format != "W" && (_sourceSyncedCommitIdIsDefined || Optional.IsDefined(SourceSyncedCommitId)))
+            if (options.Format != "W" && Optional.IsDefined(SourceSyncedCommitId, _sourceSyncedCommitIdIsDefined))
             {
                 if (SourceSyncedCommitId != null)
                 {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("sourceSyncedCommitId"u8);
                 }
             }
-            if (options.Format != "W" && (_sourceUpdatedOnIsDefined || Optional.IsDefined(SourceUpdatedOn)))
+            if (options.Format != "W" && Optional.IsDefined(SourceUpdatedOn, _sourceUpdatedOnIsDefined))
             {
                 if (SourceUpdatedOn != null)
                 {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("sourceUpdatedAt"u8);
                 }
             }
-            if (options.Format != "W" && (_statusUpdatedOnIsDefined || Optional.IsDefined(StatusUpdatedOn)))
+            if (options.Format != "W" && Optional.IsDefined(StatusUpdatedOn, _statusUpdatedOnIsDefined))
             {
                 if (StatusUpdatedOn != null)
                 {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("statusUpdatedAt"u8);
                 }
             }
-            if (_isWaitForReconciliationIsDefined || Optional.IsDefined(IsWaitForReconciliation))
+            if (Optional.IsDefined(IsWaitForReconciliation, _isWaitForReconciliationIsDefined))
             {
                 if (IsWaitForReconciliation != null)
                 {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("waitForReconciliation"u8);
                 }
             }
-            if (_reconciliationWaitDurationIsDefined || Optional.IsDefined(ReconciliationWaitDuration))
+            if (Optional.IsDefined(ReconciliationWaitDuration, _reconciliationWaitDurationIsDefined))
             {
                 if (ReconciliationWaitDuration != null)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage)))
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage, _errorMessageIsDefined))
             {
                 if (ErrorMessage != null)
                 {

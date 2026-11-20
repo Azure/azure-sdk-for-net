@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +60,27 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             Assert.IsNotNull(stringToSign);
+        }
+
+        [Test]
+        public void QueueSasBuilder_ToSasQueryParameters_NormalizesNonUtcTimesToUtc()
+        {
+            DateTimeOffset startsOn = new DateTimeOffset(2026, 01, 01, 10, 00, 00, TimeSpan.FromHours(9));
+            DateTimeOffset expiresOn = new DateTimeOffset(2026, 01, 01, 11, 30, 00, TimeSpan.FromHours(9));
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[32]));
+
+            QueueSasBuilder queueSasBuilder = new QueueSasBuilder(QueueSasPermissions.Read, expiresOn)
+            {
+                StartsOn = startsOn,
+                QueueName = "queue"
+            };
+
+            string query = queueSasBuilder.ToSasQueryParameters(credential).ToString();
+            string expectedStart = WebUtility.UrlEncode(startsOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+            string expectedExpiry = WebUtility.UrlEncode(expiresOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+
+            StringAssert.Contains($"st={expectedStart}", query);
+            StringAssert.Contains($"se={expectedExpiry}", query);
         }
 
         [RecordedTest]

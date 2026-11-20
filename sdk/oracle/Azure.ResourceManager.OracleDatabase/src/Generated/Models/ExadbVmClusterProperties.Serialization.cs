@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStringValue(GiVersion);
             }
             writer.WritePropertyName("hostname"u8);
-            writer.WriteStringValue(Hostname);
+            writer.WriteStringValue(HostnameV2);
             if (Optional.IsDefined(LicenseModel))
             {
                 writer.WritePropertyName("licenseModel"u8);
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string gridImageOcid = default;
             GridImageType? gridImageType = default;
             string giVersion = default;
-            string hostname = default;
+            string hostnameV2 = default;
             OracleLicenseModel? licenseModel = default;
             int? memorySizeInGbs = default;
             int nodeCount = default;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("hostname"u8))
                 {
-                    hostname = prop.Value.GetString();
+                    hostnameV2 = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("licenseModel"u8))
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 gridImageOcid,
                 gridImageType,
                 giVersion,
-                hostname,
+                hostnameV2,
                 licenseModel,
                 memorySizeInGbs,
                 nodeCount,

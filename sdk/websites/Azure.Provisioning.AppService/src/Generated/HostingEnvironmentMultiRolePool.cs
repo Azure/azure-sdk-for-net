@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppService
         private WorkerPool _properties;
         private AppServiceSkuDescription _sku;
         private BicepValue<string> _kind;
-        private ResourceReference<AppServiceEnvironment> _parent;
+        private ProvisioningResourceReference<AppServiceEnvironment> _parent;
 
         /// <summary> Creates a new HostingEnvironmentMultiRolePool. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -40,13 +40,18 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -211,7 +216,7 @@ namespace Azure.Provisioning.AppService
             _properties = DefineModelProperty<WorkerPool>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<AppServiceSkuDescription>(nameof(Sku), new string[] { "sku" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServiceEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<AppServiceEnvironment>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

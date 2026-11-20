@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (_startsOnIsDefined || Optional.IsDefined(StartsOn))
+            if (Optional.IsDefined(StartsOn, _startsOnIsDefined))
             {
                 if (StartsOn != null)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime"u8);
                 }
             }
-            if (_endsOnIsDefined || Optional.IsDefined(EndsOn))
+            if (Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
                 if (EndsOn != null)
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
             }
-            if (_lastModifiedOnIsDefined || Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn, _lastModifiedOnIsDefined))
             {
                 if (LastModifiedOn != null)
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("lastModifiedTime"u8);
                 }
             }
-            if (_lastStatusModifiedOnIsDefined || Optional.IsDefined(LastStatusModifiedOn))
+            if (Optional.IsDefined(LastStatusModifiedOn, _lastStatusModifiedOnIsDefined))
             {
                 if (LastStatusModifiedOn != null)
                 {

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support writing '{format}' format.");
             }
-            if (_systemCreatedAcrAccountIsDefined || Optional.IsDefined(SystemCreatedAcrAccount))
+            if (Optional.IsDefined(SystemCreatedAcrAccount, _systemCreatedAcrAccountIsDefined))
             {
                 if (SystemCreatedAcrAccount != null)
                 {

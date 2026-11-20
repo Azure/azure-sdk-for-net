@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(StartInMinutes.Value);
             }
-            if (_expireOnIsDefined || Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn, _expireOnIsDefined))
             {
                 if (ExpireOn != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (_nextRunOnIsDefined || Optional.IsDefined(NextRunOn))
+            if (Optional.IsDefined(NextRunOn, _nextRunOnIsDefined))
             {
                 if (NextRunOn != null)
                 {

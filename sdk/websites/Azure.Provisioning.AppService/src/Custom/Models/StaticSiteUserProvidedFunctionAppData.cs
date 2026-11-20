@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ComponentModel;
@@ -27,20 +27,20 @@ public partial class StaticSiteUserProvidedFunctionAppData : ProvisionableConstr
     /// </summary>
     public BicepValue<ResourceIdentifier> FunctionAppResourceId
     {
-        get { Initialize(); return _functionAppResourceId!; }
-        set { Initialize(); _functionAppResourceId!.Assign(value); }
+        get { Initialize(); return _functionAppResourceId; }
+        set { Initialize(); _functionAppResourceId.Assign(value); }
     }
-    private BicepValue<ResourceIdentifier>? _functionAppResourceId;
+    private BicepValue<ResourceIdentifier> _functionAppResourceId;
 
     /// <summary>
     /// The region of the function app registered with the static site.
     /// </summary>
     public BicepValue<string> FunctionAppRegion
     {
-        get { Initialize(); return _functionAppRegion!; }
-        set { Initialize(); _functionAppRegion!.Assign(value); }
+        get { Initialize(); return _functionAppRegion; }
+        set { Initialize(); _functionAppRegion.Assign(value); }
     }
-    private BicepValue<string>? _functionAppRegion;
+    private BicepValue<string> _functionAppRegion;
 
     /// <summary>
     /// The date and time on which the function app was registered with the
@@ -48,46 +48,46 @@ public partial class StaticSiteUserProvidedFunctionAppData : ProvisionableConstr
     /// </summary>
     public BicepValue<DateTimeOffset> CreatedOn
     {
-        get { Initialize(); return _createdOn!; }
+        get { Initialize(); return _createdOn; }
     }
-    private BicepValue<DateTimeOffset>? _createdOn;
+    private BicepValue<DateTimeOffset> _createdOn;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
     public BicepValue<string> Kind
     {
-        get { Initialize(); return _kind!; }
-        set { Initialize(); _kind!.Assign(value); }
+        get { Initialize(); return _kind; }
+        set { Initialize(); _kind.Assign(value); }
     }
-    private BicepValue<string>? _kind;
+    private BicepValue<string> _kind;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id
     {
-        get { Initialize(); return _id!; }
+        get { Initialize(); return _id; }
     }
-    private BicepValue<ResourceIdentifier>? _id;
+    private BicepValue<ResourceIdentifier> _id;
 
     /// <summary>
     /// Gets the Name.
     /// </summary>
     public BicepValue<string> Name
     {
-        get { Initialize(); return _name!; }
+        get { Initialize(); return _name; }
     }
-    private BicepValue<string>? _name;
+    private BicepValue<string> _name;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
     public SystemData SystemData
     {
-        get { Initialize(); return _systemData!; }
+        get { Initialize(); return _systemData; }
     }
-    private SystemData? _systemData;
+    private SystemData _systemData;
 
     /// <summary>
     /// Creates a new StaticSiteUserProvidedFunctionAppData.

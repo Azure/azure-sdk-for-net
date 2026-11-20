@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("entities"u8);
                 }
             }
-            if (_materializationSettingsIsDefined || Optional.IsDefined(MaterializationSettings))
+            if (Optional.IsDefined(MaterializationSettings, _materializationSettingsIsDefined))
             {
                 if (MaterializationSettings != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (_specificationIsDefined || Optional.IsDefined(Specification))
+            if (Optional.IsDefined(Specification, _specificationIsDefined))
             {
                 if (Specification != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("specification"u8);
                 }
             }
-            if (_stageIsDefined || Optional.IsDefined(Stage))
+            if (Optional.IsDefined(Stage, _stageIsDefined))
             {
                 if (Stage != null)
                 {

@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> Specifies details of the Jobs to be created on a schedule. </summary>
     public partial class BatchJobSpecification : IJsonModel<BatchJobSpecification>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/> for deserialization. </summary>
-        internal BatchJobSpecification()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchJobSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

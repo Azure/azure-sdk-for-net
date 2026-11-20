@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MachineLearningMarketplacePlan _marketplacePlan;
-        internal bool _marketplacePlanIsDefined;
+        private bool _marketplacePlanIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionProperties"/>. </summary>
         /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>

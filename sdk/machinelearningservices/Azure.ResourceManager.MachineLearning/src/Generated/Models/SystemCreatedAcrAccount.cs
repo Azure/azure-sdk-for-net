@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _acrAccountName;
-        internal bool _acrAccountNameIsDefined;
+        private bool _acrAccountNameIsDefined;
         private string _acrAccountSku;
-        internal bool _acrAccountSkuIsDefined;
+        private bool _acrAccountSkuIsDefined;
         private ArmResourceId _armResourceIdentifier;
-        internal bool _armResourceIdentifierIsDefined;
+        private bool _armResourceIdentifierIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SystemCreatedAcrAccount"/>. </summary>
         public SystemCreatedAcrAccount()

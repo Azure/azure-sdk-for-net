@@ -105,7 +105,6 @@
             "$id": "10",
             "name": "voidResponse",
             "isExactName": false,
-            "resourceName": "ResponseReplacement",
             "accessibility": "public",
             "parameters": [
               {
@@ -198,7 +197,6 @@
             "$id": "14",
             "name": "bytesResponse",
             "isExactName": false,
-            "resourceName": "ResponseReplacement",
             "accessibility": "public",
             "parameters": [
               {
@@ -279,7 +277,6 @@
               "$id": "17",
               "kind": "bytes",
               "name": "bytes",
-              "encode": "base64",
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SystemCreatedStorageAccount _systemCreatedStorageAccount;
-        internal bool _systemCreatedStorageAccountIsDefined;
+        private bool _systemCreatedStorageAccountIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountDetails"/>. </summary>
         public StorageAccountDetails()

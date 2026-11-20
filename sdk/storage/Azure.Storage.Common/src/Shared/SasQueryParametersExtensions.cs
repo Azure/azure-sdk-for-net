@@ -50,10 +50,10 @@ namespace Azure.Storage.Sas
                         parameters.KeyProperties.TenantId = kv.Value;
                         break;
                     case Constants.Sas.Parameters.KeyStartUpper:
-                        parameters.KeyProperties.StartsOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+                        parameters.KeyProperties.StartsOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
                         break;
                     case Constants.Sas.Parameters.KeyExpiryUpper:
-                        parameters.KeyProperties.ExpiresOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+                        parameters.KeyProperties.ExpiresOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
                         break;
                     case Constants.Sas.Parameters.KeyServiceUpper:
                         parameters.KeyProperties.Service = kv.Value;

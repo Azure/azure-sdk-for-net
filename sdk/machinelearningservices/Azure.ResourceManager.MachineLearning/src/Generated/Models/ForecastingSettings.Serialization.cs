@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ForecastingSettings)} does not support writing '{format}' format.");
             }
-            if (_countryOrRegionForHolidaysIsDefined || Optional.IsDefined(CountryOrRegionForHolidays))
+            if (Optional.IsDefined(CountryOrRegionForHolidays, _countryOrRegionForHolidaysIsDefined))
             {
                 if (CountryOrRegionForHolidays != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("countryOrRegionForHolidays"u8);
                 }
             }
-            if (_cvStepSizeIsDefined || Optional.IsDefined(CvStepSize))
+            if (Optional.IsDefined(CvStepSize, _cvStepSizeIsDefined))
             {
                 if (CvStepSize != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("forecastHorizon"u8);
                 writer.WriteObjectValue(ForecastHorizon, options);
             }
-            if (_frequencyIsDefined || Optional.IsDefined(Frequency))
+            if (Optional.IsDefined(Frequency, _frequencyIsDefined))
             {
                 if (Frequency != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("targetAggregateFunction"u8);
                 writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
             }
-            if (_targetLagsIsDefined || Optional.IsDefined(TargetLags))
+            if (Optional.IsDefined(TargetLags, _targetLagsIsDefined))
             {
                 if (TargetLags != null)
                 {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetLags"u8);
                 }
             }
-            if (_targetRollingWindowSizeIsDefined || Optional.IsDefined(TargetRollingWindowSize))
+            if (Optional.IsDefined(TargetRollingWindowSize, _targetRollingWindowSizeIsDefined))
             {
                 if (TargetRollingWindowSize != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetRollingWindowSize"u8);
                 }
             }
-            if (_timeColumnNameIsDefined || Optional.IsDefined(TimeColumnName))
+            if (Optional.IsDefined(TimeColumnName, _timeColumnNameIsDefined))
             {
                 if (TimeColumnName != null)
                 {

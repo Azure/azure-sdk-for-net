@@ -1,9 +1,58 @@
 # Release History
 
-## 1.0.0-beta.30 (Unreleased)
+## 1.0.0-beta.32 (Unreleased)
 
 ### Features Added
 
+- Added memory-snapshot activation for resilient tasks. When
+  `FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, enabled task definitions remain registered
+  during capture without constructing task storage or recovery workers. Restore
+  prepares the session-bound runtime before the application callback, then starts
+  automatic recovery after the callback completes.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Ensured snapshot rollback and host disposal join owned workers before releasing
+  stores, bound cleanup waits to the host shutdown timeout, and retained failed
+  cleanup for safe retry without blocking disposal of unrelated services.
+- Paused automatic recovery and external task admission before restored
+  configuration is published, while preserving protocol scope for nested task
+  calls made by already-running workers.
+- Resolved implicit file-replay storage roots after restoration and compared
+  effective task-provider bindings so equivalent hosted endpoints and irrelevant
+  local endpoint changes do not reject a restore.
+
+### Other Changes
+
+## 1.0.0-beta.31 (2026-11-04)
+
+### Features Added
+
+- Added the `microsoft.foundry = "True"` string attribute to all collected spans and log records. The default telemetry processors override conflicting marker values without changing `gen_ai.provider.name`.
+- Added protocol-scoped task access for composed hosts and per-task activation
+  checks, stamping the owning protocol on new task records so a disabled
+  protocol cannot start or recover its tasks merely because another protocol
+  enabled the shared runtime. Legacy unmarked application tasks require the
+  explicit Core switch for recovery; existing Invocations chains continue under
+  that opt-in. The new public protocol-scoping helpers and per-task activation
+  option are experimental (`AAAS003`).
+
+### Bugs Fixed
+
+- Prevented a stale steering nudge from canceling a promoted turn after its pending-input queue has drained. Pending-input publication now follows the same turn as the cancellation signal.
+
+## 1.0.0-beta.30 (2026-10-15)
+
+### Features Added
+
+- Added the private `POST /_agent/before-snapshot` and `POST /_agent/after-restore`
+  lifecycle endpoints for memory snapshot capture and restoration, with
+  `POST /_before_snapshot` and `POST /_after_restore` as aliases. Applications can register
+  an `IAgentSnapshotLifecycle` singleton to release and rebuild process state; Core applies
+  session environment overrides first and provides serialized, idempotent retry handling.
+  Consumers acknowledge this experimental contract with the `AAAS002` diagnostic.
 - Added `FoundryEnvironment.SessionInstanceId`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
   validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
 - Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility
@@ -30,7 +79,6 @@
 - Added `ResilientTaskSettings : ClientSettings` and configuration-bound
   `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
   now accepts its credential and project endpoint from one settings object.
-
 ### Breaking Changes
 
 - Resilient tasks now default to disabled. Applications that start Core tasks directly must call

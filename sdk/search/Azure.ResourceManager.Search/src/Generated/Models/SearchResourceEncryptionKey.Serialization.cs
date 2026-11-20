@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {

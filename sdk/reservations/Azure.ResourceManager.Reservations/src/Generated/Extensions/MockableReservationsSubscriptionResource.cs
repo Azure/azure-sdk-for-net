@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <returns> An object representing collection of QuotaRequestDetails and their operations over a QuotaRequestDetailResource. </returns>
         public virtual QuotaRequestDetailCollection GetQuotaRequestDetails(string providerId, AzureLocation location)
         {
-            return GetCachedClient(client => new QuotaRequestDetailCollection(client, Id, providerId, location));
+            return new QuotaRequestDetailCollection(Client, Id, providerId, location);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <returns> An object representing collection of ReservationQuota and their operations over a ReservationQuotaResource. </returns>
         public virtual ReservationQuotaCollection GetAllReservationQuota(string providerId, AzureLocation location)
         {
-            return GetCachedClient(client => new ReservationQuotaCollection(client, Id, providerId, location));
+            return new ReservationQuotaCollection(Client, Id, providerId, location);
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (_customThroughputMibpsIntIsDefined || Optional.IsDefined(CustomThroughputMibpsInt))
+            if (Optional.IsDefined(CustomThroughputMibpsInt, _customThroughputMibpsIntIsDefined))
             {
                 if (CustomThroughputMibpsInt != null)
                 {

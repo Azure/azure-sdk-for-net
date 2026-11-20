@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementWorkspaceLinksResource"/> and their operations.
     /// Each <see cref="ApiManagementWorkspaceLinksResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="ApiManagementWorkspaceLinksCollection"/> instance call the GetApiManagementWorkspaceLinks method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get a <see cref="ApiManagementWorkspaceLinksCollection"/> instance call the GetAllApiManagementWorkspaceLinks method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementWorkspaceLinksCollection : ArmCollection, IEnumerable<ApiManagementWorkspaceLinksResource>, IAsyncEnumerable<ApiManagementWorkspaceLinksResource>
     {

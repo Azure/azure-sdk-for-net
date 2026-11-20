@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Whether the rule is custom or default. </summary>
-    public readonly partial struct AdminRuleKind : IEquatable<AdminRuleKind>
+    internal readonly partial struct AdminRuleKind : IEquatable<AdminRuleKind>
     {
         private readonly string _value;
         /// <summary> Custom. </summary>

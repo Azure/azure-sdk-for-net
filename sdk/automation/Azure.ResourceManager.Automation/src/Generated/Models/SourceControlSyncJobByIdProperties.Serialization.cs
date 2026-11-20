@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && (_startsOnIsDefined || Optional.IsDefined(StartsOn)))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn, _startsOnIsDefined))
             {
                 if (StartsOn != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime"u8);
                 }
             }
-            if (options.Format != "W" && (_endsOnIsDefined || Optional.IsDefined(EndsOn)))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
                 if (EndsOn != null)
                 {

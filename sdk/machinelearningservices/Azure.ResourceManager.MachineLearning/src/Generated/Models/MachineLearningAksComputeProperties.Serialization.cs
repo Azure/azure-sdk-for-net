@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support writing '{format}' format.");
             }
-            if (_clusterFqdnIsDefined || Optional.IsDefined(ClusterFqdn))
+            if (Optional.IsDefined(ClusterFqdn, _clusterFqdnIsDefined))
             {
                 if (ClusterFqdn != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemServices"u8);
                 }
             }
-            if (_agentCountIsDefined || Optional.IsDefined(AgentCount))
+            if (Optional.IsDefined(AgentCount, _agentCountIsDefined))
             {
                 if (AgentCount != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("agentCount"u8);
                 }
             }
-            if (_agentVmSizeIsDefined || Optional.IsDefined(AgentVmSize))
+            if (Optional.IsDefined(AgentVmSize, _agentVmSizeIsDefined))
             {
                 if (AgentVmSize != null)
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("clusterPurpose"u8);
                 writer.WriteStringValue(ClusterPurpose.Value.ToString());
             }
-            if (_sslConfigurationIsDefined || Optional.IsDefined(SslConfiguration))
+            if (Optional.IsDefined(SslConfiguration, _sslConfigurationIsDefined))
             {
                 if (SslConfiguration != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sslConfiguration"u8);
                 }
             }
-            if (_aksNetworkingConfigurationIsDefined || Optional.IsDefined(AksNetworkingConfiguration))
+            if (Optional.IsDefined(AksNetworkingConfiguration, _aksNetworkingConfigurationIsDefined))
             {
                 if (AksNetworkingConfiguration != null)
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("loadBalancerType"u8);
                 writer.WriteStringValue(LoadBalancerType.Value.ToString());
             }
-            if (_loadBalancerSubnetIsDefined || Optional.IsDefined(LoadBalancerSubnet))
+            if (Optional.IsDefined(LoadBalancerSubnet, _loadBalancerSubnetIsDefined))
             {
                 if (LoadBalancerSubnet != null)
                 {

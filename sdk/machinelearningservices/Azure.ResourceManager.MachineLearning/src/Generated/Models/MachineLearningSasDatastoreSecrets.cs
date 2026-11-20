@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningSasDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private string _sasToken;
-        internal bool _sasTokenIsDefined;
+        private bool _sasTokenIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSasDatastoreSecrets"/>. </summary>
         public MachineLearningSasDatastoreSecrets() : base(SecretsType.Sas)

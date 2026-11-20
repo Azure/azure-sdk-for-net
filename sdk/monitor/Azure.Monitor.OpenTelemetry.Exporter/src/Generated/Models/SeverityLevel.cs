@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Converts a string to a <see cref="SeverityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SeverityLevel?(string value) => value == null ? null : new SeverityLevel(value);
+        public static implicit operator SeverityLevel?(string value) => value == null ? (SeverityLevel?)null : new SeverityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

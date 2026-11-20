@@ -752,24 +752,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> Settings for overrides. </summary>
-        [WirePath("properties.upgradeSettings.overrideSettings")]
-        public UpgradeOverrideSettings UpgradeOverrideSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpgradeOverrideSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.UpgradeOverrideSettings = value;
-            }
-        }
-
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("properties.metricsProfile.costAnalysis.enabled")]
         public bool? IsCostAnalysisEnabled

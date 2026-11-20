@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("virtualNetworkGatewayMigrationStatus"u8);
                 writer.WriteObjectValue(VirtualNetworkGatewayMigrationStatus, options);
             }
-            if (Optional.IsDefined(ActiveActive))
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("activeActive"u8);
-                writer.WriteBooleanValue(ActiveActive.Value);
+                writer.WriteBooleanValue(IsActive.Value);
             }
             if (Optional.IsDefined(EnableHighBandwidthVpnGateway))
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? enableBgp = default;
             bool? enablePrivateIPAddress = default;
             VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus = default;
-            bool? activeActive = default;
+            bool? isActive = default;
             bool? enableHighBandwidthVpnGateway = default;
             bool? disableIPSecReplayProtection = default;
             NetworkSubResource gatewayDefaultSite = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    activeActive = prop.Value.GetBoolean();
+                    isActive = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableHighBandwidthVpnGateway"u8))
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Network.Models
                 enableBgp,
                 enablePrivateIPAddress,
                 virtualNetworkGatewayMigrationStatus,
-                activeActive,
+                isActive,
                 enableHighBandwidthVpnGateway,
                 disableIPSecReplayProtection,
                 gatewayDefaultSite,

@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.OracleDatabase.csproj" />
+  <Project Path="tests/Azure.ResourceManager.OracleDatabase.Tests.csproj" />
+</Solution>

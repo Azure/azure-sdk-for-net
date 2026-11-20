@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -16,7 +17,6 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class NameVisitor : ScmLibraryVisitor
 {
-    private const string ResourceTypeName = "ResourceType";
     private static readonly HashSet<string> _knownTypes = new HashSet<string>()
         {
             "Sku",
@@ -71,9 +71,9 @@ internal class NameVisitor : ScmLibraryVisitor
         }
 
         type = base.PreVisitModel(model, type);
-        if (type is null)
+        if (type is null || model.IsExactName || inputLibrary.ClientNameOverriddenModels.Contains(model))
         {
-            return null;
+            return type;
         }
 
         if (TryTransformUrlToUri(type.Name, out var newName))
@@ -91,23 +91,29 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
-            // When the same model is also used as the Create body we always rename to
-            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
-            // consistent across the SDK surface.
             if (isAlsoUsedInCreate)
             {
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
-                type.Update(name: newName);
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
-            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            else
             {
-                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
                 newName = $"{enclosingResourceName}Patch";
-                type.Update(name: newName);
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
         }
         return type;
+    }
+
+    private static string NormalizeRequestModelName(InputModelType model, ModelProvider type, string name)
+    {
+        var plugin = ManagementClientGenerator.Instance;
+        if (plugin.InputLibrary.IsResourceUpdateModelNameExplicit(model))
+        {
+            return name;
+        }
+
+        return type is ManagementModelProvider managementModel ? managementModel.NormalizeRequestModelName(name) : name;
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
@@ -117,33 +123,26 @@ internal class NameVisitor : ScmLibraryVisitor
             ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterSourceProperty(propertyProvider, property);
         }
 
-        DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
+        DoPreVisitArmResourceProperty(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
-    private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
+    private static void DoPreVisitArmResourceProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider == null || property is not InputModelProperty)
+        if (property is InputModelProperty modelProperty &&
+            propertyProvider?.EnclosingType is SystemObjectModelProvider modelProvider &&
+            modelProvider.CrossLanguageDefinitionId == KnownManagementTypes.ArmResourceId &&
+            propertyProvider.Type.Equals(_nullableResourceType) &&
+            ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(modelProperty.Type) is { } currentType &&
+            ArmResourcePropertyProjection.TryGetName(modelProperty, currentType, out var name))
         {
-            return;
-        }
-        var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not SystemObjectModelProvider modelProvider
-            || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
-        {
-            return;
-        }
-        // the Azure.ResourceManager.CommonTypes.Resource defines its `type` property as an optional `armResourceType`
-        // therefore here we need to change it to required because our common types define it as required
-        if (propertyProvider.Type.Equals(_nullableResourceType))
-        {
-            propertyProvider.Update(name: ResourceTypeName, type: typeof(ResourceType));
+            propertyProvider.Update(name: name, type: currentType);
         }
     }
 
-    private readonly CSharpType _nullableResourceType = new CSharpType(typeof(ResourceType), isNullable: true);
+    private static readonly CSharpType _nullableResourceType = new(typeof(ResourceType), isNullable: true);
 
     private void DoPreVisitPropertyForUrlPropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {

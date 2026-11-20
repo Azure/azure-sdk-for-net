@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _isTenantLinkedNotificationEnabled;
-        internal bool _isTenantLinkedNotificationEnabledIsDefined;
+        private bool _isTenantLinkedNotificationEnabledIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifest"/>. </summary>
         internal ResourceProviderManifest()

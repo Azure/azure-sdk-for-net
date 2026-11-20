@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ImageModelSettingsObjectDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_boxDetectionsPerImageIsDefined || Optional.IsDefined(BoxDetectionsPerImage))
+            if (Optional.IsDefined(BoxDetectionsPerImage, _boxDetectionsPerImageIsDefined))
             {
                 if (BoxDetectionsPerImage != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("boxDetectionsPerImage"u8);
                 }
             }
-            if (_boxScoreThresholdIsDefined || Optional.IsDefined(BoxScoreThreshold))
+            if (Optional.IsDefined(BoxScoreThreshold, _boxScoreThresholdIsDefined))
             {
                 if (BoxScoreThreshold != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("boxScoreThreshold"u8);
                 }
             }
-            if (_imageSizeIsDefined || Optional.IsDefined(ImageSize))
+            if (Optional.IsDefined(ImageSize, _imageSizeIsDefined))
             {
                 if (ImageSize != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("imageSize"u8);
                 }
             }
-            if (_maxSizeIsDefined || Optional.IsDefined(MaxSize))
+            if (Optional.IsDefined(MaxSize, _maxSizeIsDefined))
             {
                 if (MaxSize != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxSize"u8);
                 }
             }
-            if (_minSizeIsDefined || Optional.IsDefined(MinSize))
+            if (Optional.IsDefined(MinSize, _minSizeIsDefined))
             {
                 if (MinSize != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("modelSize"u8);
                 writer.WriteStringValue(ModelSize.Value.ToString());
             }
-            if (_multiScaleIsDefined || Optional.IsDefined(MultiScale))
+            if (Optional.IsDefined(MultiScale, _multiScaleIsDefined))
             {
                 if (MultiScale != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("multiScale"u8);
                 }
             }
-            if (_nmsIouThresholdIsDefined || Optional.IsDefined(NmsIouThreshold))
+            if (Optional.IsDefined(NmsIouThreshold, _nmsIouThresholdIsDefined))
             {
                 if (NmsIouThreshold != null)
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nmsIouThreshold"u8);
                 }
             }
-            if (_tileGridSizeIsDefined || Optional.IsDefined(TileGridSize))
+            if (Optional.IsDefined(TileGridSize, _tileGridSizeIsDefined))
             {
                 if (TileGridSize != null)
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tileGridSize"u8);
                 }
             }
-            if (_tileOverlapRatioIsDefined || Optional.IsDefined(TileOverlapRatio))
+            if (Optional.IsDefined(TileOverlapRatio, _tileOverlapRatioIsDefined))
             {
                 if (TileOverlapRatio != null)
                 {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tileOverlapRatio"u8);
                 }
             }
-            if (_tilePredictionsNmsThresholdIsDefined || Optional.IsDefined(TilePredictionsNmsThreshold))
+            if (Optional.IsDefined(TilePredictionsNmsThreshold, _tilePredictionsNmsThresholdIsDefined))
             {
                 if (TilePredictionsNmsThreshold != null)
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tilePredictionsNmsThreshold"u8);
                 }
             }
-            if (_validationIouThresholdIsDefined || Optional.IsDefined(ValidationIouThreshold))
+            if (Optional.IsDefined(ValidationIouThreshold, _validationIouThresholdIsDefined))
             {
                 if (ValidationIouThreshold != null)
                 {

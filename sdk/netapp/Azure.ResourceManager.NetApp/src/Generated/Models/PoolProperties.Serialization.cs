@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("utilizedThroughputMibps"u8);
                 writer.WriteNumberValue(UtilizedThroughputMibps.Value);
             }
-            if (_customThroughputMibpsIntIsDefined || Optional.IsDefined(CustomThroughputMibpsInt))
+            if (Optional.IsDefined(CustomThroughputMibpsInt, _customThroughputMibpsIntIsDefined))
             {
                 if (CustomThroughputMibpsInt != null)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (_encryptionTypeIsDefined || Optional.IsDefined(EncryptionType))
+            if (Optional.IsDefined(EncryptionType, _encryptionTypeIsDefined))
             {
                 if (EncryptionType != null)
                 {

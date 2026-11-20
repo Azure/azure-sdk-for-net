@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 throw new FormatException($"The model {nameof(CognitiveServicesAgenticApplicationProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_displayNameIsDefined || Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
             {
                 if (DisplayName != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("displayName"u8);
                 }
             }
-            if (_baseUriIsDefined || Optional.IsDefined(BaseUri))
+            if (Optional.IsDefined(BaseUri, _baseUriIsDefined))
             {
                 if (BaseUri != null)
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("agents"u8);
                 }
             }
-            if (_agentIdentityBlueprintIsDefined || Optional.IsDefined(AgentIdentityBlueprint))
+            if (Optional.IsDefined(AgentIdentityBlueprint, _agentIdentityBlueprintIsDefined))
             {
                 if (AgentIdentityBlueprint != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("agentIdentityBlueprint"u8);
                 }
             }
-            if (_defaultInstanceIdentityIsDefined || Optional.IsDefined(DefaultInstanceIdentity))
+            if (Optional.IsDefined(DefaultInstanceIdentity, _defaultInstanceIdentityIsDefined))
             {
                 if (DefaultInstanceIdentity != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("defaultInstanceIdentity"u8);
                 }
             }
-            if (_authorizationPolicyIsDefined || Optional.IsDefined(AuthorizationPolicy))
+            if (Optional.IsDefined(AuthorizationPolicy, _authorizationPolicyIsDefined))
             {
                 if (AuthorizationPolicy != null)
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("authorizationPolicy"u8);
                 }
             }
-            if (_trafficRoutingPolicyIsDefined || Optional.IsDefined(TrafficRoutingPolicy))
+            if (Optional.IsDefined(TrafficRoutingPolicy, _trafficRoutingPolicyIsDefined))
             {
                 if (TrafficRoutingPolicy != null)
                 {

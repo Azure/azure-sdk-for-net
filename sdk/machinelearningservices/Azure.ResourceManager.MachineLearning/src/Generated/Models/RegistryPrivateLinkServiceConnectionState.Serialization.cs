@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(RegistryPrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
             }
-            if (_actionsRequiredIsDefined || Optional.IsDefined(ActionsRequired))
+            if (Optional.IsDefined(ActionsRequired, _actionsRequiredIsDefined))
             {
                 if (ActionsRequired != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("actionsRequired"u8);
                 }
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {

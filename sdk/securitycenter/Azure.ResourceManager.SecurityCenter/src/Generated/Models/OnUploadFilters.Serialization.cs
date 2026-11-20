@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     writer.WriteNull("excludeBlobsWithSuffix"u8);
                 }
             }
-            if (_excludeBlobsLargerThanIsDefined || Optional.IsDefined(ExcludeBlobsLargerThan))
+            if (Optional.IsDefined(ExcludeBlobsLargerThan, _excludeBlobsLargerThanIsDefined))
             {
                 if (ExcludeBlobsLargerThan != null)
                 {

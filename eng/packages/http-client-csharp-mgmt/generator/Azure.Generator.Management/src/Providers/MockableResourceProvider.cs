@@ -267,9 +267,19 @@ namespace Azure.Generator.Management.Providers
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
 
-                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"),
-                    client => New.Instance(collection.Type,
-                        [client, This.As<ArmResource>().Id(), .. collectionMethodSignature.Parameters]))); // the first two parameters have values, others we just pass through them.
+                var thisResource = This.As<ArmResource>();
+                MethodBodyStatement bodyStatement;
+                if (collectionMethodSignature.Parameters.Count > 0)
+                {
+                    // GetCachedClient keys only on the collection type, so it would ignore different path parameter values.
+                    bodyStatement = Return(New.Instance(collection.Type,
+                        [thisResource.Client(), thisResource.Id(), .. collectionMethodSignature.Parameters]));
+                }
+                else
+                {
+                    bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"),
+                        client => New.Instance(collection.Type, client, thisResource.Id())));
+                }
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -328,7 +338,8 @@ namespace Azure.Generator.Management.Providers
 
         private static string? GetResourceMethodNameOverride(ResourceClientProvider resource, ResourceMethod method, bool isAsync)
         {
-            var name = ResourceHelpers.GetExtensionOperationMethodName(method.Kind, resource.ResourceName, isAsync);
+            var name = ResourceHelpers.GetExtensionOperationMethodName(method.Kind, resource.ResourceName, isAsync,
+                resource.PreserveResourceNameCasing ? resource.PluralResourceName : null);
             // Explicit List client names override the synthesized plural extension method name.
             return method.Kind == ResourceOperationKind.List &&
                 ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(method.InputMethod) ? null : name;

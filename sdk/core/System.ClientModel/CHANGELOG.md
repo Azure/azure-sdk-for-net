@@ -1,19 +1,28 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+## 1.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
 - Added `JsonPatch.ContainsValue` to check whether a value can be read at a JSON path, including values supplied by getter propagators. Existing `Contains` behavior is unchanged for compatibility with model serializers.
-- Added `ClientPipeline.Send` and `SendAsync` overloads accepting a `CancellationToken` to override cancellation for a send while preserving applied request options.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-- Fixed invalid JSON when `JsonPatch` replaces string-like values inside stored JSON objects or arrays.
+- Fixed `PipelineRequestHeaders.Add` and `PipelineRequestHeaders.Set` to reject header values containing carriage return (`\r`), line feed (`\n`), or NUL (`\0`) characters to prevent header injection. These methods now throw `ArgumentException` for such values.
 
 ### Other Changes
+
+## 1.17.0 (2026-11-04)
+
+### Features Added
+
+- Added `ClientPipeline.Send` and `SendAsync` overloads accepting a `CancellationToken` to override cancellation for a send while preserving applied request options.
+
+### Bugs Fixed
+
+- Fixed invalid JSON when `JsonPatch` replaces string-like values inside stored JSON objects or arrays.
 
 ## 1.16.0 (2026-09-16)
 

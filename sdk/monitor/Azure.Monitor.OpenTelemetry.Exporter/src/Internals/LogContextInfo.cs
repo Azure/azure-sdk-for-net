@@ -23,6 +23,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public string? UserAccountId;
 
         /// <summary>
+        /// Validated <c>microsoft.sample_rate</c> for the envelope sampleRate. Not a context tag, so it
+        /// is excluded from <see cref="HasValues"/>.
+        /// </summary>
+        public float? SampleRate;
+        /// <summary>
         /// Returns true if any context field has been set.
         /// </summary>
         internal readonly bool HasValues =>

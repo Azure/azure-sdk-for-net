@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier SourceVirtualMachineId
+        public virtual ResourceIdentifier SourceVirtualMachineId
         {
             get
             {

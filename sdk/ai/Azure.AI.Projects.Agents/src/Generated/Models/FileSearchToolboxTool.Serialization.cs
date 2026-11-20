@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -72,15 +73,15 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(FileSearchToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxNumResults))
+            if (Optional.IsDefined(MaxResultCount))
             {
                 writer.WritePropertyName("max_num_results"u8);
-                writer.WriteNumberValue(MaxNumResults.Value);
+                writer.WriteNumberValue(MaxResultCount.Value);
             }
             if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue<object>(RankingOptions, options);
+                writer.WriteObjectValue(RankingOptions, options);
             }
             if (Optional.IsDefined(Filters, _filtersIsDefined))
             {
@@ -148,8 +149,8 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            long? maxNumResults = default;
-            object rankingOptions = default;
+            long? maxResultCount = default;
+            FileSearchToolRankingOptions rankingOptions = default;
             bool filtersIsDefined = false;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
@@ -197,7 +198,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    maxNumResults = prop.Value.GetInt64();
+                    maxResultCount = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("ranking_options"u8))
@@ -206,7 +207,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    rankingOptions = prop.Value.GetObject();
+                    rankingOptions = ModelReaderWriter.Read<FileSearchToolRankingOptions>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -252,7 +253,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
-                maxNumResults,
+                maxResultCount,
                 rankingOptions,
                 filters,
                 vectorStoreIds ?? new ChangeTrackingList<string>())

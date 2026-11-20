@@ -51,7 +51,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="DetectedProvenanceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DetectedProvenanceType?(string value) => value == null ? null : new DetectedProvenanceType(value);
+        public static implicit operator DetectedProvenanceType?(string value) => value == null ? (DetectedProvenanceType?)null : new DetectedProvenanceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsRecordingChannelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRecordingChannelType?(string value) => value == null ? null : new AcsRecordingChannelType(value);
+        public static implicit operator AcsRecordingChannelType?(string value) => value == null ? (AcsRecordingChannelType?)null : new AcsRecordingChannelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

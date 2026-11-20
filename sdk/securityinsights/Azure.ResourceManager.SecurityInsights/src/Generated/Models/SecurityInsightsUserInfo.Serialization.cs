@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (_objectIdIsDefined || Optional.IsDefined(ObjectId))
+            if (Optional.IsDefined(ObjectId, _objectIdIsDefined))
             {
                 if (ObjectId != null)
                 {

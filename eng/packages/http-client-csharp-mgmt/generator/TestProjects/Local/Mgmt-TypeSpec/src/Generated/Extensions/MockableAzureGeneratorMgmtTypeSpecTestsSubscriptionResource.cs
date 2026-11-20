@@ -82,7 +82,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> An object representing collection of PlaywrightQuota and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
-            return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
+            return new PlaywrightQuotaCollection(Client, Id, location);
         }
 
         /// <summary>

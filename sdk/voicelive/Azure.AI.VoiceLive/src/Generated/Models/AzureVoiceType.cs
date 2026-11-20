@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="AzureVoiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureVoiceType?(string value) => value == null ? null : new AzureVoiceType(value);
+        public static implicit operator AzureVoiceType?(string value) => value == null ? (AzureVoiceType?)null : new AzureVoiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

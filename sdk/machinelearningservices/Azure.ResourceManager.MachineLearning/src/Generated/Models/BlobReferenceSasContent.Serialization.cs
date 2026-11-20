@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(BlobReferenceSasContent)} does not support writing '{format}' format.");
             }
-            if (_assetIdIsDefined || Optional.IsDefined(AssetId))
+            if (Optional.IsDefined(AssetId, _assetIdIsDefined))
             {
                 if (AssetId != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetId"u8);
                 }
             }
-            if (_blobUriIsDefined || Optional.IsDefined(BlobUri))
+            if (Optional.IsDefined(BlobUri, _blobUriIsDefined))
             {
                 if (BlobUri != null)
                 {

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class DockerCredential : DataReferenceCredential
     {
         private string _password;
-        internal bool _passwordIsDefined;
+        private bool _passwordIsDefined;
         private string _userName;
-        internal bool _userNameIsDefined;
+        private bool _userNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DockerCredential"/>. </summary>
         internal DockerCredential() : base(DataReferenceCredentialType.DockerCredentials)

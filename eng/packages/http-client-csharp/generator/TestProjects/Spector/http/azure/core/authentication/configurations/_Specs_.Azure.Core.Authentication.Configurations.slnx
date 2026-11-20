@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/_Specs_.Azure.Core.Authentication.Configurations.csproj" />
+  <Project Path="tests/_Specs_.Azure.Core.Authentication.Configurations.Tests.csproj" />
+</Solution>

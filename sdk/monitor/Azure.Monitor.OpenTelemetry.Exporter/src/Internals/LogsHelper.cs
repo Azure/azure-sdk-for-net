@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -39,6 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string DeviceOsVersionAttributeName = "ai.device.osVersion";
         private const string SyntheticSourceAttributeName = "microsoft.synthetic_source";
         private const string UserAccountIdAttributeName = "microsoft.user.account_id";
+        private const string SampleRateAttributeName = SemanticConventions.AttributeMicrosoftSampleRate;
         private const string AvailabilityIdAttributeName = "microsoft.availability.id";
         private const string AvailabilityNameAttributeName = "microsoft.availability.name";
         private const string AvailabilityDurationAttributeName = "microsoft.availability.duration";
@@ -63,9 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            var maxValueLength = SchemaConstants.GenAiProperties.Contains(scopeItem.Key)
-                                ? SchemaConstants.GenAi_Properties_MaxValueLength
-                                : SchemaConstants.MessageData_Properties_MaxValueLength;
+                            var maxValueLength = GenAiTruncationConfig.GetPropertyMaxValueLength(scopeItem.Key, SchemaConstants.MessageData_Properties_MaxValueLength);
                             var stringValue = Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(maxValueLength)!;
                             properties.Add(scopeItem.Key, stringValue);
                         }
@@ -78,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         };
 
-        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey, bool applySampleRate = false)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>(capacity: (int)batchLogRecord.Count);
             var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
@@ -87,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    telemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter, consumeMultiEndpointAttributes: false, cloudRole: null));
+                    telemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter, consumeMultiEndpointAttributes: false, cloudRole: null, applySampleRate));
                 }
                 catch (Exception ex)
                 {
@@ -103,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// was stamped with. A record whose routing attributes are missing or invalid is dropped rather
         /// than sent under the exporter's own connection string.
         /// </summary>
-        internal static void OtelToAzureMonitorLogsMultiEndpoint(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorLogsMultiEndpoint(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, EndpointRouteBatch routeBatch, bool applySampleRate = false)
         {
             foreach (var logRecord in batchLogRecord)
             {
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     // No schema counter on the routed path: IMultiEndpointTransmitter.Track carries none,
                     // matching the trace multi-endpoint conversion.
-                    group.TelemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, cloudRole: cloudRole));
+                    group.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, cloudRole: cloudRole, applySampleRate));
                 }
                 catch (Exception ex)
                 {
@@ -185,10 +185,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return EndpointRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint);
         }
 
-        private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool consumeMultiEndpointAttributes, string? cloudRole)
+        private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool consumeMultiEndpointAttributes, string? cloudRole, bool applySampleRate)
         {
             var properties = new ChangeTrackingDictionary<string, string>();
-            ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, consumeMultiEndpointAttributes);
+            ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, consumeMultiEndpointAttributes, applySampleRate);
 
             TelemetryItem telemetryItem;
 
@@ -270,7 +270,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return telemetryItem;
         }
 
-        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, bool consumeMultiEndpointAttributes = false)
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, bool consumeMultiEndpointAttributes = false, bool applySampleRate = false)
         {
             eventName = null;
             availabilityInfo = null;
@@ -338,6 +338,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case UserAccountIdAttributeName:
                         logContext.UserAccountId = item.Value?.ToString();
                         break;
+                    case SampleRateAttributeName:
+                        // Kept out of custom dimensions either way; applied only by an exporter whose
+                        // logs were filtered by the trace-based sampling that stamped it.
+                        if (applySampleRate && SampleRateHelper.TryGetSampleRate(item.Value, out var sampleRate))
+                        {
+                            logContext.SampleRate = sampleRate;
+                        }
+
+                        break;
                     default:
                         // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
                         if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
@@ -359,9 +368,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 {
                                     if (!properties.ContainsKey(item.Key))
                                     {
-                                        var maxValueLength = SchemaConstants.GenAiProperties.Contains(item.Key)
-                                            ? SchemaConstants.GenAi_Properties_MaxValueLength
-                                            : SchemaConstants.MessageData_Properties_MaxValueLength;
+                                        var maxValueLength = GenAiTruncationConfig.GetPropertyMaxValueLength(item.Key, SchemaConstants.MessageData_Properties_MaxValueLength);
                                         var stringValue = Convert.ToString(item.Value, CultureInfo.InvariantCulture).Truncate(maxValueLength)!;
                                         properties.Add(item.Key, stringValue);
                                     }
@@ -385,7 +392,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // If we detected availability data, do a second pass to extract all availability attributes
             if (hasAvailabilityData)
             {
-                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out logContext, consumeMultiEndpointAttributes);
+                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out logContext, consumeMultiEndpointAttributes, applySampleRate);
             }
 
             logRecord.ForEachScope(s_processScope, properties);
@@ -413,7 +420,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out LogContextInfo logContext, bool consumeMultiEndpointAttributes = false)
+        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out LogContextInfo logContext, bool consumeMultiEndpointAttributes, bool applySampleRate)
         {
             string? availabilityId = null;
             string? availabilityName = null;
@@ -496,6 +503,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         break;
                     case UserAccountIdAttributeName:
                         logContext.UserAccountId = item.Value?.ToString();
+                        break;
+                    case SampleRateAttributeName:
+                        if (applySampleRate && SampleRateHelper.TryGetSampleRate(item.Value, out var sampleRate))
+                        {
+                            logContext.SampleRate = sampleRate;
+                        }
+
                         break;
                     default:
                         if (item.Key.Length <= SchemaConstants.AvailabilityData_Properties_MaxValueLength && item.Value != null && !properties.ContainsKey(item.Key))

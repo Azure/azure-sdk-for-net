@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableProxy"u8);
                 writer.WriteBooleanValue(EnableProxy.Value);
             }
-            if (_requireProxyForNetworkRulesIsDefined || Optional.IsDefined(RequireProxyForNetworkRules))
+            if (Optional.IsDefined(RequireProxyForNetworkRules, _requireProxyForNetworkRulesIsDefined))
             {
                 if (RequireProxyForNetworkRules != null)
                 {

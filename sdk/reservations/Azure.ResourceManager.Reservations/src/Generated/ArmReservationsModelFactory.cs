@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="skuName"> Gets or sets the Name. </param>
         /// <param name="kind"> Resource Provider type to be reserved. </param>
         /// <returns> A new <see cref="Reservations.ReservationDetailData"/> instance for mocking. </returns>
-        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationProperties properties, AzureLocation? location, int? version, string skuName, ReservationKind? kind)
+        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ReservationProperties properties = default, AzureLocation? location = default, int? version = default, string skuName = default, ReservationKind? kind = default)
         {
             return new ReservationDetailData(
                 id,
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <param name="version"></param>
         /// <returns> A new <see cref="Reservations.ReservationOrderData"/> instance for mocking. </returns>
-        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IEnumerable<ReservationDetailData> reservations, DateTimeOffset? reviewOn, int? version)
+        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? requestOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? benefitStartOn = default, int? originalQuantity = default, ReservationTerm? term = default, ReservationProvisioningState? provisioningState = default, ReservationBillingPlan? billingPlan = default, ReservationOrderBillingPlanInformation planInformation = default, IEnumerable<ReservationDetailData> reservations = default, DateTimeOffset? reviewOn = default, int? version = default)
         {
             return new ReservationOrderData(
                 id,
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <returns> A new <see cref="Reservations.ReservationOrderData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string displayName = default, DateTimeOffset? requestOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? benefitStartOn = default, int? originalQuantity = default, ReservationTerm? term = default, ReservationProvisioningState? provisioningState = default, ReservationBillingPlan? billingPlan = default, ReservationOrderBillingPlanInformation planInformation = default, IEnumerable<ReservationDetailData> reservations = default, DateTimeOffset? reviewOn = default)
+        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? version, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IEnumerable<ReservationDetailData> reservations, DateTimeOffset? reviewOn)
         {
             return new ReservationOrderData(
                 id,
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="kind"> Resource Provider type to be reserved. </param>
         /// <returns> A new <see cref="Reservations.ReservationDetailData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, int? version = default, string skuName = default, ReservationProperties properties = default, ReservationKind? kind = default)
+        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, int? version, string skuName, ReservationProperties properties, ReservationKind? kind)
         {
             return new ReservationDetailData(
                 id,

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(AzureKeyVaultProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_doesConnectAsKubernetesCsiDriverIsDefined || Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
+            if (Optional.IsDefined(DoesConnectAsKubernetesCsiDriver, _doesConnectAsKubernetesCsiDriverIsDefined))
             {
                 if (DoesConnectAsKubernetesCsiDriver != null)
                 {

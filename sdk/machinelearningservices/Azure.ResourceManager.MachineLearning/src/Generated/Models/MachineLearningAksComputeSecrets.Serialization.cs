@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("adminKubeConfig"u8);
                 writer.WriteStringValue(AdminKubeConfig);
             }
-            if (_imagePullSecretNameIsDefined || Optional.IsDefined(ImagePullSecretName))
+            if (Optional.IsDefined(ImagePullSecretName, _imagePullSecretNameIsDefined))
             {
                 if (ImagePullSecretName != null)
                 {

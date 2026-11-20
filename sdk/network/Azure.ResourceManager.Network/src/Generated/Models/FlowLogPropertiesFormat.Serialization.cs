@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the configuration of flow log. </summary>
-    public partial class FlowLogPropertiesFormat : IJsonModel<FlowLogPropertiesFormat>
+    internal partial class FlowLogPropertiesFormat : IJsonModel<FlowLogPropertiesFormat>
     {
         /// <summary> Initializes a new instance of <see cref="FlowLogPropertiesFormat"/> for deserialization. </summary>
         internal FlowLogPropertiesFormat()
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
             string recordTypes = default;
             bool? enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
-            FlowLogFormatParameters format = default;
+            FlowLogProperties format = default;
             TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(prop.Value, options);
+                    format = FlowLogProperties.DeserializeFlowLogProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("flowAnalyticsConfiguration"u8))

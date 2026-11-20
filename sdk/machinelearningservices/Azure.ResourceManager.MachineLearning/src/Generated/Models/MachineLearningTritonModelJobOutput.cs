@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningTritonModelJobOutput : MachineLearningJobOutput
     {
         private string _assetName;
-        internal bool _assetNameIsDefined;
+        private bool _assetNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobOutput"/>. </summary>
         public MachineLearningTritonModelJobOutput() : base(JobOutputType.TritonModel)

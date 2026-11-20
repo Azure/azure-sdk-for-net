@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private TimeSpan? _timeout;
-        internal bool _timeoutIsDefined;
+        private protected bool _timeoutIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>

@@ -148,7 +148,6 @@
                 "$id": "13",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "LegacyClient",
                 "doc": "Sends the API-version configured for this child client.",
                 "accessibility": "public",
                 "parameters": [

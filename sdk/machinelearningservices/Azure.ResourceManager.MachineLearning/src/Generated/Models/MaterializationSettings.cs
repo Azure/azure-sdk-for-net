@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private NotificationSetting _notification;
-        internal bool _notificationIsDefined;
+        private bool _notificationIsDefined;
         private MaterializationComputeResource _resource;
-        internal bool _resourceIsDefined;
+        private bool _resourceIsDefined;
         private MachineLearningRecurrenceTrigger _schedule;
-        internal bool _scheduleIsDefined;
+        private bool _scheduleIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MaterializationSettings"/>. </summary>
         public MaterializationSettings()

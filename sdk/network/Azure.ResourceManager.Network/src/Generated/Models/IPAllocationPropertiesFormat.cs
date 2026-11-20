@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _prefixLength;
-        internal bool _prefixLengthIsDefined;
+        private bool _prefixLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IPAllocationPropertiesFormat"/>. </summary>
         public IPAllocationPropertiesFormat()

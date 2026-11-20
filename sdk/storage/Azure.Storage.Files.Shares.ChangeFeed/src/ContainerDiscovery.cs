@@ -11,14 +11,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 {
     /// <summary>
     /// Discovers the change feed blob container name for a given file share
-    /// by calling <see cref="ShareClient.GetProperties(CancellationToken)"/> and reading
-    /// the <c>x-ms-file-blob-container-for-xfiles-change-feed</c> response header.
+    /// by calling <see cref="ShareClient.GetProperties(CancellationToken)"/>.
     /// </summary>
     internal static class ContainerDiscovery
     {
         /// <summary>
         /// Discovers the change feed container name by calling <see cref="ShareClient.GetProperties(CancellationToken)"/>
-        /// and reading the change feed container header from the raw response.
+        /// and reading the change feed properties.
         /// This is the preferred path when a <see cref="ShareClient"/> is available, as it
         /// reuses the client's authenticated pipeline.
         /// </summary>
@@ -41,22 +40,21 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 response = shareClient.GetProperties(cancellationToken: cancellationToken);
             }
 
-            // The change feed container name is returned as a raw response header
-            // that isn't yet surfaced in the ShareProperties model.
-            Response rawResponse = response.GetRawResponse();
-            if (!rawResponse.Headers.TryGetValue(Constants.FilesChangeFeed.ChangeFeedContainerHeader, out string containerName))
+            ShareProperties properties = response.Value;
+            if (properties.EnableChangeFeed != true)
             {
                 throw ShareChangeFeedErrors.ChangeFeedNotEnabledForShare(shareClient.Name);
             }
 
+            string containerName = properties.ChangeFeedBlobContainerName;
             if (string.IsNullOrEmpty(containerName))
             {
-                throw ShareChangeFeedErrors.ChangeFeedContainerHeaderEmpty(rawResponse, shareClient.Name);
+                throw ShareChangeFeedErrors.ChangeFeedContainerHeaderEmpty(response.GetRawResponse(), shareClient.Name);
             }
 
             if (containerName[0] != '$')
             {
-                throw ShareChangeFeedErrors.ChangeFeedContainerBadPrefix(rawResponse, containerName, shareClient.Name);
+                throw ShareChangeFeedErrors.ChangeFeedContainerBadPrefix(response.GetRawResponse(), containerName, shareClient.Name);
             }
 
             return containerName;

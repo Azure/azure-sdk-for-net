@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(LinkerConfigurationNameItem)} does not support writing '{format}' format.");
             }
-            if (_propertiesIsDefined || Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties, _propertiesIsDefined))
             {
                 if (Properties != null)
                 {

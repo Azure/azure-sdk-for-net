@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, bool? force, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, bool? force, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(sqlDbInstanceName, true);
+            uri.AppendPath(sqlDBInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(sqlDbInstanceName, true);
+            uri.AppendPath(sqlDBInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             uri.AppendPath("/cancel", false);
             if (_apiVersion != null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        internal HttpMessage CreateRetryRequest(Guid subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRetryRequest(Guid subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(sqlDbInstanceName, true);
+            uri.AppendPath(sqlDBInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             uri.AppendPath("/retry", false);
             if (_apiVersion != null)
             {

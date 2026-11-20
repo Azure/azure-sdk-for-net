@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
         public ArmDeploymentWhatIfProperties(ArmDeploymentMode mode) : base(mode)
         {
+            ResourcePredictions = new ChangeTrackingList<DeploymentResourceWhatIfPrediction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfProperties"/>. </summary>
@@ -35,14 +36,20 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="whatIfSettings"> Optional What-If operation settings. </param>
-        internal ArmDeploymentWhatIfProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, IDictionary<string, ArmDeploymentParameterValue> deploymentParameters, IDictionary<string, ArmDeploymentExternalInput> externalInputs, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions, ArmDeploymentParametersLink parametersLink, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluationOptions, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDeploymentWhatIfSettings whatIfSettings) : base(template, templateLink, deploymentParameters, externalInputs, externalInputDefinitions, parametersLink, extensionConfigs, mode, debugSetting, errorDeployment, expressionEvaluationOptions, validationLevel, additionalBinaryDataProperties)
+        /// <param name="resourcePredictions"> Resource predictions that can be utilized by what-if to produce potential modification changes. </param>
+        internal ArmDeploymentWhatIfProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, IDictionary<string, ArmDeploymentParameterValue> deploymentParameters, IDictionary<string, ArmDeploymentExternalInput> externalInputs, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions, ArmDeploymentParametersLink parametersLink, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluationOptions, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDeploymentWhatIfSettings whatIfSettings, IList<DeploymentResourceWhatIfPrediction> resourcePredictions) : base(template, templateLink, deploymentParameters, externalInputs, externalInputDefinitions, parametersLink, extensionConfigs, mode, debugSetting, errorDeployment, expressionEvaluationOptions, validationLevel, additionalBinaryDataProperties)
         {
             WhatIfSettings = whatIfSettings;
+            ResourcePredictions = resourcePredictions;
         }
 
         /// <summary> Optional What-If operation settings. </summary>
         [WirePath("whatIfSettings")]
         internal ArmDeploymentWhatIfSettings WhatIfSettings { get; set; }
+
+        /// <summary> Resource predictions that can be utilized by what-if to produce potential modification changes. </summary>
+        [WirePath("resourcePredictions")]
+        public IList<DeploymentResourceWhatIfPrediction> ResourcePredictions { get; }
 
         /// <summary> The format of the What-If results. </summary>
         [WirePath("whatIfSettings.resultFormat")]

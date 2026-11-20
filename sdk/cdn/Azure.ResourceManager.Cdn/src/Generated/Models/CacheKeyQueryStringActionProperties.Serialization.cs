@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
-            if (_queryParametersIsDefined || Optional.IsDefined(QueryParameters))
+            if (Optional.IsDefined(QueryParameters, _queryParametersIsDefined))
             {
                 if (QueryParameters != null)
                 {

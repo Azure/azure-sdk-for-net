@@ -80,10 +80,10 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
-            if (Optional.IsDefined(ServerUrl))
+            if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl.AbsoluteUri);
+                writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Authorization))
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteStartArray();
                     foreach (CallableToolAllowedCaller item in AllowedCallers)
                     {
-                        writer.WriteStringValue(item.ToSerialString());
+                        writer.WriteStringValue(item.ToString());
                     }
                     writer.WriteEndArray();
                 }
@@ -220,7 +220,7 @@ namespace Azure.AI.Projects.Agents
             string @type = "mcp";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
-            Uri serverUrl = default;
+            Uri serverUri = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = new ChangeTrackingDictionary<string, string>();
@@ -250,7 +250,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -288,12 +288,7 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("allowed_tools"u8))
                 {
                     allowedToolsIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        allowedTools = null;
-                        continue;
-                    }
-                    allowedTools = ModelReaderWriter.Read<McpToolFilter>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    DeserializeAllowedToolsValue(prop, ref allowedTools, options);
                     continue;
                 }
                 if (prop.NameEquals("allowed_callers"u8))
@@ -306,7 +301,7 @@ namespace Azure.AI.Projects.Agents
                     List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                        array.Add(new CallableToolAllowedCaller(item.GetString()));
                     }
                     allowedCallers = array;
                     continue;
@@ -374,7 +369,7 @@ namespace Azure.AI.Projects.Agents
                 @type,
                 additionalBinaryDataProperties,
                 serverLabel,
-                serverUrl,
+                serverUri,
                 authorization,
                 serverDescription,
                 headers,

@@ -913,7 +913,6 @@
                 "$id": "85",
                 "name": "receive",
                 "isExactName": false,
-                "resourceName": "Unnamed",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1094,7 +1093,6 @@
                 "$id": "96",
                 "name": "receive",
                 "isExactName": false,
-                "resourceName": "Named",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1283,7 +1281,6 @@
                 "$id": "107",
                 "name": "stream",
                 "isExactName": false,
-                "resourceName": "Retrieve",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1565,7 +1562,6 @@
                 "$id": "122",
                 "name": "id",
                 "isExactName": false,
-                "resourceName": "Protocol",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1696,7 +1692,6 @@
                 "$id": "129",
                 "name": "invalidId",
                 "isExactName": false,
-                "resourceName": "Protocol",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1817,7 +1812,6 @@
                 "$id": "135",
                 "name": "retry",
                 "isExactName": false,
-                "resourceName": "Protocol",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1938,7 +1932,6 @@
                 "$id": "141",
                 "name": "invalidRetry",
                 "isExactName": false,
-                "resourceName": "Protocol",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2059,7 +2052,6 @@
                 "$id": "147",
                 "name": "reconnect",
                 "isExactName": false,
-                "resourceName": "Protocol",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2229,7 +2221,6 @@
                     "$id": "157",
                     "name": "withEnvelope",
                     "isExactName": false,
-                    "resourceName": "Data",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2363,7 +2354,6 @@
                     "$id": "164",
                     "name": "withoutEnvelope",
                     "isExactName": false,
-                    "resourceName": "Data",
                     "accessibility": "public",
                     "parameters": [
                       {

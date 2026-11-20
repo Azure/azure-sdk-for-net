@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(CommitOn))
+            if (Optional.IsDefined(CommittedOn))
             {
                 writer.WritePropertyName("commitTime"u8);
-                writer.WriteStringValue(CommitOn.Value, "O");
+                writer.WriteStringValue(CommittedOn.Value, "O");
             }
             if (Optional.IsDefined(Region))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             ConnectivityConfigurationProperties properties = default;
             IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? commitOn = default;
+            DateTimeOffset? committedOn = default;
             AzureLocation? region = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    commitOn = prop.Value.GetDateTimeOffset("O");
+                    committedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("region"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                 properties,
                 configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
                 additionalBinaryDataProperties,
-                commitOn,
+                committedOn,
                 region);
         }
     }

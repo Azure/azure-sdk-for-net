@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningCertificateDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private string _certificate;
-        internal bool _certificateIsDefined;
+        private bool _certificateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreSecrets"/>. </summary>
         public MachineLearningCertificateDatastoreSecrets() : base(SecretsType.Certificate)

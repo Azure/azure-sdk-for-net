@@ -84,7 +84,6 @@
             "$id": "8",
             "name": "fixed",
             "isExactName": false,
-            "resourceName": "Routes",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -171,7 +170,6 @@
                 "$id": "14",
                 "name": "templateOnly",
                 "isExactName": false,
-                "resourceName": "PathParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -265,7 +263,6 @@
                 "$id": "20",
                 "name": "explicit",
                 "isExactName": false,
-                "resourceName": "PathParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -359,7 +356,6 @@
                 "$id": "26",
                 "name": "annotationOnly",
                 "isExactName": false,
-                "resourceName": "PathParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -502,7 +498,6 @@
                     "$id": "36",
                     "name": "template",
                     "isExactName": false,
-                    "resourceName": "ReservedExpansion",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -596,7 +591,6 @@
                     "$id": "42",
                     "name": "annotation",
                     "isExactName": false,
-                    "resourceName": "ReservedExpansion",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -788,7 +782,6 @@
                         "$id": "56",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -882,7 +875,6 @@
                         "$id": "62",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -979,7 +971,6 @@
                         "$id": "68",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1131,7 +1122,6 @@
                         "$id": "79",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1225,7 +1215,6 @@
                         "$id": "85",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1311,7 +1300,6 @@
                         "$id": "89",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1498,7 +1486,6 @@
                         "$id": "101",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1592,7 +1579,6 @@
                         "$id": "107",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1678,7 +1664,6 @@
                         "$id": "111",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1814,7 +1799,6 @@
                         "$id": "119",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1908,7 +1892,6 @@
                         "$id": "125",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -1994,7 +1977,6 @@
                         "$id": "129",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2181,7 +2163,6 @@
                         "$id": "141",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2275,7 +2256,6 @@
                         "$id": "147",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2361,7 +2341,6 @@
                         "$id": "151",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2497,7 +2476,6 @@
                         "$id": "159",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2591,7 +2569,6 @@
                         "$id": "165",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2677,7 +2654,6 @@
                         "$id": "169",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2864,7 +2840,6 @@
                         "$id": "181",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -2958,7 +2933,6 @@
                         "$id": "187",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -3044,7 +3018,6 @@
                         "$id": "191",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -3180,7 +3153,6 @@
                         "$id": "199",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -3274,7 +3246,6 @@
                         "$id": "205",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -3360,7 +3331,6 @@
                         "$id": "209",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -3502,7 +3472,6 @@
                 "$id": "217",
                 "name": "templateOnly",
                 "isExactName": false,
-                "resourceName": "QueryParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3593,7 +3562,6 @@
                 "$id": "223",
                 "name": "explicit",
                 "isExactName": false,
-                "resourceName": "QueryParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3684,7 +3652,6 @@
                 "$id": "229",
                 "name": "annotationOnly",
                 "isExactName": false,
-                "resourceName": "QueryParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3872,7 +3839,6 @@
                         "$id": "243",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -3963,7 +3929,6 @@
                         "$id": "249",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4046,7 +4011,6 @@
                         "$id": "253",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4129,7 +4093,6 @@
                         "$id": "257",
                         "name": "model",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4262,7 +4225,6 @@
                         "$id": "265",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4353,7 +4315,6 @@
                         "$id": "271",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4436,7 +4397,6 @@
                         "$id": "275",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4519,7 +4479,6 @@
                         "$id": "279",
                         "name": "model",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4703,7 +4662,6 @@
                         "$id": "291",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4794,7 +4752,6 @@
                         "$id": "297",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4877,7 +4834,6 @@
                         "$id": "301",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -4960,7 +4916,6 @@
                         "$id": "305",
                         "name": "model",
                         "isExactName": false,
-                        "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -5093,7 +5048,6 @@
                         "$id": "313",
                         "name": "primitive",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -5184,7 +5138,6 @@
                         "$id": "319",
                         "name": "array",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -5267,7 +5220,6 @@
                         "$id": "323",
                         "name": "record",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -5350,7 +5302,6 @@
                         "$id": "327",
                         "name": "model",
                         "isExactName": false,
-                        "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
                           {
@@ -5489,7 +5440,6 @@
                 "$id": "335",
                 "name": "fixed",
                 "isExactName": false,
-                "resourceName": "InInterface",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

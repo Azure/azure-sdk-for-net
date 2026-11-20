@@ -595,5 +595,41 @@ namespace Azure.ResourceManager.HybridConnectivity
 
             return GetMockableHybridConnectivitySubscriptionResource(subscriptionResource).PostGenerateAwsTemplate(content, cancellationToken);
         }
+
+        /// <summary>
+        /// Retrieve GCP Access Control template
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivitySubscriptionResource.PostGenerateGcpTemplateAsync(GenerateGcpTemplateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate GCP Access Control Template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<GenerateGcpTemplateResult>> PostGenerateGcpTemplateAsync(this SubscriptionResource subscriptionResource, GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableHybridConnectivitySubscriptionResource(subscriptionResource).PostGenerateGcpTemplateAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve GCP Access Control template
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivitySubscriptionResource.PostGenerateGcpTemplate(GenerateGcpTemplateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate GCP Access Control Template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<GenerateGcpTemplateResult> PostGenerateGcpTemplate(this SubscriptionResource subscriptionResource, GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridConnectivitySubscriptionResource(subscriptionResource).PostGenerateGcpTemplate(content, cancellationToken);
+        }
     }
 }

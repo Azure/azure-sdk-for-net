@@ -55,12 +55,15 @@ Outbound messages:
 - `response.none`
 - `response.output_text.delta`
 - `response.output_text.done`
+- `response.output_data.done`
 - `response.done`
 - `response.cancel`
 - `end_call`
 - `error`
 
 Do not add DTMF, handoff, history mutation, or `input_image` to exact 1.0 unless the authoritative selected profile changes.
+
+The selected 1.0 content union includes `input_text` and `input_data`. Data payloads are immutable application JSON objects. Data output is one complete non-audio item; applications explicitly send `response.none` after successful silent processing. These additions do not grant the SDK lifecycle ownership or change the protocol version. Keep the legacy text `Content` projection while exposing ordered `ContentParts` for mixed inputs.
 
 ## Transport invariants
 

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="sqlVirtualMachineName"> The sqlVirtualMachineName. </param>
-        /// <param name="targetDBName"> The targetDbName. </param>
+        /// <param name="targetDBName"> The targetDBName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}";

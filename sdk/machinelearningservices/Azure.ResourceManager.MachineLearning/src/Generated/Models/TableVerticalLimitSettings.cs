@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private double? _exitScore;
-        internal bool _exitScoreIsDefined;
+        private bool _exitScoreIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TableVerticalLimitSettings"/>. </summary>
         public TableVerticalLimitSettings()

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _acceptedOn;
-        internal bool _acceptedOnIsDefined;
+        private bool _acceptedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TargetDirectoryResultProperties"/>. </summary>
         internal TargetDirectoryResultProperties()

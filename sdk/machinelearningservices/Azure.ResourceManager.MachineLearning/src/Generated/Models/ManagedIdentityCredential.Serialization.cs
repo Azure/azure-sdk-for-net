@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_managedIdentityTypeIsDefined || Optional.IsDefined(ManagedIdentityType))
+            if (Optional.IsDefined(ManagedIdentityType, _managedIdentityTypeIsDefined))
             {
                 if (ManagedIdentityType != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("managedIdentityType"u8);
                 }
             }
-            if (_userManagedIdentityClientIdIsDefined || Optional.IsDefined(UserManagedIdentityClientId))
+            if (Optional.IsDefined(UserManagedIdentityClientId, _userManagedIdentityClientIdIsDefined))
             {
                 if (UserManagedIdentityClientId != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userManagedIdentityClientId"u8);
                 }
             }
-            if (_userManagedIdentityPrincipalIdIsDefined || Optional.IsDefined(UserManagedIdentityPrincipalId))
+            if (Optional.IsDefined(UserManagedIdentityPrincipalId, _userManagedIdentityPrincipalIdIsDefined))
             {
                 if (UserManagedIdentityPrincipalId != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userManagedIdentityPrincipalId"u8);
                 }
             }
-            if (_userManagedIdentityResourceIdIsDefined || Optional.IsDefined(UserManagedIdentityResourceId))
+            if (Optional.IsDefined(UserManagedIdentityResourceId, _userManagedIdentityResourceIdIsDefined))
             {
                 if (UserManagedIdentityResourceId != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userManagedIdentityResourceId"u8);
                 }
             }
-            if (_userManagedIdentityTenantIdIsDefined || Optional.IsDefined(UserManagedIdentityTenantId))
+            if (Optional.IsDefined(UserManagedIdentityTenantId, _userManagedIdentityTenantIdIsDefined))
             {
                 if (UserManagedIdentityTenantId != null)
                 {

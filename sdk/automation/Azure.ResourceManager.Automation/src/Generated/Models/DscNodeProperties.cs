@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DscNodeConfigurationAssociationProperty _nodeConfiguration;
-        internal bool _nodeConfigurationIsDefined;
+        private bool _nodeConfigurationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DscNodeProperties"/>. </summary>
         public DscNodeProperties()

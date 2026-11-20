@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (_stageIsDefined || Optional.IsDefined(Stage))
+            if (Optional.IsDefined(Stage, _stageIsDefined))
             {
                 if (Stage != null)
                 {

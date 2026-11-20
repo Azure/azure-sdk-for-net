@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class RandomSamplingAlgorithm : SamplingAlgorithm
     {
         private int? _seed;
-        internal bool _seedIsDefined;
+        private bool _seedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         public RandomSamplingAlgorithm() : base(SamplingAlgorithmType.Random)

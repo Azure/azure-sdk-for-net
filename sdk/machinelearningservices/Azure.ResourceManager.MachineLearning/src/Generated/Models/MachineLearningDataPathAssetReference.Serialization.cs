@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningDataPathAssetReference)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_datastoreIdIsDefined || Optional.IsDefined(DatastoreId))
+            if (Optional.IsDefined(DatastoreId, _datastoreIdIsDefined))
             {
                 if (DatastoreId != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("datastoreId"u8);
                 }
             }
-            if (_pathIsDefined || Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path, _pathIsDefined))
             {
                 if (Path != null)
                 {

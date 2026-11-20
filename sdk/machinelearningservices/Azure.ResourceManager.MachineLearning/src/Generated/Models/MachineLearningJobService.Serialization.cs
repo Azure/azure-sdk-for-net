@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support writing '{format}' format.");
             }
-            if (_endpointIsDefined || Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint, _endpointIsDefined))
             {
                 if (Endpoint != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint"u8);
                 }
             }
-            if (options.Format != "W" && (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage)))
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage, _errorMessageIsDefined))
             {
                 if (ErrorMessage != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("errorMessage"u8);
                 }
             }
-            if (_jobServiceTypeIsDefined || Optional.IsDefined(JobServiceType))
+            if (Optional.IsDefined(JobServiceType, _jobServiceTypeIsDefined))
             {
                 if (JobServiceType != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType"u8);
                 }
             }
-            if (_nodesIsDefined || Optional.IsDefined(Nodes))
+            if (Optional.IsDefined(Nodes, _nodesIsDefined))
             {
                 if (Nodes != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodes"u8);
                 }
             }
-            if (_portIsDefined || Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port, _portIsDefined))
             {
                 if (Port != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties"u8);
                 }
             }
-            if (options.Format != "W" && (_statusIsDefined || Optional.IsDefined(Status)))
+            if (options.Format != "W" && Optional.IsDefined(Status, _statusIsDefined))
             {
                 if (Status != null)
                 {

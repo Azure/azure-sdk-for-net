@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityInformation"/>. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
-        /// <param name="connectionStatus"> The connection status. </param>
+        /// <param name="networkConnectionStatus"> The connection status. </param>
         /// <param name="avgLatencyInMs"> Average latency in milliseconds. </param>
         /// <param name="minLatencyInMs"> Minimum latency in milliseconds. </param>
         /// <param name="maxLatencyInMs"> Maximum latency in milliseconds. </param>
         /// <param name="probesSent"> Total number of probes sent. </param>
         /// <param name="probesFailed"> Number of failed probes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityInformation(IReadOnlyList<ConnectivityHopInfo> hops, NetworkConnectionStatus? connectionStatus, int? avgLatencyInMs, int? minLatencyInMs, int? maxLatencyInMs, int? probesSent, int? probesFailed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityInformation(IReadOnlyList<ConnectivityHopInfo> hops, NetworkConnectionStatus? networkConnectionStatus, int? avgLatencyInMs, int? minLatencyInMs, int? maxLatencyInMs, int? probesSent, int? probesFailed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Hops = hops;
-            ConnectionStatus = connectionStatus;
+            NetworkConnectionStatus = networkConnectionStatus;
             AvgLatencyInMs = avgLatencyInMs;
             MinLatencyInMs = minLatencyInMs;
             MaxLatencyInMs = maxLatencyInMs;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The connection status. </summary>
         [WirePath("connectionStatus")]
-        public NetworkConnectionStatus? ConnectionStatus { get; }
+        public NetworkConnectionStatus? NetworkConnectionStatus { get; }
 
         /// <summary> Average latency in milliseconds. </summary>
         [WirePath("avgLatencyInMs")]

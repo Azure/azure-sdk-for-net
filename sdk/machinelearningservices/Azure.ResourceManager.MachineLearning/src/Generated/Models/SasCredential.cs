@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class SasCredential : DataReferenceCredential
     {
         private Uri _sasUri;
-        internal bool _sasUriIsDefined;
+        private bool _sasUriIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
         internal SasCredential() : base(DataReferenceCredentialType.SAS)

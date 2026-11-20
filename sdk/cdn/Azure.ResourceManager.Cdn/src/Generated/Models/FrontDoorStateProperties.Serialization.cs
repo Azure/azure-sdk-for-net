@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The tracking states for afd resources. </summary>
-    public partial class FrontDoorStateProperties : IJsonModel<FrontDoorStateProperties>
+    internal partial class FrontDoorStateProperties : IJsonModel<FrontDoorStateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

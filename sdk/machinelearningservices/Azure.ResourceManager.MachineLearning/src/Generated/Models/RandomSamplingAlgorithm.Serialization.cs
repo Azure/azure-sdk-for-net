@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("rule"u8);
                 writer.WriteStringValue(Rule.Value.ToString());
             }
-            if (_seedIsDefined || Optional.IsDefined(Seed))
+            if (Optional.IsDefined(Seed, _seedIsDefined))
             {
                 if (Seed != null)
                 {

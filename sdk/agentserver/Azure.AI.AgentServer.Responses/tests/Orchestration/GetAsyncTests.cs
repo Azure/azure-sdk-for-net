@@ -8,7 +8,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
-using CreateResponseRequest = Azure.AI.AgentServer.Responses.CreateResponseRequest;
+using CreateResponsePersistRequest = Azure.AI.AgentServer.Responses.CreateResponsePersistRequest;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Orchestration;
 
@@ -46,7 +46,7 @@ public class GetAsyncTests : IDisposable
     public async Task StoreFalse_InFlight_ThrowsResourceNotFoundException()
     {
         var execution = _tracker.Create("resp_get_store", isBackground: true, isStreaming: false, store: false);
-        execution.Response = new Models.ResponseObject("resp_get_store", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_get_store", Model = "test", Status = ResponseStatus.InProgress };
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
             () => _orchestrator.GetAsync("resp_get_store", PlatformContext.Empty));
@@ -65,9 +65,9 @@ public class GetAsyncTests : IDisposable
     public async Task NonBg_Completed_FallsThroughToProvider()
     {
         // After FinalizeExecutionAsync evicts from tracker, GET falls to provider.
-        var response = new Models.ResponseObject("resp_get_ok", "test") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_get_ok", Model = "test", Status = ResponseStatus.Completed };
         await _provider.CreateResponseAsync(
-            new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         var result = await _orchestrator.GetAsync("resp_get_ok", PlatformContext.Empty);
 
@@ -79,7 +79,7 @@ public class GetAsyncTests : IDisposable
     public async Task Background_InFlight_ReturnsSnapshot()
     {
         var execution = _tracker.Create("resp_get_bg", isBackground: true, isStreaming: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_get_bg", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_get_bg", Model = "test", Status = ResponseStatus.InProgress };
 
         var result = await _orchestrator.GetAsync("resp_get_bg", PlatformContext.Empty);
 
@@ -90,9 +90,9 @@ public class GetAsyncTests : IDisposable
     public async Task Background_Completed_FallsThroughToProvider()
     {
         // After eviction, bg responses are served from provider too.
-        var response = new Models.ResponseObject("resp_get_bg_done", "test") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_get_bg_done", Model = "test", Status = ResponseStatus.Completed };
         await _provider.CreateResponseAsync(
-            new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         var result = await _orchestrator.GetAsync("resp_get_bg_done", PlatformContext.Empty);
 
