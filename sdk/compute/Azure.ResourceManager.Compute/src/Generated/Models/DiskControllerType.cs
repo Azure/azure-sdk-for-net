@@ -48,10 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> The value. </param>
         public static implicit operator DiskControllerType(string value) => new DiskControllerType(value);
 
-        /// <summary> Converts a string to a <see cref="DiskControllerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DiskControllerType?(string value) => value == null ? null : new DiskControllerType(value);
-
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskControllerType other && Equals(other);
