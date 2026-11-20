@@ -1,0 +1,6 @@
+directory: specification/azurearcdata/resource-manager/Microsoft.AzureArcData/AzureArcData
+commit: d823e7673b834c1668f03bd97236e71ae5aed4bc
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
