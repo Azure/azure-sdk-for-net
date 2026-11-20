@@ -5,6 +5,7 @@ using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
@@ -166,6 +167,331 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(exptected));
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsUsesHeadWhenCheckExistenceIsAvailable(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+
+            Assert.That(body, Does.Contain("CreateCheckExistenceRequest"));
+            Assert.That(body, Does.Not.Contain("CreateGetRequest"));
+            Assert.That(body, Does.Not.Contain(".FromResponse("));
+            Assert.That(body, Does.Contain("404"));
+        }
+
+        [Test]
+        public void PublishedExistsGetParameterRemainsAvailable()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true, includeGetQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], lastContractCompilation: () => Helpers.GetCompilationFromDirectory(method: nameof(HeadPreservesPreviouslyPublishedExistsWithGetParameter)));
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(collection);
+
+            foreach (var methodName in new[] { "Exists", "ExistsAsync" })
+            {
+                Assert.That(collection.Methods.Any(m => m.Signature.Name == methodName && m.Signature.Parameters.Any(p => p.Name == "expand")), Is.True, methodName);
+            }
+        }
+
+        [Test]
+        public void HeadPreservesPreviouslyPublishedExistsWithGetParameter()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true, includeGetQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(collection);
+
+            foreach (var methodName in new[] { "Exists", "ExistsAsync" })
+            {
+                var methods = collection.Methods.Where(m => m.Signature.Name == methodName).ToArray();
+                Assert.That(methods.Any(m => m.Signature.Parameters.Any(p => p.Name == "expand")), Is.True, $"{methodName} must preserve the published GET-based overload");
+                Assert.That(methods.Any(m => m.BodyStatements!.ToDisplayString().Contains("CreateGetRequest")), Is.True, $"{methodName} must retain GET when HEAD cannot carry the published parameter");
+            }
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsUsesReadWhenHeadRequiresAdditionalParameter(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true, includeCheckExistenceQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var method = collection.Methods.Single(m => m.Signature.Name == methodName);
+
+            Assert.That(method.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("headToken"));
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain("CreateGetRequest"));
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsUsesReadWhenContextualHeadParameterHasDifferentType(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true, headResourceGroupIsGuid: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+
+            Assert.That(body, Does.Contain("CreateGetRequest"));
+            Assert.That(body, Does.Not.Contain("Guid.Parse(this.Id.ResourceGroupName)"));
+        }
+
+        [TestCase("Exists", false)]
+        [TestCase("ExistsAsync", false)]
+        [TestCase("Exists", true)]
+        [TestCase("ExistsAsync", true)]
+        public void ExistsUsesReadWhenHeadPathEscapingDiffers(string methodName, bool contextual)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true,
+                headResourceGroupSkipEncoding: contextual, headNameSkipEncoding: !contextual);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+
+            Assert.That(body, Does.Contain("CreateGetRequest"));
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsRemainsPublicWhenHeadIsInternal(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true, headIsInternal: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var method = collection.Methods.Single(m => m.Signature.Name == methodName);
+
+            Assert.That(method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.False);
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain("CreateGetRequest"));
+        }
+
+        [TestCase("Exists", false)]
+        [TestCase("ExistsAsync", false)]
+        [TestCase("Exists", true)]
+        [TestCase("ExistsAsync", true)]
+        public void ExistsUsesReadWhenConstantQuerySelectorDiffers(string methodName, bool headOmitsSelector)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            get.Operation.Update(parameters: [.. get.Operation.Parameters, InputFactory.QueryParameter("partition", InputFactory.Literal.String("primary"), isRequired: true, scope: InputParameterScope.Constant)]);
+            if (!headOmitsSelector)
+            {
+                head.Operation.Update(parameters: [.. head.Operation.Parameters, InputFactory.QueryParameter("partition", InputFactory.Literal.String("secondary"), isRequired: true, scope: InputParameterScope.Constant)]);
+            }
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+
+            Assert.That(body, Does.Contain("CreateGetRequest"));
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsUsesReadWhenGroupedConditionalHeadersDiffer(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            var dateTime = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            AddConditionalHeader(get, "ifModifiedSince", "If-Modified-Since", dateTime);
+            AddConditionalHeader(head, "ifUnmodifiedSince", "If-Unmodified-Since", dateTime);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var method = collection.Methods.Single(m => m.Signature.Name == methodName);
+
+            Assert.That(method.Signature.Parameters.Any(p => p.Type.FrameworkType == typeof(RequestConditions)), Is.True);
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain("CreateGetRequest"));
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsUsesHeadWhenConstantSelectorsAndConditionalHeadersMatch(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            var dateTime = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            foreach (var method in new[] { get, head })
+            {
+                method.Operation.Update(parameters: [.. method.Operation.Parameters, InputFactory.QueryParameter("partition", InputFactory.Literal.String("primary"), isRequired: true, scope: InputParameterScope.Constant)]);
+                AddConditionalHeader(method, "ifModifiedSince", "If-Modified-Since", dateTime);
+            }
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+
+            Assert.That(body, Does.Contain("CreateCheckExistenceRequest"));
+        }
+
+        private static void AddConditionalHeader(InputServiceMethod method, string name, string wireName, InputType type)
+        {
+            method.Operation.Update(parameters: [.. method.Operation.Parameters, InputFactory.HeaderParameter(name, type, serializedName: wireName)]);
+            method.Update(parameters: [.. method.Parameters, InputFactory.MethodParameter(name, type, serializedName: wireName, location: InputRequestLocation.Header)]);
+        }
+
+        [TestCase("Exists", false)]
+        [TestCase("ExistsAsync", false)]
+        [TestCase("Exists", true)]
+        [TestCase("ExistsAsync", true)]
+        public void ExistsUsesReadWhenConstantHeaderSelectorDiffers(string methodName, bool headOmitsSelector)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            AddConstantHeader(get, "primary");
+            if (!headOmitsSelector)
+            {
+                AddConstantHeader(head, "secondary");
+            }
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            Assert.That(collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString(), Does.Contain("CreateGetRequest"));
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsUsesReadWhenQueryArrayEncodingDiffers(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            var array = InputFactory.Array(InputPrimitiveType.String);
+            AddQueryArray(get, array, ",");
+            AddQueryArray(head, array, "|");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var restMethods = plugin.Object.TypeFactory.CreateClient(client)!.RestClient.Methods;
+            var getRequest = restMethods.Single(m => m.Signature.Name == "CreateGetRequest").BodyStatements!.ToDisplayString();
+            var headRequest = restMethods.Single(m => m.Signature.Name == "CreateCheckExistenceRequest").BodyStatements!.ToDisplayString();
+            Assert.That(getRequest, Does.Contain("AppendQueryDelimited").And.Contain("\",\""));
+            Assert.That(headRequest, Does.Contain("AppendQueryDelimited").And.Contain("\"|\""));
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            Assert.That(collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString(), Does.Contain("CreateGetRequest"));
+        }
+
+        [TestCase("Exists")]
+        [TestCase("ExistsAsync")]
+        public void ExistsUsesHeadWhenQueryArrayAndConstantHeadersMatch(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            var array = InputFactory.Array(InputPrimitiveType.String);
+            foreach (var method in new[] { get, head })
+            {
+                AddQueryArray(method, array, ",");
+                AddConstantHeader(method, "primary");
+            }
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            Assert.That(collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString(), Does.Contain("CreateCheckExistenceRequest"));
+        }
+
+        [TestCase("Exists", false)]
+        [TestCase("ExistsAsync", false)]
+        [TestCase("Exists", true)]
+        [TestCase("ExistsAsync", true)]
+        public void ExistsHonorsHeaderArrayEncodingCompatibility(string methodName, bool matching)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            var array = InputFactory.Array(InputPrimitiveType.String);
+            AddHeaderArray(get, array, ",");
+            AddHeaderArray(head, array, matching ? "," : "|");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var restMethods = plugin.Object.TypeFactory.CreateClient(client)!.RestClient.Methods;
+            var getRequest = restMethods.Single(m => m.Signature.Name == "CreateGetRequest").BodyStatements!.ToDisplayString();
+            var headRequest = restMethods.Single(m => m.Signature.Name == "CreateCheckExistenceRequest").BodyStatements!.ToDisplayString();
+            Assert.That(getRequest, Does.Contain("\",\""));
+            Assert.That(headRequest, Does.Contain(matching ? "\",\"" : "\"|\""));
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain(matching ? "CreateCheckExistenceRequest" : "CreateGetRequest"));
+        }
+
+        private static void AddHeaderArray(InputServiceMethod method, InputType type, string delimiter)
+        {
+            var header = new InputHeaderParameter("tags", null, null, type, true, false, null, null, "x-ms-tags", false, null,
+                InputParameterScope.Method, delimiter, false);
+            method.Operation.Update(parameters: [.. method.Operation.Parameters, header]);
+            method.Update(parameters: [.. method.Parameters, InputFactory.MethodParameter("tags", type, isRequired: true,
+                serializedName: "x-ms-tags", location: InputRequestLocation.Header)]);
+        }
+
+        private static void AddConstantHeader(InputServiceMethod method, string value)
+        {
+            method.Operation.Update(parameters: [.. method.Operation.Parameters, InputFactory.HeaderParameter("partition", InputFactory.Literal.String(value), isRequired: true, serializedName: "x-ms-partition", scope: InputParameterScope.Constant)]);
+        }
+
+        private static void AddQueryArray(InputServiceMethod method, InputType type, string delimiter)
+        {
+            method.Operation.Update(parameters: [.. method.Operation.Parameters, InputFactory.QueryParameter("filters", type, isRequired: true, delimiter: delimiter)]);
+            method.Update(parameters: [.. method.Parameters, InputFactory.MethodParameter("filters", type, isRequired: true, location: InputRequestLocation.Query)]);
+        }
+
+        [TestCase("Exists", false)]
+        [TestCase("ExistsAsync", false)]
+        [TestCase("Exists", true)]
+        [TestCase("ExistsAsync", true)]
+        public void ExistsHonorsConstantPathCompatibility(string methodName, bool matching)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            SetConstantResourceGroup(get, "primary");
+            SetConstantResourceGroup(head, matching ? "primary" : "secondary");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var restMethods = plugin.Object.TypeFactory.CreateClient(client)!.RestClient.Methods;
+            Assert.That(restMethods.Single(m => m.Signature.Name == "CreateGetRequest").BodyStatements!.ToDisplayString(), Does.Contain("\"primary\""));
+            Assert.That(restMethods.Single(m => m.Signature.Name == "CreateCheckExistenceRequest").BodyStatements!.ToDisplayString(), Does.Contain(matching ? "\"primary\"" : "\"secondary\""));
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain(matching ? "CreateCheckExistenceRequest" : "CreateGetRequest"));
+        }
+
+        [TestCase("Exists", false)]
+        [TestCase("ExistsAsync", false)]
+        [TestCase("Exists", true)]
+        [TestCase("ExistsAsync", true)]
+        public void ExistsHonorsOperationUriCompatibility(string methodName, bool matching)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var get = client.Methods.Single(m => m.Name == "get");
+            var head = client.Methods.Single(m => m.Name == "checkExistence");
+            get.Operation.Update(uri: "/primary");
+            head.Operation.Update(uri: matching ? "/primary" : "/secondary");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var restMethods = plugin.Object.TypeFactory.CreateClient(client)!.RestClient.Methods;
+            Assert.That(restMethods.Single(m => m.Signature.Name == "CreateGetRequest").BodyStatements!.ToDisplayString(), Does.Contain("\"/primary\""));
+            Assert.That(restMethods.Single(m => m.Signature.Name == "CreateCheckExistenceRequest").BodyStatements!.ToDisplayString(), Does.Contain(matching ? "\"/primary\"" : "\"/secondary\""));
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain(matching ? "CreateCheckExistenceRequest" : "CreateGetRequest"));
+        }
+
+        private static void SetConstantResourceGroup(InputServiceMethod method, string value)
+        {
+            var parameter = InputFactory.PathParameter("resourceGroupName", InputFactory.Literal.String(value), isRequired: true, scope: InputParameterScope.Constant);
+            method.Operation.Update(parameters: [.. method.Operation.Parameters.Select(p => p.SerializedName == "resourceGroupName" ? parameter : p)]);
+        }
+
+        [TestCase("GetIfExists")]
+        [TestCase("GetIfExistsAsync")]
+        public void GetIfExistsUsesReadWhenCheckExistenceIsAvailable(string methodName)
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single();
+            var body = collection.Methods.Single(m => m.Signature.Name == methodName).BodyStatements!.ToDisplayString();
+
+            Assert.That(body, Does.Contain("CreateGetRequest"));
+            Assert.That(body, Does.Not.Contain("CreateCheckExistenceRequest"));
         }
 
         [TestCase]

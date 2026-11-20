@@ -39,6 +39,10 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<ResourceMethod> _actions;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
+        private readonly ResourceMethod? _checkExistence;
+        private readonly IReadOnlyList<ResourceMethod> _resourceMethods;
+        private ResourceMethod? _selectedExists;
+        private bool _selectedExistsInitialized;
 
         // Cached Get method providers
         private MethodProvider? _getAsyncMethodProvider;
@@ -46,7 +50,8 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider? _getAllSyncMethodProvider;
 
         // Support for multiple rest clients
-        private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
+        private Dictionary<InputClient, RestClientInfo>? _clientInfosCache;
+        private Dictionary<InputClient, RestClientInfo> _clientInfos => _clientInfosCache ??= BuildClientInfos();
 
         // This is the resource type of the current resource. Not the resource type of my parent resource
         private ScopedApi<ResourceType> _resourceTypeExpression;
@@ -57,15 +62,302 @@ namespace Azure.Generator.Management.Providers
         {
             _resourceMetadata = resourceMetadata;
             _resource = resource;
-
-            // Initialize client info dictionary using extension method
-            _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
+            _resourceMethods = resourceMethods;
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             var contextualPath = GetContextualPath(resourceMetadata);
-            (_get, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
+            (_get, _checkExistence, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
             _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
+        }
+
+        private Dictionary<InputClient, RestClientInfo> BuildClientInfos()
+        {
+            var selected = SelectExistsMethod();
+            // Only include the selected HEAD client; other check-existence operations do not emit methods.
+            return _resourceMetadata.CreateClientInfosMap(this,
+                _resourceMethods.Where(method => method.Kind != ResourceOperationKind.CheckExistence || ReferenceEquals(method, selected)));
+        }
+
+        private ResourceMethod? SelectExistsMethod()
+        {
+            if (!_selectedExistsInitialized)
+            {
+                _selectedExists = _checkExistence ?? _get;
+                if (_get is not null && _checkExistence is not null && !HasCompatibleExistenceParameters(_get, _checkExistence))
+                {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"The HEAD existence operation for '{_resourceMetadata.ResourceIdPattern}' is incompatible with the GET operation's API or request mapping. The collection's Exists methods will continue to use GET to preserve their API and arguments.");
+                    _selectedExists = _get;
+                }
+                _selectedExistsInitialized = true;
+            }
+            return _selectedExists;
+        }
+
+        private bool HasCompatibleExistenceParameters(ResourceMethod get, ResourceMethod head)
+        {
+            // Contextual arguments are not present in the public signature, but the HEAD
+            // request must accept the same values extracted from the resource identifier.
+            if (get.InputMethod.Operation.Path != head.InputMethod.Operation.Path ||
+                get.InputMethod.Operation.Uri != head.InputMethod.Operation.Uri ||
+                !HasCompatiblePathParameters(get, head) || !HasCompatibleContextualParameters(get, head) ||
+                !HasCompatibleQueries(get, head) || !HasCompatibleHeaders(get, head) || !HasCompatibleConditionalHeaders(get, head) ||
+                (get.InputMethod is InputLongRunningPagingServiceMethod) != (head.InputMethod is InputLongRunningPagingServiceMethod))
+            {
+                return false;
+            }
+
+            foreach (var isAsync in new[] { false, true })
+            {
+                var (getParameters, getModifiers) = GetExistenceShape(get, isAsync);
+                var (headParameters, headModifiers) = GetExistenceShape(head, isAsync);
+                if (getModifiers != headModifiers || getParameters.Count != headParameters.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < getParameters.Count; i++)
+                {
+                    var left = getParameters[i];
+                    var right = headParameters[i];
+                    if (left.Name != right.Name || !left.Type.Equals(right.Type) || left.Location != right.Location ||
+                        left.WireInfo.SerializedName != right.WireInfo.SerializedName ||
+                        left.WireInfo.SerializationFormat != right.WireInfo.SerializationFormat ||
+                        !Equals(left.DefaultValue, right.DefaultValue) || left.Validation != right.Validation ||
+                        left.IsRef != right.IsRef || left.IsOut != right.IsOut || left.IsIn != right.IsIn || left.IsParams != right.IsParams)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool HasCompatiblePathParameters(ResourceMethod get, ResourceMethod head)
+        {
+            var getParameters = get.InputMethod.Operation.Parameters.OfType<InputPathParameter>()
+                .OrderBy(parameter => parameter.SerializedName, StringComparer.Ordinal).ToArray();
+            var headParameters = head.InputMethod.Operation.Parameters.OfType<InputPathParameter>()
+                .OrderBy(parameter => parameter.SerializedName, StringComparer.Ordinal).ToArray();
+            if (getParameters.Length != headParameters.Length)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < getParameters.Length; i++)
+            {
+                var left = getParameters[i];
+                var right = headParameters[i];
+                if (left.SerializedName != right.SerializedName || left.SkipUrlEncoding != right.SkipUrlEncoding ||
+                    left.AllowReserved != right.AllowReserved || left.Explode != right.Explode ||
+                    left.IsRequired != right.IsRequired || left.Scope != right.Scope || left.ServerUrlTemplate != right.ServerUrlTemplate ||
+                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value) ||
+                    (left.Scope == InputParameterScope.Constant && !HaveMatchingLiteralValues(left, right)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static bool HasCompatibleQueries(ResourceMethod get, ResourceMethod head)
+        {
+            static InputQueryParameter[] GetQueries(ResourceMethod method) => method.InputMethod.Operation.Parameters
+                .OfType<InputQueryParameter>()
+                .Where(parameter => !parameter.IsApiVersion && !parameter.SerializedName.Equals("api-version", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(parameter => parameter.SerializedName, StringComparer.Ordinal).ToArray();
+
+            var getQueries = GetQueries(get);
+            var headQueries = GetQueries(head);
+            if (getQueries.Length != headQueries.Length)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < getQueries.Length; i++)
+            {
+                var left = getQueries[i];
+                var right = headQueries[i];
+                var typeFactory = ManagementClientGenerator.Instance.TypeFactory;
+                if (left.SerializedName != right.SerializedName || left.Scope != right.Scope || left.IsRequired != right.IsRequired ||
+                    left.CollectionFormat != right.CollectionFormat || left.Explode != right.Explode ||
+                    left.ArraySerializationDelimiter != right.ArraySerializationDelimiter ||
+                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value))
+                {
+                    return false;
+                }
+                if (left.Scope == InputParameterScope.Constant)
+                {
+                    if (!HaveMatchingLiteralValues(left, right))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    var leftType = typeFactory.CreateCSharpType(left.Type);
+                    var rightType = typeFactory.CreateCSharpType(right.Type);
+                    if (leftType is null || rightType is null || !leftType.Equals(rightType) ||
+                        typeFactory.GetSerializationFormat(left.Type) != typeFactory.GetSerializationFormat(right.Type))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool HasCompatibleHeaders(ResourceMethod get, ResourceMethod head)
+        {
+            static InputHeaderParameter[] GetHeaders(ResourceMethod method) => method.InputMethod.Operation.Parameters
+                .OfType<InputHeaderParameter>()
+                .Where(parameter => !parameter.IsApiVersion && !parameter.IsContentType &&
+                    !parameter.SerializedName.Equals("Accept", StringComparison.OrdinalIgnoreCase) &&
+                    !parameter.SerializedName.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(parameter => parameter.SerializedName, StringComparer.OrdinalIgnoreCase).ToArray();
+
+            var getHeaders = GetHeaders(get);
+            var headHeaders = GetHeaders(head);
+            if (getHeaders.Length != headHeaders.Length)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < getHeaders.Length; i++)
+            {
+                var left = getHeaders[i];
+                var right = headHeaders[i];
+                if (!left.SerializedName.Equals(right.SerializedName, StringComparison.OrdinalIgnoreCase) ||
+                    left.Scope != right.Scope || left.IsRequired != right.IsRequired ||
+                    left.CollectionFormat != right.CollectionFormat || left.ArraySerializationDelimiter != right.ArraySerializationDelimiter ||
+                    left.CollectionHeaderPrefix != right.CollectionHeaderPrefix ||
+                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value))
+                {
+                    return false;
+                }
+                if (left.Scope == InputParameterScope.Constant)
+                {
+                    if (!HaveMatchingLiteralValues(left, right))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    var typeFactory = ManagementClientGenerator.Instance.TypeFactory;
+                    var leftType = typeFactory.CreateCSharpType(left.Type);
+                    var rightType = typeFactory.CreateCSharpType(right.Type);
+                    if (leftType is null || rightType is null || !leftType.Equals(rightType) ||
+                        typeFactory.GetSerializationFormat(left.Type) != typeFactory.GetSerializationFormat(right.Type))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool HaveMatchingLiteralValues(InputParameter left, InputParameter right) =>
+            left.Type is InputLiteralType leftLiteral && right.Type is InputLiteralType rightLiteral &&
+            Equals(leftLiteral.Value, rightLiteral.Value) && leftLiteral.ValueType.Kind == rightLiteral.ValueType.Kind &&
+            leftLiteral.ValueType.Encode == rightLiteral.ValueType.Encode;
+
+        private static bool HasCompatibleConditionalHeaders(ResourceMethod get, ResourceMethod head)
+        {
+            // Conditions can be collapsed into a single RequestConditions parameter, hiding
+            // which headers each operation actually accepts from the public signature.
+            return HasMatchingConditionalHeaders(get.InputMethod.Operation.Parameters, head.InputMethod.Operation.Parameters) &&
+                HasMatchingConditionalHeaders(get.InputMethod.Parameters, head.InputMethod.Parameters);
+        }
+
+        private static bool HasMatchingConditionalHeaders(IEnumerable<InputParameter> get, IEnumerable<InputParameter> head)
+        {
+            static string HeaderKey(string name) => name.Replace("-", "", StringComparison.Ordinal).ToUpperInvariant();
+            static bool IsConditionalHeader(InputParameter parameter)
+            {
+                if (parameter is not InputHeaderParameter && parameter is not InputMethodParameter { Location: InputRequestLocation.Header })
+                {
+                    return false;
+                }
+                return HeaderKey(parameter.SerializedName) is "IFMATCH" or "IFNONEMATCH" or "IFMODIFIEDSINCE" or "IFUNMODIFIEDSINCE";
+            }
+            static InputParameter[] GetHeaders(IEnumerable<InputParameter> parameters) => parameters
+                .Where(IsConditionalHeader).OrderBy(parameter => HeaderKey(parameter.SerializedName), StringComparer.Ordinal).ToArray();
+
+            var getHeaders = GetHeaders(get);
+            var headHeaders = GetHeaders(head);
+            if (getHeaders.Length != headHeaders.Length)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < getHeaders.Length; i++)
+            {
+                var left = getHeaders[i];
+                var right = headHeaders[i];
+                var typeFactory = ManagementClientGenerator.Instance.TypeFactory;
+                var leftType = typeFactory.CreateCSharpType(left.Type);
+                var rightType = typeFactory.CreateCSharpType(right.Type);
+                if (HeaderKey(left.SerializedName) != HeaderKey(right.SerializedName) || leftType is null || rightType is null ||
+                    !leftType.Equals(rightType) || typeFactory.GetSerializationFormat(left.Type) != typeFactory.GetSerializationFormat(right.Type) ||
+                    left.IsRequired != right.IsRequired || left.Scope != right.Scope ||
+                    (left.DefaultValue is null) != (right.DefaultValue is null) || !Equals(left.DefaultValue?.Value, right.DefaultValue?.Value))
+                {
+                    return false;
+                }
+                if (left is InputHeaderParameter leftHeader && right is InputHeaderParameter rightHeader &&
+                    (leftHeader.CollectionFormat != rightHeader.CollectionFormat || leftHeader.ArraySerializationDelimiter != rightHeader.ArraySerializationDelimiter ||
+                     leftHeader.IsContentType != rightHeader.IsContentType || leftHeader.CollectionHeaderPrefix != rightHeader.CollectionHeaderPrefix))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool HasCompatibleContextualParameters(ResourceMethod get, ResourceMethod head)
+        {
+            var getParameters = GetContextualRequestParameters(get);
+            var headParameters = GetContextualRequestParameters(head);
+            if (getParameters.Count != headParameters.Count)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < getParameters.Count; i++)
+            {
+                var left = getParameters[i];
+                var right = headParameters[i];
+                if (left.WireInfo.SerializedName != right.WireInfo.SerializedName ||
+                    !left.Type.Equals(right.Type) || left.Location != right.Location ||
+                    left.WireInfo.SerializationFormat != right.WireInfo.SerializationFormat)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private IReadOnlyList<ParameterProvider> GetContextualRequestParameters(ResourceMethod method)
+        {
+            var restClient = ManagementClientGenerator.Instance.TypeFactory.CreateClient(method.InputClient)!;
+            var requestMethod = restClient.GetRequestMethodByOperation(method.InputMethod.Operation);
+            var mapping = BuildParameterMapping(new RequestPathPattern(method.InputMethod.Operation.Path));
+            return requestMethod.Signature.Parameters
+                .Where(parameter => mapping.TryGetValue(parameter.WireInfo.SerializedName, out var context) && context.ContextualParameter is not null)
+                .OrderBy(parameter => parameter.WireInfo.SerializedName, StringComparer.Ordinal)
+                .ToArray();
+        }
+
+        private (IReadOnlyList<ParameterProvider> Parameters, MethodSignatureModifiers Modifiers) GetExistenceShape(ResourceMethod method, bool isAsync)
+        {
+            var restClient = ManagementClientGenerator.Instance.TypeFactory.CreateClient(method.InputClient)!;
+            var convenienceMethod = restClient.GetConvenienceMethodByOperation(method.InputMethod.Operation, isAsync, this);
+            var mapping = BuildParameterMapping(new RequestPathPattern(method.InputMethod.Operation.Path));
+            var parameters = OperationMethodParameterHelper.GetOperationMethodParameters(method.InputMethod, convenienceMethod, mapping, this, methodName: isAsync ? "ExistsAsync" : "Exists");
+            return (parameters, convenienceMethod.Signature.Modifiers);
         }
 
         private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, ResourceMethod? canonicalGetAll)
@@ -167,11 +459,12 @@ namespace Azure.Generator.Management.Providers
                 ?? SynthesizedParameterNameHelper.GetExistingParameterName(library.ExtensionProvider, methodName, parameterTypes, index, offset + 1, [mockable.ArmCoreType, .. prefixTypes]);
         }
 
-        private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls, IReadOnlyList<ResourceMethod> Actions) InitializeMethods(
+        private static (ResourceMethod? Get, ResourceMethod? CheckExistence, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls, IReadOnlyList<ResourceMethod> Actions) InitializeMethods(
             IReadOnlyList<ResourceMethod> resourceMethods,
             RequestPathPattern contextualPath)
         {
             ResourceMethod? getMethod = null;
+            ResourceMethod? checkExistenceMethod = null;
             ResourceMethod? createMethod = null;
             var listMethods = new List<ResourceMethod>();
             var actionMethods = new List<ResourceMethod>();
@@ -182,6 +475,9 @@ namespace Azure.Generator.Management.Providers
                 {
                     case ResourceOperationKind.Read:
                         getMethod ??= method;
+                        break;
+                    case ResourceOperationKind.CheckExistence:
+                        checkExistenceMethod ??= method;
                         break;
                     case ResourceOperationKind.List:
                         listMethods.Add(method);
@@ -195,7 +491,7 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
-            return (getMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath), actionMethods);
+            return (getMethod, checkExistenceMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath), actionMethods);
         }
 
         private static IReadOnlyList<ResourceMethod> SortGetAllMethodsByScopeBreadth(
@@ -685,17 +981,18 @@ namespace Azure.Generator.Management.Providers
 
         private List<MethodProvider> BuildExistsMethods()
         {
-            if (_get is null)
+            var method = SelectExistsMethod();
+            if (method is null)
             {
                 return [];
             }
 
             var result = new List<MethodProvider>();
-            var restClientInfo = _clientInfos[_get.InputClient];
-            var parameterMappings = BuildParameterMapping(new RequestPathPattern(_get.InputMethod.Operation.Path));
+            var restClientInfo = _clientInfos[method.InputClient];
+            var parameterMappings = BuildParameterMapping(new RequestPathPattern(method.InputMethod.Operation.Path));
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, _get.InputMethod, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, parameterMappings, restClientInfo, method.InputMethod, isAsync);
                 result.Add(existsMethodProvider);
             }
 

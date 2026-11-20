@@ -41,6 +41,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
+            if (_serviceMethod.Operation.HttpMethod == "HEAD")
+            {
+                return [Return(ResponseSnippets.FromValue(responseVariable.Property(nameof(Response.Status)).NotEqual(Literal(404)), responseVariable))];
+            }
+
             // For Exists methods, we check if Value is not null and return a boolean
             var returnValueExpression = responseVariable.Value().NotEqual(Null);
 
@@ -59,7 +64,28 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
+            if (_serviceMethod.Operation.HttpMethod != "HEAD")
+            {
+                return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
+            }
+
+            var sendArguments = new ValueExpression[] { messageVariable, contextVariable.Property(nameof(RequestContext.CancellationToken)) };
+            var send = _isAsync
+                ? This.Property("Pipeline").Invoke("SendAsync", sendArguments, null, true).Terminate()
+                : This.Property("Pipeline").Invoke("Send", sendArguments).Terminate();
+            var declaration = Declare("response", typeof(Response), messageVariable.Property("Response"), out var response);
+            responseVariable = response.As<Response>();
+            var status = response.Property(nameof(Response.Status));
+            var isNotSuccess = new BinaryOperatorExpression("<", status, Literal(200)).As<bool>()
+                .Or(new BinaryOperatorExpression(">=", status, Literal(300)));
+            return [
+                send,
+                declaration,
+                new IfStatement(isNotSuccess.And(status.NotEqual(Literal(404))))
+                {
+                    Throw(New.Instance(typeof(RequestFailedException), response))
+                }
+            ];
         }
     }
 }
