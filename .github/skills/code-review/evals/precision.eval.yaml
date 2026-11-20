@@ -893,3 +893,127 @@ stimuli:
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: report-library-models-without-mrw
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      Azure.Widgets is a hand-written client library that keeps its AOT checks on. The PR adds
+      the public models `Widget` and `WidgetProperties`, which `WidgetClient` methods send and
+      return. Both are plain classes with no serialization interfaces; an internal
+      System.Text.Json source-generated `JsonSerializerContext` serializes them, and the library
+      declares no other serialization context. The build, including the AOT compatibility check,
+      passes. All other design, implementation, documentation, testing, and packaging
+      requirements are satisfied. Return findings only as a JSON object with a findings array.
+      Each finding must have symbol, reason, and recommendation strings.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:implement|add|adopt|switch|move|make)\b(?:[^"\\]|\\.)*?(?:IJsonModel|IPersistableModel|ModelReaderWriterContext)'
+      - type: output-not-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:implement|add|adopt|switch|move|make)\b'
+
+  - name: report-reflection-path-without-aot-safe-alternative
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      Azure.Widgets is a hand-written client library that keeps its AOT checks on. The PR adds
+      `public virtual Response Upload<T>(IEnumerable<T> items, CancellationToken
+      cancellationToken = default)` and its async counterpart to `WidgetClient`. Both serialize
+      `items` with reflection-based System.Text.Json and are annotated
+      `[RequiresUnreferencedCode]` and `[RequiresDynamicCode]`, so the build, including the AOT
+      compatibility check, passes. No other method uploads items. All other design,
+      implementation, documentation, testing, and packaging requirements are satisfied. Return
+      findings only as a JSON object with a findings array. Each finding must have symbol,
+      reason, and recommendation strings.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:add|provide|ship|offer|expose|introduce)\b(?:[^"\\]|\\.)*?(?:BinaryData|\bstream|JsonTypeInfo|JsonSerializerContext|overload)'
+      - type: output-not-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:add|provide|ship|offer|expose|introduce)\b'
+
+  - name: allow-reflection-path-with-aot-safe-alternative
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      Azure.Widgets is a hand-written client library that keeps its AOT checks on. The PR adds
+      `public virtual Response Upload<T>(IEnumerable<T> items, CancellationToken
+      cancellationToken = default)` and its async counterpart to `WidgetClient`. Both serialize
+      `items` with reflection-based System.Text.Json and are annotated
+      `[RequiresUnreferencedCode]` and `[RequiresDynamicCode]`. The PR also adds unannotated
+      `Upload(IEnumerable<BinaryData> items, CancellationToken cancellationToken = default)` and
+      its async counterpart, which upload caller-serialized items with identical behavior, and the
+      annotated methods' remarks point AOT callers to them. The build, including the AOT
+      compatibility check, passes. All other design, implementation, documentation, testing, and
+      packaging requirements are satisfied, and no CI diagnostic covers these changes. If there is
+      no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: do-not-request-legacy-client-builder-extensions
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      The PR adds the new hand-written data-plane library Azure.Widgets at version 1.0.0-beta.1;
+      nothing has been published under that package id. `WidgetClient` has constructors taking an
+      endpoint `Uri` and a `TokenCredential`, with and without `WidgetClientOptions`. The library
+      ships `WidgetClientSettings : ClientSettings`, which binds every constructor parameter and
+      option, a `schema/ConfigurationSchema.json` covering every setting, `IHostApplicationBuilder`
+      `AddWidgetClient` host extensions, and tests that build the client from `IConfiguration`. It
+      adds no `Microsoft.Extensions.Azure` `WidgetClientBuilderExtensions` class. All other design,
+      implementation, documentation, testing, ownership, and packaging requirements are satisfied,
+      and no CI diagnostic covers these changes. If there is no finding, return exactly
+      `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?i)IAzureClientFactoryBuilder|ClientBuilderExtensions'
+
+  - name: review-planned-api-in-design-doc
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      The PR adds a skeleton for the new library Azure.Widgets with no client code yet, plus
+      `sdk/widgets/Azure.Widgets/design/widgets-design.md`. That design document's API sketch
+      plans `public class WidgetClientOptions : ClientOptions` with only a public parameterless
+      constructor. The Widgets service versions its REST API, and both 2025-01-01 and 2025-06-01
+      are supported. Everything else in the PR satisfies the applicable rules, and no CI
+      diagnostic covers the design document. Return findings only as a JSON object with a
+      findings array. Each finding must have symbol, reason, and recommendation strings.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:add|take|accept|require|introduce|declare|use)\b(?:[^"\\]|\\.)*?ServiceVersion'
+      - type: output-not-matches
+        config:
+          pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:add|take|accept|require|introduce|declare|use)\b'

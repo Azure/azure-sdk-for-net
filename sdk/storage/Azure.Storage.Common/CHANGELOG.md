@@ -1,16 +1,10 @@
 # Release History
 
-## 12.30.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.30.0-beta.2 (2026-11-19)
 
 ### Bugs Fixed
 
 - Fixed an issue where conditional `409 *AlreadyExists` responses on structured-message requests were incorrectly classified as non-errors, which could cause `InvalidDataException` to be thrown instead of the expected `RequestFailedException`.
-
-### Other Changes
 
 ## 12.30.0-beta.1 (2026-11-05)
 

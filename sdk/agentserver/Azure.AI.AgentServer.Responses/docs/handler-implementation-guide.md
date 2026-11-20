@@ -977,7 +977,7 @@ For fine-grained control, use the corresponding `Add*()` builder factory and cal
 
 ### MCP Terminal State
 
-For MCP tool calls, `EmitCompleted()` and `EmitFailed()` on `OutputItemMcpCallBuilder` record the terminal status so that `EmitDone()` sets the correct `MCPToolCallStatus` on the output item. If neither is called, `EmitDone()` defaults to `Completed`.
+For MCP tool calls, `EmitCompleted()` and `EmitFailed()` on `OutputItemMcpCallBuilder` record the terminal status so that `EmitDone()` sets the correct `McpToolCallStatus` on the output item. If neither is called, `EmitDone()` defaults to `Completed`.
 
 ```csharp
 var mcp = stream.AddOutputItemMcpCall("my-server", "tool_name");

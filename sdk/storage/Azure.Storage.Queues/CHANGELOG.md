@@ -1,16 +1,10 @@
 # Release History
 
-## 12.29.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.29.0-beta.2 (2026-11-19)
 
 ### Bugs Fixed
 
 - Fixed SAS builder/client queue-name validation to use ordinal comparisons in `QueueClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
-
-### Other Changes
 
 ## 12.29.0-beta.1 (2026-11-05)
 

@@ -13,6 +13,7 @@
   - The fixed-rate sampler now also stamps `microsoft.sample_rate` on the spans it keeps when `SamplingRatio` is below 1. The reported value is unchanged, except that ratios below 0.5% are now reported unrounded instead of as 0.
   - With trace-based log sampling (`EnableTraceBasedLogsSampler`, the default), logs kept because their span was sampled in now carry that span's sample rate. Logs without a span are unchanged.
   - `microsoft.sample_rate` no longer appears in custom dimensions on requests, dependencies, or logs. It is now sent as the envelope `sampleRate`.
+- Fixed standard metrics extraction using the wrong schema version. ([65084](https://github.com/Azure/azure-sdk-for-net/pull/65084))
 
 ### Other Changes
 

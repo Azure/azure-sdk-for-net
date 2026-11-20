@@ -2,4 +2,4 @@
 
 This plugin visits the classes and properties, detects `@extension` decorator, containing `x-ms-foundry-meta` key and marks classes and properties as experimrntal.
 
-The plugin also preserves `At` on date and time model properties (for example, `createdAt` becomes `CreatedAt`, not `CreatedOn`). It leaves wire names, published property names, and names affected by a collision with the model name unchanged.
+After the generator applies its [date and time naming conventions](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/generator/docs/naming-conventions.md#date-and-time-names), the plugin replaces only the final `On` with `At` on date/time model properties and operation method parameters. For example, `startTime` becomes `StartsOn` before the plugin changes it to `StartsAt` (`startsAt` in a method signature). The plugin leaves wire names, explicit names, published names, and names that would collide unchanged.

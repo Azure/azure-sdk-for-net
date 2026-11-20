@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     // No schema counter on the routed path: IMultiEndpointTransmitter.Track carries none,
                     // matching the trace multi-endpoint conversion.
-                    group.TelemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, cloudRole: cloudRole, applySampleRate));
+                    group.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, cloudRole: cloudRole, applySampleRate));
                 }
                 catch (Exception ex)
                 {
