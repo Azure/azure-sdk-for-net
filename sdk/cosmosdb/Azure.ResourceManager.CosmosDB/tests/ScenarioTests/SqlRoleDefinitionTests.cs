@@ -113,8 +113,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [RecordedTest]
-
-        [Ignore("MPG migration WIP: LRO completion-state divergence.")]
         public async Task SqlRoleDefinitionDelete()
         {
             var definition = await CreateSqlRoleDefinition(SqlDatabaseActionScope, SqlRoleDefinitionCollection);

@@ -81,14 +81,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [RecordedTest]
-
-        [Ignore("MPG migration WIP: query-parameter encoding diff for restorableDatabaseAccounts feed.")]
         public async Task RestoreTableDatabaseAccount()
         {
             _restorableDatabaseAccount = await GetDatabaseAccount();
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
-            Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
-            RestorableCosmosDBAccountResource restorableAccount = restorableAccounts.Single(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name);
+            RestorableCosmosDBAccountResource restorableAccount = await FindRestorableDatabaseAccountAsync(
+                (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync(), _restorableDatabaseAccount.Data.Name);
 
             var tableName = Recording.GenerateAssetName("table-");
             CosmosDBTableResource table = await CreateTable(tableName, null);
@@ -108,8 +105,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [RecordedTest]
-
-        [Ignore("MPG migration WIP: query-parameter encoding diff for restorableDatabaseAccounts feed.")]
         public async Task RestoreTable()
         {
             _restorableDatabaseAccount = await GetDatabaseAccount();
@@ -125,16 +120,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DateTimeOffset ts = DateTimeOffset.FromUnixTimeSeconds((int)table1.Data.Resource.Timestamp.Value);
             AddDelayInSeconds(60);
 
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
-            Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
-            RestorableCosmosDBAccountResource restorableAccount = restorableAccounts.Single(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name);
+            RestorableCosmosDBAccountResource restorableAccount = await FindRestorableDatabaseAccountAsync(
+                (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync(), _restorableDatabaseAccount.Data.Name);
 
             // Fetching restorable tables
             var restorableTables = await restorableAccount.GetRestorableTablesAsync().ToEnumerableAsync();
             Assert.True(restorableTables.Count == 2);
 
             // Building restore parameter to restore table1
-            RestorableTable restorableTable = restorableTables.Single(table => table.Resource.TableName == tableName1);
+            RestorableTable restorableTable = restorableTables.Single(table => table.Resource.TableName == table1.Data.Resource.TableName);
 
             CosmosDBAccountRestoreParameters restoreParameters = new CosmosDBAccountRestoreParameters()
             {
@@ -153,8 +147,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [RecordedTest]
-
-        [Ignore("MPG migration WIP: query-parameter encoding diff for restorableDatabaseAccounts feed.")]
         public async Task RestorableTableDatabaseAccountFeed()
         {
             await RestorableDatabaseAccountFeedTestHelperAsync("Table, Sql", 1);
@@ -237,9 +229,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             int expectedRestorableLocationCount)
         {
             _restorableDatabaseAccount = await GetDatabaseAccount();
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
-            Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
-            RestorableCosmosDBAccountResource restorableAccount = restorableAccounts.Single(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name);
+            RestorableCosmosDBAccountResource restorableAccount = await FindRestorableDatabaseAccountAsync(
+                (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync(), _restorableDatabaseAccount.Data.Name);
             ValidateRestorableDatabaseAccount(restorableAccount, sourceApiType, expectedRestorableLocationCount);
         }
 
