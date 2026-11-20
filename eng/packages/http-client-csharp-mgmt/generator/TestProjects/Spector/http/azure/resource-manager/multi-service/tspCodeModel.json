@@ -1932,6 +1932,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "VirtualMachine",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-11-01",
@@ -1976,6 +1977,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Disk",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-03-02",

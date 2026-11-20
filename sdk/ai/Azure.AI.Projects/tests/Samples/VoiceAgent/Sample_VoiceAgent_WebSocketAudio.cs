@@ -47,13 +47,13 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
             ModelType = VoiceModelType.SelfDeployed,
             Model = modelDeploymentName,
             Instructions = "Respond briefly and helpfully.",
-            Audio = new VoiceAgentAudioConfig
+            Audio = new VoiceAgentAudioConfiguration
             {
-                Input = new VoiceAgentAudioInputConfig
+                Input = new VoiceAgentAudioInputConfiguration
                 {
                     Format = new RealtimePcmAudioFormat { Rate = audioSampleRate }
                 },
-                Output = new VoiceAgentAudioOutputConfig
+                Output = new VoiceAgentAudioOutputConfiguration
                 {
                     Format = new RealtimePcmAudioFormat { Rate = audioSampleRate }
                 }

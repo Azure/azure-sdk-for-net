@@ -15,16 +15,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class AgentTaxonomyInput : EvaluationTaxonomyInput
     {
         /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/>. </summary>
-        /// <param name="target"> Target configuration for the agent. </param>
-        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="riskCategories"/> is null. </exception>
-        public AgentTaxonomyInput(EvaluationTarget target, IEnumerable<RiskCategory> riskCategories) : base(EvaluationTaxonomyInputType.Agent)
+        public AgentTaxonomyInput() : base(EvaluationTaxonomyInputType.Agent)
         {
-            Argument.AssertNotNull(target, nameof(target));
-            Argument.AssertNotNull(riskCategories, nameof(riskCategories));
-
-            Target = target;
-            RiskCategories = riskCategories.ToList();
+            RiskCategories = new ChangeTrackingList<RiskCategory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/>. </summary>
@@ -36,6 +29,19 @@ namespace Azure.AI.Projects.Evaluation
         {
             Target = target;
             RiskCategories = riskCategories;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/>. </summary>
+        /// <param name="target"> Target configuration for the agent. </param>
+        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="riskCategories"/> is null. </exception>
+        public AgentTaxonomyInput(EvaluationTarget target, IEnumerable<RiskCategory> riskCategories) : this()
+        {
+            Argument.AssertNotNull(target, nameof(target));
+            Argument.AssertNotNull(riskCategories, nameof(riskCategories));
+
+            Target = target;
+            RiskCategories = riskCategories.ToList();
         }
 
         /// <summary> Target configuration for the agent. </summary>

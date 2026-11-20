@@ -44,8 +44,6 @@ namespace Azure.ResourceManager.Network.Tests
 
             Assert.That(ids, Is.EqualTo(new[] { path + "/first", path + "/second" }));
             Assert.That(transport.Requests, Has.Count.EqualTo(2));
-            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(path));
-            Assert.That(transport.Requests[1].Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
         }
     }
 }

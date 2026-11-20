@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Prompt Variables. </summary>
-    public partial class ResponsePromptVariables : IJsonModel<ResponsePromptVariables>
+    internal partial class ResponsePromptVariables : IJsonModel<ResponsePromptVariables>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -78,17 +78,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName(item.Key);
                 writer.WriteStringValue(item.Value);
             }
-            foreach (var item in AdditionalBinaryDataProperties)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
@@ -124,10 +127,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 switch (prop.Value.ValueKind)
                 {
                     case JsonValueKind.String:
-                        additionalProperties.Add(prop.Name, prop.Value.GetString());
+                        additionalProperties[prop.Name] = prop.Value.GetString();
                         continue;
                 }
-                additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                }
             }
             return new ResponsePromptVariables(additionalProperties, additionalBinaryDataProperties);
         }

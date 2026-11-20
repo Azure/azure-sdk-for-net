@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(RunsEvery))
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("runsEvery"u8);
-                writer.WriteNumberValue(RunsEvery.Value);
+                writer.WriteNumberValue(Interval.Value);
             }
             if (Optional.IsDefined(WeekOfMonth))
             {
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("dayOfMonth"u8);
                 writer.WriteNumberValue(DayOfMonth.Value);
             }
-            if (Optional.IsCollectionDefined(WeeklyDays))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("weeklyDays"u8);
                 writer.WriteStartArray();
-                foreach (WeeklyDays item in WeeklyDays)
+                foreach (CommvaultScheduleDayOfWeek item in DaysOfWeek)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             CommvaultBackupType backupType = default;
             CommvaultBackupFrequency? frequency = default;
-            int? runsEvery = default;
+            int? interval = default;
             WeekOfMonth? weekOfMonth = default;
             CommvaultDayOfWeek? dayOfWeek = default;
             MonthOfYear? monthOfYear = default;
             int? dayOfMonth = default;
-            IList<WeeklyDays> weeklyDays = default;
+            IList<CommvaultScheduleDayOfWeek> daysOfWeek = default;
             string time = default;
             string timeZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    runsEvery = prop.Value.GetInt32();
+                    interval = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("weekOfMonth"u8))
@@ -251,12 +251,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    List<WeeklyDays> array = new List<WeeklyDays>();
+                    List<CommvaultScheduleDayOfWeek> array = new List<CommvaultScheduleDayOfWeek>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new WeeklyDays(item.GetString()));
+                        array.Add(new CommvaultScheduleDayOfWeek(item.GetString()));
                     }
-                    weeklyDays = array;
+                    daysOfWeek = array;
                     continue;
                 }
                 if (prop.NameEquals("time"u8))
@@ -277,12 +277,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new CommvaultBackupSchedule(
                 backupType,
                 frequency,
-                runsEvery,
+                interval,
                 weekOfMonth,
                 dayOfWeek,
                 monthOfYear,
                 dayOfMonth,
-                weeklyDays ?? new ChangeTrackingList<WeeklyDays>(),
+                daysOfWeek ?? new ChangeTrackingList<CommvaultScheduleDayOfWeek>(),
                 time,
                 timeZone,
                 additionalBinaryDataProperties);

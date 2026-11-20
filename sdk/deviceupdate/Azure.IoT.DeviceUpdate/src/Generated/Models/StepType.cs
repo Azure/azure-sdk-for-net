@@ -51,7 +51,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Converts a string to a <see cref="StepType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StepType?(string value) => value == null ? null : new StepType(value);
+        public static implicit operator StepType?(string value) => value == null ? (StepType?)null : new StepType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

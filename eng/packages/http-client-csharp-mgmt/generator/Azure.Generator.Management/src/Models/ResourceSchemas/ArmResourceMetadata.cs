@@ -21,6 +21,7 @@ namespace Azure.Generator.Management.Models;
 /// <param name="NameConstraints"> The name constraints for the resource. </param>
 /// <param name="ApiVersions"> The API versions that this resource is available in. </param>
 /// <param name="RbacRoles"> The RBAC roles defined for this resource. </param>
+/// <param name="ResourceNameIsExplicit"> Whether the name is an override rather than an automatically derived name. </param>
 public record ArmResourceMetadata(
     RequestPathPattern ResourceIdPattern,
     string ResourceName,
@@ -33,10 +34,9 @@ public record ArmResourceMetadata(
     IReadOnlyList<RequestPathPattern> ChildResourceIds,
     ArmResourceNameConstraints NameConstraints,
     IReadOnlyList<string> ApiVersions,
-    IReadOnlyList<ArmResourceRbacRole> RbacRoles)
+    IReadOnlyList<ArmResourceRbacRole> RbacRoles,
+    bool ResourceNameIsExplicit = true)
 {
-    internal bool ResourceNameIsExplicit { get; init; }
-
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<RequestPathPattern> childResourceIds)
     {
@@ -120,9 +120,7 @@ public record ArmResourceMetadata(
             childResourceIds,
             nameConstraints,
             apiVersions,
-            rbacRoles)
-        {
-            ResourceNameIsExplicit = element.TryGetProperty("resourceNameIsExplicit", out var explicitNameElement) && explicitNameElement.GetBoolean()
-        };
+            rbacRoles,
+            !element.TryGetProperty("resourceNameIsExplicit", out var explicitNameElement) || explicitNameElement.GetBoolean());
     }
 }

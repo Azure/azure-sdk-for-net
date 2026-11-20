@@ -66,14 +66,9 @@ namespace Azure.Security.KeyVault.Certificates
             V2025_07_01 = 7,
 
             /// <summary>
-            /// The Key Vault API version 2026-03-01-preview.
-            /// </summary>
-            V2026_03_01_Preview = 8,
-
-            /// <summary>
             /// The Key Vault API version 2026-04-01.
             /// </summary>
-            V2026_04_01 = 9,
+            V2026_04_01 = 8,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -116,7 +111,6 @@ namespace Azure.Security.KeyVault.Certificates
                 ServiceVersion.V7_5 => "7.5",
                 ServiceVersion.V7_6 => "7.6",
                 ServiceVersion.V2025_07_01 => "2025-07-01",
-                ServiceVersion.V2026_03_01_Preview => "2026-03-01-preview",
                 ServiceVersion.V2026_04_01 => "2026-04-01",
                 _ => throw new ArgumentException(Version.ToString()),
             };

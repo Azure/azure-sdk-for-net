@@ -23,7 +23,11 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeData(AzureLocation location, string creationToken, long usageThreshold, ResourceIdentifier subnetId) : base(location)
@@ -106,7 +110,11 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
+        /// <summary>
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </summary>
         public long UsageThreshold
         {
             get
@@ -452,6 +460,23 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbOplocks? SmbOplocks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SmbOplocks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.SmbOplocks = value;
+            }
+        }
+
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
         public float? ThroughputMibps
         {
@@ -684,6 +709,23 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        /// <summary> Async Directory Delete configuration for the volume. </summary>
+        public AsyncDirectoryDelete AsyncDirectoryDelete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AsyncDirectoryDelete;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.AsyncDirectoryDelete = value;
+            }
+        }
+
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
         public long? DefaultUserQuotaInKiBs
         {
@@ -892,6 +934,23 @@ namespace Azure.ResourceManager.NetApp
                     Properties = new VolumeProperties();
                 }
                 return Properties.ExportRules;
+            }
+        }
+
+        /// <summary> Indicates whether this volume is designated as an origin for cache volumes. </summary>
+        public OriginVolume? GeoNamespaceOriginVolume
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoNamespaceOriginVolume;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.GeoNamespaceOriginVolume = value;
             }
         }
     }

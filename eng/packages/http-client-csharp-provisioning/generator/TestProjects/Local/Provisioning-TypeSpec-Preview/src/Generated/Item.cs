@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private SystemData _systemData;
         private ItemProperties _properties;
         private BicepDictionary<string> _tags;
-        private ResourceReference<ConfigurationStore> _parent;
+        private ProvisioningResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new Item. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ConfigurationStore>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

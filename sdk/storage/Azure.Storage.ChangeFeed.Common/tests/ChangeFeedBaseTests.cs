@@ -114,9 +114,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             // Rows live strictly inside the 13:12 minute; the segment bucket is 13:12:00.
             List<TestEvent> rows = new List<TestEvent>
             {
-                new TestEvent { Id = "create-snapshotBaselineDir", Cvnt = 0, EventTime = window.AddSeconds(2) },
-                new TestEvent { Id = "create-baseline.txt", Cvnt = 0, EventTime = window.AddSeconds(2.1) },
-                new TestEvent { Id = "delete-baseline.txt", Cvnt = 1, EventTime = window.AddSeconds(9) },
+                new TestEvent { Id = "create-snapshotBaselineDir", Cvnt = 0, EventOccurredOn = window.AddSeconds(2) },
+                new TestEvent { Id = "create-baseline.txt", Cvnt = 0, EventOccurredOn = window.AddSeconds(2.1) },
+                new TestEvent { Id = "delete-baseline.txt", Cvnt = 1, EventOccurredOn = window.AddSeconds(9) },
             };
 
             ChangeFeedBase<TestEvent> filtered = BuildSingleSegmentFeed(window, rows, disableEventTimeFilter: false);
@@ -153,8 +153,8 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             List<TestEvent> rows = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-in-finalized-segment", EventTime = bucket.AddMinutes(2) },
-                new TestEvent { Id = "evt-at-caller-end", EventTime = endTime },
+                new TestEvent { Id = "evt-in-finalized-segment", EventOccurredOn = bucket.AddMinutes(2) },
+                new TestEvent { Id = "evt-at-caller-end", EventOccurredOn = endTime },
             };
 
             ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(
@@ -182,9 +182,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             List<TestEvent> rows = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-before-end", EventTime = bucket.AddSeconds(10) },
-                new TestEvent { Id = "evt-at-end", EventTime = endTime },
-                new TestEvent { Id = "evt-after", EventTime = bucket.AddSeconds(40) },
+                new TestEvent { Id = "evt-before-end", EventOccurredOn = bucket.AddSeconds(10) },
+                new TestEvent { Id = "evt-at-end", EventOccurredOn = endTime },
+                new TestEvent { Id = "evt-after", EventOccurredOn = bucket.AddSeconds(40) },
             };
 
             ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(
@@ -214,9 +214,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             List<TestEvent> rows = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-before-end", EventTime = bucket.AddSeconds(10) },
-                new TestEvent { Id = "evt-at-end", EventTime = userEndTime },
-                new TestEvent { Id = "evt-after-end", EventTime = bucket.AddSeconds(20) },
+                new TestEvent { Id = "evt-before-end", EventOccurredOn = bucket.AddSeconds(10) },
+                new TestEvent { Id = "evt-at-end", EventOccurredOn = userEndTime },
+                new TestEvent { Id = "evt-after-end", EventOccurredOn = bucket.AddSeconds(20) },
             };
 
             ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(

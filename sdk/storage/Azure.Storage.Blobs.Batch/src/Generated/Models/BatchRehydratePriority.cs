@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Batch.Models
 
         /// <summary> Converts a string to a <see cref="BatchRehydratePriority"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchRehydratePriority?(string value) => value == null ? null : new BatchRehydratePriority(value);
+        public static implicit operator BatchRehydratePriority?(string value) => value == null ? (BatchRehydratePriority?)null : new BatchRehydratePriority(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

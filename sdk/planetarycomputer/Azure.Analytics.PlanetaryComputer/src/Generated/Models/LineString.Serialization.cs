@@ -15,11 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a LineString. </summary>
     public partial class LineString : GeoJsonGeometry, IJsonModel<LineString>
     {
-        /// <summary> Initializes a new instance of <see cref="LineString"/> for deserialization. </summary>
-        internal LineString()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

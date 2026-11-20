@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchNodePlacementPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodePlacementPolicyType?(string value) => value == null ? null : new BatchNodePlacementPolicyType(value);
+        public static implicit operator BatchNodePlacementPolicyType?(string value) => value == null ? (BatchNodePlacementPolicyType?)null : new BatchNodePlacementPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

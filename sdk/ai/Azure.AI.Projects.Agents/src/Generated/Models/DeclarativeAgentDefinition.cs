@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
-            Skills = new ChangeTrackingList<SkillReference>();
+            Skills = new ChangeTrackingList<AgentSkillReference>();
             Tools = new ChangeTrackingList<ResponseTool>();
             StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
         }
@@ -65,7 +65,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
         [Experimental("AAIP001")]
-        internal DeclarativeAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, AgentHarness harness, string model, string instructions, IList<SkillReference> skills, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, BinaryData toolChoice, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal DeclarativeAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, AgentHarness harness, string model, string instructions, IList<AgentSkillReference> skills, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, BinaryData toolChoice, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Harness = harness;
             Model = model;
@@ -103,7 +103,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The Foundry skills available to this prompt agent. An omitted skill version is resolved and pinned when the agent version is created. </summary>
         [Experimental("AAIP001")]
-        public IList<SkillReference> Skills { get; }
+        public IList<AgentSkillReference> Skills { get; }
 
         /// <summary>
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.

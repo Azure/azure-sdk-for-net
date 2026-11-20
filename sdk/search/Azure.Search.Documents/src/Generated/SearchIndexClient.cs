@@ -2760,7 +2760,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFileMultipart(string sourceName, UploadKnowledgeSourceFileMultipartRequest body, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFileMultipart(string sourceName, UploadKnowledgeSourceFileMultipartContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
             Argument.AssertNotNull(body, nameof(body));
@@ -2779,7 +2779,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileMultipartAsync(string sourceName, UploadKnowledgeSourceFileMultipartRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileMultipartAsync(string sourceName, UploadKnowledgeSourceFileMultipartContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
             Argument.AssertNotNull(body, nameof(body));
@@ -3089,7 +3089,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual Response<KnowledgeSourceFile> UpdateKnowledgeSourceFile(string fileId, string sourceName, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeSourceFile> UpdateKnowledgeSourceFile(string fileId, string sourceName, UpdateKnowledgeSourceFileContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
@@ -3110,7 +3110,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual async Task<Response<KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string fileId, string sourceName, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string fileId, string sourceName, UpdateKnowledgeSourceFileContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));

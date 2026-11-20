@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
             Upgrades = new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>();
-            ComponentsByReleases = new ChangeTrackingList<KubernetesVersionComponents>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/>. </summary>
@@ -33,15 +32,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="name"> The Agent Pool name. </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
-        /// <param name="componentsByReleases"> List of components grouped by kubernetes major.minor version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades, IList<KubernetesVersionComponents> componentsByReleases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             Name = name;
             OSType = osType;
             Upgrades = upgrades;
-            ComponentsByReleases = componentsByReleases;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,9 +57,5 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> List of orchestrator types and versions available for upgrade. </summary>
         [WirePath("upgrades")]
         public IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> Upgrades { get; }
-
-        /// <summary> List of components grouped by kubernetes major.minor version. </summary>
-        [WirePath("componentsByReleases")]
-        public IList<KubernetesVersionComponents> ComponentsByReleases { get; }
     }
 }

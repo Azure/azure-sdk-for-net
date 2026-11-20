@@ -15,11 +15,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> QnA record. </summary>
     public partial class QnaRecord : IJsonModel<QnaRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="QnaRecord"/> for deserialization. </summary>
-        internal QnaRecord()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QnaRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

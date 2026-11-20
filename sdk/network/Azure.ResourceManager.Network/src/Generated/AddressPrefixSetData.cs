@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -23,11 +24,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="AddressPrefixSetData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the address prefix set. </param>
-        internal AddressPrefixSetData(ResourceIdentifier id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AddressPrefixSetPropertiesFormat properties) : base(id, name, @type, eTag, additionalBinaryDataProperties)
+        internal AddressPrefixSetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AddressPrefixSetPropertiesFormat properties) : base(id, name, resourceType, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

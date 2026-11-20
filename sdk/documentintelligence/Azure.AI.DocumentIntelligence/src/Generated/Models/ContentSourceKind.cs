@@ -61,7 +61,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="ContentSourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentSourceKind?(string value) => value == null ? null : new ContentSourceKind(value);
+        public static implicit operator ContentSourceKind?(string value) => value == null ? (ContentSourceKind?)null : new ContentSourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

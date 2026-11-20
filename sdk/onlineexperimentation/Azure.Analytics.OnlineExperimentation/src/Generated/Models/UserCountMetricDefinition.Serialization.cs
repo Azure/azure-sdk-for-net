@@ -15,11 +15,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of a UserCount metric definition. Counts unique users who encounter a specified event. </summary>
     public partial class UserCountMetricDefinition : ExperimentMetricDefinition, IJsonModel<UserCountMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="UserCountMetricDefinition"/> for deserialization. </summary>
-        internal UserCountMetricDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

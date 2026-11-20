@@ -417,6 +417,7 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** Whether the resource name stem was explicitly customized by the spec. */
   resourceNameIsExplicit?: boolean;
   /** The name constraints for the resource, from TypeSpec decorators */
   nameConstraints: NameConstraints;
@@ -1541,8 +1542,9 @@ export function expandDynamicParentResourcesInSchema(
           singletonResourceName: resource.metadata.singletonResourceName,
           resourceName: expandedResourceName,
           resourceNameIsExplicit:
-            overrideName !== undefined ||
-            resource.metadata.resourceNameIsExplicit,
+            overrideName !== undefined
+              ? true
+              : resource.metadata.resourceNameIsExplicit,
           nameConstraints: resource.metadata.nameConstraints,
           apiVersions: resource.metadata.apiVersions,
           rbacRoles: resource.metadata.rbacRoles

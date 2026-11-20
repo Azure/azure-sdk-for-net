@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
@@ -27,14 +28,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkProxyResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProxyResourceData(ResourceIdentifier id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkProxyResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,6 +50,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
     }
 }

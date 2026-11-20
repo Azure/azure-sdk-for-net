@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("bandwidthInGbps"u8);
                 writer.WriteNumberValue(BandwidthGbps.Value);
             }
+            if (Optional.IsDefined(CapacityProvider))
+            {
+                writer.WritePropertyName("capacityProvider"u8);
+                writer.WriteObjectValue(CapacityProvider, options);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             double? bandwidthGbps = default;
+            NetworkSubResource capacityProvider = default;
             IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default;
             VirtualNetworkApplianceIPVersionType? privateIPAddressVersion = default;
             NetworkProvisioningState? provisioningState = default;
@@ -167,6 +173,15 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     bandwidthGbps = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("capacityProvider"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityProvider = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ipConfigurations"u8))
@@ -226,6 +241,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new VirtualNetworkAppliancePropertiesFormat(
                 bandwidthGbps,
+                capacityProvider,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>(),
                 privateIPAddressVersion,
                 provisioningState,

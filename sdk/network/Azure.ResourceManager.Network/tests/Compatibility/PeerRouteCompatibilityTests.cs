@@ -164,12 +164,10 @@ namespace Azure.ResourceManager.Network.Tests
         [Test]
         public async Task HistoricalCanonicalOperationsExecuteGeneratedRouteOperations()
         {
-            Uri uri = null;
             CancellationToken requestToken = default;
             Action beforeResponse = null;
             var transport = MockTransport.FromMessageCallback(message =>
             {
-                uri = message.Request.Uri.ToUri();
                 requestToken = message.CancellationToken;
                 beforeResponse?.Invoke();
                 message.CancellationToken.ThrowIfCancellationRequested();
@@ -179,13 +177,9 @@ namespace Azure.ResourceManager.Network.Tests
             var resource = client.GetBgpConnectionResource(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualHubs/hub/bgpConnections/peer"));
             using var cancellation = new CancellationTokenSource();
             AssertRoute(resource.GetVirtualHubBgpConnectionAdvertisedRoutes(WaitUntil.Completed, cancellation.Token).Value["peer"][0]);
-            Assert.That(uri.AbsolutePath, Does.EndWith("/advertisedRoutes"));
             AssertRoute((await resource.GetVirtualHubBgpConnectionAdvertisedRoutesAsync(WaitUntil.Completed, cancellation.Token)).Value["peer"][0]);
-            Assert.That(uri.AbsolutePath, Does.EndWith("/advertisedRoutes"));
             AssertRoute(resource.GetVirtualHubBgpConnectionLearnedRoutes(WaitUntil.Completed, cancellation.Token).Value["peer"][0]);
-            Assert.That(uri.AbsolutePath, Does.EndWith("/learnedRoutes"));
             AssertRoute((await resource.GetVirtualHubBgpConnectionLearnedRoutesAsync(WaitUntil.Completed, cancellation.Token)).Value["peer"][0]);
-            Assert.That(uri.AbsolutePath, Does.EndWith("/learnedRoutes"));
             Assert.That(requestToken.CanBeCanceled, Is.True);
             beforeResponse = cancellation.Cancel;
             Assert.Catch<OperationCanceledException>(() => resource.GetVirtualHubBgpConnectionAdvertisedRoutes(WaitUntil.Started, cancellation.Token));

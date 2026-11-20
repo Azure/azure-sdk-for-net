@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbEncryption"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </param>
         /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, SmbOplocks? smbOplocks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SmbEncryption = smbEncryption;
             SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
+            SmbOplocks = smbOplocks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol cache. </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
+
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol cache. </summary>
+        public SmbOplocks? SmbOplocks { get; set; }
     }
 }

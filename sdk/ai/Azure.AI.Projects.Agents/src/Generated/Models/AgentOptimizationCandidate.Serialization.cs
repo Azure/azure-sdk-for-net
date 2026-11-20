@@ -170,7 +170,7 @@ namespace Azure.AI.Projects.Agents
             string rationale = default;
             string agentVersion = default;
             AgentOptimizationCandidateEvaluation evaluation = default;
-            AgentOptimizationCandidatePromotionInfo promotion = default;
+            AgentOptimizationCandidatePromotion promotion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -233,7 +233,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    promotion = AgentOptimizationCandidatePromotionInfo.DeserializeAgentOptimizationCandidatePromotionInfo(prop.Value, options);
+                    promotion = AgentOptimizationCandidatePromotion.DeserializeAgentOptimizationCandidatePromotion(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

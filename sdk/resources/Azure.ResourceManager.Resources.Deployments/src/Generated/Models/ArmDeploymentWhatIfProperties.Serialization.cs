@@ -85,6 +85,16 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 writer.WritePropertyName("whatIfSettings"u8);
                 writer.WriteObjectValue(WhatIfSettings, options);
             }
+            if (Optional.IsCollectionDefined(ResourcePredictions))
+            {
+                writer.WritePropertyName("resourcePredictions"u8);
+                writer.WriteStartArray();
+                foreach (DeploymentResourceWhatIfPrediction item in ResourcePredictions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,6 +136,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             ValidationLevel? validationLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ArmDeploymentWhatIfSettings whatIfSettings = default;
+            IList<DeploymentResourceWhatIfPrediction> resourcePredictions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("template"u8))
@@ -273,6 +284,20 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("resourcePredictions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DeploymentResourceWhatIfPrediction> array = new List<DeploymentResourceWhatIfPrediction>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeploymentResourceWhatIfPrediction.DeserializeDeploymentResourceWhatIfPrediction(item, options));
+                    }
+                    resourcePredictions = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -292,7 +317,8 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 expressionEvaluationOptions,
                 validationLevel,
                 additionalBinaryDataProperties,
-                whatIfSettings);
+                whatIfSettings,
+                resourcePredictions ?? new ChangeTrackingList<DeploymentResourceWhatIfPrediction>());
         }
     }
 }

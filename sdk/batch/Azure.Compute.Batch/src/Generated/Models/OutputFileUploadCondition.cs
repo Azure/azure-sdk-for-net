@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="OutputFileUploadCondition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OutputFileUploadCondition?(string value) => value == null ? null : new OutputFileUploadCondition(value);
+        public static implicit operator OutputFileUploadCondition?(string value) => value == null ? (OutputFileUploadCondition?)null : new OutputFileUploadCondition(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

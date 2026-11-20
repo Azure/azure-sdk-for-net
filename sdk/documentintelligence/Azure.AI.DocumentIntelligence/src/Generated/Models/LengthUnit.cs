@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LengthUnit?(string value) => value == null ? null : new LengthUnit(value);
+        public static implicit operator LengthUnit?(string value) => value == null ? (LengthUnit?)null : new LengthUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

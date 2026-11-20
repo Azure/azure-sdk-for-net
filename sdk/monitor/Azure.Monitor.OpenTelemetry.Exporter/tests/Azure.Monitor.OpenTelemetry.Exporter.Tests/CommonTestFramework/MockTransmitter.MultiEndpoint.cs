@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
@@ -17,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public readonly List<(string IngestionEndpoint, TelemetryItem[] TelemetryItems)> Sends = new();
 
         public ExportResult MultiEndpointResult { get; set; } = ExportResult.Success;
+        public bool CaptureRoutedTelemetry { get; set; }
 
         public ExportResult Track(EndpointRouteBatch routeBatch, TelemetryItemOrigin origin, CancellationToken cancellationToken)
         {
@@ -26,6 +28,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 {
                     var group = routeBatch[groupIndex];
                     Sends.Add((group.IngestionEndpoint, group.TelemetryItems.ToArray()));
+                    if (CaptureRoutedTelemetry)
+                    {
+                        lock (TelemetryItems)
+                        {
+                            foreach (var item in group.TelemetryItems)
+                            {
+                                TelemetryItems.Add(item);
+                            }
+                        }
+                    }
                 }
             }
 

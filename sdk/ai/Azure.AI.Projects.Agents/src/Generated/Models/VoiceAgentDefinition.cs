@@ -38,6 +38,7 @@ namespace Azure.AI.Projects.Agents
         /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
         /// transcription. These values are session defaults; a client may override supported fields when connecting.
         /// </param>
+        /// <param name="soundscape"> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </param>
         /// <param name="outputModalities">
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
         /// when an avatar is configured.
@@ -59,6 +60,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="structuredInputs"> Set of structured inputs that participate in prompt template substitution, rendered per session before the live session starts. </param>
         /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
         /// <param name="store">
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
         /// `false` (privacy-safe: off by default). When `true`, Foundry persists the full conversation — the transcript/event
@@ -67,7 +69,7 @@ namespace Azure.AI.Projects.Agents
         /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
         /// is not part of the persisted conversation content.
         /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfiguration greeting, VoiceAgentAudioConfiguration audio, VoiceAgentSoundscapeConfiguration soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfiguration interimResponse, VoiceAgentAvatarConfiguration avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfiguration subagentConfig, VoiceAgentPostCallConfiguration postCall, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ModelType = modelType;
             Model = model;
@@ -75,6 +77,7 @@ namespace Azure.AI.Projects.Agents
             Instructions = instructions;
             Greeting = greeting;
             Audio = audio;
+            Soundscape = soundscape;
             OutputModalities = outputModalities;
             InternalMaxOutputTokens = internalMaxOutputTokens;
             Include = include;
@@ -85,6 +88,7 @@ namespace Azure.AI.Projects.Agents
             ParallelToolCalls = parallelToolCalls;
             StructuredInputs = structuredInputs;
             SubagentConfig = subagentConfig;
+            PostCall = postCall;
             Store = store;
         }
 
@@ -101,13 +105,16 @@ namespace Azure.AI.Projects.Agents
         public string Instructions { get; set; }
 
         /// <summary> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </summary>
-        public VoiceAgentGreetingConfig Greeting { get; set; }
+        public VoiceAgentGreetingConfiguration Greeting { get; set; }
 
         /// <summary>
         /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
         /// transcription. These values are session defaults; a client may override supported fields when connecting.
         /// </summary>
-        public VoiceAgentAudioConfig Audio { get; set; }
+        public VoiceAgentAudioConfiguration Audio { get; set; }
+
+        /// <summary> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </summary>
+        public VoiceAgentSoundscapeConfiguration Soundscape { get; set; }
 
         /// <summary>
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
@@ -119,10 +126,10 @@ namespace Azure.AI.Projects.Agents
         public IList<VoiceAgentSessionIncludeOption> Include { get; }
 
         /// <summary> Interim-response settings for latency and tool execution. </summary>
-        public VoiceAgentInterimResponseConfig InterimResponse { get; set; }
+        public VoiceAgentInterimResponseConfiguration InterimResponse { get; set; }
 
         /// <summary> Optional avatar configuration. These values are session defaults and may be overridden when connecting. </summary>
-        public VoiceAgentAvatarConfig Avatar { get; set; }
+        public VoiceAgentAvatarConfiguration Avatar { get; set; }
 
         /// <summary>
         /// The tools the voice agent may use. Supported tool kinds are `function` (executed by the client), `mcp`,
@@ -138,7 +145,10 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }
 
         /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
-        public VoiceAgentSubagentConfig SubagentConfig { get; set; }
+        public VoiceAgentSubagentConfiguration SubagentConfig { get; set; }
+
+        /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>
+        public VoiceAgentPostCallConfiguration PostCall { get; set; }
 
         /// <summary>
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
