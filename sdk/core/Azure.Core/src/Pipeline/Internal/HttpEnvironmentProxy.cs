@@ -151,6 +151,12 @@ namespace Azure.Core.Pipeline
                 }
             }
 
+            int pathStart = value.IndexOfOrdinal('/');
+            if (pathStart != -1)
+            {
+                value = value.Substring(0, pathStart);
+            }
+
             int ipV6AddressEnd = value.IndexOfOrdinal(']');
             separatorIndex = value.LastIndexOf(':');
             string host;
