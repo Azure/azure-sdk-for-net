@@ -10,7 +10,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
@@ -40,9 +39,9 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 
         public virtual Task<Operation<BinaryData>> AnalyzeWithUsageAsync(WaitUntil waitUntil, string analyzerId, RequestContext context) => throw null;
 
-        public virtual AnalyzeWithUsageOperation AnalyzeWithUsage(WaitUntil waitUntil, string analyzerId, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<ContentAnalysisResult> AnalyzeWithUsage(WaitUntil waitUntil, string analyzerId, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<AnalyzeWithUsageOperation> AnalyzeWithUsageAsync(WaitUntil waitUntil, string analyzerId, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Operation<ContentAnalysisResult>> AnalyzeWithUsageAsync(WaitUntil waitUntil, string analyzerId, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetLanguageJobStatus(string jobId, RequestContext context) => throw null;
 
@@ -56,28 +55,16 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.Metadata
 
         public virtual Task<Operation<BinaryData>> AnalyzeJobAsync(WaitUntil waitUntil, RequestContext context) => throw null;
 
-        public virtual AnalyzeJobOperation AnalyzeJob(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<LanguageJobResult> AnalyzeJob(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<AnalyzeJobOperation> AnalyzeJobAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Operation<LanguageJobResult>> AnalyzeJobAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Operation<BinaryData> AnalyzeJobWithFailure(WaitUntil waitUntil, RequestContext context) => throw null;
 
         public virtual Task<Operation<BinaryData>> AnalyzeJobWithFailureAsync(WaitUntil waitUntil, RequestContext context) => throw null;
 
-        public virtual AnalyzeJobWithFailureOperation AnalyzeJobWithFailure(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<LanguageJobResult> AnalyzeJobWithFailure(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<AnalyzeJobWithFailureOperation> AnalyzeJobWithFailureAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
-
-        public static Operation<BinaryData> RehydrateAnalyzeWithUsageRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static AnalyzeWithUsageOperationMetadata GetAnalyzeWithUsageOperationMetadata(Operation operation) => throw null;
-
-        public static Operation<BinaryData> RehydrateAnalyzeJobRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static AnalyzeJobOperationMetadata GetAnalyzeJobOperationMetadata(Operation operation) => throw null;
-
-        public static Operation<BinaryData> RehydrateAnalyzeJobWithFailureRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static AnalyzeJobWithFailureOperationMetadata GetAnalyzeJobWithFailureOperationMetadata(Operation operation) => throw null;
+        public virtual Task<Operation<LanguageJobResult>> AnalyzeJobWithFailureAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -12,39 +12,16 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using ModelReaderWriter = System.ClientModel.Primitives.ModelReaderWriter;
-using ModelReaderWriterOptions = System.ClientModel.Primitives.ModelReaderWriterOptions;
 
 namespace Azure.Core
 {
     internal static class ProtocolOperationHelpers
     {
-        public static Response? GetMonitorResponse(Operation operation)
-            => operation is IStatusMonitorOperation monitor
-                ? monitor.GetStatusMonitorResponse()
-                : operation.GetRawResponse();
-
-        public static TOperation WrapWithMetadata<TOperation>(
-            Operation operation, Func<Operation, Func<Response?>, TOperation> createOperation)
-            where TOperation : Operation
-            => createOperation(operation, operation is IStatusMonitorOperation monitor
-                ? monitor.GetStatusMonitorResponse
-                : operation.GetRawResponse);
-
-        public static TOperation ConvertWithMetadata<TFrom, TTo, TOperation>(
-            Operation<TFrom> operation, Func<Response, TTo> convertFunc,
-            ClientDiagnostics diagnostics, string scopeName,
-            Func<Operation<TTo>, Func<Response?>, TOperation> createOperation)
-            where TFrom : notnull
-            where TTo : notnull
-            where TOperation : Operation
-            => createOperation(
-                Convert(operation, convertFunc, diagnostics, scopeName),
-                operation is IStatusMonitorOperation monitor
-                    ? monitor.GetStatusMonitorResponse
-                    : operation.GetRawResponse);
-
-        public static async ValueTask<TOperation> ProcessMessageWithMetadataAsync<T, TOperation>(
+        /// <summary>
+        /// Starts a long-running operation and wraps it with <paramref name="createOperation"/>, which receives a
+        /// function returning the latest successful status-monitor response.
+        /// </summary>
+        public static async ValueTask<TOperation> ProcessMessageWithMonitorAsync<T, TOperation>(
             HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics,
             string scopeName, OperationFinalStateVia finalStateVia, RequestContext? requestContext,
             WaitUntil waitUntil, Func<Response, T> resultSelector,
@@ -65,7 +42,8 @@ namespace Azure.Core
             return operation;
         }
 
-        public static TOperation ProcessMessageWithMetadata<T, TOperation>(
+        /// <inheritdoc cref="ProcessMessageWithMonitorAsync{T, TOperation}"/>
+        public static TOperation ProcessMessageWithMonitor<T, TOperation>(
             HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics,
             string scopeName, OperationFinalStateVia finalStateVia, RequestContext? requestContext,
             WaitUntil waitUntil, Func<Response, T> resultSelector,
@@ -86,26 +64,46 @@ namespace Azure.Core
             return operation;
         }
 
-        public static TOperation RehydrateWithMetadata<T, TOperation>(
-            HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options,
-            string scopeName, Func<Response, T> resultSelector,
-            Func<Operation<T>, Func<Response?>, TOperation> createOperation)
-            where T : notnull
-            where TOperation : Operation
-        {
-            Response? monitorResponse = null;
-            var innerOperation = new ProtocolOperation<T>(
-                new ClientDiagnostics(options ?? ClientOptions.Default), pipeline, rehydrationToken, scopeName,
-                resultSelector, received => monitorResponse = received);
-            return createOperation(innerOperation, () => monitorResponse);
-        }
-
-        // Monitor responses are immutable once received, so parse each one at most once and share the
-        // result across all metadata and operation ID getters instead of reparsing on every access.
+        // Monitor responses are immutable once received, so parse each one at most once instead of on every Id access.
         private static readonly ConditionalWeakTable<Response, ParsedMonitorResponse> s_parsedResponses = new();
         private static readonly ConcurrentDictionary<string, Regex> s_pollingPathPatterns = new();
 
-        public static JsonElement? GetStatusMetadata(Response? response, params string[] propertySegments)
+        /// <summary>
+        /// Gets the operation ID selected with <c>@lroOperationId</c>. A string monitor-body property takes precedence;
+        /// otherwise the path parameter is extracted from the polling URI when that URI came from the selected link.
+        /// Returns <c>NOT_SET</c> when neither is available.
+        /// </summary>
+        public static string GetOperationId(
+            Operation operation, Response? monitorResponse, string[]? propertySegments,
+            string? pollingLinkHeader, string? pollingPath, string? pathParameter, string? pathStyle)
+        {
+            if (propertySegments is not null &&
+                GetMonitorProperty(monitorResponse, propertySegments) is { ValueKind: JsonValueKind.String } property)
+            {
+                return property.GetString() ?? NextLinkOperationImplementation.NotSet;
+            }
+            if (pollingPath is null || pathParameter is null ||
+                GetPollingUri(operation, pollingLinkHeader) is not { } pollingUri)
+            {
+                return NextLinkOperationImplementation.NotSet;
+            }
+            var style = NormalizePathStyle(pathStyle);
+            var pattern = s_pollingPathPatterns.GetOrAdd($"{style}\n{pathParameter}\n{pollingPath}", _ => CreatePollingPathPattern(pollingPath, pathParameter, style));
+            var target = style == "fragment" ? pollingUri.AbsolutePath + pollingUri.Fragment : pollingUri.AbsolutePath;
+            var match = pattern.Match(target);
+            if (!match.Success || !match.Groups["operationId"].Success)
+            {
+                return NextLinkOperationImplementation.NotSet;
+            }
+            return ExpandedValue(match.Groups["operationId"].Value, pathParameter, style) is { } value
+                ? Uri.UnescapeDataString(value)
+                : NextLinkOperationImplementation.NotSet;
+        }
+
+        public static Uri? GetPollingUri(Operation operation, string? pollingLinkHeader)
+            => (operation as IPollingUriOperation)?.GetPollingUri(pollingLinkHeader);
+
+        private static JsonElement? GetMonitorProperty(Response? response, string[] propertySegments)
         {
             if (response is null || GetParsedResponse(response).Root is not { } root)
             {
@@ -122,27 +120,6 @@ namespace Azure.Core
             }
             return element.ValueKind is JsonValueKind.Null ? null : element;
         }
-
-        public static string GetOperationId(
-            RehydrationToken? rehydrationToken, Response? monitorResponse,
-            string? pollingPath, string? pathParameter, string[]? propertySegments, string? pathStyle = null)
-        {
-            return ComputeOperationId(rehydrationToken, monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
-        }
-
-        public static string GetOperationIdFromOperation(
-            Operation operation, Response? monitorResponse,
-            string? pollingPath, string? pathParameter, string[]? propertySegments, string? pathStyle = null)
-        {
-            if (GetPollingUri(operation) is { } pollingUri)
-            {
-                return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
-            }
-            return GetOperationId(operation.GetRehydrationToken(), monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
-        }
-
-        public static Uri? GetPollingUri(Operation operation)
-            => (operation as IPollingUriOperation)?.GetPollingUri();
 
         private static ParsedMonitorResponse GetParsedResponse(Response response)
             => s_parsedResponses.GetValue(response, static r => new ParsedMonitorResponse(Parse(r)));
@@ -163,50 +140,6 @@ namespace Azure.Core
             {
                 return null;
             }
-        }
-
-        private static string ComputeOperationId(
-            RehydrationToken? rehydrationToken, Response? monitorResponse,
-            string? pollingPath, string? pathParameter, string[]? propertySegments, string? pathStyle)
-        {
-            Uri? pollingUri = null;
-            if (rehydrationToken is not null && pollingPath is not null && pathParameter is not null)
-            {
-                var data = ModelReaderWriter.Write(rehydrationToken.Value, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
-                using var document = JsonDocument.Parse(data);
-                var nextUri = document.RootElement.GetProperty("nextRequestUri").GetString();
-                var initialUri = document.RootElement.GetProperty("initialUri").GetString();
-                pollingUri = new Uri(new Uri(initialUri!), nextUri);
-            }
-            return ComputeOperationId(pollingUri, monitorResponse, pollingPath, pathParameter, propertySegments, pathStyle);
-        }
-
-        private static string ComputeOperationId(
-            Uri? pollingUri, Response? monitorResponse, string? pollingPath, string? pathParameter, string[]? propertySegments,
-            string? pathStyle)
-        {
-            if (propertySegments is not null &&
-                GetStatusMetadata(monitorResponse, propertySegments) is { ValueKind: JsonValueKind.String } property)
-            {
-                return property.GetString() ?? NextLinkOperationImplementation.NotSet;
-            }
-            if (pollingUri is null || pollingPath is null || pathParameter is null)
-            {
-                return NextLinkOperationImplementation.NotSet;
-            }
-            string path = pollingPath;
-            string parameterName = pathParameter;
-            var style = NormalizePathStyle(pathStyle);
-            var pattern = s_pollingPathPatterns.GetOrAdd($"{style}\n{parameterName}\n{path}", _ => CreatePollingPathPattern(path, parameterName, style));
-            var target = style == "fragment" ? pollingUri.AbsolutePath + pollingUri.Fragment : pollingUri.AbsolutePath;
-            var match = pattern.Match(target);
-            if (!match.Success || !match.Groups["operationId"].Success)
-            {
-                return NextLinkOperationImplementation.NotSet;
-            }
-            return ExpandedValue(match.Groups["operationId"].Value, parameterName, style) is { } value
-                ? Uri.UnescapeDataString(value)
-                : NextLinkOperationImplementation.NotSet;
         }
 
         // PollingPath normalizes RFC 6570 operators away (for example `{.id}` and `{;id}` both become `{id}`),
@@ -265,7 +198,9 @@ namespace Azure.Core
                 var capture = parameter.Groups[2].Value == pathParameter;
                 var allowReserved = parameter.Groups[1].Success && parameter.Groups[1].Length > 0;
                 pattern.Append(capture ? "(?<operationId>" : "(?:");
-                pattern.Append(capture ? StyleCapturePattern(style, allowReserved) : allowReserved ? ".+?" : "[^/]+");
+                // Only the ID parameter's expansion style is known, so any other placeholder may carry a
+                // path-style ("/value"), label (".value"), matrix (";name=value") or simple expansion.
+                pattern.Append(capture ? StyleCapturePattern(style, allowReserved) : allowReserved ? ".+?" : "/?[^/]*");
                 pattern.Append(')');
                 position = parameter.Index + parameter.Length;
             }
@@ -319,7 +254,7 @@ namespace Azure.Core
             return operation;
         }
 
-        private class ConvertOperation<TFrom, TTo> : Operation<TTo>, IPollingUriOperation
+        private class ConvertOperation<TFrom, TTo> : Operation<TTo>, IStatusMonitorOperation, IPollingUriOperation
             where TFrom : notnull
             where TTo : notnull
         {
@@ -346,7 +281,9 @@ namespace Azure.Core
             public override bool HasCompleted => _operation.HasCompleted;
             public override RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
             public override Response GetRawResponse() => _operation.GetRawResponse();
-            Uri? IPollingUriOperation.GetPollingUri() => (_operation as IPollingUriOperation)?.GetPollingUri();
+            Response? IStatusMonitorOperation.GetStatusMonitorResponse()
+                => _operation is IStatusMonitorOperation monitor ? monitor.GetStatusMonitorResponse() : _operation.GetRawResponse();
+            Uri? IPollingUriOperation.GetPollingUri(string? pollingLinkHeader) => (_operation as IPollingUriOperation)?.GetPollingUri(pollingLinkHeader);
 
             public override Response UpdateStatus(CancellationToken cancellationToken = default)
             {
@@ -489,13 +426,16 @@ namespace Azure.Core
         }
     }
 
+    /// <summary>Exposes the latest successful status-monitor response of a long-running operation.</summary>
     internal interface IStatusMonitorOperation
     {
         Response? GetStatusMonitorResponse();
     }
 
+    /// <summary>Exposes the URI a long-running operation polls.</summary>
     internal interface IPollingUriOperation
     {
-        Uri? GetPollingUri();
+        /// <summary>Gets the polling URI when it was obtained from <paramref name="pollingLinkHeader"/>, or from the initial request when null.</summary>
+        Uri? GetPollingUri(string? pollingLinkHeader);
     }
 }

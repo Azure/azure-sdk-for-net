@@ -41,26 +41,22 @@ namespace Azure.Core.Tests
 
         [TestCase(true)]
         [TestCase(false)]
-        public async Task ObservesMonitorAfterRehydration(bool async)
+        public async Task DeleteNotFoundDoesNotReplaceMonitorResponse(bool async)
         {
-            const string pollingUri = "https://test/operations/job-123?api-version=1&opaque=retained";
-            var response = new MockResponse(200);
-            response.SetContent("""{"status":"Running","progress":25}""");
-            var transport = new MockTransport(response);
-            var pipeline = new HttpPipeline(transport, default);
-            var token = new RehydrationToken(
-                "job-123", null, "OperationLocation", pollingUri, "https://test/resource",
-                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
-            Response observed = null;
+            var notFound = new MockResponse(404);
+            var pipeline = new HttpPipeline(new MockTransport(notFound), default);
+            var initialResponse = new MockResponse(202);
+            initialResponse.AddHeader("Location", "https://test/resource");
+            var observed = new List<Response>();
             var operation = NextLinkOperationImplementation.Create(
-                pipeline, token, statusMonitorResponseReceived: value => observed = value);
+                pipeline, RequestMethod.Delete, new Uri("https://test/resource"), initialResponse,
+                OperationFinalStateVia.Location, statusMonitorResponseReceived: observed.Add);
 
-            Assert.IsNull(observed);
             var state = await operation.UpdateStateAsync(async, default);
 
-            Assert.AreSame(response, observed);
-            Assert.IsFalse(state.HasCompleted);
-            Assert.AreEqual(pollingUri, transport.Requests[0].Uri.ToUri().AbsoluteUri);
+            Assert.IsTrue(state.HasSucceeded);
+            Assert.AreEqual(204, state.RawResponse.Status);
+            Assert.IsEmpty(observed);
         }
 
         [Test]

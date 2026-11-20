@@ -40,7 +40,11 @@ namespace Azure.Core
         public string OperationId { get; private set; } = NotSet;
         public RequestMethod RequestMethod { get; }
 
-        internal static Uri? GetPollingUri(IOperation operation)
+        /// <summary>
+        /// Gets the URI the operation polls, or null when it was not obtained from <paramref name="pollingLinkHeader"/>.
+        /// A null header name selects the initial request URI, as used by operations that poll their own resource.
+        /// </summary>
+        internal static Uri? GetPollingUri(IOperation operation, string? pollingLinkHeader)
         {
             var nextLink = operation switch
             {
@@ -48,7 +52,17 @@ namespace Azure.Core
                 CompletedOperation completed => completed._operation,
                 _ => null
             };
-            return nextLink is null ? null : new Uri(nextLink._startRequestUri, nextLink._nextRequestUri);
+            var expectedSource = pollingLinkHeader?.ToLowerInvariant() switch
+            {
+                null => HeaderSource.None,
+                "operation-location" => HeaderSource.OperationLocation,
+                "azure-asyncoperation" => HeaderSource.AzureAsyncOperation,
+                "location" => HeaderSource.Location,
+                _ => (HeaderSource?)null
+            };
+            return nextLink is null || nextLink._headerSource != expectedSource
+                ? null
+                : new Uri(nextLink._startRequestUri, nextLink._nextRequestUri);
         }
 
         public static IOperation Create(
@@ -109,8 +123,7 @@ namespace Azure.Core
 
         public static IOperation Create(
             HttpPipeline pipeline,
-            RehydrationToken rehydrationToken,
-            Action<Response>? statusMonitorResponseReceived = null)
+            RehydrationToken rehydrationToken)
         {
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             AssertNotNull(pipeline, nameof(pipeline));
@@ -156,7 +169,7 @@ namespace Azure.Core
                 headerSource = HeaderSource.None;
             }
 
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id, statusMonitorResponseReceived: statusMonitorResponseReceived);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
         }
 
         private NextLinkOperationImplementation(
@@ -259,7 +272,8 @@ namespace Azure.Core
                 ? await GetResponseAsync(_nextRequestUri, cancellationToken).ConfigureAwait(false)
                 : GetResponse(_nextRequestUri, cancellationToken);
 
-            if (response.Status is >= 200 and < 300)
+            // A DELETE poll's 404 is surfaced as an empty 204; it is not a status-monitor response.
+            if (response.Status is >= 200 and < 300 && response is not EmptyResponse)
             {
                 _statusMonitorResponseReceived?.Invoke(response);
             }

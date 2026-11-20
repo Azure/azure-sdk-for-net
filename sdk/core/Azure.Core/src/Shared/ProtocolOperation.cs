@@ -23,16 +23,6 @@ namespace Azure.Core
             _operation = new OperationInternal<T>(this, clientDiagnostics, response, scopeName);
         }
 
-        internal ProtocolOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, RehydrationToken rehydrationToken, string scopeName, Func<Response, T> resultSelector, Action<Response> statusMonitorResponseReceived)
-        {
-            _resultSelector = resultSelector;
-            _nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, rehydrationToken, statusMonitorResponseReceived);
-            var state = ((IOperation<T>)this).UpdateStateAsync(async: false, default).EnsureCompleted();
-            _operation = state.HasCompleted
-                ? new OperationInternal<T>(state)
-                : new OperationInternal<T>(this, clientDiagnostics, state.RawResponse, scopeName);
-        }
-
 #pragma warning disable CA1822
         // This scenario is currently unsupported.
         // See: https://github.com/Azure/autorest.csharp/issues/2158.
@@ -57,7 +47,7 @@ namespace Azure.Core
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.RawResponse;
 
-        Uri? IPollingUriOperation.GetPollingUri() => NextLinkOperationImplementation.GetPollingUri(_nextLinkOperation);
+        Uri? IPollingUriOperation.GetPollingUri(string? pollingLinkHeader) => NextLinkOperationImplementation.GetPollingUri(_nextLinkOperation, pollingLinkHeader);
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

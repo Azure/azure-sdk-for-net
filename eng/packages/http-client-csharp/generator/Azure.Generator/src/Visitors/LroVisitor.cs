@@ -33,12 +33,11 @@ namespace Azure.Generator.Visitors
             ClientProvider client,
             ScmMethodProviderCollection? methods)
         {
-            if (serviceMethod is InputLongRunningPagingServiceMethod paging &&
-                (paging.LongRunningServiceMetadata.StatusMetadata.Count > 0 || paging.LongRunningServiceMetadata.OperationId.Count > 0))
+            if (serviceMethod is InputLongRunningPagingServiceMethod paging && paging.LongRunningServiceMetadata.OperationId.Count > 0)
             {
                 AzureClientGenerator.Instance.Emitter.ReportDiagnostic(
                     "AZLRO001",
-                    $"Selected LRO status metadata and operation IDs are not supported for paged operation '{paging.Name}'.",
+                    $"Selected LRO operation IDs are not supported for paged operation '{paging.Name}'.",
                     paging.CrossLanguageDefinitionId);
             }
             if (serviceMethod is InputLongRunningServiceMethod { Response.Type: InputModelType responseModel } lroServiceMethod)
@@ -174,12 +173,6 @@ namespace Azure.Generator.Visitors
                 (not null, ScmMethodKind.Protocol) => new CSharpType(typeof(Operation<>), typeof(BinaryData)),
                 _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType)!),
             };
-            if (method.Kind != ScmMethodKind.Protocol &&
-                method.ServiceMethod is InputLongRunningServiceMethod { LongRunningServiceMetadata.StatusMetadata.Count: > 0 } &&
-                GetLroOperation(method) is { } operation)
-            {
-                returnType = operation.Type;
-            }
             var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
 
             // Update the method signature
@@ -242,11 +235,7 @@ namespace Azure.Generator.Visitors
                     else
                     {
                         // Return the result of the protocol method directly for convenience methods having no response body
-                        var result = GetLroOperation(scmMethod);
-                        return result is null
-                            ? new KeywordExpression("return", assignmentExpression.Value).Terminate()
-                            : Return(Static(typeof(ProtocolOperationHelpers)).Invoke("WrapWithMetadata",
-                                [assignmentExpression.Value, result.CreateFactory(untyped: true)], [result.Type], false));
+                        return new KeywordExpression("return", assignmentExpression.Value).Terminate();
                     }
 
                     break;
@@ -254,10 +243,6 @@ namespace Azure.Generator.Visitors
                 // Remove the extra return statement for convenience methods having no response body
                 case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } } when serviceMethod.Response.Type == null:
                     return null;
-                case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression protocolCallExpression }
-                    when serviceMethod.Response.Type == null && GetLroOperation(scmMethod) is { } operation:
-                    return Return(Static(typeof(ProtocolOperationHelpers)).Invoke("WrapWithMetadata",
-                        [protocolCallExpression, operation.CreateFactory(untyped: true)], [operation.Type], false));
                 case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } invokeMethodExpression }:
                 {
                     // The generated FromValue convenience method body is
@@ -283,7 +268,6 @@ namespace Azure.Generator.Visitors
                             diagnosticsProperty,
                             Literal(scopeName),
                         ]);
-                    UpdateMetadataConversion(invokeMethodExpression, scmMethod);
                     break;
                 }
                 // Wrap typed LRO convenience methods that directly forward to the protocol method.
@@ -293,15 +277,14 @@ namespace Azure.Generator.Visitors
                     var (conversionExpression, response, diagnosticsProperty, scopeName) =
                         BuildConvertCallComponents(serviceMethod, scmMethod);
 
-                    var conversion = Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
+                    return new KeywordExpression("return",
+                        Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
                         [
                             protocolCallExpression,
                             new FuncExpression([response.Declaration], conversionExpression),
                             diagnosticsProperty,
                             Literal(scopeName),
-                        ]);
-                    UpdateMetadataConversion(conversion, scmMethod);
-                    return Return(conversion);
+                        ])).Terminate();
                 }
             }
 
@@ -309,7 +292,7 @@ namespace Azure.Generator.Visitors
         }
 
         /// <summary>
-        /// Builds the components for a <c>ProtocolOperationHelpers.Convert</c> call.
+        /// Builds the components for a <see cref="ProtocolOperationHelpers.Convert"/> call.
         /// </summary>
         private static (ValueExpression ConversionExpression, VariableExpression Response, PropertyProvider DiagnosticsProperty, string ScopeName)
             BuildConvertCallComponents(InputServiceMethod serviceMethod, ScmMethodProvider scmMethod)
@@ -329,20 +312,6 @@ namespace Azure.Generator.Visitors
                 : new CastExpression(response, responseType);
 
             return (conversionExpression, response, diagnosticsProperty, scopeName);
-        }
-
-        private static LroOperationProvider? GetLroOperation(ScmMethodProvider method, bool? protocol = null) =>
-            ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(
-                method.ServiceMethod!, (ClientProvider)method.EnclosingType, protocol ?? method.Kind == ScmMethodKind.Protocol);
-
-        private static void UpdateMetadataConversion(InvokeMethodExpression conversion, ScmMethodProvider method)
-        {
-            if (GetLroOperation(method) is { } operation)
-            {
-                conversion.Update(methodName: "ConvertWithMetadata",
-                    arguments: [.. conversion.Arguments, operation.CreateFactory()],
-                    typeArguments: [typeof(BinaryData), operation.ResultType!, operation.Type]);
-            }
         }
 
         protected override InvokeMethodExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
@@ -384,15 +353,19 @@ namespace Azure.Generator.Visitors
                         expression.Arguments[1],
                         scmMethod.Signature.Parameters[0]
                     ]);
-                if (GetLroOperation(scmMethod) is { } operation)
+                var operation = ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(serviceMethod, client);
+                if (operation is not null)
                 {
+                    // Wrap the protocol operation so that Operation.Id returns the selected @lroOperationId value.
                     var response = new VariableExpression(typeof(Response), "response");
                     expression.Update(
-                        methodName: expression.CallAsAsync ? "ProcessMessageWithMetadataAsync" : "ProcessMessageWithMetadata",
+                        methodName: expression.CallAsAsync ? "ProcessMessageWithMonitorAsync" : "ProcessMessageWithMonitor",
                         arguments:
                         [
                             .. expression.Arguments,
-                            new FuncExpression([response.Declaration], operation.CreateResultSelector(response)),
+                            new FuncExpression([response.Declaration], operation.ResultType is null
+                                ? New.Instance(typeof(VoidValue))
+                                : response.Property(nameof(Response.Content))),
                             operation.CreateFactory()
                         ],
                         typeArguments: [operation.ResultType ?? typeof(VoidValue), operation.Type]);

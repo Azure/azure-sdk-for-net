@@ -10,7 +10,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.Lro.OperationId
@@ -75,17 +74,5 @@ namespace Specs.Azure.ClientGenerator.Core.Lro.OperationId
         public virtual Operation<TranslationResult> StartTranslationWithPath(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Operation<TranslationResult>> StartTranslationWithPathAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw null;
-
-        public static Operation<DocumentAnalysisResult> RehydrateAnalyzeOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static Operation<BinaryData> RehydrateAnalyzeRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static Operation<TranslationResult> RehydrateStartTranslationOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static Operation<BinaryData> RehydrateStartTranslationRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static Operation<TranslationResult> RehydrateStartTranslationWithPathOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
-
-        public static Operation<BinaryData> RehydrateStartTranslationWithPathRawOperation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) => throw null;
     }
 }

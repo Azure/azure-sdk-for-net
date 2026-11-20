@@ -30,229 +30,66 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class LroVisitorTests
     {
-        [TestCase("public", true)]
-        [TestCase("public", false)]
-        [TestCase("internal", true)]
-        [TestCase("internal", false)]
-        public void SelectedMetadataChangesOnlyAnnotatedOperationAndUsesWireSegments(string access, bool hasEnclosingModel)
-        {
-            var progress = InputFactory.Property("progress", InputPrimitiveType.Int32, isRequired: true,
-                wireName: "percent_done", serializedName: "progress", access: access);
-            var details = InputFactory.Property("details", InputFactory.Model("Details", properties: hasEnclosingModel ? [progress] : []), wireName: "wire_details");
-            Assert.AreEqual(hasEnclosingModel, progress.EnclosingType is not null);
-            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                [new InputLroStatusMetadata(progress, [details, progress])], []);
-            var selected = InputFactory.LongRunningServiceMethod("selected", InputFactory.Operation("selected"), access: access, longRunningServiceMetadata: metadata);
-            var ordinary = InputFactory.LongRunningServiceMethod("ordinary", InputFactory.Operation("ordinary"));
-            var inputClient = InputFactory.Client("TestClient", methods: [selected, ordinary]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
-            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
-            var visitor = new TestLroVisitor();
-            foreach (var method in client.Methods.OfType<ScmMethodProvider>())
-            {
-                visitor.InvokeVisitMethod(method);
-                var returnType = method.Signature.ReturnType!;
-                if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
-                {
-                    returnType = returnType.Arguments[0];
-                }
-                Assert.AreEqual(method.ServiceMethod == selected && method.Kind != ScmMethodKind.Protocol
-                    ? "SelectedOperation" : "Operation", returnType.Name);
-            }
-            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
-            var operation = output.GetLroOperation(selected, client, protocol: false)!;
-            Assert.AreEqual("SelectedOperationMetadata", operation.Properties.Single(p => p.Name == "Metadata").Type.Name);
-            var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
-            Assert.AreEqual(access == "public", operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
-            Assert.AreEqual(access == "public", metadataType.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
-            foreach (var name in new[] { "WaitForCompletionResponse", "WaitForCompletionResponseAsync" })
-            {
-                var waits = operation.Methods.Where(m => m.Signature.Name == name).ToArray();
-                Assert.AreEqual(3, waits.Length);
-                foreach (var wait in waits)
-                {
-                    StringAssert.Contains($"_operation.{name}(", wait.BodyExpression!.ToDisplayString());
-                }
-            }
-            var property = metadataType.Properties.Single();
-            Assert.AreEqual(access == "public", property.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.AreEqual(access == "internal", property.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
-            Assert.IsTrue(property.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
-            Assert.IsFalse(property.Body.HasSetter);
-            Assert.AreEqual(new CSharpType(typeof(int), isNullable: true), property.Type);
-            var body = ((MethodPropertyBody)property.Body).Getter!.ToDisplayString();
-            StringAssert.Contains("\"wire_details\", \"percent_done\"", body);
-            Assert.IsNull(output.GetLroOperation(ordinary, client, protocol: false));
-        }
-
-        [TestCase(false)]
-        [TestCase(true)]
-        public void SelectedMetadataPreservesOwnerlessPropertyEncoding(bool isReadOnly)
-        {
-            MockHelpers.LoadMockGenerator();
-            var input = InputFactory.Property("StartTime",
-                new InputDateTimeType(DateTimeKnownEncoding.Rfc7231, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String),
-                isReadOnly: isReadOnly, wireName: "started_at");
-            var metadata = new LroStatusMetadataProvider("StartOperationMetadata", "Samples",
-                [new InputLroStatusMetadata(input, [input])], TypeSignatureModifiers.Public);
-
-            var property = metadata.Properties.Single();
-            Assert.IsNull(input.EnclosingType);
-            Assert.AreEqual("StartsOn", property.Name);
-            Assert.AreEqual(new CSharpType(typeof(DateTimeOffset), isNullable: true), property.Type);
-            Assert.AreEqual(SerializationFormat.DateTime_RFC7231, property.SerializationFormat);
-            Assert.AreEqual("started_at", property.WireInfo?.SerializedName);
-            Assert.IsFalse(property.Body.HasSetter);
-        }
-
-        [Test]
-        public void SelectedMetadataPreservesPropertyLevelArrayEncoding()
-        {
-            MockHelpers.LoadMockGenerator();
-            var input = InputFactory.Property("items", InputFactory.Array(InputPrimitiveType.String), encode: ArrayKnownEncoding.PipeDelimited);
-            var metadata = new LroStatusMetadataProvider("StartOperationMetadata", "Samples",
-                [new InputLroStatusMetadata(input, [input])], TypeSignatureModifiers.Public);
-
-            var property = metadata.Properties.Single();
-            Assert.IsNull(input.EnclosingType);
-            Assert.AreEqual(SerializationFormat.Array_PipeDelimited, property.SerializationFormat);
-            Assert.IsFalse(property.Body.HasSetter);
-        }
-
-        [TestCase("internal", true, 0)]
-        [TestCase("internal", false, 0)]
-        [TestCase("internal", false, 1)]
-        [TestCase("internal", false, 2)]
-        [TestCase("public", true, 0)]
-        [TestCase("public", false, 0)]
-        public void SelectedMetadataDoesNotExposeNonPublicTypes(string access, bool isEnum, int collectionDepth)
-        {
-            MockHelpers.LoadMockGenerator();
-            InputType type = isEnum
-                ? InputFactory.StringEnum("MonitorMode", [("Ready", "ready")], access: access, isExtensible: true)
-                : InputFactory.Model("Details", access: access);
-            for (int i = 0; i < collectionDepth; i++)
-            {
-                type = InputFactory.Array(type);
-            }
-            var input = InputFactory.Property("details", type);
-            var metadata = new LroStatusMetadataProvider("StartOperationMetadata", "Samples",
-                [new InputLroStatusMetadata(input, [input])], TypeSignatureModifiers.Public);
-
-            var property = metadata.Properties.Single();
-            Assert.AreEqual((access == "internal" ? MethodSignatureModifiers.Internal : MethodSignatureModifiers.Public) |
-                MethodSignatureModifiers.Virtual, property.Modifiers);
-            Assert.IsFalse(property.Body.HasSetter);
-        }
-
         [TestCase(true)]
         [TestCase(false)]
-        public void SelectedMetadataReadsCachedPollingResponseModel(bool hasPollingModel)
+        public void OperationIdPreservesSignaturesAndWrapsProtocolOperation(bool hasResult)
         {
-            var progress = InputFactory.Property("progress", InputPrimitiveType.Int32, isRequired: true,
-                wireName: "percent_done", serializedName: "progress");
-            var detailsModel = InputFactory.Model("Details", properties: [progress]);
-            var details = InputFactory.Property("details", detailsModel, wireName: "wire_details");
-            var monitor = InputFactory.Model("JobStatus", properties: [details]);
-            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                [new InputLroStatusMetadata(progress, [details, progress])], [], hasPollingModel ? monitor : null);
-            var selected = InputFactory.LongRunningServiceMethod("selected", InputFactory.Operation("selected"), longRunningServiceMetadata: metadata);
-            var inputClient = InputFactory.Client("TestClient", methods: [selected]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient], inputModels: () => [monitor, detailsModel]);
-            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
-            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
-            output.GetLroOperation(selected, client, protocol: false);
-            var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
-            var property = metadataType.Properties.Single();
-
-            if (!hasPollingModel)
-            {
-                Assert.IsEmpty(metadataType.Methods);
-                StringAssert.Contains("\"wire_details\", \"percent_done\"",
-                    ((MethodPropertyBody)property.Body).Getter!.ToDisplayString());
-                return;
-            }
-
-            var propertyBody = ((MethodPropertyBody)property.Body).Getter!.ToDisplayString();
-            StringAssert.Contains("GetStatusMetadata", propertyBody);
-            StringAssert.Contains("return this.GetMonitorModel(response)?.Details?.Progress;", propertyBody);
-            Assert.AreEqual(1, propertyBody.Split("_getResponse.Invoke()", StringSplitOptions.None).Length - 1);
-            StringAssert.Contains("GetStatusMetadata(response,", propertyBody);
-            var cache = metadataType.Fields.Single(f => f.Name == "_monitorCache");
-            Assert.AreEqual("JobStatus", cache.Type.Arguments[1].Name);
-            var body = metadataType.Methods.Single(m => m.Signature.Name == "GetMonitorModel").BodyStatements!.ToDisplayString();
-            StringAssert.Contains("object.ReferenceEquals(cache.Item1, response)", body);
-            StringAssert.Contains("ModelReaderWriter.Read<global::Samples.Models.JobStatus>(response.Content", body);
-            StringAssert.Contains("catch (global::System.Text.Json.JsonException)", body);
-            StringAssert.Contains("catch (global::System.InvalidOperationException)", body);
-            StringAssert.Contains("_monitorCache = new global::System.Tuple<global::Azure.Response, global::Samples.Models.JobStatus>(response, model);", body);
-        }
-
-        [Test]
-        public void ModelValuedMetadataWithoutPollingResponseModel()
-        {
-            var value = InputFactory.Model("Details", properties: [InputFactory.Property("progress", InputPrimitiveType.Int32)]);
-            var details = InputFactory.Property("details", value, isReadOnly: true);
-            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                [new InputLroStatusMetadata(details, [details])], []);
-            var selected = InputFactory.LongRunningServiceMethod("selected", InputFactory.Operation("selected"), longRunningServiceMetadata: metadata);
-            var inputClient = InputFactory.Client("TestClient", methods: [selected]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient], inputModels: () => [value]);
-            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
-            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
-            output.GetLroOperation(selected, client, protocol: false);
-            Assert.NotNull(AzureClientGenerator.Instance.TypeFactory.CreateModel(value));
-            Assert.NotNull(AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(value));
-            var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
-            var body = ((MethodPropertyBody)metadataType.Properties.Single().Body).Getter!.ToDisplayString();
-            Assert.IsEmpty(metadataType.Methods);
-            StringAssert.Contains("\"details\"", body);
-            StringAssert.Contains("Details.DeserializeDetails(element.Value", body);
-            Assert.IsTrue(output.TypeProviders.OfType<ModelProvider>().Any(model => model.Name == "Details"));
-        }
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void OperationIdOnlyPreservesMethodReturnTypes(bool hasResult)
-        {
-            var id = InputFactory.Property("id", InputPrimitiveType.String);
+            var id = InputFactory.Property("id", InputPrimitiveType.String, wireName: "jobId");
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
                 [], [new InputLroOperationIdPropertyMetadata(id, [id])]);
             var response = hasResult ? InputFactory.Model("Result") : null;
             var lro = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"),
                 response: InputFactory.ServiceMethodResponse(response, null), longRunningServiceMetadata: metadata);
-            var inputClient = InputFactory.Client("TestClient", methods: [lro]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
-            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
-            var visitor = new TestLroVisitor();
-            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
+            var ordinary = InputFactory.LongRunningServiceMethod("ordinary", InputFactory.Operation("ordinary"));
+            var inputClient = InputFactory.Client("TestClient", methods: [lro, ordinary]);
+            var generator = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var output = (AzureOutputLibrary)generator.Object.OutputLibrary;
+            new TestLroVisitor().InvokeVisitLibrary(output);
+            var client = output.TypeProviders.OfType<ClientProvider>().Single();
             foreach (var method in client.Methods.OfType<ScmMethodProvider>())
             {
-                visitor.InvokeVisitMethod(method);
                 var returnType = method.Signature.ReturnType!;
                 if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     returnType = returnType.Arguments[0];
                 }
                 Assert.AreEqual("Operation", returnType.Name);
-                if (hasResult)
+                if (hasResult && method.ServiceMethod == lro)
                 {
                     Assert.AreEqual(method.Kind == ScmMethodKind.Protocol ? "BinaryData" : "Result", returnType.Arguments[0].Name);
                 }
-                Assert.IsFalse(output.GetLroOperation(lro, client, method.Kind == ScmMethodKind.Protocol)!
-                    .DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+                if (method.Kind == ScmMethodKind.Protocol)
+                {
+                    var body = method.BodyStatements!.ToDisplayString();
+                    Assert.AreEqual(method.ServiceMethod == lro, body.Contains("ProcessMessageWithMonitor"));
+                    Assert.AreEqual(method.ServiceMethod == lro, body.Contains("new global::Samples.StartOperation(operation, monitor)"));
+                }
             }
-            _ = output.TypeProviders;
-            _ = output.TypeProviders;
-            var rehydrationMethods = client.Methods.Where(m => m.Signature.Name.StartsWith("Rehydrate", StringComparison.Ordinal)).ToArray();
-            Assert.AreEqual(hasResult ? 2 : 1, rehydrationMethods.Length);
-            Assert.AreEqual("Operation", rehydrationMethods[0].Signature.ReturnType!.Name);
-            if (hasResult)
+            Assert.IsFalse(client.Methods.Any(m => m.Signature.Name.StartsWith("Rehydrate", StringComparison.Ordinal)));
+            Assert.IsNull(output.GetLroOperation(ordinary, client));
+
+            var operation = output.TypeProviders.OfType<LroOperationProvider>().Single();
+            Assert.AreEqual("StartOperation", operation.Name);
+            Assert.IsFalse(operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            Assert.IsTrue(operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Internal));
+            Assert.AreEqual(hasResult ? new CSharpType(typeof(Operation<>), typeof(BinaryData)) : new CSharpType(typeof(Operation)), operation.BaseType);
+            CollectionAssert.AreEquivalent(new CSharpType[] { typeof(IStatusMonitorOperation), typeof(IPollingUriOperation) }, operation.Implements);
+            Assert.IsTrue(operation.Properties.All(p => !p.Name.Contains("Metadata")));
+            var idBody = ((ExpressionPropertyBody)operation.Properties.Single(p => p.Name == "Id").Body).Getter.ToDisplayString();
+            StringAssert.Contains("GetOperationId(_operation, _getStatusMonitorResponse.Invoke(), new string[] { \"jobId\" }, null, null, null, null)", idBody);
+            var waits = hasResult
+                ? new[] { "WaitForCompletionResponse", "WaitForCompletionResponseAsync", "WaitForCompletion", "WaitForCompletionAsync" }
+                : new[] { "WaitForCompletionResponse", "WaitForCompletionResponseAsync" };
+            Assert.AreEqual(waits.Length * 3, operation.Methods.Count(m => m.Signature.Name.StartsWith("WaitForCompletion", StringComparison.Ordinal)));
+            foreach (var name in waits)
             {
-                Assert.AreEqual("Result", rehydrationMethods[0].Signature.ReturnType!.Arguments[0].Name);
+                var overloads = operation.Methods.Where(m => m.Signature.Name == name).ToArray();
+                Assert.AreEqual(3, overloads.Length);
+                foreach (var wait in overloads)
+                {
+                    StringAssert.Contains($"_operation.{name}(", wait.BodyExpression!.ToDisplayString());
+                }
             }
-            Assert.IsTrue(rehydrationMethods.All(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static)));
-            Assert.IsTrue(rehydrationMethods.All(m => m.BodyExpression!.ToDisplayString().Contains("FromRehydrationToken")));
         }
 
         [TestCase(InputPathParameterStyle.Unknown)]
@@ -261,68 +98,66 @@ namespace Azure.Generator.Tests.Visitors
         [TestCase(InputPathParameterStyle.Matrix)]
         [TestCase(InputPathParameterStyle.Path)]
         [TestCase(InputPathParameterStyle.Fragment)]
-        public void OperationIdPathPassesParameterStyle(InputPathParameterStyle style)
+        public void OperationIdPathPassesPollingLinkHeaderAndParameterStyle(InputPathParameterStyle style)
         {
             var parameter = InputFactory.PathParameter("id", InputPrimitiveType.String, serializedName: "wireId");
             typeof(InputPathParameter).GetProperty(nameof(InputPathParameter.Style))!.SetValue(parameter, style);
-            var location = new InputOperationLink(InputOperationLinkLocation.ResponseHeader, InputFactory.Property("operationLocation", InputPrimitiveType.String));
+            var location = new InputOperationLink(InputOperationLinkLocation.ResponseHeader,
+                InputFactory.Property("operationLocation", InputPrimitiveType.String, serializedName: "operation-location"));
+            var operation = CreateOperationWithPollingLink(location, parameter, out var diagnostics);
+            var id = (ExpressionPropertyBody)operation.Properties.Single(p => p.Name == "Id").Body;
+            StringAssert.Contains($"null, \"Operation-Location\", \"/jobs{{wireId}}/status\", \"wireId\", \"{style}\"", id.Getter.ToDisplayString());
+            Assert.IsEmpty(diagnostics());
+        }
+
+        [TestCase(InputOperationLinkLocation.Self, null)]
+        [TestCase(InputOperationLinkLocation.ResponseBody, "unsupported")]
+        [TestCase(InputOperationLinkLocation.ResponseHeader, "unsupported")]
+        [TestCase(InputOperationLinkLocation.Unknown, "unsupported")]
+        public void OperationIdPathOnlyUsesPolledLink(InputOperationLinkLocation linkLocation, string? diagnostic)
+        {
+            var parameter = InputFactory.PathParameter("id", InputPrimitiveType.String);
+            var location = new InputOperationLink(linkLocation,
+                InputFactory.Property("next", InputPrimitiveType.String, serializedName: "custom-link"));
+            var operation = CreateOperationWithPollingLink(location, parameter, out var diagnostics);
+            var id = ((ExpressionPropertyBody)operation.Properties.Single(p => p.Name == "Id").Body).Getter.ToDisplayString();
+            if (diagnostic is null)
+            {
+                StringAssert.Contains("null, null, \"/jobs{id}/status\", \"id\"", id);
+                Assert.IsEmpty(diagnostics());
+            }
+            else
+            {
+                StringAssert.Contains("null, null, null, null, null)", id);
+                StringAssert.Contains("unsupported-lro-operation-id-source", diagnostics());
+                StringAssert.Contains("Start", diagnostics());
+            }
+        }
+
+        private static LroOperationProvider CreateOperationWithPollingLink(InputOperationLink location, InputPathParameter parameter, out Func<string> diagnostics)
+        {
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null, [],
-                [new InputLroOperationIdPathMetadata(location, parameter, "/jobs{wireId}/status")]);
+                [new InputLroOperationIdPathMetadata(location, parameter, $"/jobs{{{parameter.SerializedName}}}/status")]);
             var method = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
             var inputClient = InputFactory.Client("TestClient", methods: [method]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var generator = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var stream = new MemoryStream();
+            var emitter = (Emitter)Activator.CreateInstance(typeof(Emitter),
+                BindingFlags.Instance | BindingFlags.NonPublic, null, [stream], null)!;
+            generator.SetupGet(g => g.Emitter).Returns(emitter);
+            diagnostics = () => Encoding.UTF8.GetString(stream.ToArray());
             var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
-            var operation = ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(method, client, protocol: false)!;
-            var id = (ExpressionPropertyBody)operation.Properties.Single(p => p.Name == "Id").Body;
-            StringAssert.Contains($"\"/jobs{{wireId}}/status\", \"wireId\", null, \"{style}\"", id.Getter.ToDisplayString());
+            var operation = ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(method, client)!;
+            _ = operation.Properties;
+            return operation;
         }
 
         [Test]
-        public void RehydrationMethodAvoidsExistingClientMethod()
+        public void OperationNamesAvoidExistingTypesAndOtherOperations()
         {
             var id = InputFactory.Property("id", InputPrimitiveType.String);
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
                 [], [new InputLroOperationIdPropertyMetadata(id, [id])]);
-            var lro = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
-            var existing = InputFactory.BasicServiceMethod("rehydrateStartOperation", InputFactory.Operation("rehydrateStartOperation"));
-            var inputClient = InputFactory.Client("TestClient", methods: [lro, existing]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
-            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
-            var client = output.TypeProviders.OfType<ClientProvider>().Single();
-            Assert.AreEqual(1, client.Methods.Count(m => m.Signature.Name == "RehydrateStartOperation2"));
-        }
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void VoidLroMetadataWrapsProtocolResult(bool hasStatusMetadata)
-        {
-            var property = InputFactory.Property("id", InputPrimitiveType.String);
-            var monitor = InputFactory.Model("Monitor", properties: [property]);
-            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                hasStatusMetadata ? [new InputLroStatusMetadata(property, [property])] : [],
-                hasStatusMetadata ? [] : [new InputLroOperationIdPropertyMetadata(property, [property])]);
-            var method = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"),
-                longRunningServiceMetadata: metadata);
-            var inputClient = InputFactory.Client("TestClient", methods: [method]);
-            var generator = MockHelpers.LoadMockGenerator(clients: () => [inputClient], inputModels: () => [monitor]);
-            var output = generator.Object.OutputLibrary;
-            new TestLroVisitor().InvokeVisitLibrary(output);
-            var client = output.TypeProviders.OfType<ClientProvider>().Single();
-            foreach (var convenience in client.Methods.OfType<ScmMethodProvider>()
-                         .Where(m => m.Kind != ScmMethodKind.Protocol))
-            {
-                var body = convenience.BodyStatements!.ToDisplayString();
-                StringAssert.Contains("WrapWithMetadata", body);
-                StringAssert.Contains("new global::Samples.StartOperation", body);
-            }
-        }
-
-        [Test]
-        public void MetadataOperationNamesAvoidExistingTypesAndOtherOperations()
-        {
-            var status = InputFactory.Property("progress", InputPrimitiveType.Int32);
-            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                [new InputLroStatusMetadata(status, [status])], []);
             var first = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
             var second = InputFactory.LongRunningServiceMethod("start", InputFactory.Operation("start"), longRunningServiceMetadata: metadata);
             var firstClient = InputFactory.Client("FirstClient", methods: [first]);
@@ -330,24 +165,20 @@ namespace Azure.Generator.Tests.Visitors
             var existing = InputFactory.Model("StartOperation");
             MockHelpers.LoadMockGenerator(clients: () => [firstClient, secondClient], inputModels: () => [existing]);
             var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
-            var firstOperation = output.GetLroOperation(first, AzureClientGenerator.Instance.TypeFactory.CreateClient(firstClient)!, false)!;
-            var secondOperation = output.GetLroOperation(second, AzureClientGenerator.Instance.TypeFactory.CreateClient(secondClient)!, false)!;
+            var firstOperation = output.GetLroOperation(first, AzureClientGenerator.Instance.TypeFactory.CreateClient(firstClient)!)!;
+            var secondOperation = output.GetLroOperation(second, AzureClientGenerator.Instance.TypeFactory.CreateClient(secondClient)!)!;
 
             Assert.AreEqual("FirstClientStartOperation", firstOperation.Name);
             Assert.AreEqual("SecondClientStartOperation", secondOperation.Name);
-            Assert.AreNotEqual(firstOperation.Properties.Single(p => p.Name == "Metadata").Type.Name,
-                secondOperation.Properties.Single(p => p.Name == "Metadata").Type.Name);
         }
 
-        [TestCase("none")]
-        [TestCase("status")]
-        [TestCase("id")]
-        public void WarnsWhenPagedLroHasSelectedMetadata(string selection)
+        [TestCase(false)]
+        [TestCase(true)]
+        public void WarnsWhenPagedLroHasSelectedOperationId(bool hasOperationId)
         {
             var property = InputFactory.Property("id", InputPrimitiveType.String);
             var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
-                selection == "status" ? [new InputLroStatusMetadata(property, [property])] : [],
-                selection == "id" ? [new InputLroOperationIdPropertyMetadata(property, [property])] : []);
+                [], hasOperationId ? [new InputLroOperationIdPropertyMetadata(property, [property])] : []);
             var paging = new InputLongRunningPagingServiceMethod(
                 "list", "public", [], null, null, InputFactory.Operation("list"), [],
                 InputFactory.ServiceMethodResponse(null, null), null, false, true, true, "Test.list",
@@ -362,7 +193,7 @@ namespace Azure.Generator.Tests.Visitors
 
             new TestLroVisitor().InvokeVisitServiceMethod(paging, client, null);
             var output = Encoding.UTF8.GetString(stream.ToArray());
-            if (selection == "none")
+            if (!hasOperationId)
             {
                 Assert.IsEmpty(output);
             }

@@ -17,9 +17,7 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
-        private readonly Dictionary<(InputLongRunningServiceMethod, ClientProvider), LroOperationProvider[]> _lroOperations = new();
-        private readonly List<LroStatusMetadataProvider> _lroMetadata = new();
-        private readonly HashSet<ClientProvider> _clientsWithLroMethods = new();
+        private readonly Dictionary<(InputLongRunningServiceMethod, ClientProvider), LroOperationProvider> _lroOperations = new();
         private HashSet<string>? _reservedLroNames;
 
         private string ReserveLroName(InputLongRunningServiceMethod method, ClientProvider client)
@@ -36,54 +34,33 @@ namespace Azure.Generator
             }
 
             var methodName = method.Name.ToIdentifierName();
-            var name = methodName;
+            var name = $"{methodName}Operation";
             var suffix = 2;
-            while (_reservedLroNames.Contains($"{name}Operation") ||
-                   _reservedLroNames.Contains($"{name}RawOperation") ||
-                   _reservedLroNames.Contains($"{name}OperationMetadata"))
+            while (_reservedLroNames.Contains(name))
             {
-                name = suffix == 2 ? $"{client.Name}{methodName}" : $"{client.Name}{methodName}{suffix - 1}";
+                name = suffix == 2 ? $"{client.Name}{methodName}Operation" : $"{client.Name}{methodName}{suffix - 1}Operation";
                 suffix++;
             }
-            _reservedLroNames.Add($"{name}Operation");
-            _reservedLroNames.Add($"{name}RawOperation");
-            _reservedLroNames.Add($"{name}OperationMetadata");
+            _reservedLroNames.Add(name);
             return name;
         }
 
-        internal LroOperationProvider? GetLroOperation(InputServiceMethod method, ClientProvider client, bool protocol)
+        /// <summary>
+        /// Gets the internal operation type that exposes the <c>@lroOperationId</c> selection as <see cref="Azure.Operation.Id"/>
+        /// for the protocol method of <paramref name="method"/>, or null when the operation has no selected ID.
+        /// </summary>
+        internal LroOperationProvider? GetLroOperation(InputServiceMethod method, ClientProvider client)
         {
-            if (method is not InputLongRunningServiceMethod lro ||
-                (lro.LongRunningServiceMetadata.StatusMetadata.Count == 0 && lro.LongRunningServiceMetadata.OperationId.Count == 0))
+            if (method is not InputLongRunningServiceMethod lro || lro.LongRunningServiceMetadata.OperationId.Count == 0)
             {
                 return null;
             }
-            if (!_lroOperations.TryGetValue((lro, client), out var operations))
+            if (!_lroOperations.TryGetValue((lro, client), out var operation))
             {
-                var name = ReserveLroName(lro, client);
-                var hasMetadata = lro.LongRunningServiceMetadata.StatusMetadata.Count > 0;
-                var metadataModifiers = (hasMetadata && client.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && lro.Accessibility != "internal"
-                    ? TypeSignatureModifiers.Public : TypeSignatureModifiers.Internal) | TypeSignatureModifiers.Partial;
-                var modifiers = lro.GenerateConvenient ? metadataModifiers : TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
-                var metadata = hasMetadata
-                    ? new LroStatusMetadataProvider($"{name}OperationMetadata", client.Type.Namespace, lro.LongRunningServiceMetadata.StatusMetadata, metadataModifiers,
-                        lro.LongRunningServiceMetadata.PollingResponseModel)
-                    : null;
-                if (metadata is not null)
-                {
-                    _lroMetadata.Add(metadata);
-                }
-                var resultType = lro.Response.Type is null ? null : AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(lro.Response.Type);
-                var convenience = new LroOperationProvider(lro, client, $"{name}Operation", resultType, metadata, modifiers);
-                operations =
-                [
-                    convenience,
-                    new LroOperationProvider(lro, client, $"{name}RawOperation", resultType is null ? null : new CSharpType(typeof(BinaryData)), metadata,
-                        TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial)
-                ];
-                _lroOperations.Add((lro, client), operations);
+                operation = new LroOperationProvider(lro, client, ReserveLroName(lro, client));
+                _lroOperations.Add((lro, client), operation);
             }
-            return operations[protocol ? 1 : 0];
+            return operation;
         }
 
         /// <inheritdoc/>
@@ -94,67 +71,12 @@ namespace Azure.Generator
                 client => client.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public)).ToList();
             foreach (var client in types.OfType<ClientProvider>())
             {
-                var methods = client.Methods.ToList();
-                var processed = new HashSet<InputLongRunningServiceMethod>();
-                var addLroMethods = _clientsWithLroMethods.Add(client);
-                foreach (var method in methods.OfType<ScmMethodProvider>().ToArray())
+                foreach (var method in client.Methods.OfType<ScmMethodProvider>())
                 {
-                    if (method.ServiceMethod is { } serviceMethod)
+                    if (method.Kind == ScmMethodKind.Protocol && method.ServiceMethod is { } serviceMethod)
                     {
-                        GetLroOperation(serviceMethod, client, method.Kind == ScmMethodKind.Protocol);
+                        GetLroOperation(serviceMethod, client);
                     }
-                    if (!addLroMethods || method.ServiceMethod is not InputLongRunningServiceMethod lro ||
-                        (lro.LongRunningServiceMetadata.StatusMetadata.Count == 0 &&
-                         lro.LongRunningServiceMetadata.OperationId.Count == 0) || !processed.Add(lro))
-                    {
-                        continue;
-                    }
-
-                    var visibility = client.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && lro.Accessibility != "internal"
-                        ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal;
-                    var serviceMethods = methods.OfType<ScmMethodProvider>().Where(m => m.ServiceMethod == lro).ToArray();
-                    var hasConvenience = serviceMethods.Any(m => m.Kind != ScmMethodKind.Protocol);
-                    var hasProtocol = serviceMethods.Any(m => m.Kind == ScmMethodKind.Protocol);
-                    var hasMetadata = lro.LongRunningServiceMetadata.StatusMetadata.Count > 0;
-                    if (hasConvenience && !hasMetadata)
-                    {
-                        AddRehydrationMethod(GetLroOperation(lro, client, protocol: false)!);
-                    }
-                    if (hasProtocol && (hasMetadata || lro.Response.Type is not null || !hasConvenience))
-                    {
-                        var raw = GetLroOperation(lro, client, protocol: true)!;
-                        AddRehydrationMethod(raw);
-                        if (hasMetadata)
-                        {
-                            methods.Add(raw.CreateMetadataAccessor(client, ReserveMethodName($"Get{raw.MetadataName}"), visibility));
-                        }
-                    }
-
-                    void AddRehydrationMethod(LroOperationProvider operation)
-                    {
-                        methods.Add(operation.CreateRehydrationMethod(client, ReserveMethodName($"Rehydrate{operation.Name}"), visibility));
-                    }
-
-                    string ReserveMethodName(string baseName)
-                    {
-                        var name = baseName;
-                        var suffix = 2;
-                        while (name == client.Name ||
-                               methods.Any(m => m.Signature.Name == name) ||
-                               client.Properties.Any(p => p.Name == name) ||
-                               client.Fields.Any(f => f.Name == name) ||
-                               (client.CustomCodeView?.Methods.Any(m => m.Signature.Name == name) ?? false) ||
-                               (client.CustomCodeView?.Properties.Any(p => p.Name == name) ?? false) ||
-                               (client.CustomCodeView?.Fields.Any(f => f.Name == name) ?? false))
-                        {
-                            name = $"{baseName}{suffix++}";
-                        }
-                        return name;
-                    }
-                }
-                if (addLroMethods && processed.Count > 0)
-                {
-                    client.Update(methods: methods.ToArray());
                 }
             }
 
@@ -173,8 +95,7 @@ namespace Azure.Generator
             return
             [
                 .. types,
-                .. _lroOperations.Values.SelectMany(p => p).Distinct(),
-                .. _lroMetadata,
+                .. _lroOperations.Values,
                 new RequestContextExtensionsDefinition(),
                 AzureClientGenerator.Instance.RawRequestUriBuilderExtensionsDefinition,
                 AzureClientGenerator.Instance.RequestHeaderExtensionsDefinition,
