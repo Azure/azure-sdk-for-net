@@ -117,6 +117,63 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task FileClient_ReadStreaming_Sessions_StructuredMessage()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            var data = GetRandomBuffer(Size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.AppendAsync(stream, 0);
+                await file.FlushAsync(data.Length);
+            }
+
+            // Create a new file client with OAuth + multi-container session options.
+            // CreateSession traffic flows through the provider's own pipeline, not the
+            // DataLake client's, so the counting policy must be attached to both.
+            var countingPolicy = new SessionAuthCountingPolicy();
+            DataLakeClientOptions options = GetSessionOptions(
+                countingPolicy,
+                GetCountingSessionProvider(file.Uri, countingPolicy));
+
+            DataLakeFileClient oauthFileClient = InstrumentClient(
+                new DataLakeFileClient(
+                    file.Uri,
+                    TestEnvironment.Credential,
+                    options));
+
+            // Act
+            countingPolicy.Start();
+            Response<DataLakeFileReadStreamingResult> response = await oauthFileClient.ReadStreamingAsync(new DataLakeFileReadOptions
+            {
+                TransferValidation = new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                },
+            });
+
+            using var reader = new MemoryStream();
+            await response.Value.Content.CopyToAsync(reader);
+
+            // Assert — the service responded with a structured message body and content validated
+            Assert.IsTrue(response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader),
+                "Expected the read response to use a structured message body");
+            CollectionAssert.AreEqual(data, reader.ToArray());
+
+            // Assert — the structured message read was authenticated with a session
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected one create session request");
+            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount, "Expected the structured message read to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount, "Expected no GET requests to fall back to bearer");
+            Assert.AreEqual(1, countingPolicy.StructuredMessageSessionAuthSuccessCount,
+                "Expected the structured message GET to be signed with a Session token and succeed with a structured response");
+            Assert.AreEqual(0, countingPolicy.StructuredMessageBearerCount,
+                "Expected no structured message GET to be sent with a bearer token");
+        }
+
+        [RecordedTest]
         public async Task FileClient_ReadContent_EnabledSession()
         {
             // Arrange
@@ -1327,6 +1384,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             private int _bearerGetCount;
             private int _getLayoutCount;
             private int _routedRequestCount;
+            private int _structuredMessageSessionAuthSuccessCount;
+            private int _structuredMessageBearerCount;
             private volatile bool _enabled;
             private readonly List<string> _getSessionTokens = new List<string>();
             private readonly List<string> _routedHosts = new List<string>();
@@ -1335,6 +1394,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             public int GetSessionAuthCount => _getSessionAuthCount;
             public int CreateSessionCount => _createSessionCount;
             public int BearerGetCount => _bearerGetCount;
+
+            /// <summary>
+            /// Number of structured message GET requests (request carried <c>x-ms-structured-body</c>)
+            /// that were signed with a session token and succeeded with a structured message response.
+            /// </summary>
+            public int StructuredMessageSessionAuthSuccessCount => _structuredMessageSessionAuthSuccessCount;
+
+            /// <summary>
+            /// Number of structured message GET requests (request carried <c>x-ms-structured-body</c>)
+            /// that were authenticated with a bearer token.
+            /// </summary>
+            public int StructuredMessageBearerCount => _structuredMessageBearerCount;
 
             /// <summary>Number of Get Blob Layout requests observed (GET with <c>comp=layout</c>).</summary>
             public int GetLayoutCount => _getLayoutCount;
@@ -1433,6 +1504,22 @@ namespace Azure.Storage.Files.DataLake.Tests
                     lock (_listLock)
                     {
                         _getSessionTokens.Add(sessionToken);
+                    }
+                }
+
+                // This policy runs after the authentication policy, so the Authorization header
+                // observed here is the one actually sent on this attempt.
+                if (isGet && message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+                {
+                    if (hasSessionAuth
+                        && message.Response.Status >= 200 && message.Response.Status < 300
+                        && message.Response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+                    {
+                        Interlocked.Increment(ref _structuredMessageSessionAuthSuccessCount);
+                    }
+                    if (hasBearerAuth)
+                    {
+                        Interlocked.Increment(ref _structuredMessageBearerCount);
                     }
                 }
 
