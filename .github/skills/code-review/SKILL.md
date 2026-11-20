@@ -93,6 +93,7 @@ Use the changed paths and symbols to select sections from
 | `CHANGELOG.md` | Packaging, Versioning, Dependencies |
 | README, samples, snippets, doc settings, links | Docs & Samples; Broken-Link Ignores |
 | Generated output, TypeSpec/AutoRest configuration | Generated Code; Breaking Changes; Naming; Semantic Value Types |
+| `.github/skills/code-review/references/*.md` | Code-Review Skill |
 
 Consult additional sections whenever the diff crosses concerns. Do not load an unrelated section
 merely to manufacture findings.

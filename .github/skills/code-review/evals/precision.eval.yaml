@@ -1017,3 +1017,60 @@ stimuli:
       - type: output-not-matches
         config:
           pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:add|take|accept|require|introduce|declare|use)\b'
+
+  - name: report-new-review-rule-without-anchor
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It edits `.github/skills/code-review/references/repository-rules.md`. In the
+      Client Design section, where every existing rule bullet starts with an anchor such as
+      `<a name="client-virtual-methods" href="#client-virtual-methods">§</a>`, it adds a bullet
+      whose text is the bold sentence "Clients expose the endpoint they were constructed with as a
+      public Uri Endpoint property." The new bullet has no anchor. The rule's content is correct and
+      does not duplicate another rule, and nothing else changes.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:anchor|permalink|§)[^\n]*🟡|🟡[^\n]*(?:anchor|permalink|§))'
+
+  - name: report-renamed-review-rule-anchor
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It edits `.github/skills/code-review/references/repository-rules.md` and
+      changes only the anchor at the start of an existing Client Design rule, from
+      `<a name="client-virtual-methods" href="#client-virtual-methods">§</a>` to
+      `<a name="client-mockable-methods" href="#client-mockable-methods">§</a>`. The rule's text
+      is unchanged, and nothing else changes.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:client-virtual-methods|anchor|permalink|link)[^\n]*🟡|🟡[^\n]*(?:client-virtual-methods|anchor|permalink|link))'
+
+  - name: allow-new-review-rule-with-unique-anchor
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It edits `.github/skills/code-review/references/repository-rules.md`. In the
+      Client Design section, it adds a bullet that starts with
+      `<a name="client-endpoint-property" href="#client-endpoint-property">§</a>`, a name no other
+      rule uses, followed by the bold sentence "Clients expose the endpoint they were constructed
+      with as a public Uri Endpoint property." The rule's content is correct and does not duplicate
+      another rule, and nothing else changes. If there is no finding, return exactly
+      `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '(?i)((?:anchor|permalink|§)[^\n]*(?:🔴|🟡)|(?:🔴|🟡)[^\n]*(?:anchor|permalink|§))'
