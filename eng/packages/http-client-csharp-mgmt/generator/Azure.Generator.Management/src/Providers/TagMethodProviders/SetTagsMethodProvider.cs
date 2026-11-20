@@ -56,7 +56,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 canUseTagResourceCondition,
                 BuildIfStatements(cancellationTokenParam, (tagValues) =>
                 {
-                    // originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    // tagData.TagValues.ReplaceWith(tags);
                     return tagValues.Invoke("ReplaceWith", [tagsParam]).Terminate();
                 }, true),
                 BuildElseStatements(cancellationTokenParam, (currentTags) =>

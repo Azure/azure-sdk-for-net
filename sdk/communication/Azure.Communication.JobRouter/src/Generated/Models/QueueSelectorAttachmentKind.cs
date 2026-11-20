@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Converts a string to a <see cref="QueueSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueueSelectorAttachmentKind?(string value) => value == null ? null : new QueueSelectorAttachmentKind(value);
+        public static implicit operator QueueSelectorAttachmentKind?(string value) => value == null ? (QueueSelectorAttachmentKind?)null : new QueueSelectorAttachmentKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

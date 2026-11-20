@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MetricsContainerResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MetricsContainerResourceListResult(value ?? new ChangeTrackingList<MonitorMetricsContainerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

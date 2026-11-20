@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EventGridPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EventGridPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

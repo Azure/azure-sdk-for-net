@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagementPolicySchema(rules, additionalBinaryDataProperties);
+            return new ManagementPolicySchema(rules ?? new ChangeTrackingList<ManagementPolicyRule>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceFabricManagedNodeTypeSkuProfile(vmSizes, allocationStrategy, additionalBinaryDataProperties);
+            return new ServiceFabricManagedNodeTypeSkuProfile(vmSizes ?? new ChangeTrackingList<ServiceFabricManagedNodeTypeVmSize>(), allocationStrategy, additionalBinaryDataProperties);
         }
     }
 }

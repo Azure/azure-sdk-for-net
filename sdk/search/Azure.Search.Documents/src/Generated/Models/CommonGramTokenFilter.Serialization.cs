@@ -191,7 +191,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 odataType,
                 name,
                 additionalBinaryDataProperties,
-                commonWords,
+                commonWords ?? new ChangeTrackingList<string>(),
                 ignoreCase,
                 useQueryMode);
         }

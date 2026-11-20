@@ -2,6 +2,12 @@
 
 This sample demonstrates how to create and manage evaluation rules using the synchronous `AIProjectClient`. Evaluation rules allow subscribing the evaluation to a specific event. In the example below we create evaluation rule, which launches evaluation each time the Agent sends the response.
 
+**Note:** `ProjectResponsesClient` is a preview feature, please suppress `AAIP002` to run this sample.
+
+```C#
+#pragma warning disable AAIP002
+```
+
 ## Prerequisites
 To enable continuous evaluation, please assign project managed identity with the following steps:
 

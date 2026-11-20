@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/selfhelp/Azure.ResourceManager.SelfHelp
+    - sdk/selfhelp/Azure.Provisioning.SelfHelp
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -18,3 +19,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SelfHelp
       safeName: AzureResourceManagerSelfHelp
+    - name: Azure.Provisioning.SelfHelp
+      safeName: AzureProvisioningSelfHelp

@@ -153,7 +153,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InternalMessageTextDetails(text, annotations, additionalBinaryDataProperties);
+            return new InternalMessageTextDetails(text, annotations ?? new ChangeTrackingList<MessageTextAnnotation>(), additionalBinaryDataProperties);
         }
     }
 }

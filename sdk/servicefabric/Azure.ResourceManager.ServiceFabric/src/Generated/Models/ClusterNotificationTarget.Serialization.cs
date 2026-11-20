@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterNotificationTarget(notificationChannel, receivers, additionalBinaryDataProperties);
+            return new ClusterNotificationTarget(notificationChannel, receivers ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

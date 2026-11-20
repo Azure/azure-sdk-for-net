@@ -21,18 +21,18 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoBackground"/>. </summary>
-        /// <param name="imageUrl"></param>
+        /// <param name="imageUri"></param>
         /// <param name="color"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentAvatarVideoBackground(Uri imageUrl, string color, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentAvatarVideoBackground(Uri imageUri, string color, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ImageUrl = imageUrl;
+            ImageUri = imageUri;
             Color = color;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the ImageUrl. </summary>
-        public Uri ImageUrl { get; set; }
+        /// <summary> Gets or sets the ImageUri. </summary>
+        public Uri ImageUri { get; set; }
 
         /// <summary> Gets or sets the Color. </summary>
         public string Color { get; set; }

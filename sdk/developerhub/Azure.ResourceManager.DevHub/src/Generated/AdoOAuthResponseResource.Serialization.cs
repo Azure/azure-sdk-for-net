@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DevHub
 {
     /// <summary></summary>
-    public partial class AdoOAuthResponseResource : IJsonModel<AdoOAuthResponseData>
+    public partial class AdoOAuthResponseResource : IJsonModel<AdoOAuthResultData>
     {
-        private static IJsonModel<AdoOAuthResponseData> s_dataDeserializationInstance;
+        private static IJsonModel<AdoOAuthResultData> s_dataDeserializationInstance;
 
-        private static IJsonModel<AdoOAuthResponseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AdoOAuthResponseData();
+        private static IJsonModel<AdoOAuthResultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AdoOAuthResultData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AdoOAuthResponseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AdoOAuthResponseData>)Data).Write(writer, options);
+        void IJsonModel<AdoOAuthResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AdoOAuthResultData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AdoOAuthResponseData IJsonModel<AdoOAuthResponseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        AdoOAuthResultData IJsonModel<AdoOAuthResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AdoOAuthResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdoOAuthResponseData>(Data, options, AzureResourceManagerDevHubContext.Default);
+        BinaryData IPersistableModel<AdoOAuthResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdoOAuthResultData>(Data, options, AzureResourceManagerDevHubContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AdoOAuthResponseData IPersistableModel<AdoOAuthResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdoOAuthResponseData>(data, options, AzureResourceManagerDevHubContext.Default);
+        AdoOAuthResultData IPersistableModel<AdoOAuthResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdoOAuthResultData>(data, options, AzureResourceManagerDevHubContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AdoOAuthResponseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<AdoOAuthResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

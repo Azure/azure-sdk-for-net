@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SandboxGroupVnetConnectionData, SandboxGroupVnetConnectionResource>(new VnetConnectionsGetBySandboxGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SandboxGroupVnetConnectionData, SandboxGroupVnetConnectionResource>(new SandboxGroupVnetConnectionDataAsyncCollectionResultOfT(
                 _vnetConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SandboxGroupVnetConnectionData, SandboxGroupVnetConnectionResource>(new VnetConnectionsGetBySandboxGroupCollectionResultOfT(
+            return new PageableWrapper<SandboxGroupVnetConnectionData, SandboxGroupVnetConnectionResource>(new SandboxGroupVnetConnectionDataCollectionResultOfT(
                 _vnetConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

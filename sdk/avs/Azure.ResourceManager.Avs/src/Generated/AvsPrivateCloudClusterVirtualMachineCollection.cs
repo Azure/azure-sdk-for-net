@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudClusterVirtualMachineData, AvsPrivateCloudClusterVirtualMachineResource>(new VirtualMachinesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsPrivateCloudClusterVirtualMachineData, AvsPrivateCloudClusterVirtualMachineResource>(new AvsPrivateCloudClusterVirtualMachineDataAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudClusterVirtualMachineData, AvsPrivateCloudClusterVirtualMachineResource>(new VirtualMachinesGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsPrivateCloudClusterVirtualMachineData, AvsPrivateCloudClusterVirtualMachineResource>(new AvsPrivateCloudClusterVirtualMachineDataCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

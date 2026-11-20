@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CommvaultContentStore.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CommvaultContentStore
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cloudAccountApiVersion);
             _cloudAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ResourceType.Namespace, Diagnostics);
-            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudAccountApiVersion ?? "2026-07-03-preview");
+            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Commvault.ContentStore/cloudAccounts", out string cloudAccountsApiVersionOverride) ? cloudAccountsApiVersionOverride : "2026-11-03");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LatestLinkedSaasResult>> GetLatestLinkedSaasAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LatestLinkedSaaS");
+            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.GetLatestLinkedSaas");
             scope.Start();
             try
             {
@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _cloudAccountsRestClient.CreateGetLatestLinkedSaasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
+                Response<LatestLinkedSaasResult> response = Response.FromValue(LatestLinkedSaasResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
+        public virtual Response<LatestLinkedSaasResult> GetLatestLinkedSaas(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LatestLinkedSaaS");
+            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.GetLatestLinkedSaas");
             scope.Start();
             try
             {
@@ -485,9 +485,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _cloudAccountsRestClient.CreateGetLatestLinkedSaasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
+                Response<LatestLinkedSaasResult> response = Response.FromValue(LatestLinkedSaasResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -526,11 +526,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudAccountResource>> LinkSaaSAsync(WaitUntil waitUntil, CommvaultSaaSDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudAccountResource>> LinkSaasAsync(WaitUntil waitUntil, CommvaultSaasDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LinkSaaS");
+            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LinkSaas");
             scope.Start();
             try
             {
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
+                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaasDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -585,11 +585,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual ArmOperation<CloudAccountResource> LinkSaaS(WaitUntil waitUntil, CommvaultSaaSDetails details, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CloudAccountResource> LinkSaas(WaitUntil waitUntil, CommvaultSaasDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LinkSaaS");
+            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LinkSaas");
             scope.Start();
             try
             {
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
+                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaasDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -729,10 +729,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -772,10 +771,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

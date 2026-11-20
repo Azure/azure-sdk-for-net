@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DnsResolverDomainListListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DnsResolverDomainListListResult(value ?? new ChangeTrackingList<DnsResolverDomainListData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

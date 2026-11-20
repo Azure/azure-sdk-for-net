@@ -91,7 +91,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Converts a string to a <see cref="OAIVoice"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OAIVoice?(string value) => value == null ? null : new OAIVoice(value);
+        public static implicit operator OAIVoice?(string value) => value == null ? (OAIVoice?)null : new OAIVoice(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

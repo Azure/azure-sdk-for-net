@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> Batch provisioning support. </summary>
-    internal partial class BatchProvisioningSupport
+    public partial class BatchProvisioningSupport
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -19,18 +20,45 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="BatchProvisioningSupport"/>. </summary>
         public BatchProvisioningSupport()
         {
+            RequiredFeatures = new ChangeTrackingList<string>();
+            ActionConfigurations = new ChangeTrackingList<ActionConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchProvisioningSupport"/>. </summary>
         /// <param name="supportedOperations"> Supported operations. </param>
+        /// <param name="maxBatchSize"> The maximum batch size. </param>
+        /// <param name="batchContractVersion"> Batch contract version. </param>
+        /// <param name="maxNestedBatchSize"> The maximum nested batch size. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="actionConfigurations"> Action Configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchProvisioningSupport(ResourceManagementSupportedOperation? supportedOperations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchProvisioningSupport(ResourceManagementSupportedOperation? supportedOperations, long? maxBatchSize, string batchContractVersion, long? maxNestedBatchSize, IList<string> requiredFeatures, IList<ActionConfiguration> actionConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SupportedOperations = supportedOperations;
+            MaxBatchSize = maxBatchSize;
+            BatchContractVersion = batchContractVersion;
+            MaxNestedBatchSize = maxNestedBatchSize;
+            RequiredFeatures = requiredFeatures;
+            ActionConfigurations = actionConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Supported operations. </summary>
         public ResourceManagementSupportedOperation? SupportedOperations { get; set; }
+
+        /// <summary> The maximum batch size. </summary>
+        public long? MaxBatchSize { get; set; }
+
+        /// <summary> Batch contract version. </summary>
+        public string BatchContractVersion { get; set; }
+
+        /// <summary> The maximum nested batch size. </summary>
+        public long? MaxNestedBatchSize { get; set; }
+
+        /// <summary> The required features. </summary>
+        public IList<string> RequiredFeatures { get; }
+
+        /// <summary> Action Configurations. </summary>
+        public IList<ActionConfiguration> ActionConfigurations { get; }
     }
 }

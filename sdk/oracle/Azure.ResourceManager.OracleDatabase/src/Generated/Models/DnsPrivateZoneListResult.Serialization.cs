@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DnsPrivateZoneListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DnsPrivateZoneListResult(value ?? new ChangeTrackingList<OracleDnsPrivateZoneData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

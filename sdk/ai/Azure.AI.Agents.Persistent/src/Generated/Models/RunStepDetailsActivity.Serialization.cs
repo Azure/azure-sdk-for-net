@@ -171,7 +171,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RunStepDetailsActivity(@type, id, serverLabel, tools, additionalBinaryDataProperties);
+            return new RunStepDetailsActivity(@type, id, serverLabel, tools ?? new ChangeTrackingDictionary<string, ActivityFunctionDefinition>(), additionalBinaryDataProperties);
         }
     }
 }

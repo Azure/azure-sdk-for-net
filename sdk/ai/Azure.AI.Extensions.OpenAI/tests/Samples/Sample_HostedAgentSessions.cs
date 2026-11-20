@@ -3,8 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -73,7 +71,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateTheEndpoint_HostedAgentSessions_Async
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -91,7 +89,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         // If we have occasionally disabled the Agent, enable it again.
         await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Async
-        ProjectAgentSession session1 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(500);
@@ -111,7 +109,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         // The new session cannot be created.
         try
         {
-            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -125,7 +123,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_EnableTheAgent_HostedAgentSessions_Async
         await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
-        ProjectAgentSession session2 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session2 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(500);
@@ -183,7 +181,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateTheEndpoint_HostedAgentSessions_Sync
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -201,7 +199,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         // If we have occasionally disabled the Agent, enable it again.
         projectClient.AgentAdministrationClient.EnableAgent(agentVersion.Name);
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Sync
-        ProjectAgentSession session1 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session1 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(500);
@@ -221,7 +219,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         // The new session cannot be created.
         try
         {
-            projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
             throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
         }
         catch (ClientResultException ex)
@@ -235,7 +233,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_EnableTheAgent_HostedAgentSessions_Sync
         projectClient.AgentAdministrationClient.EnableAgent(agentVersion.Name);
-        ProjectAgentSession session2 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session2 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(500);

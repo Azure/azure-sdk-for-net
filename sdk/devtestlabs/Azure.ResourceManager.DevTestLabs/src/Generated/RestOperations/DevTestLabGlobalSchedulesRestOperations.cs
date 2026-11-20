@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -81,10 +78,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -106,10 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,10 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -152,10 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -192,10 +177,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2018-09-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -212,10 +194,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -252,10 +231,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2018-09-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -276,10 +252,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/execute", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -299,10 +272,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/retarget", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

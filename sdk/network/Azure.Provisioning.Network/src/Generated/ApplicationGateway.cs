@@ -23,13 +23,13 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private ApplicationGatewayPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private BicepList<string> _zones;
+        private BicepList<string> _availabilityZones;
         private ManagedServiceIdentity _identity;
 
         /// <summary> Creates a new ApplicationGateway. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ApplicationGateway(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/applicationGateways", resourceVersion ?? "2026-01-01")
+        public ApplicationGateway(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/applicationGateways", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -113,18 +113,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Zones. </summary>
-        public BicepList<string> Zones
+        /// <summary> Gets or sets the AvailabilityZones. </summary>
+        public BicepList<string> AvailabilityZones
         {
             get
             {
                 Initialize();
-                return _zones;
+                return _availabilityZones;
             }
             set
             {
                 Initialize();
-                _zones.Assign(value);
+                _availabilityZones.Assign(value);
             }
         }
 
@@ -813,7 +813,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<ApplicationGatewayPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
+            _availabilityZones = DefineListProperty<string>(nameof(AvailabilityZones), new string[] { "zones" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }
@@ -834,6 +834,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeSolutionTemplateProperties(
                 uniqueIdentifier,
                 description,
-                capabilities,
+                capabilities ?? new ChangeTrackingList<string>(),
                 latestVersion,
                 state,
                 isExternalValidationEnabled,

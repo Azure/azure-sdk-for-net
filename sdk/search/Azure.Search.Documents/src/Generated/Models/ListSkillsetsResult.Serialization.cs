@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListSkillsetsResult(value, odataNextLink, additionalBinaryDataProperties);
+            return new ListSkillsetsResult(value ?? new ChangeTrackingList<SearchIndexerSkillset>(), odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

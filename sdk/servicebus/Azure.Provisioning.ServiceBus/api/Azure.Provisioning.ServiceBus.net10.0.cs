@@ -337,7 +337,7 @@ namespace Azure.Provisioning.ServiceBus
         public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceBus.ServiceBusNetworkRuleSetIPRules> IPRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsTrustedServiceAccessEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ServiceBus.ServiceBusNamespace Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusPublicNetworkAccessFlag> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

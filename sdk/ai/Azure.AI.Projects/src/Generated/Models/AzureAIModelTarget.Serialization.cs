@@ -7,10 +7,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
+    /// <summary>
+    /// A target that identifies an Azure AI model.
+    /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
+    /// </summary>
     public partial class AzureAIModelTarget : EvaluationTarget, IJsonModel<AzureAIModelTarget>
     {
         /// <param name="data"> The data to parse. </param>
@@ -77,10 +81,10 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(SamplingParams))
+            if (Optional.IsDefined(SamplingParameters))
             {
                 writer.WritePropertyName("sampling_params"u8);
-                writer.WriteObjectValue(SamplingParams, options);
+                writer.WriteObjectValue(SamplingParameters, options);
             }
         }
 
@@ -112,7 +116,7 @@ namespace Azure.AI.Projects.Evaluation
             string @type = "azure_ai_model";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string model = default;
-            ModelSamplingParams samplingParams = default;
+            ModelSamplingParams samplingParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -131,7 +135,7 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    samplingParams = ModelSamplingParams.DeserializeModelSamplingParams(prop.Value, options);
+                    samplingParameters = ModelReaderWriter.Read<ModelSamplingParams>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +143,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureAIModelTarget(@type, additionalBinaryDataProperties, model, samplingParams);
+            return new AzureAIModelTarget(@type, additionalBinaryDataProperties, model, samplingParameters);
         }
     }
 }

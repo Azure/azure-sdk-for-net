@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KeyVaultSecretProviderClassCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(KeyVaultSecretProviderClassResource.ResourceType, out string keyVaultSecretProviderClassApiVersion);
             _azureKeyVaultSecretProviderClassesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", KeyVaultSecretProviderClassResource.ResourceType.Namespace, Diagnostics);
-            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2026-09-25-preview");
+            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses", out string azureKeyVaultSecretProviderClassesApiVersionOverride) ? azureKeyVaultSecretProviderClassesApiVersionOverride : "2026-09-25-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetByResourceGroupAsyncCollectionResultOfT(_azureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KeyVaultSecretProviderClassCollection.GetAll"), data => new KeyVaultSecretProviderClassResource(Client, data));
+            return new AsyncPageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new KeyVaultSecretProviderClassDataAsyncCollectionResultOfT(_azureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KeyVaultSecretProviderClassCollection.GetAll"), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetByResourceGroupCollectionResultOfT(_azureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KeyVaultSecretProviderClassCollection.GetAll"), data => new KeyVaultSecretProviderClassResource(Client, data));
+            return new PageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new KeyVaultSecretProviderClassDataCollectionResultOfT(_azureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KeyVaultSecretProviderClassCollection.GetAll"), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>

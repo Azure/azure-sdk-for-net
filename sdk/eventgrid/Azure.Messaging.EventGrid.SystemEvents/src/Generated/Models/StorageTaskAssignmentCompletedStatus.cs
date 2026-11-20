@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="StorageTaskAssignmentCompletedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageTaskAssignmentCompletedStatus?(string value) => value == null ? null : new StorageTaskAssignmentCompletedStatus(value);
+        public static implicit operator StorageTaskAssignmentCompletedStatus?(string value) => value == null ? (StorageTaskAssignmentCompletedStatus?)null : new StorageTaskAssignmentCompletedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

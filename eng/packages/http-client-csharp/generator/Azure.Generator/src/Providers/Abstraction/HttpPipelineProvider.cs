@@ -101,14 +101,23 @@ namespace Azure.Generator.Providers.Abstraction
         public override MethodBodyStatement[] SendMessageAsync(HttpMessageApi message, HttpRequestOptionsApi options)
             => BuildProcessMessage(message, options, true);
 
-        private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync)
+        /// <summary>
+        /// Sends a message with the effective enumeration cancellation token, preserving request context error options.
+        /// </summary>
+        public MethodBodyStatement[] SendMessageAsync(HttpMessageApi message, HttpRequestOptionsApi options, ValueExpression cancellationToken)
+            => BuildProcessMessage(message, options, true, cancellationToken);
+
+        private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync, ValueExpression? cancellationToken = null)
         {
             var userCancellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
-            var errorOptions = new ParameterProvider("errorOptions", $"", new CSharpType(typeof(ErrorOptions)));
+            var declareErrorOptions = new DeclarationExpression(typeof(ErrorOptions), "errorOptions", out var errorOptions);
+            var parseOptions = cancellationToken is null
+                ? new VariableTupleExpression(false, userCancellationToken, errorOptions).Assign(options.Invoke("Parse")).Terminate()
+                : declareErrorOptions.Assign(options.ErrorOptions().NullCoalesce(FrameworkEnumValue(ErrorOptions.Default))).Terminate();
             return
             [
-                new VariableTupleExpression(false, userCancellationToken, errorOptions).Assign(options.Invoke("Parse")).Terminate(),
-                Original.Invoke(isAsync ? nameof(HttpPipeline.SendAsync) : nameof(HttpPipeline.Send), [message, userCancellationToken], isAsync).Terminate(),
+                parseOptions,
+                Original.Invoke(isAsync ? nameof(HttpPipeline.SendAsync) : nameof(HttpPipeline.Send), [message, cancellationToken ?? userCancellationToken], isAsync).Terminate(),
                 MethodBodyStatement.EmptyLine,
                 new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", errorOptions, options.NoThrow()).NotEqual(options.NoThrow())))
                 {

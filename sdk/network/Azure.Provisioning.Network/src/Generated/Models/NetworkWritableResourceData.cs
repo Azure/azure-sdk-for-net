@@ -7,18 +7,35 @@
 
 using Azure.Core;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Common writable subresource representation used by the previous C# AutoRest projection. </summary>
-    public partial class NetworkWritableResourceData : NetworkSubResource
+    /// <summary> Common resource representation. </summary>
+    public partial class NetworkWritableResourceData : ProvisionableConstruct
     {
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new NetworkWritableResourceData. </summary>
         public NetworkWritableResourceData()
         {
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
+            set
+            {
+                Initialize();
+                _id.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -55,6 +72,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" });
             DefineAdditionalProperties();

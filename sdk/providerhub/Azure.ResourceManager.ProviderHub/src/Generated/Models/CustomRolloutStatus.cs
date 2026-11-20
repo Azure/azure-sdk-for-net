@@ -23,18 +23,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             CompletedRegions = new ChangeTrackingList<AzureLocation>();
             FailedOrSkippedRegions = new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
+            CompletedRegionsInfo = new ChangeTrackingList<AppliedManifestInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutStatus"/>. </summary>
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="manifestCheckinStatus"> The manifest checkin status. </param>
+        /// <param name="completedRegionsInfo"> Information about the manifests applied to the completed regions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, CheckinManifestInfo manifestCheckinStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, CheckinManifestInfo manifestCheckinStatus, IList<AppliedManifestInfo> completedRegionsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompletedRegions = completedRegions;
             FailedOrSkippedRegions = failedOrSkippedRegions;
             ManifestCheckinStatus = manifestCheckinStatus;
+            CompletedRegionsInfo = completedRegionsInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +49,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The manifest checkin status. </summary>
         public CheckinManifestInfo ManifestCheckinStatus { get; set; }
+
+        /// <summary> Information about the manifests applied to the completed regions. </summary>
+        public IList<AppliedManifestInfo> CompletedRegionsInfo { get; }
     }
 }

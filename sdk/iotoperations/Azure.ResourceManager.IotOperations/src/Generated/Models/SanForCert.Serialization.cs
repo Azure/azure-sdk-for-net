@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SanForCert(dns, ip, additionalBinaryDataProperties);
+            return new SanForCert(dns ?? new ChangeTrackingList<string>(), ip ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

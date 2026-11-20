@@ -217,7 +217,6 @@
             "$id": "17",
             "name": "v1",
             "isExactName": false,
-            "resourceName": "Added",
             "accessibility": "public",
             "parameters": [
               {

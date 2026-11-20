@@ -1,12 +1,12 @@
 # Distributed tracing
 
-This sample demonstrates how to observe Service Bus operations using the built-in distributed tracing instrumentation. The `Azure.Messaging.ServiceBus` client library emits [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) events for every operation, so you can monitor latency, trace message flow across services, and diagnose failures in production.
+This sample demonstrates how to observe Service Bus operations using the built-in distributed tracing instrumentation. The `Azure.Messaging.ServiceBus` client library emits [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) events for application operations, so you can monitor latency, trace message flow across services, and diagnose failures in production.
 
 For background on how Service Bus propagates trace context, see [Distributed tracing and correlation through Service Bus messaging](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-end-to-end-tracing).
 
 ## Automatic tracing with OpenTelemetry
 
-The `Azure.Messaging.ServiceBus` client library is instrumented for distributed tracing using [OpenTelemetry](https://opentelemetry.io/docs/languages/dotnet/) or the Application Insights SDK. Both approaches collect traces with no per-call code changes.
+The `Azure.Messaging.ServiceBus` client library is instrumented for distributed tracing using [OpenTelemetry](https://opentelemetry.io/docs/languages/dotnet/) or the Application Insights SDK. Both approaches collect operation traces automatically.
 
 > **Experimental:** OpenTelemetry support in `Azure.Messaging.ServiceBus` remains experimental. You must opt in by setting the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true` or the `Azure.Experimental.EnableActivitySource` [AppContext](https://learn.microsoft.com/dotnet/api/system.appcontext) switch. See [Enabling experimental tracing features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#enabling-experimental-tracing-features) for details.
 
@@ -34,6 +34,8 @@ await sender.SendMessageAsync(new ServiceBusMessage("Hello with tracing!"));
 ```
 
 When the processor handles a message, the client library creates a `Process` activity that is automatically linked to the `Send` activity on the producer side via the `Diagnostic-Id` message property. This gives you end-to-end visibility from sender to receiver.
+
+`ServiceBusProcessor` and `ServiceBusSessionProcessor` emit processing and settlement activities in both experimental ActivitySource and Application Insights/DiagnosticListener tracing. Explicit calls to receive messages, including through `ProcessorReceiveActions` within a callback, emit `Receive` activities in either mode. For internal receive-loop diagnostics, including idle polling and shutdown cancellation, collect [EventSource receive logs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md#logging-and-diagnostics).
 
 ```C# Snippet:ServiceBusOpenTelemetryProcessor
 AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
@@ -97,7 +99,7 @@ using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
 
 ## Automatic tracing with Application Insights
 
-If you use the [Application Insights SDK](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) and the `ServiceBusProcessor`, send and process operations are tracked and correlated automatically — no extra code required.
+If you use the [Application Insights SDK](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) and the `ServiceBusProcessor`, send and process operations are tracked and correlated automatically.
 
 For finer-grained control — for example, to add custom telemetry or explicitly set the parent context — you can start a request telemetry operation manually within the processor callback:
 

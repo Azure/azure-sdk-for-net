@@ -147,7 +147,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new ReceivedMessages(items);
+            return new ReceivedMessages(items ?? new ChangeTrackingList<ReceivedMessage>());
         }
 
         /// <param name="writer"> The XML writer. </param>

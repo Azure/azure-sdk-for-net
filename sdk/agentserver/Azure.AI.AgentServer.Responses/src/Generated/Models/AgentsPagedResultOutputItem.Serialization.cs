@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class AgentsPagedResultOutputItem : IJsonModel<AgentsPagedResultOutputItem>
+    internal partial class AgentsPagedResultOutputItem : IJsonModel<AgentsPagedResultOutputItem>
     {
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOutputItem"/> for deserialization. </summary>
         internal AgentsPagedResultOutputItem()
@@ -78,6 +79,58 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultOutputItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentsPagedResultOutputItem)} does not support writing '{format}' format.");
+            }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
+            writer.WritePropertyName("data"u8);
+            writer.WriteStartArray();
+            foreach (Item item in Data)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
+            if (Optional.IsDefined(FirstId))
+            {
+                writer.WritePropertyName("first_id"u8);
+                writer.WriteStringValue(FirstId);
+            }
+            if (Optional.IsDefined(LastId))
+            {
+                writer.WritePropertyName("last_id"u8);
+                writer.WriteStringValue(LastId);
+            }
+            writer.WritePropertyName("has_more"u8);
+            writer.WriteBooleanValue(HasMore);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AgentsPagedResultOutputItem IJsonModel<AgentsPagedResultOutputItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
@@ -97,13 +150,14 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static AgentsPagedResultOutputItem DeserializeAgentsPagedResultOutputItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<OutputItem> data = default;
+            IList<ResponseItem> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -112,10 +166,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<OutputItem> array = new List<OutputItem>();
+                    List<ResponseItem> array = new List<ResponseItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputItem.DeserializeOutputItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseItem>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     data = array;
                     continue;
@@ -137,10 +198,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultOutputItem(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultOutputItem(data ?? new ChangeTrackingList<ResponseItem>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

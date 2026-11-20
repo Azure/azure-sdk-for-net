@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 status,
                 export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(),
                 disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(),
-                iotHubs,
+                iotHubs ?? new ChangeTrackingList<string>(),
                 userDefinedResources,
                 autoDiscoveredResources ?? new ChangeTrackingList<string>(),
                 recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(),

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogProfileListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LogProfileListResult(value ?? new ChangeTrackingList<LogProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

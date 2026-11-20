@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CdnWebApplicationFirewallPolicyList(value, nextLink, additionalBinaryDataProperties);
+            return new CdnWebApplicationFirewallPolicyList(value ?? new ChangeTrackingList<CdnWebApplicationFirewallPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

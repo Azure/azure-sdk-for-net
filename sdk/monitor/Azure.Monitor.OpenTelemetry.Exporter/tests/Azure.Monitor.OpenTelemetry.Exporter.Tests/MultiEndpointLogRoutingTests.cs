@@ -82,6 +82,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void CustomerCountsIncludeOnlyRoutedLogEnvelopes()
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-b"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("unrouted")),
+                Emit(Ikey("ikey-a"), Endpoint(WestUs), IngestionAuth("aad")));
+
+            Assert.Equal(2, routeBatch.Count);
+            Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
+            Assert.Equal(2, routeBatch[0].ItemCountsByInstrumentationKey.Count);
+            Assert.Equal(2, routeBatch[0].ItemCountsByInstrumentationKey["ikey-a"]);
+            Assert.Equal(1, routeBatch[0].ItemCountsByInstrumentationKey["ikey-b"]);
+            Assert.True(routeBatch[1].IsAad);
+            Assert.Equal(new KeyValuePair<string, int>("ikey-a", 1),
+                Assert.Single(routeBatch[1].ItemCountsByInstrumentationKey));
+        }
+
+        [Fact]
         public void EachItemCarriesItsOwnInstrumentationKey()
         {
             var routeBatch = Convert(
@@ -93,17 +113,61 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 routeBatch[0].TelemetryItems.Select(item => item.InstrumentationKey));
         }
 
+        [Fact]
+        public void AadAndInstrumentationKeyRoutesToOneEndpointBecomeDistinctGroups()
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-b"), Endpoint(EastUs), IngestionAuth("aad")),
+                Emit(Ikey("ikey-c"), Endpoint(EastUs), IngestionAuth("AAD")));
+
+            Assert.Equal(2, routeBatch.Count);
+
+            Assert.Equal(EastUs, routeBatch[0].IngestionEndpoint);
+            Assert.False(routeBatch[0].IsAad);
+            Assert.Equal(new[] { "ikey-a" }, routeBatch[0].TelemetryItems.Select(item => item.InstrumentationKey));
+
+            Assert.Equal(EastUs, routeBatch[1].IngestionEndpoint);
+            Assert.True(routeBatch[1].IsAad);
+            Assert.Equal(new[] { "ikey-b", "ikey-c" }, routeBatch[1].TelemetryItems.Select(item => item.InstrumentationKey));
+        }
+
+        [Theory]
+        [InlineData("entra")]
+        [InlineData("")]
+        [InlineData(true)]
+        public void OtherIngestionAuthValuesAreInstrumentationKeyRoutes(object ingestionAuth)
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-b"), Endpoint(EastUs), IngestionAuth(ingestionAuth)));
+
+            Assert.Equal(1, routeBatch.Count);
+            Assert.False(routeBatch[0].IsAad);
+            Assert.Equal(2, routeBatch[0].TelemetryItems.Count);
+        }
+
+        [Fact]
+        public void FirstOccurrenceOfARepeatedIngestionAuthWins()
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), IngestionAuth("aad"), IngestionAuth("ikey")));
+
+            Assert.True(routeBatch[0].IsAad);
+        }
+
         /// <summary>
         /// On the routed path they are consumed, so they must not also appear as dimensions.
         /// </summary>
         [Fact]
         public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
-            var routeBatch = Convert(Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role")));
+            var routeBatch = Convert(Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), IngestionAuth("aad")));
 
             var properties = ((MessageData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionAuth, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
@@ -286,7 +350,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData(false)]
         public void AvailabilityLogRoutesRegardlessOfWhereTheRoutingTagsSit(bool routingTagsBeforeMarker)
         {
-            var routingTags = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role") };
+            var routingTags = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), IngestionAuth("aad") };
             var attributes = routingTagsBeforeMarker
                 ? routingTags.Concat(AvailabilityMarkers()).ToArray()
                 : AvailabilityMarkers().Concat(routingTags).ToArray();
@@ -295,6 +359,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(1, routeBatch.Count);
             Assert.Equal(EastUs, routeBatch[0].IngestionEndpoint);
+            Assert.True(routeBatch[0].IsAad);
 
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
             Assert.Equal("AvailabilityData", telemetryItem.Data!.BaseType);
@@ -304,6 +369,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((AvailabilityData)telemetryItem.Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionAuth, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
@@ -317,7 +383,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItems = ConvertSingleEndpoint(
                 "exporter-ikey",
                 CreateResource(),
-                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role")));
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), IngestionAuth("aad")));
 
             var telemetryItem = telemetryItems.Single();
             Assert.Equal("exporter-ikey", telemetryItem.InstrumentationKey);
@@ -327,6 +393,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((MessageData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
+            Assert.Equal("aad", properties[SemanticConventions.AttributeMicrosoftIngestionAuth]);
             Assert.Equal("app-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
@@ -588,6 +655,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-traceless", routed);
         }
 
+        [Fact]
+        public void RoutedLogsCarryTheirSampleRate()
+        {
+            var routeBatch = new EndpointRouteBatch();
+            WithLiveBatch(
+                batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource: null, routeBatch, applySampleRate: true),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), SampleRate(25f)),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)));
+            var telemetryItems = routeBatch[0].TelemetryItems;
+
+            Assert.Equal(25f, telemetryItems[0].SampleRate);
+            Assert.Null(telemetryItems[1].SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((MessageData)telemetryItems[0].Data.BaseData).Properties.Keys);
+        }
+
+        /// <summary>
+        /// Availability attributes are read in a second pass that rebuilds the log context, so the
+        /// sample rate must survive it.
+        /// </summary>
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void AvailabilityLogsCarryTheirSampleRateOnlyWhenApplied(bool applySampleRate)
+        {
+            List<TelemetryItem> telemetryItems = new();
+            WithLiveBatch(
+                batch => telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, resource: null, "ikey-a", applySampleRate).TelemetryItems,
+                Emit(AvailabilityMarkers().Concat(new[] { SampleRate(25f) }).ToArray()));
+            var telemetryItem = Assert.Single(telemetryItems);
+
+            Assert.Equal("Availability", telemetryItem.Name);
+            Assert.Equal(applySampleRate ? 25f : null, telemetryItem.SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((AvailabilityData)telemetryItem.Data.BaseData).Properties.Keys);
+        }
+
         /// <summary>
         /// On a persist-only shutdown a routed log still goes through the multi-endpoint
         /// <see cref="IMultiEndpointTransmitter.Track"/> path (not <c>TrackAsync</c>), exercising the
@@ -699,8 +801,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static KeyValuePair<string, object?> Endpoint(object? value)
             => new(SemanticConventions.AttributeMicrosoftIngestionEndpoint, value);
 
+        private static KeyValuePair<string, object?> IngestionAuth(object? value)
+            => new(SemanticConventions.AttributeMicrosoftIngestionAuth, value);
+
         private static KeyValuePair<string, object?> CloudRole(object? value)
             => new(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, value);
+
+        private static KeyValuePair<string, object?> SampleRate(object? value)
+            => new(SemanticConventions.AttributeMicrosoftSampleRate, value);
 
         private static AzureMonitorResource CreateResource()
             => ResourceBuilder.CreateDefault()

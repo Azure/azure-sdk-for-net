@@ -152,7 +152,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("input_tokens_details"u8))
                 {
-                    inputTokensDetails = ModelReaderWriter.Read<ResponseInputTokenUsageDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
+                    inputTokensDetails = ModelReaderWriter.Read<ResponseInputTokenUsageDetails>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("output_tokens"u8))
@@ -162,7 +162,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("output_tokens_details"u8))
                 {
-                    outputTokensDetails = ModelReaderWriter.Read<ResponseOutputTokenUsageDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
+                    outputTokensDetails = ModelReaderWriter.Read<ResponseOutputTokenUsageDetails>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("total_tokens"u8))

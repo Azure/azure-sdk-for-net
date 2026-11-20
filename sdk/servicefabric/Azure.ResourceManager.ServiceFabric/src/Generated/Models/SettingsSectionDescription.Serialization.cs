@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SettingsSectionDescription(name, parameters, additionalBinaryDataProperties);
+            return new SettingsSectionDescription(name, parameters ?? new ChangeTrackingList<SettingsParameterDescription>(), additionalBinaryDataProperties);
         }
     }
 }

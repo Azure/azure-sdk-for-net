@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 selector,
                 rulesEngineOperator,
                 isNegateCondition,
-                rulesEngineMatchValue,
+                rulesEngineMatchValue ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>(),
                 additionalBinaryDataProperties);
         }

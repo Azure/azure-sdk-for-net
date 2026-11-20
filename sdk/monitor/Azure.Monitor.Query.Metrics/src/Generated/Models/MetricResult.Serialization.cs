@@ -220,7 +220,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 errorCode,
                 errorMessage,
                 unit,
-                timeSeries,
+                timeSeries ?? new ChangeTrackingList<MetricTimeSeriesElement>(),
                 additionalBinaryDataProperties);
         }
     }

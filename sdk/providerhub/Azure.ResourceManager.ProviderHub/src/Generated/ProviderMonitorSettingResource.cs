@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProviderMonitorSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string providerMonitorSettingApiVersion);
             _providerMonitorSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerMonitorSettingApiVersion ?? "2024-09-01");
+            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProviderHub/providerMonitorSettings", out string providerMonitorSettingsApiVersionOverride) ? providerMonitorSettingsApiVersionOverride : "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

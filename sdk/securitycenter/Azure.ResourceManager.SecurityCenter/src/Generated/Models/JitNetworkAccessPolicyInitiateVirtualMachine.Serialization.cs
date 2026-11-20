@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JitNetworkAccessPolicyInitiateVirtualMachine(id, ports, additionalBinaryDataProperties);
+            return new JitNetworkAccessPolicyInitiateVirtualMachine(id, ports ?? new ChangeTrackingList<JitNetworkAccessPolicyInitiatePort>(), additionalBinaryDataProperties);
         }
     }
 }

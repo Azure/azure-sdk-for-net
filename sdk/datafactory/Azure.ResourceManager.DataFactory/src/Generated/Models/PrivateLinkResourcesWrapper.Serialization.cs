@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateLinkResourcesWrapper(value, additionalBinaryDataProperties);
+            return new PrivateLinkResourcesWrapper(value ?? new ChangeTrackingList<DataFactoryPrivateLinkResource>(), additionalBinaryDataProperties);
         }
     }
 }

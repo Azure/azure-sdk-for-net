@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
     /// <summary>
@@ -35,14 +38,22 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     /// Explicitly setting <see cref="ShareChangeFeedClientOptions.ResetPolicy"/> overrides the
     /// per-API default for every method on the client.
     /// </remarks>
-    public enum ShareChangeFeedResetPolicy
+    public readonly struct ShareChangeFeedResetPolicy : IEquatable<ShareChangeFeedResetPolicy>
     {
+        private readonly string _value;
+
+        /// <summary>
+        /// Initializes a new <see cref="ShareChangeFeedResetPolicy"/> with a custom string value.
+        /// </summary>
+        /// <param name="value">The reset policy string.</param>
+        public ShareChangeFeedResetPolicy(string value) { _value = value ?? throw ShareChangeFeedErrors.ArgumentNull(nameof(value)); }
+
         /// <summary>
         /// When a reset marker is detected, throw <see cref="ShareChangeFeedResetException"/>.
         /// Batched APIs fail before yielding any events when the requested range crosses a reset
         /// boundary; streaming APIs stop at the reset boundary.
         /// </summary>
-        ThrowOnReset = 0,
+        public static ShareChangeFeedResetPolicy ThrowOnReset { get; } = new ShareChangeFeedResetPolicy("ThrowOnReset");
 
         /// <summary>
         /// When a reset marker is detected, surface it in-band as a
@@ -50,6 +61,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// continue enumeration. Consumers must decide whether to stop, re-baseline, or keep
         /// reading past the marker.
         /// </summary>
-        ContinueOnReset = 1,
+        public static ShareChangeFeedResetPolicy ContinueOnReset { get; } = new ShareChangeFeedResetPolicy("ContinueOnReset");
+
+        public static implicit operator ShareChangeFeedResetPolicy(string value) => new ShareChangeFeedResetPolicy(value);
+        public static implicit operator ShareChangeFeedResetPolicy?(string value) => value == null ? null : new ShareChangeFeedResetPolicy(value);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ShareChangeFeedResetPolicy other && Equals(other);
+        public bool Equals(ShareChangeFeedResetPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override string ToString() => _value;
+        public static bool operator ==(ShareChangeFeedResetPolicy left, ShareChangeFeedResetPolicy right) => left.Equals(right);
+        public static bool operator !=(ShareChangeFeedResetPolicy left, ShareChangeFeedResetPolicy right) => !left.Equals(right);
     }
 }

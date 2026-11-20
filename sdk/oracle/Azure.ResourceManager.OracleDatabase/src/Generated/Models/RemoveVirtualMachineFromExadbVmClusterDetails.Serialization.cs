@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RemoveVirtualMachineFromExadbVmClusterDetails(dbNodes, additionalBinaryDataProperties);
+            return new RemoveVirtualMachineFromExadbVmClusterDetails(dbNodes ?? new ChangeTrackingList<DBNodeDetails>(), additionalBinaryDataProperties);
         }
     }
 }

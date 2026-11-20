@@ -2224,5 +2224,89 @@ namespace Azure.Storage.Files.Shares
         {
             return await CreateHardLinkAsync(targetFile, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// [Protocol Method] Returns the hard links of a file, along with all user-defined metadata, content properties, and system properties for the file. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetHardLinks(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetHardLinks");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetHardLinksRequest(sharesnapshot, timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the hard links of a file, along with all user-defined metadata, content properties, and system properties for the file. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetHardLinksAsync(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetHardLinks");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetHardLinksRequest(sharesnapshot, timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns the hard links of a file, along with all user-defined metadata, content properties, and system properties for the file. NFS only. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<HardLinkList> GetHardLinks(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            Response result = GetHardLinks(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext());
+            return Response.FromValue((HardLinkList)result, result);
+        }
+
+        /// <summary> Returns the hard links of a file, along with all user-defined metadata, content properties, and system properties for the file. NFS only. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<HardLinkList>> GetHardLinksAsync(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetHardLinksAsync(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((HardLinkList)result, result);
+        }
     }
 }

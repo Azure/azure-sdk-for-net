@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A managed runtime and agent loop used to execute a prompt agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GitHubCopilotHarness"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GitHubCopilotHarness"/> and <see cref="MicrosoftCopilotHarness"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentHarness))]
     public abstract partial class AgentHarness : IJsonModel<AgentHarness>
@@ -128,6 +128,8 @@ namespace Azure.AI.Projects.Agents
                 {
                     case "github_copilot_preview":
                         return GitHubCopilotHarness.DeserializeGitHubCopilotHarness(element, options);
+                    case "microsoft_copilot_preview":
+                        return MicrosoftCopilotHarness.DeserializeMicrosoftCopilotHarness(element, options);
                 }
             }
             return UnknownAgentHarness.DeserializeUnknownAgentHarness(element, options);

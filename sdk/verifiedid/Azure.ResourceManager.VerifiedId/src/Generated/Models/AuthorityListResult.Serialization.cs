@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.VerifiedId.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AuthorityListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AuthorityListResult(value ?? new ChangeTrackingList<VerifiedIdAuthorityData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

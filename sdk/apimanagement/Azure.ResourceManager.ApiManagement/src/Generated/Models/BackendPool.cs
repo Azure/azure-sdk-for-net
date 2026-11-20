@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="failureResponse"> The response to be returned when all the backends in the pool are inactive. </param>
         /// <param name="sessionAffinity"> The session stickiness properties of the backend pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendPool(IList<BackendPoolItem> poolServices, BackendFailureResponse failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendPool(IList<BackendPoolItem> poolServices, BackendFailureResult failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PoolServices = poolServices;
             FailureResponse = failureResponse;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The response to be returned when all the backends in the pool are inactive. </summary>
         [WirePath("failureResponse")]
-        internal BackendFailureResponse FailureResponse { get; set; }
+        internal BackendFailureResult FailureResponse { get; set; }
 
         /// <summary> The session stickiness properties of the backend pool. </summary>
         [WirePath("sessionAffinity")]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (FailureResponse is null)
                 {
-                    FailureResponse = new BackendFailureResponse();
+                    FailureResponse = new BackendFailureResult();
                 }
                 FailureResponse.StatusCode = value;
             }

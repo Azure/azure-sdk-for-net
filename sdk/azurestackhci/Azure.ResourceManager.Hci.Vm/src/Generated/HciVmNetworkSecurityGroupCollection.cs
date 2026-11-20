@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmNetworkSecurityGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HciVmNetworkSecurityGroupResource.ResourceType, out string hciVmNetworkSecurityGroupApiVersion);
             _networkSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNetworkSecurityGroupApiVersion ?? "2025-09-01-preview");
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkSecurityGroups", out string networkSecurityGroupsApiVersionOverride) ? networkSecurityGroupsApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetByResourceGroupAsyncCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNetworkSecurityGroupCollection.GetAll"), data => new HciVmNetworkSecurityGroupResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new HciVmNetworkSecurityGroupDataAsyncCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNetworkSecurityGroupCollection.GetAll"), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetByResourceGroupCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNetworkSecurityGroupCollection.GetAll"), data => new HciVmNetworkSecurityGroupResource(Client, data));
+            return new PageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new HciVmNetworkSecurityGroupDataCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNetworkSecurityGroupCollection.GetAll"), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>

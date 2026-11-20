@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedRulesDefinition(exceptions ?? new ChangeTrackingList<ExceptionEntry>(), exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets, additionalBinaryDataProperties);
+            return new ManagedRulesDefinition(exceptions ?? new ChangeTrackingList<ExceptionEntry>(), exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>(), additionalBinaryDataProperties);
         }
     }
 }

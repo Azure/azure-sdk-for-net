@@ -323,12 +323,12 @@ namespace Azure.Monitor.Query.Logs
 
                 context.AddPolicy(new NetworkTimeoutPolicy(timeout.Value), HttpPipelinePosition.PerCall);
 
-                var result = QueryBatch(new BatchRequest(batch.Requests), context);
+                var result = QueryBatch(new BatchContent(batch.Requests), context);
                 response = Response.FromValue((BatchResult)result, result);
             }
             else
             {
-                response = QueryBatch(new BatchRequest(batch.Requests), cancellationToken);
+                response = QueryBatch(new BatchContent(batch.Requests), cancellationToken);
             }
 
             var rawResponse = response.GetRawResponse();
@@ -403,12 +403,12 @@ namespace Azure.Monitor.Query.Logs
 
                 context.AddPolicy(new NetworkTimeoutPolicy(timeout.Value), HttpPipelinePosition.PerCall);
 
-                var result = await QueryBatchAsync(new BatchRequest(batch.Requests), context).ConfigureAwait(false);
+                var result = await QueryBatchAsync(new BatchContent(batch.Requests), context).ConfigureAwait(false);
                 response = Response.FromValue((BatchResult)result, result);
             }
             else
             {
-                response = await QueryBatchAsync(new BatchRequest(batch.Requests), cancellationToken).ConfigureAwait(false);
+                response = await QueryBatchAsync(new BatchContent(batch.Requests), cancellationToken).ConfigureAwait(false);
             }
 
             var rawResponse = response.GetRawResponse();

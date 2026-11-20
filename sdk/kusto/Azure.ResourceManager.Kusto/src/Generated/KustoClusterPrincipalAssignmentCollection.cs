@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentDataAsyncCollectionResultOfT(
                 _clusterPrincipalAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentDataCollectionResultOfT(
                 _clusterPrincipalAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

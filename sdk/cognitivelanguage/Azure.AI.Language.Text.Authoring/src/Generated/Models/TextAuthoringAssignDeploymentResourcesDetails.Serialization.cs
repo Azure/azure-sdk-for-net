@@ -157,7 +157,7 @@ namespace Azure.AI.Language.Text.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TextAuthoringAssignDeploymentResourcesDetails(resourcesMetadata, additionalBinaryDataProperties);
+            return new TextAuthoringAssignDeploymentResourcesDetails(resourcesMetadata ?? new ChangeTrackingList<TextAuthoringResourceMetadata>(), additionalBinaryDataProperties);
         }
     }
 }

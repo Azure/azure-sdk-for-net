@@ -19,7 +19,9 @@ This folder contains samples that show how to use the `Azure.Messaging.WebPubSub
 Every sample assumes you have created and authenticated a `WebPubSubChatServiceClient`:
 
 ```C# Snippet:WebPubSubChatAuthenticateWithConnectionString
+// <ChatDotNet_AuthenticateWithConnectionString>
 var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
+// </ChatDotNet_AuthenticateWithConnectionString>
 ```
 
 See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/README.md) for other ways to authenticate the client.

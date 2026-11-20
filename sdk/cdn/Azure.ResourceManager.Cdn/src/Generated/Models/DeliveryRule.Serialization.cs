@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeliveryRule(name, order, conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions, additionalBinaryDataProperties);
+            return new DeliveryRule(name, order, conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions ?? new ChangeTrackingList<DeliveryRuleAction>(), additionalBinaryDataProperties);
         }
     }
 }

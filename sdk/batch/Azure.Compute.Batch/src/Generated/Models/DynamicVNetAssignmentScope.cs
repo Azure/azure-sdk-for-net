@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="DynamicVNetAssignmentScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynamicVNetAssignmentScope?(string value) => value == null ? null : new DynamicVNetAssignmentScope(value);
+        public static implicit operator DynamicVNetAssignmentScope?(string value) => value == null ? (DynamicVNetAssignmentScope?)null : new DynamicVNetAssignmentScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

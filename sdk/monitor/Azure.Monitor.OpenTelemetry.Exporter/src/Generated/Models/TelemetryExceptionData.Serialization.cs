@@ -235,7 +235,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 version,
                 kind,
                 additionalProperties,
-                exceptions,
+                exceptions ?? new ChangeTrackingList<TelemetryExceptionDetails>(),
                 severityLevel,
                 problemId,
                 properties ?? new ChangeTrackingDictionary<string, string>(),

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogicAppWorkflowEnvelopeData, LogicAppWorkflowEnvelopeResource>(new LogicAppsGetWorkflowsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LogicAppWorkflowEnvelopeData, LogicAppWorkflowEnvelopeResource>(new LogicAppWorkflowEnvelopeDataAsyncCollectionResultOfT(
                 _logicAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogicAppWorkflowEnvelopeData, LogicAppWorkflowEnvelopeResource>(new LogicAppsGetWorkflowsCollectionResultOfT(
+            return new PageableWrapper<LogicAppWorkflowEnvelopeData, LogicAppWorkflowEnvelopeResource>(new LogicAppWorkflowEnvelopeDataCollectionResultOfT(
                 _logicAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

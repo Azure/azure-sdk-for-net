@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new StorageMoverAgentDataAsyncCollectionResultOfT(
                 _agentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllCollectionResultOfT(
+            return new PageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new StorageMoverAgentDataCollectionResultOfT(
                 _agentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="FoundryModelSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FoundryModelSourceType?(string value) => value == null ? null : new FoundryModelSourceType(value);
+        public static implicit operator FoundryModelSourceType?(string value) => value == null ? (FoundryModelSourceType?)null : new FoundryModelSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Maps.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MapsCorsRule(allowedOrigins, additionalBinaryDataProperties);
+            return new MapsCorsRule(allowedOrigins ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExperimentList(value, nextLink, additionalBinaryDataProperties);
+            return new ExperimentList(value ?? new ChangeTrackingList<FrontDoorExperimentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

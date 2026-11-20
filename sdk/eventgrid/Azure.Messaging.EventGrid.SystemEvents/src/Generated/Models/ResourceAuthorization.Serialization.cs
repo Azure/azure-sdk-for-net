@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceAuthorization(scope, action, evidence, additionalBinaryDataProperties);
+            return new ResourceAuthorization(scope, action, evidence ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

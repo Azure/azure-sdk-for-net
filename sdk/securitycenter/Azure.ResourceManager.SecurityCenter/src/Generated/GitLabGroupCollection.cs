@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupDataAsyncCollectionResultOfT(
                 _gitLabGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupsGetAllCollectionResultOfT(
+            return new PageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupDataCollectionResultOfT(
                 _gitLabGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

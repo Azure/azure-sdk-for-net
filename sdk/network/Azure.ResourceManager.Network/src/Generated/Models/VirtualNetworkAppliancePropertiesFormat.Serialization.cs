@@ -74,10 +74,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkAppliancePropertiesFormat)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BandwidthInGbps))
+            if (Optional.IsDefined(BandwidthGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
-                writer.WriteNumberValue(BandwidthInGbps.Value);
+                writer.WriteNumberValue(BandwidthGbps.Value);
+            }
+            if (Optional.IsDefined(CapacityProvider))
+            {
+                writer.WritePropertyName("capacityProvider"u8);
+                writer.WriteObjectValue(CapacityProvider, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -151,9 +156,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            double? bandwidthInGbps = default;
+            double? bandwidthGbps = default;
+            NetworkSubResource capacityProvider = default;
             IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default;
-            VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default;
+            VirtualNetworkApplianceIPVersionType? privateIPAddressVersion = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             SubnetData subnet = default;
@@ -166,7 +172,16 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bandwidthInGbps = prop.Value.GetDouble();
+                    bandwidthGbps = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("capacityProvider"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityProvider = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ipConfigurations"u8))
@@ -189,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    privateIPAddressVersion = new VirtualNetworkApplianceIpVersionType(prop.Value.GetString());
+                    privateIPAddressVersion = new VirtualNetworkApplianceIPVersionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -225,7 +240,8 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new VirtualNetworkAppliancePropertiesFormat(
-                bandwidthInGbps,
+                bandwidthGbps,
+                capacityProvider,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>(),
                 privateIPAddressVersion,
                 provisioningState,

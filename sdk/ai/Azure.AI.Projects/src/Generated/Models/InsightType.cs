@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="InsightType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InsightType?(string value) => value == null ? null : new InsightType(value);
+        public static implicit operator InsightType?(string value) => value == null ? (InsightType?)null : new InsightType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

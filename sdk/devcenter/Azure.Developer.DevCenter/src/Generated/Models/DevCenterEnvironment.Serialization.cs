@@ -19,11 +19,6 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Properties of an environment. </summary>
     public partial class DevCenterEnvironment : IJsonModel<DevCenterEnvironment>
     {
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/> for deserialization. </summary>
-        internal DevCenterEnvironment()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevCenterEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConditionalCreditList(value, nextLink, additionalBinaryDataProperties);
+            return new ConditionalCreditList(value ?? new ChangeTrackingList<ConditionalCreditData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

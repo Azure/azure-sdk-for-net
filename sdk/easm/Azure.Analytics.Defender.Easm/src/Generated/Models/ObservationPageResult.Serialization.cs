@@ -181,7 +181,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ObservationPageResult(totalElements, prioritySummary, value, additionalBinaryDataProperties);
+            return new ObservationPageResult(totalElements, prioritySummary ?? new ChangeTrackingDictionary<string, int>(), value ?? new ChangeTrackingList<ObservationResult>(), additionalBinaryDataProperties);
         }
     }
 }

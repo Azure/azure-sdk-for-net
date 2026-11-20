@@ -169,7 +169,7 @@ namespace Azure.Communication.JobRouter
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedDistributionPolicy(value, nextLink, additionalBinaryDataProperties);
+            return new PagedDistributionPolicy(value ?? new ChangeTrackingList<DistributionPolicy>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

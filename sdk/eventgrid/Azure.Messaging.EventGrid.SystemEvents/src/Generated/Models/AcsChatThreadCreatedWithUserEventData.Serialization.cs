@@ -275,9 +275,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 createTime,
                 version,
                 createdByCommunicationIdentifier,
-                properties,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                participants,
+                participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>(),
                 retentionPolicy);
         }
 

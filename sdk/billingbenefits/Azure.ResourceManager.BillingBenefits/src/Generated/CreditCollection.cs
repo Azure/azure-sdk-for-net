@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(CreditResource.ResourceType, out string creditApiVersion);
             _creditsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", CreditResource.ResourceType.Namespace, Diagnostics);
-            _creditsRestClient = new Credits(_creditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, creditApiVersion ?? "2025-12-01-preview");
+            _creditsRestClient = new Credits(
+                _creditsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                creditApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditsGetByResourceGroupAsyncCollectionResultOfT(_creditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CreditCollection.GetAll"), data => new CreditResource(Client, data));
+            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditDataAsyncCollectionResultOfT(_creditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CreditCollection.GetAll"), data => new CreditResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CreditData, CreditResource>(new CreditsGetByResourceGroupCollectionResultOfT(_creditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CreditCollection.GetAll"), data => new CreditResource(Client, data));
+            return new PageableWrapper<CreditData, CreditResource>(new CreditDataCollectionResultOfT(_creditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CreditCollection.GetAll"), data => new CreditResource(Client, data));
         }
 
         /// <summary>

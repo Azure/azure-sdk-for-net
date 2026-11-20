@@ -124,6 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string offerReplacePending = default;
             string instantMaximumThroughput = default;
             string softAllowedMaximumThroughput = default;
+            IList<CosmosDBThroughputBucket> throughputBuckets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string rid = default;
             float? timestamp = default;
@@ -168,6 +169,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     softAllowedMaximumThroughput = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("throughputBuckets"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CosmosDBThroughputBucket> array = new List<CosmosDBThroughputBucket>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(CosmosDBThroughputBucket.DeserializeCosmosDBThroughputBucket(item, options));
+                    }
+                    throughputBuckets = array;
+                    continue;
+                }
                 if (prop.NameEquals("_rid"u8))
                 {
                     rid = prop.Value.GetString();
@@ -203,6 +218,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 offerReplacePending,
                 instantMaximumThroughput,
                 softAllowedMaximumThroughput,
+                throughputBuckets ?? new ChangeTrackingList<CosmosDBThroughputBucket>(),
                 additionalBinaryDataProperties,
                 rid,
                 timestamp,

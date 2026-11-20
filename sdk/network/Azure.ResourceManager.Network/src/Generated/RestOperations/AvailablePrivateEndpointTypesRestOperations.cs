@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAvailablePrivateEndpointTypesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetAvailablePrivateEndpointTypesRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/availablePrivateEndpointTypes", false);
             if (_apiVersion != null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAvailablePrivateEndpointTypesRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetAvailablePrivateEndpointTypesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAvailablePrivateEndpointTypesByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string location, RequestContext context)
+        internal HttpMessage CreateGetAvailablePrivateEndpointTypesByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/availablePrivateEndpointTypes", false);
             if (_apiVersion != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAvailablePrivateEndpointTypesByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string location, RequestContext context)
+        internal HttpMessage CreateNextGetAvailablePrivateEndpointTypesByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

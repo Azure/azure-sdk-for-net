@@ -1,14 +1,19 @@
 # Release History
 
-## 12.0.0-preview.66 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 12.0.0-preview.68 (2026-11-19)
 
 ### Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.31.0-beta.2
+
+## 12.0.0-preview.67 (2026-11-05)
+
+### Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.31.0-beta.1
+
+## 12.0.0-preview.66 (2026-10-05)
+
+### Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.30.1
 
 ## 12.0.0-preview.65 (2026-09-28)
 

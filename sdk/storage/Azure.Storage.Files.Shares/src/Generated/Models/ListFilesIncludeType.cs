@@ -16,6 +16,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Attributes. </summary>
         Attributes,
         /// <summary> PermissionKey. </summary>
-        PermissionKey
+        PermissionKey,
+        /// <summary> Permissions. </summary>
+        Permissions,
+        /// <summary> LinkCount. </summary>
+        LinkCount,
+        /// <summary> NfsAttributes. </summary>
+        NfsAttributes,
+        /// <summary> All. </summary>
+        All
     }
 }

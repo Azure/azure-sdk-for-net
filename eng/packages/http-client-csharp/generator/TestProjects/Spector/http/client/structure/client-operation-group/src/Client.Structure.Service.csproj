@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Client.Structure.Service client library for developing .NET applications with rich experience.</Description>
+    <Description>The Client.Structure.Service client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Client.Structure.Service</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Client.Structure.Service</PackageTags>

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BulkDeploySolutionContent(targets, additionalBinaryDataProperties);
+            return new BulkDeploySolutionContent(targets ?? new ChangeTrackingList<BulkDeployTargetDetails>(), additionalBinaryDataProperties);
         }
     }
 }

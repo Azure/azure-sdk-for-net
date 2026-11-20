@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageTaskPreviewActionProperties(container, blobs, action, additionalBinaryDataProperties);
+            return new StorageTaskPreviewActionProperties(container, blobs ?? new ChangeTrackingList<StorageTaskPreviewBlobProperties>(), action, additionalBinaryDataProperties);
         }
     }
 }

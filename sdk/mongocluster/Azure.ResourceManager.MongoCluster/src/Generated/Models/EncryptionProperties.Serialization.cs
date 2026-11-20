@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The encryption configuration for the mongo cluster. </summary>
+    /// <summary> The encryption configuration for the DocumentDB cluster. </summary>
     internal partial class EncryptionProperties : IJsonModel<EncryptionProperties>
     {
         /// <param name="data"> The data to parse. </param>

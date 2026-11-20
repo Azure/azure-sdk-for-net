@@ -215,8 +215,8 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             return new SingleLabelClassificationEvalSummary(
-                confusionMatrix,
-                classes,
+                confusionMatrix ?? new ChangeTrackingDictionary<string, TextAuthoringConfusionMatrixRow>(),
+                classes ?? new ChangeTrackingDictionary<string, SingleLabelClassEvalSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

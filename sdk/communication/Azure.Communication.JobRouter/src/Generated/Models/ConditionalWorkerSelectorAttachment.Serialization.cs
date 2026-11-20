@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConditionalWorkerSelectorAttachment(kind, additionalBinaryDataProperties, condition, workerSelectors);
+            return new ConditionalWorkerSelectorAttachment(kind, additionalBinaryDataProperties, condition, workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>());
         }
     }
 }

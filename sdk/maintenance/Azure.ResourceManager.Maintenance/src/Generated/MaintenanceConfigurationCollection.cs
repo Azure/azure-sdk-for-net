@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string maintenanceConfigurationApiVersion);
             _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion ?? "2025-10-01-preview");
+            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Maintenance/maintenanceConfigurations", out string maintenanceConfigurationsApiVersionOverride) ? maintenanceConfigurationsApiVersionOverride : "2025-10-01-preview");
             _maintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
             _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(_maintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsForResourceGroupGetAllAsyncCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationDataAsync1CollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsForResourceGroupGetAllCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationData1CollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>

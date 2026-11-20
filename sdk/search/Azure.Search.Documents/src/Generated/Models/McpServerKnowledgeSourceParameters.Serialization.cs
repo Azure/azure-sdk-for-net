@@ -170,7 +170,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new McpServerKnowledgeSourceParameters(serverURL, authentication, tools, additionalBinaryDataProperties);
+            return new McpServerKnowledgeSourceParameters(serverURL, authentication, tools ?? new ChangeTrackingList<McpServerTool>(), additionalBinaryDataProperties);
         }
     }
 }

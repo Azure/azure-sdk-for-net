@@ -169,7 +169,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OperationPagedResult(value, nextLink, additionalBinaryDataProperties);
+            return new OperationPagedResult(value ?? new ChangeTrackingList<PlanetaryComputerOperation>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

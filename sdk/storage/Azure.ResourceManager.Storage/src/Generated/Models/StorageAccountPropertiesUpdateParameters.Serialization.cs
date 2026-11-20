@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("accessTier"u8);
                 writer.WriteStringValue(AccessTier.Value.ToSerialString());
             }
+            if (Optional.IsDefined(TurboTier))
+            {
+                writer.WritePropertyName("turboTier"u8);
+                writer.WriteObjectValue(TurboTier, options);
+            }
             if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication"u8);
@@ -256,6 +261,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountSasPolicy sasPolicy = default;
             KeyPolicy keyPolicy = default;
             StorageAccountAccessTier? accessTier = default;
+            TurboTier turboTier = default;
             FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default;
             bool? enableHttpsTrafficOnly = default;
             bool? isSftpEnabled = default;
@@ -324,6 +330,15 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     accessTier = prop.Value.GetString().ToStorageAccountAccessTier();
+                    continue;
+                }
+                if (prop.NameEquals("turboTier"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    turboTier = TurboTier.DeserializeTurboTier(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureFilesIdentityBasedAuthentication"u8))
@@ -535,6 +550,7 @@ namespace Azure.ResourceManager.Storage.Models
                 sasPolicy,
                 keyPolicy,
                 accessTier,
+                turboTier,
                 azureFilesIdentityBasedAuthentication,
                 enableHttpsTrafficOnly,
                 isSftpEnabled,

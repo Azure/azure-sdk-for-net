@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReservationOrderList(value, nextLink, additionalBinaryDataProperties);
+            return new ReservationOrderList(value ?? new ChangeTrackingList<BillingReservationOrderData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

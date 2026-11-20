@@ -169,7 +169,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedQuestionAnsweringProjectMetadata(value, nextLink, additionalBinaryDataProperties);
+            return new PagedQuestionAnsweringProjectMetadata(value ?? new ChangeTrackingList<QuestionAnsweringProject>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -19,9 +19,6 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string BlockValue = "Block";
         private const string LogValue = "Log";
         private const string RedirectValue = "Redirect";
-        private const string AnomalyScoringValue = "AnomalyScoring";
-        private const string JSChallengeValue = "JSChallenge";
-        private const string CAPTCHAValue = "CAPTCHA";
 
         /// <summary> Initializes a new instance of <see cref="OverrideActionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,15 +41,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the Redirect. </summary>
         public static OverrideActionType Redirect { get; } = new OverrideActionType(RedirectValue);
-
-        /// <summary> Gets the AnomalyScoring. </summary>
-        public static OverrideActionType AnomalyScoring { get; } = new OverrideActionType(AnomalyScoringValue);
-
-        /// <summary> Gets the JSChallenge. </summary>
-        public static OverrideActionType JSChallenge { get; } = new OverrideActionType(JSChallengeValue);
-
-        /// <summary> Gets the CAPTCHA. </summary>
-        public static OverrideActionType CAPTCHA { get; } = new OverrideActionType(CAPTCHAValue);
 
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

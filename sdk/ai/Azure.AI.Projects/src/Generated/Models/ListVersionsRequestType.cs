@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="ListVersionsRequestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListVersionsRequestType?(string value) => value == null ? null : new ListVersionsRequestType(value);
+        public static implicit operator ListVersionsRequestType?(string value) => value == null ? (ListVersionsRequestType?)null : new ListVersionsRequestType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

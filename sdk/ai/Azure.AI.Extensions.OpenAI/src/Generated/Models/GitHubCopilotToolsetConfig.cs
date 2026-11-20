@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> An enablement override for a GitHub Copilot built-in tool. </summary>
+    /// <summary> The legacy per-tool enablement override retained for compatibility. Use `MicrosoftCopilotToolsetConfig` for new integrations. </summary>
     public partial class GitHubCopilotToolsetConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -161,7 +161,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InternalFileListResult(@object, data, additionalBinaryDataProperties);
+            return new InternalFileListResult(@object, data ?? new ChangeTrackingList<PersistentAgentFileInfo>(), additionalBinaryDataProperties);
         }
     }
 }

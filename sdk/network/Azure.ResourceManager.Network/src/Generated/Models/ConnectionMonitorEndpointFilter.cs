@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilter"/>. </summary>
-        /// <param name="type"> The behavior of the endpoint filter. Currently only 'Include' is supported. </param>
+        /// <param name="filterType"> The behavior of the endpoint filter. Currently only 'Include' is supported. </param>
         /// <param name="items"> List of items in the filter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? @type, IList<ConnectionMonitorEndpointFilterItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? filterType, IList<ConnectionMonitorEndpointFilterItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            FilterType = filterType;
             Items = items;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The behavior of the endpoint filter. Currently only 'Include' is supported. </summary>
         [WirePath("type")]
-        public ConnectionMonitorEndpointFilterType? Type { get; set; }
+        public ConnectionMonitorEndpointFilterType? FilterType { get; set; }
 
         /// <summary> List of items in the filter. </summary>
         [WirePath("items")]

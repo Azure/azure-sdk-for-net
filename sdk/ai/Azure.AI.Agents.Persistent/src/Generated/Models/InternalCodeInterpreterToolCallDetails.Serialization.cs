@@ -153,7 +153,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InternalCodeInterpreterToolCallDetails(input, outputs, additionalBinaryDataProperties);
+            return new InternalCodeInterpreterToolCallDetails(input, outputs ?? new ChangeTrackingList<RunStepCodeInterpreterToolCallOutput>(), additionalBinaryDataProperties);
         }
     }
 }

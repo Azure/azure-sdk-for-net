@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
-/// Internal control signal yielded by <see cref="ResponseEventStream.Checkpoint"/>. It carries the
+/// Internal control signal yielded by <see cref="ResponseEventStream.CreateCheckpointEvent"/>. It carries the
 /// live response snapshot to the orchestrator, which persists it (gated to resilient background
 /// responses) and then resumes the handler. It is NEVER forwarded to the SSE wire — the orchestrator
 /// intercepts it by CLR type before any wire coercion.
@@ -16,6 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// serialization; the interception is purely type-based.
 /// </para>
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseCheckpointEvent : ResponseStreamEvent
 {
     /// <summary>The reserved, never-serialized discriminator for the checkpoint control signal.</summary>

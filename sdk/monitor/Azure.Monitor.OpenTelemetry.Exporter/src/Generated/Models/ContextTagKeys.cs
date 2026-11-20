@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> Device type. </summary>
         private const string AiDeviceTypeValue = "ai.device.type";
         /// <summary> Location IP. </summary>
-        private const string AiLocationIpValue = "ai.location.ip";
+        private const string AiLocationIPValue = "ai.location.ip";
         /// <summary> Location country. </summary>
         private const string AiLocationCountryValue = "ai.location.country";
         /// <summary> Location province. </summary>
@@ -99,7 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public static ContextTagKeys AiDeviceType { get; } = new ContextTagKeys(AiDeviceTypeValue);
 
         /// <summary> Location IP. </summary>
-        public static ContextTagKeys AiLocationIp { get; } = new ContextTagKeys(AiLocationIpValue);
+        public static ContextTagKeys AiLocationIP { get; } = new ContextTagKeys(AiLocationIPValue);
 
         /// <summary> Location country. </summary>
         public static ContextTagKeys AiLocationCountry { get; } = new ContextTagKeys(AiLocationCountryValue);
@@ -177,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Converts a string to a <see cref="ContextTagKeys"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContextTagKeys?(string value) => value == null ? null : new ContextTagKeys(value);
+        public static implicit operator ContextTagKeys?(string value) => value == null ? (ContextTagKeys?)null : new ContextTagKeys(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Retry settings for a scheduled action operation. </summary>
+    /// <summary> Retry settings for a recurring bulk action operation. </summary>
     public partial class ScheduledActionsRetryPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

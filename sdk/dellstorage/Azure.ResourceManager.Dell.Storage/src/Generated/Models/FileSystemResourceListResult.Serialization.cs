@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FileSystemResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FileSystemResourceListResult(value ?? new ChangeTrackingList<DellFileSystemData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

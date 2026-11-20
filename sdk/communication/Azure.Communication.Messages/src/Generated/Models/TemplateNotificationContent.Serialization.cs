@@ -152,7 +152,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TemplateNotificationContent(channelRegistrationId, to, kind, additionalBinaryDataProperties, template);
+            return new TemplateNotificationContent(channelRegistrationId, to ?? new ChangeTrackingList<string>(), kind, additionalBinaryDataProperties, template);
         }
     }
 }

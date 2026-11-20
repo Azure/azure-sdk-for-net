@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -149,10 +137,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +157,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -197,10 +179,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -222,10 +201,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -243,10 +219,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -267,10 +240,7 @@ namespace Azure.ResourceManager.ManagedApplications
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2023-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -287,10 +257,7 @@ namespace Azure.ResourceManager.ManagedApplications
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -311,10 +278,7 @@ namespace Azure.ResourceManager.ManagedApplications
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2023-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventCategoriesGetEventCategoriesAsyncCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetEventCategories");
+            return new MonitorLocalizableStringAsyncCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetEventCategories");
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventCategoriesGetEventCategoriesCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetEventCategories");
+            return new MonitorLocalizableStringCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetEventCategories");
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantActivityLogsGetTenantActivityLogsAsyncCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetTenantActivityLogs");
+            return new EventDataInfoAsync0CollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetTenantActivityLogs");
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantActivityLogsGetTenantActivityLogsCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetTenantActivityLogs");
+            return new EventDataInfo0CollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetTenantActivityLogs");
         }
     }
 }

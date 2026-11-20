@@ -236,7 +236,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 id,
                 status,
                 createdOn,
-                statusHistory,
+                statusHistory ?? new ChangeTrackingList<PlanetaryComputerOperationStatusHistoryItem>(),
                 startedOn,
                 finishedOn,
                 totalItems,

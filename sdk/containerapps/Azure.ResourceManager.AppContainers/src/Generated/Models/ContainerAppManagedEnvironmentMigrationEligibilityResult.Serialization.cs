@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 environmentName,
                 currentMode,
                 targetMode,
-                failureReasons,
+                failureReasons ?? new ChangeTrackingList<ContainerAppManagedEnvironmentMigrationEligibilityFailureReason>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MultiService.Combined.Models;
 
 namespace Azure.ResourceManager.MultiService.Combined
 {
@@ -16,11 +15,9 @@ namespace Azure.ResourceManager.MultiService.Combined
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DiskData))]
-    [ModelReaderWriterBuildable(typeof(DiskProperties))]
     [ModelReaderWriterBuildable(typeof(DiskResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineData))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineResource))]
     public partial class AzureResourceManagerMultiServiceCombinedContext : ModelReaderWriterContext
     {

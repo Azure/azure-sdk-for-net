@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperatorApiPlanData, OperatorApiPlanResource>(new OperatorApiPlansGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OperatorApiPlanData, OperatorApiPlanResource>(new OperatorApiPlanDataAsyncCollectionResultOfT(
                 _operatorApiPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperatorApiPlanData, OperatorApiPlanResource>(new OperatorApiPlansGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<OperatorApiPlanData, OperatorApiPlanResource>(new OperatorApiPlanDataCollectionResultOfT(
                 _operatorApiPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,

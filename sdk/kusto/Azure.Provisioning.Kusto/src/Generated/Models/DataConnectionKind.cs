@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.Kusto
 {
     /// <summary> Kind of the endpoint for the data connection. </summary>
@@ -17,7 +19,8 @@ namespace Azure.Provisioning.Kusto
         /// <summary> IotHub. </summary>
         IotHub = 2,
         /// <summary> CosmosDb. </summary>
-        CosmosDb = 3,
+        [DataMember(Name = "CosmosDb")]
+        CosmosDB = 3,
         /// <summary> EventHubWithManagedIdentity. </summary>
         EventHubWithManagedIdentity = 4,
         /// <summary> EventGridWithManagedIdentity. </summary>

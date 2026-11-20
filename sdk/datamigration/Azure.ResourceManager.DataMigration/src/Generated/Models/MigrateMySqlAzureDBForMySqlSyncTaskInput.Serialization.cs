@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrateMySqlAzureDBForMySqlSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, additionalBinaryDataProperties);
+            return new MigrateMySqlAzureDBForMySqlSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases ?? new ChangeTrackingList<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>(), additionalBinaryDataProperties);
         }
     }
 }

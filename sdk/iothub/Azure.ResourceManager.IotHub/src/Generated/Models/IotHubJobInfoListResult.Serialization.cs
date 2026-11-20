@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotHubJobInfoListResult(value, nextLink, additionalBinaryDataProperties);
+            return new IotHubJobInfoListResult(value ?? new ChangeTrackingList<IotHubJobInfo>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

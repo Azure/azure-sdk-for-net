@@ -4,10 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
+    /// <summary>
+    /// A target that identifies an Azure AI model.
+    /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
+    /// </summary>
     public partial class AzureAIModelTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIModelTarget"/>. </summary>
@@ -18,18 +22,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="AzureAIModelTarget"/>. </summary>
         /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="model"> The unique identifier of the Azure AI model. </param>
-        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
-        internal AzureAIModelTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, ModelSamplingParams samplingParams) : base(@type, additionalBinaryDataProperties)
+        /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
+        /// <param name="samplingParameters"> The parameters used to control the sampling behavior of the model during text generation. </param>
+        internal AzureAIModelTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, ModelSamplingParams samplingParameters) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
-            SamplingParams = samplingParams;
+            SamplingParameters = samplingParameters;
         }
 
-        /// <summary> The unique identifier of the Azure AI model. </summary>
+        /// <summary> The name of the model deployment to invoke as the evaluation target. </summary>
         public string Model { get; set; }
 
         /// <summary> The parameters used to control the sampling behavior of the model during text generation. </summary>
-        public ModelSamplingParams SamplingParams { get; set; }
+        public ModelSamplingParams SamplingParameters { get; set; }
     }
 }

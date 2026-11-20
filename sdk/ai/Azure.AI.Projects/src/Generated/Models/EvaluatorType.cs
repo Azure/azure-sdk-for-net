@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The type of the evaluator. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct EvaluatorType : IEquatable<EvaluatorType>
     {
         private readonly string _value;
@@ -50,7 +48,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="EvaluatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorType?(string value) => value == null ? null : new EvaluatorType(value);
+        public static implicit operator EvaluatorType?(string value) => value == null ? (EvaluatorType?)null : new EvaluatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryTaskRunData, ContainerRegistryTaskRunResource>(new TaskRunsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerRegistryTaskRunData, ContainerRegistryTaskRunResource>(new ContainerRegistryTaskRunDataAsyncCollectionResultOfT(
                 _taskRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryTaskRunData, ContainerRegistryTaskRunResource>(new TaskRunsGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerRegistryTaskRunData, ContainerRegistryTaskRunResource>(new ContainerRegistryTaskRunDataCollectionResultOfT(
                 _taskRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

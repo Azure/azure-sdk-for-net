@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="keyName"> Name of the key vault key. </param>
         /// <param name="keyVersion"> Version of the key vault key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnectorCredentials(AuthCredentialsKind? kind, string clientId, string keyVaultUri, string keyName, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataConnectorCredentials(AuthCredentialsKind? kind, string clientId, Uri keyVaultUri, string keyName, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ClientId = clientId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public string ClientId { get; set; }
 
         /// <summary> Uri of the key vault. </summary>
-        public string KeyVaultUri { get; set; }
+        public Uri KeyVaultUri { get; set; }
 
         /// <summary> Name of the key vault key. </summary>
         public string KeyName { get; set; }

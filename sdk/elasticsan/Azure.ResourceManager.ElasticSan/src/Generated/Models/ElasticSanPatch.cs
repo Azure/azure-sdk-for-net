@@ -91,6 +91,57 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
+        /// <summary> Total Provisioned IOPS of the Elastic San appliance. Supported only for ElasticSanVersion V2. </summary>
+        public long? TotalIops
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalIops;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticSanUpdateProperties();
+                }
+                Properties.TotalIops = value;
+            }
+        }
+
+        /// <summary> Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2. </summary>
+        public long? TotalMbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalMbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticSanUpdateProperties();
+                }
+                Properties.TotalMbps = value;
+            }
+        }
+
+        /// <summary> Total size of the Elastic San appliance in TB. Supported only for ElasticSanVersion V2. </summary>
+        public long? TotalSizeTiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalSizeTiB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticSanUpdateProperties();
+                }
+                Properties.TotalSizeTiB = value;
+            }
+        }
+
         /// <summary> Scale up settings on Elastic San Appliance. </summary>
         public ElasticSanScaleUpProperties ScaleUpProperties
         {

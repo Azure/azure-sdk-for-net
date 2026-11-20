@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SentimentResult(errors, statistics, modelVersion, documents, additionalBinaryDataProperties);
+            return new SentimentResult(errors ?? new ChangeTrackingList<DocumentError>(), statistics, modelVersion, documents ?? new ChangeTrackingList<SentimentActionResult>(), additionalBinaryDataProperties);
         }
     }
 }

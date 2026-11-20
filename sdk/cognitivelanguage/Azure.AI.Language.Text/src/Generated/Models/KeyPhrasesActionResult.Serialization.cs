@@ -216,9 +216,9 @@ namespace Azure.AI.Language.Text
             }
             return new KeyPhrasesActionResult(
                 id,
-                warnings,
+                warnings ?? new ChangeTrackingList<DocumentWarning>(),
                 statistics,
-                keyPhrases,
+                keyPhrases ?? new ChangeTrackingList<string>(),
                 detectedLanguage,
                 additionalBinaryDataProperties);
         }

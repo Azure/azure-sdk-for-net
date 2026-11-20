@@ -24,7 +24,6 @@
             "$id": "3",
             "name": "normal",
             "isExactName": false,
-            "resourceName": "Path",
             "accessibility": "public",
             "parameters": [
               {
@@ -118,7 +117,6 @@
             "$id": "9",
             "name": "optional",
             "isExactName": false,
-            "resourceName": "Path",
             "accessibility": "public",
             "parameters": [
               {

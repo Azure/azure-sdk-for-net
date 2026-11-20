@@ -154,7 +154,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AnalyzeResult(tokens, additionalBinaryDataProperties);
+            return new AnalyzeResult(tokens ?? new ChangeTrackingList<AnalyzedTokenInfo>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvailableSkusResult(value, nextLink, additionalBinaryDataProperties);
+            return new AvailableSkusResult(value ?? new ChangeTrackingList<DataBoxSkuInformation>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

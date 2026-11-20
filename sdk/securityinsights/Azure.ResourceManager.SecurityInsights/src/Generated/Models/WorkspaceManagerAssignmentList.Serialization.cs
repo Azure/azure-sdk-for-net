@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceManagerAssignmentList(value, nextLink, additionalBinaryDataProperties);
+            return new WorkspaceManagerAssignmentList(value ?? new ChangeTrackingList<WorkspaceManagerAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

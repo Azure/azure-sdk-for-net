@@ -48,6 +48,17 @@ internal static partial class ApplyPatchToolCallOutputItemParamValidator
             }
         }
 
+        // Optional: caller
+        if (element.TryGetProperty("caller", out var callerProp) && callerProp.ValueKind != JsonValueKind.Null)
+        {
+            var callerResult = ToolCallCallerParamValidator.Validate(callerProp);
+            if (!callerResult.IsValid)
+            {
+                foreach (var e in callerResult.Errors)
+                    errors.Add(new ValidationError("$.caller" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         // Optional: id
         if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
         {

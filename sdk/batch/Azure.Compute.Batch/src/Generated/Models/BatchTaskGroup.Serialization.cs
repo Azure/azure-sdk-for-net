@@ -157,7 +157,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchTaskGroup(tasks, additionalBinaryDataProperties);
+            return new BatchTaskGroup(tasks ?? new ChangeTrackingList<BatchTaskCreateOptions>(), additionalBinaryDataProperties);
         }
     }
 }

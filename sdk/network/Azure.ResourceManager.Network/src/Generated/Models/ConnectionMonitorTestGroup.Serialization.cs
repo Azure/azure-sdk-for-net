@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectionMonitorTestGroup(
                 name,
                 disable,
-                testConfigurations,
-                sources,
-                destinations,
+                testConfigurations ?? new ChangeTrackingList<string>(),
+                sources ?? new ChangeTrackingList<string>(),
+                destinations ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

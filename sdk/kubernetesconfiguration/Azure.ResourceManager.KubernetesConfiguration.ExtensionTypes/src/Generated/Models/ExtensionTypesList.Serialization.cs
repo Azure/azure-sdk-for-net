@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExtensionTypesList(value, nextLink, additionalBinaryDataProperties);
+            return new ExtensionTypesList(value ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

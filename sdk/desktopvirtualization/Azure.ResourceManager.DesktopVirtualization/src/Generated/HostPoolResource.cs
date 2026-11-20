@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string hostPoolApiVersion);
             _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
+            _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/hostPools", out string hostPoolsApiVersionOverride) ? hostPoolsApiVersionOverride : "2026-03-01-preview");
             _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
             _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
             _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
+            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _userSessionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
@@ -444,7 +445,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageInfoImportAppAttachPackageInfosAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageDataAsync1CollectionResultOfT(
                 _appAttachPackageInfoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -487,7 +488,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageInfoImportAppAttachPackageInfosCollectionResultOfT(
+            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageData1CollectionResultOfT(
                 _appAttachPackageInfoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -526,7 +527,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new HostPoolsGetRegistrationTokensAsyncCollectionResultOfT(
+            return new DesktopVirtualizationRegistrationTokenMinimalAsyncCollectionResultOfT(
                 _hostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new HostPoolsGetRegistrationTokensCollectionResultOfT(
+            return new DesktopVirtualizationRegistrationTokenMinimalCollectionResultOfT(
                 _hostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -703,7 +704,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new MSIXImagesExpandMsixImagesAsyncCollectionResultOfT(
+            return new ExpandMsixImageAsyncCollectionResultOfT(
                 _msixImagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -747,7 +748,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new MSIXImagesExpandMsixImagesCollectionResultOfT(
+            return new ExpandMsixImageCollectionResultOfT(
                 _msixImagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -789,7 +790,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new DesktopVirtualizationPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -833,7 +834,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+            return new DesktopVirtualizationPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -877,7 +878,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanDataAsync1CollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -921,7 +922,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansCollectionResultOfT(
+            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanData1CollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -966,7 +967,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionDataAsync0CollectionResultOfT(
                 _userSessionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1012,7 +1013,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsCollectionResultOfT(
+            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionData0CollectionResultOfT(
                 _userSessionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1135,10 +1136,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1178,10 +1178,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

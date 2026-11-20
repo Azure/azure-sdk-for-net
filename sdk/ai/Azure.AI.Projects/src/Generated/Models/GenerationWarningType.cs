@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Category of a warning surfaced on a generated evaluator version. Extensible so new warning categories (e.g., safety, output quality) can be introduced without a breaking change. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct GenerationWarningType : IEquatable<GenerationWarningType>
     {
         private readonly string _value;
@@ -45,7 +43,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="GenerationWarningType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GenerationWarningType?(string value) => value == null ? null : new GenerationWarningType(value);
+        public static implicit operator GenerationWarningType?(string value) => value == null ? (GenerationWarningType?)null : new GenerationWarningType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

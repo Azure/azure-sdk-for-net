@@ -221,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal("127.0.0.1", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.Equal("127.0.0.1", telemetryItem?.Tags[ContextTagKeys.AiLocationIP.ToString()]);
 
             // Verify that client.address is not in custom properties (it's mapped to ai.location.ip instead)
             var requestData = telemetryItem?.Data?.BaseData as RequestData;
@@ -248,7 +248,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal("1.2.3.4", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.Equal("1.2.3.4", telemetryItem?.Tags[ContextTagKeys.AiLocationIP.ToString()]);
 
             // Verify that client.address is not in custom properties (it's mapped to ai.location.ip instead)
             var requestData = telemetryItem?.Data?.BaseData as RequestData;
@@ -276,7 +276,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal("1.2.3.4", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.Equal("1.2.3.4", telemetryItem?.Tags[ContextTagKeys.AiLocationIP.ToString()]);
 
             // Verify that client.address is not in custom properties (it's mapped to ai.location.ip instead)
             var dependencyData = telemetryItem?.Data?.BaseData as RemoteDependencyData;
@@ -342,7 +342,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(), out _));
+            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIP.ToString(), out _));
         }
 
         [Fact]

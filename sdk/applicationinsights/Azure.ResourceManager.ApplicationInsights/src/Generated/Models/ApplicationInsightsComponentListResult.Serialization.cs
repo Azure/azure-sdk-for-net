@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationInsightsComponentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationInsightsComponentListResult(value ?? new ChangeTrackingList<ApplicationInsightsComponentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

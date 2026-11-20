@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PolicySetDefinitionVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PolicySetDefinitionVersionListResult(value ?? new ChangeTrackingList<PolicySetDefinitionVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

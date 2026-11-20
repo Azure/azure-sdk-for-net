@@ -11,23 +11,23 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> A day of the week on which the scheduled action can run. </summary>
+    /// <summary> A day of the week on which the recurring bulk action can run. </summary>
     public readonly partial struct WeekDay : IEquatable<WeekDay>
     {
         private readonly string _value;
-        /// <summary> The scheduled action can run on Monday. </summary>
+        /// <summary> The recurring bulk action can run on Monday. </summary>
         private const string MondayValue = "Monday";
-        /// <summary> The scheduled action can run on Tuesday. </summary>
+        /// <summary> The recurring bulk action can run on Tuesday. </summary>
         private const string TuesdayValue = "Tuesday";
-        /// <summary> The scheduled action can run on Wednesday. </summary>
+        /// <summary> The recurring bulk action can run on Wednesday. </summary>
         private const string WednesdayValue = "Wednesday";
-        /// <summary> The scheduled action can run on Thursday. </summary>
+        /// <summary> The recurring bulk action can run on Thursday. </summary>
         private const string ThursdayValue = "Thursday";
-        /// <summary> The scheduled action can run on Friday. </summary>
+        /// <summary> The recurring bulk action can run on Friday. </summary>
         private const string FridayValue = "Friday";
-        /// <summary> The scheduled action can run on Saturday. </summary>
+        /// <summary> The recurring bulk action can run on Saturday. </summary>
         private const string SaturdayValue = "Saturday";
-        /// <summary> The scheduled action can run on Sunday. </summary>
+        /// <summary> The recurring bulk action can run on Sunday. </summary>
         private const string SundayValue = "Sunday";
         /// <summary> Every day of the week. </summary>
         private const string AllValue = "All";
@@ -42,25 +42,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> The scheduled action can run on Monday. </summary>
+        /// <summary> The recurring bulk action can run on Monday. </summary>
         public static WeekDay Monday { get; } = new WeekDay(MondayValue);
 
-        /// <summary> The scheduled action can run on Tuesday. </summary>
+        /// <summary> The recurring bulk action can run on Tuesday. </summary>
         public static WeekDay Tuesday { get; } = new WeekDay(TuesdayValue);
 
-        /// <summary> The scheduled action can run on Wednesday. </summary>
+        /// <summary> The recurring bulk action can run on Wednesday. </summary>
         public static WeekDay Wednesday { get; } = new WeekDay(WednesdayValue);
 
-        /// <summary> The scheduled action can run on Thursday. </summary>
+        /// <summary> The recurring bulk action can run on Thursday. </summary>
         public static WeekDay Thursday { get; } = new WeekDay(ThursdayValue);
 
-        /// <summary> The scheduled action can run on Friday. </summary>
+        /// <summary> The recurring bulk action can run on Friday. </summary>
         public static WeekDay Friday { get; } = new WeekDay(FridayValue);
 
-        /// <summary> The scheduled action can run on Saturday. </summary>
+        /// <summary> The recurring bulk action can run on Saturday. </summary>
         public static WeekDay Saturday { get; } = new WeekDay(SaturdayValue);
 
-        /// <summary> The scheduled action can run on Sunday. </summary>
+        /// <summary> The recurring bulk action can run on Sunday. </summary>
         public static WeekDay Sunday { get; } = new WeekDay(SundayValue);
 
         /// <summary> Every day of the week. </summary>

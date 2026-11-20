@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagementGroup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagementGroupChildResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ManagementGroupChildResourceListResult(value ?? new ChangeTrackingList<ManagementGroupChildResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

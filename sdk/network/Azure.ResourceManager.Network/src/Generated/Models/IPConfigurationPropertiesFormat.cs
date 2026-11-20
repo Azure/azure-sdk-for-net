@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IPConfigurationPropertiesFormat"/>. </summary>
-        internal IPConfigurationPropertiesFormat()
+        public IPConfigurationPropertiesFormat()
         {
         }
 
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("privateIPAddress")]
-        public string PrivateIPAddress { get; }
+        public string PrivateIPAddress { get; set; }
 
         /// <summary> The private IP address allocation method. </summary>
         [WirePath("privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
 
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("subnet")]
-        public SubnetData Subnet { get; }
+        public SubnetData Subnet { get; set; }
 
         /// <summary> The reference to the public IP resource. </summary>
         [WirePath("publicIPAddress")]
-        public PublicIPAddressData PublicIPAddress { get; }
+        public PublicIPAddressData PublicIPAddress { get; set; }
 
         /// <summary> The provisioning state of the IP configuration resource. </summary>
         [WirePath("provisioningState")]

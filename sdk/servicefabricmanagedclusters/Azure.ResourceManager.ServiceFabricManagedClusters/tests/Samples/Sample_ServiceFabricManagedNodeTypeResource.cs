@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine("Succeeded");
         }
 
-//         Preview only
+        //         Preview only
         // [Test]
         // [Ignore("Only validating compilation of examples")]
         // public async Task StartFaultSimulation_StartNodeTypeFaultSimulation()

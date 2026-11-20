@@ -6,7 +6,7 @@ namespace Azure.ResourceManager.Relationships
         public static Azure.ResourceManager.Relationships.AzureResourceManagerRelationshipsContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class DependencyOfRelationshipCollection : Azure.ResourceManager.ArmCollection
+    public partial class DependencyOfRelationshipCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>, System.Collections.IEnumerable
     {
         protected DependencyOfRelationshipCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.Relationships.DependencyOfRelationshipData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -14,9 +14,14 @@ namespace Azure.ResourceManager.Relationships
         public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class DependencyOfRelationshipData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>
     {
@@ -53,16 +58,60 @@ namespace Azure.ResourceManager.Relationships
     }
     public static partial class RelationshipsExtensions
     {
+        public static Azure.Pageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetByResourceGroupContainsRelationships(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetByResourceGroupContainsRelationshipsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetBySubscriptionContainsRelationships(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetBySubscriptionContainsRelationshipsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource> GetDependencyOfRelationship(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>> GetDependencyOfRelationshipAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Relationships.DependencyOfRelationshipResource GetDependencyOfRelationshipResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Relationships.DependencyOfRelationshipCollection GetDependencyOfRelationships(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> GetServiceGroupDependencyOfRelationship(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>> GetServiceGroupDependencyOfRelationshipAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource GetServiceGroupDependencyOfRelationshipResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipCollection GetServiceGroupDependencyOfRelationships(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> GetServiceGroupMemberRelationship(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>> GetServiceGroupMemberRelationshipAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource GetServiceGroupMemberRelationshipResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipCollection GetServiceGroupMemberRelationships(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
     }
-    public partial class ServiceGroupMemberRelationshipCollection : Azure.ResourceManager.ArmCollection
+    public partial class ServiceGroupDependencyOfRelationshipCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>, System.Collections.IEnumerable
+    {
+        protected ServiceGroupDependencyOfRelationshipCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.Relationships.DependencyOfRelationshipData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.Relationships.DependencyOfRelationshipData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ServiceGroupDependencyOfRelationshipResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ServiceGroupDependencyOfRelationshipResource() { }
+        public virtual Azure.ResourceManager.Relationships.DependencyOfRelationshipData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string serviceGroupName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Relationships.DependencyOfRelationshipData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relationships.DependencyOfRelationshipData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.DependencyOfRelationshipData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relationships.DependencyOfRelationshipData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relationships.DependencyOfRelationshipData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ServiceGroupMemberRelationshipCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>, System.Collections.IEnumerable
     {
         protected ServiceGroupMemberRelationshipCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -70,9 +119,14 @@ namespace Azure.ResourceManager.Relationships
         public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ServiceGroupMemberRelationshipData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipData>
     {
@@ -117,22 +171,73 @@ namespace Azure.ResourceManager.Relationships.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.DependencyOfRelationshipResource>> GetDependencyOfRelationshipAsync(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Relationships.DependencyOfRelationshipResource GetDependencyOfRelationshipResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Relationships.DependencyOfRelationshipCollection GetDependencyOfRelationships(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource> GetServiceGroupDependencyOfRelationship(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource>> GetServiceGroupDependencyOfRelationshipAsync(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipResource GetServiceGroupDependencyOfRelationshipResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relationships.ServiceGroupDependencyOfRelationshipCollection GetServiceGroupDependencyOfRelationships(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource> GetServiceGroupMemberRelationship(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource>> GetServiceGroupMemberRelationshipAsync(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipResource GetServiceGroupMemberRelationshipResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipCollection GetServiceGroupMemberRelationships(Azure.Core.ResourceIdentifier scope) { throw null; }
+    }
+    public partial class MockableRelationshipsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRelationshipsResourceGroupResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetByResourceGroupContainsRelationships(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetByResourceGroupContainsRelationshipsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableRelationshipsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRelationshipsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetBySubscriptionContainsRelationships(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relationships.Models.ContainsRelationship> GetBySubscriptionContainsRelationshipsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Relationships.Models
 {
     public static partial class ArmRelationshipsModelFactory
     {
+        public static Azure.ResourceManager.Relationships.Models.ContainsRelationship ContainsRelationship(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties ContainsRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string targetTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Relationships.DependencyOfRelationshipData DependencyOfRelationshipData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties DependencyOfRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string targetTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Relationships.Models.RelationshipMetadata RelationshipMetadata(Azure.Core.ResourceType sourceType = default(Azure.Core.ResourceType), Azure.Core.ResourceType targetType = default(Azure.Core.ResourceType)) { throw null; }
         public static Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation RelationshipOriginInformation(Azure.ResourceManager.Relationships.Models.RelationshipOriginType relationshipOriginType = default(Azure.ResourceManager.Relationships.Models.RelationshipOriginType), string discoveryEngine = null) { throw null; }
         public static Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipData ServiceGroupMemberRelationshipData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties ServiceGroupMemberRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string targetTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties ServiceGroupMemberRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string sourceTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState?)) { throw null; }
+    }
+    public partial class ContainsRelationship : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ContainsRelationship>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationship>
+    {
+        internal ContainsRelationship() { }
+        public Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Relationships.Models.ContainsRelationship System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ContainsRelationship>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ContainsRelationship>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relationships.Models.ContainsRelationship System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationship>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationship>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationship>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainsRelationshipProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties>
+    {
+        internal ContainsRelationshipProperties() { }
+        public Azure.ResourceManager.Relationships.Models.RelationshipMetadata Metadata { get { throw null; } }
+        public Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation OriginInformation { get { throw null; } }
+        public Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
+        public string TargetTenant { get { throw null; } }
+        protected virtual Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ContainsRelationshipProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DependencyOfRelationshipProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties>
     {
@@ -226,13 +331,13 @@ namespace Azure.ResourceManager.Relationships.Models
     }
     public partial class ServiceGroupMemberRelationshipProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties>
     {
-        public ServiceGroupMemberRelationshipProperties(Azure.Core.ResourceIdentifier targetId) { }
+        public ServiceGroupMemberRelationshipProperties(Azure.Core.ResourceIdentifier sourceId) { }
         public Azure.ResourceManager.Relationships.Models.RelationshipMetadata Metadata { get { throw null; } }
         public Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation OriginInformation { get { throw null; } }
         public Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
-        public string TargetTenant { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } set { } }
+        public string SourceTenant { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
         protected virtual Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsMetadataResource"/> and their operations.
     /// Each <see cref="SecurityInsightsMetadataResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="SecurityInsightsMetadataCollection"/> instance call the GetSecurityInsightsMetadatas method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityInsightsMetadataCollection"/> instance call the GetAllSecurityInsightsMetadata method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityInsightsMetadataCollection : ArmCollection, IEnumerable<SecurityInsightsMetadataResource>, IAsyncEnumerable<SecurityInsightsMetadataResource>
     {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsMetadataData, SecurityInsightsMetadataResource>(new MetadataGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsMetadataData, SecurityInsightsMetadataResource>(new SecurityInsightsMetadataDataAsyncCollectionResultOfT(
                 _metadataRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsMetadataData, SecurityInsightsMetadataResource>(new MetadataGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsMetadataData, SecurityInsightsMetadataResource>(new SecurityInsightsMetadataDataCollectionResultOfT(
                 _metadataRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

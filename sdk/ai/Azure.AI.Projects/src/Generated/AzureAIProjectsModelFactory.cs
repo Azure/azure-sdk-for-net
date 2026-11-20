@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
@@ -24,13 +25,13 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
+        /// <param name="nextScheduledRunAt"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
-        /// <param name="updatedOn"> The time when this monitor was last updated. </param>
+        /// <param name="updatedAt"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitorListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunAt = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedAt = default)
         {
             return new AgentInsightMonitorListItem(
                 id,
@@ -38,10 +39,10 @@ namespace Azure.AI.Projects
                 enabled,
                 runIntervalHours,
                 modelDeploymentName,
-                nextScheduledRunOn,
+                nextScheduledRunAt,
                 estimatedCost,
                 suspension,
-                updatedOn,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
@@ -57,15 +58,15 @@ namespace Azure.AI.Projects
         /// <summary> Structured reason why scheduled generation is suspended for a monitor. </summary>
         /// <param name="code"> Stable, machine-readable suspension category. </param>
         /// <param name="message"> Human-readable description of the suspension. </param>
-        /// <param name="occurredOn"> The time when the suspension occurred. </param>
+        /// <param name="occurredAt"> The time when the suspension occurred. </param>
         /// <param name="details"> Additional reason-specific suspension details. </param>
         /// <returns> A new <see cref="Projects.AgentInsightSuspension"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredOn = default, IDictionary<string, BinaryData> details = default)
+        public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredAt = default, IDictionary<string, BinaryData> details = default)
         {
             details ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new AgentInsightSuspension(code, message, occurredOn, details, additionalBinaryDataProperties: null);
+            return new AgentInsightSuspension(code, message, occurredAt, details, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
@@ -86,14 +87,14 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
+        /// <param name="nextScheduledRunAt"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
         /// <param name="overview"> The effective overview, or null before an overview is available. </param>
-        /// <param name="updatedOn"> The time when this monitor was last updated. </param>
+        /// <param name="updatedAt"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitor"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunAt = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedAt = default)
         {
             return new AgentInsightMonitor(
                 id,
@@ -101,23 +102,23 @@ namespace Azure.AI.Projects
                 enabled,
                 runIntervalHours,
                 modelDeploymentName,
-                nextScheduledRunOn,
+                nextScheduledRunAt,
                 estimatedCost,
                 suspension,
                 overview,
-                updatedOn,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> The effective overview for an Agent Insights monitor. </summary>
         /// <param name="content"> The overview content. </param>
         /// <param name="source"> Where the effective overview came from. </param>
-        /// <param name="updatedOn"> The time when this overview was last updated. </param>
+        /// <param name="updatedAt"> The time when this overview was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightsOverview"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedAt = default)
         {
-            return new AgentInsightsOverview(content, source, updatedOn, additionalBinaryDataProperties: null);
+            return new AgentInsightsOverview(content, source, updatedAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Inputs used when creating an agent insight run. </summary>
@@ -172,13 +173,13 @@ namespace Azure.AI.Projects
         /// <param name="category"> An open, service-generated category label for the issue. Clients must accept previously unseen values. </param>
         /// <param name="status"> The lifecycle status of the insight. </param>
         /// <param name="traceCount"> The number of traces that provide evidence for this insight. </param>
-        /// <param name="createdOn"> The time when this insight was created. </param>
-        /// <param name="updatedOn"> The time when this insight was last updated. </param>
+        /// <param name="createdAt"> The time when this insight was created. </param>
+        /// <param name="updatedAt"> The time when this insight was last updated. </param>
         /// <param name="description"> The root-cause diagnosis for the issue. </param>
         /// <param name="details"> Additional insight details. Omitted unless details are requested. </param>
         /// <returns> A new <see cref="Projects.AgentInsight"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, string description = default, AgentInsightDetails details = default)
+        public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string description = default, AgentInsightDetails details = default)
         {
             return new AgentInsight(
                 id,
@@ -190,8 +191,8 @@ namespace Azure.AI.Projects
                 category,
                 status,
                 traceCount,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 description,
                 details,
                 additionalBinaryDataProperties: null);
@@ -762,11 +763,11 @@ namespace Azure.AI.Projects
 
         /// <summary> Request to fetch credentials for a model asset. </summary>
         /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
-        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelCredentialContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        public static ModelCredentialContent ModelCredentialContent(Uri blobUri = default)
         {
-            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+            return new ModelCredentialContent(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1009,31 +1010,26 @@ namespace Azure.AI.Projects
             return new UnknownEvaluationTarget(@type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
-        /// <param name="model"> The unique identifier of the Azure AI model. </param>
-        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
+        /// <summary>
+        /// A target that identifies an Azure AI model.
+        /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
+        /// </summary>
+        /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
+        /// <param name="samplingParameters"> The parameters used to control the sampling behavior of the model during text generation. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIModelTarget"/> instance for mocking. </returns>
-        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
+        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParameters = default)
         {
-            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParams);
+            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParameters);
         }
 
-        /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-        /// <param name="temperature"> The temperature parameter for sampling. Defaults to 1.0. </param>
-        /// <param name="topP"> The top-p parameter for nucleus sampling. Defaults to 1.0. </param>
-        /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
-        /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
-        /// <returns> A new <see cref="Evaluation.ModelSamplingParams"/> instance for mocking. </returns>
-        public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
-        {
-            return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a target specifying an Azure AI agent. </summary>
-        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
-        /// <param name="version"> The version of the Azure AI agent. </param>
-        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
-        /// <param name="tools"></param>
+        /// <summary>
+        /// A target that identifies an Azure AI agent.
+        /// See [evaluate model or agent targets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets?tabs=python).
+        /// </summary>
+        /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
+        /// <param name="version"> The version of the Azure AI agent. When omitted, the latest version is used. </param>
+        /// <param name="toolDescriptions"> Optional descriptions of tools available to the agent. </param>
+        /// <param name="tools"> Tool definitions made available when invoking the agent. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
         public static AzureAIAgentTarget AzureAIAgentTarget(string name, string version, IEnumerable<ToolDescription> toolDescriptions, IEnumerable<ResponseTool> tools)
@@ -1123,7 +1119,6 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string generationJobId = default, IEnumerable<GenerationWarningType> warnings = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1155,14 +1150,13 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base evaluator configuration with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Projects.RubricBasedEvaluatorDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Evaluation.RubricBasedEvaluatorDefinition"/>.
         /// </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorDefinition"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluatorDefinition EvaluatorDefinition(string @type = default, BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
@@ -1178,7 +1172,6 @@ namespace Azure.AI.Projects
         /// <param name="threshold"> Default pass/fail threshold for this metric. </param>
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, float? threshold = default, bool? isPrimary = default)
         {
             return new EvaluatorMetric(
@@ -1243,8 +1236,7 @@ namespace Azure.AI.Projects
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="dimensions"> The set of dimensions — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual dimension with id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same Dimension structure. </param>
         /// <param name="passThreshold"> Pass/fail threshold for the aggregate rubric score, on the same normalized 0.0-1.0 scale as the emitted `score`. When the runtime weighted average meets or exceeds this value, the result is `pass`. Defaults to 0.5 (equivalent to a raw 1-5 weighted average of 3.0). The 'any dimension scored 1 → fail' rule still applies regardless of this threshold. </param>
-        /// <returns> A new <see cref="Projects.RubricBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
+        /// <returns> A new <see cref="Evaluation.RubricBasedEvaluatorDefinition"/> instance for mocking. </returns>
         public static RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, IEnumerable<EvaluationsDimension> dimensions = default, float? passThreshold = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
@@ -1266,8 +1258,7 @@ namespace Azure.AI.Projects
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
         /// <param name="isAlwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? isAlwaysApplicable = default)
+        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int? weight = default, bool? isAlwaysApplicable = default)
         {
             return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties: null);
         }
@@ -1296,8 +1287,7 @@ namespace Azure.AI.Projects
         /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
         /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
+        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(VersionedDatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
         {
             datasetRowKinds ??= new ChangeTrackingList<string>();
 
@@ -1307,17 +1297,15 @@ namespace Azure.AI.Projects
         /// <summary> Reference to a versioned Foundry Dataset. </summary>
         /// <param name="name"> Dataset name. </param>
         /// <param name="version"> Dataset version. </param>
-        /// <returns> A new <see cref="Projects.DatasetReference"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DatasetReference DatasetReference(string name = default, string version = default)
+        /// <returns> A new <see cref="Evaluation.VersionedDatasetReference"/> instance for mocking. </returns>
+        public static VersionedDatasetReference VersionedDatasetReference(string name = default, string version = default)
         {
-            return new DatasetReference(name, version, additionalBinaryDataProperties: null);
+            return new VersionedDatasetReference(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for getting evaluator credentials. </summary>
         /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationCredentialContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationCredentialContent EvaluationCredentialContent(Uri blobUri = default)
         {
             return new EvaluationCredentialContent(blobUri, additionalBinaryDataProperties: null);
@@ -1330,7 +1318,6 @@ namespace Azure.AI.Projects
         /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
         /// <param name="description"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationInputs"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluatorGenerationInputs EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources = default, string model = default, string evaluatorName = default, string evaluatorDisplayName = default, string description = default)
         {
             sources ??= new ChangeTrackingList<EvaluatorGenerationJobSource>();
@@ -1346,11 +1333,10 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The base source model for evaluator generation jobs. Polymorphic over `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>, <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, and <see cref="Projects.TracesEvaluatorGenerationJobSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>, <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, and <see cref="Evaluation.TracesEvaluatorGenerationJobSource"/>.
         /// </summary>
         /// <param name="type"> The type of source. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluatorGenerationJobSource EvaluatorGenerationJobSource(string @type = default)
         {
             return new UnknownEvaluatorGenerationJobSource(new EvaluatorGenerationJobSourceType(@type), additionalBinaryDataProperties: null);
@@ -1360,7 +1346,6 @@ namespace Azure.AI.Projects
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
         /// <returns> A new <see cref="Projects.PromptEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static PromptEvaluatorGenerationJobSource PromptEvaluatorGenerationJobSource(string description = default, string prompt = default)
         {
             return new PromptEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType.Prompt, additionalBinaryDataProperties: null, description, prompt);
@@ -1371,7 +1356,6 @@ namespace Azure.AI.Projects
         /// <param name="agentName"> The agent name to fetch instructions from. </param>
         /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
         /// <returns> A new <see cref="Projects.AgentEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentEvaluatorGenerationJobSource AgentEvaluatorGenerationJobSource(string description = default, string agentName = default, string agentVersion = default)
         {
             return new AgentEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType.Agent, additionalBinaryDataProperties: null, description, agentName, agentVersion);
@@ -1382,11 +1366,10 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <returns> A new <see cref="Evaluation.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsAt = default, DateTimeOffset? endsAt = default)
         {
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
@@ -1395,8 +1378,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startsOn,
-                endsOn);
+                startsAt,
+                endsAt);
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -1404,7 +1387,6 @@ namespace Azure.AI.Projects
         /// <param name="name"> The name of the dataset. </param>
         /// <param name="version"> The version of the dataset. If not specified, the latest version is used. </param>
         /// <returns> A new <see cref="Projects.DatasetEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static DatasetEvaluatorGenerationJobSource DatasetEvaluatorGenerationJobSource(string description = default, string name = default, string version = default)
         {
             return new DatasetEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType.Dataset, additionalBinaryDataProperties: null, description, name, version);
@@ -1415,7 +1397,6 @@ namespace Azure.AI.Projects
         /// <param name="outputTokens"> Number of output (completion) tokens generated. </param>
         /// <param name="totalTokens"> Total tokens consumed (input + output). </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationTokenUsage"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluatorGenerationTokenUsage EvaluatorGenerationTokenUsage(long inputTokens = default, long outputTokens = default, long totalTokens = default)
         {
             return new EvaluatorGenerationTokenUsage(inputTokens, outputTokens, totalTokens, additionalBinaryDataProperties: null);
@@ -1426,9 +1407,8 @@ namespace Azure.AI.Projects
         /// <param name="severity"> Advisory severity. Initial values: `warning`. </param>
         /// <param name="message"> Human-readable message suitable for direct SDK/CLI/UI display. Must not include raw prompt, instruction, dataset, or trace text. </param>
         /// <param name="source"> Which source category the warning applies to. `aggregate` is used only for cross-source warnings. </param>
-        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.inputs.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
+        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
         /// <returns> A new <see cref="Projects.RubricGenerationInputQualityWarning"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RubricGenerationInputQualityWarning RubricGenerationInputQualityWarning(RubricGenerationInputQualityWarningCode code = default, RubricGenerationInputQualityWarningSeverity severity = default, string message = default, RubricGenerationInputQualityWarningSource source = default, int? sourceIndex = default)
         {
             return new RubricGenerationInputQualityWarning(
@@ -2369,11 +2349,11 @@ namespace Azure.AI.Projects
         /// <param name="isEnabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
-        /// <param name="createdOn"> The time when the routine was created. </param>
-        /// <param name="updatedOn"> The time when the routine was last updated. </param>
+        /// <param name="createdAt"> The time when the routine was created. </param>
+        /// <param name="updatedAt"> The time when the routine was last updated. </param>
         /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
+        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdAt = default, DateTimeOffset? updatedAt = default)
         {
             triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
 
@@ -2383,8 +2363,8 @@ namespace Azure.AI.Projects
                 isEnabled,
                 triggers,
                 action,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2401,10 +2381,10 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> The legacy endpoint-scoped agent identifier recorded for the routine attempt. </param>
         /// <param name="conversationId"> The conversation identifier used by a responses API dispatch. </param>
         /// <param name="sessionId"> The hosted-agent session identifier used by an invocations API dispatch. </param>
-        /// <param name="triggeredOn"> The logical trigger time recorded for the routine attempt. </param>
-        /// <param name="scheduledFireOn"> The scheduled fire time recorded for timer and schedule deliveries. </param>
-        /// <param name="startedOn"> The time when the underlying run started. </param>
-        /// <param name="endedOn"> The time when the underlying run reached a terminal state. </param>
+        /// <param name="triggeredAt"> The logical trigger time recorded for the routine attempt. </param>
+        /// <param name="scheduledFireAt"> The scheduled fire time recorded for timer and schedule deliveries. </param>
+        /// <param name="startedAt"> The time when the underlying run started. </param>
+        /// <param name="endedAt"> The time when the underlying run reached a terminal state. </param>
         /// <param name="dispatchId"> The dispatch identifier associated with the routine attempt. </param>
         /// <param name="actionCorrelationId"> The downstream action correlation identifier, when available. </param>
         /// <param name="responseId"> The downstream response or invocation identifier, when available. </param>
@@ -2414,7 +2394,7 @@ namespace Azure.AI.Projects
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredOn = default, DateTimeOffset? scheduledFireOn = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
+        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             triggerEventPayload ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -2431,10 +2411,10 @@ namespace Azure.AI.Projects
                 agentEndpointId,
                 conversationId,
                 sessionId,
-                triggeredOn,
-                scheduledFireOn,
-                startedOn,
-                endedOn,
+                triggeredAt,
+                scheduledFireAt,
+                startedAt,
+                endedAt,
                 dispatchId,
                 actionCorrelationId,
                 responseId,
@@ -2486,199 +2466,11 @@ namespace Azure.AI.Projects
             return new DispatchRoutineResult(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Caller-supplied inputs for a data generation job. </summary>
-        /// <param name="name"> The display name of the data generation job. </param>
-        /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="options"> The options for the data generation job. </param>
-        /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        /// <param name="outputOptions"> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobInputs"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions options = default, DataGenerationJobScenario scenario = default, DataGenerationJobOutputOptions outputOptions = default)
-        {
-            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
-
-            return new DataGenerationJobInputs(
-                name,
-                sources.ToList(),
-                options,
-                scenario,
-                outputOptions,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The base source model for data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentDataGenerationJobSource"/>, <see cref="Projects.FileDataGenerationJobSource"/>, <see cref="Projects.PromptDataGenerationJobSource"/>, and <see cref="Projects.TracesDataGenerationJobSource"/>.
-        /// </summary>
-        /// <param name="type"> The type of source. </param>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DataGenerationJobSource DataGenerationJobSource(string @type = default, string description = default)
-        {
-            return new UnknownDataGenerationJobSource(new DataGenerationJobSourceType(@type), description, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
-        /// <returns> A new <see cref="Projects.PromptDataGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static PromptDataGenerationJobSource PromptDataGenerationJobSource(string description = default, string prompt = default)
-        {
-            return new PromptDataGenerationJobSource(DataGenerationJobSourceType.Prompt, additionalBinaryDataProperties: null, description, prompt);
-        }
-
-        /// <summary> Agent source for data generation jobs — references an agent to fetch instructions and metadata from. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="agentName"> The agent name to fetch instructions from. </param>
-        /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Projects.AgentDataGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentDataGenerationJobSource AgentDataGenerationJobSource(string description = default, string agentName = default, string agentVersion = default)
-        {
-            return new AgentDataGenerationJobSource(DataGenerationJobSourceType.Agent, additionalBinaryDataProperties: null, description, agentName, agentVersion);
-        }
-
-        /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
-        /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
-        /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
-        /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
-        {
-            traceIds ??= new ChangeTrackingList<string>();
-
-            return new TracesDataGenerationJobSource(
-                DataGenerationJobSourceType.Traces,
-                additionalBinaryDataProperties: null,
-                description,
-                agentId,
-                agentName,
-                agentVersion,
-                startsOn,
-                endsOn,
-                traceIds.ToList());
-        }
-
-        /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="id"> Input Azure Open AI file id used for data generation. </param>
-        /// <returns> A new <see cref="Projects.FileDataGenerationJobSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static FileDataGenerationJobSource FileDataGenerationJobSource(string description = default, string id = default)
-        {
-            return new FileDataGenerationJobSource(DataGenerationJobSourceType.File, description, additionalBinaryDataProperties: null, id);
-        }
-
-        /// <summary>
-        /// Options for managing data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.SimulationSeedDataGenerationJobOptions"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>, and <see cref="Projects.TracesDataGenerationJobOptions"/>.
-        /// </summary>
-        /// <param name="type"> The data generation job type. </param>
-        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
-        /// <param name="modelOptions"> The LLM model options. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DataGenerationJobOptions DataGenerationJobOptions(string @type = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
-        {
-            return new UnknownDataGenerationJobOptions(new DataGenerationJobKind(@type), trainSplit, modelOptions, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> LLM model options for data generation jobs. </summary>
-        /// <param name="model"> Base model name used to generate data. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationModelOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DataGenerationModelOptions DataGenerationModelOptions(string model = default)
-        {
-            return new DataGenerationModelOptions(model, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The options for a data generation job with SimpleQnA type. </summary>
-        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
-        /// <param name="modelOptions"> The LLM model options. </param>
-        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
-        /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
-        /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static SimpleQnADataGenerationJobOptions SimpleQnADataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
-        {
-            questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
-
-            return new SimpleQnADataGenerationJobOptions(
-                DataGenerationJobKind.SimpleQna,
-                trainSplit,
-                modelOptions,
-                additionalBinaryDataProperties: null,
-                maxSamples,
-                questionTypes.ToList());
-        }
-
-        /// <summary> The options for a data generation job with Traces type. </summary>
-        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
-        /// <param name="modelOptions"> The LLM model options. </param>
-        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
-        /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
-        /// <returns> A new <see cref="Projects.TracesDataGenerationJobOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int? maxSamples = default, bool? redactPrivateContent = default)
-        {
-            return new TracesDataGenerationJobOptions(
-                DataGenerationJobKind.Traces,
-                trainSplit,
-                modelOptions,
-                additionalBinaryDataProperties: null,
-                maxSamples,
-                redactPrivateContent);
-        }
-
-        /// <summary> The options for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
-        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
-        /// <param name="modelOptions"> The LLM model options. </param>
-        /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static SimulationSeedDataGenerationJobOptions SimulationSeedDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
-        {
-            return new SimulationSeedDataGenerationJobOptions(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
-        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
-        /// <param name="modelOptions"> The LLM model options. </param>
-        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
-        /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static ToolUseFineTuningDataGenerationJobOptions ToolUseFineTuningDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
-        {
-            return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
-        }
-
-        /// <summary> Output options for data generation job. </summary>
-        /// <param name="name"> Name to assign to the output. Used as the filename for Azure OpenAI file outputs (fine-tuning scenarios) and as the dataset name for dataset outputs (evaluation scenario). </param>
-        /// <param name="description"> Description to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
-        /// <param name="tags"> Tags to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
-        /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobOutputOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DataGenerationJobOutputOptions DataGenerationJobOutputOptions(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataGenerationJobOutputOptions(name, description, tags, writeMode, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Result produced by a successful data generation job. </summary>
         /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
         /// <param name="generatedSamples"> The number of samples actually generated. </param>
         /// <param name="tokenUsage"> The token usage information for the data generation job. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static DataGenerationJobResult DataGenerationJobResult(IEnumerable<DataGenerationJobOutput> outputs = default, int generatedSamples = default, DataGenerationTokenUsage tokenUsage = default)
         {
             outputs ??= new ChangeTrackingList<DataGenerationJobOutput>();
@@ -2692,13 +2484,12 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The type of the output. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static DataGenerationJobOutput DataGenerationJobOutput(string @type = default)
         {
             return new UnknownDataGenerationJobOutput(new DataGenerationJobOutputType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Azure OpenAI file output for a data generation job. </summary>
+        /// <summary> Azure OpenAI file output for a data generation job. This is a preview feature. </summary>
         /// <param name="id"> The id of the output Azure OpenAI file. </param>
         /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
         /// <returns> A new <see cref="Projects.FileDataGenerationJobOutput"/> instance for mocking. </returns>
@@ -2715,7 +2506,6 @@ namespace Azure.AI.Projects
         /// <param name="description"> Description of the output dataset. </param>
         /// <param name="tags"> Tag dictionary of the output dataset. </param>
         /// <returns> A new <see cref="Projects.DatasetDataGenerationJobOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static DatasetDataGenerationJobOutput DatasetDataGenerationJobOutput(string id = default, string name = default, string version = default, string description = default, IReadOnlyDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -2735,10 +2525,263 @@ namespace Azure.AI.Projects
         /// <param name="completionTokens"> The number of completion tokens generated. </param>
         /// <param name="totalTokens"> Total number of tokens used. </param>
         /// <returns> A new <see cref="Projects.DataGenerationTokenUsage"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static DataGenerationTokenUsage DataGenerationTokenUsage(long promptTokens = default, long completionTokens = default, long totalTokens = default)
         {
             return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The base source model for data generation jobs.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentDataGenerationJobSource"/>, <see cref="Projects.FileDataGenerationJobSource"/>, <see cref="Projects.PromptDataGenerationJobSource"/>, and <see cref="Projects.TracesDataGenerationJobSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source. </param>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobSource"/> instance for mocking. </returns>
+        public static DataGenerationJobSource DataGenerationJobSource(string @type = default, string description = default)
+        {
+            return new UnknownDataGenerationJobSource(new DataGenerationJobSourceType(@type), description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
+        /// <returns> A new <see cref="Projects.PromptDataGenerationJobSource"/> instance for mocking. </returns>
+        public static PromptDataGenerationJobSource PromptDataGenerationJobSource(string description = default, string prompt = default)
+        {
+            return new PromptDataGenerationJobSource(DataGenerationJobSourceType.Prompt, additionalBinaryDataProperties: null, description, prompt);
+        }
+
+        /// <summary> Agent source for data generation jobs — references an agent to fetch instructions and metadata from. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentName"> The agent name to fetch instructions from. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Projects.AgentDataGenerationJobSource"/> instance for mocking. </returns>
+        public static AgentDataGenerationJobSource AgentDataGenerationJobSource(string description = default, string agentName = default, string agentVersion = default)
+        {
+            return new AgentDataGenerationJobSource(DataGenerationJobSourceType.Agent, additionalBinaryDataProperties: null, description, agentName, agentVersion);
+        }
+
+        /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
+        /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
+        /// <param name="startsAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
+        /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsAt = default, DateTimeOffset? endsAt = default, IEnumerable<string> traceIds = default)
+        {
+            traceIds ??= new ChangeTrackingList<string>();
+
+            return new TracesDataGenerationJobSource(
+                DataGenerationJobSourceType.Traces,
+                additionalBinaryDataProperties: null,
+                description,
+                agentId,
+                agentName,
+                agentVersion,
+                startsAt,
+                endsAt,
+                traceIds.ToList());
+        }
+
+        /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="id"> Input Azure Open AI file id used for data generation. </param>
+        /// <returns> A new <see cref="Projects.FileDataGenerationJobSource"/> instance for mocking. </returns>
+        public static FileDataGenerationJobSource FileDataGenerationJobSource(string description = default, string id = default)
+        {
+            return new FileDataGenerationJobSource(DataGenerationJobSourceType.File, description, additionalBinaryDataProperties: null, id);
+        }
+
+        /// <summary>
+        /// Configuration for managing data generation jobs.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/>, <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="Projects.TracesDataGenerationJobConfiguration"/>.
+        /// </summary>
+        /// <param name="type"> The data generation job type. </param>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobConfiguration"/> instance for mocking. </returns>
+        public static DataGenerationJobConfiguration DataGenerationJobConfiguration(string @type = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        {
+            return new UnknownDataGenerationJobConfiguration(new DataGenerationJobKind(@type), trainSplit, modelOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> LLM model options for data generation jobs. </summary>
+        /// <param name="model"> Base model name used to generate data. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationModelOptions"/> instance for mocking. </returns>
+        public static DataGenerationModelOptions DataGenerationModelOptions(string model = default)
+        {
+            return new DataGenerationModelOptions(model, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The configuration for a data generation job with SimpleQnA type. </summary>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
+        /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
+        /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SimpleQnADataGenerationJobConfiguration SimpleQnADataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
+        {
+            questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
+
+            return new SimpleQnADataGenerationJobConfiguration(
+                DataGenerationJobKind.SimpleQna,
+                trainSplit,
+                modelOptions,
+                additionalBinaryDataProperties: null,
+                maxSamples,
+                questionTypes.ToList());
+        }
+
+        /// <summary> The configuration for a data generation job with Traces type. </summary>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
+        /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
+        /// <returns> A new <see cref="Projects.TracesDataGenerationJobConfiguration"/> instance for mocking. </returns>
+        public static TracesDataGenerationJobConfiguration TracesDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int? maxSamples = default, bool? redactPrivateContent = default)
+        {
+            return new TracesDataGenerationJobConfiguration(
+                DataGenerationJobKind.Traces,
+                trainSplit,
+                modelOptions,
+                additionalBinaryDataProperties: null,
+                maxSamples,
+                redactPrivateContent);
+        }
+
+        /// <summary> The configuration for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
+        /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/> instance for mocking. </returns>
+        public static SimulationSeedDataGenerationJobConfiguration SimulationSeedDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
+        {
+            return new SimulationSeedDataGenerationJobConfiguration(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
+        }
+
+        /// <summary> The configuration for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
+        /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ToolUseFineTuningDataGenerationJobConfiguration ToolUseFineTuningDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
+        {
+            return new ToolUseFineTuningDataGenerationJobConfiguration(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
+        }
+
+        /// <summary> Dataset output configuration for an evaluation data generation job. </summary>
+        /// <param name="name"> Dataset name to assign to the output. </param>
+        /// <param name="description"> Description to assign to the output dataset. </param>
+        /// <param name="tags"> Tags to assign to the output dataset. </param>
+        /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
+        /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
+        public static EvaluationDataGenerationJobOutputConfiguration EvaluationDataGenerationJobOutputConfiguration(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EvaluationDataGenerationJobOutputConfiguration(name, description, tags, writeMode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> File output configuration for a supervised fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
+        /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
+        /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
+        /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SupervisedFineTuningDataGenerationJobOutputConfiguration SupervisedFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
+        {
+            return new SupervisedFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> File output configuration for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
+        /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
+        /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
+        /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ReinforcementFineTuningDataGenerationJobOutputConfiguration ReinforcementFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
+        {
+            return new ReinforcementFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Caller-supplied inputs for a data generation job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.EvaluationDataGenerationJobInputs"/>, <see cref="Projects.ReinforcementFineTuningDataGenerationJobInputs"/>, and <see cref="Projects.SupervisedFineTuningDataGenerationJobInputs"/>.
+        /// </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobInputs"/> instance for mocking. </returns>
+        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, string scenario = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new UnknownDataGenerationJobInputs(name, sources.ToList(), generationConfiguration, new DataGenerationJobScenario(scenario), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-supplied inputs for an evaluation data generation job. </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="outputConfiguration"> Optional dataset output configuration for the generated evaluation data. </param>
+        /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobInputs"/> instance for mocking. </returns>
+        public static EvaluationDataGenerationJobInputs EvaluationDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, EvaluationDataGenerationJobOutputConfiguration outputConfiguration = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new EvaluationDataGenerationJobInputs(
+                name,
+                sources.ToList(),
+                generationConfiguration,
+                DataGenerationJobScenario.Evaluation,
+                additionalBinaryDataProperties: null,
+                outputConfiguration);
+        }
+
+        /// <summary> Caller-supplied inputs for a supervised fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="outputConfiguration"> Optional file output configuration for the generated supervised fine-tuning data. </param>
+        /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SupervisedFineTuningDataGenerationJobInputs SupervisedFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, SupervisedFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new SupervisedFineTuningDataGenerationJobInputs(
+                name,
+                sources.ToList(),
+                generationConfiguration,
+                DataGenerationJobScenario.SupervisedFinetuningPreview,
+                additionalBinaryDataProperties: null,
+                outputConfiguration);
+        }
+
+        /// <summary> Caller-supplied inputs for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="outputConfiguration"> Optional file output configuration for the generated reinforcement fine-tuning data. </param>
+        /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ReinforcementFineTuningDataGenerationJobInputs ReinforcementFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new ReinforcementFineTuningDataGenerationJobInputs(
+                name,
+                sources.ToList(),
+                generationConfiguration,
+                DataGenerationJobScenario.ReinforcementFinetuningPreview,
+                additionalBinaryDataProperties: null,
+                outputConfiguration);
         }
 
         /// <summary> Evaluation rule action for continuous evaluation. </summary>
@@ -2767,7 +2810,6 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("AAIP001")]
         public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
         {
             return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, generationJobId: default, warnings: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
@@ -2781,7 +2823,6 @@ namespace Azure.AI.Projects
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("AAIP001")]
         public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, bool? isPrimary)
         {
             return EvaluatorMetric(@type: @type, desirableDirection: desirableDirection, minValue: minValue, maxValue: maxValue, threshold: default, isPrimary: isPrimary);

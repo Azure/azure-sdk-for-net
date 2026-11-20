@@ -114,6 +114,31 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
                 writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
             }
+            if (Optional.IsDefined(IsEncryptionInTransitEnabled))
+            {
+                writer.WritePropertyName("encryptionInTransit"u8);
+                writer.WriteBooleanValue(IsEncryptionInTransitEnabled.Value);
+            }
+            if (Optional.IsDefined(ReservedIops))
+            {
+                writer.WritePropertyName("reservedIops"u8);
+                writer.WriteNumberValue(ReservedIops.Value);
+            }
+            if (Optional.IsDefined(ReservedMBps))
+            {
+                writer.WritePropertyName("reservedMBps"u8);
+                writer.WriteNumberValue(ReservedMBps.Value);
+            }
+            if (Optional.IsDefined(QualityOfService))
+            {
+                writer.WritePropertyName("qualityOfService"u8);
+                writer.WriteStringValue(QualityOfService.Value.ToString());
+            }
+            if (Optional.IsDefined(DeleteRetentionPolicy))
+            {
+                writer.WritePropertyName("deleteRetentionPolicy"u8);
+                writer.WriteObjectValue(DeleteRetentionPolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -163,6 +188,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanNetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
+            bool? isEncryptionInTransitEnabled = default;
+            int? reservedIops = default;
+            int? reservedMBps = default;
+            ElasticSanQualityOfService? qualityOfService = default;
+            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,6 +264,51 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     enforceDataIntegrityCheckForIscsi = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("encryptionInTransit"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isEncryptionInTransitEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("reservedIops"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservedIops = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("reservedMBps"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservedMBps = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("qualityOfService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    qualityOfService = new ElasticSanQualityOfService(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("deleteRetentionPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -247,6 +322,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 networkAcls,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 enforceDataIntegrityCheckForIscsi,
+                isEncryptionInTransitEnabled,
+                reservedIops,
+                reservedMBps,
+                qualityOfService,
+                deleteRetentionPolicy,
                 additionalBinaryDataProperties);
         }
     }

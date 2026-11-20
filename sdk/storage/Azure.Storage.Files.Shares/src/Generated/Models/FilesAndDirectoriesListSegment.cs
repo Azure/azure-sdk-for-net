@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -19,15 +20,30 @@ namespace Azure.Storage.Files.Shares.Models
         {
             DirectoryItems = directoryItems.ToList();
             FileItems = fileItems.ToList();
+            SymLinkItems = new ChangeTrackingList<SymLinkItem>();
+            BlockDeviceItems = new ChangeTrackingList<BlockDeviceItem>();
+            CharDeviceItems = new ChangeTrackingList<CharDeviceItem>();
+            FifoItems = new ChangeTrackingList<FifoItem>();
+            SocketItems = new ChangeTrackingList<SocketItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"> The directory items. </param>
         /// <param name="fileItems"> The file items. </param>
-        internal FilesAndDirectoriesListSegment(IList<DirectoryItem> directoryItems, IList<FileItem> fileItems)
+        /// <param name="symLinkItems"> The symbolic link items. </param>
+        /// <param name="blockDeviceItems"> The block device items. </param>
+        /// <param name="charDeviceItems"> The character device items. </param>
+        /// <param name="fifoItems"> The FIFO items. </param>
+        /// <param name="socketItems"> The socket items. </param>
+        internal FilesAndDirectoriesListSegment(IList<DirectoryItem> directoryItems, IList<FileItem> fileItems, IList<SymLinkItem> symLinkItems, IList<BlockDeviceItem> blockDeviceItems, IList<CharDeviceItem> charDeviceItems, IList<FifoItem> fifoItems, IList<SocketItem> socketItems)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
+            SymLinkItems = symLinkItems;
+            BlockDeviceItems = blockDeviceItems;
+            CharDeviceItems = charDeviceItems;
+            FifoItems = fifoItems;
+            SocketItems = socketItems;
         }
 
         /// <summary> The directory items. </summary>
@@ -35,5 +51,20 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> The file items. </summary>
         public IList<FileItem> FileItems { get; }
+
+        /// <summary> The symbolic link items. </summary>
+        public IList<SymLinkItem> SymLinkItems { get; }
+
+        /// <summary> The block device items. </summary>
+        public IList<BlockDeviceItem> BlockDeviceItems { get; }
+
+        /// <summary> The character device items. </summary>
+        public IList<CharDeviceItem> CharDeviceItems { get; }
+
+        /// <summary> The FIFO items. </summary>
+        public IList<FifoItem> FifoItems { get; }
+
+        /// <summary> The socket items. </summary>
+        public IList<SocketItem> SocketItems { get; }
     }
 }

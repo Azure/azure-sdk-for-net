@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetAppChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints, additionalBinaryDataProperties);
+            return new NetAppChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints ?? new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>(), additionalBinaryDataProperties);
         }
     }
 }

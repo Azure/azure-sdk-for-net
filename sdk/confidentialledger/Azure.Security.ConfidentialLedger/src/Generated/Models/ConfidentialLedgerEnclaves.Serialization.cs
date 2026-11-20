@@ -164,7 +164,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConfidentialLedgerEnclaves(currentNodeId, enclaveQuotes, additionalBinaryDataProperties);
+            return new ConfidentialLedgerEnclaves(currentNodeId, enclaveQuotes ?? new ChangeTrackingDictionary<string, EnclaveQuote>(), additionalBinaryDataProperties);
         }
     }
 }

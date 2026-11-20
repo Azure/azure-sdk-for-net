@@ -335,7 +335,8 @@
             }
           },
           "isHttpMetadata": false,
-          "isExactName": false
+          "isExactName": false,
+          "requiredInConstructor": false
         }
       ]
     },
@@ -420,7 +421,6 @@
             "$id": "31",
             "name": "getWidget",
             "isExactName": false,
-            "resourceName": "PreviewVersion",
             "doc": "Get widget by id (available in all versions)",
             "accessibility": "public",
             "parameters": [
@@ -645,7 +645,6 @@
             "$id": "45",
             "name": "updateWidgetColor",
             "isExactName": false,
-            "resourceName": "PreviewVersion",
             "doc": "Update widget color (preview only)",
             "accessibility": "public",
             "parameters": [
@@ -934,7 +933,6 @@
             "$id": "60",
             "name": "listWidgets",
             "isExactName": false,
-            "resourceName": "PreviewVersion",
             "doc": "List widgets with optional color filtering",
             "accessibility": "public",
             "parameters": [

@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DevOpsGitHubOrganizationProfile(kind, additionalBinaryDataProperties, organizations);
+            return new DevOpsGitHubOrganizationProfile(kind, additionalBinaryDataProperties, organizations ?? new ChangeTrackingList<DevOpsGitHubOrganization>());
         }
     }
 }

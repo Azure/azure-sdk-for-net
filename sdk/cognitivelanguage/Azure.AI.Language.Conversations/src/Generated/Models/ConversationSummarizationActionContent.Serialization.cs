@@ -235,7 +235,7 @@ namespace Azure.AI.Language.Conversations.Models
                 sentenceCount,
                 stringIndexType,
                 summaryLength,
-                summaryAspects,
+                summaryAspects ?? new ChangeTrackingList<SummaryAspect>(),
                 instruction,
                 additionalBinaryDataProperties);
         }

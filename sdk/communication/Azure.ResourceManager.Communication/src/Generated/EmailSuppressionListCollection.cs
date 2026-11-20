@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new SuppressionListsGetByDomainAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new EmailSuppressionListDataAsyncCollectionResultOfT(
                 _suppressionListsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new SuppressionListsGetByDomainCollectionResultOfT(
+            return new PageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new EmailSuppressionListDataCollectionResultOfT(
                 _suppressionListsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

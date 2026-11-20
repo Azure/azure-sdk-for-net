@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OccurrenceExtensionResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OccurrenceExtensionResourceListResult(value ?? new ChangeTrackingList<OccurrenceExtension>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.DataBox.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputResult"/>. </summary>
+        protected DataBoxValidationInputResult() : this(default)
+        {
+        }
+
         /// <summary> Identifies the type of validation response. </summary>
         internal DataBoxValidationInputDiscriminator ValidationType { get; set; }
 

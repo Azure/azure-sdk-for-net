@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionDataAsyncCollectionResultOfT(
                 _scriptExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionDataCollectionResultOfT(
                 _scriptExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

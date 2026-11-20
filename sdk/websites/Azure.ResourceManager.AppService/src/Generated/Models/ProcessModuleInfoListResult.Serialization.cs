@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProcessModuleInfoListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ProcessModuleInfoListResult(value ?? new ChangeTrackingList<ProcessModuleInfoData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

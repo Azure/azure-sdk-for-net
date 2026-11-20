@@ -18,8 +18,8 @@ namespace Azure.Analytics.Defender.Easm
         private const string ContactValue = "contact";
         private const string DomainValue = "domain";
         private const string HostValue = "host";
-        private const string IpAddressValue = "ipAddress";
-        private const string IpBlockValue = "ipBlock";
+        private const string IPAddressValue = "ipAddress";
+        private const string IPBlockValue = "ipBlock";
         private const string PageValue = "page";
         private const string SslCertValue = "sslCert";
 
@@ -45,11 +45,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Host. </summary>
         public static AssetUpdateTransfers Host { get; } = new AssetUpdateTransfers(HostValue);
 
-        /// <summary> Gets the IpAddress. </summary>
-        public static AssetUpdateTransfers IpAddress { get; } = new AssetUpdateTransfers(IpAddressValue);
+        /// <summary> Gets the IPAddress. </summary>
+        public static AssetUpdateTransfers IPAddress { get; } = new AssetUpdateTransfers(IPAddressValue);
 
-        /// <summary> Gets the IpBlock. </summary>
-        public static AssetUpdateTransfers IpBlock { get; } = new AssetUpdateTransfers(IpBlockValue);
+        /// <summary> Gets the IPBlock. </summary>
+        public static AssetUpdateTransfers IPBlock { get; } = new AssetUpdateTransfers(IPBlockValue);
 
         /// <summary> Gets the Page. </summary>
         public static AssetUpdateTransfers Page { get; } = new AssetUpdateTransfers(PageValue);
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="AssetUpdateTransfers"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssetUpdateTransfers?(string value) => value == null ? null : new AssetUpdateTransfers(value);
+        public static implicit operator AssetUpdateTransfers?(string value) => value == null ? (AssetUpdateTransfers?)null : new AssetUpdateTransfers(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

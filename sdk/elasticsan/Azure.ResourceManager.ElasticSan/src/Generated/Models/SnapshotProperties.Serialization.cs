@@ -96,6 +96,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
+            if (options.Format != "W" && Optional.IsDefined(SnapshotAccessState))
+            {
+                writer.WritePropertyName("snapshotAccessState"u8);
+                writer.WriteStringValue(SnapshotAccessState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CompletionPercent))
+            {
+                writer.WritePropertyName("completionPercent"u8);
+                writer.WriteNumberValue(CompletionPercent.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -142,6 +152,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanProvisioningState? provisioningState = default;
             long? sourceVolumeSizeGiB = default;
             string volumeName = default;
+            SnapshotAccessState? snapshotAccessState = default;
+            float? completionPercent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,12 +185,37 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     volumeName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("snapshotAccessState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotAccessState = new SnapshotAccessState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("completionPercent"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completionPercent = prop.Value.GetSingle();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SnapshotProperties(creationData, provisioningState, sourceVolumeSizeGiB, volumeName, additionalBinaryDataProperties);
+            return new SnapshotProperties(
+                creationData,
+                provisioningState,
+                sourceVolumeSizeGiB,
+                volumeName,
+                snapshotAccessState,
+                completionPercent,
+                additionalBinaryDataProperties);
         }
     }
 }

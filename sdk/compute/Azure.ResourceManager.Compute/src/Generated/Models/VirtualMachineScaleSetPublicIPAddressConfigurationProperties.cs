@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeDeleteOption? DeleteOption { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier PublicIPPrefixId
+        public virtual ResourceIdentifier PublicIPPrefixId
         {
             get
             {

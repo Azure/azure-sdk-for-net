@@ -146,7 +146,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubmitToolApprovalDetails(toolCalls, additionalBinaryDataProperties);
+            return new SubmitToolApprovalDetails(toolCalls ?? new ChangeTrackingList<RequiredToolCall>(), additionalBinaryDataProperties);
         }
     }
 }

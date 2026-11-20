@@ -188,7 +188,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConversationalPiiResult(id, warnings, statistics, conversationItems, additionalBinaryDataProperties);
+            return new ConversationalPiiResult(id, warnings ?? new ChangeTrackingList<InputWarning>(), statistics, conversationItems ?? new ChangeTrackingList<ConversationPiiItemResult>(), additionalBinaryDataProperties);
         }
     }
 }

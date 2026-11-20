@@ -146,7 +146,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchResult(searchResults, additionalBinaryDataProperties);
+            return new SearchResult(searchResults ?? new ChangeTrackingList<SearchResultItem>(), additionalBinaryDataProperties);
         }
     }
 }

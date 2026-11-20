@@ -10,5 +10,9 @@ namespace Azure.ResourceManager.PrivateDns
     /// <summary> Describes a DNS record set (a collection of DNS records with the same name and type) in a Private DNS zone. </summary>
     public partial class PrivateDnsRecordData : PrivateDnsBaseRecordData
     {
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordData"/>. </summary>
+        public PrivateDnsRecordData()
+        {
+        }
     }
 }

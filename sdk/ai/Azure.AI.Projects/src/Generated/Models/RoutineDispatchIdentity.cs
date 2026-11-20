@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RoutineDispatchIdentity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineDispatchIdentity?(string value) => value == null ? null : new RoutineDispatchIdentity(value);
+        public static implicit operator RoutineDispatchIdentity?(string value) => value == null ? (RoutineDispatchIdentity?)null : new RoutineDispatchIdentity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

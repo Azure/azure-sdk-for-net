@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(HybridComputePrivateLinkScopeResource.ResourceType, out string hybridComputePrivateLinkScopeApiVersion);
             _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputePrivateLinkScopeApiVersion ?? "2026-07-15");
+            _privateLinkScopesRestClient = new PrivateLinkScopes(
+                _privateLinkScopesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hybridComputePrivateLinkScopeApiVersion ?? "2026-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +294,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeDataAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +322,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeDataCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>

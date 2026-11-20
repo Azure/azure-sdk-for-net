@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 vnetConfiguration,
                 vwanConfiguration,
                 networkType,
-                publicIPs,
+                publicIPs ?? new ChangeTrackingList<IPAddressInfo>(),
                 enableEgressNat,
                 egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
                 trustedRanges ?? new ChangeTrackingList<string>(),

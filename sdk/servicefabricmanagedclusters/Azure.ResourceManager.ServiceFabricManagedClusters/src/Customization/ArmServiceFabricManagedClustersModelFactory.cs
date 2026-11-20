@@ -148,6 +148,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         typeof(IEnumerable<ResourceIdentifier>),
         typeof(IDictionary<string, string>),
         typeof(NodeTypeSku))]
+    // Preserve optional arguments that generator updates remove from compatibility overloads.
+    [CodeGenSuppress(
+        "ServiceFabricManagedApplicationData",
+        typeof(ResourceIdentifier),
+        typeof(string),
+        typeof(ResourceType),
+        typeof(SystemData),
+        typeof(AzureLocation),
+        typeof(IEnumerable<ApplicationUserAssignedIdentityInfo>),
+        typeof(string),
+        typeof(string),
+        typeof(IDictionary<string, string>),
+        typeof(ApplicationUpgradePolicy),
+        typeof(IDictionary<string, string>),
+        typeof(ManagedServiceIdentity))]
+    [CodeGenSuppress(
+        "ServiceFabricManagedUnsupportedVmSize",
+        typeof(ResourceIdentifier),
+        typeof(string),
+        typeof(ResourceType),
+        typeof(SystemData),
+        typeof(string))]
+    [CodeGenSuppress(
+        "ServiceFabricManagedUnsupportedVmSize",
+        typeof(ResourceIdentifier),
+        typeof(ResourceType),
+        typeof(SystemData),
+        typeof(string),
+        typeof(string))]
     public static partial class ArmServiceFabricManagedClustersModelFactory
     {
         /// <summary> Initializes fault simulation content with an arbitrary discriminator for mocking. </summary>
@@ -184,6 +213,51 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null)
             => ServiceFabricManagedApplicationData(id, name, resourceType, systemData, location, managedIdentities, provisioningState, version, parameters, upgradePolicy, tags, identity);
+
+        /// <summary> Initializes application data with the original optional parameter order for mocking. </summary>
+        /// <param name="id"> The resource ID. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The resource metadata. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="managedIdentities"> The application managed identities. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="version"> The application type version. </param>
+        /// <param name="parameters"> The application parameters. </param>
+        /// <param name="upgradePolicy"> The application upgrade policy. </param>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="identity"> The resource managed identity. </param>
+        /// <returns> Application data for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
+            => ServiceFabricManagedApplicationData(id, name, resourceType, systemData, tags, location, managedIdentities, provisioningState, version, parameters, upgradePolicy, identity);
+
+        /// <summary> Initializes unsupported VM size data for mocking. </summary>
+        /// <param name="id"> The resource ID. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The resource metadata. </param>
+        /// <param name="vmSize"> The VM size name. </param>
+        /// <returns> Unsupported VM size data for mocking. </returns>
+        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vmSize)
+            => new ServiceFabricManagedUnsupportedVmSize(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vmSize is null ? default : new ServiceFabricManagedVmSizeProperties(vmSize, default),
+                default);
+
+        /// <summary> Initializes unsupported VM size data with the original optional parameters for mocking. </summary>
+        /// <param name="id"> The resource ID. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The resource metadata. </param>
+        /// <param name="serviceFabricManagedVmSize"> The VM size name. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <returns> Unsupported VM size data for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = null, ResourceType resourceType = default, SystemData systemData = null, string serviceFabricManagedVmSize = null, string name = null)
+            => ServiceFabricManagedUnsupportedVmSize(id, name, resourceType, systemData, serviceFabricManagedVmSize);
 
         // Backward-compat: pre-overhaul signature had baseSizeTiB and extendedCapacitySizeTiB as long? (nullable).
         // The mgmt generator's flatten/lift-to-nullable overhaul now exposes these as non-nullable long.

@@ -69,7 +69,6 @@
             "$id": "6",
             "name": "pathApiVersion",
             "isExactName": false,
-            "resourceName": "Path",
             "doc": "Path api version parameter.",
             "accessibility": "public",
             "parameters": [

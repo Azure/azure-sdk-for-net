@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="keyVaultResourceId"> Key vault resource Id. </param>
         /// <param name="redisCacheResourceId"> Redis cache resource Id. </param>
         /// <returns> A new <see cref="Models.AgricultureServiceConfig"/> instance for mocking. </returns>
-        public static AgricultureServiceConfig AgricultureServiceConfig(string instanceUri = default, string version = default, ResourceIdentifier appServiceResourceId = default, ResourceIdentifier cosmosDBResourceId = default, ResourceIdentifier storageAccountResourceId = default, ResourceIdentifier keyVaultResourceId = default, ResourceIdentifier redisCacheResourceId = default)
+        public static AgricultureServiceConfig AgricultureServiceConfig(Uri instanceUri = default, string version = default, ResourceIdentifier appServiceResourceId = default, ResourceIdentifier cosmosDBResourceId = default, ResourceIdentifier storageAccountResourceId = default, ResourceIdentifier keyVaultResourceId = default, ResourceIdentifier redisCacheResourceId = default)
         {
             return new AgricultureServiceConfig(
                 instanceUri,
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="keyName"> Name of the key vault key. </param>
         /// <param name="keyVersion"> Version of the key vault key. </param>
         /// <returns> A new <see cref="Models.DataConnectorCredentials"/> instance for mocking. </returns>
-        public static DataConnectorCredentials DataConnectorCredentials(AuthCredentialsKind? kind = default, string clientId = default, string keyVaultUri = default, string keyName = default, string keyVersion = default)
+        public static DataConnectorCredentials DataConnectorCredentials(AuthCredentialsKind? kind = default, string clientId = default, Uri keyVaultUri = default, string keyName = default, string keyVersion = default)
         {
             return new DataConnectorCredentials(
                 kind,

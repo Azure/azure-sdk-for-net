@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <returns> An object representing collection of LocationExtensionTypes and their operations over a LocationExtensionTypeResource. </returns>
         public virtual LocationExtensionTypeCollection GetLocationExtensionTypes(string location)
         {
-            return GetCachedClient(client => new LocationExtensionTypeCollection(client, Id, location));
+            return new LocationExtensionTypeCollection(Client, Id, location);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/fabric/Azure.ResourceManager.Fabric
+    - sdk/fabric/Azure.Provisioning.Fabric
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -17,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Fabric
       safeName: AzureResourceManagerFabric
+    - name: Azure.Provisioning.Fabric
+      safeName: AzureProvisioningFabric

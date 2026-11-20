@@ -15,11 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a MultiPolygon. </summary>
     public partial class MultiPolygon : GeoJsonGeometry, IJsonModel<MultiPolygon>
     {
-        /// <summary> Initializes a new instance of <see cref="MultiPolygon"/> for deserialization. </summary>
-        internal MultiPolygon()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -219,7 +214,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultiPolygon(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
+            return new MultiPolygon(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates ?? new ChangeTrackingList<IList<IList<IList<float>>>>());
         }
     }
 }

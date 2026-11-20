@@ -169,7 +169,7 @@ namespace Azure.IoT.DeviceUpdate
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeviceOperationsList(value, nextLink, additionalBinaryDataProperties);
+            return new DeviceOperationsList(value ?? new ChangeTrackingList<DeviceOperation>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

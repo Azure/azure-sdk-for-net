@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkFabricSkusListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkFabricSkusListResult(value ?? new ChangeTrackingList<NetworkFabricSkuData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -16,10 +16,10 @@ public partial class FunctionAppStorage
     [CodeGenMember("AzureStorageUriStringValue")]
     public BicepValue<Uri> Value
     {
-        get { Initialize(); return _value!; }
-        set { Initialize(); _value!.Assign(value); }
+        get { Initialize(); return _value; }
+        set { Initialize(); _value.Assign(value); }
     }
-    private BicepValue<Uri>? _value;
+    private BicepValue<Uri> _value;
 
     partial void DefineAdditionalProperties()
     {

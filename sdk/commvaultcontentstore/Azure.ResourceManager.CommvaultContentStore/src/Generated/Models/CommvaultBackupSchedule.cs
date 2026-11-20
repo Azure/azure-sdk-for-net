@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public CommvaultBackupSchedule(CommvaultBackupType backupType)
         {
             BackupType = backupType;
-            WeeklyDays = new ChangeTrackingList<WeeklyDays>();
+            DaysOfWeek = new ChangeTrackingList<CommvaultScheduleDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommvaultBackupSchedule"/>. </summary>
         /// <param name="backupType"> Type of Backup. </param>
         /// <param name="frequency"> Frequency of Retention. </param>
-        /// <param name="runsEvery"> Interval of Retention. </param>
+        /// <param name="interval"> Interval of Retention. </param>
         /// <param name="weekOfMonth"> Week of the month. </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
         /// <param name="monthOfYear"> Month of the year. </param>
         /// <param name="dayOfMonth"> Day of the month. </param>
-        /// <param name="weeklyDays"> Weekly Days List. </param>
+        /// <param name="daysOfWeek"> Weekly Days List. </param>
         /// <param name="time"> Time of Retention. </param>
         /// <param name="timeZone"> Time Zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultBackupSchedule(CommvaultBackupType backupType, CommvaultBackupFrequency? frequency, int? runsEvery, WeekOfMonth? weekOfMonth, CommvaultDayOfWeek? dayOfWeek, MonthOfYear? monthOfYear, int? dayOfMonth, IList<WeeklyDays> weeklyDays, string time, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultBackupSchedule(CommvaultBackupType backupType, CommvaultBackupFrequency? frequency, int? interval, WeekOfMonth? weekOfMonth, CommvaultDayOfWeek? dayOfWeek, MonthOfYear? monthOfYear, int? dayOfMonth, IList<CommvaultScheduleDayOfWeek> daysOfWeek, string time, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupType = backupType;
             Frequency = frequency;
-            RunsEvery = runsEvery;
+            Interval = interval;
             WeekOfMonth = weekOfMonth;
             DayOfWeek = dayOfWeek;
             MonthOfYear = monthOfYear;
             DayOfMonth = dayOfMonth;
-            WeeklyDays = weeklyDays;
+            DaysOfWeek = daysOfWeek;
             Time = time;
             TimeZone = timeZone;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public CommvaultBackupFrequency? Frequency { get; set; }
 
         /// <summary> Interval of Retention. </summary>
-        public int? RunsEvery { get; set; }
+        public int? Interval { get; set; }
 
         /// <summary> Week of the month. </summary>
         public WeekOfMonth? WeekOfMonth { get; set; }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public int? DayOfMonth { get; set; }
 
         /// <summary> Weekly Days List. </summary>
-        public IList<WeeklyDays> WeeklyDays { get; }
+        public IList<CommvaultScheduleDayOfWeek> DaysOfWeek { get; }
 
         /// <summary> Time of Retention. </summary>
         public string Time { get; set; }

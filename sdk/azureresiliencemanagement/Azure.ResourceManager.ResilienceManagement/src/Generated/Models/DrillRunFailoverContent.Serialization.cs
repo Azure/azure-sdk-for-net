@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            AutoFailover autoFailover = default;
+            DrillRunAutoFailover autoFailover = default;
             ResilienceManagementFailoverContent failoverProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("autoFailover"u8))
                 {
-                    autoFailover = new AutoFailover(prop.Value.GetString());
+                    autoFailover = new DrillRunAutoFailover(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failoverProperties"u8))

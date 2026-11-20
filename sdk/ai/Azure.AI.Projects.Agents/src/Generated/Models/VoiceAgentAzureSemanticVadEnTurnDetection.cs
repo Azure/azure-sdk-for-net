@@ -10,8 +10,11 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> English-optimized Azure semantic voice activity detection. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentAzureSemanticVadEnTurnDetection : VoiceAgentTurnDetectionConfig
+    public partial class VoiceAgentAzureSemanticVadEnTurnDetection : VoiceAgentTurnDetectionConfiguration
     {
+        private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
+        private bool _endOfUtteranceDetectionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAzureSemanticVadEnTurnDetection"/>. </summary>
         public VoiceAgentAzureSemanticVadEnTurnDetection() : base(VoiceAgentTurnDetectionType.AzureSemanticVadEn)
         {
@@ -22,52 +25,63 @@ namespace Azure.AI.Projects.Agents
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
-        /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
-        /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="prefixPadding"> Audio to include before detected speech, in milliseconds. </param>
+        /// <param name="silenceDuration"> Silence required to end speech detection, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
+        /// <param name="speechDuration"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
-        /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
-        /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
-        internal VoiceAgentAzureSemanticVadEnTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPaddingMs, TimeSpan? silenceDurationMs, TimeSpan? idleTimeoutMs, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDurationMs, bool? removeFillerWords, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        /// <param name="createResponseEnabled"> Whether a response is created automatically when speech stops. </param>
+        /// <param name="interruptResponseEnabled"> Whether user speech may interrupt the agent's response. </param>
+        internal VoiceAgentAzureSemanticVadEnTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPadding, TimeSpan? silenceDuration, TimeSpan? idleTimeout, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDuration, bool? removeFillerWords, bool? createResponseEnabled, bool? interruptResponseEnabled) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Threshold = threshold;
-            PrefixPaddingMs = prefixPaddingMs;
-            SilenceDurationMs = silenceDurationMs;
-            IdleTimeoutMs = idleTimeoutMs;
-            EndOfUtteranceDetection = endOfUtteranceDetection;
-            SpeechDurationMs = speechDurationMs;
+            PrefixPadding = prefixPadding;
+            SilenceDuration = silenceDuration;
+            IdleTimeout = idleTimeout;
+            _endOfUtteranceDetection = endOfUtteranceDetection;
+            SpeechDuration = speechDuration;
             RemoveFillerWords = removeFillerWords;
-            CreateResponse = createResponse;
-            InterruptResponse = interruptResponse;
+            CreateResponseEnabled = createResponseEnabled;
+            InterruptResponseEnabled = interruptResponseEnabled;
         }
 
         /// <summary> Activation threshold for voice activity detection, from 0 to 1. </summary>
         public float? Threshold { get; set; }
 
         /// <summary> Audio to include before detected speech, in milliseconds. </summary>
-        public TimeSpan? PrefixPaddingMs { get; set; }
+        public TimeSpan? PrefixPadding { get; set; }
 
         /// <summary> Silence required to end speech detection, in milliseconds. </summary>
-        public TimeSpan? SilenceDurationMs { get; set; }
+        public TimeSpan? SilenceDuration { get; set; }
 
         /// <summary> Maximum idle time before the detector ends the turn, in milliseconds. </summary>
-        public TimeSpan? IdleTimeoutMs { get; set; }
+        public TimeSpan? IdleTimeout { get; set; }
 
         /// <summary> Semantic end-of-utterance detection configuration. Set to null to disable it. </summary>
-        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get; set; }
+        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection
+        {
+            get
+            {
+                return _endOfUtteranceDetection;
+            }
+            set
+            {
+                _endOfUtteranceDetection = value;
+                _endOfUtteranceDetectionIsDefined = true;
+            }
+        }
 
         /// <summary> Minimum speech duration required to trigger detection, in milliseconds. </summary>
-        public TimeSpan? SpeechDurationMs { get; set; }
+        public TimeSpan? SpeechDuration { get; set; }
 
         /// <summary> Whether filler words are removed from transcription. </summary>
         public bool? RemoveFillerWords { get; set; }
 
         /// <summary> Whether a response is created automatically when speech stops. </summary>
-        public bool? CreateResponse { get; set; }
+        public bool? CreateResponseEnabled { get; set; }
 
         /// <summary> Whether user speech may interrupt the agent's response. </summary>
-        public bool? InterruptResponse { get; set; }
+        public bool? InterruptResponseEnabled { get; set; }
     }
 }

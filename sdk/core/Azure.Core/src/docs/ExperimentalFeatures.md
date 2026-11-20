@@ -84,30 +84,6 @@ Or in your project file:
 </PropertyGroup>
 ```
 
-## AZID0002 - Identity: IsAzureProxyEnabled Experimental API
-
-### Description
-
-The `IsAzureProxyEnabled` property on `WorkloadIdentityCredentialOptions` enables the Azure Kubernetes Service proxy for workload identity authentication.
-
-### Affected APIs
-
-- `Azure.Identity.WorkloadIdentityCredentialOptions.IsAzureProxyEnabled`
-
-### Suppression
-
-```csharp
-#pragma warning disable AZID0002
-```
-
-Or in your project file:
-
-```xml
-<PropertyGroup>
-  <NoWarn>$(NoWarn);AZID0002</NoWarn>
-</PropertyGroup>
-```
-
 ## AZID0003 - Identity: TokenRequestCallback Experimental API
 
 ### Description

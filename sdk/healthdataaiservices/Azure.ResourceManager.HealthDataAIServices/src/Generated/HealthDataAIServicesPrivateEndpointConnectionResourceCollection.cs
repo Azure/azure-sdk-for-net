@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new HealthDataAIServicesPrivateEndpointConnectionResourceDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceCollectionResultOfT(
+            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new HealthDataAIServicesPrivateEndpointConnectionResourceDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

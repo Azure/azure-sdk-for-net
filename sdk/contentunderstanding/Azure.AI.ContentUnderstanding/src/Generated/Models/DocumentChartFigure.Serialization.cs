@@ -254,7 +254,7 @@ namespace Azure.AI.ContentUnderstanding
                 description,
                 role,
                 additionalBinaryDataProperties,
-                content);
+                content ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
     }
 }

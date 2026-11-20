@@ -164,7 +164,7 @@ namespace Azure.AI.DocumentIntelligence
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BoundingRegion(pageNumber, polygon, additionalBinaryDataProperties);
+            return new BoundingRegion(pageNumber, polygon ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);
         }
 
         /// <param name="writer"> The JSON writer. </param>

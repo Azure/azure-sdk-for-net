@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Avs.Models
                 displayName,
                 provisioningState,
                 additionalBinaryDataProperties,
-                vmMembers,
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
                 affinityType);
         }
     }

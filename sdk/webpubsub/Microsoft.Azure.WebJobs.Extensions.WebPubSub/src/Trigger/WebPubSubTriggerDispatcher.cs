@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
     {
-        private readonly ConcurrentDictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
+        private readonly ConcurrentDictionary<WebPubSubTriggerKey, WebPubSubListener> _listeners = new();
         private readonly ILogger _logger;
 
         public WebPubSubTriggerDispatcher(ILogger logger)
@@ -28,11 +28,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _logger = logger;
         }
 
-        public void AddListener(string key, WebPubSubListener listener)
+        public void AddListener(WebPubSubTriggerKey key, WebPubSubListener listener)
         {
             if (!_listeners.TryAdd(key, listener))
             {
-                throw new ArgumentException($"Duplicated binding attribute find: {string.Join(",", key.Split('.'))}");
+                throw new ArgumentException($"Duplicated binding attribute find: {key}");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return true;
             }
-            key = $"{context.Hub}.{context.EventType}.{context.EventName}.{WebPubSubTriggerAcceptedClientProtocols.All}"; // match all client protocols
+            key = Utilities.GetFunctionKey(context.Hub, context.EventType, context.EventName, WebPubSubTriggerAcceptedClientProtocols.All); // match all client protocols
             if (_listeners.TryGetValue(key, out listener))
             {
                 return true;

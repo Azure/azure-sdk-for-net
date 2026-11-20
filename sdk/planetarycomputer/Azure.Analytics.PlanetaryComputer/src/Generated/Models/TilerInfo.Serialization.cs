@@ -564,7 +564,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return new TilerInfo(
-                bounds,
+                bounds ?? new ChangeTrackingList<float>(),
                 bandMetadata ?? new ChangeTrackingList<IList<BinaryData>>(),
                 bandDescriptions ?? new ChangeTrackingList<IList<string>>(),
                 dataType,

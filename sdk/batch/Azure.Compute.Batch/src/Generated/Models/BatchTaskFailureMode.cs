@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="BatchTaskFailureMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchTaskFailureMode?(string value) => value == null ? null : new BatchTaskFailureMode(value);
+        public static implicit operator BatchTaskFailureMode?(string value) => value == null ? (BatchTaskFailureMode?)null : new BatchTaskFailureMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

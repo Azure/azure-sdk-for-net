@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 description,
                 severity,
                 isEnabled,
-                scopes,
+                scopes ?? new ChangeTrackingList<string>(),
                 evaluationFrequency,
                 windowSize,
                 targetResourceType,

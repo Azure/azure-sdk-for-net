@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static SqlDBSingleDatabaseTargetProperties SqlDBSingleDatabaseTargetProperties(TargetAuthenticationType targetAuthenticationType = default, TargetAuthenticationVaultSecret targetVault = default, string connectionServerName = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, ResourceIdentifier sqlDBResourceId = default, bool? readIntent = default)
         {
             return new SqlDBSingleDatabaseTargetProperties(
-                default,
+                "SqlDb",
                 targetAuthenticationType,
                 targetVault,
                 connectionServerName,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static SqlDBElasticPoolTargetProperties SqlDBElasticPoolTargetProperties(TargetAuthenticationType targetAuthenticationType = default, TargetAuthenticationVaultSecret targetVault = default, string connectionServerName = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, ResourceIdentifier sqlEpResourceId = default, ResourceIdentifier anchorDatabaseResourceId = default, bool? readIntent = default)
         {
             return new SqlDBElasticPoolTargetProperties(
-                default,
+                "SqlEp",
                 targetAuthenticationType,
                 targetVault,
                 connectionServerName,
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static SqlMITargetProperties SqlMITargetProperties(TargetAuthenticationType targetAuthenticationType = default, TargetAuthenticationVaultSecret targetVault = default, string connectionServerName = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, ResourceIdentifier sqlMiResourceId = default, int? connectionTcpPort = default, bool? readIntent = default)
         {
             return new SqlMITargetProperties(
-                default,
+                "SqlMi",
                 targetAuthenticationType,
                 targetVault,
                 connectionServerName,

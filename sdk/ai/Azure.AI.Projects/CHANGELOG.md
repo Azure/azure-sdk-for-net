@@ -1,14 +1,102 @@
 # Release History
 
-## 3.0.0-beta.4 (Unreleased)
+## 3.0.0 (2026-11-19)
+
+### Features Added
+- Uploading of models now can be cancelled.
+
+### Breaking Changes
+- Added `[Experimental("AAIP001")]` to the following APIs that shipped without the attribute in 2.0.x. Using them now requires suppressing the `AAIP001` diagnostic.
+  - Types in `Azure.AI.Projects`: `ProjectsScheduleTask`, `TreatmentEffectType`.
+  - Types in `Azure.AI.Projects.Evaluation`:
+    `AgentClusterInsightRequest`, `AgentClusterInsightResult`, `AgentTaxonomyInput`, `AttackStrategy`,
+    `AzureOpenAIModelConfiguration`, `ChartCoordinate`, `ClusterInsightResult`, `ClusterTokenUsage`,
+    `CodeBasedEvaluatorDefinition`, `CronTrigger`, `DailyRecurrenceSchedule`, `EvalResult`,
+    `EvalRunResultCompareItem`, `EvalRunResultComparison`, `EvalRunResultSummary`,
+    `EvaluationComparisonInsightRequest`, `EvaluationComparisonInsightResult`, `EvaluationResultSample`,
+    `EvaluationRunClusterInsightRequest`, `EvaluationRunClusterInsightResult`, `EvaluationScheduleTask`,
+    `EvaluationTaxonomies`, `EvaluationTaxonomy`, `EvaluationTaxonomyInput`, `HourlyRecurrenceSchedule`,
+    `InsightCluster`, `InsightModelConfiguration`, `InsightRequest`, `InsightResult`, `InsightSample`,
+    `InsightScheduleTask`, `InsightSummary`, `InsightType`, `InsightsMetadata`, `MonthlyRecurrenceSchedule`,
+    `OneTimeTrigger`, `ProjectsInsight`, `ProjectsSchedule`, `PromptBasedEvaluatorDefinition`,
+    `RecurrenceSchedule`, `RecurrenceTrigger`, `RedTeam`, `RiskCategory`, `ScheduleProvisioningStatus`,
+    `ScheduleRun`, `ScheduleTaskType`, `ScheduleTrigger`, `TargetConfig`, `TaxonomyCategory`,
+    `TaxonomySubCategory`, `WeeklyRecurrenceSchedule`.
+  - Types in `Azure.AI.Projects.Memory`:
+    `ChatSummaryMemoryItem`, `DeleteMemoryStoreResponse`, `MemoryItem`, `MemoryOperation`,
+    `MemoryOperationKind`, `MemorySearchItem`, `MemorySearchOptions`, `MemoryStore`,
+    `MemoryStoreDefaultDefinition`, `MemoryStoreDefaultOptions`, `MemoryStoreDefinition`,
+    `MemoryStoreDeleteScopeResponse`, `MemoryStoreObjectType`, `MemoryStoreOperationUsage`,
+    `MemoryStoreSearchResponse`, `MemoryUpdateResult`, `MemoryUpdateResultDetails`, `UserProfileMemoryItem`.
+  - `AIProjectClient` properties: `Insights`, `MemoryStores`, `RedTeams`, `Schedules`.
+  - `AzureAIProjectsModelFactory` methods:
+    `AgentClusterInsightRequest`, `AgentClusterInsightResult`, `AzureOpenAIModelConfiguration`,
+    `ChartCoordinate`, `ClusterInsightResult`, `ClusterTokenUsage`, `CodeBasedEvaluatorDefinition`,
+    `DeleteMemoryStoreResponse`, `EvalResult`, `EvalRunResultCompareItem`, `EvalRunResultComparison`,
+    `EvalRunResultSummary`, `EvaluationComparisonInsightRequest`, `EvaluationComparisonInsightResult`,
+    `EvaluationRunClusterInsightRequest`, `EvaluationRunClusterInsightResult`, `EvaluationScheduleTask`,
+    `EvaluationTaxonomy`, `HumanEvaluationPreviewRuleAction`, `InsightCluster`, `InsightModelConfiguration`,
+    `InsightRequest`, `InsightResult`, `InsightScheduleTask`, `InsightSummary`, `InsightsMetadata`,
+    `MemoryOperation`, `MemorySearchItem`, `MemoryStore`, `MemoryStoreDefaultOptions`,
+    `MemoryStoreDeleteScopeResponse`, `MemoryStoreSearchResponse`, `MemoryUpdateResultDetails`,
+    `ProjectsInsight`, `ProjectsSchedule`, `ProjectsScheduleTask`, `PromptBasedEvaluatorDefinition`,
+    `RedTeam`, `ScheduleRun`, `TargetConfig`, `TaxonomyCategory`, `TaxonomySubCategory`.
+- `AIProjectClient.GetAIProjectMemoryStoresClient()` also now requires suppression of `AAIP001`. The current `AzureAIProjectsModelFactory.MemoryStoreOperationUsage` overload is experimental as well; its signature differs from the 2.0.x overload.
+- Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
+- The `ModelSamplingParams` class was removed. Please use `ModelSamplingParams` from `Azure.AI.Projects.Agents` package.
+- The `AzureAIModelTarget` property `SamplingParams` was renamed to `SamplingParameters` and now uses `ModelSamplingParams` from `Azure.AI.Projects.Agents`. The corresponding `AzureAIProjectsModelFactory.AzureAIModelTarget` parameter was renamed from `samplingParams` to `samplingParameters`.
+- `InputFileContentParam` and `InputTextContentParam` classes were removed.
+- `ResponseUsageInputTokensDetails` and `ResponseUsageOutputTokensDetails` were removed: `MemoryStoreOperationUsage.InputTokensDetails` and `OutputTokensDetails` now return `OpenAI.Responses.ResponseInputTokenUsageDetails` and `ResponseOutputTokenUsageDetails`.
+- `Azure.AI.Projects.Memory.MemorySearchResultOptions` was removed: `MemorySearchOptions.ResultOptions` is now `Azure.AI.Extensions.OpenAI.MemorySearchResultOptions`.
+- `OpenAI.AgentObjectType` was removed.
+- The `Azure.AI.Projects.Agents` dependency has renamed agent models and members used by project clients. For example, replace `VersionRefIndicator` with `VersionReferenceIndicator` and `VoiceAgentAudioConfig` with `VoiceAgentAudioConfiguration`. See the `Azure.AI.Projects.Agents` changelog for the complete list.
+- Renamed `Azure.AI.Projects.DatasetReference` to `Azure.AI.Projects.Evaluation.VersionedDatasetReference` and renamed the corresponding model-factory method.
+- Moved `RubricBasedEvaluatorDefinition` and `TracesEvaluatorGenerationJobSource` from `Azure.AI.Projects` to `Azure.AI.Projects.Evaluation`.
+- Renamed timestamp properties and corresponding constructor/model-factory parameters from `*On` to `*At` on routine, data-generation, evaluator-generation, and Agent Insights models.
+- Changed `EvaluationsDimension.Weight` and the corresponding constructor/model-factory parameters from `int` to `int?` to support null weights.
+- Removed `AgentInsightsV1Preview` from `FoundryFeaturesOptInKeys`.
+- The `AzureAIModelTarget` property `SamplingParams` was renamed to `samplingParameters`.
+- Added `[Experimental("AAIP002")]` to `AzureAIProjectsModelFactory.AzureAIAgentTarget(string, string, IEnumerable<ToolDescription>)`, which shipped without the attribute in 2.0.x. Using it now requires suppressing the `AAIP002` diagnostic.
+
+## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added
 
+- Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
+- Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
+- Added the `MaxSamples` property to `SimulationSeedDataGenerationJobConfiguration`.
+
 ### Breaking Changes
+- `SimulationSeedDataGenerationJobConfiguration` now requires a `maxSamples` constructor argument. Replace parameterless construction with `new SimulationSeedDataGenerationJobConfiguration(maxSamples)`.
+- Added an optional `maxSamples` parameter to `AzureAIProjectsModelFactory.SimulationSeedDataGenerationJobConfiguration`, changing its binary signature. Recompile code that uses this factory.
 
-### Bugs Fixed
+### Sample Updates
 
-### Other Changes
+- Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
+
+## 3.0.0-beta.5 (2026-10-16)
+
+### Features Added
+- Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
+
+### Breaking Changes
+- Removed the `UpdateMemories(string, BinaryContent, RequestOptions)` and `UpdateMemoriesAsync(string, BinaryContent, RequestOptions)` protocol overloads from `AIProjectMemoryStores`. Use the corresponding long-running operation overloads that accept `waitUntilCompleted` instead, passing `false` to return after starting the operation.
+
+### Sample Updates
+- Added runnable Voice Agent WebSocket transport samples for stored text conversations and streamed PCM audio with actual input and output byte counts.
+
+## 3.0.0-beta.4 (2026-10-12)
+
+### Features Added
+- `EvaluatorGenerationJobs` and `DataGenerationJob` do not require warning suppression anymore.
+- Agent optimization does not require `AAIP001` warning suppression anymore.
+
+### Breaking Changes
+- `EvaluatorGenerationJobs.Create` and `EvaluatorGenerationJobs.CreateAsync` are now returning the LRO poller.
+- To create a data generation job, `DataGenerationJobInputs` is now need to be used. It can be of three types: `EvaluationDataGenerationJobInputs`, `ReinforcementFineTuningDataGenerationJobInputs` and `SupervisedFineTuningDataGenerationJobInputs`. 
+- `DataGenerationJobOptions` was replaced by `DataGenerationJobConfiguration` subtypes.
+- `DataGenerationJobOutputOptions` was replaced by `EvaluationDataGenerationJobOutputConfiguration`.
+- The `EvaluatorName` property of `EvaluatorGenerationInputs` now can only be set through constructor.
 
 ## 3.0.0-beta.3 (2026-09-16)
 

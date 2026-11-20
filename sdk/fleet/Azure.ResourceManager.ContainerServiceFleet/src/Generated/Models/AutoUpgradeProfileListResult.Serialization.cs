@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AutoUpgradeProfileListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AutoUpgradeProfileListResult(value ?? new ChangeTrackingList<AutoUpgradeProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

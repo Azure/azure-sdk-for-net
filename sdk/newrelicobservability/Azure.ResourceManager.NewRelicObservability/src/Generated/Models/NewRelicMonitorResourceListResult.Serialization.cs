@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NewRelicMonitorResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NewRelicMonitorResourceListResult(value ?? new ChangeTrackingList<NewRelicMonitorResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

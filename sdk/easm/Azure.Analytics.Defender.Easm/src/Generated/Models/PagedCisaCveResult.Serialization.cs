@@ -184,7 +184,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedCisaCveResult(value, nextLink, totalElements, additionalBinaryDataProperties);
+            return new PagedCisaCveResult(value ?? new ChangeTrackingList<CisaCveResult>(), nextLink, totalElements, additionalBinaryDataProperties);
         }
     }
 }

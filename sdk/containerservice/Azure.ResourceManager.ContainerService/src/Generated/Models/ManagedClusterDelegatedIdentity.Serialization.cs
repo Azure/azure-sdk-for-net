@@ -75,15 +75,21 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterDelegatedIdentity)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            writer.WritePropertyName("referralResource"u8);
-            writer.WriteStringValue(ReferralResource);
+            if (Optional.IsDefined(ReferralResource))
+            {
+                writer.WritePropertyName("referralResource"u8);
+                writer.WriteStringValue(ReferralResource);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -140,6 +146,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }

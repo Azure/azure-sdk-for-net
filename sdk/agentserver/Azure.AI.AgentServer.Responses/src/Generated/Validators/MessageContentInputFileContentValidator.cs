@@ -31,6 +31,15 @@ internal static partial class MessageContentInputFileContentValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: detail
+        if (element.TryGetProperty("detail", out var detailProp))
+        {
+            if (detailProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.detail", $"Expected string, got {detailProp.ValueKind}"));
+            else if (detailProp.GetString() is not ("auto" or "low" or "high"))
+                errors.Add(new ValidationError("$.detail", $"Value '{detailProp.GetString()}' is not valid. Allowed: auto, low, high"));
+        }
+
         // Optional: file_data
         if (element.TryGetProperty("file_data", out var fileDataProp))
         {
@@ -57,6 +66,17 @@ internal static partial class MessageContentInputFileContentValidator
         {
             if (filenameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.filename", $"Expected string, got {filenameProp.ValueKind}"));
+        }
+
+        // Optional: prompt_cache_breakpoint
+        if (element.TryGetProperty("prompt_cache_breakpoint", out var promptCacheBreakpointProp))
+        {
+            var promptCacheBreakpointResult = PromptCacheBreakpointConfigValidator.Validate(promptCacheBreakpointProp);
+            if (!promptCacheBreakpointResult.IsValid)
+            {
+                foreach (var e in promptCacheBreakpointResult.Errors)
+                    errors.Add(new ValidationError("$.prompt_cache_breakpoint" + e.Path.Substring(1), e.Message));
+            }
         }
 
         // Required: type

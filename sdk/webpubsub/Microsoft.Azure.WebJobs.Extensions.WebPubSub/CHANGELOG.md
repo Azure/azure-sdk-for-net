@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fix trigger routing for hub and event names containing periods.
+
 ### Other Changes
 
 ## 1.10.2 (2026-06-01)

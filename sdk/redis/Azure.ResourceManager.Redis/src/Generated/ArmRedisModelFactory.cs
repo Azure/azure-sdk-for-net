@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Redis.RedisData"/> instance for mocking. </returns>
-        public static RedisData RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IEnumerable<SubResource> linkedServers, IEnumerable<RedisInstanceDetails> instances, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections, ResourceIdentifier targetAmrResourceId, IEnumerable<string> zones, ManagedServiceIdentity identity)
+        public static RedisData RedisData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisCommonConfiguration redisConfiguration = default, string redisVersion = default, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default, RedisProvisioningState? provisioningState = default, string hostName = default, int? port = default, int? sslPort = default, RedisAccessKeys accessKeys = default, IEnumerable<SubResource> linkedServers = default, IEnumerable<RedisInstanceDetails> instances = default, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections = default, ResourceIdentifier targetAmrResourceId = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="redisProvisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Redis.RedisPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState, ResourceIdentifier privateEndpointId)
+        public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState = default, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new RedisPrivateEndpointConnectionData(
                 id,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Models.RedisCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static RedisCreateOrUpdateContent RedisCreateOrUpdateContent(RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default, IEnumerable<string> zones = default, AzureLocation location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static RedisCreateOrUpdateContent RedisCreateOrUpdateContent(RedisCommonConfiguration redisConfiguration = default, string redisVersion = default, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default, IEnumerable<string> zones = default, AzureLocation location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Redis.RedisPatchScheduleData"/> instance for mocking. </returns>
-        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<RedisPatchScheduleSetting> scheduleEntries, RedisPatchScheduleDefaultName defaultName, AzureLocation? location = default)
+        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<RedisPatchScheduleSetting> scheduleEntries = default, RedisPatchScheduleDefaultName defaultName = default, AzureLocation? location = default)
         {
             return new RedisPatchScheduleData(
                 id,
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Asynchronous operation status. </summary>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
         /// <returns> A new <see cref="Models.RedisOperationStatus"/> instance for mocking. </returns>
-        public static RedisOperationStatus RedisOperationStatus(IReadOnlyDictionary<string, BinaryData> properties)
+        public static RedisOperationStatus RedisOperationStatus(IReadOnlyDictionary<string, BinaryData> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="staticIP"> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </param>
         /// <returns> A new <see cref="Models.RedisCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisCreateOrUpdateContent RedisCreateOrUpdateContent(IEnumerable<string> zones = default, AzureLocation location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, RedisCommonConfiguration redisConfiguration = default, string redisVersion = default, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default)
+        public static RedisCreateOrUpdateContent RedisCreateOrUpdateContent(IEnumerable<string> zones, AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP)
         {
             return new RedisCreateOrUpdateContent(
                 redisConfiguration is null && redisVersion is null && enableNonSslPort is null && replicasPerMaster is null && replicasPerPrimary is null && tenantSettings is null && shardCount is null && minimumTlsVersion is null && publicNetworkAccess is null && updateChannel is null && isAccessKeyAuthenticationDisabled is null && zonalAllocationPolicy is null && sku is null && subnetId is null && staticIP is null ? default : new RedisCreateProperties(
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
         /// <returns> A new <see cref="Redis.RedisData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisData RedisData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, RedisCommonConfiguration redisConfiguration = default, string redisVersion = default, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default, RedisProvisioningState? provisioningState = default, string hostName = default, int? port = default, int? sslPort = default, RedisAccessKeys accessKeys = default, IEnumerable<SubResource> linkedServers = default, IEnumerable<RedisInstanceDetails> instances = default, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static RedisData RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IEnumerable<SubResource> linkedServers, IEnumerable<RedisInstanceDetails> instances, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections)
         {
             return new RedisData(
                 id,
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="redisProvisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Redis.RedisPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState = default, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState = default)
+        public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState)
         {
             return new RedisPrivateEndpointConnectionData(
                 id,
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
         /// <returns> A new <see cref="Redis.RedisPatchScheduleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IEnumerable<RedisPatchScheduleSetting> scheduleEntries = default)
+        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IEnumerable<RedisPatchScheduleSetting> scheduleEntries)
         {
             return new RedisPatchScheduleData(
                 id,
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
         /// <returns> A new <see cref="Models.RedisOperationStatus"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisOperationStatus RedisOperationStatus(ResourceIdentifier id = default, string name = default, string status = default, float? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, IReadOnlyDictionary<string, BinaryData> properties = default)
+        public static RedisOperationStatus RedisOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties)
         {
             return new RedisOperationStatus(properties ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
         }

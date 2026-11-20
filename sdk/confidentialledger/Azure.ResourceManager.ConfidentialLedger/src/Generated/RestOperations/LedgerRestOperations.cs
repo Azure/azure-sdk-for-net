@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
             uri.AppendPath(ledgerName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-23", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
             uri.AppendPath(ledgerName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-23", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
             uri.AppendPath(ledgerName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-23", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
             uri.AppendPath(ledgerName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-23", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-23", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -176,10 +161,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-02-23");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,10 +178,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-23", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -224,10 +203,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-02-23");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,10 +224,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
             uri.AppendPath(ledgerName, true);
             uri.AppendPath("/filesExport", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-23", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

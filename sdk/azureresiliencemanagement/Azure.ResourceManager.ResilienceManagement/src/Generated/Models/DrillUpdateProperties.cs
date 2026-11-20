@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private HealthModelMonitoringProperties _healthModelMonitoringProperties;
+        private bool _healthModelMonitoringPropertiesIsDefined;
+        private SliMonitoringProperties _sliMonitoringProperties;
+        private bool _sliMonitoringPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DrillUpdateProperties"/>. </summary>
         public DrillUpdateProperties()
@@ -23,23 +27,32 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="DrillUpdateProperties"/>. </summary>
         /// <param name="recoveryPlanProperties"> Recovery Plan properties. </param>
+        /// <param name="goalAssignmentProperties"> Goal Assignment properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
+        /// <param name="healthModelMonitoringProperties"> Azure Health Model monitoring properties of the Drill. Send null to clear the selection. </param>
+        /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. Send null to clear the selection; the submitted slis array is the new desired state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillUpdateProperties(RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ResilienceManagementRbacSetupMode? rbacSetupMode, MonitoringPropertiesOfDrill monitoringProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillUpdateProperties(RecoveryPlanPropertiesOfDrill recoveryPlanProperties, GoalAssignmentPropertiesOfDrill goalAssignmentProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ResilienceManagementRbacSetupMode? rbacSetupMode, MonitoringPropertiesOfDrill monitoringProperties, HealthModelMonitoringProperties healthModelMonitoringProperties, SliMonitoringProperties sliMonitoringProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecoveryPlanProperties = recoveryPlanProperties;
+            GoalAssignmentProperties = goalAssignmentProperties;
             DrillAssetProperties = drillAssetProperties;
             ChaosResourceProperties = chaosResourceProperties;
             RbacSetupMode = rbacSetupMode;
             MonitoringProperties = monitoringProperties;
+            _healthModelMonitoringProperties = healthModelMonitoringProperties;
+            _sliMonitoringProperties = sliMonitoringProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Recovery Plan properties. </summary>
         public RecoveryPlanPropertiesOfDrill RecoveryPlanProperties { get; set; }
+
+        /// <summary> Goal Assignment properties. </summary>
+        public GoalAssignmentPropertiesOfDrill GoalAssignmentProperties { get; set; }
 
         /// <summary> Properties for internal resources that are created for the Drill. </summary>
         public AssetPropertiesOfDrill DrillAssetProperties { get; set; }
@@ -52,5 +65,33 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Monitoring properties of the Drill. </summary>
         public MonitoringPropertiesOfDrill MonitoringProperties { get; set; }
+
+        /// <summary> Azure Health Model monitoring properties of the Drill. Send null to clear the selection. </summary>
+        public HealthModelMonitoringProperties HealthModelMonitoringProperties
+        {
+            get
+            {
+                return _healthModelMonitoringProperties;
+            }
+            set
+            {
+                _healthModelMonitoringProperties = value;
+                _healthModelMonitoringPropertiesIsDefined = true;
+            }
+        }
+
+        /// <summary> SLI monitoring properties of the Drill. Send null to clear the selection; the submitted slis array is the new desired state. </summary>
+        public SliMonitoringProperties SliMonitoringProperties
+        {
+            get
+            {
+                return _sliMonitoringProperties;
+            }
+            set
+            {
+                _sliMonitoringProperties = value;
+                _sliMonitoringPropertiesIsDefined = true;
+            }
+        }
     }
 }

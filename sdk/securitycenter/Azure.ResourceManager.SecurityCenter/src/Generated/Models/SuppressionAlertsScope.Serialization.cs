@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SuppressionAlertsScope(suppressionAlertsScopeAllOf, additionalBinaryDataProperties);
+            return new SuppressionAlertsScope(suppressionAlertsScopeAllOf ?? new ChangeTrackingList<SuppressionAlertsScopeElement>(), additionalBinaryDataProperties);
         }
     }
 }

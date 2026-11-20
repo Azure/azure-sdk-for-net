@@ -52,7 +52,13 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string jitNetworkAccessPolicyApiVersion);
             _jitNetworkAccessPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _jitNetworkAccessPoliciesRestClient = new JitNetworkAccessPolicies(_jitNetworkAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, jitNetworkAccessPolicyApiVersion ?? "2020-01-01");
+            _jitNetworkAccessPoliciesRestClient = new JitNetworkAccessPolicies(
+                _jitNetworkAccessPoliciesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                jitNetworkAccessPolicyApiVersion ?? "2020-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

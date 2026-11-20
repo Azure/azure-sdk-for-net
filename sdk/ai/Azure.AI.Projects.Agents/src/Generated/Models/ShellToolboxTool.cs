@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -40,9 +39,6 @@ namespace Azure.AI.Projects.Agents
             AllowedCallers = allowedCallers;
             Environment = environment;
         }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </summary>
         public ToolboxShellEnvironment Environment { get; set; }

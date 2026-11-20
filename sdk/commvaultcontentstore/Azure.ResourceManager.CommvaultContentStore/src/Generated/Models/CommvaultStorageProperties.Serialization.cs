@@ -87,11 +87,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WritePropertyName("vendor"u8);
             writer.WriteStringValue(Vendor.ToString());
             writer.WritePropertyName("class"u8);
-            writer.WriteStringValue(Class.ToString());
+            writer.WriteStringValue(StorageClass.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ComplianceLockStatus))
+            {
+                writer.WritePropertyName("complianceLockStatus"u8);
+                writer.WriteStringValue(ComplianceLockStatus.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,8 +143,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             AzureLocation location = default;
             CommvaultStorageType storageType = default;
             CommvaultVendor vendor = default;
-            CommvaultStorageClassType @class = default;
+            CommvaultStorageClassType storageClass = default;
             ResourceProvisioningState? provisioningState = default;
+            ComplianceLockStatus? complianceLockStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("class"u8))
                 {
-                    @class = new CommvaultStorageClassType(prop.Value.GetString());
+                    storageClass = new CommvaultStorageClassType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -172,6 +178,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     provisioningState = new ResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("complianceLockStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    complianceLockStatus = new ComplianceLockStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -181,8 +196,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 location,
                 storageType,
                 vendor,
-                @class,
+                storageClass,
                 provisioningState,
+                complianceLockStatus,
                 additionalBinaryDataProperties);
         }
     }

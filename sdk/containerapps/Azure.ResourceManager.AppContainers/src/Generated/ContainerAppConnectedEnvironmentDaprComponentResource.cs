@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppConnectedEnvironmentDaprComponentsGetSecretsAsyncCollectionResultOfT(
+            return new ContainerAppDaprSecretAsyncCollectionResultOfT(
                 _containerAppConnectedEnvironmentDaprComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppConnectedEnvironmentDaprComponentsGetSecretsCollectionResultOfT(
+            return new ContainerAppDaprSecretCollectionResultOfT(
                 _containerAppConnectedEnvironmentDaprComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

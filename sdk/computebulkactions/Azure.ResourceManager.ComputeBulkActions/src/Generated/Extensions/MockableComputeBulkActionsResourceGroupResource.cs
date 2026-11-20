@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
         /// <returns> An object representing collection of BulkActions and their operations over a BulkActionResource. </returns>
         public virtual BulkActionCollection GetBulkActions(AzureLocation location)
         {
-            return GetCachedClient(client => new BulkActionCollection(client, Id, location));
+            return new BulkActionCollection(Client, Id, location);
         }
 
         /// <summary>

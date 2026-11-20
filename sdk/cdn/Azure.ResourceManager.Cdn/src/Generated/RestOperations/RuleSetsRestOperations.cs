@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string profileName, string ruleSetName, RequestContext context)
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string profileName, string ruleSetName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -90,7 +90,12 @@ namespace Azure.ResourceManager.Cdn
             request.Uri = uri;
             request.Method = RequestMethod.Put;
             _userAgent.Apply(message);
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -210,7 +215,7 @@ namespace Azure.ResourceManager.Cdn
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;

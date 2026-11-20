@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationsArtifactData, DisconnectedOperationsArtifactResource>(new ArtifactsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DisconnectedOperationsArtifactData, DisconnectedOperationsArtifactResource>(new DisconnectedOperationsArtifactDataAsyncCollectionResultOfT(
                 _artifactsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationsArtifactData, DisconnectedOperationsArtifactResource>(new ArtifactsGetByParentCollectionResultOfT(
+            return new PageableWrapper<DisconnectedOperationsArtifactData, DisconnectedOperationsArtifactResource>(new DisconnectedOperationsArtifactDataCollectionResultOfT(
                 _artifactsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

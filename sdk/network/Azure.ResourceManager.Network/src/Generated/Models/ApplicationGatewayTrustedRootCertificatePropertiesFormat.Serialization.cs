@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteBase64StringValue(Data, "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(KeyVaultSecretId))
             {
@@ -143,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    data = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretId"u8))

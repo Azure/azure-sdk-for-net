@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Authentication.ApiKey client library for developing .NET applications with rich experience.</Description>
+    <Description>The Authentication.ApiKey client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Authentication.ApiKey</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Authentication.ApiKey</PackageTags>

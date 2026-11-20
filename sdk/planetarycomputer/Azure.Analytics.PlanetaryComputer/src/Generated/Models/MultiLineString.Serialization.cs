@@ -15,11 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a MultiLineString. </summary>
     public partial class MultiLineString : GeoJsonGeometry, IJsonModel<MultiLineString>
     {
-        /// <summary> Initializes a new instance of <see cref="MultiLineString"/> for deserialization. </summary>
-        internal MultiLineString()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -197,7 +192,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultiLineString(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
+            return new MultiLineString(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates ?? new ChangeTrackingList<IList<IList<float>>>());
         }
     }
 }

@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            FailoverDirectionTypes failoverDirection = default;
-            FailoverRequestProperties failoverRequestProperties = default;
+            ResilienceManagementFailoverDirection failoverDirection = default;
+            ResilienceManagementFailoverProperties failoverRequestProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("failoverDirection"u8))
                 {
-                    failoverDirection = new FailoverDirectionTypes(prop.Value.GetString());
+                    failoverDirection = new ResilienceManagementFailoverDirection(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failoverRequestProperties"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    failoverRequestProperties = FailoverRequestProperties.DeserializeFailoverRequestProperties(prop.Value, options);
+                    failoverRequestProperties = ResilienceManagementFailoverProperties.DeserializeResilienceManagementFailoverProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -188,7 +188,7 @@ namespace Azure.AI.Language.Text.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentMultiLabelClassificationEvalResult(expectedClasses, predictedClasses, additionalBinaryDataProperties);
+            return new DocumentMultiLabelClassificationEvalResult(expectedClasses ?? new ChangeTrackingList<string>(), predictedClasses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                 contentVersion,
                 variables,
                 parameters,
-                resources,
+                resources ?? new ChangeTrackingList<BinaryData>(),
                 additionalBinaryDataProperties);
         }
     }

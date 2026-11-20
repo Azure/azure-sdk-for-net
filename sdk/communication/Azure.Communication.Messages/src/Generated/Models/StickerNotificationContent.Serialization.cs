@@ -152,7 +152,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StickerNotificationContent(channelRegistrationId, to, kind, additionalBinaryDataProperties, mediaUri);
+            return new StickerNotificationContent(channelRegistrationId, to ?? new ChangeTrackingList<string>(), kind, additionalBinaryDataProperties, mediaUri);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -15,15 +14,9 @@ namespace Azure.Developer.LoadTesting
     public partial class ScheduleTestsTrigger : LoadTestingTrigger
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleTestsTrigger"/>. </summary>
-        /// <param name="displayName"> The name of the trigger. </param>
-        /// <param name="testIds"> The test id of test to be triggered by this schedule trigger. Currently only one test is supported for a trigger. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="testIds"/> is null. </exception>
-        public ScheduleTestsTrigger(string displayName, IEnumerable<string> testIds) : base(displayName, TriggerType.ScheduleTestsTrigger)
+        public ScheduleTestsTrigger() : base(TriggerType.ScheduleTestsTrigger)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(testIds, nameof(testIds));
-
-            TestIds = testIds.ToList();
+            TestIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleTestsTrigger"/>. </summary>

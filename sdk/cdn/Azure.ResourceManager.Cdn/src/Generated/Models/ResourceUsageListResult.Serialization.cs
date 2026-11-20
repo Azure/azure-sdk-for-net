@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceUsageListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceUsageListResult(value ?? new ChangeTrackingList<CdnUsage>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

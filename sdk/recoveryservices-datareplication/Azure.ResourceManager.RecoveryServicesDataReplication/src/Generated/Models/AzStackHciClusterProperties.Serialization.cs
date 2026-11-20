@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzStackHciClusterProperties(clusterName, resourceName, storageAccountName, storageContainers, additionalBinaryDataProperties);
+            return new AzStackHciClusterProperties(clusterName, resourceName, storageAccountName, storageContainers ?? new ChangeTrackingList<StorageContainerProperties>(), additionalBinaryDataProperties);
         }
     }
 }

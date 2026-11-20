@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkStatusContract(dnsServers, connectivityStatus, additionalBinaryDataProperties);
+            return new NetworkStatusContract(dnsServers ?? new ChangeTrackingList<string>(), connectivityStatus ?? new ChangeTrackingList<ConnectivityStatusContract>(), additionalBinaryDataProperties);
         }
     }
 }

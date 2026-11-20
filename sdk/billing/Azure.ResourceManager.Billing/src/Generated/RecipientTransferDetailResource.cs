@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new RecipientTransfersValidateAsyncCollectionResultOfT(_recipientTransfersRestClient, Id.Name, AcceptTransferContent.ToRequestContent(content), context, "RecipientTransferDetailResource.Validate");
+            return new BillingTransferValidationResultAsyncCollectionResultOfT(_recipientTransfersRestClient, Id.Name, AcceptTransferContent.ToRequestContent(content), context, "RecipientTransferDetailResource.Validate");
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new RecipientTransfersValidateCollectionResultOfT(_recipientTransfersRestClient, Id.Name, AcceptTransferContent.ToRequestContent(content), context, "RecipientTransferDetailResource.Validate");
+            return new BillingTransferValidationResultCollectionResultOfT(_recipientTransfersRestClient, Id.Name, AcceptTransferContent.ToRequestContent(content), context, "RecipientTransferDetailResource.Validate");
         }
     }
 }

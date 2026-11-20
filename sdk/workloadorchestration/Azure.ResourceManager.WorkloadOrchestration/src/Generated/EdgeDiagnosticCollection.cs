@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeDiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeDiagnosticResource.ResourceType, out string edgeDiagnosticApiVersion);
             _diagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            _diagnosticsRestClient = new Diagnostics(_diagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDiagnosticApiVersion ?? "2025-06-01");
+            _diagnosticsRestClient = new Diagnostics(_diagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/diagnostics", out string diagnosticsApiVersionOverride) ? diagnosticsApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupAsyncCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
+            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new EdgeDiagnosticDataAsyncCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
+            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new EdgeDiagnosticDataCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>

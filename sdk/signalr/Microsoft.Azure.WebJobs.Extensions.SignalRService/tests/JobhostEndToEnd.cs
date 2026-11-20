@@ -108,8 +108,12 @@ namespace SignalRServiceExtension.Tests
             _output = output;
         }
 
-        [Theory]
+        [Theory(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64511")]
         [MemberData(nameof(SignalRAttributeTestData))]
+        public Task SignalRAttributeConnectionStringSettingFacts(Type classType, Dictionary<string, string> configDict)
+            => ConnectionStringSettingFacts(classType, configDict);
+
+        [Theory]
         [MemberData(nameof(SignalRConnectionInfoAttributeTestData))]
         public async Task ConnectionStringSettingFacts(Type classType, Dictionary<string, string> configDict)
         {

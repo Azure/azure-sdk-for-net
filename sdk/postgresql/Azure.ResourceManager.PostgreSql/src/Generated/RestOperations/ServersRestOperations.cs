@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,10 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -125,10 +116,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -146,10 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,10 +155,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -190,10 +172,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -214,10 +193,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -238,10 +214,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/restart", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +239,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/start", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -289,10 +259,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/stop", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -312,10 +279,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/migrateNetwork", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -336,10 +300,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/startMajorVersionUpgradePrecheck", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

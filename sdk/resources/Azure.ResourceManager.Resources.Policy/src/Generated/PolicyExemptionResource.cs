@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyExemptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
             _policyExemptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", ResourceType.Namespace, Diagnostics);
-            _policyExemptionsRestClient = new PolicyExemptions(_policyExemptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyExemptionApiVersion ?? "2025-12-01-preview");
+            _policyExemptionsRestClient = new PolicyExemptions(_policyExemptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Authorization/policyExemptions", out string policyExemptionsApiVersionOverride) ? policyExemptionsApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

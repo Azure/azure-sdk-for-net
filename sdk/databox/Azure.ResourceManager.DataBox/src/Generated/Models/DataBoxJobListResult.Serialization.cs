@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataBoxJobListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DataBoxJobListResult(value ?? new ChangeTrackingList<DataBoxJobData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

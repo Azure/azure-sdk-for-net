@@ -165,7 +165,7 @@ namespace Azure.Communication.Messages
             }
             return new ImageNotificationContent(
                 channelRegistrationId,
-                to,
+                to ?? new ChangeTrackingList<string>(),
                 kind,
                 additionalBinaryDataProperties,
                 caption,

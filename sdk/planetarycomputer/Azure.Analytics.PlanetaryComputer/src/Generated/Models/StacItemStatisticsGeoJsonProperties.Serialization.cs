@@ -142,7 +142,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
-            return new StacItemStatisticsGeoJsonProperties(statistics, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
+            return new StacItemStatisticsGeoJsonProperties(statistics ?? new ChangeTrackingDictionary<string, BandStatistics>(), new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
     }
 }

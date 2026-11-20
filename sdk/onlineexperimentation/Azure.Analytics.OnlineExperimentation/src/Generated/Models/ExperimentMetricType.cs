@@ -76,7 +76,7 @@ namespace Azure.Analytics.OnlineExperimentation
 
         /// <summary> Converts a string to a <see cref="ExperimentMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExperimentMetricType?(string value) => value == null ? null : new ExperimentMetricType(value);
+        public static implicit operator ExperimentMetricType?(string value) => value == null ? (ExperimentMetricType?)null : new ExperimentMetricType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

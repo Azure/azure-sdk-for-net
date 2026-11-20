@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectionTypeCreateOrUpdateProperties(isGlobal, fieldDefinitions, additionalBinaryDataProperties);
+            return new ConnectionTypeCreateOrUpdateProperties(isGlobal, fieldDefinitions ?? new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>(), additionalBinaryDataProperties);
         }
     }
 }

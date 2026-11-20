@@ -244,7 +244,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 name,
                 resourceType,
                 systemData,
-                properties,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 location,
                 additionalBinaryDataProperties);
         }

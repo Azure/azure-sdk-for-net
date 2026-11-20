@@ -49,7 +49,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="StacLinkMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StacLinkMethod?(string value) => value == null ? null : new StacLinkMethod(value);
+        public static implicit operator StacLinkMethod?(string value) => value == null ? (StacLinkMethod?)null : new StacLinkMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

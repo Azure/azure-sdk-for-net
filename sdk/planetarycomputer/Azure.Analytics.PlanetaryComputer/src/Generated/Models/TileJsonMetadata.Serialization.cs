@@ -424,7 +424,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 template,
                 legend,
                 scheme,
-                tiles,
+                tiles ?? new ChangeTrackingList<string>(),
                 grids ?? new ChangeTrackingList<string>(),
                 data ?? new ChangeTrackingList<string>(),
                 minZoom,

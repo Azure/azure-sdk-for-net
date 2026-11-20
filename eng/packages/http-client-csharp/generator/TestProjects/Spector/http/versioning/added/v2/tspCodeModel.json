@@ -535,7 +535,6 @@
             "$id": "43",
             "name": "v1",
             "isExactName": false,
-            "resourceName": "Added",
             "accessibility": "public",
             "parameters": [
               {
@@ -775,7 +774,6 @@
             "$id": "55",
             "name": "v2",
             "isExactName": false,
-            "resourceName": "Added",
             "accessibility": "public",
             "parameters": [
               {
@@ -1035,7 +1033,6 @@
                 "$id": "68",
                 "name": "v2InInterface",
                 "isExactName": false,
-                "resourceName": "InterfaceV2",
                 "accessibility": "public",
                 "parameters": [
                   {

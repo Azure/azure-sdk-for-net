@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClientCertificateValidatedIfPresentedAdvancedSettings(scenario, additionalBinaryDataProperties, secrets, allowedFqdns ?? new ChangeTrackingList<string>(), certificateRevocationCheck);
+            return new ClientCertificateValidatedIfPresentedAdvancedSettings(scenario, additionalBinaryDataProperties, secrets ?? new ChangeTrackingList<CdnResourceReference>(), allowedFqdns ?? new ChangeTrackingList<string>(), certificateRevocationCheck);
         }
     }
 }

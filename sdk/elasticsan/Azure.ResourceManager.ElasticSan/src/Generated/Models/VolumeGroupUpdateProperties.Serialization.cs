@@ -99,6 +99,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
                 writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
             }
+            if (Optional.IsDefined(ReservedIops))
+            {
+                writer.WritePropertyName("reservedIops"u8);
+                writer.WriteNumberValue(ReservedIops.Value);
+            }
+            if (Optional.IsDefined(ReservedMBps))
+            {
+                writer.WritePropertyName("reservedMBps"u8);
+                writer.WriteNumberValue(ReservedMBps.Value);
+            }
+            if (Optional.IsDefined(DeleteRetentionPolicy))
+            {
+                writer.WritePropertyName("deleteRetentionPolicy"u8);
+                writer.WriteObjectValue(DeleteRetentionPolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -146,6 +161,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanEncryptionProperties encryptionProperties = default;
             ElasticSanNetworkRuleSet networkAcls = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
+            int? reservedIops = default;
+            int? reservedMBps = default;
+            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,6 +212,33 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     enforceDataIntegrityCheckForIscsi = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("reservedIops"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservedIops = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("reservedMBps"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservedMBps = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("deleteRetentionPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -205,6 +250,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 encryptionProperties,
                 networkAcls,
                 enforceDataIntegrityCheckForIscsi,
+                reservedIops,
+                reservedMBps,
+                deleteRetentionPolicy,
                 additionalBinaryDataProperties);
         }
     }

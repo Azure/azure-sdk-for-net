@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationPropertiesFormat"/>. </summary>
-        internal ExpressRoutePortsLocationPropertiesFormat()
+        public ExpressRoutePortsLocationPropertiesFormat()
         {
             AvailableBandwidths = new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>();
         }

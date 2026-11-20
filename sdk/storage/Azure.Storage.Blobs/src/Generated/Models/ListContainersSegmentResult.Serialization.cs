@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs.Models
                 prefix,
                 marker,
                 maxResults,
-                containerItems,
+                containerItems ?? new ChangeTrackingList<ContainerItemInternal>(),
                 nextMarker);
         }
 

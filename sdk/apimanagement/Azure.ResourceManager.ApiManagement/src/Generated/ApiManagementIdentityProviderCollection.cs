@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new ApiManagementIdentityProviderDataAsyncCollectionResultOfT(
                 _identityProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new ApiManagementIdentityProviderDataCollectionResultOfT(
                 _identityProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

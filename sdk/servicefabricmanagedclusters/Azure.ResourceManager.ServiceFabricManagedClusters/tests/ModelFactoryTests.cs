@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using Azure.Core;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
 
@@ -74,6 +75,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                 isPrimary: true);
 
             Assert.That(data.IsPrimary, Is.True);
+        }
+
+        [Test]
+        public void ApplicationDataFactoryPreservesOptionalParameters()
+        {
+            ServiceFabricManagedApplicationData data = ArmServiceFabricManagedClustersModelFactory.ServiceFabricManagedApplicationData(
+                location: AzureLocation.SouthCentralUS);
+
+            Assert.That(data.Location, Is.EqualTo(AzureLocation.SouthCentralUS));
+        }
+
+        [Test]
+        public void UnsupportedVmSizeFactoryPreservesOptionalParameters()
+        {
+            ServiceFabricManagedUnsupportedVmSize data = ArmServiceFabricManagedClustersModelFactory.ServiceFabricManagedUnsupportedVmSize(
+                serviceFabricManagedVmSize: "Standard_D4s_v5");
+
+            Assert.That(data.VmSize, Is.EqualTo("Standard_D4s_v5"));
         }
     }
 }

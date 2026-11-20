@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported data generation job types. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct DataGenerationJobKind : IEquatable<DataGenerationJobKind>
     {
         private readonly string _value;
@@ -60,7 +58,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="DataGenerationJobKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataGenerationJobKind?(string value) => value == null ? null : new DataGenerationJobKind(value);
+        public static implicit operator DataGenerationJobKind?(string value) => value == null ? (DataGenerationJobKind?)null : new DataGenerationJobKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

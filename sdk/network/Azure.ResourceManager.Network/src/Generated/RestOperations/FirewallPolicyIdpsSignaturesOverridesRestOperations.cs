@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreatePatchRequest(Guid subscriptionId, string resourceGroupName, string firewallPolicyName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string firewallPolicyName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string firewallPolicyName, RequestContext context)
+        internal HttpMessage CreateGetIdpsSignatureOverridesRequest(Guid subscriptionId, string resourceGroupName, string firewallPolicyName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

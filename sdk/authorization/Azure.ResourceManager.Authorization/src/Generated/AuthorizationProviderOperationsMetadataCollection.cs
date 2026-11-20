@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization
     /// <summary>
     /// A class representing a collection of <see cref="AuthorizationProviderOperationsMetadataResource"/> and their operations.
     /// Each <see cref="AuthorizationProviderOperationsMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="AuthorizationProviderOperationsMetadataCollection"/> instance call the GetAuthorizationProviderOperationsMetadatas method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="AuthorizationProviderOperationsMetadataCollection"/> instance call the GetAllAuthorizationProviderOperationsMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class AuthorizationProviderOperationsMetadataCollection : ArmCollection, IEnumerable<AuthorizationProviderOperationsMetadataResource>, IAsyncEnumerable<AuthorizationProviderOperationsMetadataResource>
     {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new ProviderOperationsMetadataGetAllAsyncCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
+            return new AsyncPageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new AuthorizationProviderOperationsMetadataDataAsyncCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new ProviderOperationsMetadataGetAllCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
+            return new PageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new AuthorizationProviderOperationsMetadataDataCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
         }
 
         /// <summary>

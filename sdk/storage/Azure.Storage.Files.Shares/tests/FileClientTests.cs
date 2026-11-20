@@ -7783,6 +7783,39 @@ namespace Azure.Storage.Files.Shares.Tests
                 () => fileClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
         }
+
+        [Test]
+        public void GenerateSas_BuilderFileNameWithIgnorableUnicode_IsRejected()
+        {
+            string shareName = "share";
+            string fileName = "canary";
+            string spoofedFileName = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(fileName, spoofedFileName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(fileName, spoofedFileName, StringComparison.Ordinal));
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(new Uri("https://account.file.core.windows.net"))
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = fileName
+            };
+
+            ShareFileClient fileClient = InstrumentClient(new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                ShareName = shareName,
+                FilePath = spoofedFileName
+            };
+
+            TestHelper.AssertExpectedException(
+                () => fileClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
+        }
         #endregion
 
         [RecordedTest]

@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LinkerDryrunData, LinkerDryrunResource>(new LinkerDryrunsGetDryrunAsyncCollectionResultOfT(_linkerDryrunsRestClient, Id.ToString(), context, "LinkerDryrunCollection.GetAll"), data => new LinkerDryrunResource(Client, data));
+            return new AsyncPageableWrapper<LinkerDryrunData, LinkerDryrunResource>(new LinkerDryrunDataAsync0CollectionResultOfT(_linkerDryrunsRestClient, Id.ToString(), context, "LinkerDryrunCollection.GetAll"), data => new LinkerDryrunResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LinkerDryrunData, LinkerDryrunResource>(new LinkerDryrunsGetDryrunCollectionResultOfT(_linkerDryrunsRestClient, Id.ToString(), context, "LinkerDryrunCollection.GetAll"), data => new LinkerDryrunResource(Client, data));
+            return new PageableWrapper<LinkerDryrunData, LinkerDryrunResource>(new LinkerDryrunData0CollectionResultOfT(_linkerDryrunsRestClient, Id.ToString(), context, "LinkerDryrunCollection.GetAll"), data => new LinkerDryrunResource(Client, data));
         }
 
         /// <summary>

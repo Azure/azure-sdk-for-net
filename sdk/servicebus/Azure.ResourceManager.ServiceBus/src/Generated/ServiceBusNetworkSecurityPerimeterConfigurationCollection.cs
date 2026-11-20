@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new ServiceBusNetworkSecurityPerimeterConfigurationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllCollectionResultOfT(
+            return new PageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new ServiceBusNetworkSecurityPerimeterConfigurationDataCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

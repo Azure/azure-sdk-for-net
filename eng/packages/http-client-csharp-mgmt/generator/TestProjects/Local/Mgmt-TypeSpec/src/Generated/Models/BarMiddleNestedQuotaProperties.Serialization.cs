@@ -170,7 +170,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BarMiddleNestedQuotaProperties(innerProp1, innerProp2, additionalBinaryDataProperties, middleProp1, middleProp2);
+            return new BarMiddleNestedQuotaProperties(innerProp1, innerProp2, additionalBinaryDataProperties, middleProp1, middleProp2 ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

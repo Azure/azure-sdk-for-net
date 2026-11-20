@@ -108,15 +108,20 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task Sample2_HealthChecks_ReadinessEndpoint_ReturnsHealthy()
+    public async Task ReadMe_CustomReadinessCheck_ControlsReadinessEndpoint()
     {
         var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
+        var readiness = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
 
         builder.ConfigureHealth(health =>
         {
-            health.AddCheck("database", () =>
-                Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy("DB reachable"));
+            health.AddCheck("application", () =>
+                readiness.Task.IsCompletedSuccessfully
+                    ? Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy()
+                    : Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Unhealthy(
+                        "Application initialization is still in progress."));
         });
 
         builder.RegisterProtocol("MyProtocol", endpoints =>
@@ -128,9 +133,13 @@ public class SampleEndToEndTests
         await app.App.StartAsync();
 
         var client = app.App.GetTestClient();
-        var response = await client.GetAsync("/readiness");
+        using var initializingResponse = await client.GetAsync("/readiness");
+        Assert.That(initializingResponse.StatusCode, Is.EqualTo(HttpStatusCode.ServiceUnavailable));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        readiness.TrySetResult();
+
+        using var readyResponse = await client.GetAsync("/readiness");
+        Assert.That(readyResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         await app.App.StopAsync();
     }
@@ -192,6 +201,50 @@ public class SampleEndToEndTests
         Assert.That(await responseB.Content.ReadAsStringAsync(), Is.EqualTo("from B"));
 
         await app.App.StopAsync();
+    }
+
+    [Test]
+    [NonParallelizable]
+    public async Task ReadMe_SnapshotLifecycle_AfterRestoreReturns200()
+    {
+        const string sessionIdEnvironmentVariable = "FOUNDRY_AGENT_SESSION_ID";
+        var originalSessionId = Environment.GetEnvironmentVariable(sessionIdEnvironmentVariable);
+        try
+        {
+            var builder = AgentHost.CreateBuilder();
+            builder.WebApplicationBuilder.WebHost.UseTestServer();
+            builder.Services.AddSingleton<
+                IAgentSnapshotLifecycle,
+                Snippets.ReadMeSnippets.DatabaseSnapshotLifecycle>();
+
+            var app = builder.Build();
+            await app.App.StartAsync();
+
+            var client = app.App.GetTestClient();
+            var response = await client.PostAsync(
+                "/_agent/after-restore",
+                new StringContent(
+                    """
+                    {
+                      "session_context": {
+                        "session_id": "session-1",
+                        "restore_id": "restore-1"
+                      }
+                    }
+                    """,
+                    System.Text.Encoding.UTF8,
+                    "application/json"));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo("""{"status":"ok"}"""));
+
+            await app.App.StopAsync();
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(sessionIdEnvironmentVariable, originalSessionId);
+            FoundryEnvironment.Reload();
+        }
     }
 
     // Helper types

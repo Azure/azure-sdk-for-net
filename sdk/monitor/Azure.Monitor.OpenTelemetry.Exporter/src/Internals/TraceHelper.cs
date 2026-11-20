@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -22,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float fallbackSampleRate)
         {
             // One item per Activity plus the optional resource envelope. Activity events add more, so
             // this is a floor rather than an exact size, but it removes the seven intermediate arrays
@@ -45,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     try
                     {
-                        telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                        telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, fallbackSampleRate);
 
                         // Check for Exceptions events
                         if (activity.Events.Any())
@@ -101,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// stamped with. An Activity whose routing tags are missing or invalid is dropped rather
         /// than sent under the exporter's own connection string.
         /// </summary>
-        internal static void OtelToAzureMonitorTraceMultiEndpoint(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorTraceMultiEndpoint(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float fallbackSampleRate, EndpointRouteBatch routeBatch)
         {
             var collected = 0;
             var rejected = 0;
@@ -121,18 +122,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             continue;
                         }
 
-                        var group = routeBatch.GetOrAdd(ingestionEndpoint);
-                        var telemetryItems = group.TelemetryItems;
+                        var group = routeBatch.GetOrAdd(ingestionEndpoint, EndpointRouting.IsAadRoute(ref activityTagsProcessor.MappedTags));
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
                         // process and would be filed as the destination's own application.
                         var cloudRole = EndpointRouting.GetCloudRole(ref activityTagsProcessor.MappedTags);
-                        var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                        var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, fallbackSampleRate);
                         telemetryItem.SetCloudRole(cloudRole);
 
                         if (activity.Events.Any())
                         {
-                            AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems, telemetrySchemaTypeCounter: null);
+                            AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems: null, telemetrySchemaTypeCounter: null, group);
                         }
 
                         switch (activity.GetTelemetryType())
@@ -159,7 +159,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 break;
                         }
 
-                        telemetryItems.Add(telemetryItem);
+                        group.Add(telemetryItem);
 
                         // Counted once the envelope exists, so a conversion that throws is not
                         // reported as collected.
@@ -209,9 +209,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                 // In case of duplicate keys, only the first occurence will be exported.
-                var maxValueLength = SchemaConstants.GenAiProperties.Contains(keyValuePair.Key)
-                    ? SchemaConstants.GenAi_Properties_MaxValueLength
-                    : SchemaConstants.KVP_MaxValueLength;
+                var maxValueLength = GenAiTruncationConfig.GetPropertyMaxValueLength(keyValuePair.Key, SchemaConstants.KVP_MaxValueLength);
                 var stringValue = Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(maxValueLength) ?? "null";
 #if NET
                 destination.TryAdd(keyValuePair.Key, stringValue);
@@ -231,9 +229,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                 // In case of duplicate keys, only the first occurence will be exported.
-                var maxValueLength = SchemaConstants.GenAiProperties.Contains(key)
-                    ? SchemaConstants.GenAi_Properties_MaxValueLength
-                    : SchemaConstants.KVP_MaxValueLength;
+                var maxValueLength = GenAiTruncationConfig.GetPropertyMaxValueLength(key, SchemaConstants.KVP_MaxValueLength);
                 var sanitizedValue = value.Truncate(maxValueLength) ?? "null";
 #if NET
                 destination.TryAdd(key, sanitizedValue);
@@ -354,7 +350,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter)
+        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem>? telemetryItems, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, EndpointRouteBatch.Group? routeGroup = null)
         {
             foreach (ref readonly var @event in activity.EnumerateEvents())
             {
@@ -367,7 +363,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
-                            telemetryItems.Add(exceptionTelemetryItem);
+                            if (routeGroup != null)
+                            {
+                                routeGroup.Add(exceptionTelemetryItem);
+                            }
+                            else
+                            {
+                                telemetryItems!.Add(exceptionTelemetryItem);
+                            }
                             if (telemetrySchemaTypeCounter != null)
                             {
                                 telemetrySchemaTypeCounter._exceptionCount++;
@@ -381,7 +384,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             traceTelemetryItem.Data = messageData;
-                            telemetryItems.Add(traceTelemetryItem);
+                            if (routeGroup != null)
+                            {
+                                routeGroup.Add(traceTelemetryItem);
+                            }
+                            else
+                            {
+                                telemetryItems!.Add(traceTelemetryItem);
+                            }
                             if (telemetrySchemaTypeCounter != null)
                             {
                                 telemetrySchemaTypeCounter._traceCount++;

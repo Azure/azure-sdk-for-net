@@ -17,13 +17,23 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VpnClientRootCertificate : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
+        /// <param name="publicCertData"> The certificate public data. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
+        public VpnClientRootCertificate(BinaryData publicCertData)
+        {
+            Argument.AssertNotNull(publicCertData, nameof(publicCertData));
+
+            Properties = new VpnClientRootCertificatePropertiesFormat(publicCertData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the vpn client root certificate. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VpnClientRootCertificate(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnClientRootCertificatePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VpnClientRootCertificate(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, VpnClientRootCertificatePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -36,6 +46,24 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> The certificate public data. </summary>
+        [WirePath("properties.publicCertData")]
+        public BinaryData PublicCertData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicCertData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnClientRootCertificatePropertiesFormat();
+                }
+                Properties.PublicCertData = value;
+            }
+        }
 
         /// <summary> The provisioning state of the VPN client root certificate resource. </summary>
         [WirePath("properties.provisioningState")]

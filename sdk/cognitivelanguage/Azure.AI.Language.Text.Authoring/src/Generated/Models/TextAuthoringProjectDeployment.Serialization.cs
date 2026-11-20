@@ -212,7 +212,7 @@ namespace Azure.AI.Language.Text.Authoring
                 lastDeployedOn,
                 deploymentExpiredOn,
                 modelTrainingConfigVersion,
-                assignedResources,
+                assignedResources ?? new ChangeTrackingList<TextAuthoringDeploymentResource>(),
                 additionalBinaryDataProperties);
         }
     }

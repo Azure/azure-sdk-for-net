@@ -172,7 +172,7 @@ namespace Azure.AI.VoiceLive
                 @object,
                 additionalBinaryDataProperties,
                 role,
-                content,
+                content ?? new ChangeTrackingList<VoiceLiveContentPart>(),
                 status);
         }
     }

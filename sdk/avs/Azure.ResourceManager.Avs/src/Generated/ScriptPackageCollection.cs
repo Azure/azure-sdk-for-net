@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackagesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackageDataAsyncCollectionResultOfT(
                 _scriptPackagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackagesGetAllCollectionResultOfT(
+            return new PageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackageDataCollectionResultOfT(
                 _scriptPackagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

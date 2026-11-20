@@ -175,7 +175,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchSuggester(name, searchMode, sourceFields, additionalBinaryDataProperties);
+            return new SearchSuggester(name, searchMode, sourceFields ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

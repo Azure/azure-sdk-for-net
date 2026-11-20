@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBLocationResource.ResourceType, out string cosmosDBLocationApiVersion);
             _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBLocationResource.ResourceType.Namespace, Diagnostics);
-            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBLocationApiVersion ?? "2026-03-15");
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBLocationApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new LocationsGetAllAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new CosmosDBLocationDataAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new LocationsGetAllCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
+            return new PageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new CosmosDBLocationDataCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

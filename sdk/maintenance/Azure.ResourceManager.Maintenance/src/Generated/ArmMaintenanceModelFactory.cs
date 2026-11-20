@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </param>
         /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, MaintenancePatchConfiguration installPatches, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery)
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, TimeSpan? duration = default, string timeZone = default, string recurEvery = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -195,6 +195,36 @@ namespace Azure.ResourceManager.Maintenance.Models
             return new MaintenanceScheduledEventIdList((value ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> An error response received from the Azure Maintenance service. </summary>
+        /// <param name="error"> Error response. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventsListAcknowledgeError"/> instance for mocking. </returns>
+        public static ScheduledEventsListAcknowledgeError ScheduledEventsListAcknowledgeError(ScheduledEventsListAcknowledgeErrorDetails error = default)
+        {
+            return new ScheduledEventsListAcknowledgeError(error, default);
+        }
+
+        /// <summary> An error response details received from the Azure Maintenance service. </summary>
+        /// <param name="code"> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </param>
+        /// <param name="message"> Human-readable representation of the error. </param>
+        /// <param name="details"> Error details for each ScheduledEvents. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventsListAcknowledgeErrorDetails"/> instance for mocking. </returns>
+        public static ScheduledEventsListAcknowledgeErrorDetails ScheduledEventsListAcknowledgeErrorDetails(string code = default, string message = default, IEnumerable<ScheduledEventsAcknowledgeErrorDetails> details = default)
+        {
+            details ??= new ChangeTrackingList<ScheduledEventsAcknowledgeErrorDetails>();
+
+            return new ScheduledEventsListAcknowledgeErrorDetails(code, message, (details ?? new ChangeTrackingList<ScheduledEventsAcknowledgeErrorDetails>()).ToList(), default);
+        }
+
+        /// <summary> An error response details received from the Azure Maintenance service for each ScheduledEvents. </summary>
+        /// <param name="target"> ScheduledEvents Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="code"> Status code for the ScheduledEvents acknowledge operation on the target ScheduledEvents Id. </param>
+        /// <param name="message"> Human-readable representation of the error. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventsAcknowledgeErrorDetails"/> instance for mocking. </returns>
+        public static ScheduledEventsAcknowledgeErrorDetails ScheduledEventsAcknowledgeErrorDetails(string target = default, string code = default, string message = default)
+        {
+            return new ScheduledEventsAcknowledgeErrorDetails(target, code, message, default);
+        }
+
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
@@ -232,7 +262,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, TimeSpan? duration = default, string timeZone = default, string recurEvery = default)
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery)
         {
             return new MaintenanceConfigurationData(
                 id,

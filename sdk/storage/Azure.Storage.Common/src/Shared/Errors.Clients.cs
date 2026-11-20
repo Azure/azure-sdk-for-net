@@ -165,6 +165,9 @@ namespace Azure.Storage
 
             public static InvalidOperationException MissingEncryptionMetadata(string field)
                 => new InvalidOperationException($"Missing field \"{field}\" in encryption metadata");
+
+            public static InvalidDataException IncompleteContentEncryptionIv(int expectedLength, int actualLength)
+                => new InvalidDataException($"Client-side encryption IV is incomplete. Expected {expectedLength} bytes but the stream ended after {actualLength} bytes.");
         }
     }
 }

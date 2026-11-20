@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OutboundEnvironmentEndpointCollection(value, nextLink, additionalBinaryDataProperties);
+            return new OutboundEnvironmentEndpointCollection(value ?? new ChangeTrackingList<BatchAccountOutboundEnvironmentEndpoint>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

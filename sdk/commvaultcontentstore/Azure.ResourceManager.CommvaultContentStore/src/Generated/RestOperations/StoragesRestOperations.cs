@@ -167,5 +167,83 @@ namespace Azure.ResourceManager.CommvaultContentStore
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateEnableComplianceLockRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, string storageName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
+            uri.AppendPath(cloudAccountName, true);
+            uri.AppendPath("/storages/", false);
+            uri.AppendPath(storageName, true);
+            uri.AppendPath("/enableComplianceLock", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDisableComplianceLockRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, string storageName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
+            uri.AppendPath(cloudAccountName, true);
+            uri.AppendPath("/storages/", false);
+            uri.AppendPath(storageName, true);
+            uri.AppendPath("/disableComplianceLock", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRefreshRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, string storageName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
+            uri.AppendPath(cloudAccountName, true);
+            uri.AppendPath("/storages/", false);
+            uri.AppendPath(storageName, true);
+            uri.AppendPath("/refresh", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

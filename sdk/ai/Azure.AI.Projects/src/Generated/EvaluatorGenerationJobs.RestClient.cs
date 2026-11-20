@@ -21,7 +21,7 @@ namespace Azure.AI.Projects.Evaluation
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateCreateRequest(BinaryContent content, string foundryFeatures, string operationId, RequestOptions options)
+        internal PipelineMessage CreateCreateRequest(BinaryContent content, string operationId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -32,10 +32,6 @@ namespace Azure.AI.Projects.Evaluation
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             if (operationId != null)
             {
                 request.Headers.Set("Operation-Id", operationId);
@@ -47,7 +43,7 @@ namespace Azure.AI.Projects.Evaluation
             return message;
         }
 
-        internal PipelineMessage CreateGetRequest(string jobId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetRequest(string jobId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -59,16 +55,12 @@ namespace Azure.AI.Projects.Evaluation
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetAllRequest(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetAllRequest(int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -95,16 +87,12 @@ namespace Azure.AI.Projects.Evaluation
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateCancelRequest(string jobId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCancelRequest(string jobId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -117,16 +105,12 @@ namespace Azure.AI.Projects.Evaluation
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateDeleteRequest(string jobId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDeleteRequest(string jobId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -138,10 +122,6 @@ namespace Azure.AI.Projects.Evaluation
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             message.Apply(options);
             return message;
         }

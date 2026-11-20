@@ -79,7 +79,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // dimensions as any other attribute would.
             [SemanticConventions.AttributeMicrosoftInstrumentationKey] = SemanticSlot.MicrosoftInstrumentationKey,
             [SemanticConventions.AttributeMicrosoftIngestionEndpoint] = SemanticSlot.MicrosoftIngestionEndpoint,
+            [SemanticConventions.AttributeMicrosoftIngestionAuth] = SemanticSlot.MicrosoftIngestionAuth,
             [SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole] = SemanticSlot.MicrosoftMultiEndpointCloudRole,
+
+            // Mapped to the envelope sampleRate, so it is kept out of custom dimensions.
+            [SemanticConventions.AttributeMicrosoftSampleRate] = SemanticSlot.MicrosoftSampleRate,
         };
 
         /// <remarks>

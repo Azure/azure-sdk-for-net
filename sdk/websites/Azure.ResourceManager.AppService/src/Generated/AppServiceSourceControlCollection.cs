@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceSourceControlData, AppServiceSourceControlResource>(new SourceControlsGetSourceControlsAsyncCollectionResultOfT(_sourceControlsRestClient, context, "AppServiceSourceControlCollection.GetAll"), data => new AppServiceSourceControlResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceSourceControlData, AppServiceSourceControlResource>(new AppServiceSourceControlDataAsyncCollectionResultOfT(_sourceControlsRestClient, context, "AppServiceSourceControlCollection.GetAll"), data => new AppServiceSourceControlResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceSourceControlData, AppServiceSourceControlResource>(new SourceControlsGetSourceControlsCollectionResultOfT(_sourceControlsRestClient, context, "AppServiceSourceControlCollection.GetAll"), data => new AppServiceSourceControlResource(Client, data));
+            return new PageableWrapper<AppServiceSourceControlData, AppServiceSourceControlResource>(new AppServiceSourceControlDataCollectionResultOfT(_sourceControlsRestClient, context, "AppServiceSourceControlCollection.GetAll"), data => new AppServiceSourceControlResource(Client, data));
         }
 
         /// <summary>

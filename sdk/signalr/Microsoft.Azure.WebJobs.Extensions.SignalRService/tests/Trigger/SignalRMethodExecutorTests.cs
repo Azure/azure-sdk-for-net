@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -127,6 +128,20 @@ namespace SignalRServiceExtension.Tests.Trigger
             Assert.Equal(connectionId, triggerData.Context.ConnectionId);
             Assert.Equal(hub, triggerData.Context.Hub);
             Assert.Equal(arguments, triggerData.Context.Arguments);
+
+            // Output binding failures can contain sensitive data in either exception message.
+            var exception = new InvalidOperationException("Internal binding configuration.",
+                new ArgumentException("Connection credential: synthetic-secret"));
+            Mock.Get(_triggeredFunctionExecutor)
+                .Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FunctionResult(exception));
+
+            using var failedRequest = TestHelpers.CreateHttpRequestMessage(hub, category, @event, connectionId, contentType: contentType, content: payload.ToArray());
+            using var failedResponse = await methodExecutor.ExecuteAsync(failedRequest);
+            Assert.Equal(HttpStatusCode.OK, failedResponse.StatusCode);
+
+            var expectedCompletion = CompletionMessage.WithError(message.InvocationId, "Method execution failed.");
+            Assert.Equal(protocol.GetMessageBytes(expectedCompletion).ToArray(), await failedResponse.Content.ReadAsByteArrayAsync());
         }
     }
 }

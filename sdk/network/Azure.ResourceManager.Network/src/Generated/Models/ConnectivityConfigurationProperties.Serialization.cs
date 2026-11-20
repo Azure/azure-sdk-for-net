@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network.Models
                 hubs ?? new ChangeTrackingList<ConnectivityHub>(),
                 isGlobal,
                 connectivityCapabilities,
-                appliesToGroups,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
                 provisioningState,
                 deleteExistingPeering,
                 resourceGuid,

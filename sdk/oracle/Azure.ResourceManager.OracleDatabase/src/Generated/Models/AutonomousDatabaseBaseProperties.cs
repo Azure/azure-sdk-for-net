@@ -113,8 +113,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="databaseOcid"> Database ocid. </param>
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
         /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="isScheduleAzUpdateToEarliest"> Update AZ at the earliest available opportunity. </param>
+        /// <param name="timeScheduledAzUpdate"> The date and time when the Autonomous Database availability zone is to be updated. </param>
+        /// <param name="zone"> The logical zone where the Autonomous Database is provisioned. </param>
+        /// <param name="backupDestination"> Backup destination for auto and long-term backups. Existing backups stay in their original destination when this value changes. </param>
+        /// <param name="resourceAnchorId"> Azure Resource Anchor ID. </param>
+        /// <param name="networkAnchorId"> Azure Network Anchor ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBaseProperties(string adminPassword, OracleDataBaseType dataBaseType, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, string characterSet, float? computeCount, OracleDatabaseComputeModel? databaseComputeModel, int? cpuCoreCount, IList<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string dbVersion, AutonomousDatabaseWorkloadType? dbWorkload, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, IReadOnlyList<string> peerDBIds, string peerDBId, bool? isLocalDataGuardEnabled, bool? isRemoteDataGuardEnabled, DisasterRecoveryType? localDisasterRecoveryType, DateTimeOffset? disasterRecoveryRoleChangedOn, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration, AutonomousDatabaseStandbySummary localStandbyDB, int? failedDataRecoveryInSeconds, bool? isMtlsConnectionRequired, bool? isPreviewVersionWithServiceTermsAccepted, OracleLicenseModel? licenseModel, string ncharacterSet, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, AutonomousDatabaseLifecycleState? lifecycleState, IList<ScheduledOperationsType> scheduledOperationsList, string privateEndpointIP, string privateEndpointLabel, Uri ociUri, ResourceIdentifier subnetId, ResourceIdentifier vnetId, DateTimeOffset? createdOn, DateTimeOffset? maintenanceBeginOn, DateTimeOffset? maintenanceEndOn, double? actualUsedDataStorageSizeInTbs, double? allocatedStorageSizeInTbs, OracleApexDetailsType apexDetails, IReadOnlyList<string> availableUpgradeVersions, AutonomousDatabaseConnectionStrings connectionStrings, AutonomousDatabaseConnectionUrls connectionUrls, DataSafeStatusType? dataSafeStatus, OracleDatabaseEditionType? databaseEdition, ResourceIdentifier autonomousDatabaseId, int? inMemoryAreaInGbs, DateTimeOffset? nextLongTermBackupCreatedOn, LongTermBackUpScheduleDetails longTermBackupSchedule, bool? isPreview, int? localAdgAutoFailoverMaxDataLossLimit, int? memoryPerOracleComputeUnitInGbs, AutonomousDatabaseModeType? openMode, OperationsInsightsStatusType? operationsInsightsStatus, AutonomousDatabasePermissionLevelType? permissionLevel, string privateEndpoint, IReadOnlyList<int> provisionableCpus, DataGuardRoleType? role, Uri serviceConsoleUri, Uri sqlWebDeveloperUri, IReadOnlyList<string> supportedRegionsToCloneTo, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? freeAutonomousDatabaseDeletedOn, string timeLocalDataGuardEnabled, DateTimeOffset? lastFailoverHappenedOn, DateTimeOffset? lastRefreshHappenedOn, DateTimeOffset? lastRefreshPointTimestamp, DateTimeOffset? lastSwitchoverHappenedOn, DateTimeOffset? freeAutonomousDatabaseStoppedOn, int? usedDataStorageSizeInGbs, int? usedDataStorageSizeInTbs, string databaseOcid, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutonomousDatabaseBaseProperties(string adminPassword, OracleDataBaseType dataBaseType, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, string characterSet, float? computeCount, OracleDatabaseComputeModel? databaseComputeModel, int? cpuCoreCount, IList<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string dbVersion, AutonomousDatabaseWorkloadType? dbWorkload, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, IReadOnlyList<string> peerDBIds, string peerDBId, bool? isLocalDataGuardEnabled, bool? isRemoteDataGuardEnabled, DisasterRecoveryType? localDisasterRecoveryType, DateTimeOffset? disasterRecoveryRoleChangedOn, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration, AutonomousDatabaseStandbySummary localStandbyDB, int? failedDataRecoveryInSeconds, bool? isMtlsConnectionRequired, bool? isPreviewVersionWithServiceTermsAccepted, OracleLicenseModel? licenseModel, string ncharacterSet, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, AutonomousDatabaseLifecycleState? lifecycleState, IList<ScheduledOperationsType> scheduledOperationsList, string privateEndpointIP, string privateEndpointLabel, Uri ociUri, ResourceIdentifier subnetId, ResourceIdentifier vnetId, DateTimeOffset? createdOn, DateTimeOffset? maintenanceBeginOn, DateTimeOffset? maintenanceEndOn, double? actualUsedDataStorageSizeInTbs, double? allocatedStorageSizeInTbs, OracleApexDetailsType apexDetails, IReadOnlyList<string> availableUpgradeVersions, AutonomousDatabaseConnectionStrings connectionStrings, AutonomousDatabaseConnectionUrls connectionUrls, DataSafeStatusType? dataSafeStatus, OracleDatabaseEditionType? databaseEdition, ResourceIdentifier autonomousDatabaseId, int? inMemoryAreaInGbs, DateTimeOffset? nextLongTermBackupCreatedOn, LongTermBackUpScheduleDetails longTermBackupSchedule, bool? isPreview, int? localAdgAutoFailoverMaxDataLossLimit, int? memoryPerOracleComputeUnitInGbs, AutonomousDatabaseModeType? openMode, OperationsInsightsStatusType? operationsInsightsStatus, AutonomousDatabasePermissionLevelType? permissionLevel, string privateEndpoint, IReadOnlyList<int> provisionableCpus, DataGuardRoleType? role, Uri serviceConsoleUri, Uri sqlWebDeveloperUri, IReadOnlyList<string> supportedRegionsToCloneTo, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? freeAutonomousDatabaseDeletedOn, string timeLocalDataGuardEnabled, DateTimeOffset? lastFailoverHappenedOn, DateTimeOffset? lastRefreshHappenedOn, DateTimeOffset? lastRefreshPointTimestamp, DateTimeOffset? lastSwitchoverHappenedOn, DateTimeOffset? freeAutonomousDatabaseStoppedOn, int? usedDataStorageSizeInGbs, int? usedDataStorageSizeInTbs, string databaseOcid, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, bool? isScheduleAzUpdateToEarliest, string timeScheduledAzUpdate, string zone, BackupDestinationType? backupDestination, ResourceIdentifier resourceAnchorId, ResourceIdentifier networkAnchorId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminPassword = adminPassword;
             DataBaseType = dataBaseType;
@@ -193,6 +199,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DatabaseOcid = databaseOcid;
             BackupRetentionPeriodInDays = backupRetentionPeriodInDays;
             WhitelistedIPs = whitelistedIPs;
+            IsScheduleAzUpdateToEarliest = isScheduleAzUpdateToEarliest;
+            TimeScheduledAzUpdate = timeScheduledAzUpdate;
+            Zone = zone;
+            BackupDestination = backupDestination;
+            ResourceAnchorId = resourceAnchorId;
+            NetworkAnchorId = networkAnchorId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -426,5 +438,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </summary>
         public IList<string> WhitelistedIPs { get; }
+
+        /// <summary> Update AZ at the earliest available opportunity. </summary>
+        public bool? IsScheduleAzUpdateToEarliest { get; set; }
+
+        /// <summary> The date and time when the Autonomous Database availability zone is to be updated. </summary>
+        public string TimeScheduledAzUpdate { get; set; }
+
+        /// <summary> The logical zone where the Autonomous Database is provisioned. </summary>
+        public string Zone { get; set; }
+
+        /// <summary> Backup destination for auto and long-term backups. Existing backups stay in their original destination when this value changes. </summary>
+        public BackupDestinationType? BackupDestination { get; set; }
+
+        /// <summary> Azure Resource Anchor ID. </summary>
+        public ResourceIdentifier ResourceAnchorId { get; set; }
+
+        /// <summary> Azure Network Anchor ID. </summary>
+        public ResourceIdentifier NetworkAnchorId { get; set; }
     }
 }

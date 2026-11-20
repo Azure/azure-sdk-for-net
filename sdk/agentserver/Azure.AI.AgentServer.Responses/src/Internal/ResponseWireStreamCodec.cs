@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
@@ -29,6 +30,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// event objects, and preserves the prior behavior in which a malformed handler event (e.g. one with no
 /// discriminator) was serialized once and never deserialized.
 /// </remarks>
+[Experimental("OPENAI001")]
 internal static class ResponseWireStreamCodec
 {
     /// <summary>Serializes a response event into a client-ready Core event-stream wire item.</summary>
@@ -71,8 +73,7 @@ internal static class ResponseWireStreamCodec
     /// <param name="item">The wire item whose <see cref="SseItem{T}.Data"/> holds the serialized event.</param>
     /// <returns>The deserialized event, with <see cref="ResponseStreamEvent.SequenceNumber"/> restored.</returns>
     public static ResponseStreamEvent FromWireItem(SseItem<string> item)
-        => ModelReaderWriter.Read<ResponseStreamEvent>(
+        => ModelJson.Read<ResponseStreamEvent>(
             BinaryData.FromString(item.Data),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+            ModelReaderWriterOptions.Json)!;
 }

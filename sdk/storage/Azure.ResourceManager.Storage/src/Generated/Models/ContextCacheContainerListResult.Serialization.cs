@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContextCacheContainerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ContextCacheContainerListResult(value ?? new ChangeTrackingList<ContextCacheContainerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

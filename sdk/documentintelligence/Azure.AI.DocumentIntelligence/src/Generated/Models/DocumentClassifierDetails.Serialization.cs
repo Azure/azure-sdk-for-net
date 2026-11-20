@@ -264,7 +264,7 @@ namespace Azure.AI.DocumentIntelligence
                 modifiedOn,
                 apiVersion,
                 baseClassifierId,
-                documentTypes,
+                documentTypes ?? new ChangeTrackingDictionary<string, ClassifierDocumentTypeDetails>(),
                 warnings ?? new ChangeTrackingList<DocumentIntelligenceWarning>(),
                 additionalBinaryDataProperties);
         }

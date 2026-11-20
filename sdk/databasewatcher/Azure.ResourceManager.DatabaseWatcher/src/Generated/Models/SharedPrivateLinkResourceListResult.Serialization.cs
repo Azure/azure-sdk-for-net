@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SharedPrivateLinkResourceListResult(value ?? new ChangeTrackingList<DatabaseWatcherSharedPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

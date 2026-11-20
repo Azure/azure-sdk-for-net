@@ -154,7 +154,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActionGroup(title, items, additionalBinaryDataProperties);
+            return new ActionGroup(title, items ?? new ChangeTrackingList<ActionGroupItem>(), additionalBinaryDataProperties);
         }
     }
 }

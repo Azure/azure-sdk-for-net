@@ -170,7 +170,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedContentAnalyzer(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedContentAnalyzer(value ?? new ChangeTrackingList<ContentAnalyzer>(), nextLink, clientRequestId, additionalBinaryDataProperties);
         }
     }
 }

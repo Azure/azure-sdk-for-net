@@ -210,7 +210,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new TilerInfoGeoJsonFeature(
                 @type,
                 geometry,
-                properties,
+                properties ?? new ChangeTrackingDictionary<string, TilerInfo>(),
                 id,
                 boundingBox ?? new ChangeTrackingList<float>(),
                 additionalBinaryDataProperties);

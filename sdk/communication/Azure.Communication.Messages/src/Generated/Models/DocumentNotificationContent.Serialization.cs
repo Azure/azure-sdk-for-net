@@ -176,7 +176,7 @@ namespace Azure.Communication.Messages
             }
             return new DocumentNotificationContent(
                 channelRegistrationId,
-                to,
+                to ?? new ChangeTrackingList<string>(),
                 kind,
                 additionalBinaryDataProperties,
                 caption,

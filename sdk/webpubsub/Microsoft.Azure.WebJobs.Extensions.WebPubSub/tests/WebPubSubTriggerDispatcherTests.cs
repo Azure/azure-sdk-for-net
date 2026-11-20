@@ -56,6 +56,45 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
+        [TestCase(WebPubSubTriggerAcceptedClientProtocols.All)]
+        [TestCase(WebPubSubTriggerAcceptedClientProtocols.WebPubSub)]
+        public async Task TestProcessRequest_DottedHubAndEventRemainDistinct(WebPubSubTriggerAcceptedClientProtocols clientProtocol)
+        {
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
+            var executions = new List<string>();
+            RegisterUserEventListener(dispatcher, "sample.User.segment", "event", clientProtocol, () => executions.Add("first"));
+
+            Assert.AreEqual(HttpStatusCode.OK, await ExecuteUserEventAsync(dispatcher, "sample.User.segment", "event"));
+            Assert.AreEqual(HttpStatusCode.NotFound, await ExecuteUserEventAsync(dispatcher, "sample", "segment.User.event"));
+            CollectionAssert.AreEqual(new[] { "first" }, executions);
+
+            // Both routes must also be able to coexist, despite their identical dotted representation.
+            RegisterUserEventListener(dispatcher, "sample", "segment.User.event", clientProtocol, () => executions.Add("second"));
+
+            Assert.AreEqual(HttpStatusCode.OK, await ExecuteUserEventAsync(dispatcher, "sample", "segment.User.event"));
+            Assert.AreEqual(HttpStatusCode.OK, await ExecuteUserEventAsync(dispatcher, "sample.User.segment", "event"));
+            CollectionAssert.AreEqual(new[] { "first", "second", "first" }, executions);
+        }
+
+        [TestCase(WebPubSubClientProtocol.Default, WebPubSubTriggerAcceptedClientProtocols.WebPubSub)]
+        [TestCase(WebPubSubClientProtocol.Mqtt, WebPubSubTriggerAcceptedClientProtocols.Mqtt)]
+        public async Task TestProcessRequest_CaseInsensitiveProtocolRouting(WebPubSubClientProtocol clientProtocol, WebPubSubTriggerAcceptedClientProtocols acceptedProtocol)
+        {
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
+            var executions = new List<string>();
+            RegisterUserEventListener(dispatcher, "hub.name", "event.name", WebPubSubTriggerAcceptedClientProtocols.All, () => executions.Add("all"));
+
+            Assert.AreEqual(HttpStatusCode.OK, await ExecuteUserEventAsync(dispatcher, "HUB.NAME", "EVENT.NAME", clientProtocol));
+            CollectionAssert.AreEqual(new[] { "all" }, executions);
+
+            RegisterUserEventListener(dispatcher, "hub.name", "event.name", acceptedProtocol, () => executions.Add("specific"));
+
+            Assert.AreEqual(HttpStatusCode.OK, await ExecuteUserEventAsync(dispatcher, "HUB.NAME", "EVENT.NAME", clientProtocol));
+            CollectionAssert.AreEqual(new[] { "all", "specific" }, executions);
+
+            Assert.Throws<ArgumentException>(() => RegisterUserEventListener(dispatcher, "HUB.NAME", "EVENT.NAME", acceptedProtocol, () => executions.Add("duplicate")));
+        }
+
         [TestCase]
         public async Task TestProcessRequest_SignatureInvalid()
         {
@@ -392,9 +431,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var httpResponse = await dispatcher.ExecuteAsync(disconnectedRequest);
         }
 
+        private static void RegisterUserEventListener(WebPubSubTriggerDispatcher dispatcher, string hub, string eventName, WebPubSubTriggerAcceptedClientProtocols clientProtocol, Action onInvoke)
+        {
+            var executor = new Mock<ITriggeredFunctionExecutor>();
+            executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Callback<TriggeredFunctionData, CancellationToken>((data, _) =>
+                {
+                    onInvoke();
+                    ((WebPubSubTriggerEvent)data.TriggerValue).TaskCompletionSource.SetResult(null);
+                })
+                .ReturnsAsync(new FunctionResult(true));
+            var validator = new RequestValidator([WebPubSubServiceAccessUtil.CreateFromConnectionString(TestConnectionString)]);
+            var key = Utilities.GetFunctionKey(hub, WebPubSubEventType.User, eventName, clientProtocol);
+            dispatcher.AddListener(key, new WebPubSubListener(executor.Object, key, dispatcher, validator));
+        }
+
+        private static async Task<HttpStatusCode> ExecuteUserEventAsync(WebPubSubTriggerDispatcher dispatcher, string hub, string eventName, WebPubSubClientProtocol clientProtocol = WebPubSubClientProtocol.Default)
+        {
+            using var request = TestHelpers.CreateHttpRequestMessage(hub, WebPubSubEventType.User, eventName, TestKey.ConnectionId, ValidSignature,
+                origin: new[] { TestOrigin }, payload: Encoding.UTF8.GetBytes("test"),
+                subProtocols: clientProtocol == WebPubSubClientProtocol.Mqtt ? new[] { "mqtt" } : null, clientProtocol: clientProtocol);
+            using var response = await dispatcher.ExecuteAsync(request);
+            return response.StatusCode;
+        }
+
         private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, WebPubSubTriggerAcceptedClientProtocols clientProtocol = WebPubSubTriggerAcceptedClientProtocols.All)
         {
-            var funcName = Utilities.GetFunctionKey(hub, type, eventName, clientProtocol).ToLower();
+            var funcName = Utilities.GetFunctionKey(hub, type, eventName, clientProtocol);
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
@@ -414,7 +477,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         // Connections but no default WebPubSubConnection app setting).
         private static WebPubSubTriggerDispatcher SetupDispatcherWithListenerOnlyAccess(string triggerHost)
         {
-            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
+            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All);
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
@@ -432,7 +495,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         // access — global default is NOT consulted for this listener.
         private static WebPubSubTriggerDispatcher SetupDispatcherWithLocalAccess(string defaultHost, string triggerHost)
         {
-            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
+            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All);
             var defaultAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
                 $"Endpoint=http://{defaultHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
@@ -451,7 +514,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         // explicit Connections, so its validator falls back to the global default.
         private static WebPubSubTriggerDispatcher SetupDispatcherWithGlobalFallback(string defaultHost)
         {
-            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
+            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All);
             var defaultAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
                 $"Endpoint=http://{defaultHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);

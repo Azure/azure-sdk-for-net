@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorTimeSeriesBaseline(
                 aggregation,
                 dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>(),
-                timestamps,
-                data,
+                timestamps ?? new ChangeTrackingList<DateTimeOffset>(),
+                data ?? new ChangeTrackingList<MonitorSingleBaseline>(),
                 metadataValues ?? new ChangeTrackingList<MonitorBaselineMetadata>(),
                 additionalBinaryDataProperties);
         }

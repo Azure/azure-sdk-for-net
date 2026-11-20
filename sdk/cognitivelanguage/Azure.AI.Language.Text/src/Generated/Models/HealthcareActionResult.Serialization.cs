@@ -237,10 +237,10 @@ namespace Azure.AI.Language.Text
             }
             return new HealthcareActionResult(
                 id,
-                warnings,
+                warnings ?? new ChangeTrackingList<DocumentWarning>(),
                 statistics,
-                entities,
-                relations,
+                entities ?? new ChangeTrackingList<HealthcareEntity>(),
+                relations ?? new ChangeTrackingList<HealthcareRelation>(),
                 fhirBundle,
                 detectedLanguage,
                 additionalBinaryDataProperties);

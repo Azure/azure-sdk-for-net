@@ -122,12 +122,12 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedOn, "U");
+                writer.WriteNumberValue(CreatedAt, "U");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedOn, "U");
+                writer.WriteNumberValue(UpdatedAt, "U");
             }
             if (options.Format != "W")
             {
@@ -139,15 +139,15 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("window_end"u8);
                 writer.WriteNumberValue(WindowEnd, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && Optional.IsDefined(StartedAt))
             {
                 writer.WritePropertyName("started_at"u8);
-                writer.WriteNumberValue(StartedOn.Value, "U");
+                writer.WriteNumberValue(StartedAt.Value, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
+            if (options.Format != "W" && Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completed_at"u8);
-                writer.WriteNumberValue(CompletedOn.Value, "U");
+                writer.WriteNumberValue(CompletedAt.Value, "U");
             }
             if (options.Format != "W")
             {
@@ -204,12 +204,12 @@ namespace Azure.AI.Projects
             string monitorId = default;
             string agentName = default;
             AgentInsightRunTrigger trigger = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset updatedOn = default;
+            DateTimeOffset createdAt = default;
+            DateTimeOffset updatedAt = default;
             DateTimeOffset windowStart = default;
             DateTimeOffset windowEnd = default;
-            DateTimeOffset? startedOn = default;
-            DateTimeOffset? completedOn = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? completedAt = default;
             string modelDeploymentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -268,12 +268,12 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
                 {
-                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("window_start"u8))
@@ -292,7 +292,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    startedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("completed_at"u8))
@@ -301,7 +301,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    completedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    completedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("model_deployment_name"u8))
@@ -323,12 +323,12 @@ namespace Azure.AI.Projects
                 monitorId,
                 agentName,
                 trigger,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 windowStart,
                 windowEnd,
-                startedOn,
-                completedOn,
+                startedAt,
+                completedAt,
                 modelDeploymentName,
                 additionalBinaryDataProperties);
         }

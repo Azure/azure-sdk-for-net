@@ -17,3 +17,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HealthcareApis
       safeName: AzureResourceManagerHealthcareApis
+    - name: Azure.Provisioning.HealthcareApis
+      safeName: AzureProvisioningHealthcareApis

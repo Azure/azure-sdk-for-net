@@ -216,7 +216,7 @@ namespace Azure.AI.DocumentIntelligence
             return new AnalyzedDocument(
                 documentType,
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
-                spans,
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
                 fieldsPrivate ?? new ChangeTrackingDictionary<string, DocumentField>(),
                 confidence,
                 additionalBinaryDataProperties);

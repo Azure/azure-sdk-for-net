@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidatedSolutionRecipeCapabilities(clusterCapabilities, nodeCapabilities, additionalBinaryDataProperties);
+            return new ValidatedSolutionRecipeCapabilities(clusterCapabilities ?? new ChangeTrackingList<ValidatedSolutionRecipeCapability>(), nodeCapabilities ?? new ChangeTrackingList<ValidatedSolutionRecipeCapability>(), additionalBinaryDataProperties);
         }
     }
 }

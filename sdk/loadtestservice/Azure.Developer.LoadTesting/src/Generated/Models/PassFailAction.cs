@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="PassFailAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PassFailAction?(string value) => value == null ? null : new PassFailAction(value);
+        public static implicit operator PassFailAction?(string value) => value == null ? (PassFailAction?)null : new PassFailAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

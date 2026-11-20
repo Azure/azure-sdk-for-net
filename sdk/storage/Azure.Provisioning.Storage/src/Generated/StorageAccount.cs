@@ -36,7 +36,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new StorageAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public StorageAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2025-06-01")
+        public StorageAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2026-06-01")
         {
         }
 
@@ -695,6 +695,57 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets or sets the AllowSharedKeyAccessForServices. </summary>
+        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowSharedKeyAccessForServices;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowSharedKeyAccessForServices = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DataCollaborationPolicyProperties. </summary>
+        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataCollaborationPolicyProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.DataCollaborationPolicyProperties = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AllowCrossTenantDelegationSas. </summary>
+        public BicepValue<bool> AllowCrossTenantDelegationSas
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowCrossTenantDelegationSas;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowCrossTenantDelegationSas = value;
+            }
+        }
+
         /// <summary> Gets or sets the IsIPv6EndpointToBePublished. </summary>
         public BicepValue<bool> IsIPv6EndpointToBePublished
         {
@@ -821,6 +872,12 @@ namespace Azure.Provisioning.Storage
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2025-08-01". </summary>
+            public static readonly string V2025_08_01 = "2025-08-01";
             /// <summary> API version "2025-06-01". </summary>
             public static readonly string V2025_06_01 = "2025-06-01";
         }

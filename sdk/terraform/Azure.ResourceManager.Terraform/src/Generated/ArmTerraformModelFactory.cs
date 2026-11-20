@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new UnknownCommonExportProperties(
-                default,
+                @type is null ? default : new CommonExportType(@type),
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new ExportQueryTerraform(
-                default,
+                CommonExportType.ExportQuery,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Terraform.Models
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new ExportResourceTerraform(
-                default,
+                CommonExportType.ExportResource,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new ExportResourceGroupTerraform(
-                default,
+                CommonExportType.ExportResourceGroup,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,

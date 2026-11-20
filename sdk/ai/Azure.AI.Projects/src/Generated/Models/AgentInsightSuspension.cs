@@ -19,26 +19,26 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AgentInsightSuspension"/>. </summary>
         /// <param name="code"> Stable, machine-readable suspension category. </param>
         /// <param name="message"> Human-readable description of the suspension. </param>
-        /// <param name="occurredOn"> The time when the suspension occurred. </param>
-        internal AgentInsightSuspension(string code, string message, DateTimeOffset occurredOn)
+        /// <param name="occurredAt"> The time when the suspension occurred. </param>
+        internal AgentInsightSuspension(string code, string message, DateTimeOffset occurredAt)
         {
             Code = code;
             Message = message;
-            OccurredOn = occurredOn;
+            OccurredAt = occurredAt;
             Details = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentInsightSuspension"/>. </summary>
         /// <param name="code"> Stable, machine-readable suspension category. </param>
         /// <param name="message"> Human-readable description of the suspension. </param>
-        /// <param name="occurredOn"> The time when the suspension occurred. </param>
+        /// <param name="occurredAt"> The time when the suspension occurred. </param>
         /// <param name="details"> Additional reason-specific suspension details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightSuspension(string code, string message, DateTimeOffset occurredOn, IDictionary<string, BinaryData> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsightSuspension(string code, string message, DateTimeOffset occurredAt, IDictionary<string, BinaryData> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
-            OccurredOn = occurredOn;
+            OccurredAt = occurredAt;
             Details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
         public string Message { get; }
 
         /// <summary> The time when the suspension occurred. </summary>
-        public DateTimeOffset OccurredOn { get; }
+        public DateTimeOffset OccurredAt { get; }
 
         /// <summary>
         /// Additional reason-specific suspension details.

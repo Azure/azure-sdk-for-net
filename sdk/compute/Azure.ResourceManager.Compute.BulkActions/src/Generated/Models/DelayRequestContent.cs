@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request body for delaying a scheduled action occurrence. </summary>
+    /// <summary> Request body for delaying a recurring bulk action occurrence. </summary>
     public partial class DelayRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
