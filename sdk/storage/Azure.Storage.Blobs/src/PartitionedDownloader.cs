@@ -375,8 +375,6 @@ namespace Azure.Storage.Blobs
             AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
             CancellationToken cancellationToken)
         {
-            BlobErrors.VerifyParallelismGreaterThanOne(parallel);
-
             Queue<Task<BufferedDownloadResult>> bufferedTasks = new();
 
             // Easiest to rent whether or not we need it. It's just 8 bytes.
