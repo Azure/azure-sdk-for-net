@@ -627,12 +627,14 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(new CSharpType(typeof(DateTimeOffset), isNullable: true), metadata[0].Type);
             Assert.AreEqual(new CSharpType(typeof(int), isNullable: true), metadata[1].Type);
             Assert.IsTrue(metadata.All(p => !p.Body.HasSetter && p.Modifiers.HasFlag(MethodSignatureModifiers.Public)));
-            StringAssert.Contains("return this.GetStatusMonitorModel()?.Statistics?.Succeeded;", ((MethodPropertyBody)metadata[1].Body).Getter!.ToDisplayString());
+            // Required value types are null unless their JSON path is present, rather than the deserializer's default.
+            StringAssert.Contains("return ((monitor != null) && monitor.Item3[1]) ? monitor.Item2?.Statistics?.Succeeded : null;", ((MethodPropertyBody)metadata[1].Body).Getter!.ToDisplayString());
             StringAssert.Contains("IsCollectionDefined(value)", ((MethodPropertyBody)metadata[2].Body).Getter!.ToDisplayString());
 
-            var getModel = operation.Methods.Single(m => m.Signature.Name == "GetStatusMonitorModel").BodyStatements!.ToDisplayString();
+            var getModel = operation.Methods.Single(m => m.Signature.Name == "GetStatusMonitor").BodyStatements!.ToDisplayString();
             StringAssert.Contains("object.ReferenceEquals(cache.Item1, response)", getModel);
-            StringAssert.Contains("global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Samples.Models.JobStatus>(response.Content", getModel);
+            StringAssert.Contains("model = global::Samples.Models.JobStatus.DeserializeJobStatus(document.RootElement", getModel);
+            StringAssert.Contains("TryGetProperty(\"statistics\"u8, out global::System.Text.Json.JsonElement element0)) && ((element0.ValueKind == global::System.Text.Json.JsonValueKind.Object) && element0.TryGetProperty(\"succeeded\"u8", getModel);
             StringAssert.Contains("catch (global::System.Exception)", getModel);
             Assert.IsFalse(operation.Methods.Any(m => m.Signature.Name.Contains("Rehydrat") && m.Signature.Name != "GetRehydrationToken"));
             var waits = operation.Methods.Where(m => m.Signature.Name.StartsWith("WaitForCompletion")).ToArray();

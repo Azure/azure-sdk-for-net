@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -36,7 +35,8 @@ namespace Azure.Generator.Providers
         private readonly FieldProvider _getResponse;
         private readonly ModelProvider? _monitorModel;
         private readonly FieldProvider? _monitorCache;
-        private readonly List<(InputLroStatusMetadata Metadata, PropertyProvider[] Path)> _selected = [];
+        private readonly List<(InputLroStatusMetadata Metadata, PropertyProvider[] Path, int PresenceIndex)> _selected = [];
+        private int _presenceCount;
 
         internal LroOperationProvider(InputLongRunningServiceMethod method, ClientProvider client, string name, CSharpType? resultType)
         {
@@ -63,12 +63,17 @@ namespace Azure.Generator.Providers
                         method.CrossLanguageDefinitionId);
                     continue;
                 }
-                _selected.Add((metadata, path));
+                // The deserializer leaves an absent required value type at its default, so its presence is recorded separately.
+                var leafType = path[^1].Type;
+                _selected.Add((metadata, path, leafType.IsValueType && !leafType.IsNullable ? _presenceCount++ : -1));
             }
             if (_selected.Count > 0)
             {
                 _monitorCache = new FieldProvider(FieldModifiers.Private,
-                    new CSharpType(typeof(Tuple<,>), typeof(Response), _monitorModel!.Type), "_monitorCache", this);
+                    _presenceCount > 0
+                        ? new CSharpType(typeof(Tuple<,,>), typeof(Response), _monitorModel!.Type, typeof(bool[]))
+                        : new CSharpType(typeof(Tuple<,>), typeof(Response), _monitorModel!.Type),
+                    "_monitorCache", this);
             }
         }
 
@@ -113,7 +118,7 @@ namespace Azure.Generator.Providers
                 properties.Add(DelegatedProperty("Value", ResultType));
                 properties.Add(DelegatedProperty("HasValue", typeof(bool)));
             }
-            properties.AddRange(_selected.Select(s => BuildMetadataProperty(s.Path)));
+            properties.AddRange(_selected.Select(s => BuildMetadataProperty(s.Path, s.PresenceIndex)));
             return properties.ToArray();
         }
 
@@ -122,17 +127,27 @@ namespace Azure.Generator.Providers
                 new ExpressionPropertyBody(_operation.Property(name)), this);
 
         // Each property reads the latest status-monitor model; it never parses JSON itself.
-        private PropertyProvider BuildMetadataProperty(PropertyProvider[] path)
+        private PropertyProvider BuildMetadataProperty(PropertyProvider[] path, int presenceIndex)
         {
             var leaf = path[^1];
             var type = leaf.Type.WithNullable(true);
-            ValueExpression value = This.Invoke(GetMonitorModelMethodName);
+            var monitor = new VariableExpression(_monitorCache!.Type, "monitor");
+            ValueExpression value = presenceIndex >= 0 ? monitor.Property("Item2") : This.Invoke(GetMonitorMethodName).NullConditional().Property("Item2");
             foreach (var segment in path)
             {
                 value = value.NullConditional().Property(segment.Name);
             }
             MethodBodyStatement[] body;
-            if (leaf.Type.IsCollection)
+            if (presenceIndex >= 0)
+            {
+                body =
+                [
+                    Declare(monitor, This.Invoke(GetMonitorMethodName)),
+                    Return(new TernaryConditionalExpression(
+                        monitor.NotEqual(Null).And(new IndexerExpression(monitor.Property("Item3"), Int(presenceIndex)).As<bool>()), value, Null))
+                ];
+            }
+            else if (leaf.Type.IsCollection)
             {
                 // Absent collections deserialize as undefined change-tracking collections; expose them as null.
                 var collection = new VariableExpression(type, "value");
@@ -153,39 +168,70 @@ namespace Azure.Generator.Providers
                 type, leaf.Name, new MethodPropertyBody(body), this);
         }
 
-        private const string GetMonitorModelMethodName = "GetStatusMonitorModel";
+        private const string GetMonitorMethodName = "GetStatusMonitor";
 
         // Deserializes the status-monitor response once with the model's generated deserializer and caches the result with the
         // response it came from. A single tuple field keeps the response and model consistent when read concurrently.
-        private MethodProvider BuildGetMonitorModelMethod()
+        private MethodProvider BuildGetMonitorMethod()
         {
             var modelType = _monitorModel!.Type;
             var cacheType = _monitorCache!.Type;
-            var body = new MethodBodyStatement[]
+            var serializationExtensions = Static(new ModelSerializationExtensionsDefinition().Type);
+            var body = new List<MethodBodyStatement>
             {
                 Declare("response", typeof(Response), _getResponse.AsValueExpression.NullConditional().Invoke("Invoke"), out var response),
                 new IfStatement(response.Equal(Null)) { Return(Null) },
                 Declare("cache", cacheType, _monitorCache, out var cached),
                 new IfStatement(cached.NotEqual(Null).And(Static<object>().Invoke(nameof(ReferenceEquals), cached.Property("Item1"), response)))
                 {
-                    Return(cached.Property("Item2"))
+                    Return(cached)
                 },
-                Declare("model", modelType, Default, out var model),
-                new TryCatchFinallyStatement(
-                    new TryExpression(model.Assign(Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Read),
-                        [
-                            response.Property(nameof(Response.Content)),
-                            Static(new ModelSerializationExtensionsDefinition().Type).Property("WireOptions"),
-                            ModelReaderWriterContextSnippets.Default
-                        ], [modelType])).Terminate()),
-                    // Malformed or unexpected monitor payloads expose absent metadata instead of throwing from a property getter.
-                    [new CatchExpression(Static(typeof(Exception)))],
-                    null),
-                _monitorCache.Assign(New.Instance(cacheType, response, model)).Terminate(),
-                Return(model)
+                Declare("model", modelType, Default, out var model)
             };
+            var cacheArguments = new List<ValueExpression> { response, model };
+            var parse = new List<MethodBodyStatement>
+            {
+                UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke(nameof(JsonDocument.Parse),
+                    [response.Property(nameof(Response.Content)), serializationExtensions.Property("JsonDocumentOptions")]), out var document),
+                model.Assign(Static(modelType).Invoke($"Deserialize{modelType.Name}",
+                    [document.Property(nameof(JsonDocument.RootElement)), serializationExtensions.Property("WireOptions")])).Terminate()
+            };
+            if (_presenceCount > 0)
+            {
+                body.Add(Declare("present", typeof(bool[]), New.Array(typeof(bool), Int(_presenceCount)), out var present));
+                cacheArguments.Add(present);
+                foreach (var (_, path, presenceIndex) in _selected.Where(s => s.PresenceIndex >= 0))
+                {
+                    parse.Add(new IndexerExpression(present, Int(presenceIndex))
+                        .Assign(BuildIsPresent(document.Property(nameof(JsonDocument.RootElement)), path)).Terminate());
+                }
+            }
+            body.Add(new TryCatchFinallyStatement(
+                new TryExpression(parse.ToArray()),
+                // Malformed or unexpected monitor payloads expose absent metadata instead of throwing from a property getter.
+                [new CatchExpression(Static(typeof(Exception)))],
+                null));
+            body.Add(cached.Assign(New.Instance(cacheType, cacheArguments.ToArray())).Terminate());
+            body.Add(_monitorCache.Assign(cached).Terminate());
+            body.Add(Return(cached));
             return new MethodProvider(
-                new MethodSignature(GetMonitorModelMethodName, null, MethodSignatureModifiers.Private, modelType, null, []), body, this);
+                new MethodSignature(GetMonitorMethodName, null, MethodSignatureModifiers.Private, cacheType, null, []), body.ToArray(), this);
+        }
+
+        // Matches the JSON property path of a required value type, which the generated deserializer cannot report as absent.
+        private static ValueExpression BuildIsPresent(ValueExpression root, PropertyProvider[] path)
+        {
+            ValueExpression element = root;
+            ValueExpression? condition = null;
+            foreach (var segment in path)
+            {
+                var next = new DeclarationExpression(typeof(JsonElement), "element", out var nextElement, isOut: true);
+                var step = element.Property(nameof(JsonElement.ValueKind)).Equal(FrameworkEnumValue(JsonValueKind.Object))
+                    .And(element.Invoke(nameof(JsonElement.TryGetProperty), [LiteralU8(segment.WireInfo!.SerializedName), next]).As<bool>());
+                condition = condition is null ? step : condition.As<bool>().And(step);
+                element = nextElement;
+            }
+            return condition!.As<bool>().And(element.Property(nameof(JsonElement.ValueKind)).NotEqual(FrameworkEnumValue(JsonValueKind.Null)));
         }
 
         private static PropertyProvider[]? ResolvePropertyPath(ModelProvider model, IReadOnlyList<InputModelProperty> segments)
@@ -241,7 +287,7 @@ namespace Azure.Generator.Providers
             }
             if (_monitorCache is not null)
             {
-                methods.Add(BuildGetMonitorModelMethod());
+                methods.Add(BuildGetMonitorMethod());
             }
             return methods.ToArray();
         }

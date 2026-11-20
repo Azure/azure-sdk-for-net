@@ -41,11 +41,14 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Lro.Metadata
                 Assert.IsNull(GetProperty(operation, "JobId"), json);
                 Assert.IsNull(GetProperty(operation, "Statistics"), json);
                 Assert.IsNull(GetProperty(operation, "Errors"), json);
-                // Required value types follow the generated deserializer: null on a parse failure, default when absent.
-                Assert.DoesNotThrow(() => GetProperty(operation, "CreatedOn"), json);
+                // CreatedOn is a required DateTimeOffset, which the deserializer would otherwise default when absent.
+                Assert.IsNull(GetProperty(operation, "CreatedOn"), json);
             }
-            using var malformed = new MetadataResponse("not json");
-            Assert.IsNull(GetProperty(CreateAnalyzeJobOperation(() => malformed), "CreatedOn"));
+            using var partial = new MetadataResponse("""{"jobId":"job","lastUpdatedDateTime":"2025-01-01T10:01:00Z"}""");
+            var withoutCreatedOn = CreateAnalyzeJobOperation(() => partial);
+            Assert.AreEqual("job", GetProperty(withoutCreatedOn, "JobId"));
+            Assert.IsNull(GetProperty(withoutCreatedOn, "CreatedOn"));
+            Assert.AreEqual(DateTimeOffset.Parse("2025-01-01T10:01:00Z"), GetProperty(withoutCreatedOn, "LastUpdatedOn"));
         }
 
         [Test]
