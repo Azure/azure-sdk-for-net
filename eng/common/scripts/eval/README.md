@@ -13,6 +13,91 @@ templates.
   its own pnpm package/lock for **fflate only** and CLI/PowerShell tests. Shard evaluator
   restores do not install it; publication adds no Node Azure SDK dependencies.
 
+## Extending a shard job
+
+The shared `eng/common/pipelines/templates/jobs/eval-shard.yml` owns checkout,
+Node/Vally installation, MCP staging, git fixture initialization and Copilot login.
+Its defaults preserve the standard Prepare/Eval/Summary pipeline behavior.
+Repo-local adapters can customize it without copying that infrastructure:
+
+| Parameter | Contract |
+| --- | --- |
+| `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
+| `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
+| `azureSubscription` | Optional service-connection override. Stage/job templates default to `''` and omit an empty override; the common invoke template retains its `opensource-api-connection` default. |
+| `vallyArguments` | Optional array of supplementary Vally options, values and switches. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
+
+**Not allowed in `vallyArguments`:**
+
+| Affected part | Reserved options | Reason |
+| --- | --- | --- |
+| Shard structure and execution context | `--eval-spec` / `-e`, `--no-eval-spec`, `--suite`, `--no-suite`, `--eval-plugin`, `--no-eval-plugin`, `--work-dir`, `--no-work-dir` | Prepare already assigns files to shards. These change eval selection/loading or the working directory; `--suite` also conflicts with the assigned `-e` arguments. Use `evalGlobs` and `vallyRoot` instead. |
+| Result collection and Summary | `--output-dir`, `--no-output-dir`, `--output`, `--no-output`, `--junit`, `--no-junit` | The pipeline owns result locations and enables JUnit. In Vally 0.19.0, `--output jsonl` sends results to stdout instead of `results.jsonl`. |
+| Validation and scoring | `--threshold`, `--no-threshold`, `--skip-grade`, `--no-skip-grade`, `--skip-validate`, `--no-skip-validate` | The runner does not support bypassing validation/grading, and scoring must match the shard gate. Set the template's `threshold` parameter instead. |
+| Exit-code gating | `--require-pass`, `--no-require-pass` | The shard decides pass/fail from `results.jsonl`, not Vally's exit code; this option would not control the pipeline gate. |
+
+**Allowed:** other Vally options using `--option value` or standalone switches such as
+`--verbose`. This includes `--tag`, `--runs`, `--workers`, `--timeout`,
+`--model` and supplementary plugin options. New options need no common-template changes;
+Vally validates their names, values and whether they require a value.
+Aliases, `--flag=value` and positional paths/globs are not supported.
+Values must be nonempty strings without null characters and must not start with `-`;
+`--runs` and `--workers` also accept positive safe integer numbers.
+Arguments are passed literally, without a shell or whitespace splitting.
+
+For example, replace `<tag-key>` and `<tag-value>` with a tag defined in your eval stimuli:
+
+```yaml
+vallyArguments:
+  - --tag
+  - '<tag-key>=<tag-value>'
+  - --runs
+  - 3
+  - --workers
+  - 2
+  - --verbose
+failOnFailedTests: false
+```
+
+Multiple runs require `failOnFailedTests: false`, including repetition configured
+outside `vallyArguments`. `--tag` uses keys and values defined in your eval stimuli,
+not predefined mode names. Tags filter stimuli, not the shard matrix: keep
+`evalGlobs` aligned so every selected eval has matching stimuli.
+Custom invoke templates must declare `vallyArguments` to receive a non-empty array.
+
+Use the existing pre/post-eval and MCP setup hooks for repository-specific work.
+Authenticated callers can pass `azureSubscription` explicitly to the stage or shard
+template. Nonempty overrides are forwarded to the common invoke step; otherwise
+the invoke template retains its existing `opensource-api-connection` default.
+An explicitly empty or whitespace-only value passed directly to the invoke template fails with
+a configuration error without creating an `AzureCLI@2` task. Unauthenticated runs
+do not need the parameter. Custom invoke templates receive it only when nonempty
+and must declare their own `azureSubscription` parameter to opt in.
+Configure an authorized connection in repo-owned YAML and explicitly pass it from
+the entrypoint to the stage template. Do not rely on an
+ambient variable being visible across nested templates, or on task/output variables
+that are unavailable during template expansion.
+The `eng/common/pipelines/live-eval.yml` entrypoint imports the repo-owned
+`eng/pipelines/templates/variables/globals.yml` and passes its `EvalAzureSubscription`
+value as `azureSubscription`. Nested stage, job and invoke templates use only the
+parameter. Scheduled runs use the same YAML configuration without a connection run
+parameter. Other repos must configure their own authorized connection in that
+repo-owned variable template.
+Do not replace authentication, result collection or retry/completeness checks.
+Supplementary reports must not rewrite JUnit thresholds or raw results.
+
+The shared job templates use the `Prepare` matrix and `Eval` timeline stage, with
+one build-wide Summary depending on both stages. Result/debug artifacts are named
+`eval-result-<shard>-<attempt>` / `eval-debug-<shard>-<attempt>`; the summary artifact
+is `eval-summary-<attempt>`. Summary downloads `eval-result-*` result data and selects
+only the latest verified attempt for each expected shard.
+Shard names must start with an ASCII letter, digit or underscore, contain only
+ASCII letters, digits, underscores or hyphens, and be at most 200 characters.
+
+Benchmarks select one mode per build through repo-owned pipeline parameters,
+aligned `evalGlobs` and `vallyArguments`. Run separate builds to compare modes;
+multiple independently published tracks within one build are not supported.
+
 ## Complete build results and direct Blob publishing
 
 Shards now retain the newest invocation's raw JSONL, JUnit and a completion marker
@@ -50,11 +135,11 @@ explicit bootstrap, without changing dependency checks or the frozen lock.
 
 | Control | Current use |
 | --- | --- |
-| `publishDashboardResults` | The only checkbox; defaults to `true` in the three tools entrypoints. Set `false` to disable both upload and Azure Storage egress |
+| `publishDashboardResults` | The only checkbox; defaults to `true` in the three standard tools entrypoints. Set `false` to disable both upload and Azure Storage egress |
 | `EvalStorageAccountName` | Pipeline-owner configuration. Upload is skipped when absent; set it to `evaltestsummary` for this dashboard |
 | `EvalDashboardRefreshUrl` | Pipeline-owner configuration: `https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net/api/refresh` |
 | `EvalDashboardResource` | Pipeline-owner configuration: `api://258998df-81ec-460c-bdd7-56a9bdde1e48` (resource URI, not a `/.default` scope) |
-| `createDashboardBundle` | Shared-template artifact-only mode; enabled for all three tools entrypoints |
+| `createDashboardBundle` | Shared-template artifact-only mode; enabled for the three standard tools entrypoints |
 
 The pipeline owner must set **`EvalStorageAccountName=evaltestsummary`** and the two
 dashboard variables above in each onboarded DevOps pipeline, with **queue-time
@@ -155,6 +240,9 @@ then `node --experimental-strip-types --test` from this directory.
 These shared Node tests do not need Tools-owned CI files, PowerShell tests or
 the consuming repository's redirect settings. A consumer-copy regression runs
 them without Tools files or Git history, with absent and different redirect templates.
+Template contract checks use bounded text assertions, not a YAML parser, and need
+no evaluator dependencies. They do not evaluate Azure template expressions;
+server-side expansion and service-connection authorization require separate validation.
 
 In Tools, run `Invoke-Pester -Path eng/common-tests/eval/Publish-EvalResults.Tests.ps1 -CI`
 from the repository root for the **PowerShell 7.4+ / Pester 5 / Azure CLI** tests. That Tools-only
