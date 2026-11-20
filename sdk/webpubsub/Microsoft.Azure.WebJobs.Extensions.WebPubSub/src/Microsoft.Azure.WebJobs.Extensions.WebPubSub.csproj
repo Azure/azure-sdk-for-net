@@ -6,7 +6,7 @@
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <Description>Azure Functions extension for the WebPubSub service</Description>
-    <Version>1.11.0-beta.1</Version>
+    <Version>1.10.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.10.2</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
   </ItemGroup>

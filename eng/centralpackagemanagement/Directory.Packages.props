@@ -15,6 +15,7 @@
     <CastleCoreVersion>5.1.0</CastleCoreVersion>
     <CloudNativeCloudEventsSystemTextJsonVersion>2.8.0</CloudNativeCloudEventsSystemTextJsonVersion>
     <MicrosoftAspNetCoreHttpVersion>2.3.0</MicrosoftAspNetCoreHttpVersion>
+    <MicrosoftAspNetCoreWebUtilitiesVersion>2.3.14</MicrosoftAspNetCoreWebUtilitiesVersion>
     <MicrosoftAspNetCoreVersion>2.3.0</MicrosoftAspNetCoreVersion>
     <MicrosoftExtensionsAzureVersion>1.14.0</MicrosoftExtensionsAzureVersion>
     <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.10</MicrosoftExtensionsConfigurationAbstractionsVersion>
