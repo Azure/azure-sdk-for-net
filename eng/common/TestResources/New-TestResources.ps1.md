@@ -55,6 +55,11 @@ If no service principal is specified, a new one will be created and assigned the
 
 This script runs in the context of credentials already specified in Connect-AzAccount
 or those specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
+If no subscription is specified, it signs in to the TME tenant if necessary and uses the
+Azure SDK Test Resources - TME subscription for `-Environment AzureCloud`. Specify `-SubscriptionId`
+to use another subscription or to deploy to a sovereign cloud. When Azure CLI commands are used
+by local tests, run `az login --tenant 70a036f6-8e4d-4615-bad6-149c02e7720d` and
+`az account set --subscription 4d042dc6-fe17-4698-a23f-ec6a8d1e98f4`.
 
 ## EXAMPLES
 

@@ -39,7 +39,7 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
-    # Azure SDK Developer Playground subscription is assumed if not set
+    # Azure SDK Test Resources - TME subscription is assumed if not set
     [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $SubscriptionId,
@@ -248,43 +248,71 @@ try {
         $context = Get-AzContext;
         if (!$context) {
             Log 'User not logged in. Logging in now...'
-            $context = (Connect-AzAccount).Context
+            if ($SubscriptionId) {
+                $tenantArgs = if ($TenantId) { @{ Tenant = $TenantId } } else { @{} }
+                $context = (Connect-AzAccount -Environment $Environment @tenantArgs).Context
+            } else {
+                if ($Environment -ne 'AzureCloud') {
+                    throw "The TME default is only available for AzureCloud. Specify -SubscriptionId to deploy to '$Environment'."
+                }
+                $context = (Connect-AzAccount -TenantId $wellKnownTMETenants[0]).Context
+            }
+        }
+        elseif (!$SubscriptionId -and $Environment -ne 'AzureCloud') {
+            throw "The TME default is only available for AzureCloud. Specify -SubscriptionId to deploy to '$Environment'."
         }
 
-        $currentSubcriptionId = $context.Subscription.Id
+        $currentSubscriptionId = $context.Subscription.Id
 
-        # If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
-        # Ignore errors to leave the automatically selected subscription.
+        # If no subscription was specified, use the Azure SDK Test Resources - TME subscription.
         if ($SubscriptionId) {
-            if ($currentSubcriptionId -ne $SubscriptionId) {
+            if ($currentSubscriptionId -ne $SubscriptionId) {
                 Log "Selecting subscription '$SubscriptionId'"
-                $null = Select-AzSubscription -Subscription $SubscriptionId
+                $null = Select-AzSubscription -Subscription $SubscriptionId -ErrorAction Stop
 
                 $exitActions += {
-                    Log "Selecting previous subscription '$currentSubcriptionId'"
-                    $null = Select-AzSubscription -Subscription $currentSubcriptionId
+                    Log "Selecting previous subscription '$currentSubscriptionId'"
+                    $null = Select-AzSubscription -Subscription $currentSubscriptionId
                 }
 
                 # Update the context.
                 $context = Get-AzContext
             }
         } else {
-            if ($context.Tenant.Name -like '*TME*') {
-                if ($currentSubscriptionId -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
-                    Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
-                    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore -WarningAction Ignore
-                    # Update the context.
-                    $context = Get-AzContext
-                }
-            } elseif ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
-                Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
-                $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore -WarningAction Ignore
+            if ($context.Tenant.Id -ne $wellKnownTMETenants[0]) {
+                Log 'User is not logged in to the TME tenant. Logging in now...'
+                $context = (Connect-AzAccount -TenantId $wellKnownTMETenants[0] -Environment $Environment).Context
+            }
+
+            if ($context.Subscription.Id -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
+                Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
+                $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Stop
                 # Update the context.
                 $context = Get-AzContext
             }
 
+            if ($context.Subscription.Id -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
+                throw "Unable to select Azure SDK Test Resources - TME subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4'. Specify -SubscriptionId to use another subscription."
+            }
+
             $SubscriptionId = $context.Subscription.Id
             $PSBoundParameters['SubscriptionId'] = $SubscriptionId
+        }
+
+        if ($SubscriptionId -and $context.Subscription.Id -ne $SubscriptionId) {
+            throw "Unable to select subscription '$SubscriptionId'. Verify that you have access to the subscription."
+        }
+
+        if ($Environment -eq 'AzureCloud' -and $SubscriptionId -eq '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -and (Get-Command az -ErrorAction SilentlyContinue)) {
+            $cliAccountJson = az account show --output json 2>$null
+            if ($LASTEXITCODE -ne 0) {
+                throw "Azure CLI is not logged in to the TME subscription '$SubscriptionId'. Run 'az login --tenant $($wellKnownTMETenants[0])' and 'az account set --subscription $SubscriptionId' before provisioning."
+            }
+
+            $cliAccount = $cliAccountJson | ConvertFrom-Json
+            if ($cliAccount.id -ne $SubscriptionId -or $cliAccount.tenantId -ne $wellKnownTMETenants[0]) {
+                throw "Azure CLI is not set to TME subscription '$SubscriptionId'. Run 'az login --tenant $($wellKnownTMETenants[0])' and 'az account set --subscription $SubscriptionId' before provisioning."
+            }
         }
 
         # Use cache of well-known team subs without having to be authenticated.
@@ -311,11 +339,9 @@ try {
     }
 
     # This needs to happen after we set the TenantId but before we use the ResourceGroupName
-    if ($wellKnownTMETenants.Contains($TenantId) -and !$ResourceGroupName.StartsWith("SSS3PT_", [System.StringComparison]::OrdinalIgnoreCase)) {
-        # Add a prefix to the resource group name to avoid flagging the usages of local auth
-        # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
-        $ResourceGroupName = "SSS3PT_" + $ResourceGroupName
-    }
+    # The SSS3PT prefix avoids flagging use of local auth in TME.
+    # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
+    $ResourceGroupName = AddTestResourceGroupPrefix $ResourceGroupName $TenantId $SubscriptionId
 
     if ($ResourceGroupName.Length -gt 90) {
         # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
