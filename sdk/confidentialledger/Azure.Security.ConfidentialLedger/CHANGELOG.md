@@ -1,14 +1,10 @@
 # Release History
 
-## 2.0.0-beta.7 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 2.0.0-beta.7 (2026-11-19)
 
 ### Bugs Fixed
 
-### Other Changes
+- Restored cross-ledger fallback for collection-qualified ledger-entry reads returning 404, including `InvalidTransactionId` and `UnknownLedgerEntry`, and traversal past missing entries on failover ledgers. After a primary historical-read 404, the legacy fallback reads the collection's current entry on a failover ledger and returns it as `entry` with state `Ready`, preserving tags and the actual returned transaction id (which can differ from the requested id). Reads without a nonempty collection id do not fail over on 404; transient failover and non-entry operations are unchanged.
 
 ## 2.0.0-beta.6 (2026-10-15)
 
