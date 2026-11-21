@@ -104,6 +104,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             activity.Stop();
 
+            Activity operation = testListener.AssertAndRemoveActivity("EventHubs.send");
             Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
             AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
             Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
@@ -116,8 +117,9 @@ namespace Azure.Messaging.EventHubs.Tests
             // Kind attribute is not set for the OTel path as this is handled by the OTel exporter SDK
             Assert.That(messageActivity.Tags, Does.Not.Contain(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
             Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
-            Assert.That(sendActivity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
-            Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
+            Assert.That(operation.ParentId, Is.EqualTo(activity.Id));
+            Assert.That(sendActivity.ParentId, Is.EqualTo(operation.Id));
+            Assert.That(messageActivity.ParentId, Is.EqualTo(operation.Id));
         }
 
         /// <summary>
@@ -175,12 +177,14 @@ namespace Azure.Messaging.EventHubs.Tests
             Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
             AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
 
+            Activity operation = testListener.AssertAndRemoveActivity("EventHubs.send");
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
+            Assert.That(sendActivity.ParentId, Is.EqualTo(operation.Id));
             AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
 
             Assert.That(batchEvent.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
             Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
-            Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
+            Assert.That(operation.ParentId, Is.EqualTo(activity.Id));
             Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
         }
 
@@ -315,7 +319,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, diagnosticId2 } })
             });
 
+            Activity operation = testListener.AssertAndRemoveActivity("EventHubs.send");
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
+            Assert.That(sendActivity.ParentId, Is.EqualTo(operation.Id));
 
             var expectedLinks = new[] { new ActivityLink(ActivityContext.Parse(diagnosticId1, null)), new ActivityLink(ActivityContext.Parse(diagnosticId2, null)) };
             var links = sendActivity.Links.ToList();
@@ -379,7 +385,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(batch);
 
+            Activity operation = testListener.AssertAndRemoveActivity("EventHubs.send");
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
+            Assert.That(sendActivity.ParentId, Is.EqualTo(operation.Id));
             AssertCommonTags(sendActivity, "SomeName", "some.endpoint.com", MessagingDiagnosticOperation.Publish, 2);
 
             var expectedLinks = new[] { new ActivityLink(ActivityContext.Parse(diagnosticId1, null)), new ActivityLink(ActivityContext.Parse(diagnosticId2, null)) };

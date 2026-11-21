@@ -498,11 +498,22 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // Attempt to send the message batch.
 
                         var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
-                        var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, cancellationToken).ConfigureAwait(false);
-
-                        if (outcome.DescriptorCode != Accepted.Code)
+                        using (var telemetry = ConnectionScope.Telemetry.StartAmqp("EventHubs.amqp.send"))
                         {
-                            throw AmqpError.CreateExceptionForError((outcome as Rejected)?.Error, EventHubName);
+                            try
+                            {
+                                var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, cancellationToken).ConfigureAwait(false);
+                                if (outcome.DescriptorCode != Accepted.Code)
+                                {
+                                    throw AmqpError.CreateExceptionForError((outcome as Rejected)?.Error, EventHubName);
+                                }
+                                telemetry?.Complete();
+                            }
+                            catch (Exception ex)
+                            {
+                                telemetry?.Failed(ex, cancellationToken);
+                                throw;
+                            }
                         }
 
                         // The send operation should be considered successful; return to
