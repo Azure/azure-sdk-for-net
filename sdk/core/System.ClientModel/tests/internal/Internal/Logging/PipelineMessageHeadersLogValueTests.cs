@@ -42,7 +42,13 @@ public class PipelineMessageHeadersLogValueTests
         Assert.That(loggedRequestValue, Is.Not.Null);
         Assert.That(loggedResponseValue, Is.Not.Null);
 
-        Assert.AreEqual(loggedRequestValue, "Sensitive-Header:REDACTED\r\nNonSensitive-Header:NonSensitiveValue\r\nContent-Length:REDACTED\r\n");
-        Assert.AreEqual(loggedResponseValue, "Sensitive-Header:REDACTED\r\nNonSensitive-Header:NonSensitiveValue\r\nContent-Length:REDACTED\r\n");
+        string expected = string.Join(Environment.NewLine,
+            "Sensitive-Header:REDACTED",
+            "NonSensitive-Header:NonSensitiveValue",
+            "Content-Length:REDACTED",
+            string.Empty);
+
+        Assert.AreEqual(loggedRequestValue, expected);
+        Assert.AreEqual(loggedResponseValue, expected);
     }
 }

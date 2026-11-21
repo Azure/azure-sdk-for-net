@@ -55,6 +55,7 @@ internal sealed partial class TaskEngine : IDisposable
     private int _startAdmissionClosing;
     private int _disposeStarted;
     private int _orphanSweepDone;
+    private int _preserveRecoverableTasks;
 
     // Spec §21 source.server_version: "<sdk_name>/<sdk_version> (<runtime>/<version>)".
     // Built once from this assembly's informational version (mirrors Python's
@@ -90,6 +91,22 @@ internal sealed partial class TaskEngine : IDisposable
     internal bool IsActive(string taskId) => _activeRuns.ContainsKey(taskId);
 
     internal string InstanceId => _lease.InstanceId;
+
+    internal bool RotateLeaseInstanceIfIdle()
+    {
+        lock (_startLifecycleGate)
+        {
+            if (_startsInFlight != 0
+                || !_pendingStarts.IsEmpty
+                || !_activeRuns.IsEmpty)
+            {
+                return false;
+            }
+
+            _lease.RotateInstanceId();
+            return true;
+        }
+    }
 
     internal LeaseManager Lease => _lease;
 
@@ -161,7 +178,7 @@ internal sealed partial class TaskEngine : IDisposable
         CancellationToken cancellationToken)
     {
         TaskRegistration registration = _registry.Get(name);
-        string protocol = TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+        string protocol = ResolveCurrentProtocol();
         if (!RegistrationEnabled(registration, protocol))
         {
             throw new ResilientTaskException(
@@ -292,7 +309,7 @@ internal sealed partial class TaskEngine : IDisposable
         bool persistInputId, TInput input, RunOptions? options, CancellationToken cancellationToken)
     {
         EnsureTaskName(existing.Name, registration.Name, taskId);
-        string protocol = TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+        string protocol = ResolveCurrentProtocol();
         if (!string.Equals(existing.Protocol, protocol, StringComparison.Ordinal))
         {
             throw new ResilientTaskException(
@@ -556,6 +573,19 @@ internal sealed partial class TaskEngine : IDisposable
             && (registration.Options?.IsEnabled?.Invoke() ?? true);
     }
 
+    private string ResolveCurrentProtocol()
+    {
+        string? activeProtocol = TaskEngineAccessor.ActiveProtocol(_enablement);
+        if (activeProtocol is not null)
+        {
+            return activeProtocol;
+        }
+
+        return TaskEngineAccessor.IsInitializationHandler(this)
+            ? _enablement?.ResolveHostProtocol() ?? TaskWireKeys.ProtocolCore
+            : TaskWireKeys.ProtocolCore;
+    }
+
     private string? PersistedProtocol(TaskRecord record)
     {
         if (record.Payload is not JsonObject payload
@@ -621,7 +651,7 @@ internal sealed partial class TaskEngine : IDisposable
         if (_enablement is not null)
         {
             payload[TaskWireKeys.PayloadProtocolScope] =
-                TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+                ResolveCurrentProtocol();
         }
 
         EntryMode entryMode = EntryMode.Fresh;
@@ -655,7 +685,7 @@ internal sealed partial class TaskEngine : IDisposable
             EnsureTaskName(current.Source?.Name, name, taskId);
             EnsureProtocolOwner(
                 current, registration,
-                TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore);
+                ResolveCurrentProtocol());
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
                 throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
@@ -782,7 +812,7 @@ internal sealed partial class TaskEngine : IDisposable
             if (_enablement is not null)
             {
                 payload[TaskWireKeys.PayloadProtocolScope] =
-                    TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+                    ResolveCurrentProtocol();
             }
             if (persistInputId)
             {
@@ -817,7 +847,7 @@ internal sealed partial class TaskEngine : IDisposable
                     EnsureTaskName(observed.Source?.Name, name, taskId);
                     EnsureProtocolOwner(
                         observed, registration,
-                        TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore);
+                        ResolveCurrentProtocol());
                     CheckInputPrecondition(observed, options?.IfLastInputId);
                 }
 
@@ -846,7 +876,7 @@ internal sealed partial class TaskEngine : IDisposable
             EnsureTaskName(current.Source?.Name, name, taskId);
             EnsureProtocolOwner(
                 current, registration,
-                TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore);
+                ResolveCurrentProtocol());
 
             // ifLastInputId precondition (FR-006).
             CheckInputPrecondition(current, options?.IfLastInputId);
@@ -1364,6 +1394,12 @@ internal sealed partial class TaskEngine : IDisposable
         CancellationTokenSource handlerCts,
         bool isSteeredTurn = false)
     {
+        using IDisposable? protocolScope = _enablement is not null
+            ? TaskEngineAccessor.EnterProtocolScope(
+                _enablement,
+                activeRun.Protocol,
+                enabled: true)
+            : null;
         var handler = registration.RequiresServiceScope
             ? null
             : (Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler;
@@ -1380,9 +1416,8 @@ internal sealed partial class TaskEngine : IDisposable
         EntryMode currentMode = entryMode;
         bool steered = isSteeredTurn;
         CancellationTokenSource currentCts = handlerCts;
-        using IDisposable? recoveryHandlerScope = entryMode == EntryMode.Recovered
-            ? TaskEngineAccessor.EnterRecoveryHandlerScope(this)
-            : null;
+        using IDisposable workerHandlerScope =
+            TaskEngineAccessor.EnterRecoveryHandlerScope(this);
 
         try
         {
@@ -1643,6 +1678,11 @@ internal sealed partial class TaskEngine : IDisposable
         TimeSpan? timeout,
         CancellationTokenSource handlerCts)
     {
+        if (Volatile.Read(ref _preserveRecoverableTasks) != 0)
+        {
+            return new TurnOutcome<TOutput> { Kind = TurnOutcomeKind.Deferred };
+        }
+
         var ctxState = new TaskContextState<TInput>(
             input,
             taskId,
@@ -1717,6 +1757,14 @@ internal sealed partial class TaskEngine : IDisposable
                 ctxState.RetryAttempt = attempt;
                 try
                 {
+                    if (Volatile.Read(ref _preserveRecoverableTasks) != 0)
+                    {
+                        return new TurnOutcome<TOutput>
+                        {
+                            Kind = TurnOutcomeKind.Deferred,
+                        };
+                    }
+
                     FoundryAgentRequestContext ambientRequestContext = FoundryAgentRequestContext.Current;
                     FoundryAgentRequestContext? previousRequestContext =
                         FoundryAgentRequestContext.Exchange(new FoundryAgentRequestContext
@@ -3147,6 +3195,37 @@ internal sealed partial class TaskEngine : IDisposable
         CancelActiveHandlers();
     }
 
+    internal async Task ShutdownForRollbackAsync()
+    {
+        Task startsDrained = BeginRollbackShutdown();
+        await startsDrained.ConfigureAwait(false);
+
+        IActiveRun[] retainedRuns = _activeRuns.Values.ToArray();
+        await Task.WhenAll(retainedRuns.Select(run => run.ProducerStopped))
+            .ConfigureAwait(false);
+
+        foreach (IActiveRun run in retainedRuns)
+        {
+            try
+            {
+                await _lease.ReleaseAsync(run.TaskId, _owner, CancellationToken.None)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LeaseForceExpireFailed(run.TaskId, ex.GetType().Name);
+            }
+        }
+    }
+
+    internal Task BeginRollbackShutdown()
+    {
+        Volatile.Write(ref _preserveRecoverableTasks, 1);
+        Task startsDrained = BeginShutdown();
+        SignalShutdown();
+        return startsDrained;
+    }
+
     internal Task BeginShutdown()
     {
         Task startsDrained = CloseStartAdmission();
@@ -3219,6 +3298,8 @@ internal sealed partial class TaskEngine : IDisposable
 
         Task RequestDeletionAsync(TaskDeletionState deletion);
 
+        Task ProducerStopped { get; }
+
         void CancelForShutdown();
 
         void StopRenewal();
@@ -3252,6 +3333,8 @@ internal sealed partial class TaskEngine : IDisposable
         public string Name { get; }
 
         public string Protocol { get; }
+
+        public Task ProducerStopped => _producerStopped.Task;
 
         /// <summary>The in-process steering coordinator. Lazily created on first access so a
         /// non-steerable task never allocates a steering queue (pay-for-what-you-use, FR-038).

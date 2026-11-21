@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="SimpleQnAFineTuningQuestionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SimpleQnAFineTuningQuestionType?(string value) => value == null ? null : new SimpleQnAFineTuningQuestionType(value);
+        public static implicit operator SimpleQnAFineTuningQuestionType?(string value) => value == null ? (SimpleQnAFineTuningQuestionType?)null : new SimpleQnAFineTuningQuestionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

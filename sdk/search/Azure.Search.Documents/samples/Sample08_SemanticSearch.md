@@ -14,7 +14,7 @@ Let's consider the example of a `Hotel`. First, we need to create an index for s
 
 To accomplish this, we will create an instace of `SearchIndex` and define `Hotel` fields.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_SemanticSearch_Index
 string indexName = "hotel";
 SearchIndex searchIndex = new(indexName)
 {
@@ -48,10 +48,9 @@ SearchIndex searchIndex = new(indexName)
 
 After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Create_Index
+```C# Snippet:Azure_Search_Documents_Tests_Samples_SemanticSearch_Create_Index
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-AzureKeyCredential credential = new(key);
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);
@@ -61,7 +60,7 @@ await indexClient.CreateIndexAsync(searchIndex);
 
 Let's create a simple model type for `Hotel`:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Model
+```C# Snippet:Azure_Search_Documents_Tests_Samples_SemanticSearch_Model
 public class Hotel
 {
     public string HotelId { get; set; }
@@ -73,7 +72,7 @@ public class Hotel
 
 Next, we will create sample hotel documents:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Hotel_Document
+```C# Snippet:Azure_Search_Documents_Tests_Samples_SemanticSearch_Hotel_Document
 public static Hotel[] GetHotelDocuments()
 {
     return new[]
@@ -102,7 +101,7 @@ public static Hotel[] GetHotelDocuments()
 
 Now, we can instantiate the `SearchClient` and upload the documents to the `Hotel` index we created earlier:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Upload_Documents
+```C# Snippet:Azure_Search_Documents_Tests_Samples_SemanticSearch_Upload_Documents
 SearchClient searchClient = new(endpoint, indexName, credential);
 Hotel[] hotelDocuments = GetHotelDocuments();
 await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments));
@@ -114,7 +113,7 @@ To perform a semantic search query, we'll specify `SemanticSearch.SemanticConfig
 
 ### Using QueryType
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Query
+```C# Snippet:Azure_Search_Documents_Tests_Samples_SemanticSearch_Query
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
     new SearchOptions
@@ -164,7 +163,7 @@ Console.WriteLine($"Total number of search results:{count}");
 
 You can also use `SemanticSearch.SemanticQuery` for semantic search. This feature allows you to set a separate search query that will be used exclusively for semantic reranking, semantic captions, and semantic answers. It is beneficial for scenarios where different queries are required between the base retrieval and ranking phase, and the L2 semantic phase.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Query
+```C# Snippet:Azure_Search_Documents_Tests_Samples_SemanticSearch_SemanticQuery
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     "Luxury hotel",
     new SearchOptions

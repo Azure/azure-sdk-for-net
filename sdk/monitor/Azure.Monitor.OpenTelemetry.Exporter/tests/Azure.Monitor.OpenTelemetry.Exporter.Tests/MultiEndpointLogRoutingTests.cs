@@ -82,6 +82,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void CustomerCountsIncludeOnlyRoutedLogEnvelopes()
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-b"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("unrouted")),
+                Emit(Ikey("ikey-a"), Endpoint(WestUs), IngestionAuth("aad")));
+
+            Assert.Equal(2, routeBatch.Count);
+            Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
+            Assert.Equal(2, routeBatch[0].ItemCountsByInstrumentationKey.Count);
+            Assert.Equal(2, routeBatch[0].ItemCountsByInstrumentationKey["ikey-a"]);
+            Assert.Equal(1, routeBatch[0].ItemCountsByInstrumentationKey["ikey-b"]);
+            Assert.True(routeBatch[1].IsAad);
+            Assert.Equal(new KeyValuePair<string, int>("ikey-a", 1),
+                Assert.Single(routeBatch[1].ItemCountsByInstrumentationKey));
+        }
+
+        [Fact]
         public void EachItemCarriesItsOwnInstrumentationKey()
         {
             var routeBatch = Convert(

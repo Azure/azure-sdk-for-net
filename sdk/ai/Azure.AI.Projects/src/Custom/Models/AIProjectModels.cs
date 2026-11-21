@@ -215,4 +215,40 @@ public partial class AIProjectModels
         containerClient = new BlobContainerClient(pendingUploadResult.BlobReference.Credential.SasUri);
         return containerClient;
     }
+
+    /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
+    /// <param name="name"> Name of the model. </param>
+    /// <param name="version"> Version of the model. </param>
+    /// <param name="credentialContent"> The credential request request body. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialContent"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult<DatasetCredential> GetModelCredentials(string name, string version, ModelCredentialContent credentialContent, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNull(credentialContent, nameof(credentialContent));
+
+        ClientResult result = GetModelCredentials(name, version, credentialContent, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
+    }
+
+    /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
+    /// <param name="name"> Name of the model. </param>
+    /// <param name="version"> Version of the model. </param>
+    /// <param name="credentialContent"> The credential request request body. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialContent"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult<DatasetCredential>> GetModelCredentialsAsync(string name, string version, ModelCredentialContent credentialContent, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNull(credentialContent, nameof(credentialContent));
+
+        ClientResult result = await GetModelCredentialsAsync(name, version, credentialContent, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
+    }
 }

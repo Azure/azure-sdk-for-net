@@ -4,6 +4,7 @@
     <Description>Tests of System.ClientModel internal types and internal contracts.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
