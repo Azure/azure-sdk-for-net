@@ -44,23 +44,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal StoragePoolUpdateProperties Properties { get; set; }
-
-        /// <summary> Total bandwidth provisioned for the pool, in MB/s. </summary>
-        public long? StoragePoolUpdateProvisionedBandwidthMbPerSec
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisionedBandwidthMbPerSec;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StoragePoolUpdateProperties();
-                }
-                Properties.ProvisionedBandwidthMbPerSec = value;
-            }
-        }
+        public StoragePoolUpdateProperties Properties { get; set; }
     }
 }
