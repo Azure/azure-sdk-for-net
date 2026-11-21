@@ -57,6 +57,42 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetMonitorResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MonitorResource"/> object. </returns>
+        public static MonitorResource GetMonitorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConfluentArmClient(client).GetMonitorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetMonitorTagRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MonitorTagRuleResource"/> object. </returns>
+        public static MonitorTagRuleResource GetMonitorTagRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConfluentArmClient(client).GetMonitorTagRuleResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SCEnvironmentRecordResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>

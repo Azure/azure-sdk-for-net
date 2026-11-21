@@ -35,6 +35,24 @@ namespace Azure.ResourceManager.Confluent.Mocking
             return new ConfluentOrganizationResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="MonitorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorResource"/> object. </returns>
+        public virtual MonitorResource GetMonitorResource(ResourceIdentifier id)
+        {
+            MonitorResource.ValidateResourceId(id);
+            return new MonitorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MonitorTagRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorTagRuleResource"/> object. </returns>
+        public virtual MonitorTagRuleResource GetMonitorTagRuleResource(ResourceIdentifier id)
+        {
+            MonitorTagRuleResource.ValidateResourceId(id);
+            return new MonitorTagRuleResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="SCEnvironmentRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SCEnvironmentRecordResource"/> object. </returns>
