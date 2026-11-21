@@ -21,7 +21,7 @@ dotnet run --project sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetr
 Start an OpenTelemetry Collector with the supplied configuration:
 
 ```sh
-docker run --rm --name eventhubs-dotnet-otel -p 14318:4318 \
+docker run --rm --name eventhubs-dotnet-otel -p 127.0.0.1:14318:4318 \
   -v "$PWD/sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry/collector.yaml:/etc/otelcol/config.yaml:ro" \
   otel/opentelemetry-collector:0.109.0
 ```

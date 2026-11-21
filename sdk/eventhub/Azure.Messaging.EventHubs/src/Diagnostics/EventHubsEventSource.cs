@@ -2912,13 +2912,30 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             WriteEvent(128, identifier ?? string.Empty, eventHubName ?? string.Empty, ownershipIntervalSeconds, loadBalancingIntervalSeconds, troubleshootingGuideLink);
         }
-        /// <summary>Reports an AMQP component creation attempt or connection invalidation.</summary>
+
+        /// <summary>
+        ///   Reports an AMQP component creation attempt or connection invalidation.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The Event Hubs namespace associated with the client.</param>
+        /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
+        /// <param name="clientIdentifier">The identifier of the client reporting the transition.</param>
+        /// <param name="component">The AMQP component undergoing the transition.</param>
+        /// <param name="generation">The identifier for this component creation attempt.</param>
+        /// <param name="outcome">The reported lifecycle transition or terminal outcome.</param>
+        ///
         [Event(132, Level = EventLevel.Informational, Message = "AMQP {3} generation {4}: {5}. Namespace: {0}; Event Hub: {1}; Client: {2}.")]
-        public void AmqpLifecycle(string fullyQualifiedNamespace, string eventHubName, string clientIdentifier, string component, long generation, string outcome)
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
+        public virtual void AmqpLifecycle(string fullyQualifiedNamespace,
+                                          string eventHubName,
+                                          string clientIdentifier,
+                                          string component,
+                                          long generation,
+                                          string outcome)
         {
             if (IsEnabled())
             {
-                WriteEvent(132, fullyQualifiedNamespace, eventHubName, clientIdentifier, component, generation, outcome);
+                WriteEvent(132, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, clientIdentifier ?? string.Empty, component ?? string.Empty, generation, outcome ?? string.Empty);
             }
         }
     }
