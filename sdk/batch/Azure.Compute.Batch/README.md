@@ -1237,6 +1237,14 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 ### Recording integration tests
 
+The `Batch2026FeaturesIntegrationTests` cover Instance Mix, automatic zone placement
+and resiliency, and hardware-profile configuration using zero-node pools. Instance Mix
+and automatic zone placement require those features to be enabled on the test account.
+These scenarios verify accepted configuration and preservation across updates, not
+successful compute-node allocation. Instance Mix, zone/resiliency, and hardware-profile coverage uses
+metadata-only PATCH updates to verify that omitted settings are preserved. The tested
+service rejects PATCH requests that change `vmSkuProfile` or `virtualMachineConfiguration`.
+
 For local recording with an existing Azure CLI login, set `BATCH_USE_AZURE_CLI_CREDENTIAL=true`
 and `BATCH_TENANT_ID` to the tenant containing the test accounts. This explicitly selects
 `AzureCliCredential` for developer authentication; when unset, the normal test-framework
