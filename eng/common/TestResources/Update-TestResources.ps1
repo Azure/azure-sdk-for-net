@@ -83,17 +83,16 @@ if (!$context) {
     throw "You must be already logged in to use this script. Run 'Connect-AzAccount' and try again."
 }
 
-# If no subscription was specified, try to select the 'Azure SDK Test Resources - TME' subscription.
-# Ignore errors to leave the automatically selected subscription.
+# If no subscription was specified, select the 'Azure SDK Test Resources - TME' subscription.
 if ($SubscriptionId) {
-    $currentSubcriptionId = $context.Subscription.Id
-    if ($currentSubcriptionId -ne $SubscriptionId) {
+    $currentSubscriptionId = $context.Subscription.Id
+    if ($currentSubscriptionId -ne $SubscriptionId) {
         Log "Selecting subscription '$SubscriptionId'"
-        $null = Select-AzSubscription -Subscription $SubscriptionId -WarningAction Ignore
+        $null = Select-AzSubscription -Subscription $SubscriptionId -ErrorAction Stop
 
         $exitActions += {
-            Log "Selecting previous subscription '$currentSubcriptionId'"
-            $null = Select-AzSubscription -Subscription $SubscriptionId -WarningAction Ignore
+            Log "Selecting previous subscription '$currentSubscriptionId'"
+            $null = Select-AzSubscription -Subscription $currentSubscriptionId -WarningAction Ignore
         }
 
         # Update the context.
@@ -101,7 +100,7 @@ if ($SubscriptionId) {
     }
 } else {
     Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
-    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore -WarningAction Ignore
+    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Stop
 
     # Update the context.
     $context = Get-AzContext
@@ -109,6 +108,12 @@ if ($SubscriptionId) {
     $SubscriptionId = $context.Subscription.Id
     $PSBoundParameters['SubscriptionId'] = $SubscriptionId
 }
+
+if ($SubscriptionId -and $context.Subscription.Id -ne $SubscriptionId) {
+    throw "Unable to select subscription '$SubscriptionId'. Verify that you have access to the subscription."
+}
+
+$ResourceGroupName = AddTestResourceGroupPrefix $ResourceGroupName $context.Subscription.TenantId $SubscriptionId
 
 # Use cache of well-known team subs without having to be authenticated.
 $wellKnownSubscriptions = @{
