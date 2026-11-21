@@ -10,6 +10,8 @@ using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+#pragma warning disable AAAS005 // Bind experimental attribution for handler execution only.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -324,6 +326,51 @@ internal sealed class ResponseOrchestrator
         return execution.Response!.Snapshot();
     }
 
+    private async IAsyncEnumerable<ResponseStreamEvent> EnumerateHandlerAsync(
+        CreateResponse request,
+        ResponseContext context,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var platform = context.PlatformContext;
+        var requestContext = new FoundryAgentRequestContext
+        {
+            CallId = platform.CallId,
+            UserId = platform.UserIdKey,
+            SessionId = FoundryEnvironment.SessionId,
+            OriginalSubject = platform.OriginalSubject,
+        };
+        IAsyncEnumerator<ResponseStreamEvent> enumerator;
+        using (FoundryAgentRequestContext.BeginScope(requestContext))
+        {
+            enumerator = _handler.CreateAsync(request, context, cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        try
+        {
+            while (await MoveNextAsync(enumerator, requestContext).ConfigureAwait(false))
+            {
+                yield return enumerator.Current;
+            }
+        }
+        finally
+        {
+            using (FoundryAgentRequestContext.BeginScope(requestContext))
+            {
+                await enumerator.DisposeAsync().ConfigureAwait(false);
+            }
+        }
+    }
+
+    private static async ValueTask<bool> MoveNextAsync(
+        IAsyncEnumerator<ResponseStreamEvent> enumerator,
+        FoundryAgentRequestContext requestContext)
+    {
+        using (FoundryAgentRequestContext.BeginScope(requestContext))
+        {
+            return await enumerator.MoveNextAsync().ConfigureAwait(false);
+        }
+    }
+
     // --- Event Processing Pipeline (US2) ---
 
     /// <summary>
@@ -351,7 +398,7 @@ internal sealed class ResponseOrchestrator
             "Invoking handler {HandlerType} for response {ResponseId}",
             _handler.GetType().Name, execution.ResponseId);
 
-        await foreach (var evt in _handler.CreateAsync(request, context, ct)
+        await foreach (var evt in EnumerateHandlerAsync(request, context, ct)
             .WithCancellation(ct))
         {
             // F2 (FR-036): ExitForRecoveryAsync() records DeferralRequested immediately before it

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Malformed original-subject metadata now returns a platform `400` response even when the host does not install Core middleware.
+
 ### Other Changes
 
 ## 1.0.0-beta.8 (2026-10-28)
