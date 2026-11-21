@@ -82,7 +82,7 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
 - [Mocking Client Types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_MockingClientTypes.md)
   A demonstration of how to mock the types in the Event Hubs client library, focusing on common application scenarios.
 
-- [OpenTelemetry](./OpenTelemetry/README.md)
+- [OpenTelemetry](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry/README.md)
   Export traces, logs, and native metrics from Event Hubs clients.
 
 ## Contributing
