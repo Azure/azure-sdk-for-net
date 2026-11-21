@@ -90,6 +90,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
+            if (Optional.IsCollectionDefined(ControlPlaneAcls))
+            {
+                writer.WritePropertyName("controlPlaneAcls"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in ControlPlaneAcls)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -145,6 +160,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(OperationalState))
+            {
+                writer.WritePropertyName("operationalState"u8);
+                writer.WriteStringValue(OperationalState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
+            {
+                writer.WritePropertyName("secretRotationStatus"u8);
+                writer.WriteStartArray();
+                foreach (NetworkFabricSecretRotationStatus item in SecretRotationStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -190,6 +220,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             string hostName = default;
             string serialNumber = default;
+            IList<ResourceIdentifier> controlPlaneAcls = default;
             string version = default;
             string networkDeviceSku = default;
             ResourceIdentifier networkFabricId = default;
@@ -201,6 +232,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string primaryManagementIPv4Address = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             NetworkFabricConfigurationState? configurationState = default;
+            OperationalState? operationalState = default;
+            IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -217,6 +250,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 if (prop.NameEquals("serialNumber"u8))
                 {
                     serialNumber = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("controlPlaneAcls"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    controlPlaneAcls = array;
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -290,6 +344,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     configurationState = new NetworkFabricConfigurationState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("operationalState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationalState = new OperationalState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("secretRotationStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkFabricSecretRotationStatus> array = new List<NetworkFabricSecretRotationStatus>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(NetworkFabricSecretRotationStatus.DeserializeNetworkFabricSecretRotationStatus(item, options));
+                    }
+                    secretRotationStatus = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -299,6 +376,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 annotation,
                 hostName,
                 serialNumber,
+                controlPlaneAcls ?? new ChangeTrackingList<ResourceIdentifier>(),
                 version,
                 networkDeviceSku,
                 networkFabricId,
@@ -310,6 +388,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 primaryManagementIPv4Address,
                 administrativeState,
                 configurationState,
+                operationalState,
+                secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>(),
                 additionalBinaryDataProperties);
         }
     }

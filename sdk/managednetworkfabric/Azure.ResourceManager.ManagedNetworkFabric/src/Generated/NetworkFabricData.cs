@@ -266,6 +266,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> Azure resource ID for the NetworkBootstrapDevice belonging to this Network Fabric. </summary>
+        public ResourceIdentifier NetworkBootstrapDeviceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkBootstrapDeviceId;
+            }
+        }
+
         /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
         public NetworkFabricTerminalServerConfiguration TerminalServerSettings
         {
@@ -483,6 +492,45 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             get
             {
                 return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
+        /// <summary> Operational state of networkFabric indicating if the resources of the fabric are reachable and services are available. </summary>
+        public OperationalState? OperationalState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationalState;
+            }
+        }
+
+        /// <summary> The settings for a customer secret archive that may be used to hold copies of credentials for the Network Fabric. </summary>
+        public SecretArchiveSettings SecretArchiveSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretArchiveSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricProperties();
+                }
+                Properties.SecretArchiveSettings = value;
+            }
+        }
+
+        /// <summary> The upgrade profile to be used by devices in the network fabric during device operations. </summary>
+        public IList<UpgradeProfileProperties> UpgradeProfile
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricProperties();
+                }
+                return Properties.UpgradeProfile;
             }
         }
 

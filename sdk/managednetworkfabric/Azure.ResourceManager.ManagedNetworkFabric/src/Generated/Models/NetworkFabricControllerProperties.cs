@@ -42,8 +42,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
+        /// <param name="operationalState"> Operational state of networkFabricController indicating if the resources of the controller are reachable and services are available. </param>
+        /// <param name="vmProfile"> The VM profile configuration for the NFC's associated compute (VM) resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricControllerProperties(string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricControllerProperties(string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, OperationalState? operationalState, VmProfile vmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
@@ -59,6 +61,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NfcSku = nfcSku;
             LastOperation = lastOperation;
             ProvisioningState = provisioningState;
+            OperationalState = operationalState;
+            VmProfile = vmProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -104,12 +108,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
 
+        /// <summary> Operational state of networkFabricController indicating if the resources of the controller are reachable and services are available. </summary>
+        public OperationalState? OperationalState { get; }
+
+        /// <summary> The VM profile configuration for the NFC's associated compute (VM) resources. </summary>
+        internal VmProfile VmProfile { get; set; }
+
         /// <summary> Details status of the last operation performed on the resource. </summary>
         public string LastOperationDetails
         {
             get
             {
                 return LastOperation is null ? default : LastOperation.Details;
+            }
+        }
+
+        /// <summary> The SKU that will be used for creating the VMS for AKS cluster. </summary>
+        public string VmSkuName
+        {
+            get
+            {
+                return VmProfile is null ? default : VmProfile.VmSkuName;
+            }
+            set
+            {
+                VmProfile = new VmProfile(value);
             }
         }
     }

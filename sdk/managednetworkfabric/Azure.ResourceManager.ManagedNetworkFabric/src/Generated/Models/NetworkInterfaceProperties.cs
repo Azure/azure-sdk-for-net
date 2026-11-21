@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
-        internal NetworkInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState) : base(annotation, additionalBinaryDataProperties)
+        /// <param name="operationalState"> Operational state of networkInterface indicating if the interface is reachable. </param>
+        internal NetworkInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, OperationalState? operationalState) : base(annotation, additionalBinaryDataProperties)
         {
             PhysicalIdentifier = physicalIdentifier;
             ConnectedTo = connectedTo;
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
             ConfigurationState = configurationState;
+            OperationalState = operationalState;
         }
 
         /// <summary> Physical Identifier of the network interface. </summary>
@@ -86,6 +88,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
+
+        /// <summary> Operational state of networkInterface indicating if the interface is reachable. </summary>
+        public OperationalState? OperationalState { get; }
 
         /// <summary> Details status of the last operation performed on the resource. </summary>
         public string LastOperationDetails

@@ -40,8 +40,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborGroupProperties(string annotation, NeighborGroupDestination destination, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> networkTapRuleIds, IReadOnlyList<ResourceIdentifier> networkFabricIds, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeighborGroupProperties(string annotation, NeighborGroupDestination destination, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> networkTapRuleIds, IReadOnlyList<ResourceIdentifier> networkFabricIds, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             Destination = destination;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             LastOperation = lastOperation;
             ProvisioningState = provisioningState;
             ConfigurationState = configurationState;
+            AdministrativeState = administrativeState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,6 +79,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
+
+        /// <summary> Administrative state of the resource. </summary>
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
 
         /// <summary> Details status of the last operation performed on the resource. </summary>
         public string LastOperationDetails

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -19,18 +21,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatchProperties"/>. </summary>
         public NetworkBootstrapDevicePatchProperties()
         {
+            ControlPlaneAcls = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatchProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="controlPlaneAcls"> Control Plane Access Control List ARM resource IDs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapDevicePatchProperties(string annotation, string hostName, string serialNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkBootstrapDevicePatchProperties(string annotation, string hostName, string serialNumber, IList<ResourceIdentifier> controlPlaneAcls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             HostName = hostName;
             SerialNumber = serialNumber;
+            ControlPlaneAcls = controlPlaneAcls;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +47,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
+
+        /// <summary> Control Plane Access Control List ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> ControlPlaneAcls { get; } = new ChangeTrackingList<ResourceIdentifier>();
     }
 }

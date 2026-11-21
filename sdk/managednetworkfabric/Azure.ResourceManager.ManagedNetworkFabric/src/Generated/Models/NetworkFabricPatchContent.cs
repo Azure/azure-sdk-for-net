@@ -279,6 +279,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
+        /// <summary> The settings for a customer secret archive that may be used to hold copies of credentials for the Network Fabric. </summary>
+        public SecretArchivePatchSettings SecretArchiveSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretArchiveSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricPatchProperties();
+                }
+                Properties.SecretArchiveSettings = value;
+            }
+        }
+
+        /// <summary> The upgrade profile to be used by devices in the network fabric during device operations. </summary>
+        public IList<UpgradeProfilePropertiesPatchProperties> UpgradeProfile
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricPatchProperties();
+                }
+                return Properties.UpgradeProfile;
+            }
+        }
+
         /// <summary> QoS configuration state. Default is Disabled. </summary>
         public NetworkFabricQosConfigurationState? QosConfigurationState
         {

@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv4Address"> IPv4Address of the interface. </param>
         /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        internal NetworkBootstrapInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string description, string additionalDescription, string ipv4Address, string ipv6Address, string serialNumber) : base(annotation, additionalBinaryDataProperties)
+        /// <param name="operationalState"> Operational state of networkBootstrapInterface indicating if the interface is reachable. </param>
+        internal NetworkBootstrapInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string description, string additionalDescription, string ipv4Address, string ipv6Address, string serialNumber, OperationalState? operationalState) : base(annotation, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPv4Address = ipv4Address;
             IPv6Address = ipv6Address;
             SerialNumber = serialNumber;
+            OperationalState = operationalState;
         }
 
         /// <summary> Provisioning state of the resource. </summary>
@@ -79,5 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
+
+        /// <summary> Operational state of networkBootstrapInterface indicating if the interface is reachable. </summary>
+        public OperationalState? OperationalState { get; }
     }
 }
