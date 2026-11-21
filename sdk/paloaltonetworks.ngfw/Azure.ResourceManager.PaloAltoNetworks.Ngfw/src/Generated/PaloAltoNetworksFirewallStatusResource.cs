@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string paloAltoNetworksFirewallStatusApiVersion);
             _firewallStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _firewallStatusRestClient = new FirewallStatus(_firewallStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallStatusApiVersion ?? "2026-07-29-preview");
+            _firewallStatusRestClient = new FirewallStatus(_firewallStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallStatusApiVersion ?? "2026-09-25-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

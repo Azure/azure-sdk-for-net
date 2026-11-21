@@ -44,6 +44,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return new LogIngestionSettingsResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="OfferPlanGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OfferPlanGroupResource"/> object. </returns>
+        public virtual OfferPlanGroupResource GetOfferPlanGroupResource(ResourceIdentifier id)
+        {
+            OfferPlanGroupResource.ValidateResourceId(id);
+            return new OfferPlanGroupResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="GlobalRulestackResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GlobalRulestackResource"/> object. </returns>

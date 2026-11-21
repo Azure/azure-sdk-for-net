@@ -40,13 +40,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="protocol"> Protocol Type. </param>
         /// <param name="frontendConfiguration"> Frontend configurations. </param>
         /// <param name="backendConfiguration"> Backend configurations. </param>
+        /// <param name="idleTimeoutInMinutes"> Time in minutes an inbound session can stay inactive before termination, Default will be 4. </param>
+        /// <param name="tcpReset"> Send a TCP reset when an inactive inbound session is terminated, Default will be Disabled. </param>
+        /// <param name="loadDistribution"> Hash algorithm used to distribute inbound traffic, Default will be a five-tuple hash. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallFrontendSetting(string name, FirewallProtocolType protocol, FirewallEndpointConfiguration frontendConfiguration, FirewallEndpointConfiguration backendConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallFrontendSetting(string name, FirewallProtocolType protocol, FirewallEndpointConfiguration frontendConfiguration, FirewallEndpointConfiguration backendConfiguration, int? idleTimeoutInMinutes, FirewallTcpReset? tcpReset, FirewallLoadDistribution? loadDistribution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
             FrontendConfiguration = frontendConfiguration;
             BackendConfiguration = backendConfiguration;
+            IdleTimeoutInMinutes = idleTimeoutInMinutes;
+            TcpReset = tcpReset;
+            LoadDistribution = loadDistribution;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,5 +67,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Backend configurations. </summary>
         public FirewallEndpointConfiguration BackendConfiguration { get; set; }
+
+        /// <summary> Time in minutes an inbound session can stay inactive before termination, Default will be 4. </summary>
+        public int? IdleTimeoutInMinutes { get; set; }
+
+        /// <summary> Send a TCP reset when an inactive inbound session is terminated, Default will be Disabled. </summary>
+        public FirewallTcpReset? TcpReset { get; set; }
+
+        /// <summary> Hash algorithm used to distribute inbound traffic, Default will be a five-tuple hash. </summary>
+        public FirewallLoadDistribution? LoadDistribution { get; set; }
     }
 }

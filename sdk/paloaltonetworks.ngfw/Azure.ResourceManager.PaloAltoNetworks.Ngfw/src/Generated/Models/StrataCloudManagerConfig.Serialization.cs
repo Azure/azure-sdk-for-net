@@ -14,7 +14,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> This field is only present if Strata Cloud Manager is managing the policy for this firewall. </summary>
-    internal partial class StrataCloudManagerConfig : IJsonModel<StrataCloudManagerConfig>
+    public partial class StrataCloudManagerConfig : IJsonModel<StrataCloudManagerConfig>
     {
         /// <summary> Initializes a new instance of <see cref="StrataCloudManagerConfig"/> for deserialization. </summary>
         internal StrataCloudManagerConfig()
@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             writer.WritePropertyName("cloudManagerName"u8);
             writer.WriteStringValue(CloudManagerName);
+            if (Optional.IsDefined(ScmLinkCode))
+            {
+                writer.WritePropertyName("scmLinkCode"u8);
+                writer.WriteStringValue(ScmLinkCode);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             string cloudManagerName = default;
+            string scmLinkCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,12 +138,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     cloudManagerName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("scmLinkCode"u8))
+                {
+                    scmLinkCode = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StrataCloudManagerConfig(cloudManagerName, additionalBinaryDataProperties);
+            return new StrataCloudManagerConfig(cloudManagerName, scmLinkCode, additionalBinaryDataProperties);
         }
     }
 }
