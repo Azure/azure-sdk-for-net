@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
+            if (Optional.IsDefined(VmSkuProfile))
+            {
+                writer.WritePropertyName("vmSkuProfile"u8);
+                writer.WriteObjectValue(VmSkuProfile, options);
+            }
             if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
@@ -264,6 +269,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchAccountPoolAllocationState? allocationState = default;
             DateTimeOffset? allocationStateTransitionOn = default;
             string vmSize = default;
+            VirtualMachineSkuProfile vmSkuProfile = default;
             BatchDeploymentConfiguration deploymentConfiguration = default;
             int? currentDedicatedNodes = default;
             int? currentLowPriorityNodes = default;
@@ -345,6 +351,15 @@ namespace Azure.ResourceManager.Batch.Models
                 if (prop.NameEquals("vmSize"u8))
                 {
                     vmSize = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("vmSkuProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmSkuProfile = VirtualMachineSkuProfile.DeserializeVirtualMachineSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deploymentConfiguration"u8))
@@ -525,6 +540,7 @@ namespace Azure.ResourceManager.Batch.Models
                 allocationState,
                 allocationStateTransitionOn,
                 vmSize,
+                vmSkuProfile,
                 deploymentConfiguration,
                 currentDedicatedNodes,
                 currentLowPriorityNodes,

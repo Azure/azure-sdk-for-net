@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/syncAutoStorageKeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/regenerateKeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/listKeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts") ?? "2026-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath(accountName, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorId, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts/detectors") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts/detectors") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Batch
             uri.AppendPath("/providers/Microsoft.Batch/batchAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/detectors", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts/detectors") ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts/detectors") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Batch
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts/detectors") ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Batch/batchAccounts/detectors") ?? "2026-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

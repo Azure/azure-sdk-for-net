@@ -311,6 +311,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="allocationState"> Whether the pool is resizing. </param>
         /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
         /// <param name="vmSize"> For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
+        /// <param name="vmSkuProfile"> Specifies the profile of VM sizes and the allocation strategy used to allocate compute nodes for an Instance Mix pool. When specified, vmSize must be "Mix". This property can only be changed while the pool has no compute nodes. </param>
         /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
         /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
         /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
-        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default, BatchVmConfiguration deploymentVmConfiguration = default, ManagedServiceIdentity identity = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, VirtualMachineSkuProfile vmSkuProfile, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IEnumerable<BatchUserAccount> userAccounts, IEnumerable<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IEnumerable<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IEnumerable<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, BatchVmConfiguration deploymentVmConfiguration, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && vmSkuProfile is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
                     displayName,
                     lastModifiedOn,
                     createdOn,
@@ -349,6 +350,7 @@ namespace Azure.ResourceManager.Batch.Models
                     allocationState,
                     allocationStateTransitionOn,
                     vmSize,
+                    vmSkuProfile,
                     deploymentVmConfiguration is null ? default : new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
                     currentDedicatedNodes,
                     currentLowPriorityNodes,
@@ -370,6 +372,26 @@ namespace Azure.ResourceManager.Batch.Models
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
+        }
+
+        /// <summary> Specifies the set of VM sizes and the allocation strategy used to allocate compute nodes for an Instance Mix pool. </summary>
+        /// <param name="vmSizes"> The list of VM sizes (up to 5) that may be allocated for the Pool. VM sizes may span the supported A, B, D, E, and F VM families, but must have the same vCPU count and CPU architecture and compatible VM capabilities. This must be specified when the vmSkuProfile is provided during Pool creation. </param>
+        /// <param name="allocationStrategy"> The allocation strategy used to select VM sizes from vmSizes. Defaults to LowestPrice when not specified. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineSkuProfile"/> instance for mocking. </returns>
+        public static VirtualMachineSkuProfile VirtualMachineSkuProfile(IEnumerable<VirtualMachineSkuProfileVmSize> vmSizes = default, VirtualMachineSkuAllocationStrategy? allocationStrategy = default)
+        {
+            vmSizes ??= new ChangeTrackingList<VirtualMachineSkuProfileVmSize>();
+
+            return new VirtualMachineSkuProfile((vmSizes ?? new ChangeTrackingList<VirtualMachineSkuProfileVmSize>()).ToList(), allocationStrategy, default);
+        }
+
+        /// <summary> Specifies a single VM size that may be allocated for an Instance Mix pool. </summary>
+        /// <param name="name"> The name of the VM size (for example, "Standard_D8s_v5"). </param>
+        /// <param name="rank"> The 0-based rank (a.k.a. priority) associated with this VM size. Lower values indicate higher priority. Rank is required only when the allocation strategy is 'Prioritized' and must be omitted otherwise. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineSkuProfileVmSize"/> instance for mocking. </returns>
+        public static VirtualMachineSkuProfileVmSize VirtualMachineSkuProfileVmSize(string name = default, int? rank = default)
+        {
+            return new VirtualMachineSkuProfileVmSize(name, rank, default);
         }
 
         /// <summary> Deployment configuration properties. </summary>
@@ -396,8 +418,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
         /// <param name="serviceArtifactReferenceId"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        /// <param name="hardwareVmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. </param>
+        /// <param name="zonePlacementPolicy"> Auto delegates zone selection and balancing to the virtual machine scale set. </param>
+        /// <param name="resiliencyZoneAllocationPolicy"> The policy that controls allocation across availability zones. </param>
         /// <returns> A new <see cref="Models.BatchVmConfiguration"/> instance for mocking. </returns>
-        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, BatchDiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default)
+        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, BatchDiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default, VmSizeProperties hardwareVmSizeProperties = default, ZonePlacementPolicyType? zonePlacementPolicy = default, ZoneAllocationPolicy resiliencyZoneAllocationPolicy = default)
         {
             dataDisks ??= new ChangeTrackingList<BatchVmDataDisk>();
             extensions ??= new ChangeTrackingList<BatchVmExtension>();
@@ -415,6 +440,9 @@ namespace Azure.ResourceManager.Batch.Models
                 osDisk,
                 securityProfile,
                 serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, default),
+                hardwareVmSizeProperties is null ? default : new HardwareProfile(hardwareVmSizeProperties, default),
+                zonePlacementPolicy is null ? default : new Placement(zonePlacementPolicy.GetValueOrDefault(), default),
+                resiliencyZoneAllocationPolicy is null ? default : new ResiliencyPolicy(resiliencyZoneAllocationPolicy, default),
                 default);
         }
 
@@ -599,6 +627,33 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchHostEndpointSettings BatchHostEndpointSettings(BatchHostEndpointSettingsModeType? mode = default, ResourceIdentifier inVmAccessControlProfileReferenceId = default)
         {
             return new BatchHostEndpointSettings(mode, inVmAccessControlProfileReferenceId, default);
+        }
+
+        /// <summary> Specifies the properties for customizing the size of the virtual machine. </summary>
+        /// <param name="vcpUsAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size. </param>
+        /// <param name="vcpUsPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size. <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
+        /// <returns> A new <see cref="Models.VmSizeProperties"/> instance for mocking. </returns>
+        public static VmSizeProperties VmSizeProperties(int? vcpUsAvailable = default, int? vcpUsPerCore = default)
+        {
+            return new VmSizeProperties(vcpUsAvailable, vcpUsPerCore, default);
+        }
+
+        /// <summary> The policy that controls allocation across availability zones. </summary>
+        /// <param name="maxZoneCount"> The maximum number of availability zones that may be used. The value cannot exceed the number of zones supported by the region. </param>
+        /// <param name="maxInstancePercentPerZonePolicy"> The policy that limits the percentage of pool instances that may be allocated in a single availability zone. </param>
+        /// <returns> A new <see cref="Models.ZoneAllocationPolicy"/> instance for mocking. </returns>
+        public static ZoneAllocationPolicy ZoneAllocationPolicy(int? maxZoneCount = default, MaxInstancePercentPerZonePolicy maxInstancePercentPerZonePolicy = default)
+        {
+            return new ZoneAllocationPolicy(maxZoneCount, maxInstancePercentPerZonePolicy, default);
+        }
+
+        /// <summary> The policy that limits the percentage of pool instances that may be allocated in a single availability zone. </summary>
+        /// <param name="enabled"> Whether the maximum instance percentage policy is enabled. </param>
+        /// <param name="value"> The maximum percentage of pool instances that may be allocated in a single availability zone. </param>
+        /// <returns> A new <see cref="Models.MaxInstancePercentPerZonePolicy"/> instance for mocking. </returns>
+        public static MaxInstancePercentPerZonePolicy MaxInstancePercentPerZonePolicy(bool? enabled = default, int value = default)
+        {
+            return new MaxInstancePercentPerZonePolicy(enabled, value, default);
         }
 
         /// <summary> Scale settings for the pool. </summary>
@@ -787,8 +842,8 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <param name="autoBlobContainerName"> The autoStorageContainerName, storageContainerUrl and httpUrl properties are mutually exclusive and one of them must be specified. </param>
-        /// <param name="blobContainerUri"> The autoStorageContainerName, storageContainerUrl and httpUrl properties are mutually exclusive and one of them must be specified. This URL must be readable and listable from compute nodes. There are three ways to get such a URL for a container in Azure storage: include a Shared Access Signature (SAS) granting read and list permissions on the container, use a managed identity with read and list permissions, or set the ACL for the container to allow public access. </param>
-        /// <param name="httpUri"> The autoStorageContainerName, storageContainerUrl and httpUrl properties are mutually exclusive and one of them must be specified. If the URL points to Azure Blob Storage, it must be readable from compute nodes. There are three ways to get such a URL for a blob in Azure storage: include a Shared Access Signature (SAS) granting read permissions on the blob, use a managed identity with read permission, or set the ACL for the blob or its container to allow public access. </param>
+        /// <param name="blobContainerUri"> The autoStorageContainerName, storageContainerUrl and httpUrl properties are mutually exclusive and one of them must be specified. This URL must be readable and listable from compute nodes. Do not embed credentials in the URL. For Azure Blob Storage, use a managed identity with read and list permissions on the container and specify it using identityReference. </param>
+        /// <param name="httpUri"> The autoStorageContainerName, storageContainerUrl and httpUrl properties are mutually exclusive and one of them must be specified. If the URL points to Azure Blob Storage, it must be readable from compute nodes. Do not embed credentials in the URL. For Azure Blob Storage, use a managed identity with read permission on the blob and specify it using identityReference. </param>
         /// <param name="blobPrefix"> The property is valid only when autoStorageContainerName or storageContainerUrl is used. This prefix can be a partial filename or a subdirectory. If a prefix is not specified, all the files in the container will be downloaded. </param>
         /// <param name="filePath"> If the httpUrl property is specified, the filePath is required and describes the path which the file will be downloaded to, including the filename. Otherwise, if the autoStorageContainerName or storageContainerUrl property is specified, filePath is optional and is the directory to download the files to. In the case where filePath is used as a directory, any directory structure already associated with the input data will be retained in full and appended to the specified filePath directory. The specified relative path cannot break out of the task's working directory (for example by using '..'). </param>
         /// <param name="fileMode"> This property applies only to files being downloaded to Linux compute nodes. It will be ignored if it is specified for a resourceFile which will be downloaded to a Windows node. If this property is not specified for a Linux node, then a default value of 0770 is applied to the file. </param>
@@ -994,7 +1049,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
-        /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. If this field is not set, Azure Azure Batch will not set its default value. The value of enableCrossZoneUpgrade on the created VirtualMachineScaleSet will be decided by the default configurations on VirtualMachineScaleSet. This field is able to be set to true or false only when using NodePlacementConfiguration as Zonal. </param>
+        /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. If this field is not set, Azure Azure Batch will not set its default value. The value of enableCrossZoneUpgrade on the created VirtualMachineScaleSet will be decided by the default configurations on VirtualMachineScaleSet. This field can be set to true or false only when nodePlacementConfiguration.policy is Zonal or placement.zonePlacementPolicy is Auto. </param>
         /// <param name="maxBatchInstancePercent"> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
         /// <param name="maxUnhealthyInstancePercent"> The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
         /// <param name="maxUnhealthyUpgradedInstancePercent"> The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check will happen after each batch is upgraded. If this percentage is ever exceeded, the rolling update aborts. The value of this field should be between 0 and 100, inclusive. </param>
@@ -1013,6 +1068,152 @@ namespace Azure.ResourceManager.Batch.Models
                 prioritizeUnhealthyInstances,
                 rollbackFailedInstancesOnPolicyBreach,
                 default);
+        }
+
+        /// <summary> Properties supplied when updating a pool. </summary>
+        /// <param name="identity"> The type of identity used for the Batch Pool. </param>
+        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The pool properties to update. </param>
+        /// <returns> A new <see cref="Models.BatchAccountPoolPatch"/> instance for mocking. </returns>
+        public static BatchAccountPoolPatch BatchAccountPoolPatch(ManagedServiceIdentity identity = default, ETag? eTag = default, IDictionary<string, string> tags = default, ResourceIdentifier id = default, SystemData systemData = default, PoolPatchProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchAccountPoolPatch(
+                identity,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                id,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
+        /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
+        /// <param name="createdOn"> The creation time of the pool. </param>
+        /// <param name="provisioningState"> The current state of the pool. </param>
+        /// <param name="provisioningStateTransitOn"> The time at which the pool entered its current state. </param>
+        /// <param name="allocationState"> Whether the pool is resizing. </param>
+        /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
+        /// <param name="vmSize"> For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
+        /// <param name="vmSkuProfile"> Specifies the profile of VM sizes and the allocation strategy used to allocate compute nodes for an Instance Mix pool. When specified, vmSize must be "Mix". This property can only be changed while the pool has no compute nodes. </param>
+        /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
+        /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
+        /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
+        /// <param name="autoScaleRun"> This property is set only if the pool automatically scales, i.e. autoScaleSettings are used. </param>
+        /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </param>
+        /// <param name="networkConfiguration"> The network configuration for a pool. </param>
+        /// <param name="taskSchedulingPolicy"> If not specified, the default is spread. </param>
+        /// <param name="userAccounts"> The list of user accounts to be created on each node in the pool. </param>
+        /// <param name="metadata"> The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
+        /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
+        /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
+        /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
+        /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
+        /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
+        /// <param name="deploymentVirtualMachineConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
+        /// <param name="taskSlotsPerNode"> When omitted, the existing value is preserved. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
+        /// <returns> A new <see cref="Models.PoolPatchProperties"/> instance for mocking. </returns>
+        public static PoolPatchProperties PoolPatchProperties(string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, VirtualMachineSkuProfile vmSkuProfile = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default, VirtualMachineConfigurationPatch deploymentVirtualMachineConfiguration = default, int? taskSlotsPerNode = default)
+        {
+            userAccounts ??= new ChangeTrackingList<BatchUserAccount>();
+            metadata ??= new ChangeTrackingList<BatchAccountPoolMetadataItem>();
+            applicationPackages ??= new ChangeTrackingList<BatchApplicationPackageReference>();
+            mountConfiguration ??= new ChangeTrackingList<BatchMountConfiguration>();
+
+            return new PoolPatchProperties(
+                displayName,
+                lastModifiedOn,
+                createdOn,
+                provisioningState,
+                provisioningStateTransitOn,
+                allocationState,
+                allocationStateTransitionOn,
+                vmSize,
+                vmSkuProfile,
+                currentDedicatedNodes,
+                currentLowPriorityNodes,
+                scaleSettings,
+                autoScaleRun,
+                interNodeCommunication,
+                networkConfiguration,
+                taskSchedulingPolicy,
+                (userAccounts ?? new ChangeTrackingList<BatchUserAccount>()).ToList(),
+                (metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>()).ToList(),
+                startTask,
+                (applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>()).ToList(),
+                resizeOperationStatus,
+                (mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>()).ToList(),
+                upgradePolicy,
+                deploymentVirtualMachineConfiguration is null ? default : new DeploymentConfigurationPatch(deploymentVirtualMachineConfiguration, default),
+                taskSlotsPerNode,
+                default);
+        }
+
+        /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
+        /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
+        /// <param name="isAutomaticUpdateEnabled"> If omitted, the default value is true. </param>
+        /// <param name="dataDisks"> This property must be specified if the compute nodes in the pool need to have empty data disks attached to them. </param>
+        /// <param name="licenseType">
+        /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
+        /// Windows_Server - The on-premises license is for Windows Server.
+        /// Windows_Client - The on-premises license is for Windows Client.
+        /// </param>
+        /// <param name="containerConfiguration"> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </param>
+        /// <param name="diskEncryptionConfiguration"> If specified, encryption is performed on each node in the pool during node provisioning. </param>
+        /// <param name="nodePlacementPolicy"> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </param>
+        /// <param name="extensions"> If specified, the extensions mentioned in this configuration will be installed on each node. </param>
+        /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
+        /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
+        /// <param name="serviceArtifactReferenceId"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        /// <param name="hardwareVmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. </param>
+        /// <param name="zonePlacementPolicy"> Auto delegates zone selection and balancing to the virtual machine scale set. </param>
+        /// <param name="resiliencyZoneAllocationPolicy"> The zone allocation policy fields to update. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineConfigurationPatch"/> instance for mocking. </returns>
+        public static VirtualMachineConfigurationPatch VirtualMachineConfigurationPatch(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, BatchDiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default, VmSizeProperties hardwareVmSizeProperties = default, ZonePlacementPolicyType? zonePlacementPolicy = default, ZoneAllocationPolicyPatch resiliencyZoneAllocationPolicy = default)
+        {
+            dataDisks ??= new ChangeTrackingList<BatchVmDataDisk>();
+            extensions ??= new ChangeTrackingList<BatchVmExtension>();
+
+            return new VirtualMachineConfigurationPatch(
+                imageReference,
+                nodeAgentSkuId,
+                isAutomaticUpdateEnabled is null ? default : new WindowsConfiguration(isAutomaticUpdateEnabled, default),
+                (dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>()).ToList(),
+                licenseType,
+                containerConfiguration,
+                diskEncryptionConfiguration,
+                nodePlacementPolicy is null ? default : new NodePlacementConfiguration(nodePlacementPolicy, default),
+                (extensions ?? new ChangeTrackingList<BatchVmExtension>()).ToList(),
+                osDisk,
+                securityProfile,
+                serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, default),
+                hardwareVmSizeProperties is null ? default : new HardwareProfile(hardwareVmSizeProperties, default),
+                zonePlacementPolicy is null ? default : new PlacementPatch(zonePlacementPolicy, default),
+                resiliencyZoneAllocationPolicy is null ? default : new ResiliencyPolicyPatch(resiliencyZoneAllocationPolicy, default),
+                default);
+        }
+
+        /// <summary> Zone allocation policy fields to update, leaving omitted fields unchanged. </summary>
+        /// <param name="maxZoneCount"> The maximum number of availability zones that may be used. The value cannot exceed the number of zones supported by the region. </param>
+        /// <param name="maxInstancePercentPerZonePolicy"> The per-zone instance percentage policy fields to update. </param>
+        /// <returns> A new <see cref="Models.ZoneAllocationPolicyPatch"/> instance for mocking. </returns>
+        public static ZoneAllocationPolicyPatch ZoneAllocationPolicyPatch(int? maxZoneCount = default, MaxInstancePercentPerZonePolicyPatch maxInstancePercentPerZonePolicy = default)
+        {
+            return new ZoneAllocationPolicyPatch(maxZoneCount, maxInstancePercentPerZonePolicy, default);
+        }
+
+        /// <summary> Per-zone instance percentage fields to update, leaving omitted fields unchanged. </summary>
+        /// <param name="enabled"> Whether the maximum instance percentage policy is enabled. </param>
+        /// <param name="value"> The maximum percentage of pool instances that may be allocated in a single availability zone. </param>
+        /// <returns> A new <see cref="Models.MaxInstancePercentPerZonePolicyPatch"/> instance for mocking. </returns>
+        public static MaxInstancePercentPerZonePolicyPatch MaxInstancePercentPerZonePolicyPatch(bool? enabled = default, int? value = default)
+        {
+            return new MaxInstancePercentPerZonePolicyPatch(enabled, value, default);
         }
 
         /// <summary> Network security perimeter (NSP) configuration resource. </summary>
@@ -1210,6 +1411,120 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> Contains information about a pool. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
+        /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
+        /// <param name="createdOn"> The creation time of the pool. </param>
+        /// <param name="provisioningState"> The current state of the pool. </param>
+        /// <param name="provisioningStateTransitOn"> The time at which the pool entered its current state. </param>
+        /// <param name="allocationState"> Whether the pool is resizing. </param>
+        /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
+        /// <param name="vmSize"> For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
+        /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
+        /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
+        /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
+        /// <param name="autoScaleRun"> This property is set only if the pool automatically scales, i.e. autoScaleSettings are used. </param>
+        /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </param>
+        /// <param name="networkConfiguration"> The network configuration for a pool. </param>
+        /// <param name="taskSlotsPerNode"> The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
+        /// <param name="taskSchedulingPolicy"> If not specified, the default is spread. </param>
+        /// <param name="userAccounts"> The list of user accounts to be created on each node in the pool. </param>
+        /// <param name="metadata"> The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
+        /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
+        /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
+        /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
+        /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
+        /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
+        /// <param name="deploymentVmConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
+        /// <param name="identity"> The type of identity used for the Batch Pool. </param>
+        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IEnumerable<BatchUserAccount> userAccounts, IEnumerable<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IEnumerable<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IEnumerable<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, BatchVmConfiguration deploymentVmConfiguration, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, string> tags)
+        {
+            return new BatchAccountPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
+                    displayName,
+                    lastModifiedOn,
+                    createdOn,
+                    provisioningState,
+                    provisioningStateTransitOn,
+                    allocationState,
+                    allocationStateTransitionOn,
+                    vmSize,
+                    default,
+                    deploymentVmConfiguration is null ? default : new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
+                    currentDedicatedNodes,
+                    currentLowPriorityNodes,
+                    scaleSettings,
+                    autoScaleRun,
+                    interNodeCommunication,
+                    networkConfiguration,
+                    taskSlotsPerNode,
+                    taskSchedulingPolicy,
+                    (userAccounts ?? new ChangeTrackingList<BatchUserAccount>()).ToList(),
+                    (metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>()).ToList(),
+                    startTask,
+                    (applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>()).ToList(),
+                    resizeOperationStatus,
+                    (mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>()).ToList(),
+                    upgradePolicy,
+                    default),
+                identity,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
+        /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
+        /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
+        /// <param name="isAutomaticUpdateEnabled"> If omitted, the default value is true. </param>
+        /// <param name="dataDisks"> This property must be specified if the compute nodes in the pool need to have empty data disks attached to them. </param>
+        /// <param name="licenseType">
+        /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
+        /// Windows_Server - The on-premises license is for Windows Server.
+        /// Windows_Client - The on-premises license is for Windows Client.
+        /// </param>
+        /// <param name="containerConfiguration"> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </param>
+        /// <param name="diskEncryptionConfiguration"> If specified, encryption is performed on each node in the pool during node provisioning. </param>
+        /// <param name="nodePlacementPolicy"> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </param>
+        /// <param name="extensions"> If specified, the extensions mentioned in this configuration will be installed on each node. </param>
+        /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
+        /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
+        /// <param name="serviceArtifactReferenceId"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        /// <returns> A new <see cref="Models.BatchVmConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, bool? isAutomaticUpdateEnabled, IEnumerable<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, BatchDiskEncryptionConfiguration diskEncryptionConfiguration, BatchNodePlacementPolicyType? nodePlacementPolicy, IEnumerable<BatchVmExtension> extensions, BatchOSDisk osDisk, BatchSecurityProfile securityProfile, ResourceIdentifier serviceArtifactReferenceId)
+        {
+            return new BatchVmConfiguration(
+                imageReference,
+                nodeAgentSkuId,
+                isAutomaticUpdateEnabled is null ? default : new WindowsConfiguration(isAutomaticUpdateEnabled, default),
+                (dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>()).ToList(),
+                licenseType,
+                containerConfiguration,
+                diskEncryptionConfiguration,
+                nodePlacementPolicy is null ? default : new NodePlacementConfiguration(nodePlacementPolicy, default),
+                (extensions ?? new ChangeTrackingList<BatchVmExtension>()).ToList(),
+                osDisk,
+                securityProfile,
+                serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, default),
+                default,
+                default,
+                default,
+                default);
+        }
+
         /// <summary> Contains information about an Azure Batch account. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1355,7 +1670,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="state"> The current state of the application package. </param>
         /// <param name="format"> The format of the application package, if the package is active. </param>
-        /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
+        /// <param name="storageUri"> The URL for the application package in Azure Storage. This property is only returned for the PUT application package (create or update) operation. For the GET application package and POST activate application package operations, this property is not populated. </param>
         /// <param name="storageUriExpireOn"></param>
         /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
         /// <returns> A new <see cref="Batch.BatchApplicationPackageData"/> instance for mocking. </returns>
@@ -1452,6 +1767,7 @@ namespace Azure.ResourceManager.Batch.Models
                     allocationState,
                     allocationStateTransitionOn,
                     vmSize,
+                    default,
                     deploymentVmConfiguration is null ? default : new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
                     currentDedicatedNodes,
                     currentLowPriorityNodes,
