@@ -1,5 +1,5 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-projects
-commit: f4af634595333ca668c3e37e273e27ee113fc55d
+commit: f00563f796152dc70f416c0a307fb72a776f346a
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/agents

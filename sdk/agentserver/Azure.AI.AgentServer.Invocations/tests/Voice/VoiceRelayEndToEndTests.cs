@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
+#pragma warning disable AAAS005 // Test experimental invocation attribution.
+
 namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceRelayEndToEndTests
@@ -446,8 +448,9 @@ public class VoiceRelayEndToEndTests
         });
     }
 
-    [Test]
-    public async Task PlatformIdentityAndTraceContextReachVoiceCallback()
+    [TestCase("invocations_ws")]
+    [TestCase("voice_conversation_engine")]
+    public async Task PlatformIdentityAndTraceContextReachVoiceCallback(string path)
     {
         const string traceId = "0123456789abcdef0123456789abcdef";
         var handler = new ContextCapturingHandler();
@@ -458,10 +461,11 @@ public class VoiceRelayEndToEndTests
         {
             request.Headers[PlatformHeaders.FoundryCallId] = "call-voice";
             request.Headers[PlatformHeaders.UserId] = "user-voice";
+            request.Headers["x-ms-original-subject"] = "oid=\"voice-user\", tid=\"tenant\", idtype=\"user\"";
             request.Headers[PlatformHeaders.TraceParent] = $"00-{traceId}-0123456789abcdef-01";
         };
         using var webSocket = await client.ConnectAsync(
-            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            new Uri(app.GetTestServer().BaseAddress, path),
             CancellationToken.None);
 
         await SendTextAsync(webSocket, """
@@ -476,6 +480,8 @@ public class VoiceRelayEndToEndTests
             Assert.That(handler.AmbientUserId, Is.EqualTo("user-voice"));
             Assert.That(handler.ExplicitCallId, Is.EqualTo("call-voice"));
             Assert.That(handler.ExplicitUserId, Is.EqualTo("user-voice"));
+            Assert.That(handler.AmbientSubject, Is.EqualTo("voice-user"));
+            Assert.That(handler.ExplicitSubject, Is.EqualTo("voice-user"));
             Assert.That(handler.TraceId, Is.EqualTo(traceId));
         });
 
@@ -761,6 +767,10 @@ public class VoiceRelayEndToEndTests
 
         public string? ExplicitUserId { get; private set; }
 
+        public string? AmbientSubject { get; private set; }
+
+        public string? ExplicitSubject { get; private set; }
+
         public string? TraceId { get; private set; }
 
         protected override async Task OnSessionStartAsync(
@@ -772,6 +782,8 @@ public class VoiceRelayEndToEndTests
             AmbientUserId = FoundryAgentRequestContext.Current.UserId;
             ExplicitCallId = session.InvocationContext.PlatformContext.CallId;
             ExplicitUserId = session.InvocationContext.PlatformContext.UserIdKey;
+            AmbientSubject = FoundryAgentRequestContext.Current.OriginalSubject?.ObjectId;
+            ExplicitSubject = session.InvocationContext.PlatformContext.OriginalSubject?.ObjectId;
             TraceId = Activity.Current?.TraceId.ToString();
             Captured.TrySetResult();
             await session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);

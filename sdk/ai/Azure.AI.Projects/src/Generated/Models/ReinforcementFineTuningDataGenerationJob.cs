@@ -29,11 +29,11 @@ namespace Azure.AI.Projects
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
-        /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="finishedAt"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputConfiguration"> Optional file output configuration for the generated reinforcement fine-tuning data. </param>
-        internal ReinforcementFineTuningDataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration) : base(id, result, status, error, name, sources, generationConfiguration, scenario, createdOn, finishedOn, additionalBinaryDataProperties)
+        internal ReinforcementFineTuningDataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdAt, DateTimeOffset? finishedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration) : base(id, result, status, error, name, sources, generationConfiguration, scenario, createdAt, finishedAt, additionalBinaryDataProperties)
         {
             OutputConfiguration = outputConfiguration;
         }

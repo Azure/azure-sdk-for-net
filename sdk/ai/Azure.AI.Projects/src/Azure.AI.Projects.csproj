@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
@@ -19,12 +19,12 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <ProjectReference Include="../../Azure.AI.Projects.Agents/src/Azure.AI.Projects.Agents.csproj" />
   </ItemGroup>
   
   <ItemGroup>
-    <!-- We need to explicitly link Azure.AI.Extensions.OpenAI so the code generator will replace the gemerated types by OpenAI ones.  -->
-    <PackageReference Include="Azure.AI.Extensions.OpenAI" />
+    <!-- We need to explicitly link Azure.AI.Projects.Agents so the code generator will replace the gemerated types by OpenAI ones.  -->
+    <!-- This brings the implicit dependency on Azure.AI.Extensions.OprenAI -->
+    <PackageReference Include="Azure.AI.Projects.Agents" />
   </ItemGroup>
 
 

@@ -23,20 +23,15 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListIndexStatsSummary"/>. </summary>
-        /// <param name="count"> The total count of index statistics in the service, or null if the count was not requested. </param>
         /// <param name="value"> The Statistics summary of all indexes in the Search service. </param>
         /// <param name="nextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListIndexStatsSummary(long? count, IReadOnlyList<IndexStatisticsSummary> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListIndexStatsSummary(IReadOnlyList<IndexStatisticsSummary> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Count = count;
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The total count of index statistics in the service, or null if the count was not requested. </summary>
-        public long? Count { get; }
 
         /// <summary> The Statistics summary of all indexes in the Search service. </summary>
         public IReadOnlyList<IndexStatisticsSummary> Value { get; }

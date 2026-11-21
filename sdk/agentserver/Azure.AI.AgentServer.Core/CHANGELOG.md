@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added experimental (`AAAS005`) [original-subject attribution](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/ORIGINAL_SUBJECT.md) snapshots and an explicit per-call model header helper.
 - Added memory-snapshot activation for resilient tasks. When
   `FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, enabled task definitions remain registered
   during capture without constructing task storage or recovery workers. Restore

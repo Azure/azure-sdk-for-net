@@ -127,12 +127,12 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedOn, "U");
+                writer.WriteNumberValue(CreatedAt, "U");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedOn, "U");
+                writer.WriteNumberValue(UpdatedAt, "U");
             }
             if (options.Format != "W")
             {
@@ -195,8 +195,8 @@ namespace Azure.AI.Projects
             string category = default;
             AgentInsightStatus status = default;
             int traceCount = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset updatedOn = default;
+            DateTimeOffset createdAt = default;
+            DateTimeOffset updatedAt = default;
             string description = default;
             AgentInsightDetails details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -249,12 +249,12 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
                 {
-                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -286,8 +286,8 @@ namespace Azure.AI.Projects
                 category,
                 status,
                 traceCount,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 description,
                 details,
                 additionalBinaryDataProperties);

@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
         public string AgentName { get { throw null; } }
         public string AgentVersion { get { throw null; } }
         public string Category { get { throw null; } }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.AI.Projects.AgentInsightDetails Details { get { throw null; } }
         public string Id { get { throw null; } }
@@ -61,7 +61,7 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.AgentInsightStatus Status { get { throw null; } }
         public string Title { get { throw null; } }
         public int TraceCount { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } }
         protected virtual Azure.AI.Projects.AgentInsight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Projects.AgentInsight (System.ClientModel.ClientResult result) { throw null; }
@@ -150,11 +150,11 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.AgentInsightEstimatedCost EstimatedCost { get { throw null; } }
         public string Id { get { throw null; } }
         public string ModelDeploymentName { get { throw null; } }
-        public System.DateTimeOffset? NextScheduledRunOn { get { throw null; } }
+        public System.DateTimeOffset? NextScheduledRunAt { get { throw null; } }
         public Azure.AI.Projects.AgentInsightsOverview Overview { get { throw null; } }
         public double RunIntervalHours { get { throw null; } }
         public Azure.AI.Projects.AgentInsightSuspension Suspension { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } }
         protected virtual Azure.AI.Projects.AgentInsightMonitor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Projects.AgentInsightMonitor (System.ClientModel.ClientResult result) { throw null; }
@@ -194,10 +194,10 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.AgentInsightEstimatedCost EstimatedCost { get { throw null; } }
         public string Id { get { throw null; } }
         public string ModelDeploymentName { get { throw null; } }
-        public System.DateTimeOffset? NextScheduledRunOn { get { throw null; } }
+        public System.DateTimeOffset? NextScheduledRunAt { get { throw null; } }
         public double RunIntervalHours { get { throw null; } }
         public Azure.AI.Projects.AgentInsightSuspension Suspension { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } }
         protected virtual Azure.AI.Projects.AgentInsightMonitorListItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.AgentInsightMonitorListItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -373,17 +373,17 @@ namespace Azure.AI.Projects
     {
         internal AgentInsightRun() { }
         public string AgentName { get { throw null; } }
-        public System.DateTimeOffset? CompletedOn { get { throw null; } }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset? CompletedAt { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.Projects.AgentInsightRunCreate Inputs { get { throw null; } }
         public string ModelDeploymentName { get { throw null; } }
         public string MonitorId { get { throw null; } }
         public Azure.AI.Projects.AgentInsightRunResult Result { get { throw null; } }
-        public System.DateTimeOffset? StartedOn { get { throw null; } }
+        public System.DateTimeOffset? StartedAt { get { throw null; } }
         public Azure.AI.Projects.ProjectsJobStatus Status { get { throw null; } }
         public Azure.AI.Projects.AgentInsightRunTrigger Trigger { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } }
         public System.DateTimeOffset WindowEnd { get { throw null; } }
         public System.DateTimeOffset WindowStart { get { throw null; } }
         protected virtual Azure.AI.Projects.AgentInsightRun JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -477,7 +477,7 @@ namespace Azure.AI.Projects
         internal AgentInsightsOverview() { }
         public string Content { get { throw null; } }
         public Azure.AI.Projects.AgentInsightOverviewSource Source { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } }
         protected virtual Azure.AI.Projects.AgentInsightsOverview JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.AgentInsightsOverview PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -514,7 +514,7 @@ namespace Azure.AI.Projects
         public string Code { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Details { get { throw null; } }
         public string Message { get { throw null; } }
-        public System.DateTimeOffset OccurredOn { get { throw null; } }
+        public System.DateTimeOffset OccurredAt { get { throw null; } }
         protected virtual Azure.AI.Projects.AgentInsightSuspension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.AgentInsightSuspension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1014,9 +1014,9 @@ namespace Azure.AI.Projects
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.ModelVersion> GetLatestModelVersions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetLatestModelVersionsAsync(System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.ModelVersion> GetLatestModelVersionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential> GetModelCredentials(string name, string version, Azure.AI.Projects.ModelCredentialContent credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential> GetModelCredentials(string name, string version, Azure.AI.Projects.ModelCredentialContent credentialContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetModelCredentials(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential>> GetModelCredentialsAsync(string name, string version, Azure.AI.Projects.ModelCredentialContent credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential>> GetModelCredentialsAsync(string name, string version, Azure.AI.Projects.ModelCredentialContent credentialContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetModelCredentialsAsync(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult GetModelVersion(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ModelVersion> GetModelVersion(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1097,7 +1097,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AgentEvaluatorGenerationJobSource AgentEvaluatorGenerationJobSource(string description = null, string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.AgenticIdentityPreviewCredentials AgenticIdentityPreviewCredentials() { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.AgentInsight AgentInsight(string id = null, string monitorId = null, string agentName = null, string agentVersion = null, string title = null, Azure.AI.Projects.AgentInsightSeverity severity = default(Azure.AI.Projects.AgentInsightSeverity), string category = null, Azure.AI.Projects.AgentInsightStatus status = default(Azure.AI.Projects.AgentInsightStatus), int traceCount = 0, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string description = null, Azure.AI.Projects.AgentInsightDetails details = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsight AgentInsight(string id = null, string monitorId = null, string agentName = null, string agentVersion = null, string title = null, Azure.AI.Projects.AgentInsightSeverity severity = default(Azure.AI.Projects.AgentInsightSeverity), string category = null, Azure.AI.Projects.AgentInsightStatus status = default(Azure.AI.Projects.AgentInsightStatus), int traceCount = 0, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string description = null, Azure.AI.Projects.AgentInsightDetails details = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.AgentInsightDetails AgentInsightDetails(System.Collections.Generic.IEnumerable<Azure.AI.Projects.AgentInsightHighlightedTrace> highlightedTraces = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.AgentInsightLinkedTrace> linkedTraces = null, Azure.AI.Projects.AgentInsightRecommendedAction recommendedActions = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -1107,11 +1107,11 @@ namespace Azure.AI.Projects
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.AgentInsightLinkedTrace AgentInsightLinkedTrace(string traceId = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.AgentInsightMonitor AgentInsightMonitor(string id = null, string agentName = null, bool enabled = false, double runIntervalHours = 0, string modelDeploymentName = null, System.DateTimeOffset? nextScheduledRunOn = default(System.DateTimeOffset?), Azure.AI.Projects.AgentInsightEstimatedCost estimatedCost = null, Azure.AI.Projects.AgentInsightSuspension suspension = null, Azure.AI.Projects.AgentInsightsOverview overview = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightMonitor AgentInsightMonitor(string id = null, string agentName = null, bool enabled = false, double runIntervalHours = 0, string modelDeploymentName = null, System.DateTimeOffset? nextScheduledRunAt = default(System.DateTimeOffset?), Azure.AI.Projects.AgentInsightEstimatedCost estimatedCost = null, Azure.AI.Projects.AgentInsightSuspension suspension = null, Azure.AI.Projects.AgentInsightsOverview overview = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.AgentInsightMonitorCreate AgentInsightMonitorCreate(string agentName = null, bool? enabled = default(bool?), double? runIntervalHours = default(double?), string modelDeploymentName = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = null, string agentName = null, bool enabled = false, double runIntervalHours = 0, string modelDeploymentName = null, System.DateTimeOffset? nextScheduledRunOn = default(System.DateTimeOffset?), Azure.AI.Projects.AgentInsightEstimatedCost estimatedCost = null, Azure.AI.Projects.AgentInsightSuspension suspension = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = null, string agentName = null, bool enabled = false, double runIntervalHours = 0, string modelDeploymentName = null, System.DateTimeOffset? nextScheduledRunAt = default(System.DateTimeOffset?), Azure.AI.Projects.AgentInsightEstimatedCost estimatedCost = null, Azure.AI.Projects.AgentInsightSuspension suspension = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.AgentInsightProposedFix AgentInsightProposedFix(Azure.AI.Projects.AgentInsightProposedFixKind kind = default(Azure.AI.Projects.AgentInsightProposedFixKind), string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.AgentInsightProposedFixChange> changes = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -1123,9 +1123,9 @@ namespace Azure.AI.Projects
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.AgentInsightRunResult AgentInsightRunResult(int tracesInWindow = 0, int tracesAnalyzed = 0, int insightsCreated = 0, int insightsUpdated = 0, int insightsReopened = 0, Azure.AI.Projects.AgentInsightTokenUsage tokenUsage = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.AgentInsightsOverview AgentInsightsOverview(string content = null, Azure.AI.Projects.AgentInsightOverviewSource source = default(Azure.AI.Projects.AgentInsightOverviewSource), System.DateTimeOffset updatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightsOverview AgentInsightsOverview(string content = null, Azure.AI.Projects.AgentInsightOverviewSource source = default(Azure.AI.Projects.AgentInsightOverviewSource), System.DateTimeOffset updatedAt = default(System.DateTimeOffset)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.AgentInsightSuspension AgentInsightSuspension(string code = null, string message = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, System.BinaryData> details = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightSuspension AgentInsightSuspension(string code = null, string message = null, System.DateTimeOffset occurredAt = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, System.BinaryData> details = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.AgentInsightTokenUsage AgentInsightTokenUsage(int inputTokens = 0, int outputTokens = 0, int? cachedTokens = default(int?), int totalTokens = 0) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -1156,7 +1156,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.AzureAIAgentTarget AzureAIAgentTarget(string name = null, string version = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDescription> toolDescriptions = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public static Azure.AI.Projects.Evaluation.AzureAIAgentTarget AzureAIAgentTarget(string name, string version, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDescription> toolDescriptions, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseTool> tools) { throw null; }
-        public static Azure.AI.Projects.Evaluation.AzureAIModelTarget AzureAIModelTarget(string model = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.AzureAIModelTarget AzureAIModelTarget(string model = null, Azure.AI.Projects.Agents.ModelSamplingParams samplingParameters = null) { throw null; }
         public static Azure.AI.Projects.AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, Azure.AI.Projects.AIProjectIndexFieldMapping fieldMapping = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = null) { throw null; }
@@ -1193,7 +1193,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.DatasetCredential DatasetCredential(Azure.AI.Projects.AIProjectBlobReference blobReference = null) { throw null; }
         public static Azure.AI.Projects.DatasetDataGenerationJobOutput DatasetDataGenerationJobOutput(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.DatasetEvaluatorGenerationJobSource DatasetEvaluatorGenerationJobSource(string description = null, string name = null, string version = null) { throw null; }
-        public static Azure.AI.Projects.DatasetReference DatasetReference(string name = null, string version = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Memory.DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = null, bool isDeleted = false) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -1227,14 +1226,14 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightResult EvaluationRunClusterInsightResult(Azure.AI.Projects.Evaluation.ClusterInsightResult clusterInsight = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.EvaluationScheduleTask EvaluationScheduleTask(System.Collections.Generic.IDictionary<string, string> configuration = null, string evalId = null, System.BinaryData evalRun = null) { throw null; }
-        public static Azure.AI.Projects.Evaluation.EvaluationsDimension EvaluationsDimension(string id = null, string description = null, int weight = 0, bool? isAlwaysApplicable = default(bool?)) { throw null; }
+        public static Azure.AI.Projects.Evaluation.EvaluationsDimension EvaluationsDimension(string id = null, string description = null, int? weight = default(int?), bool? isAlwaysApplicable = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluationTarget EvaluationTarget(string type = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.EvaluationTaxonomy EvaluationTaxonomy(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.AI.Projects.Evaluation.EvaluationTaxonomyInput taxonomyInput = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.TaxonomyCategory> taxonomyCategories = null, System.Collections.Generic.IDictionary<string, string> properties = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.EvaluationTaxonomyInput EvaluationTaxonomyInput(string type = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluatorDefinition EvaluatorDefinition(string type = null, System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null) { throw null; }
-        public static Azure.AI.Projects.Evaluation.EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(Azure.AI.Projects.DatasetReference reference = null, System.Collections.Generic.IEnumerable<string> datasetRowKinds = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(Azure.AI.Projects.Evaluation.VersionedDatasetReference reference = null, System.Collections.Generic.IEnumerable<string> datasetRowKinds = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluatorGenerationInputs EvaluatorGenerationInputs(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource> sources = null, string model = null, string evaluatorName = null, string evaluatorDisplayName = null, string description = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource EvaluatorGenerationJobSource(string type = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluatorGenerationTokenUsage EvaluatorGenerationTokenUsage(long inputTokens = (long)0, long outputTokens = (long)0, long totalTokens = (long)0) { throw null; }
@@ -1330,7 +1329,7 @@ namespace Azure.AI.Projects
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.ProjectsInsight ProjectsInsight(string id = null, Azure.AI.Projects.Evaluation.InsightsMetadata metadata = null, Azure.AI.Projects.Evaluation.OperationStatus state = default(Azure.AI.Projects.Evaluation.OperationStatus), string displayName = null, Azure.AI.Projects.Evaluation.InsightRequest request = null, Azure.AI.Projects.Evaluation.InsightResult result = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.ProjectsRoutine ProjectsRoutine(string name = null, string description = null, bool isEnabled = false, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.RoutineTrigger> triggers = null, Azure.AI.Projects.RoutineAction action = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Projects.ProjectsRoutine ProjectsRoutine(string name = null, string description = null, bool isEnabled = false, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.RoutineTrigger> triggers = null, Azure.AI.Projects.RoutineAction action = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.DateTimeOffset? updatedAt = default(System.DateTimeOffset?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.ProjectsSchedule ProjectsSchedule(string id = null, string displayName = null, string description = null, bool enabled = false, Azure.AI.Projects.Evaluation.ScheduleProvisioningStatus? provisioningStatus = default(Azure.AI.Projects.Evaluation.ScheduleProvisioningStatus?), Azure.AI.Projects.Evaluation.ScheduleTrigger trigger = null, Azure.AI.Projects.ProjectsScheduleTask task = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> systemData = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -1354,10 +1353,10 @@ namespace Azure.AI.Projects
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.RoutineDispatchPayload RoutineDispatchPayload(string type = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.RoutineRun RoutineRun(string id = null, System.BinaryData statusInternal = null, Azure.AI.Projects.RoutineRunPhase? phase = default(Azure.AI.Projects.RoutineRunPhase?), Azure.AI.Projects.RoutineTriggerKind? triggerType = default(Azure.AI.Projects.RoutineTriggerKind?), string triggerName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> triggerEventPayload = null, Azure.AI.Projects.RoutineAttemptSource? attemptSource = default(Azure.AI.Projects.RoutineAttemptSource?), Azure.AI.Projects.RoutineActionKind? actionType = default(Azure.AI.Projects.RoutineActionKind?), string agentId = null, string agentEndpointId = null, string conversationId = null, string sessionId = null, System.DateTimeOffset? triggeredOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledFireOn = default(System.DateTimeOffset?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string dispatchId = null, string actionCorrelationId = null, string responseId = null, string taskId = null, int? errorStatusCode = default(int?), string errorType = null, string errorMessage = null) { throw null; }
+        public static Azure.AI.Projects.RoutineRun RoutineRun(string id = null, System.BinaryData statusInternal = null, Azure.AI.Projects.RoutineRunPhase? phase = default(Azure.AI.Projects.RoutineRunPhase?), Azure.AI.Projects.RoutineTriggerKind? triggerType = default(Azure.AI.Projects.RoutineTriggerKind?), string triggerName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> triggerEventPayload = null, Azure.AI.Projects.RoutineAttemptSource? attemptSource = default(Azure.AI.Projects.RoutineAttemptSource?), Azure.AI.Projects.RoutineActionKind? actionType = default(Azure.AI.Projects.RoutineActionKind?), string agentId = null, string agentEndpointId = null, string conversationId = null, string sessionId = null, System.DateTimeOffset? triggeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledFireAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), string dispatchId = null, string actionCorrelationId = null, string responseId = null, string taskId = null, int? errorStatusCode = default(int?), string errorType = null, string errorMessage = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.RoutineTrigger RoutineTrigger(string type = null) { throw null; }
-        public static Azure.AI.Projects.RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluationsDimension> dimensions = null, float? passThreshold = default(float?)) { throw null; }
+        public static Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluationsDimension> dimensions = null, float? passThreshold = default(float?)) { throw null; }
         public static Azure.AI.Projects.RubricGenerationInputQualityWarning RubricGenerationInputQualityWarning(Azure.AI.Projects.RubricGenerationInputQualityWarningCode code = default(Azure.AI.Projects.RubricGenerationInputQualityWarningCode), Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity severity = default(Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity), string message = null, Azure.AI.Projects.RubricGenerationInputQualityWarningSource source = default(Azure.AI.Projects.RubricGenerationInputQualityWarningSource), int? sourceIndex = default(int?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.ScheduleRoutineTrigger ScheduleRoutineTrigger(string cronExpression = null, string timeZone = null) { throw null; }
@@ -1384,12 +1383,13 @@ namespace Azure.AI.Projects
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.ToolUseFineTuningDataGenerationJobConfiguration ToolUseFineTuningDataGenerationJobConfiguration(float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null, int maxSamples = 0) { throw null; }
         public static Azure.AI.Projects.TracesDataGenerationJobConfiguration TracesDataGenerationJobConfiguration(float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null, int? maxSamples = default(int?), bool? redactPrivateContent = default(bool?)) { throw null; }
-        public static Azure.AI.Projects.TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> traceIds = null) { throw null; }
-        public static Azure.AI.Projects.TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Projects.TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startsAt = default(System.DateTimeOffset), System.DateTimeOffset? endsAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> traceIds = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startsAt = default(System.DateTimeOffset), System.DateTimeOffset? endsAt = default(System.DateTimeOffset?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.UpdateModelVersionOptions UpdateModelVersionOptions(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Memory.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.VersionedDatasetReference VersionedDatasetReference(string name = null, string version = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(System.Collections.Generic.IEnumerable<System.DayOfWeek> daysOfWeek = null) { throw null; }
     }
@@ -1488,8 +1488,8 @@ namespace Azure.AI.Projects
     public abstract partial class DataGenerationJob : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJob>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJob>
     {
         internal DataGenerationJob() { }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.DateTimeOffset? FinishedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? FinishedAt { get { throw null; } }
         public Azure.AI.Projects.DataGenerationJobConfiguration GenerationConfiguration { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1700,21 +1700,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetEvaluatorGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetEvaluatorGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatasetReference : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DatasetReference>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetReference>
-    {
-        internal DatasetReference() { }
-        public string Name { get { throw null; } }
-        public string Version { get { throw null; } }
-        protected virtual Azure.AI.Projects.DatasetReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.DatasetReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.DatasetReference System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DatasetReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DatasetReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.DatasetReference System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class DispatchRoutineResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DispatchRoutineResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DispatchRoutineResult>
     {
@@ -1892,13 +1877,12 @@ namespace Azure.AI.Projects
         RedTeamsV1Preview = 2,
         InsightsV1Preview = 3,
         MemoryStoresV1Preview = 4,
-        AgentInsightsV1Preview = 5,
-        RoutinesV2Preview = 6,
-        SkillsV1Preview = 7,
-        DataGenerationJobsV1Preview = 8,
-        ModelsV1Preview = 9,
-        ModelRouterControlsV1Preview = 10,
-        FinetuningSessionsV1Preview = 11,
+        RoutinesV2Preview = 5,
+        SkillsV1Preview = 6,
+        DataGenerationJobsV1Preview = 7,
+        ModelsV1Preview = 8,
+        ModelRouterControlsV1Preview = 9,
+        FinetuningSessionsV1Preview = 10,
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2382,12 +2366,12 @@ namespace Azure.AI.Projects
     {
         internal ProjectsRoutine() { }
         public Azure.AI.Projects.RoutineAction Action { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string Description { get { throw null; } }
         public bool IsEnabled { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.AI.Projects.RoutineTrigger> Triggers { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset? UpdatedAt { get { throw null; } }
         protected virtual Azure.AI.Projects.ProjectsRoutine JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Projects.ProjectsRoutine (System.ClientModel.ClientResult result) { throw null; }
@@ -2578,19 +2562,19 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.RoutineAttemptSource? AttemptSource { get { throw null; } }
         public string ConversationId { get { throw null; } }
         public string DispatchId { get { throw null; } }
-        public System.DateTimeOffset? EndedOn { get { throw null; } }
+        public System.DateTimeOffset? EndedAt { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? ErrorStatusCode { get { throw null; } }
         public string ErrorType { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.Projects.RoutineRunPhase? Phase { get { throw null; } }
         public string ResponseId { get { throw null; } }
-        public System.DateTimeOffset? ScheduledFireOn { get { throw null; } }
+        public System.DateTimeOffset? ScheduledFireAt { get { throw null; } }
         public string SessionId { get { throw null; } }
-        public System.DateTimeOffset? StartedOn { get { throw null; } }
+        public System.DateTimeOffset? StartedAt { get { throw null; } }
         public string Status { get { throw null; } }
         public string TaskId { get { throw null; } }
-        public System.DateTimeOffset? TriggeredOn { get { throw null; } }
+        public System.DateTimeOffset? TriggeredAt { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> TriggerEventPayload { get { throw null; } }
         public string TriggerName { get { throw null; } }
         public Azure.AI.Projects.RoutineTriggerKind? TriggerType { get { throw null; } }
@@ -2657,21 +2641,6 @@ namespace Azure.AI.Projects
         public static implicit operator Azure.AI.Projects.RoutineTriggerKind? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.RoutineTriggerKind left, Azure.AI.Projects.RoutineTriggerKind right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RubricBasedEvaluatorDefinition : Azure.AI.Projects.Evaluation.EvaluatorDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>
-    {
-        public RubricBasedEvaluatorDefinition(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluationsDimension> dimensions) { }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Evaluation.EvaluationsDimension> Dimensions { get { throw null; } }
-        public float? PassThreshold { get { throw null; } set { } }
-        protected override Azure.AI.Projects.Evaluation.EvaluatorDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Evaluation.EvaluatorDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.RubricBasedEvaluatorDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.RubricBasedEvaluatorDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RubricGenerationInputQualityWarning : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>
     {
@@ -2922,13 +2891,13 @@ namespace Azure.AI.Projects
     }
     public partial class TracesDataGenerationJobSource : Azure.AI.Projects.DataGenerationJobSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TracesDataGenerationJobSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesDataGenerationJobSource>
     {
-        public TracesDataGenerationJobSource(System.DateTimeOffset startsOn) { }
+        public TracesDataGenerationJobSource(System.DateTimeOffset startsAt) { }
         public string AgentId { get { throw null; } set { } }
         public string AgentName { get { throw null; } set { } }
         public string AgentVersion { get { throw null; } set { } }
         public override string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
-        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsAt { get { throw null; } set { } }
+        public System.DateTimeOffset StartsAt { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TraceIds { get { throw null; } }
         protected override Azure.AI.Projects.DataGenerationJobSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2939,25 +2908,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.TracesDataGenerationJobSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesDataGenerationJobSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesDataGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesDataGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TracesEvaluatorGenerationJobSource : Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TracesEvaluatorGenerationJobSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesEvaluatorGenerationJobSource>
-    {
-        public TracesEvaluatorGenerationJobSource(System.DateTimeOffset startsOn) { }
-        public string AgentId { get { throw null; } set { } }
-        public string AgentName { get { throw null; } set { } }
-        public string AgentVersion { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
-        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
-        protected override Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.TracesEvaluatorGenerationJobSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TracesEvaluatorGenerationJobSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TracesEvaluatorGenerationJobSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.TracesEvaluatorGenerationJobSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesEvaluatorGenerationJobSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesEvaluatorGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesEvaluatorGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3114,6 +3064,7 @@ namespace Azure.AI.Projects.Evaluation
     {
         public AzureAIModelTarget() { }
         public string Model { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.ModelSamplingParams SamplingParameters { get { throw null; } set { } }
         protected override Azure.AI.Projects.Evaluation.EvaluationTarget JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Evaluation.EvaluationTarget PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3549,11 +3500,11 @@ namespace Azure.AI.Projects.Evaluation
     }
     public partial class EvaluationsDimension : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.EvaluationsDimension>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EvaluationsDimension>
     {
-        public EvaluationsDimension(string id, string description, int weight) { }
+        public EvaluationsDimension(string id, string description, int? weight) { }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public bool? IsAlwaysApplicable { get { throw null; } set { } }
-        public int Weight { get { throw null; } set { } }
+        public int? Weight { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.Evaluation.EvaluationsDimension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Evaluation.EvaluationsDimension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3700,7 +3651,7 @@ namespace Azure.AI.Projects.Evaluation
     {
         internal EvaluatorGenerationArtifacts() { }
         public System.Collections.Generic.IList<string> DatasetRowKinds { get { throw null; } }
-        public Azure.AI.Projects.DatasetReference Reference { get { throw null; } }
+        public Azure.AI.Projects.Evaluation.VersionedDatasetReference Reference { get { throw null; } }
         protected virtual Azure.AI.Projects.Evaluation.EvaluatorGenerationArtifacts JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Evaluation.EvaluatorGenerationArtifacts PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3733,11 +3684,11 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluatorGenerationJob : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.EvaluatorGenerationJob>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EvaluatorGenerationJob>
     {
         internal EvaluatorGenerationJob() { }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string EvaluatorDescription { get { throw null; } }
         public string EvaluatorDisplayName { get { throw null; } }
         public string EvaluatorName { get { throw null; } }
-        public System.DateTimeOffset? FinishedOn { get { throw null; } }
+        public System.DateTimeOffset? FinishedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.RubricGenerationInputQualityWarning> InputQualityWarnings { get { throw null; } }
         public string Model { get { throw null; } }
@@ -4162,8 +4113,8 @@ namespace Azure.AI.Projects.Evaluation
         public virtual System.ClientModel.ClientResult DeleteVersion(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteVersionAsync(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteVersionAsync(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential> GetCredential(string name, string version, Azure.AI.Projects.Evaluation.EvaluationCredentialContent credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential>> GetCredentialAsync(string name, string version, Azure.AI.Projects.Evaluation.EvaluationCredentialContent credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential> GetCredential(string name, string version, Azure.AI.Projects.Evaluation.EvaluationCredentialContent credentialContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential>> GetCredentialAsync(string name, string version, Azure.AI.Projects.Evaluation.EvaluationCredentialContent credentialContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetLatestVersions(Azure.AI.Projects.Evaluation.ListVersionsRequestType? type = default(Azure.AI.Projects.Evaluation.ListVersionsRequestType?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetLatestVersions(string type, int? limit, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetLatestVersionsAsync(Azure.AI.Projects.Evaluation.ListVersionsRequestType? type = default(Azure.AI.Projects.Evaluation.ListVersionsRequestType?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4176,8 +4127,8 @@ namespace Azure.AI.Projects.Evaluation
         public virtual System.ClientModel.Primitives.CollectionResult GetVersions(string name, string type, int? limit, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetVersionsAsync(string name, Azure.AI.Projects.Evaluation.ListVersionsRequestType? type = default(Azure.AI.Projects.Evaluation.ListVersionsRequestType?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetVersionsAsync(string name, string type, int? limit, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.PendingUploadResult> StartPendingUpload(string name, string version, Azure.AI.Projects.PendingUploadConfiguration pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.PendingUploadResult>> StartPendingUploadAsync(string name, string version, Azure.AI.Projects.PendingUploadConfiguration pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.PendingUploadResult> StartPendingUpload(string name, string version, Azure.AI.Projects.PendingUploadConfiguration configuration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.PendingUploadResult>> StartPendingUploadAsync(string name, string version, Azure.AI.Projects.PendingUploadConfiguration configuration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult UpdateVersion(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateVersionAsync(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
     }
@@ -4390,6 +4341,21 @@ namespace Azure.AI.Projects.Evaluation
         public static bool operator !=(Azure.AI.Projects.Evaluation.RiskCategory left, Azure.AI.Projects.Evaluation.RiskCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RubricBasedEvaluatorDefinition : Azure.AI.Projects.Evaluation.EvaluatorDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition>
+    {
+        public RubricBasedEvaluatorDefinition(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluationsDimension> dimensions) { }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Evaluation.EvaluationsDimension> Dimensions { get { throw null; } }
+        public float? PassThreshold { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Evaluation.EvaluatorDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Evaluation.EvaluatorDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.RubricBasedEvaluatorDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduleProvisioningStatus : System.IEquatable<Azure.AI.Projects.Evaluation.ScheduleProvisioningStatus>
@@ -4516,6 +4482,40 @@ namespace Azure.AI.Projects.Evaluation
         Azure.AI.Projects.Evaluation.TaxonomySubCategory System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TaxonomySubCategory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TaxonomySubCategory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TaxonomySubCategory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TracesEvaluatorGenerationJobSource : Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>
+    {
+        public TracesEvaluatorGenerationJobSource(System.DateTimeOffset startsAt) { }
+        public string AgentId { get { throw null; } set { } }
+        public string AgentName { get { throw null; } set { } }
+        public string AgentVersion { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsAt { get { throw null; } set { } }
+        public System.DateTimeOffset StartsAt { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Evaluation.EvaluatorGenerationJobSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.TracesEvaluatorGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VersionedDatasetReference : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.VersionedDatasetReference>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.VersionedDatasetReference>
+    {
+        internal VersionedDatasetReference() { }
+        public string Name { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.AI.Projects.Evaluation.VersionedDatasetReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Evaluation.VersionedDatasetReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Evaluation.VersionedDatasetReference System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.VersionedDatasetReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.VersionedDatasetReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Evaluation.VersionedDatasetReference System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.VersionedDatasetReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.VersionedDatasetReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.VersionedDatasetReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class WeeklyRecurrenceSchedule : Azure.AI.Projects.Evaluation.RecurrenceSchedule, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule>

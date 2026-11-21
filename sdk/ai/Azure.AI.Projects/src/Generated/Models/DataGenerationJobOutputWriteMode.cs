@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="DataGenerationJobOutputWriteMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataGenerationJobOutputWriteMode?(string value) => value == null ? null : new DataGenerationJobOutputWriteMode(value);
+        public static implicit operator DataGenerationJobOutputWriteMode?(string value) => value == null ? (DataGenerationJobOutputWriteMode?)null : new DataGenerationJobOutputWriteMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

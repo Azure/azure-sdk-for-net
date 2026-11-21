@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Malformed original-subject metadata now returns a platform `400` response even when the host does not install Core middleware.
+
 ### Other Changes
 
 - Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`. This fixes the `MissingMethodException` that hosted agents hit at startup when Agent365 export is enabled.
