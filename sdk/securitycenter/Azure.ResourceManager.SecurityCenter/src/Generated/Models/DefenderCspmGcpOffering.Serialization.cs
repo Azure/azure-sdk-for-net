@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("ciemDiscovery"u8);
                 writer.WriteObjectValue(CiemDiscovery, options);
             }
+            if (Optional.IsDefined(Ciem))
+            {
+                writer.WritePropertyName("ciem"u8);
+                writer.WriteObjectValue(Ciem, options);
+            }
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery = default;
+            DefenderCspmGcpOfferingCiem ciem = default;
             DefenderCspmGcpOfferingVmScanners vmScanners = default;
             DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default;
             DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
@@ -154,6 +160,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         continue;
                     }
                     ciemDiscovery = DefenderCspmGcpOfferingCiemDiscovery.DeserializeDefenderCspmGcpOfferingCiemDiscovery(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("ciem"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ciem = DefenderCspmGcpOfferingCiem.DeserializeDefenderCspmGcpOfferingCiem(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmScanners"u8))
@@ -202,6 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 description,
                 additionalBinaryDataProperties,
                 ciemDiscovery,
+                ciem,
                 vmScanners,
                 dataSensitivityDiscovery,
                 mdcContainersImageAssessment,

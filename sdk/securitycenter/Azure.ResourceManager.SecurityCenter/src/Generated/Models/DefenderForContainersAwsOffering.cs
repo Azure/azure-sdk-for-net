@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kubernetesDataCollection"> The kubernetes data collection connection configuration. </param>
         /// <param name="cloudWatchToKinesis"> The cloudwatch to kinesis connection configuration. </param>
         /// <param name="kinesisToS3"> The kinesis to s3 connection configuration. </param>
+        /// <param name="installationMethod"> The installation method for the Defender for Containers agent. </param>
+        /// <param name="securityGatingEnabled"> Is security gating enabled. </param>
+        /// <param name="containerAntiMalwareEnabled"> Is defender anti-malware enabled. </param>
         /// <param name="enableAuditLogsAutoProvisioning"> Is audit logs data collection enabled. </param>
         /// <param name="enableDefenderAgentAutoProvisioning"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
         /// <param name="enablePolicyAgentAutoProvisioning"> Is Policy Kubernetes agent auto provisioning enabled. </param>
@@ -34,12 +37,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Container K8s VM host scanning configuration. </param>
-        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesDataCollection kubernetesDataCollection, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, bool? enableAuditLogsAutoProvisioning, bool? enableDefenderAgentAutoProvisioning, bool? enablePolicyAgentAutoProvisioning, long? kubeAuditRetentionTime, string dataCollectionExternalId, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S, DefenderForContainersAwsOfferingVmScanners vmScanners) : base(offeringType, description, additionalBinaryDataProperties)
+        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesDataCollection kubernetesDataCollection, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, InstallationMethod? installationMethod, bool? securityGatingEnabled, bool? containerAntiMalwareEnabled, bool? enableAuditLogsAutoProvisioning, bool? enableDefenderAgentAutoProvisioning, bool? enablePolicyAgentAutoProvisioning, long? kubeAuditRetentionTime, string dataCollectionExternalId, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S, DefenderForContainersAwsOfferingVmScanners vmScanners) : base(offeringType, description, additionalBinaryDataProperties)
         {
             KubernetesService = kubernetesService;
             KubernetesDataCollection = kubernetesDataCollection;
             CloudWatchToKinesis = cloudWatchToKinesis;
             KinesisToS3 = kinesisToS3;
+            InstallationMethod = installationMethod;
+            SecurityGatingEnabled = securityGatingEnabled;
+            ContainerAntiMalwareEnabled = containerAntiMalwareEnabled;
             EnableAuditLogsAutoProvisioning = enableAuditLogsAutoProvisioning;
             EnableDefenderAgentAutoProvisioning = enableDefenderAgentAutoProvisioning;
             EnablePolicyAgentAutoProvisioning = enablePolicyAgentAutoProvisioning;
@@ -61,6 +67,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The kinesis to s3 connection configuration. </summary>
         internal DefenderForContainersAwsOfferingKinesisToS3 KinesisToS3 { get; set; }
+
+        /// <summary> The installation method for the Defender for Containers agent. </summary>
+        public InstallationMethod? InstallationMethod { get; set; }
+
+        /// <summary> Is security gating enabled. </summary>
+        public bool? SecurityGatingEnabled { get; set; }
+
+        /// <summary> Is defender anti-malware enabled. </summary>
+        public bool? ContainerAntiMalwareEnabled { get; set; }
 
         /// <summary> Is audit logs data collection enabled. </summary>
         public bool? EnableAuditLogsAutoProvisioning { get; set; }

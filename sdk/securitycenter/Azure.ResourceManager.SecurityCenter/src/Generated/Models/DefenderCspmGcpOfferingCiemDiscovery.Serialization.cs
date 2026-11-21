@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("azureActiveDirectoryAppName"u8);
                 writer.WriteStringValue(AzureActiveDirectoryAppName);
             }
+            if (Optional.IsDefined(EnableAuditLogIngestion))
+            {
+                writer.WritePropertyName("enableAuditLogIngestion"u8);
+                writer.WriteBooleanValue(EnableAuditLogIngestion.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string workloadIdentityProviderId = default;
             string serviceAccountEmailAddress = default;
             string azureActiveDirectoryAppName = default;
+            bool? enableAuditLogIngestion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,12 +158,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     azureActiveDirectoryAppName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("enableAuditLogIngestion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAuditLogIngestion = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId, serviceAccountEmailAddress, azureActiveDirectoryAppName, additionalBinaryDataProperties);
+            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId, serviceAccountEmailAddress, azureActiveDirectoryAppName, enableAuditLogIngestion, additionalBinaryDataProperties);
         }
     }
 }

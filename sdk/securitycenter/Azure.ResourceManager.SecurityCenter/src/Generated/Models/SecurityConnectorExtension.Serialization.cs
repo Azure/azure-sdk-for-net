@@ -111,6 +111,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(OperationStatus, options);
             }
+            if (Optional.IsDefined(SecurityOperatorResourceId))
+            {
+                writer.WritePropertyName("securityOperatorResourceId"u8);
+                writer.WriteStringValue(SecurityOperatorResourceId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecurityCenterExtensionIsEnabled isEnabled = default;
             IDictionary<string, BinaryData> additionalExtensionProperties = default;
             SecurityCenterOperationStatus operationStatus = default;
+            string securityOperatorResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,12 +206,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     operationStatus = SecurityCenterOperationStatus.DeserializeSecurityCenterOperationStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("securityOperatorResourceId"u8))
+                {
+                    securityOperatorResourceId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecurityConnectorExtension(name, isEnabled, additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), operationStatus, additionalBinaryDataProperties);
+            return new SecurityConnectorExtension(
+                name,
+                isEnabled,
+                additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                operationStatus,
+                securityOperatorResourceId,
+                additionalBinaryDataProperties);
         }
     }
 }

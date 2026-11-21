@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -794,11 +794,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return GetIotSecuritySolutions().Get(solutionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of SecurityCenterPrivateLinkResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityCenterPrivateLinkResources and their operations over a SecurityCenterPrivateLinkResource. </returns>
+        public virtual SecurityCenterPrivateLinkResourceCollection GetSecurityCenterPrivateLinkResources()
         {
-            return GetCachedClient(client => new PrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new SecurityCenterPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -823,11 +823,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterPrivateLinkResource>> GetSecurityCenterPrivateLinkResourceAsync(string privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            return await GetPrivateLinkResources().GetAsync(privateLinkName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterPrivateLinkResources().GetAsync(privateLinkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -852,11 +852,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string privateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterPrivateLinkResource> GetSecurityCenterPrivateLinkResource(string privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
-            return GetPrivateLinkResources().Get(privateLinkName, cancellationToken);
+            return GetSecurityCenterPrivateLinkResources().Get(privateLinkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityCenterAllowedConnections in the <see cref="ResourceGroupResource"/>. </summary>

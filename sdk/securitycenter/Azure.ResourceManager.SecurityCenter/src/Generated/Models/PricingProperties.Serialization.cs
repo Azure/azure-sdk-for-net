@@ -146,6 +146,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SecurityOperatorResourceId))
+            {
+                writer.WritePropertyName("securityOperatorResourceId"u8);
+                writer.WriteStringValue(SecurityOperatorResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OriginatedFrom))
+            {
+                writer.WritePropertyName("originatedFrom"u8);
+                writer.WriteStringValue(OriginatedFrom.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -199,6 +214,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<SecurityConnectorExtension> extensions = default;
             bool? isDeprecated = default;
             IReadOnlyList<string> replacedBy = default;
+            string securityOperatorResourceId = default;
+            OriginatedFrom? originatedFrom = default;
+            string managedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -306,6 +324,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     replacedBy = array;
                     continue;
                 }
+                if (prop.NameEquals("securityOperatorResourceId"u8))
+                {
+                    securityOperatorResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("originatedFrom"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    originatedFrom = new OriginatedFrom(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("managedBy"u8))
+                {
+                    managedBy = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -323,6 +360,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 extensions ?? new ChangeTrackingList<SecurityConnectorExtension>(),
                 isDeprecated,
                 replacedBy ?? new ChangeTrackingList<string>(),
+                securityOperatorResourceId,
+                originatedFrom,
+                managedBy,
                 additionalBinaryDataProperties);
         }
     }

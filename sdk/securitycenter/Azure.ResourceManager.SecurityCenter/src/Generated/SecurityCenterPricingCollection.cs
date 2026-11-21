@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityCenterPricingResource.ResourceType, out string securityCenterPricingApiVersion);
             _pricingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterPricingResource.ResourceType.Namespace, Diagnostics);
-            _pricingsRestClient = new Pricings(_pricingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterPricingApiVersion ?? "2024-01-01");
+            _pricingsRestClient = new Pricings(_pricingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterPricingApiVersion ?? "2026-07-01");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

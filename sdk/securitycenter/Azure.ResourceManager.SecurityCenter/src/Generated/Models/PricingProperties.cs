@@ -38,8 +38,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
+        /// <param name="securityOperatorResourceId"> Resource ID of the security operator associated with the pricing configuration. </param>
+        /// <param name="originatedFrom"> Indicates the origin of the most recent configuration change. </param>
+        /// <param name="managedBy"> Indicates who exclusively manages the pricing configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, SecurityPolicyEnforce? enforce, SecurityCenterPricingInheritance? inherited, string inheritedFrom, SecurityCenterResourcesCoverageStatus? resourcesCoverageStatus, IList<SecurityConnectorExtension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, SecurityPolicyEnforce? enforce, SecurityCenterPricingInheritance? inherited, string inheritedFrom, SecurityCenterResourcesCoverageStatus? resourcesCoverageStatus, IList<SecurityConnectorExtension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, string securityOperatorResourceId, OriginatedFrom? originatedFrom, string managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
@@ -52,6 +55,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Extensions = extensions;
             IsDeprecated = isDeprecated;
             ReplacedBy = replacedBy;
+            SecurityOperatorResourceId = securityOperatorResourceId;
+            OriginatedFrom = originatedFrom;
+            ManagedBy = managedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -87,5 +93,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </summary>
         public IReadOnlyList<string> ReplacedBy { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Resource ID of the security operator associated with the pricing configuration. </summary>
+        public string SecurityOperatorResourceId { get; set; }
+
+        /// <summary> Indicates the origin of the most recent configuration change. </summary>
+        public OriginatedFrom? OriginatedFrom { get; }
+
+        /// <summary> Indicates who exclusively manages the pricing configuration. </summary>
+        public string ManagedBy { get; }
     }
 }

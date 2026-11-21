@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a PrivateLinkGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkResource"/> using the GetPrivateLinkGroups method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterPrivateLinkResource"/> using the GetPrivateLinkGroups method.
     /// </summary>
     public partial class PrivateLinkGroupResource : ArmResource
     {

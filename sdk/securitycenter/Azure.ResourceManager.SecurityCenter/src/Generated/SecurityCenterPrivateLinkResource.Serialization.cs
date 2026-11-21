@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    public partial class PrivateLinkResource : IJsonModel<SecurityCenterPrivateLinkResourceData>
+    public partial class SecurityCenterPrivateLinkResource : IJsonModel<SecurityCenterPrivateLinkResourceData>
     {
         private static IJsonModel<SecurityCenterPrivateLinkResourceData> s_dataDeserializationInstance;
 

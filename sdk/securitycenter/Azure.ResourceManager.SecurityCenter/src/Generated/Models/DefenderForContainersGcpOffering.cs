@@ -25,16 +25,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
         /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
         /// <param name="enableAuditLogsAutoProvisioning"> Is audit logs data collection enabled. </param>
+        /// <param name="installationMethod"> The installation method for the Defender for Containers agent. </param>
+        /// <param name="securityGatingEnabled"> Is security gating enabled. </param>
+        /// <param name="containerAntiMalwareEnabled"> Is defender anti-malware enabled. </param>
         /// <param name="enableDefenderAgentAutoProvisioning"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
         /// <param name="enablePolicyAgentAutoProvisioning"> Is Policy Kubernetes agent auto provisioning enabled. </param>
         /// <param name="mdcContainersImageAssessment"> The Microsoft Defender Container image assessment configuration. </param>
         /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender Container agentless discovery configuration. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Container K8s VM host scanning configuration. </param>
-        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? enableAuditLogsAutoProvisioning, bool? enableDefenderAgentAutoProvisioning, bool? enablePolicyAgentAutoProvisioning, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S, DefenderForContainersGcpOfferingVmScanners vmScanners) : base(offeringType, description, additionalBinaryDataProperties)
+        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? enableAuditLogsAutoProvisioning, InstallationMethod? installationMethod, bool? securityGatingEnabled, bool? containerAntiMalwareEnabled, bool? enableDefenderAgentAutoProvisioning, bool? enablePolicyAgentAutoProvisioning, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S, DefenderForContainersGcpOfferingVmScanners vmScanners) : base(offeringType, description, additionalBinaryDataProperties)
         {
             NativeCloudConnection = nativeCloudConnection;
             DataPipelineNativeCloudConnection = dataPipelineNativeCloudConnection;
             EnableAuditLogsAutoProvisioning = enableAuditLogsAutoProvisioning;
+            InstallationMethod = installationMethod;
+            SecurityGatingEnabled = securityGatingEnabled;
+            ContainerAntiMalwareEnabled = containerAntiMalwareEnabled;
             EnableDefenderAgentAutoProvisioning = enableDefenderAgentAutoProvisioning;
             EnablePolicyAgentAutoProvisioning = enablePolicyAgentAutoProvisioning;
             MdcContainersImageAssessment = mdcContainersImageAssessment;
@@ -50,6 +56,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Is audit logs data collection enabled. </summary>
         public bool? EnableAuditLogsAutoProvisioning { get; set; }
+
+        /// <summary> The installation method for the Defender for Containers agent. </summary>
+        public InstallationMethod? InstallationMethod { get; set; }
+
+        /// <summary> Is security gating enabled. </summary>
+        public bool? SecurityGatingEnabled { get; set; }
+
+        /// <summary> Is defender anti-malware enabled. </summary>
+        public bool? ContainerAntiMalwareEnabled { get; set; }
 
         /// <summary> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </summary>
         public bool? EnableDefenderAgentAutoProvisioning { get; set; }

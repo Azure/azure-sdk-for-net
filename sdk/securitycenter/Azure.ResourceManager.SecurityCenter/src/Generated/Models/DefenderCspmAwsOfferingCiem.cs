@@ -22,36 +22,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingCiem"/>. </summary>
-        /// <param name="ciemDiscovery"> Defender CSPM Permissions Management discovery configuration. </param>
         /// <param name="ciemOidc"> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </param>
+        /// <param name="logCollectionOidc"> The AWS log collection OIDC (open id connect) connection configuration. </param>
+        /// <param name="cloudTrailAuditLogIngestion"> The CloudTrail audit log ingestion configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmAwsOfferingCiem(DefenderCspmAwsOfferingCiemCiemDiscovery ciemDiscovery, DefenderCspmAwsOfferingCiemCiemOidc ciemOidc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderCspmAwsOfferingCiem(DefenderCspmAwsOfferingCiemCiemOidc ciemOidc, DefenderCspmAwsOfferingCiemLogCollectionOidc logCollectionOidc, AwsCloudTrailConfiguration cloudTrailAuditLogIngestion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CiemDiscovery = ciemDiscovery;
             CiemOidc = ciemOidc;
+            LogCollectionOidc = logCollectionOidc;
+            CloudTrailAuditLogIngestion = cloudTrailAuditLogIngestion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Defender CSPM Permissions Management discovery configuration. </summary>
-        internal DefenderCspmAwsOfferingCiemCiemDiscovery CiemDiscovery { get; set; }
 
         /// <summary> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </summary>
         public DefenderCspmAwsOfferingCiemCiemOidc CiemOidc { get; set; }
 
-        /// <summary> The cloud role ARN in AWS for Permissions Management discovery. </summary>
-        public string CiemDiscoveryCloudRoleArn
+        /// <summary> The AWS log collection OIDC (open id connect) connection configuration. </summary>
+        internal DefenderCspmAwsOfferingCiemLogCollectionOidc LogCollectionOidc { get; set; }
+
+        /// <summary> The CloudTrail audit log ingestion configuration. </summary>
+        public AwsCloudTrailConfiguration CloudTrailAuditLogIngestion { get; set; }
+
+        /// <summary> The cloud role ARN in AWS used for the log collection oidc connection. </summary>
+        public string LogCollectionOidcCloudRoleArn
         {
             get
             {
-                return CiemDiscovery is null ? default : CiemDiscovery.CloudRoleArn;
+                return LogCollectionOidc is null ? default : LogCollectionOidc.CloudRoleArn;
             }
             set
             {
-                if (CiemDiscovery is null)
+                if (LogCollectionOidc is null)
                 {
-                    CiemDiscovery = new DefenderCspmAwsOfferingCiemCiemDiscovery();
+                    LogCollectionOidc = new DefenderCspmAwsOfferingCiemLogCollectionOidc();
                 }
-                CiemDiscovery.CloudRoleArn = value;
+                LogCollectionOidc.CloudRoleArn = value;
             }
         }
     }

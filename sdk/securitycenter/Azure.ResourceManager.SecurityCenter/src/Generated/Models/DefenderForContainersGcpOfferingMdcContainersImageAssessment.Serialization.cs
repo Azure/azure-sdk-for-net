@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
+            if (Optional.IsDefined(SecurityFindingsEnabled))
+            {
+                writer.WritePropertyName("securityFindingsEnabled"u8);
+                writer.WriteBooleanValue(SecurityFindingsEnabled.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             bool? enabled = default;
             string workloadIdentityProviderId = default;
             string serviceAccountEmailAddress = default;
+            bool? securityFindingsEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +162,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     serviceAccountEmailAddress = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("securityFindingsEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityFindingsEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DefenderForContainersGcpOfferingMdcContainersImageAssessment(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, additionalBinaryDataProperties);
+            return new DefenderForContainersGcpOfferingMdcContainersImageAssessment(enabled, workloadIdentityProviderId, serviceAccountEmailAddress, securityFindingsEnabled, additionalBinaryDataProperties);
         }
     }
 }

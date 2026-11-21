@@ -15,61 +15,61 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Request payload for updating a private link resource. Used in PATCH operations to update specific mutable properties without affecting the entire resource configuration. </summary>
-    public partial class PrivateLinkResourcePatch : IJsonModel<PrivateLinkResourcePatch>
+    public partial class SecurityCenterPrivateLinkResourcePatch : IJsonModel<SecurityCenterPrivateLinkResourcePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateLinkResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SecurityCenterPrivateLinkResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateLinkResourcePatch(document.RootElement, options);
+                        return DeserializeSecurityCenterPrivateLinkResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterPrivateLinkResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterPrivateLinkResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateLinkResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityCenterPrivateLinkResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkResourcePatch IPersistableModel<PrivateLinkResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SecurityCenterPrivateLinkResourcePatch IPersistableModel<SecurityCenterPrivateLinkResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateLinkResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityCenterPrivateLinkResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="privateLinkResourcePatch"> The <see cref="PrivateLinkResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PrivateLinkResourcePatch privateLinkResourcePatch)
+        /// <param name="securityCenterPrivateLinkResourcePatch"> The <see cref="SecurityCenterPrivateLinkResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SecurityCenterPrivateLinkResourcePatch securityCenterPrivateLinkResourcePatch)
         {
-            if (privateLinkResourcePatch == null)
+            if (securityCenterPrivateLinkResourcePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(privateLinkResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(securityCenterPrivateLinkResourcePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateLinkResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityCenterPrivateLinkResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterPrivateLinkResourcePatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkResourcePatch IJsonModel<PrivateLinkResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SecurityCenterPrivateLinkResourcePatch IJsonModel<SecurityCenterPrivateLinkResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateLinkResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SecurityCenterPrivateLinkResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPrivateLinkResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterPrivateLinkResourcePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateLinkResourcePatch(document.RootElement, options);
+            return DeserializeSecurityCenterPrivateLinkResourcePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateLinkResourcePatch DeserializePrivateLinkResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityCenterPrivateLinkResourcePatch DeserializeSecurityCenterPrivateLinkResourcePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateLinkResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new SecurityCenterPrivateLinkResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

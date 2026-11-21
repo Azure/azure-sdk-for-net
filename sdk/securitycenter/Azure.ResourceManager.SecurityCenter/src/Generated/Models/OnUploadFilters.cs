@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private BinaryData _excludeBlobsLargerThan;
+        private long? _excludeBlobsLargerThan;
         private bool _excludeBlobsLargerThanIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OnUploadFilters"/>. </summary>
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="excludeBlobsWithSuffix"> Optional. A list of suffixes to exclude from on-upload malware scanning. Suffixes match only the end of blob names, and should be used for file extensions or blob name endings only. </param>
         /// <param name="excludeBlobsLargerThan"> Optional. Specifies the maximum size in bytes for blobs to be scanned. This parameter accepts a single positive integer value. Blobs larger than this value will be excluded from scanning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OnUploadFilters(IList<string> excludeBlobsWithPrefix, IList<string> excludeBlobsWithSuffix, BinaryData excludeBlobsLargerThan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OnUploadFilters(IList<string> excludeBlobsWithPrefix, IList<string> excludeBlobsWithSuffix, long? excludeBlobsLargerThan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExcludeBlobsWithPrefix = excludeBlobsWithPrefix;
             ExcludeBlobsWithSuffix = excludeBlobsWithSuffix;
@@ -56,33 +55,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Optional. A list of suffixes to exclude from on-upload malware scanning. Suffixes match only the end of blob names, and should be used for file extensions or blob name endings only. </summary>
         public IList<string> ExcludeBlobsWithSuffix { get; set; }
 
-        /// <summary>
-        /// Optional. Specifies the maximum size in bytes for blobs to be scanned. This parameter accepts a single positive integer value. Blobs larger than this value will be excluded from scanning.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ExcludeBlobsLargerThan
+        /// <summary> Optional. Specifies the maximum size in bytes for blobs to be scanned. This parameter accepts a single positive integer value. Blobs larger than this value will be excluded from scanning. </summary>
+        public long? ExcludeBlobsLargerThan
         {
             get
             {

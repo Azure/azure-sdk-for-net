@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string defenderForStorageSettingApiVersion);
             _defenderForStorageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForStorageSettingApiVersion ?? "2025-09-01-preview");
+            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForStorageSettingApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="resourceId"> The resourceId. </param>
         /// <param name="settingName"> The settingName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceId, SettingName settingName)
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string settingName)
         {
             string resourceId0 = $"{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}";
             return new ResourceIdentifier(resourceId0);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -187,19 +187,19 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Cancels a Defender for Storage malware scan for the specified storage account.
+        /// Initiate a Defender for Storage malware scan for the specified storage account. Blobs and Files will be scanned for malware.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}/malwareScans/{scanId}/cancelMalwareScan. </description>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}/startMalwareScan. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DefenderForStorageSettings_CancelMalwareScan. </description>
+        /// <description> DefenderForStorageSettings_StartMalwareScan. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,15 +207,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
+        /// <param name="content"> Optional request body to filter which blobs and files to scan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MalwareScan>> CancelMalwareScanAsync(string scanId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MalwareScanResource>> StartMalwareScanAsync(StartMalwareScanRequest content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
-
-            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.CancelMalwareScan");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.StartMalwareScan");
             scope.Start();
             try
             {
@@ -223,173 +219,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCancelMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
+                HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, StartMalwareScanRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
+                Response<MalwareScanData> response = Response.FromValue(MalwareScanData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancels a Defender for Storage malware scan for the specified storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}/malwareScans/{scanId}/cancelMalwareScan. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefenderForStorageSettings_CancelMalwareScan. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DefenderForStorageSettingResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MalwareScan> CancelMalwareScan(string scanId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
-
-            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.CancelMalwareScan");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _defenderForStorageRestClient.CreateCancelMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the Defender for Storage malware scan for the specified storage resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}/malwareScans/{scanId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefenderForStorageSettings_GetMalwareScan. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DefenderForStorageSettingResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MalwareScan>> GetMalwareScanAsync(string scanId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
-
-            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.GetMalwareScan");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the Defender for Storage malware scan for the specified storage resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}/malwareScans/{scanId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefenderForStorageSettings_GetMalwareScan. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DefenderForStorageSettingResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MalwareScan> GetMalwareScan(string scanId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
-
-            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.GetMalwareScan");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
+                return Response.FromValue(new MalwareScanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -411,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,8 +256,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> Optional request body to filter which blobs and files to scan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MalwareScan>> StartMalwareScanAsync(CancellationToken cancellationToken = default)
+        public virtual Response<MalwareScanResource> StartMalwareScan(StartMalwareScanRequest content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.StartMalwareScan");
             scope.Start();
@@ -430,62 +268,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Initiate a Defender for Storage malware scan for the specified storage account. Blobs and Files will be scanned for malware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}/startMalwareScan. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefenderForStorageSettings_StartMalwareScan. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DefenderForStorageSettingResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MalwareScan> StartMalwareScan(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.StartMalwareScan");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, StartMalwareScanRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
+                Response<MalwareScanData> response = Response.FromValue(MalwareScanData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return response;
+                return Response.FromValue(new MalwareScanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -507,7 +297,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -563,7 +353,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -604,6 +394,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of MalwareScans in the <see cref="DefenderForStorageSettingResource"/>. </summary>
+        /// <returns> An object representing collection of MalwareScans and their operations over a MalwareScanResource. </returns>
+        public virtual MalwareScanCollection GetMalwareScans()
+        {
+            return GetCachedClient(client => new MalwareScanCollection(client, Id));
+        }
+
+        /// <summary> Gets the Defender for Storage malware scan for the specified storage resource. </summary>
+        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MalwareScanResource>> GetMalwareScanAsync(string scanId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
+
+            return await GetMalwareScans().GetAsync(scanId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the Defender for Storage malware scan for the specified storage resource. </summary>
+        /// <param name="scanId"> The identifier of the scan. Can be either 'latest' or a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MalwareScanResource> GetMalwareScan(string scanId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
+
+            return GetMalwareScans().Get(scanId, cancellationToken);
         }
     }
 }
