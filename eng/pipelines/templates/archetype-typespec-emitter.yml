@@ -57,6 +57,11 @@ parameters:
   type: boolean
   default: false
 
+# Create a management-generator dependency update after a public branded release.
+- name: UpdateMgmtGeneratorDependency
+  type: boolean
+  default: false
+
 # Fetch recent main/source history before regeneration pushes when greater than zero.
 - name: RegenerationHistoryDepth
   type: number
@@ -298,6 +303,11 @@ extends:
                       ServiceEndpointUrl: https://api.esrp.microsoft.com
                       MainPublisher: ESRPRELPACMANTEST
 
+                  # Preserve the npm publication result even if the later playground upload fails.
+                  - pwsh: Write-Host '##vso[task.setvariable variable=publicNpmPublished;isOutput=true]true'
+                    name: markPublicNpm
+                    displayName: Record public npm publication
+
                   - ${{ if parameters.UploadPlaygroundBundle }}:
                     - task: AzureCLI@2
                       displayName: Publish TypeSpec playground bundle
@@ -388,6 +398,13 @@ extends:
                       echo "Building playground server from TypeSpec commit $(git -C "$source" rev-parse HEAD)"
                       context="$source/packages/http-client-csharp"
                       bash "$context/playground-server/deploy.sh" "$context" "azsdk-$(Build.BuildId)"
+
+    - ${{ if and(parameters.UpdateMgmtGeneratorDependency, parameters.ShouldPublish, parameters.PublishPublic) }}:
+      - template: /eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
+        parameters:
+          Pool: ${{ parameters.Pool }}
+          InitializationSteps: ${{ parameters.InitializationSteps }}
+          HasNugetPackages: ${{ parameters.HasNugetPackages }}
 
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
@@ -724,11 +741,44 @@ extends:
             parameters:
               Paths: ${{ parameters.SparseCheckoutPaths }}
 
+          # Both the branded regression tests and management validation need the
+          # dashboard script, which is not included in the default sparse checkout.
+          - ${{ if or(parameters.UpdateMgmtGeneratorDependency, eq(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp-mgmt')) }}:
+            - pwsh: |
+                git sparse-checkout add '/doc/GeneratorVersions/Emitter_Version_Dashboard.ps1'
+                if ($LASTEXITCODE -ne 0) { throw 'Failed to include the emitter version validator.' }
+              displayName: Include emitter version validator
+              workingDirectory: $(Build.SourcesDirectory)
+
+          # Management dependency bumps must not exceed the descriptor approved on
+          # the PR's merge ref, including after a draft is manually marked ready.
+          - ${{ if eq(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp-mgmt') }}:
+            - pwsh: |
+                $ErrorActionPreference = 'Stop'
+                & ./doc/GeneratorVersions/Emitter_Version_Dashboard.ps1 -RepoRoot '$(Build.SourcesDirectory)' -ValidateOnly
+                $global:LASTEXITCODE = 0
+              displayName: Validate approved management versions
+              workingDirectory: $(Build.SourcesDirectory)
+
           - download: current
             artifact: build_artifacts
             displayName: Download build artifacts
 
           - ${{ parameters.InitializationSteps }}
+
+          # Updater-only changes are excluded from eng/scripts CI but trigger this
+          # emitter pipeline, so its PR validation must run the focused tests too.
+          - ${{ if parameters.UpdateMgmtGeneratorDependency }}:
+            - pwsh: |
+                . ./eng/common/scripts/Helpers/PSModule-Helpers.ps1
+                Install-ModuleIfNotInstalled 'Pester' '5.7.1' | Import-Module
+                $result = Invoke-Pester -Path ./eng/scripts/tests/Update-MgmtGeneratorDependency.Tests.ps1,./eng/scripts/tests/Mgmt-Dependency-Pipeline.Tests.ps1 -Tag UnitTest -PassThru
+                if ($result.FailedCount -gt 0 -or $result.FailedContainersCount -gt 0 -or $result.TotalCount -eq 0) {
+                  throw 'Management dependency automation tests failed or were not discovered.'
+                }
+                $global:LASTEXITCODE = 0
+              displayName: Test management dependency automation
+              workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
             parameters:
