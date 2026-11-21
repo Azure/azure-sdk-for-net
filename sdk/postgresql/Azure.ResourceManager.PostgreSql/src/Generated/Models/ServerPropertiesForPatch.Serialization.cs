@@ -15,7 +15,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Properties of a server. </summary>
     internal partial class ServerPropertiesForPatch : IJsonModel<ServerPropertiesForPatch>
     {
         /// <param name="data"> The data to parse. </param>
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
+                SerializeVersion(writer, options);
             }
             if (Optional.IsDefined(Storage))
             {
@@ -156,6 +155,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("cluster"u8);
                 writer.WriteObjectValue(Cluster, options);
             }
+            if (Optional.IsDefined(FipsMode))
+            {
+                writer.WritePropertyName("fipsMode"u8);
+                writer.WriteStringValue(FipsMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -214,6 +218,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
             PostgreSqlFlexibleServerClusterProperties cluster = default;
+            FipsMode? fipsMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,11 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    version = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    DeserializeVersion(prop, ref version);
                     continue;
                 }
                 if (prop.NameEquals("storage"u8))
@@ -349,6 +350,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     cluster = PostgreSqlFlexibleServerClusterProperties.DeserializePostgreSqlFlexibleServerClusterProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("fipsMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fipsMode = new FipsMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -371,6 +381,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 replica,
                 network,
                 cluster,
+                fipsMode,
                 additionalBinaryDataProperties);
         }
     }

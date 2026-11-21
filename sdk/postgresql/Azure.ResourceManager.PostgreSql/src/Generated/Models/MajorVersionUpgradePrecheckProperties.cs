@@ -52,10 +52,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [WirePath("precheckResult")]
         public MajorVersionUpgradePrecheckResult PrecheckResult { get; }
 
-        /// <summary> The target PostgreSQL major version for the upgrade. </summary>
-        [WirePath("targetVersion")]
-        public PostgreSqlFlexibleServerVersion? TargetVersion { get; }
-
         /// <summary> Array of policy validation details. </summary>
         [WirePath("policyDetails")]
         public IList<MajorVersionUpgradePrecheckPolicyDetail> PolicyDetails { get; }

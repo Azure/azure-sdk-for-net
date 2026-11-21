@@ -85,6 +85,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
+            if (Optional.IsDefined(AutoGrowMaxThresholdMb))
+            {
+                writer.WritePropertyName("autoGrowMaxThresholdMb"u8);
+                writer.WriteNumberValue(AutoGrowMaxThresholdMb.Value);
+            }
+            if (Optional.IsDefined(AutoGrowIncrementPercent))
+            {
+                writer.WritePropertyName("autoGrowIncrementPercent"u8);
+                writer.WriteNumberValue(AutoGrowIncrementPercent.Value);
+            }
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
@@ -149,6 +159,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             int? storageSizeInGB = default;
             StorageAutoGrow? autoGrow = default;
+            int? autoGrowMaxThresholdMb = default;
+            int? autoGrowIncrementPercent = default;
             PostgreSqlManagedDiskPerformanceTier? tier = default;
             int? iops = default;
             int? throughput = default;
@@ -172,6 +184,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         continue;
                     }
                     autoGrow = new StorageAutoGrow(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("autoGrowMaxThresholdMb"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoGrowMaxThresholdMb = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("autoGrowIncrementPercent"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoGrowIncrementPercent = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("tier"u8))
@@ -218,6 +248,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerStorage(
                 storageSizeInGB,
                 autoGrow,
+                autoGrowMaxThresholdMb,
+                autoGrowIncrementPercent,
                 tier,
                 iops,
                 throughput,

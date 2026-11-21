@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SourceVersion))
             {
                 writer.WritePropertyName("sourceVersion"u8);
-                writer.WriteStringValue(SourceVersion.Value.ToString());
+                SerializeSourceVersion(writer, options);
             }
             if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
-                writer.WriteStringValue(TargetVersion.Value.ToString());
+                SerializeTargetVersion(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,20 +134,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (prop.NameEquals("sourceVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    DeserializeSourceVersion(prop, ref sourceVersion);
                     continue;
                 }
                 if (prop.NameEquals("targetVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    DeserializeTargetVersion(prop, ref targetVersion);
                     continue;
                 }
                 if (options.Format != "W")
