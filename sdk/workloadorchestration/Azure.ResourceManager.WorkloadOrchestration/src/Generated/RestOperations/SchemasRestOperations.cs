@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/schemas/", false);
             uri.AppendPath(schemaName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/schemas/", false);
             uri.AppendPath(schemaName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/schemas/", false);
             uri.AppendPath(schemaName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/schemas/", false);
             uri.AppendPath(schemaName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/providers/Microsoft.Edge/schemas/", false);
             uri.AppendPath(schemaName, true);
             uri.AppendPath("/createVersion", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/providers/Microsoft.Edge/schemas/", false);
             uri.AppendPath(schemaName, true);
             uri.AppendPath("/removeVersion", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/schemas", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/schemas", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

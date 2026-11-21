@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> The type used for update operations of the Solution. </summary>
+    /// <summary> The updatable properties of the Solution. </summary>
     public partial class EdgeSolutionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

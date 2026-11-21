@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary>
     /// Base Job Parameter
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobContent"/>, <see cref="PublishJobContent"/>, and <see cref="UninstallJobContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEdgeJobContent))]
     public abstract partial class EdgeJobContent : IJsonModel<EdgeJobContent>
@@ -127,6 +127,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 {
                     case "deploy":
                         return DeployJobContent.DeserializeDeployJobContent(element, options);
+                    case "publish":
+                        return PublishJobContent.DeserializePublishJobContent(element, options);
+                    case "uninstall":
+                        return UninstallJobContent.DeserializeUninstallJobContent(element, options);
                 }
             }
             return UnknownEdgeJobContent.DeserializeUnknownEdgeJobContent(element, options);

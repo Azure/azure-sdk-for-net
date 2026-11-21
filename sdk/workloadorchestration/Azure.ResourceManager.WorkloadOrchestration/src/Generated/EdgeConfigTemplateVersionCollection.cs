@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeConfigTemplateVersionResource.ResourceType, out string edgeConfigTemplateVersionApiVersion);
             _configTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateVersionResource.ResourceType.Namespace, Diagnostics);
-            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2025-06-01");
+            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,6 +51,122 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             if (id.ResourceType != EdgeConfigTemplateResource.ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeConfigTemplateResource.ResourceType), nameof(id));
+            }
+        }
+
+        /// <summary>
+        /// Create or update a Config Template Version Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplateVersions_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<EdgeConfigTemplateVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configTemplateVersionName, EdgeConfigTemplateVersionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplateVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, EdgeConfigTemplateVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource>(
+                    new EdgeConfigTemplateVersionResourceOperationSource(Client),
+                    _configTemplateVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a Config Template Version Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplateVersions_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<EdgeConfigTemplateVersionResource> CreateOrUpdate(WaitUntil waitUntil, string configTemplateVersionName, EdgeConfigTemplateVersionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplateVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, EdgeConfigTemplateVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource>(
+                    new EdgeConfigTemplateVersionResourceOperationSource(Client),
+                    _configTemplateVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -67,7 +183,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +232,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +281,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,7 +315,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +349,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +406,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +463,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +524,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> The type used for update operations of the Solution. </summary>
+    /// <summary> The updatable properties of the Solution. </summary>
     public partial class EdgeSolutionPatch : IJsonModel<EdgeSolutionPatch>
     {
         /// <param name="data"> The data to parse. </param>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/contexts/", false);
             uri.AppendPath(contextName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/contexts/", false);
             uri.AppendPath(contextName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/contexts/", false);
             uri.AppendPath(contextName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/contexts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/contexts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/contexts/", false);
             uri.AppendPath(contextName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

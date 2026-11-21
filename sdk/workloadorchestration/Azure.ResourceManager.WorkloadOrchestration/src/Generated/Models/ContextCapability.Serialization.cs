@@ -13,7 +13,7 @@ using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Capability, to match in Solution Templates and Targets. </summary>
+    /// <summary> Capability, to match in Solution Templates &amp; Targets. </summary>
     public partial class ContextCapability : IJsonModel<ContextCapability>
     {
         /// <summary> Initializes a new instance of <see cref="ContextCapability"/> for deserialization. </summary>
