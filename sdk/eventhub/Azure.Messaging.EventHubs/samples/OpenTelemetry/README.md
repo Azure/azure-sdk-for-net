@@ -37,7 +37,7 @@ For a live send, set `EVENTHUBS_CONNECTION_STRING` to an Event Hubs connection s
 
 ## Application configuration
 
-- Set `AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true)` before creating clients, and subscribe to `Azure.Messaging.EventHubs.*` on the tracer provider.
+- Set `AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true)` before creating clients, and subscribe to `Azure.Messaging.EventHubs.*` on the tracer provider. When enabled, each receive poll can create a logical span and a child wait span for each transport attempt, including empty polls.
 - Subscribe to `Azure.Messaging.EventHubs` on the meter provider. Metrics work independently of the tracing switch. The sample configures histogram boundaries suitable for durations measured in seconds.
 - Bridge the `AmqpLifecycle` EventSource record into application logging. This record contains structured identifiers and outcomes. Other existing diagnostic records can include broker descriptions; review them before forwarding them externally.
 - Keep providers alive for the client lifetime. Flush or dispose them during shutdown, including after failures. Exporters belong to the application, not the Event Hubs client.

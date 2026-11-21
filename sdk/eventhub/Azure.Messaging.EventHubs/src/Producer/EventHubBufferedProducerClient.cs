@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.ExceptionServices;
@@ -1423,7 +1424,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                                             CancellationToken publishCancellationToken,
                                                             CancellationToken batchingWaitCancellationToken)
         {
-            using var telemetry = Telemetry.StartOperation("send", "EventHubBufferedProducerClient.Send", buffered: true);
+            using var telemetry = Telemetry.StartOperation("send", "EventHubBufferedProducerClient.Send", buffered: true, deferActivity: true);
             var operationId = GenerateOperationId();
             var partitionId = partitionState.PartitionId;
             var batchEvents = new List<EventData>();
@@ -1442,7 +1443,24 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 // The wait time constraint should not consider creating the batch; start tracking after the batch is available to build.
 
-                batch = await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, publishCancellationToken).ConfigureAwait(false);
+                // Reserve the first event before tracing preparation. Other publishers may be draining this partition.
+                EventData currentEvent = null;
+                if (telemetry?.IsActivityDeferred == true && ShouldWait(remainingWaitTime, MinimumPublishingWaitInterval) && partitionState.TryReadEvent(out currentEvent))
+                {
+                    telemetry?.StartActivity();
+                }
+                try
+                {
+                    batch = await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, publishCancellationToken).ConfigureAwait(false);
+                }
+                catch
+                {
+                    if (currentEvent != null)
+                    {
+                        partitionState.StashEvent(currentEvent);
+                    }
+                    throw;
+                }
                 publishWatch = ValueStopwatch.StartNew();
 
                 // Build the batch, stopping either when it is full or when the allowable wait time
@@ -1450,11 +1468,13 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 while (ShouldWait(remainingWaitTime, MinimumPublishingWaitInterval))
                 {
-                    if ((partitionState.TryReadEvent(out var currentEvent)) && (currentEvent != null))
+                    if ((currentEvent != null || partitionState.TryReadEvent(out currentEvent)) && currentEvent != null)
                     {
+                        telemetry?.StartActivity();
                         if (batch.TryAdd(currentEvent))
                         {
                             batchEvents.Add(currentEvent);
+                            currentEvent = null;
                             Logger.BufferedProducerEventBatchPublishEventAdded(Identifier, EventHubName, partitionId, operationId, batchEvents.Count, publishWatch.GetElapsedTime().TotalSeconds);
                         }
                         else
@@ -1550,7 +1570,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, publishCancellationToken);
                 Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, ex.Message);
 
                 // Handler invocation is performed with a guarantee not to throw; exceptions in the handler are logged
@@ -1619,17 +1639,35 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 while (!drainComplete)
                 {
-                    telemetry = Telemetry.StartOperation("send", "EventHubBufferedProducerClient.Send", buffered: true);
-                    batch ??= await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, cancellationToken).ConfigureAwait(false);
+                    telemetry = Telemetry.StartOperation("send", "EventHubBufferedProducerClient.Send", buffered: true, deferActivity: true);
+                    readEvent = null;
+                    if (telemetry?.IsActivityDeferred == true && partitionState.TryReadEvent(out readEvent))
+                    {
+                        telemetry.StartActivity();
+                    }
+                    try
+                    {
+                        batch ??= await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch
+                    {
+                        if (readEvent != null)
+                        {
+                            partitionState.StashEvent(readEvent);
+                        }
+                        throw;
+                    }
                     batchEvents ??= new List<EventData>();
 
                     publishWatch = ValueStopwatch.StartNew();
 
                     // Read events until one does not fit in the batch.
 
-                    while ((partitionState.TryReadEvent(out readEvent)) && (batch.TryAdd(readEvent)))
+                    while ((readEvent != null || partitionState.TryReadEvent(out readEvent)) && batch.TryAdd(readEvent))
                     {
+                        telemetry?.StartActivity();
                         batchEvents.Add(readEvent);
+                        readEvent = null;
                         Logger.BufferedProducerEventBatchPublishEventAdded(Identifier, EventHubName, partitionId, operationId, batch.Count, publishWatch.GetElapsedTime().TotalSeconds);
                     }
 
@@ -1676,7 +1714,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         }
                         catch (Exception ex)
                         {
-                            telemetry?.Failed(ex);
+                            telemetry?.Failed(ex, cancellationToken);
                             Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, ex.Message);
                             await SafeInvokeOnSendFailedAsync(batchEvents, ex, partitionId, cancellationToken).ConfigureAwait(false);
 
@@ -1706,13 +1744,13 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (OperationCanceledException ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 // This is expected when cancellation is detected when creating a new batch; the partition
                 // will be left in a consistent state.
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 // This path should not be possible under normal conditions; if triggered, then
                 // something is in a corrupt state and the drain cannot continue.  Consider all remaining
                 // events to be failures and cease publishing.
@@ -2236,6 +2274,8 @@ namespace Azure.Messaging.EventHubs.Producer
         private Task RunPublishingAsync(CancellationToken cancellationToken) =>
             Task.Run(async () =>
             {
+                // The publisher outlives the request which first enqueued an event.
+                Activity.Current = null;
                 var operationId = GenerateOperationId();
                 Logger.BufferedProducerPublishingManagementStart(Identifier, EventHubName, operationId);
 

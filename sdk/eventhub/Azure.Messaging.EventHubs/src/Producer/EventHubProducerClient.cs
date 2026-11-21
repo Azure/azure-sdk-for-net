@@ -617,20 +617,17 @@ namespace Azure.Messaging.EventHubs.Producer
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            var events = eventBatch switch
-            {
-                IReadOnlyCollection<EventData> eventCollection => eventCollection,
-                _ => eventBatch.ToArray()
-            };
-
-            if (events.Count == 0)
-            {
-                return;
-            }
-
-            using var telemetry = Telemetry.StartOperation("send");
+            using var telemetry = Telemetry.StartOperation("send", "EventHubs.send", deferActivity: true);
             try
             {
+                var events = eventBatch as IReadOnlyCollection<EventData> ?? eventBatch.ToArray();
+                if (events.Count == 0)
+                {
+                    telemetry?.Discard();
+                    return;
+                }
+
+                telemetry?.StartActivity();
                 var sendTask = (Options.EnableIdempotentPartitions)
                     ? SendIdempotentAsync(events, options, cancellationToken)
                     : SendInternalAsync(events, options, cancellationToken);
@@ -640,7 +637,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 throw;
             }
         }
@@ -677,7 +674,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 return;
             }
 
-            using var telemetry = Telemetry.StartOperation("send");
+            using var telemetry = Telemetry.StartOperation("send", "EventHubs.send");
             try
             {
                 var sendTask = (Options.EnableIdempotentPartitions)
@@ -689,7 +686,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 throw;
             }
         }

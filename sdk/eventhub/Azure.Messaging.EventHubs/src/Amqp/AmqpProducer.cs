@@ -511,7 +511,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             }
                             catch (Exception ex)
                             {
-                                telemetry?.Failed(ex);
+                                telemetry?.Failed(ex, cancellationToken);
                                 throw;
                             }
                         }

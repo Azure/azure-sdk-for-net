@@ -14,12 +14,15 @@ using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
+using Microsoft.Azure.Amqp.Transport;
 using Moq;
 using NUnit.Framework;
 
@@ -51,7 +54,8 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             telemetry.AssertOperation("send", "success", 2);
-            Assert.That(telemetry.Activities.Count(a => a.OperationName == "EventHubProducerClient.Send"), Is.EqualTo(1));
+            var send = telemetry.Activities.Single(a => a.OperationName == "EventHubs.send");
+            Assert.That(telemetry.Activities.Single(a => a.OperationName == "EventHubProducerClient.Send").ParentId, Is.EqualTo(send.Id));
         }
 
         [TestCase(false)]
@@ -74,6 +78,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.ThrowsAsync<InvalidOperationException>(() => producer.SendAsync(events, new SendEventOptions { PartitionId = "0" }));
             }
             telemetry.AssertOperation("send", "error", 0);
+            Assert.That(telemetry.Activities.Single(a => a.OperationName == "EventHubs.send").Status, Is.EqualTo(ActivityStatusCode.Error));
         }
 
         [Test]
@@ -140,9 +145,11 @@ namespace Azure.Messaging.EventHubs.Tests
             telemetry.AssertOperation("receive", "success", 0);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task BufferedPreparationFailureIsObserved(bool drain)
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public async Task BufferedPreparationFailureIsObserved(bool drain, bool hasEvent)
         {
             using var telemetry = new Listener();
             var producer = new Mock<EventHubProducerClient>("namespace.example", "hub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions());
@@ -150,6 +157,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions();
             await using var buffered = new EventHubBufferedProducerClient(producer.Object, options);
             var state = new EventHubBufferedProducerClient.PartitionPublishingState("0", options);
+            var pending = new EventData("pending");
+            if (hasEvent)
+            {
+                await state.PendingEventsWriter.WriteAsync(pending);
+                state.BufferedEventCount = 1;
+            }
+            var failedEvents = new List<EventData>();
+            buffered.SendEventBatchFailedAsync += args =>
+            {
+                failedEvents.AddRange(args.EventBatch);
+                return Task.CompletedTask;
+            };
             if (drain)
             {
                 await buffered.DrainAndPublishPartitionEvents(state, null, CancellationToken.None);
@@ -157,6 +176,15 @@ namespace Azure.Messaging.EventHubs.Tests
             else
             {
                 await buffered.PublishBatchToPartition(state, false, CancellationToken.None, CancellationToken.None);
+            }
+            if (hasEvent && drain)
+            {
+                Assert.That(failedEvents, Is.EqualTo(new[] { pending }));
+            }
+            else if (hasEvent)
+            {
+                Assert.That(state.TryReadEvent(out var retained), Is.True);
+                Assert.That(retained, Is.SameAs(pending));
             }
             telemetry.AssertOperation("send", "error", 0);
             Assert.That(telemetry.Activities.Single(a => a.OperationName == "EventHubBufferedProducerClient.Send").Status, Is.EqualTo(ActivityStatusCode.Error));
@@ -205,17 +233,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(callbackObserved, Is.True);
             Assert.That(completedAtCallback, Is.True);
             telemetry.AssertOperation("send", "success", 1);
-            var bufferedActivity = telemetry.Activities.First(a => a.OperationName == "EventHubBufferedProducerClient.Send");
+            var bufferedActivity = telemetry.Activities.Single(a => a.OperationName == "EventHubBufferedProducerClient.Send");
             var sends = telemetry.Activities.Where(a => a.OperationName == "EventHubProducerClient.Send").ToArray();
             Assert.That(sends.Length, Is.EqualTo(throttle ? 2 : 1));
             Assert.That(sends.Select(a => a.ParentId), Is.All.EqualTo(bufferedActivity.Id));
             Assert.That(sends.Count(a => a.Status == ActivityStatusCode.Error), Is.EqualTo(throttle ? 1 : 0));
             Assert.That(bufferedActivity.Status, Is.Not.EqualTo(ActivityStatusCode.Error));
-            if (!drain)
-            {
-                var duration = telemetry.Measurements.Single(m => m.Name == "az.eventhubs.operation.duration").Value;
-                Assert.That(bufferedActivity.Duration.TotalSeconds - duration, Is.GreaterThan(0.02), "Batch-fill waits must be excluded from the metric.");
-            }
         }
 
         [TestCase(false)]
@@ -251,6 +274,180 @@ namespace Azure.Messaging.EventHubs.Tests
             await using var producer = new EventHubProducerClient(connection, transport.Object);
             Assert.ThrowsAsync<TaskCanceledException>(() => producer.SendAsync(new[] { new EventData("payload") }));
             telemetry.AssertOperation("send", "cancelled", 0);
+        }
+
+        [Test]
+        public async Task BackgroundPublisherDoesNotInheritTheEnqueueActivity()
+        {
+            using var listener = new Listener();
+            var producer = new Mock<EventHubProducerClient>("namespace.example", "hub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions());
+            producer.Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new[] { "0" });
+            producer.Setup(p => p.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, _) => new ValueTask<EventDataBatch>(EventHubsModelFactory.EventDataBatch(1024, new List<EventData>(), options)));
+            var published = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(20) };
+            await using var buffered = new EventHubBufferedProducerClient(producer.Object, options);
+            buffered.SendEventBatchSucceededAsync += _ => { published.TrySetResult(true); return Task.CompletedTask; };
+            buffered.SendEventBatchFailedAsync += args => { published.TrySetException(args.Exception); return Task.CompletedTask; };
+            using (var request = new Activity("enqueue").Start())
+            {
+                await buffered.EnqueueEventAsync(new EventData("payload"), new EnqueueEventOptions { PartitionId = "0" });
+                Assert.That(Activity.Current, Is.SameAs(request));
+            }
+            Assert.That(await Task.WhenAny(published.Task, Task.Delay(TimeSpan.FromSeconds(10))), Is.SameAs(published.Task));
+            await published.Task;
+            Assert.That(listener.Activities.Single(a => a.OperationName == "EventHubBufferedProducerClient.Send").ParentId, Is.Null);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task EmptyBufferedIterationProducesNoSend(bool drain)
+        {
+            using var listener = new Listener();
+            var producer = new Mock<EventHubProducerClient>("namespace.example", "hub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions());
+            producer.Setup(p => p.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, _) => new ValueTask<EventDataBatch>(EventHubsModelFactory.EventDataBatch(1024, new List<EventData>(), options)));
+            var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(20) };
+            await using var buffered = new EventHubBufferedProducerClient(producer.Object, options);
+            using var state = new EventHubBufferedProducerClient.PartitionPublishingState("0", options);
+            if (drain)
+            {
+                await buffered.DrainAndPublishPartitionEvents(state, null, CancellationToken.None);
+            }
+            else
+            {
+                await buffered.PublishBatchToPartition(state, false, CancellationToken.None, CancellationToken.None);
+            }
+            Assert.That(listener.Activities, Is.Empty);
+            Assert.That(listener.Measurements, Is.Empty);
+        }
+
+        [Test]
+        public async Task LazyEnumerationFailureIsObservedAndEmptyEnumerationIsSilent()
+        {
+            static IEnumerable<EventData> Events(bool fail)
+            {
+                if (fail)
+                {
+                    throw new FormatException("private event source");
+                }
+                yield break;
+            }
+
+            using var telemetry = new Listener();
+            await using var connection = new EventHubConnection("namespace.example", "hub", Mock.Of<TokenCredential>());
+            await using var producer = new EventHubProducerClient(connection, Mock.Of<TransportProducer>());
+
+            await producer.SendAsync(Events(false));
+            Assert.That(telemetry.Activities, Is.Empty);
+            Assert.That(telemetry.Measurements, Is.Empty);
+            Assert.ThrowsAsync<FormatException>(() => producer.SendAsync(Events(true)));
+            telemetry.AssertOperation("send", "error", 0);
+            Assert.That(telemetry.Activities.Single().OperationName, Is.EqualTo("EventHubs.send"));
+            Assert.That(telemetry.Activities.Single().Status, Is.EqualTo(ActivityStatusCode.Error));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task WrappedTransportFailurePreservesExceptionAndOutcome(bool cancel)
+        {
+            using var telemetry = new Listener();
+            using var cancellation = new CancellationTokenSource();
+            var failure = new OperationCanceledException("transport closed", new TimeoutException("private timeout"));
+            var transport = new Mock<TransportProducer>();
+            transport.Setup(t => t.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    if (cancel)
+                    {
+                        cancellation.Cancel();
+                    }
+                    return Task.FromException(failure);
+                });
+            await using var connection = new EventHubConnection("namespace.example", "hub", Mock.Of<TokenCredential>());
+            await using var producer = new EventHubProducerClient(connection, transport.Object);
+            Assert.That(Assert.ThrowsAsync<OperationCanceledException>(() => producer.SendAsync(new[] { new EventData("one") }, cancellation.Token)), Is.SameAs(failure));
+            telemetry.AssertOperation("send", cancel ? "cancelled" : "error", 0);
+        }
+
+        [Test]
+        public void DurationExcludesPausedBatchFillTime()
+        {
+            long timestamp = Stopwatch.Frequency;
+            using var telemetry = new Listener();
+            var diagnostics = new EventHubsTelemetry("namespace.example", "hub", () => timestamp);
+            using var operation = diagnostics.StartOperation("send");
+            timestamp += Stopwatch.Frequency;
+            operation.Pause();
+            timestamp += 100 * Stopwatch.Frequency;
+            operation.Resume();
+            timestamp += 2 * Stopwatch.Frequency;
+            operation.Complete(1);
+            Assert.That(telemetry.Measurements.Single(m => m.Name == "az.eventhubs.operation.duration").Value, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void LegacyListenerReceivesNoAdditionalScopesWithOptInDisabled()
+        {
+            using var telemetry = new Listener(false);
+            using var legacy = new ClientDiagnosticListener(name => name.StartsWith(EventHubsTelemetry.MeterName));
+            var diagnostics = new EventHubsTelemetry("namespace.example", "hub");
+            using var operation = diagnostics.StartOperation("receive", "EventHubs.receive");
+            using var link = diagnostics.StartLifecycle("receiver");
+            using var wait = diagnostics.StartAmqp("EventHubs.amqp.receive");
+            link.Complete();
+            operation.Complete(2);
+            telemetry.AssertOperation("receive", "success", 2);
+            Assert.That(telemetry.LifecycleRecords, Has.Count.EqualTo(2));
+            Assert.That(telemetry.Activities, Is.Empty);
+            Assert.That(legacy.Scopes, Is.Empty);
+        }
+
+        [Test]
+        public async Task ReceiveRecordsOneWaitAndTheReturnedBatchSize()
+        {
+            using var telemetry = new Listener();
+            var settings = new AmqpSettings();
+            var provider = new AmqpTransportProvider();
+            provider.Versions.Add(new AmqpVersion(new Version(1, 0, 0, 0)));
+            settings.TransportProviders.Add(provider);
+            var connection = new AmqpConnection(new Mock<TransportBase>("test").Object, settings, new AmqpConnectionSettings());
+            var session = new AmqpSession(connection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
+            var link = new ReceivingAmqpLink(session, new AmqpLinkSettings { Role = true, LinkName = "receiver", TotalLinkCredit = 10, AutoSendFlow = true, Source = new Source(), Target = new Target() });
+            var opening = link.OpenAsync(TimeSpan.FromSeconds(2));
+            var attach = new Attach { Handle = 0, LinkName = "receiver", Role = false, Source = new Source(), Target = new Target(), InitialDeliveryCount = 0 };
+            using (var frame = new Frame())
+            {
+                frame.Decode(Frame.EncodeCommand(FrameType.Amqp, 0, attach, 0));
+                link.ProcessFrame(frame);
+            }
+            await opening;
+            var converter = new AmqpMessageConverter();
+            for (uint id = 0; id < 2; ++id)
+            {
+                using var message = converter.CreateMessageFromEvent(new EventData($"event-{id}"));
+                using var payload = message.ToStream();
+                var transfer = new Transfer { Handle = 0, DeliveryId = id, DeliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(id)), Settled = true };
+                var encoded = Frame.EncodeCommand(FrameType.Amqp, 0, transfer, (int)payload.Length);
+                var size = payload.Read(encoded.Buffer, encoded.WritePos, (int)payload.Length);
+                encoded.Append(size);
+                using var frame = new Frame();
+                frame.Decode(encoded);
+                link.ProcessFrame(frame);
+                Assert.That(link.TerminalException, Is.Null);
+                Assert.That(session.TerminalException, Is.Null);
+            }
+
+            var scope = new Mock<AmqpConnectionScope>();
+            scope.Setup(s => s.OpenConsumerLinkAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>(), It.IsAny<uint>(), It.IsAny<long?>(), It.IsAny<long?>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(link);
+            var consumer = new AmqpConsumer("hub", "$Default", "0", "consumer", EventPosition.Earliest, false, true, null, null, null, scope.Object, converter, new BasicRetryPolicy(new EventHubsRetryOptions { MaximumRetries = 0 }));
+            var events = await consumer.ReceiveAsync(2, TimeSpan.FromSeconds(1), CancellationToken.None);
+            Assert.That(events.Select(e => e.EventBody.ToString()), Is.EqualTo(new[] { "event-0", "event-1" }));
+            telemetry.AssertOperation("receive", "success", 2);
+            var receive = telemetry.Activities.Single(a => a.OperationName == "EventHubs.receive");
+            Assert.That(telemetry.Activities.Single(a => a.OperationName == "EventHubs.amqp.receive").ParentId, Is.EqualTo(receive.Id));
+            link.Abort();
+            await consumer.CloseAsync(CancellationToken.None);
         }
 
         [Test]
@@ -292,7 +489,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         private sealed class Listener : IDisposable
         {
-            private readonly TestAppContextSwitch _switch = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
+            private readonly TestAppContextSwitch _switch;
             private readonly ActivityListener _activities;
             private readonly MeterListener _metrics = new MeterListener();
             private readonly AzureEventSourceListener _logs;
@@ -301,8 +498,9 @@ namespace Azure.Messaging.EventHubs.Tests
             internal ConcurrentQueue<Activity> Activities { get; } = new ConcurrentQueue<Activity>();
             internal ConcurrentQueue<(string Name, double Value, Dictionary<string, object> Tags)> Measurements { get; } = new ConcurrentQueue<(string, double, Dictionary<string, object>)>();
 
-            internal Listener()
+            internal Listener(bool enableTracing = true)
             {
+                _switch = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", enableTracing ? "true" : "false");
                 ActivityExtensions.ResetFeatureSwitch();
                 _activities = new ActivityListener
                 {

@@ -280,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             }
                             catch (Exception ex)
                             {
-                                wait?.Failed(ex);
+                                wait?.Failed(ex, cancellationToken);
                                 throw;
                             }
                         }
@@ -397,12 +397,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (TaskCanceledException ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 throw;
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, ex.Message);
                 throw;
             }

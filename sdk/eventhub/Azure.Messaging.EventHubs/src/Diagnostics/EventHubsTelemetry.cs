@@ -7,6 +7,7 @@ using System.Diagnostics.Metrics;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared;
+using Azure.Messaging.EventHubs.Amqp;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
@@ -30,15 +31,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         private readonly string _eventHub;
         private readonly string _identifier = Guid.NewGuid().ToString("N");
         private long _generation;
+        private readonly Func<long> _getTimestamp;
 
-        internal EventHubsTelemetry(string host, string eventHub)
+        internal EventHubsTelemetry(string host, string eventHub, Func<long> getTimestamp = null)
         {
+            _getTimestamp = getTimestamp ?? Stopwatch.GetTimestamp;
             _host = host;
             _eventHub = eventHub;
             _diagnostics = new MessagingClientDiagnostics(MeterName, DiagnosticProperty.ResourceProviderNamespace, DiagnosticProperty.EventHubsServiceContext, host, eventHub);
         }
 
-        internal Operation StartOperation(string operation, string activityName = null, bool buffered = false)
+        internal Operation StartOperation(string operation, string activityName = null, bool buffered = false, bool deferActivity = false)
         {
             // The buffered worker owns the logical send across preparation and throttling retries.
             if (operation == "send" && !buffered && BufferedSend.Value != null)
@@ -46,14 +49,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 return null;
             }
 
-            var scope = activityName == null ? default : _diagnostics.CreateScope(activityName, ActivityKind.Client,
+            var scope = activityName == null || !ActivityExtensions.SupportsActivitySource ? default : _diagnostics.CreateScope(activityName, ActivityKind.Client,
                 operation == "send" ? MessagingDiagnosticOperation.Publish : MessagingDiagnosticOperation.Receive);
             if (!scope.IsEnabled && !Operations.Enabled && !Events.Enabled && !Duration.Enabled)
             {
                 return null;
             }
-            scope.Start();
-            var result = new Operation(this, scope, operation);
+            var result = new Operation(this, scope, operation, deferActivity: deferActivity);
+            if (!deferActivity)
+            {
+                scope.Start();
+            }
             if (buffered)
             {
                 BufferedSend.Value = result;
@@ -63,6 +69,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         internal Operation StartAmqp(string activityName)
         {
+            if (!ActivityExtensions.SupportsActivitySource)
+            {
+                return null;
+            }
             var scope = _diagnostics.CreateScope(activityName, ActivityKind.Client);
             if (!scope.IsEnabled)
             {
@@ -75,7 +85,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         internal Operation StartLifecycle(string component)
         {
             var generation = Interlocked.Increment(ref _generation);
-            var scope = _diagnostics.CreateScope("EventHubs.amqp." + component + ".open", ActivityKind.Client);
+            var scope = ActivityExtensions.SupportsActivitySource
+                ? _diagnostics.CreateScope("EventHubs.amqp." + component + ".open", ActivityKind.Client)
+                : default;
             if (!scope.IsEnabled && !Lifecycle.Enabled && !EventHubsEventSource.Log.IsEnabled())
             {
                 return null;
@@ -105,33 +117,52 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             private readonly string _operation;
             private readonly string _component;
             private readonly long _generation;
-            private long _started = Stopwatch.GetTimestamp();
+            private long _started;
+            private bool _activityDeferred;
             private double _elapsed;
             private bool _paused;
             private bool _completed;
             private int _invalidated;
 
-            internal Operation(EventHubsTelemetry owner, DiagnosticScope scope, string operation, string component = null, long generation = 0)
+            internal Operation(EventHubsTelemetry owner, DiagnosticScope scope, string operation, string component = null, long generation = 0, bool deferActivity = false)
             {
                 _owner = owner;
                 _scope = scope;
                 _operation = operation;
                 _component = component;
                 _generation = generation;
+                _started = owner._getTimestamp();
+                _activityDeferred = deferActivity && scope.IsEnabled;
+                if (_activityDeferred)
+                {
+                    _scope.SetStartTime(DateTime.UtcNow);
+                }
+            }
+
+            internal bool IsActivityDeferred => _activityDeferred;
+
+            // A lazy enumerable or a competing batch worker may discover there is nothing to send.
+            internal void StartActivity()
+            {
+                if (_activityDeferred)
+                {
+                    _activityDeferred = false;
+                    _scope.Start();
+                }
             }
 
             internal void Pause()
             {
                 if (!_paused)
                 {
-                    _elapsed += (Stopwatch.GetTimestamp() - _started) / (double)Stopwatch.Frequency;
+                    _elapsed += (_owner._getTimestamp() - _started) / (double)Stopwatch.Frequency;
                     _paused = true;
                 }
             }
 
             internal void Resume()
             {
-                _started = Stopwatch.GetTimestamp();
+                _started = _owner._getTimestamp();
                 _paused = false;
             }
 
@@ -139,15 +170,19 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
             internal void Complete(int eventCount = 0) => Finish("success", eventCount);
 
-            internal void Failed(Exception exception)
+            internal void Failed(Exception exception, CancellationToken cancellationToken = default)
             {
                 if (_completed)
                 {
                     return;
                 }
                 // Broker descriptions, exception messages, and message contents are never added to these spans.
-                _scope.Failed(exception.GetType().FullName);
-                Finish(exception is OperationCanceledException ? "cancelled" : "error", 0);
+                StartActivity();
+                var failure = exception is OperationCanceledException && !cancellationToken.IsCancellationRequested
+                    ? exception.TranslateServiceException(_owner._eventHub)
+                    : exception;
+                _scope.Failed(failure.GetType().FullName);
+                Finish(failure is OperationCanceledException ? "cancelled" : "error", 0);
             }
 
             internal void Invalidate()

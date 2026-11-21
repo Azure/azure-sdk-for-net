@@ -317,7 +317,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.AmqpManagementLinkCreateError(EventHubName, ex.Message);
                 throw;
             }
@@ -405,7 +405,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.AmqpConsumerLinkCreateError(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog, ex.Message, linkIdentifier);
                 throw;
             }
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                telemetry?.Failed(ex);
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.AmqpProducerLinkCreateError(EventHubName, partitionId, featuresLog, ex.Message, linkIdentifier);
                 throw;
             }
@@ -629,7 +629,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     }
                     catch (Exception ex)
                     {
-                        telemetry?.Failed(ex);
+                        telemetry?.Failed(ex, cancellationToken);
                         throw;
                     }
                 }
@@ -719,7 +719,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     }
                     catch (Exception ex)
                     {
-                        telemetry?.Failed(ex);
+                        telemetry?.Failed(ex, cancellationToken);
                         throw;
                     }
                 }
@@ -854,7 +854,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     }
                     catch (Exception ex)
                     {
-                        telemetry?.Failed(ex);
+                        telemetry?.Failed(ex, cancellationToken);
                         throw;
                     }
                 }
