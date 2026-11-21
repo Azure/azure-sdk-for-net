@@ -21,12 +21,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         public ResponsePromptVariables()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsePromptVariables"/>. </summary>
         /// <param name="additionalProperties"></param>
-        /// <param name="additionalBinaryDataProperties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResponsePromptVariables(IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalStringProperties = additionalProperties;
@@ -35,8 +34,5 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
-
-        /// <summary> Gets the AdditionalBinaryDataProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalBinaryDataProperties => _additionalBinaryDataProperties;
     }
 }

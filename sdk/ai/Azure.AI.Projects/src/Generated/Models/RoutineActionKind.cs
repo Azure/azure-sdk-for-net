@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RoutineActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineActionKind?(string value) => value == null ? null : new RoutineActionKind(value);
+        public static implicit operator RoutineActionKind?(string value) => value == null ? (RoutineActionKind?)null : new RoutineActionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Malformed original-subject metadata now returns a platform `400` response even when the host does not install Core middleware.
+
 ### Other Changes
 
 - Updated the OpenAI dependency used by tests and samples to 2.15.0.

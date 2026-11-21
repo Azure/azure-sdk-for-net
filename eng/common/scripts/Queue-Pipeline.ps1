@@ -18,7 +18,7 @@ Pipline definition ID
 
 .PARAMETER CancelPreviousBuilds
 Requires a value for SourceBranch. Cancel previous builds before queuing the new
-build.
+build, using the specified Organization and Project.
 
 .PARAMETER VsoQueuedPipelines
 Variable name to set in DevOps for the queued pipeline links
@@ -96,8 +96,11 @@ if (![string]::IsNullOrWhiteSpace($AuthToken)) {
 if ($CancelPreviousBuilds -and $SourceBranch)
 {
   try {
-    $queuedBuilds = Get-DevOpsBuilds -BranchName "refs/heads/$SourceBranch" -Definitions $DefinitionId `
-    -StatusFilter "inProgress, notStarted" -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken
+    # Build helpers default to azure-sdk/internal. Keep lookup and cancellation on
+    # the requested target so builds in another project are not found or canceled.
+    $queuedBuilds = Get-DevOpsBuilds -Organization $Organization -Project $Project `
+      -BranchName "refs/heads/$SourceBranch" -Definitions $DefinitionId `
+      -StatusFilter "inProgress, notStarted" -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken
 
     if ($queuedBuilds.count -eq 0) {
       LogDebug "There is no previous build still inprogress or about to start."
@@ -106,7 +109,8 @@ if ($CancelPreviousBuilds -and $SourceBranch)
     foreach ($build in $queuedBuilds.Value) {
       $buildID = $build.id
       LogDebug "Canceling build [ $($build._links.web.href) ]"
-      Update-DevOpsBuild -BuildId $buildID -Status "cancelling" -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken
+      Update-DevOpsBuild -Organization $Organization -Project $Project `
+        -BuildId $buildID -Status "cancelling" -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken
     }
   }
   catch {

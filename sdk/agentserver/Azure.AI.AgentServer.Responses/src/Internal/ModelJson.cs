@@ -19,7 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// Reads also accept the array form of a <c>function_call_output</c> item's <c>output</c> for
 /// models that only accept the string form; see <see cref="FunctionCallOutputParts"/>. They also
 /// accept the object form of <c>created_by</c> on custom tool call items, which OpenAI's reader
-/// rejects; see <see cref="CustomToolCallCreatedBy"/>.
+/// rejects; see <see cref="CustomToolCallCreatedBy"/>. They preserve the string form of a
+/// <c>custom_tool_call_output</c> item's <c>output</c>; see <see cref="CustomToolCallOutputString"/>.
 /// </para>
 /// </summary>
 internal static class ModelJson
@@ -55,18 +56,21 @@ internal static class ModelJson
     {
         options ??= ModelReaderWriterOptions.Json;
         var original = data;
+        var outputStrings = CustomToolCallOutputString.Capture(data);
         var flattened = FunctionCallOutputParts.Flatten(ref data);
         var createdBy = CustomToolCallCreatedBy.Strip(ref data);
 #pragma warning disable AZC0150
         if (flattened is not null || createdBy is not null)
         {
             // Models that carry these values natively (e.g. ItemFieldFunctionToolCallOutput's
-            // BinaryData output, or OutputItemCustomToolCall's created_by) would lose data if
+            // BinaryData output, or CustomToolCallItem's created_by) would lose data if
             // rewritten, so only fall back to rewrite-and-restore when the plain read rejects the
             // original payload (the OpenAI reader throws).
             try
             {
-                return ModelReaderWriter.Read(original, returnType, options);
+                var plain = ModelReaderWriter.Read(original, returnType, options);
+                RestoreOutputStrings(plain, outputStrings);
+                return plain;
             }
             catch (InvalidOperationException)
             {
@@ -85,6 +89,15 @@ internal static class ModelJson
             CustomToolCallCreatedBy.Restore(model, createdBy);
         }
 
+        RestoreOutputStrings(model, outputStrings);
         return model;
+    }
+
+    private static void RestoreOutputStrings(object? model, List<(object[] Path, string Output)>? outputStrings)
+    {
+        if (outputStrings is not null)
+        {
+            CustomToolCallOutputString.Restore(model, outputStrings);
+        }
     }
 }

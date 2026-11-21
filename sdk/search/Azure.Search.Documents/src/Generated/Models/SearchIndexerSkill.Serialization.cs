@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for skills.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureMachineLearningSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="ChatCompletionSkill"/>, <see cref="ConditionalSkill"/>, <see cref="ContentUnderstandingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="OcrSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="ShaperSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="VisionVectorizeSkill"/>, and <see cref="WebApiSkill"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="ChatCompletionSkill"/>, <see cref="ConditionalSkill"/>, <see cref="ContentUnderstandingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="OcrSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="ShaperSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, and <see cref="WebApiSkill"/>.
     /// </summary>
     public partial class SearchIndexerSkill : IJsonModel<SearchIndexerSkill>
     {
@@ -158,8 +158,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Skills.Custom.AmlSkill":
-                        return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill":
                         return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
                     case "#Microsoft.Skills.Custom.ChatCompletionSkill":
@@ -198,8 +196,6 @@ namespace Azure.Search.Documents.Indexes.Models
                         return SplitSkill.DeserializeSplitSkill(element, options);
                     case "#Microsoft.Skills.Text.TranslationSkill":
                         return TextTranslationSkill.DeserializeTextTranslationSkill(element, options);
-                    case "#Microsoft.Skills.Vision.VectorizeSkill":
-                        return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
                     case "#Microsoft.Skills.Custom.WebApiSkill":
                         return WebApiSkill.DeserializeWebApiSkill(element, options);
                 }

@@ -58,7 +58,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="DataGenerationJobKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataGenerationJobKind?(string value) => value == null ? null : new DataGenerationJobKind(value);
+        public static implicit operator DataGenerationJobKind?(string value) => value == null ? (DataGenerationJobKind?)null : new DataGenerationJobKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

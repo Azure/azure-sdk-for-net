@@ -812,6 +812,60 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task DownloadStreamingAsync_Sessions_StructuredMessage()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled,
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            byte[] expectedCrc = new byte[Constants.StorageCrc64SizeInBytes];
+            StorageCrc64Calculator.ComputeSlicedSafe(data, 0L).WriteCrc64(expectedCrc);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            countingPolicy.Start();
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                TransferValidation = new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                },
+            });
+
+            var actual = new MemoryStream();
+            await response.Value.Content.CopyToAsync(actual);
+
+            // Assert — the service responded with a structured message body and content validated
+            Assert.IsTrue(response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader),
+                "Expected the download response to use a structured message body");
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            TestHelper.AssertSequenceEqual(expectedCrc, response.Value.Details.ContentCrc);
+
+            // Assert — the structured message download was authenticated with a session
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected one create session request");
+            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount, "Expected the structured message download to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to bearer");
+            Assert.AreEqual(1, countingPolicy.StructuredMessageSessionAuthSuccessCount,
+                "Expected the structured message GET to be signed with a Session token and succeed with a structured response");
+            Assert.AreEqual(0, countingPolicy.StructuredMessageBearerCount,
+                "Expected no structured message GET to be sent with a bearer token");
+        }
+
+        [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadContentAsync_Sessions()
         {

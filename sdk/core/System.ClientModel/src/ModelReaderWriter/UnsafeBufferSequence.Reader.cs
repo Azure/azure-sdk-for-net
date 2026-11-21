@@ -89,6 +89,10 @@ internal partial class UnsafeBufferSequence
         }
 
         public BinaryData ToBinaryData()
+            => ToBinaryData(static capacity => new MemoryStream(capacity));
+
+        // Internal seam allowing tests to interact with the destination stream during the copy.
+        internal BinaryData ToBinaryData(Func<int, MemoryStream> streamFactory)
         {
             if (_isDisposed)
             {
@@ -106,7 +110,7 @@ internal partial class UnsafeBufferSequence
                 Buffer.BlockCopy(_buffers[0].Array, 0, arr, 0, _buffers[0].Written);
                 return new BinaryData(arr);
             }
-            using var stream = new MemoryStream((int)length);
+            using MemoryStream stream = streamFactory((int)length);
             CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }

@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="EvaluationTaxonomyInputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluationTaxonomyInputType?(string value) => value == null ? null : new EvaluationTaxonomyInputType(value);
+        public static implicit operator EvaluationTaxonomyInputType?(string value) => value == null ? (EvaluationTaxonomyInputType?)null : new EvaluationTaxonomyInputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
