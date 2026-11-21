@@ -10,42 +10,44 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Properties for a CVE analysis summary. </summary>
+    /// <summary> Properties for a CVE (Common Vulnerabilities and Exposures) analysis summary (deprecated). </summary>
     public partial class CveSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
-        public CveSummary()
+        public CveSummary() : base(FirmwareAnalysisSummaryType.CommonVulnerabilitiesAndExposures)
         {
-            SummaryType = FirmwareAnalysisSummaryType.CommonVulnerabilitiesAndExposures;
         }
 
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="criticalCveCount"> The total number of critical severity CVEs detected. </param>
         /// <param name="highCveCount"> The total number of high severity CVEs detected. </param>
         /// <param name="mediumCveCount"> The total number of medium severity CVEs detected. </param>
         /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
         /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
-        internal CveSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount) : base(summaryType, provisioningState, serializedAdditionalRawData)
+        internal CveSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             CriticalCveCount = criticalCveCount;
             HighCveCount = highCveCount;
             MediumCveCount = mediumCveCount;
             LowCveCount = lowCveCount;
             UnknownCveCount = unknownCveCount;
-            SummaryType = summaryType;
         }
 
         /// <summary> The total number of critical severity CVEs detected. </summary>
         public long? CriticalCveCount { get; set; }
+
         /// <summary> The total number of high severity CVEs detected. </summary>
         public long? HighCveCount { get; set; }
+
         /// <summary> The total number of medium severity CVEs detected. </summary>
         public long? MediumCveCount { get; set; }
+
         /// <summary> The total number of low severity CVEs detected. </summary>
         public long? LowCveCount { get; set; }
+
         /// <summary> The total number of unknown severity CVEs detected. </summary>
         public long? UnknownCveCount { get; set; }
     }

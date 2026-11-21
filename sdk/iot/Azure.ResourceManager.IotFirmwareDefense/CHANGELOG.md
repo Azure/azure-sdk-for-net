@@ -4,11 +4,16 @@
 
 ### Features Added
 
+- Added support for API version `2026-06-01-preview`, including unsafe function call analysis and expanded vulnerability metadata.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated SDK generation from AutoRest to TypeSpec while preserving the existing package and API compatibility.
+- Preserved API-version overrides, summary model-factory discriminators, and enumeration-time cancellation during the migration.
 
 ## 1.1.1 (2026-06-13)
 

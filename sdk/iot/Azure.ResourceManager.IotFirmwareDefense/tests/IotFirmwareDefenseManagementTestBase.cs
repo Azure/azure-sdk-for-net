@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
@@ -23,11 +23,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         protected IotFirmwareDefenseManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         protected IotFirmwareDefenseManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            // TypeSpec omits Accept on operations without a response body; older recordings include it.
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         [SetUp]
