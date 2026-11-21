@@ -97,6 +97,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             writer.WriteStringValue(PlanDescription);
             writer.WritePropertyName("recoveryGroupsSetting"u8);
             writer.WriteObjectValue(RecoveryGroupsSetting, options);
+            if (Optional.IsDefined(ResiliencyPlanProperties))
+            {
+                writer.WritePropertyName("resiliencyPlanProperties"u8);
+                writer.WriteObjectValue(ResiliencyPlanProperties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(LatestFailoverStatus))
             {
                 writer.WritePropertyName("latestFailoverStatus"u8);
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             RecoveryPlanState? planState = default;
             string planDescription = default;
             RecoveryGroupsSetting recoveryGroupsSetting = default;
+            RecoveryPlanResiliencyProperties resiliencyPlanProperties = default;
             RecoveryPlanFailoverOperationStatus latestFailoverStatus = default;
             RecoveryPlanOperationStatus latestValidationStatus = default;
             ResponseError errorDetails = default;
@@ -196,6 +202,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 if (prop.NameEquals("recoveryGroupsSetting"u8))
                 {
                     recoveryGroupsSetting = RecoveryGroupsSetting.DeserializeRecoveryGroupsSetting(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("resiliencyPlanProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resiliencyPlanProperties = RecoveryPlanResiliencyProperties.DeserializeRecoveryPlanResiliencyProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("latestFailoverStatus"u8))
@@ -236,6 +251,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 planState,
                 planDescription,
                 recoveryGroupsSetting,
+                resiliencyPlanProperties,
                 latestFailoverStatus,
                 latestValidationStatus,
                 errorDetails,

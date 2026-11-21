@@ -105,6 +105,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ResiliencyGroupProperties))
+            {
+                writer.WritePropertyName("resiliencyGroupProperties"u8);
+                writer.WriteObjectValue(ResiliencyGroupProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             string description = default;
             IList<RecoveryGroupBaseAction> preActions = default;
             IList<RecoveryGroupBaseAction> postActions = default;
+            RecoveryGroupResiliencyProperties resiliencyGroupProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,6 +204,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     postActions = array;
                     continue;
                 }
+                if (prop.NameEquals("resiliencyGroupProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resiliencyGroupProperties = RecoveryGroupResiliencyProperties.DeserializeRecoveryGroupResiliencyProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -209,6 +224,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 description,
                 preActions ?? new ChangeTrackingList<RecoveryGroupBaseAction>(),
                 postActions ?? new ChangeTrackingList<RecoveryGroupBaseAction>(),
+                resiliencyGroupProperties,
                 additionalBinaryDataProperties);
         }
     }

@@ -165,6 +165,51 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return await GetRecoveryPlans(scope).GetAsync(recoveryPlanName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="RecoveryConfigProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryConfigProfileResource"/> object. </returns>
+        public virtual RecoveryConfigProfileResource GetRecoveryConfigProfileResource(ResourceIdentifier id)
+        {
+            RecoveryConfigProfileResource.ValidateResourceId(id);
+            return new RecoveryConfigProfileResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="RecoveryConfigProfileCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RecoveryConfigProfileResource"/> objects. </returns>
+        public virtual RecoveryConfigProfileCollection GetRecoveryConfigProfiles(ResourceIdentifier scope)
+        {
+            return new RecoveryConfigProfileCollection(Client, scope);
+        }
+
+        /// <summary> Gets a recovery configuration profile. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recoveryConfigProfileName"> The name of the recovery configuration profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryConfigProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryConfigProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RecoveryConfigProfileResource> GetRecoveryConfigProfile(ResourceIdentifier scope, string recoveryConfigProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryConfigProfileName, nameof(recoveryConfigProfileName));
+
+            return GetRecoveryConfigProfiles(scope).Get(recoveryConfigProfileName, cancellationToken);
+        }
+
+        /// <summary> Gets a recovery configuration profile. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recoveryConfigProfileName"> The name of the recovery configuration profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryConfigProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryConfigProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoveryConfigProfileResource>> GetRecoveryConfigProfileAsync(ResourceIdentifier scope, string recoveryConfigProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryConfigProfileName, nameof(recoveryConfigProfileName));
+
+            return await GetRecoveryConfigProfiles(scope).GetAsync(recoveryConfigProfileName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="RecoveryMembersResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecoveryMembersResource"/> object. </returns>
