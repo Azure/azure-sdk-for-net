@@ -1,0 +1,117 @@
+parameters:
+  - name: MaxParallel
+    type: number
+  - name: SelectionKind
+    type: string
+  - name: Selection
+    type: string
+  - name: EnvVars
+    type: object
+  - name: PreSteps
+    type: stepList
+  - name: PostSteps
+    type: stepList
+
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+      - stage: Plan
+        displayName: Discover and partition samples
+        variables:
+          - template: /eng/pipelines/templates/variables/globals.yml@self
+          - template: /eng/pipelines/templates/variables/image.yml@self
+        jobs:
+          - job: Plan
+            timeoutInMinutes: 45
+            pool:
+              name: $(LINUXPOOL)
+              image: $(LINUXVMIMAGE)
+              os: linux
+            steps:
+              - template: /eng/pipelines/templates/steps/install-dotnet.yml
+              - pwsh: |
+                  & ./sdk/ai/Azure.AI.Projects/tests/Samples/ci/New-SampleTestPlan.ps1 `
+                    -SelectionKind $env:SAMPLE_SELECTION_KIND -Selection $env:SAMPLE_SELECTION `
+                    -QueueCount ([int] $env:SAMPLE_QUEUE_COUNT) `
+                    -OutputDirectory '$(Build.ArtifactStagingDirectory)/sample-plan' `
+                    -Pool $env:SAMPLE_POOL -Image $env:SAMPLE_IMAGE
+                name: Discover
+                displayName: Discover selected NUnit samples and assign queues without execution
+                env:
+                  SAMPLE_SELECTION_KIND: ${{ parameters.SelectionKind }}
+                  SAMPLE_SELECTION: ${{ parameters.Selection }}
+                  SAMPLE_QUEUE_COUNT: ${{ parameters.MaxParallel }}
+                  SAMPLE_POOL: $(LINUXPOOL)
+                  SAMPLE_IMAGE: $(LINUXVMIMAGE)
+              - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+                parameters:
+                  ArtifactPath: '$(Build.ArtifactStagingDirectory)/sample-plan'
+                  ArtifactName: 'sample-plan-$(System.JobAttempt)'
+                  CustomCondition: always()
+                  SbomEnabled: false
+      - stage: Public
+        dependsOn: Plan
+        variables:
+          - template: /eng/pipelines/templates/variables/globals.yml@self
+          - template: /eng/pipelines/templates/variables/image.yml@self
+        jobs:
+          - template: /eng/pipelines/templates/jobs/live.tests.yml
+            parameters:
+              OSName: linux
+              Matrix: stageDependencies.Plan.Plan.outputs['Discover.WorkerMatrix']
+              MaxParallel: ${{ parameters.MaxParallel }}
+              TimeoutInMinutes: 120
+              ServiceDirectory: ai
+              Location: East US
+              DeployTestResources: false
+              UseFederatedAuth: true
+              IgnoreTestFailures: false
+              CloudConfig:
+                Cloud: Public
+                ServiceConnection: azure-sdk-tests
+                UseAzureCliForTests: true
+                SubscriptionConfiguration:
+                SubscriptionConfigurations:
+                SubscriptionConfigurationFilePaths:
+              EnvVars: ${{ parameters.EnvVars }}
+              PreSteps:
+                - task: DownloadPipelineArtifact@2
+                  displayName: Download this run's sample assignments
+                  inputs:
+                    buildType: current
+                    artifactName: $(SamplePlanArtifact)
+                    targetPath: '$(Pipeline.Workspace)/sample-plan'
+                    itemPattern: '**/$(SampleQueueName)/selected-tests.json'
+                - pwsh: |
+                    $files = @(Get-ChildItem -LiteralPath '$(Pipeline.Workspace)/sample-plan' -Recurse -Filter selected-tests.json |
+                      Where-Object { $_.Directory.Name -ceq $env:SAMPLE_QUEUE_NAME })
+                    if ($files.Count -ne 1) { throw 'Expected exactly one assignment manifest for this worker.' }
+                    $manifest = Get-Content -LiteralPath $files[0].FullName -Raw | ConvertFrom-Json
+                    if ($manifest.schemaVersion -ne 1 -or $manifest.queueName -cne $env:SAMPLE_QUEUE_NAME -or
+                        @($manifest.selectedTests).Count -eq 0 -or [string]::IsNullOrWhiteSpace($manifest.filter)) {
+                      throw 'Invalid or empty worker assignment.'
+                    }
+                    New-Item -ItemType Directory -Force '$(Build.ArtifactStagingDirectory)/sample-assignment' | Out-Null
+                    Copy-Item -LiteralPath $files[0].FullName -Destination '$(Build.ArtifactStagingDirectory)/sample-assignment/selected-tests.json'
+                    foreach ($test in $manifest.selectedTests) { Write-Host "Assigned: $($test.fullName)" }
+                    $filter = $manifest.filter.Replace('%', '%AZP25').Replace("`r", '%0D').Replace("`n", '%0A')
+                    Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$filter"
+                  displayName: Use only this worker's exact assigned test IDs
+                  env:
+                    SAMPLE_QUEUE_NAME: $(SampleQueueName)
+                - ${{ parameters.PreSteps }}
+              PostSteps:
+                - pwsh: |
+                    & ./sdk/ai/Azure.AI.Projects/tests/Samples/ci/Test-SampleAssignments.ps1 `
+                      -ManifestPath '$(Build.ArtifactStagingDirectory)/sample-assignment/selected-tests.json' `
+                      -ResultsRoot '$(Build.SourcesDirectory)/sdk/ai'
+                  displayName: Verify every assigned sample passed exactly once
+                  condition: succeeded()
+                - ${{ parameters.PostSteps }}
+                - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+                  parameters:
+                    ArtifactPath: '$(Build.ArtifactStagingDirectory)/sample-assignment'
+                    ArtifactName: 'sample-assignment-$(SampleQueueName)-$(System.JobAttempt)'
+                    CustomCondition: always()
+                    SbomEnabled: false
