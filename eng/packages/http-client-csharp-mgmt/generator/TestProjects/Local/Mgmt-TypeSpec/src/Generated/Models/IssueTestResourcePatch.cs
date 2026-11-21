@@ -55,11 +55,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new IssueTestUpdateProperties();
                 }
                 Properties.DisplayName = value;
+                if (Properties.IsIssueTestUpdatePropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
 
@@ -83,11 +91,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new IssueTestUpdateProperties();
                 }
                 Properties.InnerValue = value;
+                if (Properties.IsIssueTestUpdatePropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
 
@@ -101,11 +117,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new IssueTestUpdateProperties();
                 }
                 Properties.InnerFlag = value;
+                if (Properties.IsIssueTestUpdatePropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
 
@@ -119,11 +143,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new IssueTestUpdateProperties();
                 }
                 Properties.UpdateOnlyValue = value;
+                if (Properties.IsIssueTestUpdatePropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

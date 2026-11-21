@@ -87,8 +87,8 @@ internal class RestClientVisitor : ScmLibraryVisitor
 
     private static ValueExpression BuildResourceTypeExpression(ArmResourceMetadata[] resources, InputServiceMethod serviceMethod, MethodProvider requestMethod, MethodSignature initialSignature)
     {
-        var resourceType = resources[0].ResourceType;
-        if (resources.All(r => r.ResourceType.Equals(resourceType)) && resourceType.All(segment => segment.IsConstant))
+        var resourceType = InputClientExtensions.GetApiVersionResourceType(resources[0], serviceMethod);
+        if (resources.All(r => InputClientExtensions.GetApiVersionResourceType(r, serviceMethod).Equals(resourceType)) && resourceType.All(segment => segment.IsConstant))
         {
             return Literal(resourceType.SerializedResourceType);
         }
@@ -96,7 +96,10 @@ internal class RestClientVisitor : ScmLibraryVisitor
         // An expanded resource can reuse one REST method for several concrete types.
         // Recover its dynamic type segments from the request parameters rather than
         // choosing the first metadata entry. Truncate action suffixes to the resource path.
-        var path = new RequestPathPattern(new RequestPathPattern(serviceMethod.Operation.Path).Take(resources[0].ResourceIdPattern.Count));
+        var resourceMethod = resources[0].Methods.First(method => ReferenceEquals(method.InputMethod, serviceMethod));
+        var path = InputClientExtensions.IsChildListRoute(resources[0], resourceMethod)
+            ? resourceMethod.OperationPath
+            : new RequestPathPattern(new RequestPathPattern(serviceMethod.Operation.Path).Take(resources[0].ResourceIdPattern.Count));
         ValueExpression? result = null;
         var retainedParameters = new List<ParameterProvider>();
         foreach (var segment in path.ResourceType)

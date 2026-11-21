@@ -62,7 +62,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-05-01");
             _employeesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-05-01");
+            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/foos/bars/employees", out string employeesApiVersionOverride) ? employeesApiVersionOverride : "2024-05-01");
             ValidateResourceId(id);
         }
 

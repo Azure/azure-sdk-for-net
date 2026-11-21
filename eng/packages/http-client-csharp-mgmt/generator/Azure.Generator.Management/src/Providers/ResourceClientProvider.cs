@@ -296,6 +296,67 @@ namespace Azure.Generator.Management.Providers
         private MethodSignature? _factoryMethodSignature;
         internal MethodSignature FactoryMethodSignature => _factoryMethodSignature ??= BuildFactoryMethodSignature();
 
+        internal RequestPathPattern SingletonResourcePath
+        {
+            get
+            {
+                var path = (_resourceMetadata.ParentResourceId ?? _resourceMetadata.Scope.ScopeIdPattern)
+                    .TrimAncestorFrom(_resourceMetadata.ResourceIdPattern);
+                return new RequestPathPattern([.. path.Take(path.Count - 1), new RequestPathSegment(SingletonResourceName!)]);
+            }
+        }
+
+        private IReadOnlyList<ParameterProvider>? _singletonPathParameters;
+        internal IReadOnlyList<ParameterProvider> SingletonPathParameters => _singletonPathParameters ??= SingletonResourcePath
+            .Where(segment => !segment.IsConstant)
+            .Select(segment => SynthesizedParameterNameHelper.PreserveName(new ParameterProvider(
+                SynthesizedParameterNameHelper.GetPathParameterName(segment.VariableName, _readMethod.InputMethod),
+                $"The {segment.VariableName} for the resource.",
+                ResourceHelpers.GetRequestPathParameterType(segment.VariableName, _readMethod.InputMethod),
+                location: ParameterLocation.Path,
+                wireInfo: new WireInformation(SerializationFormat.Default, segment.VariableName),
+                inputParameter: SynthesizedParameterNameHelper.GetPathParameter(segment.VariableName, _readMethod.InputMethod))))
+            .ToArray();
+
+        internal ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> parentId)
+        {
+            var path = SingletonResourcePath;
+            if (SingletonPathParameters.Count == 0 && path.Count == 4 && path[0].IsProvidersSegment)
+            {
+                return parentId.AppendProviderResource(Literal(path[1].Value), Literal(path[2].Value), Literal(path[3].Value));
+            }
+            if (SingletonPathParameters.Count == 0 && path.Count == 2)
+            {
+                return parentId.AppendChildResource(Literal(path[0].Value), Literal(path[1].Value));
+            }
+
+            var arguments = new List<ValueExpression> { parentId };
+            var format = new StringBuilder("{0}");
+            foreach (var segment in path)
+            {
+                format.Append('/');
+                if (segment.IsConstant)
+                {
+                    format.Append(segment.Value.Replace("{", "{{{{").Replace("}", "}}}}"));
+                }
+                else
+                {
+                    format.Append($"{{{arguments.Count}}}");
+                    arguments.Add(SingletonPathParameters.Single(parameter => parameter.WireInfo.SerializedName == segment.VariableName));
+                }
+            }
+            return New.Instance(typeof(ResourceIdentifier), new FormattableStringExpression(format.ToString(), arguments.ToArray()));
+        }
+
+        internal MethodProvider? BuildLegacySingletonAccessor(TypeProvider enclosingType)
+            => SingletonPathParameters.Count == 0 ? null : new MethodProvider(
+                new MethodSignature(FactoryMethodSignature.Name,
+                    $"This resource requires path parameters. Use the {FactoryMethodSignature.Name} overload that supplies them.",
+                    FactoryMethodSignature.Modifiers, Type, FactoryMethodSignature.ReturnDescription, []),
+                Throw(New.Instance(typeof(InvalidOperationException),
+                    Literal($"This resource requires a location or other path parameters. Use the {FactoryMethodSignature.Name} overload that supplies them."))),
+                enclosingType);
+
         private MethodSignature BuildFactoryMethodSignature()
         {
             if (ResourceCollection != null)
@@ -324,7 +385,7 @@ namespace Azure.Generator.Management.Providers
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     Type,
                     $"Returns a {Type:C} object.",
-                    []
+                    SingletonPathParameters
                     );
             }
         }
@@ -742,9 +803,12 @@ namespace Azure.Generator.Management.Providers
                 if (childResource.IsSingleton)
                 {
                     var signature = childResource.FactoryMethodSignature;
-                    var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
-                    var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
+                    var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), childResource.BuildSingletonResourceIdentifier(thisResource.Id())));
                     methods.Add(new MethodProvider(signature, bodyStatement, this));
+                    if (childResource.BuildLegacySingletonAccessor(this) is { } legacyAccessor)
+                    {
+                        methods.Add(legacyAccessor);
+                    }
                 }
                 else
                 {

@@ -11,17 +11,17 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The type of the Entra ID principal. </summary>
+    /// <summary> The type of Microsoft Entra principal mapped to a PostgreSQL role. </summary>
     public readonly partial struct HorizonDBPrincipalType : IEquatable<HorizonDBPrincipalType>
     {
         private readonly string _value;
-        /// <summary> Unknown or unrecognized type (internal only, not accepted in requests). </summary>
+        /// <summary> An unknown or unrecognized type. This value is for internal use and is not accepted in requests. </summary>
         private const string UnknownValue = "Unknown";
-        /// <summary> An Entra ID user account (UPN-based principal). </summary>
+        /// <summary> A Microsoft Entra ID user account. </summary>
         private const string UserValue = "User";
-        /// <summary> An Entra ID security group. All members of the group inherit admin privileges. </summary>
+        /// <summary> A Microsoft Entra ID security group. All members of the group inherit administrator privileges. </summary>
         private const string GroupValue = "Group";
-        /// <summary> An Entra ID application / service principal (used for automated workloads). </summary>
+        /// <summary> A Microsoft Entra ID application or service principal used for automated workloads. </summary>
         private const string ServicePrincipalValue = "ServicePrincipal";
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPrincipalType"/>. </summary>
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _value = value;
         }
 
-        /// <summary> Unknown or unrecognized type (internal only, not accepted in requests). </summary>
+        /// <summary> An unknown or unrecognized type. This value is for internal use and is not accepted in requests. </summary>
         public static HorizonDBPrincipalType Unknown { get; } = new HorizonDBPrincipalType(UnknownValue);
 
-        /// <summary> An Entra ID user account (UPN-based principal). </summary>
+        /// <summary> A Microsoft Entra ID user account. </summary>
         public static HorizonDBPrincipalType User { get; } = new HorizonDBPrincipalType(UserValue);
 
-        /// <summary> An Entra ID security group. All members of the group inherit admin privileges. </summary>
+        /// <summary> A Microsoft Entra ID security group. All members of the group inherit administrator privileges. </summary>
         public static HorizonDBPrincipalType Group { get; } = new HorizonDBPrincipalType(GroupValue);
 
-        /// <summary> An Entra ID application / service principal (used for automated workloads). </summary>
+        /// <summary> A Microsoft Entra ID application or service principal used for automated workloads. </summary>
         public static HorizonDBPrincipalType ServicePrincipal { get; } = new HorizonDBPrincipalType(ServicePrincipalValue);
 
         /// <summary> Determines if two <see cref="HorizonDBPrincipalType"/> values are the same. </summary>

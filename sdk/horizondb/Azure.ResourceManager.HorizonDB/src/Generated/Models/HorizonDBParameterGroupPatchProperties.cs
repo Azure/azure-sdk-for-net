@@ -25,24 +25,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPatchProperties"/>. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
-        /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="description"> Description of the parameter group. The maximum length is 1024 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterGroupPatchProperties(IList<HorizonDBParameterProperties> parameters, string description, bool? shouldApplyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupPatchProperties(IList<HorizonDBParameterProperties> parameters, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
-            ShouldApplyImmediately = shouldApplyImmediately;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Parameters in the parameter group. </summary>
         public IList<HorizonDBParameterProperties> Parameters { get; }
 
-        /// <summary> Description of the parameter group. </summary>
+        /// <summary> Description of the parameter group. The maximum length is 1024 characters. </summary>
         public string Description { get; set; }
-
-        /// <summary> Indicates whether the parameters should be applied immediately. </summary>
-        public bool? ShouldApplyImmediately { get; set; }
     }
 }

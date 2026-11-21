@@ -61,6 +61,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new ZooProperties();
@@ -151,6 +155,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new ZooProperties();

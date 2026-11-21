@@ -246,7 +246,7 @@ namespace Azure.Generator.Management.Providers
                     New.Instance(
                         resource.Type,
                         This.As<ArmResource>().Client(),
-                        BuildSingletonResourceIdentifier(This.As<ArmResource>().Id(), resource.ResourceTypeValue, resource.SingletonResourceName!)));
+                        resource.BuildSingletonResourceIdentifier(This.As<ArmResource>().Id())));
                 var method = new MethodProvider(
                     resourceMethodSignature,
                     bodyStatement,
@@ -260,6 +260,10 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 yield return method;
+                if (resource.BuildLegacySingletonAccessor(this) is { } legacyAccessor)
+                {
+                    yield return legacyAccessor;
+                }
             }
             else
             {

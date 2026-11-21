@@ -60,11 +60,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new PropertyOverrideCreateProperties();
                 }
                 Properties.BaseOnlyProperty = value;
+                if (Properties.IsPropertyOverrideCreatePropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
 
@@ -81,11 +89,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new PropertyOverrideCreateProperties();
                 }
                 Properties.OverridableProperty = value;
+                if (Properties.IsPropertyOverrideCreatePropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

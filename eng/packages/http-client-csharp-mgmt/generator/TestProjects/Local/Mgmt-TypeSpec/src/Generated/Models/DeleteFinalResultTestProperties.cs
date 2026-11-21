@@ -34,5 +34,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Gets or sets the Marker. </summary>
         [WirePath("marker")]
         public string Marker { get; set; }
+
+        internal bool IsDeleteFinalResultTestPropertiesEmptyForFlattening()
+        {
+            return true && Marker is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

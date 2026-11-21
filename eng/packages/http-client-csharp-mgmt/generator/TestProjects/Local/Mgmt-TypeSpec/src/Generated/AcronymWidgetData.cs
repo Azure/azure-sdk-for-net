@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Gets the Description. </summary>
         [WirePath("properties.description")]
-        public string AcronymWidgetDescription
+        public string Description
         {
             get
             {

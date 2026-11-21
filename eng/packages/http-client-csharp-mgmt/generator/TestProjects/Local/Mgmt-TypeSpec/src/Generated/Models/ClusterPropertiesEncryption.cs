@@ -34,5 +34,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
         [WirePath("customerManagedKeyEncryption")]
         public CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
+
+        internal bool IsClusterPropertiesEncryptionEmptyForFlattening()
+        {
+            return true && CustomerManagedKeyEncryption is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

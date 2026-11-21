@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     yield break;
                 }
-                HorizonDBClusterListResult result = HorizonDBClusterListResult.FromResponse(response);
+                ClusterListResult result = ClusterListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<HorizonDBClusterData>.FromValues((IReadOnlyList<HorizonDBClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
