@@ -480,6 +480,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await mockSessionProcessor.Object.CloseAsync(cts.Token);
             mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
+
+        [TestCase(ServiceBusErrorSource.Receive)]
+        [TestCase(ServiceBusErrorSource.ProcessMessageCallback)]
+        public void ErrorSourceValidationAllowsDisposedReceiver(ServiceBusErrorSource errorSource)
+        {
+            var eventArgs = new ProcessErrorEventArgs(
+                new ObjectDisposedException(nameof(ServiceBusReceiver)),
+                errorSource,
+                "namespace",
+                "entityPath",
+                CancellationToken.None);
+
+            Assert.DoesNotThrow(() =>
+                SessionProcessorLiveTests.AssertExpectedErrorSource(errorSource, 0, eventArgs));
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
