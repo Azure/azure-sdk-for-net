@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task NetAppAccountGetOperations()
         {
             var options = new ArmClientOptions();
-            options.SetApiVersion(new ResourceType("Microsoft.NetApp/operations"), "2026-08-15-preview");
+            options.SetApiVersion(new ResourceType("Microsoft.NetApp/operations"), "2026-09-01");
             ArmClient client = GetArmClient(options);
             SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ArmRestApiCollection operationCollection = subscription.GetArmRestApis("Microsoft.NetApp");

@@ -107,7 +107,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             AssertAccountPayload(ArmNetAppModelFactory.NetAppAccountData(
                 null, null, default, null, null, "westus2", null, null, configuration, null, null, null, null, null, null, null), options);
             AssertAccountPayload(ArmNetAppModelFactory.NetAppAccountPatch(
-                null, null, default, null, null, "westus2", null, null, null, null, patchConfiguration, (LdapConfigurationPatch)null), options);
+                id: null, name: null, resourceType: default, systemData: null, tags: null, location: "westus2",
+                identity: null, provisioningState: null, activeDirectories: null, encryption: null, disableShowmount: null,
+                entraIdConfig: patchConfiguration, ldapConfiguration: null), options);
             AssertAccountPayload(ArmNetAppModelFactory.NetAppAccountData(
                 null, null, default, null, null, "westus2", null, null, null, null, null, null,
                 configuration, (LdapConfiguration)null), options);
