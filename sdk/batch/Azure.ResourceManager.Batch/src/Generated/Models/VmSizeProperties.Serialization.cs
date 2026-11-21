@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 throw new FormatException($"The model {nameof(VmSizeProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(VCPUsAvailable))
+            if (Optional.IsDefined(VcpusAvailable))
             {
                 writer.WritePropertyName("vCPUsAvailable"u8);
-                writer.WriteNumberValue(VCPUsAvailable.Value);
+                writer.WriteNumberValue(VcpusAvailable.Value);
             }
-            if (Optional.IsDefined(VCPUsPerCore))
+            if (Optional.IsDefined(VcpusPerCore))
             {
                 writer.WritePropertyName("vCPUsPerCore"u8);
-                writer.WriteNumberValue(VCPUsPerCore.Value);
+                writer.WriteNumberValue(VcpusPerCore.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            int? vcpUsAvailable = default;
-            int? vcpUsPerCore = default;
+            int? vcpusAvailable = default;
+            int? vcpusPerCore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    vcpUsAvailable = prop.Value.GetInt32();
+                    vcpusAvailable = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("vCPUsPerCore"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    vcpUsPerCore = prop.Value.GetInt32();
+                    vcpusPerCore = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VmSizeProperties(vcpUsAvailable, vcpUsPerCore, additionalBinaryDataProperties);
+            return new VmSizeProperties(vcpusAvailable, vcpusPerCore, additionalBinaryDataProperties);
         }
     }
 }

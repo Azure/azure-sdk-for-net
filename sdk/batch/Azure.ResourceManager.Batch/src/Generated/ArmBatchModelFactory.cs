@@ -630,12 +630,12 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Specifies the properties for customizing the size of the virtual machine. </summary>
-        /// <param name="vcpUsAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size. </param>
-        /// <param name="vcpUsPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size. <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
+        /// <param name="vcpusAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size. </param>
+        /// <param name="vcpusPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size. <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
         /// <returns> A new <see cref="Models.VmSizeProperties"/> instance for mocking. </returns>
-        public static VmSizeProperties VmSizeProperties(int? vcpUsAvailable = default, int? vcpUsPerCore = default)
+        public static VmSizeProperties VmSizeProperties(int? vcpusAvailable = default, int? vcpusPerCore = default)
         {
-            return new VmSizeProperties(vcpUsAvailable, vcpUsPerCore, default);
+            return new VmSizeProperties(vcpusAvailable, vcpusPerCore, default);
         }
 
         /// <summary> The policy that controls allocation across availability zones. </summary>

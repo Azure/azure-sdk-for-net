@@ -47,6 +47,35 @@ Documentation is available to help you learn how to use this package:
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
+## Migrating from version 1.x to 2.0
+
+Version 2.0 uses service API version `2026-10-01` by default and includes the breaking changes listed in the [changelog](CHANGELOG.md).
+
+### Updating pools
+
+`BatchAccountPoolResource.Update` and `UpdateAsync` now accept `BatchAccountPoolPatch` instead of `BatchAccountPoolData`. Construct the update settings inside `PoolPatchProperties`:
+
+```C# Snippet:Azure_ResourceManager_Batch_CreatePoolPatch
+var patch = new BatchAccountPoolPatch
+{
+    Properties = new PoolPatchProperties
+    {
+        ScaleSettings = new BatchAccountPoolScaleSettings
+        {
+            AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=34")
+        }
+    }
+};
+```
+
+Pass this patch to `Update` or `UpdateAsync`. Pool reads and update responses still return `BatchAccountPoolData`; do not pass that response data directly to the update methods.
+
+### Authentication modes
+
+`BatchAuthenticationMode.TaskAuthenticationToken` was removed. Remove references to this enum value and use an authentication mode supported by the service.
+
+Account responses from older API versions, including older test recordings, that contain `TaskAuthenticationToken` cannot be deserialized by version 2.0. Applications that explicitly select an older API version should account for this incompatibility before upgrading.
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
@@ -57,6 +86,16 @@ Code samples for using the management library for .NET can be found in the follo
 For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
+
+### Recording management tests
+
+Provision the resources in [the Batch test-resource template](../test-resources.json) before recording tests. The template accepts `batchAccounts_poolallocation_location` and `batchAccounts_usersubscription_location` overrides so the two setup accounts can use separate regional quotas. Both default to the deployment's `location`; the user-subscription account's Key Vault and disk encryption set use its selected region.
+
+The generated test environment's `LOCATION` selects the region for additional test accounts and their storage. Allow at least three free Batch account slots in that region for the account-collection test.
+
+For non-interactive developer recording, set `BATCH_USE_CLI_AUTH=true` to use Azure CLI authentication in the tenant from the test environment. Without this flag, the existing developer credential behavior is unchanged.
+
+Set the optional MSBuild property `BatchTestTargetFramework` to a single target, such as `net10.0`, when recording with limited quota. Leave it unset for normal validation across all required frameworks. Use serial NUnit run settings and wait for resource cleanup between fixtures before starting another recording run.
 
 For details on contributing to this repository, see the [contributing
 guide][cg].

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             var name = Recording.GenerateAssetName("account");
             var name2 = Recording.GenerateAssetName("account");
             var name3 = Recording.GenerateAssetName("account");
-            var input = ResourceDataHelper.GetBatchAccountData(StorageAccountIdentifier);
+            var input = ResourceDataHelper.GetBatchAccountData(StorageAccountIdentifier, DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountResource account1 = lro.Value;
             Assert.AreEqual(name, account1.Data.Name);
