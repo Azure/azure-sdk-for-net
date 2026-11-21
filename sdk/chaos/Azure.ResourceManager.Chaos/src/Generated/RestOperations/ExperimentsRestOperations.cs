@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             if (running != null)
             {
                 uri.AppendQuery("running", TypeFormatters.ConvertToString(running), true);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             if (running != null)
             {
                 uri.AppendQuery("running", TypeFormatters.ConvertToString(running), true);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
             uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
