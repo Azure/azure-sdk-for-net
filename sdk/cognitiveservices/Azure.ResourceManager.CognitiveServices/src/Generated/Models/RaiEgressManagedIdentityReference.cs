@@ -12,26 +12,26 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A reference to a managed-identity token used as a header value. </summary>
-    public partial class RaiEgressManagedIdentityRef
+    public partial class RaiEgressManagedIdentityReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RaiEgressManagedIdentityRef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiEgressManagedIdentityReference"/>. </summary>
         /// <param name="resource"> The resource/audience the token is requested for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public RaiEgressManagedIdentityRef(string resource)
+        public RaiEgressManagedIdentityReference(string resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RaiEgressManagedIdentityRef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiEgressManagedIdentityReference"/>. </summary>
         /// <param name="resource"> The resource/audience the token is requested for. </param>
         /// <param name="format"> Optional format for the resolved token; "{value}" is the placeholder, e.g. "Bearer {value}". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiEgressManagedIdentityRef(string resource, string format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiEgressManagedIdentityReference(string resource, string format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Format = format;

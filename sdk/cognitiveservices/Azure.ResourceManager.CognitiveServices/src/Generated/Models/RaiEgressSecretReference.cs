@@ -12,27 +12,27 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A reference to a stored secret used as a header value. </summary>
-    public partial class RaiEgressSecretRef
+    public partial class RaiEgressSecretReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RaiEgressSecretRef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiEgressSecretReference"/>. </summary>
         /// <param name="secretId"> Identifier of the secret to inject. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        public RaiEgressSecretRef(string secretId)
+        public RaiEgressSecretReference(string secretId)
         {
             Argument.AssertNotNull(secretId, nameof(secretId));
 
             SecretId = secretId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RaiEgressSecretRef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiEgressSecretReference"/>. </summary>
         /// <param name="secretId"> Identifier of the secret to inject. </param>
         /// <param name="secretKey"> Optional key within the secret. </param>
         /// <param name="format"> Optional format for the resolved value; "{value}" is the placeholder, e.g. "Bearer {value}". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiEgressSecretRef(string secretId, string secretKey, string format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiEgressSecretReference(string secretId, string secretKey, string format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretId = secretId;
             SecretKey = secretKey;

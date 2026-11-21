@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(OfferScope))
             {
                 writer.WritePropertyName("offerScope"u8);
-                writer.WriteStringValue(OfferScope);
+                writer.WriteStringValue(OfferScope.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ScopeId))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string acceleratorType = default;
-            string offerScope = default;
+            CognitiveServicesManagedComputeCapacityOfferScope? offerScope = default;
             string scopeId = default;
             int? availableAccelerators = default;
             int? totalAvailableAccelerators = default;
@@ -167,7 +167,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("offerScope"u8))
                 {
-                    offerScope = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    offerScope = new CognitiveServicesManagedComputeCapacityOfferScope(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scopeId"u8))

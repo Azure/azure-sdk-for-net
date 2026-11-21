@@ -12,33 +12,33 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A dynamic source for a header value. Exactly one of secretRef or managedIdentityRef must be set. </summary>
-    public partial class RaiEgressHeaderValueRef
+    public partial class RaiEgressHeaderValueReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RaiEgressHeaderValueRef"/>. </summary>
-        public RaiEgressHeaderValueRef()
+        /// <summary> Initializes a new instance of <see cref="RaiEgressHeaderValueReference"/>. </summary>
+        public RaiEgressHeaderValueReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RaiEgressHeaderValueRef"/>. </summary>
-        /// <param name="secretRef"> Resolve the value from a stored secret. </param>
-        /// <param name="managedIdentityRef"> Resolve the value from a managed-identity token. </param>
+        /// <summary> Initializes a new instance of <see cref="RaiEgressHeaderValueReference"/>. </summary>
+        /// <param name="secretReference"> Resolve the value from a stored secret. </param>
+        /// <param name="managedIdentityReference"> Resolve the value from a managed-identity token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiEgressHeaderValueRef(RaiEgressSecretRef secretRef, RaiEgressManagedIdentityRef managedIdentityRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiEgressHeaderValueReference(RaiEgressSecretReference secretReference, RaiEgressManagedIdentityReference managedIdentityReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SecretRef = secretRef;
-            ManagedIdentityRef = managedIdentityRef;
+            SecretReference = secretReference;
+            ManagedIdentityReference = managedIdentityReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resolve the value from a stored secret. </summary>
         [WirePath("secretRef")]
-        public RaiEgressSecretRef SecretRef { get; set; }
+        public RaiEgressSecretReference SecretReference { get; set; }
 
         /// <summary> Resolve the value from a managed-identity token. </summary>
         [WirePath("managedIdentityRef")]
-        public RaiEgressManagedIdentityRef ManagedIdentityRef { get; set; }
+        public RaiEgressManagedIdentityReference ManagedIdentityReference { get; set; }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         public async Task CapacityListUsesExpectedRequest(bool async)
         {
             const string subscriptionId = "83aa47df-e3e9-49ff-877b-94304bf3d3ad";
-            const string deploymentId = "/subscriptions/83aa47df-e3e9-49ff-877b-94304bf3d3ad/resourceGroups/rg/providers/Microsoft.CognitiveServices/accounts/account/deployments/deployment";
+            var deploymentId = new ResourceIdentifier("/subscriptions/83aa47df-e3e9-49ff-877b-94304bf3d3ad/resourceGroups/rg/providers/Microsoft.CognitiveServices/accounts/account/deployments/deployment");
             string requestUri = null;
             var options = new ArmClientOptions
             {
