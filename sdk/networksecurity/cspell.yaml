@@ -4,3 +4,4 @@ overrides:
   - filename: '**/sdk/networksecurity/**/*'
     words:
       - neuro
+      - spiffe

@@ -1,6 +1,6 @@
 directory: specification/networksecurity/resource-manager/Microsoft.NetworkSecurity
-commit: 73f1687f0b6875c99a32f145a28c589274791aed
-repo: Azure/azure-rest-api-specs
+commit: 8d6fba6c5281c3be50e5d257d96ca90d6cc33cfc
+repo: ArcturusZhang/azure-rest-api-specs
 additionalDirectories: 
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
