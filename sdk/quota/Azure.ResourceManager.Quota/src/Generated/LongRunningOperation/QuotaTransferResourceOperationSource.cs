@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary></summary>
-    internal partial class GroupQuotaSubscriptionResourceOperationSource : IOperationSource<GroupQuotaSubscriptionResource>
+    internal partial class QuotaTransferResourceOperationSource : IOperationSource<QuotaTransferResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GroupQuotaSubscriptionResourceOperationSource(ArmClient client)
+        internal QuotaTransferResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Quota
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GroupQuotaSubscriptionResource IOperationSource<GroupQuotaSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        QuotaTransferResource IOperationSource<QuotaTransferResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GroupQuotaSubscriptionData data = GroupQuotaSubscriptionData.DeserializeGroupQuotaSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GroupQuotaSubscriptionResource(_client, data);
+            QuotaTransferData data = QuotaTransferData.DeserializeQuotaTransferData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new QuotaTransferResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GroupQuotaSubscriptionResource> IOperationSource<GroupQuotaSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<QuotaTransferResource> IOperationSource<QuotaTransferResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GroupQuotaSubscriptionData data = GroupQuotaSubscriptionData.DeserializeGroupQuotaSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GroupQuotaSubscriptionResource(_client, data);
+            QuotaTransferData data = QuotaTransferData.DeserializeQuotaTransferData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new QuotaTransferResource(_client, data);
         }
     }
 }

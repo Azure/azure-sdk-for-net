@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A class representing a GroupQuotaSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GroupQuotaSubscriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GroupQuotaEntityResource"/> using the GetGroupQuotaSubscriptions method.
+    /// A class representing a ManagementGroupGroupQuotaSubscriptionId along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GroupQuotaEntityResource"/> using the GetManagementGroupGroupQuotaSubscriptionIds method.
     /// </summary>
-    public partial class GroupQuotaSubscriptionResource : ArmResource
+    public partial class ManagementGroupGroupQuotaSubscriptionIdResource : ArmResource
     {
         private readonly ClientDiagnostics _groupQuotaSubscriptionIdsClientDiagnostics;
         private readonly GroupQuotaSubscriptionIds _groupQuotaSubscriptionIdsRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Quota
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Quota/groupQuotas/subscriptions";
 
-        /// <summary> Initializes a new instance of GroupQuotaSubscriptionResource for mocking. </summary>
-        protected GroupQuotaSubscriptionResource()
+        /// <summary> Initializes a new instance of ManagementGroupGroupQuotaSubscriptionIdResource for mocking. </summary>
+        protected ManagementGroupGroupQuotaSubscriptionIdResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GroupQuotaSubscriptionResource(ArmClient client, GroupQuotaSubscriptionData data) : this(client, data.Id)
+        internal ManagementGroupGroupQuotaSubscriptionIdResource(ArmClient client, GroupQuotaSubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GroupQuotaSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagementGroupGroupQuotaSubscriptionIdResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string groupQuotaSubscriptionApiVersion);
+            TryGetApiVersion(ResourceType, out string managementGroupGroupQuotaSubscriptionIdApiVersion);
             _groupQuotaSubscriptionIdsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _groupQuotaSubscriptionIdsRestClient = new GroupQuotaSubscriptionIds(_groupQuotaSubscriptionIdsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionApiVersion ?? "2025-09-01");
+            _groupQuotaSubscriptionIdsRestClient = new GroupQuotaSubscriptionIds(_groupQuotaSubscriptionIdsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupGroupQuotaSubscriptionIdApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="GroupQuotaSubscriptionResource"/>. </description>
+        /// <description> <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GroupQuotaSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupGroupQuotaSubscriptionIdResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Get");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdResource.Get");
             scope.Start();
             try
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupGroupQuotaSubscriptionIdResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,18 +151,18 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="GroupQuotaSubscriptionResource"/>. </description>
+        /// <description> <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GroupQuotaSubscriptionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupGroupQuotaSubscriptionIdResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Get");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdResource.Get");
             scope.Start();
             try
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupGroupQuotaSubscriptionIdResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,19 +199,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="GroupQuotaSubscriptionResource"/>. </description>
+        /// <description> <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotaSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Update");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdResource.Update");
             scope.Start();
             try
             {
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionResourceOperationSource(Client),
+                QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource> operation = new QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource>(
+                    new ManagementGroupGroupQuotaSubscriptionIdResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -254,19 +254,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="GroupQuotaSubscriptionResource"/>. </description>
+        /// <description> <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotaSubscriptionResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Update");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdResource.Update");
             scope.Start();
             try
             {
@@ -276,8 +276,8 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionResourceOperationSource(Client),
+                QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource> operation = new QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource>(
+                    new ManagementGroupGroupQuotaSubscriptionIdResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="GroupQuotaSubscriptionResource"/>. </description>
+        /// <description> <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Delete");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdResource.Delete");
             scope.Start();
             try
             {
@@ -358,11 +358,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="GroupQuotaSubscriptionResource"/>. </description>
+        /// <description> <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Delete");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdResource.Delete");
             scope.Start();
             try
             {

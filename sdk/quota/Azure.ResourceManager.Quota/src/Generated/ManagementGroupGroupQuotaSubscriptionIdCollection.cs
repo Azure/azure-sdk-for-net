@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GroupQuotaSubscriptionResource"/> and their operations.
-    /// Each <see cref="GroupQuotaSubscriptionResource"/> in the collection will belong to the same instance of <see cref="GroupQuotaEntityResource"/>.
-    /// To get a <see cref="GroupQuotaSubscriptionCollection"/> instance call the GetGroupQuotaSubscriptions method from an instance of <see cref="GroupQuotaEntityResource"/>.
+    /// A class representing a collection of <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> and their operations.
+    /// Each <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> in the collection will belong to the same instance of <see cref="GroupQuotaEntityResource"/>.
+    /// To get a <see cref="ManagementGroupGroupQuotaSubscriptionIdCollection"/> instance call the GetManagementGroupGroupQuotaSubscriptionIds method from an instance of <see cref="GroupQuotaEntityResource"/>.
     /// </summary>
-    public partial class GroupQuotaSubscriptionCollection : ArmCollection, IEnumerable<GroupQuotaSubscriptionResource>, IAsyncEnumerable<GroupQuotaSubscriptionResource>
+    public partial class ManagementGroupGroupQuotaSubscriptionIdCollection : ArmCollection, IEnumerable<ManagementGroupGroupQuotaSubscriptionIdResource>, IAsyncEnumerable<ManagementGroupGroupQuotaSubscriptionIdResource>
     {
         private readonly ClientDiagnostics _groupQuotaSubscriptionIdsClientDiagnostics;
         private readonly GroupQuotaSubscriptionIds _groupQuotaSubscriptionIdsRestClient;
 
-        /// <summary> Initializes a new instance of GroupQuotaSubscriptionCollection for mocking. </summary>
-        protected GroupQuotaSubscriptionCollection()
+        /// <summary> Initializes a new instance of ManagementGroupGroupQuotaSubscriptionIdCollection for mocking. </summary>
+        protected ManagementGroupGroupQuotaSubscriptionIdCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaSubscriptionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupGroupQuotaSubscriptionIdCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GroupQuotaSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagementGroupGroupQuotaSubscriptionIdCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GroupQuotaSubscriptionResource.ResourceType, out string groupQuotaSubscriptionApiVersion);
-            _groupQuotaSubscriptionIdsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotaSubscriptionIdsRestClient = new GroupQuotaSubscriptionIds(_groupQuotaSubscriptionIdsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionApiVersion ?? "2025-09-01");
+            TryGetApiVersion(ManagementGroupGroupQuotaSubscriptionIdResource.ResourceType, out string managementGroupGroupQuotaSubscriptionIdApiVersion);
+            _groupQuotaSubscriptionIdsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ManagementGroupGroupQuotaSubscriptionIdResource.ResourceType.Namespace, Diagnostics);
+            _groupQuotaSubscriptionIdsRestClient = new GroupQuotaSubscriptionIds(_groupQuotaSubscriptionIdsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupGroupQuotaSubscriptionIdApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotaSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, subscriptionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionResourceOperationSource(Client),
+                QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource> operation = new QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource>(
+                    new ManagementGroupGroupQuotaSubscriptionIdResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotaSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource> CreateOrUpdate(WaitUntil waitUntil, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, subscriptionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionResourceOperationSource(Client),
+                QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource> operation = new QuotaArmOperation<ManagementGroupGroupQuotaSubscriptionIdResource>(
+                    new ManagementGroupGroupQuotaSubscriptionIdResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GroupQuotaSubscriptionResource>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupGroupQuotaSubscriptionIdResource>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.Get");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.Get");
             scope.Start();
             try
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupGroupQuotaSubscriptionIdResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GroupQuotaSubscriptionResource> Get(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupGroupQuotaSubscriptionIdResource> Get(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.Get");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.Get");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupGroupQuotaSubscriptionIdResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,19 +269,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GroupQuotaSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GroupQuotaSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroupGroupQuotaSubscriptionIdResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GroupQuotaSubscriptionData, GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionDataAsyncCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context, "GroupQuotaSubscriptionCollection.GetAll"), data => new GroupQuotaSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<GroupQuotaSubscriptionData, ManagementGroupGroupQuotaSubscriptionIdResource>(new GroupQuotaSubscriptionDataAsyncCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context, "ManagementGroupGroupQuotaSubscriptionIdCollection.GetAll"), data => new ManagementGroupGroupQuotaSubscriptionIdResource(Client, data));
         }
 
         /// <summary>
@@ -297,19 +297,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GroupQuotaSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GroupQuotaSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagementGroupGroupQuotaSubscriptionIdResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroupGroupQuotaSubscriptionIdResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GroupQuotaSubscriptionData, GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionDataCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context, "GroupQuotaSubscriptionCollection.GetAll"), data => new GroupQuotaSubscriptionResource(Client, data));
+            return new PageableWrapper<GroupQuotaSubscriptionData, ManagementGroupGroupQuotaSubscriptionIdResource>(new GroupQuotaSubscriptionDataCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context, "ManagementGroupGroupQuotaSubscriptionIdCollection.GetAll"), data => new ManagementGroupGroupQuotaSubscriptionIdResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.Exists");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.Exists");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.Exists");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.Exists");
             scope.Start();
             try
             {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,11 +447,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<GroupQuotaSubscriptionResource>> GetIfExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ManagementGroupGroupQuotaSubscriptionIdResource>> GetIfExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.GetIfExists");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -476,9 +476,9 @@ namespace Azure.ResourceManager.Quota
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<GroupQuotaSubscriptionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ManagementGroupGroupQuotaSubscriptionIdResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupGroupQuotaSubscriptionIdResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,11 +508,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<GroupQuotaSubscriptionResource> GetIfExists(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ManagementGroupGroupQuotaSubscriptionIdResource> GetIfExists(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.GetIfExists");
+            using DiagnosticScope scope = _groupQuotaSubscriptionIdsClientDiagnostics.CreateScope("ManagementGroupGroupQuotaSubscriptionIdCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -537,9 +537,9 @@ namespace Azure.ResourceManager.Quota
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<GroupQuotaSubscriptionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ManagementGroupGroupQuotaSubscriptionIdResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupGroupQuotaSubscriptionIdResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        IEnumerator<GroupQuotaSubscriptionResource> IEnumerable<GroupQuotaSubscriptionResource>.GetEnumerator()
+        IEnumerator<ManagementGroupGroupQuotaSubscriptionIdResource> IEnumerable<ManagementGroupGroupQuotaSubscriptionIdResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<GroupQuotaSubscriptionResource> IAsyncEnumerable<GroupQuotaSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagementGroupGroupQuotaSubscriptionIdResource> IAsyncEnumerable<ManagementGroupGroupQuotaSubscriptionIdResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
