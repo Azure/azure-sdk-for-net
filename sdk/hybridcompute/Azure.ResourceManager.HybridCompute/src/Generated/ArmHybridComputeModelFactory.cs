@@ -668,13 +668,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
         /// <param name="identityKeyStore"> Identity key store type of the machine. </param>
         /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
+        /// <param name="clientPublicKey"> Public Key that the client provides to be used during initial resource onboarding. </param>
         /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
         /// <returns> A new <see cref="Models.HybridComputeMachinePatch"/> instance for mocking. </returns>
-        public static HybridComputeMachinePatch HybridComputeMachinePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default, HybridComputeLocation locationData = default, HybridComputeOSProfile osProfile = default, AgentUpgrade agentUpgrade = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier privateLinkScopeResourceId = default, string identityKeyStore = default, string tpmEkCertificate = default, string cloudMetadataProvider = default)
+        public static HybridComputeMachinePatch HybridComputeMachinePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default, HybridComputeLocation locationData = default, HybridComputeOSProfile osProfile = default, AgentUpgrade agentUpgrade = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier privateLinkScopeResourceId = default, string identityKeyStore = default, string tpmEkCertificate = default, string clientPublicKey = default, string cloudMetadataProvider = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HybridComputeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, identity, kind, locationData is null && osProfile is null && cloudMetadataProvider is null && agentUpgrade is null && parentClusterResourceId is null && privateLinkScopeResourceId is null && identityKeyStore is null && tpmEkCertificate is null ? default : new MachineUpdateProperties(
+            return new HybridComputeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, identity, kind, locationData is null && osProfile is null && cloudMetadataProvider is null && agentUpgrade is null && parentClusterResourceId is null && privateLinkScopeResourceId is null && identityKeyStore is null && tpmEkCertificate is null && clientPublicKey is null ? default : new MachineUpdateProperties(
                 locationData,
                 osProfile,
                 cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
@@ -683,6 +684,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 privateLinkScopeResourceId,
                 identityKeyStore,
                 tpmEkCertificate,
+                clientPublicKey,
                 default));
         }
 
@@ -1053,6 +1055,107 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 displayStatus,
                 message,
                 time,
+                default);
+        }
+
+        /// <summary> A VM application installed on a hybrid machine. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The VM application properties. </param>
+        /// <returns> A new <see cref="HybridCompute.VmApplicationData"/> instance for mocking. </returns>
+        public static VmApplicationData VmApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VmApplicationProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VmApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> The properties of a VM application. Exactly one gallery application reference must be specified when creating or replacing the resource. </summary>
+        /// <param name="order"> The order in which the application is installed. </param>
+        /// <param name="packageReferenceId"> The resource ID of the gallery application version. The version name can be `latest` or a specific version. This property is mutually exclusive with sharedGalleryApplicationId and communityGalleryApplicationId. </param>
+        /// <param name="sharedGalleryApplicationId"> The identifier of a direct shared gallery application version. Use `/sharedGalleries/{sharedGalleryUniqueName}/applications/{applicationName}/versions/{versionName}`, where the version name can be `latest` or a specific version. This property is mutually exclusive with packageReferenceId and communityGalleryApplicationId. </param>
+        /// <param name="communityGalleryApplicationId"> The identifier of a community gallery application version. Use `/communityGalleries/{communityGalleryPublicName}/applications/{applicationName}/versions/{versionName}`, where the version name can be `latest` or a specific version. This property is mutually exclusive with packageReferenceId and sharedGalleryApplicationId. </param>
+        /// <param name="configurationReference"> The URI of configuration data that replaces the package's default configuration. </param>
+        /// <param name="treatFailureAsDeploymentFailure"> Indicates whether an application operation failure causes the deployment to fail. </param>
+        /// <param name="provisioningState"> The provisioning state of the VM application. </param>
+        /// <param name="instanceView"> The instance view of the VM application. </param>
+        /// <returns> A new <see cref="Models.VmApplicationProperties"/> instance for mocking. </returns>
+        public static VmApplicationProperties VmApplicationProperties(int? order = default, ResourceIdentifier packageReferenceId = default, string sharedGalleryApplicationId = default, string communityGalleryApplicationId = default, Uri configurationReference = default, bool? treatFailureAsDeploymentFailure = default, HybridComputeProvisioningState? provisioningState = default, VmApplicationInstanceView instanceView = default)
+        {
+            return new VmApplicationProperties(
+                order,
+                packageReferenceId,
+                sharedGalleryApplicationId,
+                communityGalleryApplicationId,
+                configurationReference,
+                treatFailureAsDeploymentFailure,
+                provisioningState,
+                instanceView,
+                default);
+        }
+
+        /// <summary> The instance view of a VM application. </summary>
+        /// <param name="name"> The application name. </param>
+        /// <param name="version"> The application version. </param>
+        /// <param name="result"> The current installation result. </param>
+        /// <param name="actionsPerformed"> The recent actions performed for the application. </param>
+        /// <returns> A new <see cref="Models.VmApplicationInstanceView"/> instance for mocking. </returns>
+        public static VmApplicationInstanceView VmApplicationInstanceView(string name = default, string version = default, string result = default, IEnumerable<VmApplicationInstanceViewAction> actionsPerformed = default)
+        {
+            actionsPerformed ??= new ChangeTrackingList<VmApplicationInstanceViewAction>();
+
+            return new VmApplicationInstanceView(name, version, result, (actionsPerformed ?? new ChangeTrackingList<VmApplicationInstanceViewAction>()).ToList(), default);
+        }
+
+        /// <summary> An action recently performed for a VM application. </summary>
+        /// <param name="operation"> The operation that was performed. </param>
+        /// <param name="result"> The result of the operation. </param>
+        /// <returns> A new <see cref="Models.VmApplicationInstanceViewAction"/> instance for mocking. </returns>
+        public static VmApplicationInstanceViewAction VmApplicationInstanceViewAction(string operation = default, string result = default)
+        {
+            return new VmApplicationInstanceViewAction(operation, result, default);
+        }
+
+        /// <summary> The update request for a VM application. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.VmApplicationPatch"/> instance for mocking. </returns>
+        public static VmApplicationPatch VmApplicationPatch(IDictionary<string, string> tags = default, VmApplicationUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VmApplicationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the VmApplication. </summary>
+        /// <param name="order"> The order in which the application is installed. </param>
+        /// <param name="packageReferenceId"> The resource ID of the gallery application version. The version name can be `latest` or a specific version. This property is mutually exclusive with sharedGalleryApplicationId and communityGalleryApplicationId. </param>
+        /// <param name="sharedGalleryApplicationId"> The identifier of a direct shared gallery application version. Use `/sharedGalleries/{sharedGalleryUniqueName}/applications/{applicationName}/versions/{versionName}`, where the version name can be `latest` or a specific version. This property is mutually exclusive with packageReferenceId and communityGalleryApplicationId. </param>
+        /// <param name="communityGalleryApplicationId"> The identifier of a community gallery application version. Use `/communityGalleries/{communityGalleryPublicName}/applications/{applicationName}/versions/{versionName}`, where the version name can be `latest` or a specific version. This property is mutually exclusive with packageReferenceId and sharedGalleryApplicationId. </param>
+        /// <param name="configurationReference"> The URI of configuration data that replaces the package's default configuration. </param>
+        /// <param name="treatFailureAsDeploymentFailure"> Indicates whether an application operation failure causes the deployment to fail. </param>
+        /// <returns> A new <see cref="Models.VmApplicationUpdateProperties"/> instance for mocking. </returns>
+        public static VmApplicationUpdateProperties VmApplicationUpdateProperties(int? order = default, ResourceIdentifier packageReferenceId = default, string sharedGalleryApplicationId = default, string communityGalleryApplicationId = default, Uri configurationReference = default, bool? treatFailureAsDeploymentFailure = default)
+        {
+            return new VmApplicationUpdateProperties(
+                order,
+                packageReferenceId,
+                sharedGalleryApplicationId,
+                communityGalleryApplicationId,
+                configurationReference,
+                treatFailureAsDeploymentFailure,
                 default);
         }
 
@@ -1477,6 +1580,35 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 (privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>()).ToList(),
                 default,
                 default);
+        }
+
+        /// <summary> Describes a hybrid machine Update. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
+        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
+        /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
+        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
+        /// <param name="identityKeyStore"> Identity key store type of the machine. </param>
+        /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
+        /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
+        /// <returns> A new <see cref="Models.HybridComputeMachinePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridComputeMachinePatch HybridComputeMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, HybridComputeOSProfile osProfile, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId, string identityKeyStore, string tpmEkCertificate, string cloudMetadataProvider)
+        {
+            return new HybridComputeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, identity, kind, locationData is null && osProfile is null && cloudMetadataProvider is null && agentUpgrade is null && parentClusterResourceId is null && privateLinkScopeResourceId is null && identityKeyStore is null && tpmEkCertificate is null ? default : new MachineUpdateProperties(
+                locationData,
+                osProfile,
+                cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
+                agentUpgrade,
+                parentClusterResourceId,
+                privateLinkScopeResourceId,
+                identityKeyStore,
+                tpmEkCertificate,
+                default,
+                default));
         }
 
         /// <summary> License Profile Instance View in Machine Properties. </summary>

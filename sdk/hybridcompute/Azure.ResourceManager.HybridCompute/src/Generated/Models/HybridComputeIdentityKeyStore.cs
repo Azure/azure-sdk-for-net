@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private const string TPMValue = "TPM";
         /// <summary> Default. </summary>
         private const string DefaultValue = "Default";
+        /// <summary> The machine is transitioning its identity key store to TPM. </summary>
+        private const string TpmTransitionValue = "TpmTransition";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeIdentityKeyStore"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Default. </summary>
         public static HybridComputeIdentityKeyStore Default { get; } = new HybridComputeIdentityKeyStore(DefaultValue);
+
+        /// <summary> The machine is transitioning its identity key store to TPM. </summary>
+        public static HybridComputeIdentityKeyStore TpmTransition { get; } = new HybridComputeIdentityKeyStore(TpmTransitionValue);
 
         /// <summary> Determines if two <see cref="HybridComputeIdentityKeyStore"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
