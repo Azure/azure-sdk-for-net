@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task GetAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
 
             Assert.IsNotNull(result);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DeleteAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             await SearchResource.DeleteAsync(WaitUntil.Completed, new SearchManagementRequestOptions());
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await SearchCollection.GetAsync(name, new SearchManagementRequestOptions()));
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task UpdateAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             SearchServicePatch patch = new SearchServicePatch(DefaultLocation)
             {
                 PartitionCount = 2,
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task GetAdminKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var result = await SearchResource.GetAdminKeyAsync(new SearchManagementRequestOptions());
             Assert.NotNull(result);
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task RegenerateAdminKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
 
             var originalAdminKey = (await SearchResource.GetAdminKeyAsync(new SearchManagementRequestOptions())).Value;
             var regenAdminPrimaryKey = (await SearchResource.RegenerateAdminKeyAsync(SearchServiceAdminKeyKind.Primary, new SearchManagementRequestOptions())).Value;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task CreateQueryKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var queryName = Recording.GenerateAssetName("queryKey-");
             var result = (await SearchResource.CreateQueryKeyAsync(queryName, new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DeleteQueryKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var queryName = Recording.GenerateAssetName("queryKey-");
             var key = SearchResource.CreateQueryKeyAsync(queryName, new SearchManagementRequestOptions()).Result.Value.Key;
             var result = Mode == RecordedTestMode.Playback ? await SearchResource.DeleteQueryKeyAsync("Sanitized", new SearchManagementRequestOptions()) : await SearchResource.DeleteQueryKeyAsync(key, new SearchManagementRequestOptions());
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task GetQueryKeysBySearchServiceAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var queryName = Recording.GenerateAssetName("queryKey-");
             var originKey = (await SearchResource.CreateQueryKeyAsync(queryName, new SearchManagementRequestOptions())).Value;
             var list = await SearchResource.GetQueryKeysBySearchServiceAsync(new SearchManagementRequestOptions()).ToEnumerableAsync();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task AddTagAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             await SearchResource.AddTagAsync("key1", "value1");
             var result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             KeyValuePair<string, string> tag = result.Data.Tags.FirstOrDefault();
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task SetTagsAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             Dictionary<string, string> tags = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
             var result = (await SearchResource.SetTagsAsync(tags)).Value;
             Assert.NotNull(result);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task RemoveTagAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             Dictionary<string, string> tags = new Dictionary<string, string> { { "key1", "Value1" }, { "key2", "vaule2" } };
             await SearchResource.SetTagsAsync(tags);
             await SearchResource.RemoveTagAsync("key1");
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DisableAndEnableLocalAuthAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SkuName = SearchSkuName.Basic,
@@ -286,13 +286,13 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 HostingMode = SearchServiceHostingMode.Default,
                 IsLocalAuthDisabled = true
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.IsTrue(result.Data.IsLocalAuthDisabled);
 
             data.IsLocalAuthDisabled = false;
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.IsFalse(result.Data.IsLocalAuthDisabled);
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 ApiKeyOnly = BinaryData.FromObjectAsJson(new { })
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.IsFalse(result.Data.IsLocalAuthDisabled);
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge, null)
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.IsFalse(result.Data.IsLocalAuthDisabled);
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http403, null)
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.IsFalse(result.Data.IsLocalAuthDisabled);
@@ -340,27 +340,27 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DisableAndEnableSemanticSearchAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
-            var data = new SearchServiceData(AzureLocation.WestCentralUS)
+            var name = GenerateSearchServiceName();
+            var data = new SearchServiceData(TestEnvironment.GetSearchLocation("westcentralus"))
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 SemanticSearch = SearchSemanticSearch.Disabled
             };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Disabled);
 
             data.SemanticSearch = SearchSemanticSearch.Free;
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Free);
 
             data.SemanticSearch = SearchSemanticSearch.Standard;
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            SearchResource = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             result = (await SearchResource.GetAsync(new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Standard);
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task UpgradeAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            var searchService = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            var searchService = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             var upgradedService = (await searchService.UpgradeAsync(WaitUntil.Completed)).Value;
 
             Assert.IsNotNull(upgradedService);
