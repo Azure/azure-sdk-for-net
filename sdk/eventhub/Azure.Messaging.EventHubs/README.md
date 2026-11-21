@@ -392,7 +392,7 @@ To collect traces, enable `Azure.Experimental.EnableActivitySource` before creat
 
 The `AmqpLifecycle` EventSource record identifies a connection scope, component, and unique creation-attempt generation. The same identity accompanies `started` and terminal `success`, `error`, or `cancelled` records. Faulted connections also emit `invalidated`. These diagnostic generations are not partition ownership epochs. Existing diagnostic events remain available.
 
-See the runnable [OpenTelemetry sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/eventhubs/opentelemetry) for provider setup, second-scale histogram buckets, an EventSource log bridge, OTLP export, and a smoke run that requires no Azure credentials.
+See the runnable [OpenTelemetry sample](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry) for provider setup, second-scale histogram buckets, an EventSource log bridge, OTLP export, and a smoke run that requires no Azure credentials.
 
 ## Next steps
 

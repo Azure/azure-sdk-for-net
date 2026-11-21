@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Azure.Messaging.EventHubs.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+  </ItemGroup>
+</Project>

@@ -5,7 +5,7 @@ This sample exports Event Hubs traces, native metrics, and structured AMQP lifec
 Run from the repository root:
 
 ```sh
-dotnet run --project samples/eventhubs/opentelemetry/EventHubs.OpenTelemetry.csproj
+dotnet run --project sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry/Azure.Messaging.EventHubs.Samples.OpenTelemetry.csproj
 ```
 
 The default mode attempts to send to local port zero, which cannot host a service. It catches the expected connection failure and exports real SDK telemetry to the console without Azure credentials. Expect one failed logical send, no accepted events, and failed connection and sender creation attempts. The sample flushes providers even when an operation fails.
@@ -13,7 +13,7 @@ The default mode attempts to send to local port zero, which cannot host a servic
 To exercise the same SDK operation without any tracer provider, meter provider, log bridge, or exporter:
 
 ```sh
-dotnet run --project samples/eventhubs/opentelemetry/EventHubs.OpenTelemetry.csproj -- --no-providers
+dotnet run --project sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry/Azure.Messaging.EventHubs.Samples.OpenTelemetry.csproj -- --no-providers
 ```
 
 ## Export to a collector
@@ -22,7 +22,7 @@ Start an OpenTelemetry Collector with the supplied configuration:
 
 ```sh
 docker run --rm --name eventhubs-dotnet-otel -p 14318:4318 \
-  -v "$PWD/samples/eventhubs/opentelemetry/collector.yaml:/etc/otelcol/config.yaml:ro" \
+  -v "$PWD/sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry/collector.yaml:/etc/otelcol/config.yaml:ro" \
   otel/opentelemetry-collector:0.109.0
 ```
 
@@ -30,7 +30,7 @@ Then export all three signals using OTLP/HTTP:
 
 ```sh
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:14318 \
-  dotnet run --project samples/eventhubs/opentelemetry/EventHubs.OpenTelemetry.csproj -- --otlp
+  dotnet run --project sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry/Azure.Messaging.EventHubs.Samples.OpenTelemetry.csproj -- --otlp
 ```
 
 For a live send, set `EVENTHUBS_CONNECTION_STRING` to an Event Hubs connection string that includes `EntityPath` and has permission to send. Add `--live` to either command. Keep credentials outside source control.
