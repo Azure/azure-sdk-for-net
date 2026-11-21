@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.FileShares.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-06-01",
+            "2026-09-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics InformationalOperationsClientDiagnostics => _informationalOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InformationalOperations InformationalOperationsRestClient => _informationalOperationsRestClient ??= new InformationalOperations(InformationalOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private InformationalOperations InformationalOperationsRestClient => _informationalOperationsRestClient ??= new InformationalOperations(InformationalOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
 
         /// <summary>
         /// List FileShare resources by subscription ID
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,96 +297,6 @@ namespace Azure.ResourceManager.FileShares.Mocking
         }
 
         /// <summary>
-        /// Get file shares limits.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.FileShares/locations/{location}/getLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> InformationalOperations_GetLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FileShareLimitsResult>> GetLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = InformationalOperationsClientDiagnostics.CreateScope("MockableFileSharesSubscriptionResource.GetLimits");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetLimitsRequest(Guid.Parse(Id.SubscriptionId), location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FileShareLimitsResult> response = Response.FromValue(FileShareLimitsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get file shares limits.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.FileShares/locations/{location}/getLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> InformationalOperations_GetLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FileShareLimitsResult> GetLimits(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = InformationalOperationsClientDiagnostics.CreateScope("MockableFileSharesSubscriptionResource.GetLimits");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetLimitsRequest(Guid.Parse(Id.SubscriptionId), location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FileShareLimitsResult> response = Response.FromValue(FileShareLimitsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get file shares provisioning parameters recommendation.
         /// <list type="bullet">
         /// <item>
@@ -399,7 +309,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,7 +358,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>

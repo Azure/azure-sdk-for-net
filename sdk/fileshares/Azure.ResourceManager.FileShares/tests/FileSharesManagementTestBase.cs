@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
@@ -22,11 +23,19 @@ namespace Azure.ResourceManager.FileShares.Tests
         protected FileSharesManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            AddSanitizers();
         }
 
         protected FileSharesManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            AddSanitizers();
+        }
+
+        private void AddSanitizers()
+        {
+            // ARM echoes the caller's tenant and object ID in this header.
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-operation-identifier") { Value = "Sanitized" });
         }
 
         private const string CanaryArmEndpoint = "https://eastus2euap.management.azure.com";
