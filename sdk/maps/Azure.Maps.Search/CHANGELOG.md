@@ -12,6 +12,8 @@
 
 ### Bugs Fixed
 
+- Fixed `GetGeocoding`, `GetGeocodingAsync` and `GetPolygonAsync` sending the `coordinates` query parameter as `lat,lon` instead of the `lon,lat` order required by the service.
+
 ### Other Changes
 
 ## 2.0.0-beta.5 (2025-04-16)
