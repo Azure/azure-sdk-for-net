@@ -139,6 +139,7 @@ namespace Azure.ResourceManager.Terraform.Models
             bool? isOutputFullPropertiesEnabled = default;
             bool? isMaskSensitiveEnabled = default;
             bool? includeRoleAssignment = default;
+            IList<AzureExtensionResourceType> includeExtensions = default;
             bool? includeManagedResource = default;
             IList<string> azureResourcesToExclude = default;
             IList<string> terraformResourcesToExclude = default;
@@ -190,6 +191,20 @@ namespace Azure.ResourceManager.Terraform.Models
                         continue;
                     }
                     includeRoleAssignment = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("includeExtensions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AzureExtensionResourceType> array = new List<AzureExtensionResourceType>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new AzureExtensionResourceType(item.GetString()));
+                    }
+                    includeExtensions = array;
                     continue;
                 }
                 if (prop.NameEquals("includeManagedResource"u8))
@@ -296,6 +311,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
+                includeExtensions ?? new ChangeTrackingList<AzureExtensionResourceType>(),
                 includeManagedResource,
                 azureResourcesToExclude ?? new ChangeTrackingList<string>(),
                 terraformResourcesToExclude ?? new ChangeTrackingList<string>(),
