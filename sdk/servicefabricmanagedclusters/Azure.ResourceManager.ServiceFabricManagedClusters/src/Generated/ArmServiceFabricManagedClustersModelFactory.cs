@@ -829,23 +829,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="vmSize"> VM Size name. </param>
-        /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
-        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vmSize)
-        {
-            return new ServiceFabricManagedUnsupportedVmSize(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default);
-        }
-
         /// <summary> Describes a load balancing rule. </summary>
         /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 1 and 65534. </param>
         /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
@@ -1138,17 +1121,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="operationId"> Current or latest asynchronous operation identifier on the node type. </param>
         /// <param name="operationStatus"> Current or latest asynchronous operation status on the node type. </param>
         /// <returns> A new <see cref="Models.NodeTypeFaultSimulation"/> instance for mocking. </returns>
-        public static NodeTypeFaultSimulation NodeTypeFaultSimulation(string nodeTypeName = default, FaultSimulationStatus? status = default, string operationId = default, SfmcOperationStatus? operationStatus = default)
+        public static NodeTypeFaultSimulation NodeTypeFaultSimulation(string nodeTypeName = default, FaultSimulationStatus? status = default, string operationId = default, ServiceFabricManagedClusterOperationStatus? operationStatus = default)
         {
             return new NodeTypeFaultSimulation(nodeTypeName, status, operationId, operationStatus, default);
         }
 
         /// <summary> Fault Simulation Request for Start action. </summary>
         /// <param name="parameters"> Parameters for Fault Simulation start action. </param>
-        /// <returns> A new <see cref="Models.FaultSimulationContentWrapper"/> instance for mocking. </returns>
-        public static FaultSimulationContentWrapper FaultSimulationContentWrapper(FaultSimulationContent parameters = default)
+        /// <returns> A new <see cref="Models.StartFaultSimulationContent"/> instance for mocking. </returns>
+        public static StartFaultSimulationContent StartFaultSimulationContent(FaultSimulationContent parameters = default)
         {
-            return new FaultSimulationContentWrapper(parameters, default);
+            return new StartFaultSimulationContent(parameters, default);
         }
 
         /// <summary> Describes the result of the request to list Managed VM Sizes for Service Fabric Managed Clusters. </summary>
@@ -1205,141 +1188,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
-        /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
-        /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
-        /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
-        /// <param name="placementProperties"> The placement tags applied to nodes in the node type, which can be used to indicate where certain services (workload) should run. </param>
-        /// <param name="capacities"> The capacity tags applied to the nodes in the node type, the cluster resource manager uses these tags to understand how much resource a node has. </param>
-        /// <param name="applicationPorts"> The range of ports from which cluster assigned port to Service Fabric applications. </param>
-        /// <param name="ephemeralPorts"> The range of ephemeral ports that nodes in this node type should be configured with. </param>
-        /// <param name="vmSize"> The size of virtual machines in the pool. All virtual machines in a pool are the same size. For example, Standard_D3. </param>
-        /// <param name="vmImagePublisher"> The publisher of the Azure Virtual Machines Marketplace image. For example, Canonical or MicrosoftWindowsServer. </param>
-        /// <param name="vmImageOffer"> The offer type of the Azure Virtual Machines Marketplace image. For example, UbuntuServer or WindowsServer. </param>
-        /// <param name="vmImageSku"> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </param>
-        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
-        /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
-        /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
-        /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
-        /// <param name="hasMultiplePlacementGroups"> Indicates if scale set associated with the node type can be composed of multiple placement groups. </param>
-        /// <param name="frontendConfigurations"> Indicates the node type uses its own frontend configurations instead of the default one for the cluster. This setting can only be specified for non-primary node types and can not be added or removed after the node type is created. </param>
-        /// <param name="networkSecurityRules"> The Network Security Rules for this node type. This setting can only be specified for node types that are configured with frontend configurations. </param>
-        /// <param name="additionalDataDisks"> Additional managed data disks. </param>
-        /// <param name="isEncryptionAtHostEnabled"> Enable or disable the Host Encryption for the virtual machines on the node type. This will enable the encryption for all the disks including Resource/Temp disk at host itself. Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the node type resource. </param>
-        /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
-        /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
-        /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
-        /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
-        /// <param name="isSpotVm"> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </param>
-        /// <param name="hostGroupId"> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </param>
-        /// <param name="useEphemeralOSDisk"> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </param>
-        /// <param name="spotRestoreTimeout"> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </param>
-        /// <param name="evictionPolicy"> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </param>
-        /// <param name="vmImageResourceId"> Indicates the resource id of the vm image. This parameter is used for custom vm image. </param>
-        /// <param name="subnetId"> Indicates the resource id of the subnet for the node type. </param>
-        /// <param name="vmSetupActions"> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </param>
-        /// <param name="securityType"> Specifies the security type of the nodeType. Supported values include Standard, TrustedLaunch and ConfidentialVM. </param>
-        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob and VMGuestStateOnly for encryption of just the VMGuestState blob. Note: It can be set for only Confidential VMs. </param>
-        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch and ConfidentialVM SecurityType. </param>
-        /// <param name="isNodePublicIPEnabled"> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </param>
-        /// <param name="isNodePublicIPv6Enabled"> Specifies whether each node is allocated its own public IPv6 address. This is only supported on secondary node types with custom Load Balancers. </param>
-        /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
-        /// <param name="natGatewayId"> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </param>
-        /// <param name="natConfigurations"> Specifies the NAT configuration on default public Load Balancer for the node type. This is only supported for node types use the default public Load Balancer. </param>
-        /// <param name="vmImagePlan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
-        /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. </param>
-        /// <param name="dscpConfigurationId"> Specifies the resource id of the DSCP configuration to apply to the node type network interface. </param>
-        /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
-        /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
-        /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
-        /// <param name="isZoneBalanceEnabled"> Setting this to true allows stateless node types to scale out without equal distribution across zones. </param>
-        /// <param name="isOutboundOnly"> Specifies the node type should be configured for only outbound traffic and not inbound traffic. </param>
-        /// <param name="enableResilientEphemeralOSDisk"> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </param>
-        /// <param name="proxyAgentSettings"> Specifies the settings for the proxy agent on the node type. </param>
-        /// <param name="vmManagedIdentityUserAssignedIdentities"> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <param name="scaleInMode"> The scale in policy mode for a node type. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> The node type sku. </param>
-        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isPrimary = default, int? vmInstanceCount = default, int? dataDiskSizeInGB = default, ServiceFabricManagedDataDiskType? dataDiskType = default, string dataDiskLetter = default, IDictionary<string, string> placementProperties = default, IDictionary<string, string> capacities = default, EndpointRangeDescription applicationPorts = default, EndpointRangeDescription ephemeralPorts = default, string vmSize = default, string vmImagePublisher = default, string vmImageOffer = default, string vmImageSku = default, string vmImageVersion = default, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets = default, IEnumerable<NodeTypeVmssExtension> vmExtensions = default, bool? isStateless = default, bool? hasMultiplePlacementGroups = default, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations = default, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = default, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks = default, bool? isEncryptionAtHostEnabled = default, ServiceFabricManagedResourceProvisioningState? provisioningState = default, bool? isAcceleratedNetworkingEnabled = default, bool? useDefaultPublicLoadBalancer = default, bool? useTempDataDisk = default, bool? isOverProvisioningEnabled = default, IEnumerable<string> zones = default, bool? isSpotVm = default, string hostGroupId = default, bool? useEphemeralOSDisk = default, string spotRestoreTimeout = default, SpotNodeVmEvictionPolicyType? evictionPolicy = default, ResourceIdentifier vmImageResourceId = default, ResourceIdentifier subnetId = default, IEnumerable<VmSetupAction> vmSetupActions = default, ServiceFabricManagedClusterSecurityType? securityType = default, NodeTypeSecurityEncryptionType? securityEncryptionType = default, bool? isSecureBootEnabled = default, bool? isNodePublicIPEnabled = default, bool? isNodePublicIPv6Enabled = default, ResourceIdentifier vmSharedGalleryImageId = default, ResourceIdentifier natGatewayId = default, IEnumerable<NodeTypeNatConfig> natConfigurations = default, VmImagePlan vmImagePlan = default, ResourceIdentifier serviceArtifactReferenceId = default, ResourceIdentifier dscpConfigurationId = default, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default, string computerNamePrefix = default, IEnumerable<ServiceFabricManagedVmApplication> vmApplications = default, bool? isZoneBalanceEnabled = default, bool? isOutboundOnly = default, bool? enableResilientEphemeralOSDisk = default, ProxyAgentSettings proxyAgentSettings = default, IEnumerable<ResourceIdentifier> vmManagedIdentityUserAssignedIdentities = default, ScaleInPolicyMode? scaleInMode = default, IDictionary<string, string> tags = default, NodeTypeSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricManagedNodeTypeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isPrimary is null && vmInstanceCount is null && dataDiskSizeInGB is null && dataDiskType is null && dataDiskLetter is null && placementProperties is null && capacities is null && applicationPorts is null && ephemeralPorts is null && vmSize is null && vmImagePublisher is null && vmImageOffer is null && vmImageSku is null && vmImageVersion is null && vmSecrets is null && vmExtensions is null && vmManagedIdentityUserAssignedIdentities is null && isStateless is null && hasMultiplePlacementGroups is null && frontendConfigurations is null && networkSecurityRules is null && additionalDataDisks is null && isEncryptionAtHostEnabled is null && provisioningState is null && isAcceleratedNetworkingEnabled is null && useDefaultPublicLoadBalancer is null && useTempDataDisk is null && isOverProvisioningEnabled is null && zones is null && isSpotVm is null && hostGroupId is null && useEphemeralOSDisk is null && spotRestoreTimeout is null && evictionPolicy is null && vmImageResourceId is null && subnetId is null && vmSetupActions is null && securityType is null && securityEncryptionType is null && isSecureBootEnabled is null && isNodePublicIPEnabled is null && isNodePublicIPv6Enabled is null && vmSharedGalleryImageId is null && natGatewayId is null && natConfigurations is null && vmImagePlan is null && serviceArtifactReferenceId is null && dscpConfigurationId is null && additionalNetworkInterfaceConfigurations is null && computerNamePrefix is null && vmApplications is null && isZoneBalanceEnabled is null && isOutboundOnly is null && enableResilientEphemeralOSDisk is null && scaleInMode is null && proxyAgentSettings is null ? default : new ServiceFabricManagedNodeTypeProperties(
-                    isPrimary.GetValueOrDefault(),
-                    vmInstanceCount.GetValueOrDefault(),
-                    dataDiskSizeInGB,
-                    dataDiskType,
-                    dataDiskLetter,
-                    placementProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    capacities ?? new ChangeTrackingDictionary<string, string>(),
-                    applicationPorts,
-                    ephemeralPorts,
-                    vmSize,
-                    vmImagePublisher,
-                    vmImageOffer,
-                    vmImageSku,
-                    vmImageVersion,
-                    (vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>()).ToList(),
-                    (vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>()).ToList(),
-                    vmManagedIdentityUserAssignedIdentities is null ? default : new VmManagedIdentity((vmManagedIdentityUserAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
-                    isStateless,
-                    hasMultiplePlacementGroups,
-                    (frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>()).ToList(),
-                    (networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>()).ToList(),
-                    (additionalDataDisks ?? new ChangeTrackingList<NodeTypeVmssDataDisk>()).ToList(),
-                    isEncryptionAtHostEnabled,
-                    provisioningState,
-                    isAcceleratedNetworkingEnabled,
-                    useDefaultPublicLoadBalancer,
-                    useTempDataDisk,
-                    isOverProvisioningEnabled,
-                    (zones ?? new ChangeTrackingList<string>()).ToList(),
-                    isSpotVm,
-                    hostGroupId,
-                    useEphemeralOSDisk,
-                    spotRestoreTimeout,
-                    evictionPolicy,
-                    vmImageResourceId,
-                    subnetId,
-                    (vmSetupActions ?? new ChangeTrackingList<VmSetupAction>()).ToList(),
-                    securityType,
-                    securityEncryptionType,
-                    isSecureBootEnabled,
-                    isNodePublicIPEnabled,
-                    isNodePublicIPv6Enabled,
-                    vmSharedGalleryImageId,
-                    natGatewayId,
-                    (natConfigurations ?? new ChangeTrackingList<NodeTypeNatConfig>()).ToList(),
-                    vmImagePlan,
-                    serviceArtifactReferenceId,
-                    dscpConfigurationId,
-                    (additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>()).ToList(),
-                    computerNamePrefix,
-                    (vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>()).ToList(),
-                    isZoneBalanceEnabled,
-                    isOutboundOnly,
-                    enableResilientEphemeralOSDisk,
-                    scaleInMode is null ? default : new ScaleInPolicy(scaleInMode, default),
-                    proxyAgentSettings,
-                    default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku,
-                default);
-        }
-
         /// <summary> Port range details. </summary>
         /// <param name="startPort"> Starting port of a range of ports. </param>
         /// <param name="endPort"> End port of a range of ports. </param>
@@ -1385,10 +1233,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="diskSizeInGB"> Disk size for each vm in the node type in GBs. </param>
         /// <param name="diskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
         /// <param name="diskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
+        /// <param name="caching"> Specifies the caching requirements for the managed data disk. Possible values include: None, ReadOnly, ReadWrite. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether write accelerator should be enabled or disabled on the managed data disk. </param>
+        /// <param name="diskIopsReadWrite"> Specifies the Read-Write IOPS for the managed data disk. </param>
+        /// <param name="diskMbpsReadWrite"> Specifies the bandwidth in MB per second for the managed data disk. </param>
         /// <returns> A new <see cref="Models.NodeTypeVmssDataDisk"/> instance for mocking. </returns>
-        public static NodeTypeVmssDataDisk NodeTypeVmssDataDisk(int lun = default, int diskSizeInGB = default, ServiceFabricManagedDataDiskType diskType = default, string diskLetter = default)
+        public static NodeTypeVmssDataDisk NodeTypeVmssDataDisk(int lun = default, int diskSizeInGB = default, ServiceFabricManagedDataDiskType diskType = default, string diskLetter = default, ServiceFabricManagedDiskCachingType? caching = default, bool? isWriteAcceleratorEnabled = default, int? diskIopsReadWrite = default, int? diskMbpsReadWrite = default)
         {
-            return new NodeTypeVmssDataDisk(lun, diskSizeInGB, diskType, diskLetter, default);
+            return new NodeTypeVmssDataDisk(
+                lun,
+                diskSizeInGB,
+                diskType,
+                diskLetter,
+                caching,
+                isWriteAcceleratorEnabled,
+                diskIopsReadWrite,
+                diskMbpsReadWrite,
+                default);
         }
 
         /// <summary> Provides information about NAT configuration on the default public Load Balancer for the node type. </summary>
@@ -1488,7 +1349,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. </param>
         /// <param name="shouldAddProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <returns> A new <see cref="Models.ProxyAgentSettings"/> instance for mocking. </returns>
-        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? shouldAddProxyAgentExtension = default)
+        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, int? keyIncarnationId = default, ProxyAgentHostEndpointSettings wireServer = default, ProxyAgentHostEndpointSettings imds = default, bool? shouldAddProxyAgentExtension = default)
         {
             return new ProxyAgentSettings(
                 enabled,
@@ -1502,10 +1363,30 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Specifies particular host endpoint settings. </summary>
         /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
         /// <param name="inVMAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
-        /// <returns> A new <see cref="Models.HostEndpointSettings"/> instance for mocking. </returns>
-        public static HostEndpointSettings HostEndpointSettings(string mode = default, string inVMAccessControlProfileReferenceId = default)
+        /// <returns> A new <see cref="Models.ProxyAgentHostEndpointSettings"/> instance for mocking. </returns>
+        public static ProxyAgentHostEndpointSettings ProxyAgentHostEndpointSettings(string mode = default, string inVMAccessControlProfileReferenceId = default)
         {
-            return new HostEndpointSettings(mode, inVMAccessControlProfileReferenceId, default);
+            return new ProxyAgentHostEndpointSettings(mode, inVMAccessControlProfileReferenceId, default);
+        }
+
+        /// <summary> Specifies the sku profile for Instance Mix scenarios on a node type. </summary>
+        /// <param name="vmSizes"> Specifies the VM sizes for the node type. </param>
+        /// <param name="allocationStrategy"> Specifies the allocation strategy for the VM sizes in the sku profile. </param>
+        /// <returns> A new <see cref="Models.ServiceFabricManagedNodeTypeSkuProfile"/> instance for mocking. </returns>
+        public static ServiceFabricManagedNodeTypeSkuProfile ServiceFabricManagedNodeTypeSkuProfile(IEnumerable<ServiceFabricManagedNodeTypeVmSize> vmSizes = default, ServiceFabricManagedNodeTypeAllocationStrategy? allocationStrategy = default)
+        {
+            vmSizes ??= new ChangeTrackingList<ServiceFabricManagedNodeTypeVmSize>();
+
+            return new ServiceFabricManagedNodeTypeSkuProfile((vmSizes ?? new ChangeTrackingList<ServiceFabricManagedNodeTypeVmSize>()).ToList(), allocationStrategy, default);
+        }
+
+        /// <summary> Specifies a VM size in the sku profile. </summary>
+        /// <param name="name"> The name of the VM size. For example, Standard_D2s_v3. </param>
+        /// <param name="rank"> Specifies the rank or priority of the VM size when allocationStrategy is Prioritized. Lower values indicate higher priority. </param>
+        /// <returns> A new <see cref="Models.ServiceFabricManagedNodeTypeVmSize"/> instance for mocking. </returns>
+        public static ServiceFabricManagedNodeTypeVmSize ServiceFabricManagedNodeTypeVmSize(string name = default, int? rank = default)
+        {
+            return new ServiceFabricManagedNodeTypeVmSize(name, rank, default);
         }
 
         /// <summary> Describes a node type sku. </summary>
@@ -1541,6 +1422,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeActionContent((nodes ?? new ChangeTrackingList<string>()).ToList(), isForced, updateType, default);
         }
 
+        /// <summary> Parameters for the operation that reimages all disks on a single node. </summary>
+        /// <param name="nodes"> The name of the node to reimage. </param>
+        /// <param name="isForced"> Force the action to go through. </param>
+        /// <returns> A new <see cref="Models.ReimageAllDisksContent"/> instance for mocking. </returns>
+        public static ReimageAllDisksContent ReimageAllDisksContent(IEnumerable<string> nodes = default, bool? isForced = default)
+        {
+            nodes ??= new ChangeTrackingList<string>();
+
+            return new ReimageAllDisksContent((nodes ?? new ChangeTrackingList<string>()).ToList(), isForced, default);
+        }
+
         /// <summary> Defines the type of sku available for a node type. </summary>
         /// <param name="resourceType"> The type of resource the sku applies to. Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
         /// <param name="sku"> The supported SKU for a for node type. </param>
@@ -1569,196 +1461,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static NodeTypeSkuCapacity NodeTypeSkuCapacity(int? minimum = default, int? maximum = default, int? @default = default, NodeTypeSkuScaleType? scaleType = default)
         {
             return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType, default);
-        }
-
-        /// <summary> The application resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="version">
-        /// The version of the application type as defined in the application manifest.
-        /// This name must be the full Arm Resource ID for the referenced application type version.
-        /// </param>
-        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
-        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
-        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities, string provisioningState, string version, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, IDictionary<string, string> tags, ManagedServiceIdentity identity)
-        {
-            return new ServiceFabricManagedApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                managedIdentities is null && provisioningState is null && version is null && parameters is null && upgradePolicy is null ? default : new ApplicationResourceProperties(
-                    (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>()).ToList(),
-                    provisioningState,
-                    version,
-                    parameters ?? new ChangeTrackingDictionary<string, string>(),
-                    upgradePolicy,
-                    default),
-                identity,
-                default);
-        }
-
-        /// <summary> Describes a VM Sizes. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="serviceFabricManagedVmSize"> VM Size name. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, string serviceFabricManagedVmSize, string name)
-        {
-            return new ServiceFabricManagedUnsupportedVmSize(
-                id,
-                name,
-                resourceType,
-                systemData,
-                serviceFabricManagedVmSize is null ? default : new ServiceFabricManagedVmSizeProperties(serviceFabricManagedVmSize, default),
-                default);
-        }
-
-        /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
-        /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
-        /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
-        /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
-        /// <param name="placementProperties"> The placement tags applied to nodes in the node type, which can be used to indicate where certain services (workload) should run. </param>
-        /// <param name="capacities"> The capacity tags applied to the nodes in the node type, the cluster resource manager uses these tags to understand how much resource a node has. </param>
-        /// <param name="applicationPorts"> The range of ports from which cluster assigned port to Service Fabric applications. </param>
-        /// <param name="ephemeralPorts"> The range of ephemeral ports that nodes in this node type should be configured with. </param>
-        /// <param name="vmSize"> The size of virtual machines in the pool. All virtual machines in a pool are the same size. For example, Standard_D3. </param>
-        /// <param name="vmImagePublisher"> The publisher of the Azure Virtual Machines Marketplace image. For example, Canonical or MicrosoftWindowsServer. </param>
-        /// <param name="vmImageOffer"> The offer type of the Azure Virtual Machines Marketplace image. For example, UbuntuServer or WindowsServer. </param>
-        /// <param name="vmImageSku"> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </param>
-        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
-        /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
-        /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
-        /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
-        /// <param name="hasMultiplePlacementGroups"> Indicates if scale set associated with the node type can be composed of multiple placement groups. </param>
-        /// <param name="frontendConfigurations"> Indicates the node type uses its own frontend configurations instead of the default one for the cluster. This setting can only be specified for non-primary node types and can not be added or removed after the node type is created. </param>
-        /// <param name="networkSecurityRules"> The Network Security Rules for this node type. This setting can only be specified for node types that are configured with frontend configurations. </param>
-        /// <param name="additionalDataDisks"> Additional managed data disks. </param>
-        /// <param name="isEncryptionAtHostEnabled"> Enable or disable the Host Encryption for the virtual machines on the node type. This will enable the encryption for all the disks including Resource/Temp disk at host itself. Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the node type resource. </param>
-        /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
-        /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
-        /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
-        /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
-        /// <param name="isSpotVm"> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </param>
-        /// <param name="hostGroupId"> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </param>
-        /// <param name="useEphemeralOSDisk"> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </param>
-        /// <param name="spotRestoreTimeout"> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </param>
-        /// <param name="evictionPolicy"> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </param>
-        /// <param name="vmImageResourceId"> Indicates the resource id of the vm image. This parameter is used for custom vm image. </param>
-        /// <param name="subnetId"> Indicates the resource id of the subnet for the node type. </param>
-        /// <param name="vmSetupActions"> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </param>
-        /// <param name="securityType"> Specifies the security type of the nodeType. Supported values include Standard, TrustedLaunch and ConfidentialVM. </param>
-        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob and VMGuestStateOnly for encryption of just the VMGuestState blob. Note: It can be set for only Confidential VMs. </param>
-        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch and ConfidentialVM SecurityType. </param>
-        /// <param name="isNodePublicIPEnabled"> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </param>
-        /// <param name="isNodePublicIPv6Enabled"> Specifies whether each node is allocated its own public IPv6 address. This is only supported on secondary node types with custom Load Balancers. </param>
-        /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
-        /// <param name="natGatewayId"> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </param>
-        /// <param name="natConfigurations"> Specifies the NAT configuration on default public Load Balancer for the node type. This is only supported for node types use the default public Load Balancer. </param>
-        /// <param name="vmImagePlan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
-        /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. </param>
-        /// <param name="dscpConfigurationId"> Specifies the resource id of the DSCP configuration to apply to the node type network interface. </param>
-        /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
-        /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
-        /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
-        /// <param name="isZoneBalanceEnabled"> Setting this to true allows stateless node types to scale out without equal distribution across zones. </param>
-        /// <param name="isOutboundOnly"> Specifies the node type should be configured for only outbound traffic and not inbound traffic. </param>
-        /// <param name="enableResilientEphemeralOsDisk"> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </param>
-        /// <param name="vmManagedIdentityUserAssignedIdentities"> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> The node type sku. </param>
-        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets, IEnumerable<NodeTypeVmssExtension> vmExtensions, bool? isStateless, bool? hasMultiplePlacementGroups, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IEnumerable<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IEnumerable<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, NodeTypeSecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IEnumerable<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IEnumerable<ServiceFabricManagedVmApplication> vmApplications, bool? isZoneBalanceEnabled, bool? isOutboundOnly, bool? enableResilientEphemeralOsDisk, IEnumerable<ResourceIdentifier> vmManagedIdentityUserAssignedIdentities, IDictionary<string, string> tags, NodeTypeSku sku)
-        {
-            return new ServiceFabricManagedNodeTypeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isPrimary is null && vmInstanceCount is null && dataDiskSizeInGB is null && dataDiskType is null && dataDiskLetter is null && placementProperties is null && capacities is null && applicationPorts is null && ephemeralPorts is null && vmSize is null && vmImagePublisher is null && vmImageOffer is null && vmImageSku is null && vmImageVersion is null && vmSecrets is null && vmExtensions is null && vmManagedIdentityUserAssignedIdentities is null && isStateless is null && hasMultiplePlacementGroups is null && frontendConfigurations is null && networkSecurityRules is null && additionalDataDisks is null && isEncryptionAtHostEnabled is null && provisioningState is null && isAcceleratedNetworkingEnabled is null && useDefaultPublicLoadBalancer is null && useTempDataDisk is null && isOverProvisioningEnabled is null && zones is null && isSpotVm is null && hostGroupId is null && useEphemeralOSDisk is null && spotRestoreTimeout is null && evictionPolicy is null && vmImageResourceId is null && subnetId is null && vmSetupActions is null && securityType is null && securityEncryptionType is null && isSecureBootEnabled is null && isNodePublicIPEnabled is null && isNodePublicIPv6Enabled is null && vmSharedGalleryImageId is null && natGatewayId is null && natConfigurations is null && vmImagePlan is null && serviceArtifactReferenceId is null && dscpConfigurationId is null && additionalNetworkInterfaceConfigurations is null && computerNamePrefix is null && vmApplications is null && isZoneBalanceEnabled is null && isOutboundOnly is null && enableResilientEphemeralOsDisk is null ? default : new ServiceFabricManagedNodeTypeProperties(
-                    isPrimary.GetValueOrDefault(),
-                    vmInstanceCount.GetValueOrDefault(),
-                    dataDiskSizeInGB,
-                    dataDiskType,
-                    dataDiskLetter,
-                    placementProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    capacities ?? new ChangeTrackingDictionary<string, string>(),
-                    applicationPorts,
-                    ephemeralPorts,
-                    vmSize,
-                    vmImagePublisher,
-                    vmImageOffer,
-                    vmImageSku,
-                    vmImageVersion,
-                    (vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>()).ToList(),
-                    (vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>()).ToList(),
-                    vmManagedIdentityUserAssignedIdentities is null ? default : new VmManagedIdentity((vmManagedIdentityUserAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
-                    isStateless,
-                    hasMultiplePlacementGroups,
-                    (frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>()).ToList(),
-                    (networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>()).ToList(),
-                    (additionalDataDisks ?? new ChangeTrackingList<NodeTypeVmssDataDisk>()).ToList(),
-                    isEncryptionAtHostEnabled,
-                    provisioningState,
-                    isAcceleratedNetworkingEnabled,
-                    useDefaultPublicLoadBalancer,
-                    useTempDataDisk,
-                    isOverProvisioningEnabled,
-                    (zones ?? new ChangeTrackingList<string>()).ToList(),
-                    isSpotVm,
-                    hostGroupId,
-                    useEphemeralOSDisk,
-                    spotRestoreTimeout,
-                    evictionPolicy,
-                    vmImageResourceId,
-                    subnetId,
-                    (vmSetupActions ?? new ChangeTrackingList<VmSetupAction>()).ToList(),
-                    securityType,
-                    securityEncryptionType,
-                    isSecureBootEnabled,
-                    isNodePublicIPEnabled,
-                    isNodePublicIPv6Enabled,
-                    vmSharedGalleryImageId,
-                    natGatewayId,
-                    (natConfigurations ?? new ChangeTrackingList<NodeTypeNatConfig>()).ToList(),
-                    vmImagePlan,
-                    serviceArtifactReferenceId,
-                    dscpConfigurationId,
-                    (additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>()).ToList(),
-                    computerNamePrefix,
-                    (vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>()).ToList(),
-                    isZoneBalanceEnabled,
-                    isOutboundOnly,
-                    enableResilientEphemeralOsDisk,
-                    default,
-                    default,
-                    default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku,
-                default);
         }
 
         /// <summary> The managed cluster resource. </summary>
@@ -1987,6 +1689,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     dscpConfigurationId,
                     (additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>()).ToList(),
                     computerNamePrefix,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     default,
                     default,
                     default,

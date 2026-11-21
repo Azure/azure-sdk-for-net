@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string nodeTypeName = default;
             FaultSimulationStatus? status = default;
             string operationId = default;
-            SfmcOperationStatus? operationStatus = default;
+            ServiceFabricManagedClusterOperationStatus? operationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    operationStatus = new SfmcOperationStatus(prop.Value.GetString());
+                    operationStatus = new ServiceFabricManagedClusterOperationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
