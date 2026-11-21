@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
 {
     /// <summary>
-    /// Configuration integration examples compiled to prevent rot.
+    /// Code snippets backing the Configuration README.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require optimization env vars to execute.")]
@@ -24,6 +24,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
         [Test]
         public void SingleAgent()
         {
+            #region Snippet:Configuration_ReadMe_SingleAgent
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddOptimizationConfigSource("AgentOptimization")
                 .Build();
@@ -42,6 +43,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
 
             Console.WriteLine($"Model: {options?.Model}");
             Console.WriteLine($"Instructions: {options?.Instructions}");
+            #endregion
         }
 
         [Test]
@@ -56,7 +58,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             services.AddSingleton(configuration);
             CandidateDeployConfig? triage = configuration.GetOptimizationConfig("triage-agent");
             CandidateDeployConfig? billing = configuration.GetOptimizationConfig("billing-agent");
-
             Assert.That(services, Is.Not.Null);
             Assert.That(triage, Is.Not.Null.Or.Null);
             Assert.That(billing, Is.Not.Null.Or.Null);
@@ -72,7 +73,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
                     settings.CredentialProvider = ResolveMyCredential();
                 })
                 .Build();
-
             Assert.That(configuration, Is.Not.Null);
         }
 
@@ -90,7 +90,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             {
                 Console.WriteLine($"Loaded model: {options.Model}");
             }
-
             Assert.That(options, Is.Not.Null.Or.Null);
         }
 

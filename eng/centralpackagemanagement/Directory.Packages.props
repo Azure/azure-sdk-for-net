@@ -39,6 +39,7 @@
     <OpenTelemetryExtensionsHostingVersion>1.20.1</OpenTelemetryExtensionsHostingVersion>
     <OpenTelemetryInstrumentationHttpVersion>1.20.1</OpenTelemetryInstrumentationHttpVersion>
     <OpenTelemetryVersion>1.20.1</OpenTelemetryVersion>
+    <MicrosoftOpenTelemetryVersion>1.0.4</MicrosoftOpenTelemetryVersion>
   </PropertyGroup>
 
   <!-- ============================================================== -->

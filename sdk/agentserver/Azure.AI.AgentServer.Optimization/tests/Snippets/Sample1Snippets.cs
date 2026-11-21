@@ -15,12 +15,13 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
     public class Sample1Snippets
     {
         [Test]
-        public void UseOptions()
+        public async Task UseOptions()
         {
-            #region Snippet:Optimization_Sample1_UseConfig
-            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+            Azure.Core.TokenCredential credential = new StubCredential();
+            #region Snippet:Optimization_Sample1_UseOptions
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), credential);
             string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
-            CandidateDeployConfig? options = client.ResolveOptions(candidateId);
+            CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
             string instructions = options?.Instructions ?? "You are a helpful assistant.";
             string model = options?.Model ?? "gpt-4o-mini";

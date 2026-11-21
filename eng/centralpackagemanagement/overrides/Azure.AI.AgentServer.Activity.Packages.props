@@ -9,7 +9,7 @@
     <PackageVersion Include="Microsoft.Agents.Hosting.AspNetCore" Version="1.6.150" />
   </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <PackageVersion Include="Microsoft.OpenTelemetry" Version="1.0.4" />
+    <PackageVersion Include="Microsoft.OpenTelemetry" Version="$(MicrosoftOpenTelemetryVersion)" />
     <PackageVersion Include="Microsoft.Agents.Builder.Testing" Version="1.6.150" />
   </ItemGroup>
 </Project>
