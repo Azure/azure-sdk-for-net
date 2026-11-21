@@ -1552,6 +1552,21 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
+    public partial class GitHubActionsCredential : Azure.Core.TokenCredential
+    {
+        public GitHubActionsCredential() { }
+        public GitHubActionsCredential(Azure.Identity.GitHubActionsCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class GitHubActionsCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public GitHubActionsCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+    }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static partial class IdentityModelFactory
     {
