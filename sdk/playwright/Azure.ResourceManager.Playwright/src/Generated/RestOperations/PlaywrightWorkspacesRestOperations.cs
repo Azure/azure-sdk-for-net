@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.LoadTestService/playwrightWorkspaces/", false);
             uri.AppendPath(playwrightWorkspaceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.LoadTestService/playwrightWorkspaces/", false);
             uri.AppendPath(playwrightWorkspaceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.LoadTestService/playwrightWorkspaces/", false);
             uri.AppendPath(playwrightWorkspaceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.LoadTestService/playwrightWorkspaces/", false);
             uri.AppendPath(playwrightWorkspaceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.LoadTestService/playwrightWorkspaces", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.LoadTestService/playwrightWorkspaces", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-02-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.LoadTestService/playwrightWorkspaces") ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

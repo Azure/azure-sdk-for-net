@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgraded the default API version to `2026-08-01-preview`.
+- Added `SubnetId` to `PlaywrightWorkspaceProperties` to configure private network connectivity.
+
 ### Breaking Changes
 
 ### Bugs Fixed
