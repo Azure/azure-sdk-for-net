@@ -61,9 +61,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
         }
 
-        /// <summary> Authentication configuration used by the cache rule to access the upstream source repository. </summary>
+        /// <summary>
+        /// Authentication configuration used by the cache rule to access the upstream source repository.
+        /// Omitted fields retain their current values. When authentication is first configured, all
+        /// required fields of the selected authentication type must be supplied. Changing an existing
+        /// authentication type is not supported.
+        /// </summary>
         [WirePath("properties.additionalAuthenticationProperties")]
-        public ContainerRegistryCacheAuthentication AdditionalAuthenticationProperties
+        public AdditionalAuthenticationUpdateProperties AdditionalAuthenticationProperties
         {
             get
             {

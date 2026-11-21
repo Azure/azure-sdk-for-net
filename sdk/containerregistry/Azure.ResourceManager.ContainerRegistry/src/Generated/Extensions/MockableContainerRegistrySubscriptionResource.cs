@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-09-01-preview",
+            "2026-10-15-preview",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

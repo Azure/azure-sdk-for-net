@@ -4,7 +4,14 @@
 
 ### Features Added
 
+- Updated API version to `2026-10-15-preview`.
+- Added cache-rule authentication support for AWS Elastic Container Registry and Microsoft Entra federated identity credentials.
+- Added dedicated authentication update models that support partial updates to cache-rule authentication settings.
+
 ### Breaking Changes
+
+- Changed `ContainerRegistryCacheRulePatch.AdditionalAuthenticationProperties` from `ContainerRegistryCacheAuthentication` to `AdditionalAuthenticationUpdateProperties`. For Google Artifact Registry authentication updates, replace `GoogleArtifactRegistryCacheAuthentication` with `GoogleArtifactRegistryCacheAuthenticationUpdateProperties`. Continue using the full authentication model for create/read operations.
+- Updated the corresponding cache-rule patch model-factory signature to use `AdditionalAuthenticationUpdateProperties`. Update affected factory calls to pass an authentication update model.
 
 ### Bugs Fixed
 

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GoogleArtifactRegistryCacheAuthentication"/>. </summary>
-        /// <param name="authenticationType"> Authentication type discriminator. </param>
+        /// <param name="authenticationType"> Authentication type discriminator. The authentication type cannot change once configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectNumber">
         /// The Google Cloud Platform project that is configured for authentication

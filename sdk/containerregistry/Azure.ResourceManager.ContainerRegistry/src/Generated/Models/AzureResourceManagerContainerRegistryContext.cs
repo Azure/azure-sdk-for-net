@@ -17,6 +17,9 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AdditionalAuthenticationUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AwsElasticContainerRegistryCacheAuthentication))]
+    [ModelReaderWriterBuildable(typeof(AwsElasticContainerRegistryCacheAuthenticationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AzureADAuthenticationAsArmPolicy))]
     [ModelReaderWriterBuildable(typeof(CacheRulesListResult))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistryData))]
@@ -115,8 +118,11 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryWebhookPatch))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryWebhookResource))]
     [ModelReaderWriterBuildable(typeof(CredentialSetListResult))]
+    [ModelReaderWriterBuildable(typeof(EntraFederatedIdentityCredentialAuthenticationUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(EntraFederatedIdentityCredentialCacheAuthentication))]
     [ModelReaderWriterBuildable(typeof(GarbageCollectionProperties))]
     [ModelReaderWriterBuildable(typeof(GoogleArtifactRegistryCacheAuthentication))]
+    [ModelReaderWriterBuildable(typeof(GoogleArtifactRegistryCacheAuthenticationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScopeMapData))]
