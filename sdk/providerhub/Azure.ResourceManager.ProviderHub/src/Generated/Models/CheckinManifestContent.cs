@@ -33,11 +33,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="CheckinManifestContent"/>. </summary>
         /// <param name="environment"> The environment supplied to the checkin manifest operation. </param>
         /// <param name="baselineArmManifestLocation"> The baseline ARM manifest location supplied to the checkin manifest operation. </param>
+        /// <param name="swaggerUri"> The URI of the signed-off OpenAPI specification pull request associated with the manifest check-in. </param>
+        /// <param name="checkinComment"> The comment associated with the manifest check-in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckinManifestContent(string environment, AzureLocation baselineArmManifestLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CheckinManifestContent(string environment, AzureLocation baselineArmManifestLocation, Uri swaggerUri, string checkinComment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Environment = environment;
             BaselineArmManifestLocation = baselineArmManifestLocation;
+            SwaggerUri = swaggerUri;
+            CheckinComment = checkinComment;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +50,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The baseline ARM manifest location supplied to the checkin manifest operation. </summary>
         public AzureLocation BaselineArmManifestLocation { get; set; }
+
+        /// <summary> The URI of the signed-off OpenAPI specification pull request associated with the manifest check-in. </summary>
+        public Uri SwaggerUri { get; set; }
+
+        /// <summary> The comment associated with the manifest check-in. </summary>
+        public string CheckinComment { get; set; }
     }
 }
