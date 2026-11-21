@@ -112,6 +112,46 @@ namespace Azure.ResourceManager.Enclave.Models
                 writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(SyncTo))
+            {
+                writer.WritePropertyName("syncTo"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in SyncTo)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(SyncFrom))
+            {
+                writer.WritePropertyName("syncFrom"u8);
+                writer.WriteStringValue(SyncFrom);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SyncStatus))
+            {
+                writer.WritePropertyName("syncStatus"u8);
+                writer.WriteStringValue(SyncStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SyncDestinationStatuses))
+            {
+                writer.WritePropertyName("syncDestinationStatuses"u8);
+                writer.WriteStartArray();
+                foreach (SyncDestinationStatus item in SyncDestinationStatuses)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(SyncPerformedBy))
+            {
+                writer.WritePropertyName("syncPerformedBy"u8);
+                writer.WriteObjectValue(SyncPerformedBy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +198,11 @@ namespace Azure.ResourceManager.Enclave.Models
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
             VirtualEnclaveProvisioningState? provisioningState = default;
             VirtualEnclaveUpdateMode? updateMode = default;
+            IList<ResourceIdentifier> syncTo = default;
+            ResourceIdentifier syncFrom = default;
+            SyncStatus? syncStatus = default;
+            IReadOnlyList<SyncDestinationStatus> syncDestinationStatuses = default;
+            SyncPerformedBy syncPerformedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,12 +255,84 @@ namespace Azure.ResourceManager.Enclave.Models
                     updateMode = new VirtualEnclaveUpdateMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("syncTo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    syncTo = array;
+                    continue;
+                }
+                if (prop.NameEquals("syncFrom"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncFrom = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("syncStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncStatus = new SyncStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("syncDestinationStatuses"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SyncDestinationStatus> array = new List<SyncDestinationStatus>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SyncDestinationStatus.DeserializeSyncDestinationStatus(item, options));
+                    }
+                    syncDestinationStatuses = array;
+                    continue;
+                }
+                if (prop.NameEquals("syncPerformedBy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncPerformedBy = SyncPerformedBy.DeserializeSyncPerformedBy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualEnclaveCommunityEndpointProperties(ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>(), resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(), provisioningState, updateMode, additionalBinaryDataProperties);
+            return new VirtualEnclaveCommunityEndpointProperties(
+                ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>(),
+                resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(),
+                provisioningState,
+                updateMode,
+                syncTo ?? new ChangeTrackingList<ResourceIdentifier>(),
+                syncFrom,
+                syncStatus,
+                syncDestinationStatuses ?? new ChangeTrackingList<SyncDestinationStatus>(),
+                syncPerformedBy,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -1,5 +1,5 @@
 directory: specification/mission/resource-manager/Microsoft.Mission/Mission
-commit: ae8bfcbd69fc161651b0509f4869f55376750f1a
+commit: be93aca8c35ada896dd7fd6c7f65b1a9f766e84c
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

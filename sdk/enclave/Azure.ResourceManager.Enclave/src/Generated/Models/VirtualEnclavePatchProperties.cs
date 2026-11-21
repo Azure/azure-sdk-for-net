@@ -19,41 +19,40 @@ namespace Azure.ResourceManager.Enclave.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePatchProperties"/>. </summary>
-        /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveVirtualNetwork"/> is null. </exception>
-        public VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork)
+        public VirtualEnclavePatchProperties()
         {
-            Argument.AssertNotNull(enclaveVirtualNetwork, nameof(enclaveVirtualNetwork));
-
-            EnclaveVirtualNetwork = enclaveVirtualNetwork;
             EnclaveRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
             WorkloadRoleAssignments = new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
             GovernedServiceList = new ChangeTrackingList<VirtualEnclaveGovernedService>();
+            AddressSpaces = new ChangeTrackingList<AddressSpaceEntry>();
+            SubnetConfigurations = new ChangeTrackingList<VirtualEnclaveSubnetConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePatchProperties"/>. </summary>
-        /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
         /// <param name="isBastionEnabled"> Deploy Bastion service (True or False). </param>
         /// <param name="workloadResourceVisibility"> Specifies whether resources in the workload resource group(s) are visible through standard RBAC. </param>
         /// <param name="rbacInheritance"> Controls whether standard Azure RBAC role inheritance applies to the workload resource group(s). </param>
         /// <param name="enclaveRoleAssignments"> Enclave role assignments. </param>
         /// <param name="workloadRoleAssignments"> Workload role assignments. </param>
         /// <param name="governedServiceList"> Enclave specific policies. </param>
+        /// <param name="addressSpaces"> Customer-requested address spaces for the enclave. Supports multiple entries. Each entry specifies a prefixLength for the RP to allocate, or a custom addressSpace CIDR. The RP returns these entries exactly as provided; allocated values are reported in computedAddressSpaces. </param>
+        /// <param name="subnetConfigurations"> Subnet configurations for the enclave network. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
         /// <param name="dedicatedHubResourceId"> DedicatedHub Resource ID. </param>
         /// <param name="approvalSettings"> Approval requirements for various actions on the enclave's resources. </param>
         /// <param name="monitoringSettings"> Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, bool? isBastionEnabled, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility, VirtualEnclaveRbacInheritanceMode? rbacInheritance, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettingsPatch enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, ResourceIdentifier dedicatedHubResourceId, VirtualEnclaveApprovalSettingsPatchProperties approvalSettings, VirtualEnclaveMonitoringSettingsPatch monitoringSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclavePatchProperties(bool? isBastionEnabled, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility, VirtualEnclaveRbacInheritanceMode? rbacInheritance, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, IList<AddressSpaceEntry> addressSpaces, IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations, EnclaveDefaultSettingsPatch enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, ResourceIdentifier dedicatedHubResourceId, VirtualEnclaveApprovalSettingsPatchProperties approvalSettings, VirtualEnclaveMonitoringSettingsPatch monitoringSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EnclaveVirtualNetwork = enclaveVirtualNetwork;
             IsBastionEnabled = isBastionEnabled;
             WorkloadResourceVisibility = workloadResourceVisibility;
             RbacInheritance = rbacInheritance;
             EnclaveRoleAssignments = enclaveRoleAssignments;
             WorkloadRoleAssignments = workloadRoleAssignments;
             GovernedServiceList = governedServiceList;
+            AddressSpaces = addressSpaces;
+            SubnetConfigurations = subnetConfigurations;
             EnclaveDefaultSettings = enclaveDefaultSettings;
             MaintenanceModeConfiguration = maintenanceModeConfiguration;
             DedicatedHubResourceId = dedicatedHubResourceId;
@@ -61,9 +60,6 @@ namespace Azure.ResourceManager.Enclave.Models
             MonitoringSettings = monitoringSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Virtual Network. </summary>
-        public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; }
 
         /// <summary> Deploy Bastion service (True or False). </summary>
         public bool? IsBastionEnabled { get; set; }
@@ -82,6 +78,12 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Enclave specific policies. </summary>
         public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
+
+        /// <summary> Customer-requested address spaces for the enclave. Supports multiple entries. Each entry specifies a prefixLength for the RP to allocate, or a custom addressSpace CIDR. The RP returns these entries exactly as provided; allocated values are reported in computedAddressSpaces. </summary>
+        public IList<AddressSpaceEntry> AddressSpaces { get; }
+
+        /// <summary> Subnet configurations for the enclave network. </summary>
+        public IList<VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get; }
 
         /// <summary> Enclave default settings. </summary>
         internal EnclaveDefaultSettingsPatch EnclaveDefaultSettings { get; set; }

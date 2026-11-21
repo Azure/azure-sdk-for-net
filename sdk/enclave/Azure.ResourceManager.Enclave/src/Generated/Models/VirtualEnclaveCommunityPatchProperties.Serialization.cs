@@ -119,6 +119,11 @@ namespace Azure.ResourceManager.Enclave.Models
                 writer.WritePropertyName("firewallSku"u8);
                 writer.WriteStringValue(FirewallSku.Value.ToString());
             }
+            if (Optional.IsDefined(SubnetJoinPolicyMode))
+            {
+                writer.WritePropertyName("subnetJoinPolicyMode"u8);
+                writer.WriteStringValue(SubnetJoinPolicyMode.Value.ToString());
+            }
             if (Optional.IsDefined(GranularApprovalSettings))
             {
                 writer.WritePropertyName("approvalSettings"u8);
@@ -193,9 +198,10 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             IList<string> dnsServers = default;
             IList<VirtualEnclaveGovernedService> governedServiceList = default;
-            CommunityPropertiesPolicyOverride? policyOverride = default;
+            Models.CommunityPropertiesPolicyOverride? policyOverride = default;
             IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default;
             VirtualEnclaveFirewallSku? firewallSku = default;
+            SubnetJoinPolicyMode? subnetJoinPolicyMode = default;
             ApprovalSettingsPatchProperties granularApprovalSettings = default;
             VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default;
             VirtualEnclaveMonitoringSettingsPatch monitoringSettings = default;
@@ -244,7 +250,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    policyOverride = new CommunityPropertiesPolicyOverride(prop.Value.GetString());
+                    policyOverride = new Models.CommunityPropertiesPolicyOverride(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("communityRoleAssignments"u8))
@@ -268,6 +274,15 @@ namespace Azure.ResourceManager.Enclave.Models
                         continue;
                     }
                     firewallSku = new VirtualEnclaveFirewallSku(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("subnetJoinPolicyMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetJoinPolicyMode = new SubnetJoinPolicyMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("approvalSettings"u8))
@@ -329,6 +344,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 policyOverride,
                 communityRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 firewallSku,
+                subnetJoinPolicyMode,
                 granularApprovalSettings,
                 maintenanceModeConfiguration,
                 monitoringSettings,

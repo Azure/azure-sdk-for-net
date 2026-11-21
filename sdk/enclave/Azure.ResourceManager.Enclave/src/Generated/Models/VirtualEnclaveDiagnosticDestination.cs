@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Enclave.Models
         private const string EnclaveOnlyValue = "EnclaveOnly";
         /// <summary> DiagnosticDestination Type Both. </summary>
         private const string BothValue = "Both";
+        /// <summary> DiagnosticDestination Type Unspecified. </summary>
+        private const string UnspecifiedValue = "Unspecified";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveDiagnosticDestination"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> DiagnosticDestination Type Both. </summary>
         public static VirtualEnclaveDiagnosticDestination Both { get; } = new VirtualEnclaveDiagnosticDestination(BothValue);
+
+        /// <summary> DiagnosticDestination Type Unspecified. </summary>
+        public static VirtualEnclaveDiagnosticDestination Unspecified { get; } = new VirtualEnclaveDiagnosticDestination(UnspecifiedValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveDiagnosticDestination"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
