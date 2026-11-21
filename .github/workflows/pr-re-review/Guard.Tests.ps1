@@ -657,12 +657,36 @@ Describe 'Compiled re-review publication guard' {
         @{ Name = 'Download exported-patch markers' }
         @{ Name = 'Checkout trusted re-review publication guard' }
         @{ Name = 'Verify re-review helpers match the export' }
-        @{ Name = 'Require complete re-review coverage before publishing' }
         @{ Name = 'Process Safe Outputs' }
     ) {
         $step = Get-Step $Name
         Get-StepProperty $step 'if' | Should -BeNullOrEmpty
         Get-StepProperty $step 'continue-on-error' | Should -BeNullOrEmpty
+    }
+
+    It 'skips the live guard only for a replay, whose safe outputs are staged so nothing is published' {
+        $guard = Get-Step 'Require complete re-review coverage before publishing'
+        Get-StepProperty $guard 'if' | Should -BeExactly "github.event_name != 'workflow_dispatch'"
+        Get-StepProperty $guard 'continue-on-error' | Should -BeNullOrEmpty
+        (Get-StepMapping (Get-Step 'Process Safe Outputs') 'env')['GH_AW_SAFE_OUTPUTS_STAGED'] | Should -BeExactly "`${{ github.event_name == 'workflow_dispatch' }}"
+        Test-PrReReviewReplayStaged (Join-Path $script:RepoRoot '.github' 'workflows' 'pr-re-review.lock.yml') | Should -BeTrue
+    }
+
+    It 'evaluates a replay only on workflow_dispatch, before the live guard and anything is published' {
+        $replay = Get-Step 'Evaluate the replayed re-review'
+        Get-StepProperty $replay 'if' | Should -BeExactly "github.event_name == 'workflow_dispatch'"
+        Get-StepProperty $replay 'continue-on-error' | Should -BeNullOrEmpty
+        Get-StepProperty $replay 'shell' | Should -BeExactly 'pwsh'
+        Get-StepProperty $replay 'run' | Should -BeExactly './.github/workflows/pr-re-review/Invoke-PrReReviewReplayGuard.ps1'
+        $environment = Get-StepMapping $replay 'env'
+        $environment['REVIEW_REPLAY'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input/replay.json'
+        $environment['REVIEW_WORKFLOW_LOCK'] | Should -BeExactly '${{ github.workspace }}/.github/workflows/pr-re-review.lock.yml'
+        $upload = Get-Step 'Upload replay result'
+        Get-StepProperty $upload 'if' | Should -BeExactly '${{ !cancelled() && github.event_name == ''workflow_dispatch'' }}'
+        (Get-StepMapping $upload 'with')['path'] | Should -BeExactly ($environment['REVIEW_REPLAY_RESULT'] -replace '/[^/]+$')
+        $order = @('Verify re-review helpers match the export', 'Evaluate the replayed re-review', 'Upload replay result', 'Require complete re-review coverage before publishing', 'Process Safe Outputs') |
+            ForEach-Object { [array]::IndexOf($script:StepNames, $_) }
+        for ($i = 1; $i -lt $order.Count; $i++) { $order[$i] | Should -BeGreaterThan $order[$i - 1] }
     }
 
     It 'blocks run 40400877253 when the compiled step runs the guard' {
@@ -810,6 +834,11 @@ Describe 'Re-review prompt' {
     It 'asks for the exact coverage line the guard enforces' {
         $prompt = [IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md'))
         $prompt.Contains((Get-PrReReviewCoverageTemplate), [StringComparison]::Ordinal) | Should -BeTrue
+    }
+
+    # gh-aw v0.92.0 evaluates a {{#if}} condition before it substitutes the condition's value, so the block is always kept.
+    It 'uses no {{#if}} blocks' {
+        $script:PromptBody | Should -Not -Match '\{\{#if\b'
     }
 
     It 'accepts that coverage line once every placeholder is a matching count' {

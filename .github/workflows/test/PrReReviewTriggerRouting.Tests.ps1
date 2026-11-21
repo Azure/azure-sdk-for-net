@@ -236,13 +236,52 @@ Describe 'pr-re-review trigger routing' {
             $pushContext = New-PushContext -EventName $EventName -FromFork $FromFork -Draft $Draft
             Test-WorkflowCondition $condition $pushContext | Should -Be $Runs
         }
+
+        It 'replay dispatched without a pull request runs' {
+            $dispatchContext = @{
+                github = @{ event_name = 'workflow_dispatch'; repository_id = '1000'; event = @{ inputs = @{ pull_request = '1' } } }
+                needs = @{ pre_activation = @{ outputs = @{ activated = 'true' } } }
+            }
+            Test-WorkflowCondition $condition $dispatchContext | Should -BeTrue
+        }
+    }
+
+    It 'reopens review threads for a pull request but never for a replay' {
+        $condition = Get-JobCondition 'unresolve_review_thread'
+        # Stand in for the two functions the evaluator does not support: the run is not cancelled, and the agent asked to reopen a thread.
+        foreach ($call in '!cancelled()', "contains(needs.agent.outputs.output_types, 'unresolve_review_thread')") {
+            $condition.Contains($call, [StringComparison]::Ordinal) | Should -BeTrue -Because 'a changed condition shape means this test needs revisiting'
+            $condition = $condition.Replace($call, 'true')
+        }
+        $needs = @{ agent = @{ result = 'success' }; safe_outputs = @{ result = 'success' } }
+        Test-WorkflowCondition $condition @{ github = @{ event_name = 'pull_request' }; needs = $needs } | Should -BeTrue
+        Test-WorkflowCondition $condition @{ github = @{ event_name = 'workflow_dispatch' }; needs = $needs } | Should -BeFalse
     }
 
     It 'keys workflow concurrency by event so the skipped twin run never queues behind the real run' {
         $group = (Get-YamlSection $LockLines 'concurrency' 0) -cmatch '^  group: '
         $group | Should -HaveCount 1
         $group | Should -Match '\$\{\{\s*github\.event_name\s*\}\}'
-        $group | Should -Match '\$\{\{\s*github\.event\.pull_request\.number\s*\}\}'
+        # A replay has no pull request number, so each one gets its own group instead of queuing behind the others.
+        $group | Should -Match '\$\{\{\s*github\.event\.pull_request\.number\s*\|\|\s*github\.run_id\s*\}\}'
+    }
+
+    It 'adds the replay instructions to the prompt only for a dispatched replay' {
+        $bindings = @($LockLines | ForEach-Object {
+            if ($_ -cmatch '^\s+GH_AW_EXPR_[0-9A-F]+: \$\{\{ (?<expr>.*\bgithub\.event\.inputs\..*) \}\}$') { $Matches['expr'] }
+        } | Select-Object -Unique)
+        $replay = @($bindings | Where-Object { $_.Contains('This run replays', [StringComparison]::Ordinal) })
+        $replay | Should -HaveCount 1
+        $pullRequestContext = @{ github = @{ event_name = 'pull_request'; event = @{ pull_request = @{ number = 1; head = @{ sha = 'a' * 40 } } } } }
+        $dispatchContext = @{ github = @{ event_name = 'workflow_dispatch'; event = @{ inputs = @{ pull_request = '1'; head_sha = 'b' * 40 } } } }
+        Test-WorkflowCondition $replay[0] $pullRequestContext | Should -BeFalse
+        Test-WorkflowCondition $replay[0] $dispatchContext | Should -BeTrue
+        $targets = @($bindings | Where-Object { $_ -cnotin $replay })
+        $targets | Should -HaveCount 2
+        foreach ($target in $targets) {
+            Test-WorkflowCondition $target $pullRequestContext | Should -BeTrue
+            Test-WorkflowCondition $target $dispatchContext | Should -BeTrue
+        }
     }
 
     # The pull_request_target path is safe partly because a fork cannot steer the agent through
