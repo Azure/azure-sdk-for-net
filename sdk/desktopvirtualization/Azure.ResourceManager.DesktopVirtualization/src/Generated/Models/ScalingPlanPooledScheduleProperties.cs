@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DesktopVirtualizationCreateDeleteProperties _createDelete;
+        private bool _createDeleteIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledScheduleProperties"/>. </summary>
         public ScalingPlanPooledScheduleProperties()
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ScheduleName = scheduleName;
             DaysOfWeek = daysOfWeek;
             ScalingMethod = scalingMethod;
-            CreateDelete = createDelete;
+            _createDelete = createDelete;
             RampUpStartTime = rampUpStartTime;
             RampUpLoadBalancingAlgorithm = rampUpLoadBalancingAlgorithm;
             RampUpMinimumHostsPct = rampUpMinimumHostsPct;
@@ -84,7 +86,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
         [WirePath("createDelete")]
-        public DesktopVirtualizationCreateDeleteProperties CreateDelete { get; set; }
+        public DesktopVirtualizationCreateDeleteProperties CreateDelete
+        {
+            get
+            {
+                return _createDelete;
+            }
+            set
+            {
+                _createDelete = value;
+                _createDeleteIsDefined = true;
+            }
+        }
 
         /// <summary> Starting time for ramp up period. </summary>
         [WirePath("rampUpStartTime")]

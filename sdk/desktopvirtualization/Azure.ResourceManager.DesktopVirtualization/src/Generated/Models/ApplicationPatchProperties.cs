@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="msixPackageFamilyName"> Specifies the package family name for MSIX applications. </param>
         /// <param name="msixPackageApplicationId"> Specifies the package application Id for MSIX applications. </param>
         /// <param name="applicationType"> Resource Type of Application. </param>
+        /// <param name="shortcutsExtension"> Additional shortcut settings for the remote application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationPatchProperties(string description, string friendlyName, string filePath, VirtualApplicationCommandLineSetting? commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationPatchProperties(string description, string friendlyName, string filePath, VirtualApplicationCommandLineSetting? commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, ShortcutsExtension shortcutsExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             FriendlyName = friendlyName;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             MsixPackageFamilyName = msixPackageFamilyName;
             MsixPackageApplicationId = msixPackageApplicationId;
             ApplicationType = applicationType;
+            ShortcutsExtension = shortcutsExtension;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -94,5 +96,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Resource Type of Application. </summary>
         [WirePath("applicationType")]
         public RemoteApplicationType? ApplicationType { get; set; }
+
+        /// <summary> Additional shortcut settings for the remote application. </summary>
+        [WirePath("shortcutsExtension")]
+        internal ShortcutsExtension ShortcutsExtension { get; set; }
+
+        /// <summary> Indicates whether to create a desktop shortcut for the remote application. </summary>
+        [WirePath("shortcutsExtension.putShortcutOnDesktop")]
+        public bool? PutShortcutOnDesktop
+        {
+            get
+            {
+                return ShortcutsExtension is null ? default : ShortcutsExtension.PutShortcutOnDesktop;
+            }
+            set
+            {
+                if (ShortcutsExtension is null)
+                {
+                    ShortcutsExtension = new ShortcutsExtension();
+                }
+                ShortcutsExtension.PutShortcutOnDesktop = value;
+            }
+        }
     }
 }

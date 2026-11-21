@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> DeploymentScope type for ApplicationGroup. </summary>
         [WirePath("properties.deploymentScope")]
-        public DesktopVirtualizationDeploymentScope? DeploymentScope
+        public ReadOnlyDeploymentScope? DeploymentScope
         {
             get
             {

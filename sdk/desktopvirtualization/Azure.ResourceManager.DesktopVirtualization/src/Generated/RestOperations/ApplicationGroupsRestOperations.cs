@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
             uri.AppendPath(applicationGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
             uri.AppendPath(applicationGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
             uri.AppendPath(applicationGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
             uri.AppendPath(applicationGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
