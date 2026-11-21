@@ -36,7 +36,8 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             var client = CreateBatchClient();
             string jobScheduleId = "jobSchedule1";
-            DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
+            bool scheduleCreated = false;
+            DateTimeOffset unboundDNRU = Recording.UtcNow.AddDays(1);
 
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
@@ -73,6 +74,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
+                scheduleCreated = true;
 
                 // check to see if the job schedule exists
                 bool result = await client.JobScheduleExistsAsync(jobScheduleId);
@@ -98,11 +100,14 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                DeleteJobScheduleOperation operation = await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId, force: true);
-                await operation.WaitForCompletionAsync();
-                Assert.IsTrue(operation.HasCompleted);
-                Assert.IsTrue(operation.HasValue);
-                Assert.IsTrue(operation.Value);
+                if (scheduleCreated)
+                {
+                    DeleteJobScheduleOperation operation = await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId, force: true);
+                    await operation.WaitForCompletionAsync();
+                    Assert.IsTrue(operation.HasCompleted);
+                    Assert.IsTrue(operation.HasValue);
+                    Assert.IsTrue(operation.Value);
+                }
             }
         }
 
@@ -235,7 +240,8 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             var client = CreateBatchClient();
             string jobScheduleId = "jobSchedule3";
-            DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
+            bool scheduleCreated = false;
+            DateTimeOffset unboundDNRU = Recording.UtcNow.AddDays(1);
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
                 DoNotRunBefore = unboundDNRU,
@@ -271,6 +277,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
+                scheduleCreated = true;
 
                 BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
                 Assert.NotNull(batchJobSchedule);
@@ -283,7 +290,10 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId);
+                if (scheduleCreated)
+                {
+                    await client.DeleteJobScheduleAsync(WaitUntil.Completed, jobScheduleId);
+                }
             }
         }
 
@@ -292,7 +302,8 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             var client = CreateBatchClient();
             string jobScheduleId = "jobSchedulePatch";
-            DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
+            bool scheduleCreated = false;
+            DateTimeOffset unboundDNRU = Recording.UtcNow.AddDays(1);
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
                 DoNotRunBefore = unboundDNRU,
@@ -328,6 +339,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
+                scheduleCreated = true;
 
                 BatchJobScheduleUpdateOptions batchJobScheduleUpdateContent = new BatchJobScheduleUpdateOptions();
                 batchJobScheduleUpdateContent.Metadata.Add(new BatchMetadataItem("name", "value"));
@@ -342,7 +354,10 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId);
+                if (scheduleCreated)
+                {
+                    await client.DeleteJobScheduleAsync(WaitUntil.Completed, jobScheduleId);
+                }
             }
         }
     }

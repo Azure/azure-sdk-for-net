@@ -84,11 +84,6 @@ namespace Azure.Compute.Batch
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
             writer.WriteStringValue(LastUpdateTime, "O");
-            if (Optional.IsDefined(UsageStatistics))
-            {
-                writer.WritePropertyName("usageStats"u8);
-                writer.WriteObjectValue(UsageStatistics, options);
-            }
             if (Optional.IsDefined(ResourceStatistics))
             {
                 writer.WritePropertyName("resourceStats"u8);
@@ -139,7 +134,6 @@ namespace Azure.Compute.Batch
             Uri uri = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
-            BatchPoolUsageStatistics usageStatistics = default;
             BatchPoolResourceStatistics resourceStatistics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,15 +153,6 @@ namespace Azure.Compute.Batch
                     lastUpdateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("usageStats"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    usageStatistics = BatchPoolUsageStatistics.DeserializeBatchPoolUsageStatistics(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("resourceStats"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -182,13 +167,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchPoolStatistics(
-                uri,
-                startTime,
-                lastUpdateTime,
-                usageStatistics,
-                resourceStatistics,
-                additionalBinaryDataProperties);
+            return new BatchPoolStatistics(uri, startTime, lastUpdateTime, resourceStatistics, additionalBinaryDataProperties);
         }
     }
 }

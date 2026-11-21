@@ -9,63 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> The result of a listing the usage metrics for an Account. </summary>
-    internal partial class BatchPoolListUsageMetricsResult : IJsonModel<BatchPoolListUsageMetricsResult>
+    /// <summary> Specifies the set of VM sizes and the allocation strategy used to allocate Compute Nodes for an Instance Mix Pool. </summary>
+    public partial class VirtualMachineSkuProfile : IJsonModel<VirtualMachineSkuProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchPoolListUsageMetricsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineSkuProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolListUsageMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchPoolListUsageMetricsResult(document.RootElement, options);
+                        return DeserializeVirtualMachineSkuProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchPoolListUsageMetricsResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSkuProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolListUsageMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchPoolListUsageMetricsResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSkuProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchPoolListUsageMetricsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineSkuProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolListUsageMetricsResult IPersistableModel<BatchPoolListUsageMetricsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineSkuProfile IPersistableModel<VirtualMachineSkuProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchPoolListUsageMetricsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchPoolListUsageMetricsResult"/> from. </param>
-        public static explicit operator BatchPoolListUsageMetricsResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchPoolListUsageMetricsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<VirtualMachineSkuProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchPoolListUsageMetricsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineSkuProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,25 +68,25 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolListUsageMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPoolListUsageMetricsResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSkuProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(VmSizes))
             {
-                writer.WritePropertyName("value"u8);
+                writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
-                foreach (BatchPoolUsageMetrics item in Value)
+                foreach (VirtualMachineSkuProfileVmSize item in VmSizes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OdataNextLink))
+            if (Optional.IsDefined(AllocationStrategy))
             {
-                writer.WritePropertyName("odata.nextLink"u8);
-                writer.WriteStringValue(OdataNextLink.AbsoluteUri);
+                writer.WritePropertyName("allocationStrategy"u8);
+                writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -115,55 +107,55 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolListUsageMetricsResult IJsonModel<BatchPoolListUsageMetricsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineSkuProfile IJsonModel<VirtualMachineSkuProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchPoolListUsageMetricsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineSkuProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolListUsageMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPoolListUsageMetricsResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSkuProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchPoolListUsageMetricsResult(document.RootElement, options);
+            return DeserializeVirtualMachineSkuProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BatchPoolListUsageMetricsResult DeserializeBatchPoolListUsageMetricsResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineSkuProfile DeserializeVirtualMachineSkuProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<BatchPoolUsageMetrics> value = default;
-            Uri odataNextLink = default;
+            IList<VirtualMachineSkuProfileVmSize> vmSizes = default;
+            VirtualMachineSkuAllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("vmSizes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<BatchPoolUsageMetrics> array = new List<BatchPoolUsageMetrics>();
+                    List<VirtualMachineSkuProfileVmSize> array = new List<VirtualMachineSkuProfileVmSize>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(item, options));
+                        array.Add(VirtualMachineSkuProfileVmSize.DeserializeVirtualMachineSkuProfileVmSize(item, options));
                     }
-                    value = array;
+                    vmSizes = array;
                     continue;
                 }
-                if (prop.NameEquals("odata.nextLink"u8))
+                if (prop.NameEquals("allocationStrategy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    odataNextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    allocationStrategy = new VirtualMachineSkuAllocationStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -171,7 +163,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchPoolListUsageMetricsResult(value ?? new ChangeTrackingList<BatchPoolUsageMetrics>(), odataNextLink, additionalBinaryDataProperties);
+            return new VirtualMachineSkuProfile(vmSizes ?? new ChangeTrackingList<VirtualMachineSkuProfileVmSize>(), allocationStrategy, additionalBinaryDataProperties);
         }
     }
 }

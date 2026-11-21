@@ -29,38 +29,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            // Example fix for BatchNode constructor calls with <null> DateTimeOffset arguments
-            BatchNode batchNodeDeallocating = new BatchNode(
-                NodeId,
-                null,
-                BatchNodeState.Deallocating,
-                null,
-                DateTimeOffset.Now,
-                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
-                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
-                null,
-                null,
-                "affinityId",
-                "vmSize",
-                0, 0, 0, 0,
-                null, null, null, null, null, null, null, null, null
-            );
+            BatchNode batchNodeDeallocating = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Deallocating, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.MinValue, allocationTime: DateTimeOffset.MinValue, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
 
-            BatchNode batchNodeDeallocated = new BatchNode(
-                NodeId,
-                null,
-                BatchNodeState.Deallocated,
-                null,
-                DateTimeOffset.Now,
-                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
-                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
-                null,
-                null,
-                "affinityId",
-                "vmSize",
-                0, 0, 0, 0,
-                null, null, null, null, null, null, null, null, null
-            );
+            BatchNode batchNodeDeallocated = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Deallocated, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.MinValue, allocationTime: DateTimeOffset.MinValue, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -149,7 +120,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocated = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Deallocated, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -207,7 +178,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocated = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Deallocated, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -704,43 +675,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Deleting,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                null, // AllocationState
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Deleting, stateTransitionTime: DateTimeOffset.UtcNow, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -787,80 +722,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Deleting,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                null, // AllocationState
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
-            BatchPool batchPoolNew = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow.AddMinutes(1), // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow.AddMinutes(1), // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow.AddMinutes(1), // StateTransitionTime (fix for CS1503: Argument 8)
-                null, // AllocationState
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Deleting, stateTransitionTime: DateTimeOffset.UtcNow, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
+            BatchPool batchPoolNew = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow.AddMinutes(1), creationTime: DateTimeOffset.UtcNow.AddMinutes(1), state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow.AddMinutes(1), currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -908,80 +771,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             int CallsToGet = 0;
             DateTimeOffset creationTime = DateTimeOffset.UtcNow;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                creationTime, // LastModified (fix for CS1503: Argument 5)
-                creationTime, // CreationTime
-                BatchPoolState.Deleting,
-                creationTime, // StateTransitionTime (fix for CS1503: Argument 8)
-                null, // AllocationState
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
-            BatchPool batchPoolNew = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                creationTime.AddHours(1), // LastModified (fix for CS1503: Argument 5)
-                creationTime.AddHours(1), // CreationTime
-                BatchPoolState.Active,
-                creationTime.AddHours(1), // StateTransitionTime (fix for CS1503: Argument 8)
-                null, // AllocationState
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: creationTime, creationTime: creationTime, state: BatchPoolState.Deleting, stateTransitionTime: creationTime, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
+            BatchPool batchPoolNew = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: creationTime.AddHours(1), creationTime: creationTime.AddHours(1), state: BatchPoolState.Active, stateTransitionTime: creationTime.AddHours(1), currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1128,8 +919,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Rebooting, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeRebooting = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Rebooting, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
+            BatchNode batchNodeIdle = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Idle, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1179,8 +970,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Reimaging, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeRebooting = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Reimaging, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
+            BatchNode batchNodeIdle = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Idle, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1229,80 +1020,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Resizing,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
-            BatchPool batchPoolFinished = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Steady,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Resizing, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
+            BatchPool batchPoolFinished = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Steady, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1352,80 +1071,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Resizing,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
-            BatchPool batchPoolFinished = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Steady,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Resizing, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
+            BatchPool batchPoolFinished = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Steady, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1473,80 +1120,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Resizing,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
-            BatchPool batchPoolFinished = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Steady,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Resizing, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
+            BatchPool batchPoolFinished = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Steady, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1596,8 +1171,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchNode batchNodeStarting = new BatchNode(NodeId, null, BatchNodeState.Starting, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeStarting = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Starting, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
+            BatchNode batchNodeIdle = ComputeBatchModelFactory.BatchNode(id: NodeId, state: BatchNodeState.Idle, stateTransitionTime: DateTimeOffset.Now, lastBootTime: DateTimeOffset.Now, allocationTime: DateTimeOffset.Now, affinityId: "affinityId", vmSize: "vmSize", totalTasksRun: 0, runningTasksCount: 0, runningTaskSlotsCount: 0, totalTasksSucceeded: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1646,80 +1221,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Stopping,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
-            BatchPool batchPoolFinished = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Steady,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Stopping, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
+            BatchPool batchPoolFinished = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Steady, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1769,80 +1272,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Stopping,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
-            BatchPool batchPoolFinished = new BatchPool(
-                PoolID,
-                null, // DisplayName
-                null, // Uri
-                default(ETag), // ETag (fix for CS1503: Argument 4)
-                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
-                DateTimeOffset.UtcNow, // CreationTime
-                BatchPoolState.Active,
-                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
-                AllocationState.Steady,
-                null, // AllocationStateTransitionTime
-                null, // VmSize
-                null, // VirtualMachineConfiguration
-                null, // ResizeTimeout
-                null, // ResizeErrors
-                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
-                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
-                null, // TargetDedicatedNodes
-                null, // TargetLowPriorityNodes
-                null, // EnableAutoScale
-                null, // AutoScaleFormula
-                null, // AutoScaleEvaluationInterval
-                null, // AutoScaleRun
-                null, // EnableInterNodeCommunication
-                null, // NetworkConfiguration
-                null, // StartTask
-                null, // ApplicationPackageReferences
-                null, // TaskSlotsPerNode
-                null, // TaskSchedulingPolicy
-                null, // UserAccounts
-                null, // Metadata
-                null, // PoolStatistics
-                null, // MountConfiguration
-                null, // Identity
-                null, // UpgradePolicy
-                null  // serializedAdditionalRawData
-            );
+            BatchPool batchPool = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Stopping, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
+            BatchPool batchPoolFinished = ComputeBatchModelFactory.BatchPool(id: PoolID, eTag: default(ETag), lastModified: DateTimeOffset.UtcNow, creationTime: DateTimeOffset.UtcNow, state: BatchPoolState.Active, stateTransitionTime: DateTimeOffset.UtcNow, allocationState: AllocationState.Steady, currentDedicatedNodes: 0, currentLowPriorityNodes: 0);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(

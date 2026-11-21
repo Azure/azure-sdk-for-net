@@ -33,6 +33,14 @@
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Audience": {
+              "type": "string"
+            }
+          }
         }
       ]
     }

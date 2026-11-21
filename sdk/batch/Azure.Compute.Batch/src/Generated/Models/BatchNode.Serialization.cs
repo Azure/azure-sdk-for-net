@@ -127,6 +127,16 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(Ipv6Address.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            {
+                writer.WritePropertyName("publicIPAddress"u8);
+                writer.WriteStringValue(PublicIPAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicIPv6Address))
+            {
+                writer.WritePropertyName("publicIPv6Address"u8);
+                writer.WriteStringValue(PublicIPv6Address);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("affinityId"u8);
@@ -258,6 +268,8 @@ namespace Azure.Compute.Batch
             DateTimeOffset allocationTime = default;
             IPAddress ipAddress = default;
             IPAddress ipv6Address = default;
+            string publicIPAddress = default;
+            string publicIPv6Address = default;
             string affinityId = default;
             string vmSize = default;
             int totalTasksRun = default;
@@ -322,6 +334,16 @@ namespace Azure.Compute.Batch
                 if (prop.NameEquals("ipv6Address"u8))
                 {
                     ipv6Address = IPAddress.Parse(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("publicIPAddress"u8))
+                {
+                    publicIPAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("publicIPv6Address"u8))
+                {
+                    publicIPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("affinityId"u8))
@@ -459,6 +481,8 @@ namespace Azure.Compute.Batch
                 allocationTime,
                 ipAddress,
                 ipv6Address,
+                publicIPAddress,
+                publicIPv6Address,
                 affinityId,
                 vmSize,
                 totalTasksRun,

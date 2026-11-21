@@ -47,8 +47,18 @@ namespace Azure.Compute.Batch
         /// <param name="osDisk"> Settings for the operating system disk of the Virtual Machine. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
         /// <param name="serviceArtifactReference"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the Compute Nodes. This property is not supported for pools created via auto-pool (as part of a job or job schedule); the request will be rejected if it is specified in that context. </param>
+        /// <param name="placement">
+        /// The availability zone placement policy for Compute Nodes in the Pool. Set zonePlacementPolicy to Auto to delegate availability zone selection and balancing to the Virtual Machine Scale Set.
+        /// On Pool creation, if placement is omitted, Batch uses nodePlacementConfiguration when it is specified; otherwise, the Pool uses Regional placement, which provides no availability zone distribution guarantee. This property cannot be combined with nodePlacementConfiguration.
+        /// On PATCH, omitting placement preserves the existing placement policy, including when virtualMachineConfiguration is supplied.
+        /// </param>
+        /// <param name="resiliencyPolicy">
+        /// The resiliency policy for Compute Nodes in the Pool. This property requires placement.zonePlacementPolicy to be Auto.
+        /// On PATCH, omitting resiliencyPolicy preserves the existing resiliency policy independently of whether placement is supplied.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineConfiguration(BatchVmImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<DataDisk> dataDisks, string licenseType, BatchContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, BatchNodePlacementConfiguration nodePlacementConfiguration, IList<VMExtension> extensions, BatchOsDisk osDisk, SecurityProfile securityProfile, ServiceArtifactReference serviceArtifactReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineConfiguration(BatchVmImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<DataDisk> dataDisks, string licenseType, BatchContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, BatchNodePlacementConfiguration nodePlacementConfiguration, IList<VMExtension> extensions, BatchOsDisk osDisk, SecurityProfile securityProfile, ServiceArtifactReference serviceArtifactReference, HardwareProfile hardwareProfile, ZonePlacement placement, ResiliencyPolicy resiliencyPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -62,6 +72,9 @@ namespace Azure.Compute.Batch
             OsDisk = osDisk;
             SecurityProfile = securityProfile;
             ServiceArtifactReference = serviceArtifactReference;
+            HardwareProfile = hardwareProfile;
+            Placement = placement;
+            ResiliencyPolicy = resiliencyPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -121,5 +134,21 @@ namespace Azure.Compute.Batch
 
         /// <summary> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </summary>
         public ServiceArtifactReference ServiceArtifactReference { get; set; }
+
+        /// <summary> Specifies the hardware settings for the Compute Nodes. This property is not supported for pools created via auto-pool (as part of a job or job schedule); the request will be rejected if it is specified in that context. </summary>
+        public HardwareProfile HardwareProfile { get; set; }
+
+        /// <summary>
+        /// The availability zone placement policy for Compute Nodes in the Pool. Set zonePlacementPolicy to Auto to delegate availability zone selection and balancing to the Virtual Machine Scale Set.
+        /// On Pool creation, if placement is omitted, Batch uses nodePlacementConfiguration when it is specified; otherwise, the Pool uses Regional placement, which provides no availability zone distribution guarantee. This property cannot be combined with nodePlacementConfiguration.
+        /// On PATCH, omitting placement preserves the existing placement policy, including when virtualMachineConfiguration is supplied.
+        /// </summary>
+        public ZonePlacement Placement { get; set; }
+
+        /// <summary>
+        /// The resiliency policy for Compute Nodes in the Pool. This property requires placement.zonePlacementPolicy to be Auto.
+        /// On PATCH, omitting resiliencyPolicy preserves the existing resiliency policy independently of whether placement is supplied.
+        /// </summary>
+        public ResiliencyPolicy ResiliencyPolicy { get; set; }
     }
 }

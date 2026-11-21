@@ -187,19 +187,6 @@ namespace Azure.Compute.Batch.Tests.Samples
             #endregion
         }
 
-        public void BatchGetPoolUsageMetrics()
-        {
-            #region Snippet:Batch_Migration_GetPoolUsageMetrics
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            foreach (BatchPoolUsageMetrics item in batchClient.GetPoolUsageMetrics())
-            {
-                // do something
-            }
-            #endregion
-        }
-
         public void BatchGetSupportedImages()
         {
             #region Snippet:Batch_Migration_GetSupportedImages

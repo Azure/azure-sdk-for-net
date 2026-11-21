@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using Azure.Compute.Batch.Custom;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using static Azure.Core.HttpPipelineExtensions;
 using Microsoft.TypeSpec.Generator.Customizations;
+using static Azure.Core.HttpPipelineExtensions;
 
 namespace Azure.Compute.Batch
 {
@@ -63,10 +63,11 @@ namespace Azure.Compute.Batch
             options ??= new BatchClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
+            string scope = $"{options.Audience ?? BatchAudience.AzurePublicCloud}/.default";
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerRetryPolicies = { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) },
+                PerRetryPolicies = { new BearerTokenAuthenticationPolicy(credential, scope) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };
@@ -380,7 +381,7 @@ namespace Azure.Compute.Batch
                     poolId,
                     nodeId,
                     filePath,
-                    timeout ,
+                    timeout,
                     ocpdate,
                     null,
                     new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
