@@ -60,7 +60,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
-        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// If the expected environment variables are not found at this time, the GetToken and GetTokenAsync methods will throw a
+        /// <see cref="CredentialUnavailableException"/> when invoked.
         /// </summary>
         public EnvironmentCredential()
             : this(CredentialPipeline.GetInstance(null))
@@ -68,7 +69,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
-        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// If the expected environment variables are not found at this time, the GetToken and GetTokenAsync methods will throw a
+        /// <see cref="CredentialUnavailableException"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -78,7 +80,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
-        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// If the expected environment variables are not found at this time, the GetToken and GetTokenAsync methods will throw a
+        /// <see cref="CredentialUnavailableException"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public EnvironmentCredential(EnvironmentCredentialOptions options)
@@ -137,9 +140,6 @@ namespace Azure.Identity
         /// instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
-        /// <remarks>
-        /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
-        /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
@@ -157,12 +157,9 @@ namespace Azure.Identity
         /// instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
-        /// <remarks>
-        /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
-        /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         /// <exception cref="CredentialUnavailableException">Thrown when the credential is unavailable because the environment is not properly configured.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
