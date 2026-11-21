@@ -170,9 +170,9 @@ Describe 'Assert-PrReReviewReadCoverage' {
         BeforeEach {
             $script:Masked = New-ReviewInputMarkers $script:Paths
             $marker = $script:Masked.Files[2].marker
-            $script:Masked.Files[2].chunks = @(@{ content = "# Review input part 1 [$marker]`n+        Assert.That(authorization, Is.EqualTo(`"Bearer test-token`"));`n+        Assert.Pass();`n# End of part [$marker]`n" })
+            $script:Masked.Files[2].chunks = @(@{ content = "# Review input part 1 [$marker]`n+        Assert.That(authorization, Is.EqualTo(`"test-token`"));`n+        Assert.Pass();`n# End of part [$marker]`n" })
             [IO.File]::WriteAllText($script:Masked.Path, (ConvertTo-Json -InputObject @{ headSha = 'abc1234'; files = $script:Masked.Files } -Depth 10))
-            $script:MaskedPart = $script:Masked.Files[2].chunks[0].content.Replace('Bearer test-token', '******')
+            $script:MaskedPart = $script:Masked.Files[2].chunks[0].content.Replace('test-token', '******')
         }
 
         It 'counts it as read when the rest of the part matches' {

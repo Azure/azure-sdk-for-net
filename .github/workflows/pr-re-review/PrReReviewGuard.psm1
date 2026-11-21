@@ -169,7 +169,7 @@ function Assert-PrReReviewOutput {
     return "Re-review coverage is complete: $line"
 }
 
-# The Copilot CLI replaces token-like text in tool output, such as a test's "Bearer <token>", with ******, so a part
+# The Copilot CLI replaces token-like text in tool output, such as a bearer token in a test, with ******, so a part
 # holding such text never appears verbatim. Compare such a result line by line, letting ****** stand for the masked
 # text within a line. The first and last lines carry the part's markers, so they must still match exactly.
 function Test-PrReReviewMaskedRead {
