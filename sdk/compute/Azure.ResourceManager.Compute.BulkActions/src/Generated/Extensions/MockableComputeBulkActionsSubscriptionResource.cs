@@ -26,10 +26,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         private BulkCreateCustom _bulkCreateCustomRestClient;
         private ClientDiagnostics _bulkCreateClientDiagnostics;
         private BulkCreate _bulkCreateRestClient;
-        private ClientDiagnostics _scheduledActionsClientDiagnostics;
-        private ScheduledActions _scheduledActionsRestClient;
-        private ClientDiagnostics _scheduledActionOperationStatusClientDiagnostics;
-        private ScheduledActionOperationStatus _scheduledActionOperationStatusRestClient;
 
         /// <summary> Initializes a new instance of MockableComputeBulkActionsSubscriptionResource for mocking. </summary>
         protected MockableComputeBulkActionsSubscriptionResource()
@@ -50,7 +46,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-10-06-preview",
+            "2026-10-16",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics BulkCreateClientDiagnostics => _bulkCreateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -60,16 +56,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-10-06-preview",
+            "2026-10-16",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
-
-        private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/scheduledActions", out string apiVersion0) ? apiVersion0 : "2026-10-06-preview");
-
-        private ClientDiagnostics ScheduledActionOperationStatusClientDiagnostics => _scheduledActionOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ScheduledActionOperationStatus ScheduledActionOperationStatusRestClient => _scheduledActionOperationStatusRestClient ??= new ScheduledActionOperationStatus(ScheduledActionOperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-06-preview");
 
         /// <summary>
         /// List BulkCreateCustom resources by subscriptionId.
@@ -84,7 +72,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +101,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,7 +130,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +159,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,62 +176,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Lists recurring bulk actions in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/scheduledActions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledActionResource> GetScheduledActionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionDataAsync0CollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeBulkActionsSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists recurring bulk actions in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/scheduledActions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledActionResource> GetScheduledActions(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionData0CollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeBulkActionsSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
-        }
-
-        /// <summary>
         /// Get the status of an async operation of a BulkCreateCustom.
         /// <list type="bullet">
         /// <item>
@@ -256,7 +188,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,7 +238,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +288,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +338,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
+        /// <description> 2026-10-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,106 +360,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = BulkCreateRestClient.CreateGetBulkCreateAsyncOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, asyncOperationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status of the specified recurring bulk action operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/scheduledActionsOperationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationStatus_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The Azure region where the operation is running. </param>
-        /// <param name="operationId"> The operation ID in UUID format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ScheduledActionOperationStatusClientDiagnostics.CreateScope("MockableComputeBulkActionsSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ScheduledActionOperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status of the specified recurring bulk action operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/scheduledActionsOperationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationStatus_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-10-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The Azure region where the operation is running. </param>
-        /// <param name="operationId"> The operation ID in UUID format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ScheduledActionOperationStatusClientDiagnostics.CreateScope("MockableComputeBulkActionsSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ScheduledActionOperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default), result);
                 if (response.Value == null)

@@ -127,22 +127,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 writer.WritePropertyName("placement"u8);
                 writer.WriteObjectValue(Placement, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -204,7 +188,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
             IList<string> zones = default;
             ExtendedLocation extendedLocation = default;
             BulkActionsVirtualMachinePlacement placement = default;
-            IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             ArmPlan plan = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -290,27 +273,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
                     placement = BulkActionsVirtualMachinePlacement.DeserializeBulkActionsVirtualMachinePlacement(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -344,7 +306,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 zones ?? new ChangeTrackingList<string>(),
                 extendedLocation,
                 placement,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 plan,
                 additionalBinaryDataProperties);

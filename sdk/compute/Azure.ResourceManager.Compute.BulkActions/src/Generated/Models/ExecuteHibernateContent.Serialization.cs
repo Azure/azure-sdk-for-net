@@ -92,16 +92,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("executionParameters"u8);
             writer.WriteObjectValue(ExecutionParameters, options);
-            if (Optional.IsDefined(Resources))
-            {
-                writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
-            }
-            if (Optional.IsDefined(ResourcesWithContext))
-            {
-                writer.WritePropertyName("resourcesWithContext"u8);
-                writer.WriteObjectValue(ResourcesWithContext, options);
-            }
+            writer.WritePropertyName("resources"u8);
+            writer.WriteObjectValue(Resources, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -146,7 +138,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             BulkActionExecutionParameterDetail executionParameters = default;
             UserRequestResources resources = default;
-            ResourcesWithContext resourcesWithContext = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,20 +148,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (prop.NameEquals("resources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resources = UserRequestResources.DeserializeUserRequestResources(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("resourcesWithContext"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourcesWithContext = ResourcesWithContext.DeserializeResourcesWithContext(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +156,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExecuteHibernateContent(executionParameters, resources, resourcesWithContext, additionalBinaryDataProperties);
+            return new ExecuteHibernateContent(executionParameters, resources, additionalBinaryDataProperties);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Compute.BulkActions;
 using Azure.ResourceManager.Models;
@@ -24,11 +23,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> The virtual machines and execution settings for a bulk deallocate action. </summary>
         /// <param name="executionParameters"> The execution settings for the bulk action. </param>
         /// <param name="resources"> The target virtual machines. </param>
-        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
-            return new ExecuteDeallocateContent(executionParameters, resources, resourcesWithContext, default);
+            return new ExecuteDeallocateContent(executionParameters, resources, default);
         }
 
         /// <summary> The execution settings for a bulk action. </summary>
@@ -75,25 +73,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ids ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new UserRequestResources((ids ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
-        }
-
-        /// <summary> The resources needed for the user request with the context for tracking purposes. </summary>
-        /// <param name="resources"> The resource ids used for the request. </param>
-        /// <returns> A new <see cref="Models.ResourcesWithContext"/> instance for mocking. </returns>
-        public static ResourcesWithContext ResourcesWithContext(IEnumerable<ResourceWithContext> resources = default)
-        {
-            resources ??= new ChangeTrackingList<ResourceWithContext>();
-
-            return new ResourcesWithContext((resources ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default);
-        }
-
-        /// <summary> The resources needed for the user request with the resourceContext. </summary>
-        /// <param name="resourceId"> The resource ids used for the request. </param>
-        /// <param name="resourceContext"> The operational context of the resourceId. </param>
-        /// <returns> A new <see cref="Models.ResourceWithContext"/> instance for mocking. </returns>
-        public static ResourceWithContext ResourceWithContext(ResourceIdentifier resourceId = default, string resourceContext = default)
-        {
-            return new ResourceWithContext(resourceId, resourceContext, default);
         }
 
         /// <summary> The result of a bulk deallocate action. </summary>
@@ -253,11 +232,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> The virtual machines and execution settings for a bulk hibernate action. </summary>
         /// <param name="executionParameters"> The execution settings for the bulk action. </param>
         /// <param name="resources"> The target virtual machines. </param>
-        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
-        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
+        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
-            return new ExecuteHibernateContent(executionParameters, resources, resourcesWithContext, default);
+            return new ExecuteHibernateContent(executionParameters, resources, default);
         }
 
         /// <summary> The result of a bulk hibernate action. </summary>
@@ -276,11 +254,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> The virtual machines and execution settings for a bulk start action. </summary>
         /// <param name="executionParameters"> The execution settings for the bulk action. </param>
         /// <param name="resources"> The target virtual machines. </param>
-        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
-        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
+        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
-            return new ExecuteStartContent(executionParameters, resources, resourcesWithContext, default);
+            return new ExecuteStartContent(executionParameters, resources, default);
         }
 
         /// <summary> The result of a bulk start action. </summary>
@@ -299,12 +276,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> The virtual machines and execution settings for a bulk delete action. </summary>
         /// <param name="executionParameters"> The execution settings for the bulk action. </param>
         /// <param name="resources"> The target virtual machines. </param>
-        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="isForceDeletion"> Indicates whether Bulk Actions uses forced deletion for the target virtual machines. </param>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default, bool? isForceDeletion = default)
+        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, bool? isForceDeletion = default)
         {
-            return new ExecuteDeleteContent(executionParameters, resources, resourcesWithContext, isForceDeletion, default);
+            return new ExecuteDeleteContent(executionParameters, resources, isForceDeletion, default);
         }
 
         /// <summary> The result of a bulk delete action. </summary>
@@ -360,93 +336,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new CancelBulkOperationsResult((results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
-        /// <summary> The virtual machines and configuration for a bulk reimage action. </summary>
-        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
-        /// <param name="resources"> The target virtual machines. </param>
-        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
-        /// <param name="reimageParameters"> The shared and per-virtual-machine reimage configuration. </param>
-        /// <returns> A new <see cref="Models.BulkActionsExecuteReimageRequestContent"/> instance for mocking. </returns>
-        public static BulkActionsExecuteReimageRequestContent BulkActionsExecuteReimageRequestContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default, ReimagePayload reimageParameters = default)
-        {
-            return new BulkActionsExecuteReimageRequestContent(executionParameters, resources, resourcesWithContext, reimageParameters, default);
-        }
-
-        /// <summary> The shared and per-virtual-machine configuration for a bulk reimage action. </summary>
-        /// <param name="baseProfile"> The reimage configuration applied to every virtual machine unless a per-virtual-machine override is provided. </param>
-        /// <param name="resourceOverrides"> The reimage configuration overrides for individual virtual machines. </param>
-        /// <returns> A new <see cref="Models.ReimagePayload"/> instance for mocking. </returns>
-        public static ReimagePayload ReimagePayload(BulkActionsVirtualMachineReimageParametersContent baseProfile = default, IEnumerable<ReimageResourceOverride> resourceOverrides = default)
-        {
-            resourceOverrides ??= new ChangeTrackingList<ReimageResourceOverride>();
-
-            return new ReimagePayload(baseProfile, (resourceOverrides ?? new ChangeTrackingList<ReimageResourceOverride>()).ToList(), default);
-        }
-
-        /// <summary> The parameters for reimaging a virtual machine. The operating system disk is always reimaged. </summary>
-        /// <param name="isTempDisk"> Indicates whether to reimage the temporary disk. The default value is `false`. This option is supported only for virtual machines or virtual machine scale sets that use an ephemeral operating system disk. </param>
-        /// <param name="exactVersion"> The exact image version to use when reimaging the operating system disk. When omitted, the disk is reimaged to its current image version. </param>
-        /// <param name="osProfile"> The operating system profile used when reimaging a non-ephemeral operating system disk. </param>
-        /// <returns> A new <see cref="Models.BulkActionsVirtualMachineReimageParametersContent"/> instance for mocking. </returns>
-        public static BulkActionsVirtualMachineReimageParametersContent BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk = default, string exactVersion = default, BulkActionsOSProfileProvisioningContent osProfile = default)
-        {
-            return new BulkActionsVirtualMachineReimageParametersContent(isTempDisk, exactVersion, osProfile, default);
-        }
-
-        /// <summary> Additional parameters for reimaging a virtual machine that does not use an ephemeral operating system disk. </summary>
-        /// <param name="adminPassword"> The password for the virtual machine administrator account. The password must be 8 to 123 characters long for Windows virtual machines or 6 to 72 characters long for Linux virtual machines. It must contain characters from at least three of these categories: lowercase letters, uppercase letters, digits, and special characters. The following values are not allowed: `abc@123`, `P@$$w0rd`, `P@ssw0rd`, `P@ssword123`, `Pa$$word`, `pass@word1`, `Password!`, `Password1`, `Password22`, and `iloveyou!`. This secret is accepted only in the request and is not returned in responses. </param>
-        /// <param name="customData"> Base64-encoded custom data provided to the virtual machine. The decoded data can contain up to 65,535 bytes. Do not include secrets or passwords. </param>
-        /// <returns> A new <see cref="Models.BulkActionsOSProfileProvisioningContent"/> instance for mocking. </returns>
-        public static BulkActionsOSProfileProvisioningContent BulkActionsOSProfileProvisioningContent(string adminPassword = default, string customData = default)
-        {
-            return new BulkActionsOSProfileProvisioningContent(adminPassword, customData, default);
-        }
-
-        /// <summary> A reimage configuration override for one virtual machine. </summary>
-        /// <param name="resourceId"> The Azure resource ID of the virtual machine to which the override applies. </param>
-        /// <param name="profile"> The reimage configuration for this virtual machine. </param>
-        /// <returns> A new <see cref="Models.ReimageResourceOverride"/> instance for mocking. </returns>
-        public static ReimageResourceOverride ReimageResourceOverride(ResourceIdentifier resourceId = default, BulkActionsVirtualMachineReimageParametersContent profile = default)
-        {
-            return new ReimageResourceOverride(resourceId, profile, default);
-        }
-
-        /// <summary> The result of a bulk reimage action. </summary>
-        /// <param name="description"> A description of the bulk action result. </param>
-        /// <param name="resourceTypeName"> The type of resources targeted by the bulk action. </param>
-        /// <param name="location"> The Azure region where Bulk Actions processes the request. </param>
-        /// <param name="results"> The result for each virtual machine. </param>
-        /// <returns> A new <see cref="Models.BulkActionsReimageResourceOperationResponseResult"/> instance for mocking. </returns>
-        public static BulkActionsReimageResourceOperationResponseResult BulkActionsReimageResourceOperationResponseResult(string description = default, string resourceTypeName = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
-        {
-            results ??= new ChangeTrackingList<ComputeBulkOperationResult>();
-
-            return new BulkActionsReimageResourceOperationResponseResult(description, resourceTypeName, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
-        }
-
-        /// <summary> The operations for which errors should be acknowledged. </summary>
-        /// <param name="operationIds"> The Bulk Action Operation Ids that identify operations for which errors should be acknowledged. </param>
-        /// <returns> A new <see cref="Models.AcknowledgeBulkOperationErrorsRequestContent"/> instance for mocking. </returns>
-        public static AcknowledgeBulkOperationErrorsRequestContent AcknowledgeBulkOperationErrorsRequestContent(IEnumerable<string> operationIds = default)
-        {
-            operationIds ??= new ChangeTrackingList<string>();
-
-            return new AcknowledgeBulkOperationErrorsRequestContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <summary> The result of acknowledging errors for specified operations. </summary>
-        /// <param name="acknowledged"> The Bulk Action Operation Ids that identify operations with acknowledged errors. </param>
-        /// <param name="notFound"> The Bulk Action Operation Ids that were not found or are no longer available. </param>
-        /// <param name="skipped"> The Bulk Action Operation Ids that identify operations with errors that could not be acknowledged. </param>
-        /// <returns> A new <see cref="Models.AcknowledgeBulkOperationErrorsResponseResult"/> instance for mocking. </returns>
-        public static AcknowledgeBulkOperationErrorsResponseResult AcknowledgeBulkOperationErrorsResponseResult(IEnumerable<string> acknowledged = default, IEnumerable<string> notFound = default, IEnumerable<string> skipped = default)
-        {
-            acknowledged ??= new ChangeTrackingList<string>();
-            notFound ??= new ChangeTrackingList<string>();
-            skipped ??= new ChangeTrackingList<string>();
-
-            return new AcknowledgeBulkOperationErrorsResponseResult((acknowledged ?? new ChangeTrackingList<string>()).ToList(), (notFound ?? new ChangeTrackingList<string>()).ToList(), (skipped ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
         /// <summary> Location based BulkCreateCustom resource. The location is part of the resource path. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -457,14 +346,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="zones"> Zones in which the BulkCreateCustom is available. </param>
         /// <param name="extendedLocation"> The extended location of the virtual machines created by the BulkCreateCustom operation. </param>
         /// <param name="placement"> The availability zone placement constraints applied to the virtual machines created by the BulkCreateCustom operation. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="BulkActions.LocationBasedBulkCreateCustomData"/> instance for mocking. </returns>
-        public static LocationBasedBulkCreateCustomData LocationBasedBulkCreateCustomData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateCustomProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, BulkActionsVirtualMachinePlacement placement = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static LocationBasedBulkCreateCustomData LocationBasedBulkCreateCustomData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateCustomProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, BulkActionsVirtualMachinePlacement placement = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             zones ??= new ChangeTrackingList<string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new LocationBasedBulkCreateCustomData(
                 id,
@@ -476,7 +363,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 extendedLocation,
                 placement,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 plan,
                 default);
@@ -1354,14 +1240,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="zones"> Zones in which the BulkCreate is available. </param>
         /// <param name="extendedLocation"> The extended location of the virtual machines created by the BulkCreate operation. </param>
         /// <param name="placement"> The availability zone placement constraints applied to the virtual machines created by the BulkCreate operation. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="BulkActions.LocationBasedBulkCreateData"/> instance for mocking. </returns>
-        public static LocationBasedBulkCreateData LocationBasedBulkCreateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, BulkActionsVirtualMachinePlacement placement = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static LocationBasedBulkCreateData LocationBasedBulkCreateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, BulkActionsVirtualMachinePlacement placement = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             zones ??= new ChangeTrackingList<string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new LocationBasedBulkCreateData(
                 id,
@@ -1373,7 +1257,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 extendedLocation,
                 placement,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 plan,
                 default);
@@ -1397,437 +1280,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 computeProfile,
                 executionParameters,
                 default);
-        }
-
-        /// <summary> A recurring bulk action that operates on specified compute resources. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="BulkActions.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledActionProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ScheduledActionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
-        /// <summary> Configuration and status of a recurring bulk action. </summary>
-        /// <param name="resourceType"> The type of compute resource targeted by the action. </param>
-        /// <param name="actionType"> The operation performed on the targeted resources. </param>
-        /// <param name="startsOn"> The date and time, including UTC offset, when the schedule becomes active. </param>
-        /// <param name="endsOn"> The date and time, including UTC offset, after which no new occurrences are scheduled. </param>
-        /// <param name="schedule"> The recurring schedule. </param>
-        /// <param name="notificationSettings"> Notification settings that apply to the recurring bulk action. </param>
-        /// <param name="disabled"> Indicates whether new occurrences are disabled. </param>
-        /// <param name="provisioningState"> Read-only. The provisioning state of the recurring bulk action. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionProperties ScheduledActionProperties(ScheduledActionsResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default, ScheduledActionsProvisioningState? provisioningState = default)
-        {
-            notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-
-            return new ScheduledActionProperties(
-                resourceType,
-                actionType,
-                startsOn,
-                endsOn,
-                schedule,
-                (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
-                disabled,
-                provisioningState,
-                default);
-        }
-
-        /// <param name="scheduledTime"> The local time of day when the recurring bulk action runs. </param>
-        /// <param name="timeZone"> The time zone used to interpret the scheduled time. </param>
-        /// <param name="requestedWeekDays"> The days of the week when the action runs. An empty array means every day of the week. </param>
-        /// <param name="requestedMonths"> The months when the action runs. An empty array means every month. </param>
-        /// <param name="requestedDaysOfTheMonth"> The calendar days when the action runs. An empty array means every day of the month. </param>
-        /// <param name="executionParametersRetryPolicy"> The retry settings for failed resource operations. </param>
-        /// <param name="deadlineType"> How the scheduled time is interpreted. The default is `InitiateAt`. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionsSchedule"/> instance for mocking. </returns>
-        public static ScheduledActionsSchedule ScheduledActionsSchedule(TimeSpan scheduledTime = default, string timeZone = default, IEnumerable<WeekDay> requestedWeekDays = default, IEnumerable<Month> requestedMonths = default, IEnumerable<int> requestedDaysOfTheMonth = default, ScheduledActionsRetryPolicy executionParametersRetryPolicy = default, ScheduledActionsDeadlineType? deadlineType = default)
-        {
-            requestedWeekDays ??= new ChangeTrackingList<WeekDay>();
-            requestedMonths ??= new ChangeTrackingList<Month>();
-            requestedDaysOfTheMonth ??= new ChangeTrackingList<int>();
-
-            return new ScheduledActionsSchedule(
-                scheduledTime,
-                timeZone,
-                (requestedWeekDays ?? new ChangeTrackingList<WeekDay>()).ToList(),
-                (requestedMonths ?? new ChangeTrackingList<Month>()).ToList(),
-                (requestedDaysOfTheMonth ?? new ChangeTrackingList<int>()).ToList(),
-                executionParametersRetryPolicy is null ? default : new ScheduledActionsExecutionParametersContent(executionParametersRetryPolicy, default),
-                deadlineType,
-                default);
-        }
-
-        /// <summary> Retry settings for a recurring bulk action operation. </summary>
-        /// <param name="retryCount"> The maximum number of retry attempts. </param>
-        /// <param name="retryWindowInMinutes"> The time window, in minutes, during which retries can occur. </param>
-        /// <param name="onFailureAction"> The resource operation to retry after a failure. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionsRetryPolicy"/> instance for mocking. </returns>
-        public static ScheduledActionsRetryPolicy ScheduledActionsRetryPolicy(int? retryCount = default, int? retryWindowInMinutes = default, ScheduledActionsResourceOperationType? onFailureAction = default)
-        {
-            return new ScheduledActionsRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, default);
-        }
-
-        /// <summary> Settings for notifications about upcoming recurring bulk action operations. </summary>
-        /// <param name="destination"> The notification destination. For email notifications, specify a valid email address. </param>
-        /// <param name="type"> The notification delivery method. </param>
-        /// <param name="language"> The language used for the notification. </param>
-        /// <param name="disabled"> If true, notifications to this destination are disabled. </param>
-        /// <returns> A new <see cref="Models.NotificationProperties"/> instance for mocking. </returns>
-        public static NotificationProperties NotificationProperties(string destination = default, NotificationType @type = default, ScheduledActionLanguage language = default, bool? disabled = default)
-        {
-            return new NotificationProperties(destination, @type, language, disabled, default);
-        }
-
-        /// <summary> The type used for update operations of the ScheduledAction. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionPatch"/> instance for mocking. </returns>
-        public static ScheduledActionPatch ScheduledActionPatch(IDictionary<string, string> tags = default, ScheduledActionUpdateProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ScheduledActionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <summary> The updatable properties of the ScheduledAction. </summary>
-        /// <param name="resourceType"> The type of compute resource targeted by the action. </param>
-        /// <param name="actionType"> The operation performed on the targeted resources. </param>
-        /// <param name="startsOn"> The date and time, including UTC offset, when the schedule becomes active. </param>
-        /// <param name="endsOn"> The date and time, including UTC offset, after which no new occurrences are scheduled. </param>
-        /// <param name="schedule"> Changes to the recurring schedule. </param>
-        /// <param name="notificationSettings"> Notification settings that apply to the recurring bulk action. </param>
-        /// <param name="disabled"> Indicates whether new occurrences are disabled. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionUpdateProperties"/> instance for mocking. </returns>
-        public static ScheduledActionUpdateProperties ScheduledActionUpdateProperties(ScheduledActionsResourceType? resourceType = default, ScheduledActionType? actionType = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedulePatch schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default)
-        {
-            notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-
-            return new ScheduledActionUpdateProperties(
-                resourceType,
-                actionType,
-                startsOn,
-                endsOn,
-                schedule,
-                (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
-                disabled,
-                default);
-        }
-
-        /// <param name="scheduledTime"> The local time of day when the recurring bulk action runs. </param>
-        /// <param name="timeZone"> The time zone used to interpret the scheduled time. </param>
-        /// <param name="requestedWeekDays"> The days of the week when the action runs. An empty array means every day of the week. </param>
-        /// <param name="requestedMonths"> The months when the action runs. An empty array means every month. </param>
-        /// <param name="requestedDaysOfTheMonth"> The calendar days when the action runs. An empty array means every day of the month. </param>
-        /// <param name="executionParametersRetryPolicy"> The retry settings for failed resource operations. </param>
-        /// <param name="deadlineType"> How the scheduled time is interpreted. The default is `InitiateAt`. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionsSchedulePatch"/> instance for mocking. </returns>
-        public static ScheduledActionsSchedulePatch ScheduledActionsSchedulePatch(TimeSpan? scheduledTime = default, string timeZone = default, IEnumerable<WeekDay> requestedWeekDays = default, IEnumerable<Month> requestedMonths = default, IEnumerable<int> requestedDaysOfTheMonth = default, ScheduledActionsRetryPolicy executionParametersRetryPolicy = default, ScheduledActionsDeadlineType? deadlineType = default)
-        {
-            requestedWeekDays ??= new ChangeTrackingList<WeekDay>();
-            requestedMonths ??= new ChangeTrackingList<Month>();
-            requestedDaysOfTheMonth ??= new ChangeTrackingList<int>();
-
-            return new ScheduledActionsSchedulePatch(
-                scheduledTime,
-                timeZone,
-                (requestedWeekDays ?? new ChangeTrackingList<WeekDay>()).ToList(),
-                (requestedMonths ?? new ChangeTrackingList<Month>()).ToList(),
-                (requestedDaysOfTheMonth ?? new ChangeTrackingList<int>()).ToList(),
-                executionParametersRetryPolicy is null ? default : new ScheduledActionsExecutionParametersContent(executionParametersRetryPolicy, default),
-                deadlineType,
-                default);
-        }
-
-        /// <summary> A compute resource associated with a recurring bulk action. </summary>
-        /// <param name="name"> Read-only. The name of the association resource. </param>
-        /// <param name="id"> Read-only. The Azure resource ID of the association resource. </param>
-        /// <param name="type"> Read-only. The Azure resource type of the associated resource. </param>
-        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
-        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResourceMetadata"/> instance for mocking. </returns>
-        public static ScheduledActionResourceMetadata ScheduledActionResourceMetadata(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default)
-        {
-            notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-
-            return new ScheduledActionResourceMetadata(
-                name,
-                id,
-                @type,
-                resourceId,
-                (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
-                default);
-        }
-
-        /// <summary> Resources to attach to a recurring bulk action. </summary>
-        /// <param name="resources"> The list of resources to attach to the recurring bulk action. </param>
-        /// <returns> A new <see cref="Models.ResourceAttachRequestContent"/> instance for mocking. </returns>
-        public static ResourceAttachRequestContent ResourceAttachRequestContent(IEnumerable<ScheduledActionResourceInput> resources = default)
-        {
-            resources ??= new ChangeTrackingList<ScheduledActionResourceInput>();
-
-            return new ResourceAttachRequestContent((resources ?? new ChangeTrackingList<ScheduledActionResourceInput>()).ToList(), default);
-        }
-
-        /// <summary> A compute resource to add to or update in a recurring bulk action. </summary>
-        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
-        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResourceInput"/> instance for mocking. </returns>
-        public static ScheduledActionResourceInput ScheduledActionResourceInput(ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default)
-        {
-            notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-
-            return new ScheduledActionResourceInput(resourceId, (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(), default);
-        }
-
-        /// <summary> Results of a recurring bulk action operation for targeted resources. </summary>
-        /// <param name="totalResources"> The number of resources included in the operation. </param>
-        /// <param name="resourcesStatuses"> The operation result for each resource. </param>
-        /// <returns> A new <see cref="Models.ResourceOperationResponseResult"/> instance for mocking. </returns>
-        public static ResourceOperationResponseResult ResourceOperationResponseResult(int totalResources = default, IEnumerable<ResourceStatus> resourcesStatuses = default)
-        {
-            resourcesStatuses ??= new ChangeTrackingList<ResourceStatus>();
-
-            return new ResourceOperationResponseResult(totalResources, (resourcesStatuses ?? new ChangeTrackingList<ResourceStatus>()).ToList(), default);
-        }
-
-        /// <summary> Current status for a targeted resource in a recurring bulk action occurrence. </summary>
-        /// <param name="resourceId"> The Azure resource ID of the targeted resource. </param>
-        /// <param name="status"> The result of the operation for the resource. </param>
-        /// <param name="error"> Error details when the operation fails for the resource. </param>
-        /// <returns> A new <see cref="Models.ResourceStatus"/> instance for mocking. </returns>
-        public static ResourceStatus ResourceStatus(ResourceIdentifier resourceId = default, ResourceOperationStatus status = default, ResponseError error = default)
-        {
-            return new ResourceStatus(resourceId, status, error, default);
-        }
-
-        /// <summary> Resources to remove from a recurring bulk action. </summary>
-        /// <param name="resources"> The Azure resource IDs of the resources to remove. </param>
-        /// <returns> A new <see cref="Models.ResourceDetachRequestContent"/> instance for mocking. </returns>
-        public static ResourceDetachRequestContent ResourceDetachRequestContent(IEnumerable<ResourceIdentifier> resources = default)
-        {
-            resources ??= new ChangeTrackingList<ResourceIdentifier>();
-
-            return new ResourceDetachRequestContent((resources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
-        }
-
-        /// <summary> Resource-specific settings to update in a recurring bulk action. </summary>
-        /// <param name="resources"> The resources and notification settings to update. </param>
-        /// <returns> A new <see cref="Models.ResourcePatchRequestContent"/> instance for mocking. </returns>
-        public static ResourcePatchRequestContent ResourcePatchRequestContent(IEnumerable<ScheduledActionResourceInput> resources = default)
-        {
-            resources ??= new ChangeTrackingList<ScheduledActionResourceInput>();
-
-            return new ResourcePatchRequestContent((resources ?? new ChangeTrackingList<ScheduledActionResourceInput>()).ToList(), default);
-        }
-
-        /// <summary> Request body for canceling a recurring bulk action occurrence. </summary>
-        /// <param name="resourceIds"> The resources for which operations should be canceled. An empty array cancels all operations for all resources for the occurrence. </param>
-        /// <returns> A new <see cref="Models.CancelOccurrenceRequestContent"/> instance for mocking. </returns>
-        public static CancelOccurrenceRequestContent CancelOccurrenceRequestContent(IEnumerable<ResourceIdentifier> resourceIds = default)
-        {
-            resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-
-            return new CancelOccurrenceRequestContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
-        }
-
-        /// <summary> One scheduled execution of a recurring bulk action. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="BulkActions.ScheduledActionOccurrenceData"/> instance for mocking. </returns>
-        public static ScheduledActionOccurrenceData ScheduledActionOccurrenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceProperties properties = default)
-        {
-            return new ScheduledActionOccurrenceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Properties of a recurring bulk action occurrence. </summary>
-        /// <param name="scheduledOn"> Read-only. The UTC date and time when the occurrence is scheduled to run. </param>
-        /// <param name="resultSummary"> Read-only. The result summary after the occurrence reaches a final state. </param>
-        /// <param name="provisioningState"> Read-only. The current state of the occurrence. </param>
-        /// <returns> A new <see cref="Models.OccurrenceProperties"/> instance for mocking. </returns>
-        public static OccurrenceProperties OccurrenceProperties(DateTimeOffset scheduledOn = default, OccurrenceResultSummary resultSummary = default, OccurrenceState? provisioningState = default)
-        {
-            return new OccurrenceProperties(scheduledOn, resultSummary, provisioningState, default);
-        }
-
-        /// <summary> Summary of results for a recurring bulk action occurrence. </summary>
-        /// <param name="total"> The number of resources targeted by the occurrence. </param>
-        /// <param name="statuses"> Resource counts grouped by result code. </param>
-        /// <returns> A new <see cref="Models.OccurrenceResultSummary"/> instance for mocking. </returns>
-        public static OccurrenceResultSummary OccurrenceResultSummary(int total = default, IEnumerable<ResourceResultSummary> statuses = default)
-        {
-            statuses ??= new ChangeTrackingList<ResourceResultSummary>();
-
-            return new OccurrenceResultSummary(total, (statuses ?? new ChangeTrackingList<ResourceResultSummary>()).ToList(), default);
-        }
-
-        /// <summary> Summary of operation results across targeted resources. </summary>
-        /// <param name="code"> The result code shared by the resources in this group. A successful result uses `Success`. </param>
-        /// <param name="count"> The number of resources with this result code. </param>
-        /// <param name="errorDetails"> Error details for failed resources. This property is omitted for successful results. </param>
-        /// <returns> A new <see cref="Models.ResourceResultSummary"/> instance for mocking. </returns>
-        public static ResourceResultSummary ResourceResultSummary(string code = default, int count = default, ResponseError errorDetails = default)
-        {
-            return new ResourceResultSummary(code, count, errorDetails, default);
-        }
-
-        /// <summary> A recurring bulk action associated with a specific compute resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResources"/> instance for mocking. </returns>
-        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionsExtensionProperties properties = default)
-        {
-            return new ScheduledActionResources(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> A recurring bulk action associated with a specific compute resource. </summary>
-        /// <param name="resourceType"> The type of compute resource targeted by the action. </param>
-        /// <param name="actionType"> The operation performed on the targeted resources. </param>
-        /// <param name="startsOn"> The date and time, including UTC offset, when the schedule becomes active. </param>
-        /// <param name="endsOn"> The date and time, including UTC offset, after which no new occurrences are scheduled. </param>
-        /// <param name="schedule"> The recurring schedule. </param>
-        /// <param name="notificationSettings"> Notification settings that apply to the recurring bulk action. </param>
-        /// <param name="disabled"> Indicates whether new occurrences are disabled. </param>
-        /// <param name="provisioningState"> Read-only. The provisioning state of the recurring bulk action. </param>
-        /// <param name="resourceNotificationSettings"> Read-only. Notification settings that apply only to the specified compute resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default, ScheduledActionsProvisioningState? provisioningState = default, IEnumerable<NotificationProperties> resourceNotificationSettings = default)
-        {
-            notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-            resourceNotificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-
-            return new ScheduledActionsExtensionProperties(
-                resourceType,
-                actionType,
-                startsOn,
-                endsOn,
-                schedule,
-                (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
-                disabled,
-                provisioningState,
-                (resourceNotificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
-                default);
-        }
-
-        /// <summary> Scheduling and status details for a resource included in a recurring bulk action occurrence. </summary>
-        /// <param name="name"> Read-only. The name of the association resource. </param>
-        /// <param name="id"> Read-only. The Azure resource ID of the association resource. </param>
-        /// <param name="type"> Read-only. The Azure resource type of the associated resource. </param>
-        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
-        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
-        /// <param name="scheduledOn"> Read-only. The UTC date and time when the operation is scheduled for this resource. </param>
-        /// <param name="provisioningState"> Read-only. The current state of the operation for this resource. </param>
-        /// <param name="errorDetails"> Read-only. Error details when the operation fails for this resource. </param>
-        /// <returns> A new <see cref="Models.OccurrenceResourceMetadata"/> instance for mocking. </returns>
-        public static OccurrenceResourceMetadata OccurrenceResourceMetadata(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default)
-        {
-            notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-
-            return new OccurrenceResourceMetadata(
-                name,
-                id,
-                @type,
-                resourceId,
-                (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
-                scheduledOn,
-                provisioningState,
-                errorDetails,
-                default);
-        }
-
-        /// <summary> Request body for delaying a recurring bulk action occurrence. </summary>
-        /// <param name="scheduleOn"> The new date and time for the occurrence, including the UTC offset. </param>
-        /// <param name="resourceIds"> The resources to delay. An empty array delays all resources in the occurrence. </param>
-        /// <returns> A new <see cref="Models.DelayRequestContent"/> instance for mocking. </returns>
-        public static DelayRequestContent DelayRequestContent(DateTimeOffset scheduleOn = default, IEnumerable<ResourceIdentifier> resourceIds = default)
-        {
-            resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-
-            return new DelayRequestContent(scheduleOn, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
-        }
-
-        /// <summary> A recurring bulk action occurrence associated with a specific compute resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.OccurrenceExtension"/> instance for mocking. </returns>
-        public static OccurrenceExtension OccurrenceExtension(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceExtensionProperties properties = default)
-        {
-            return new OccurrenceExtension(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> An occurrence associated with a specific compute resource. </summary>
-        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
-        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
-        /// <param name="scheduledOn"> Read-only. The UTC date and time when the operation is scheduled for this resource. </param>
-        /// <param name="provisioningState"> Read-only. The current state of the operation for this resource. </param>
-        /// <param name="errorDetails"> Read-only. Error details when the operation fails for this resource. </param>
-        /// <param name="scheduledActionId"> The Azure resource ID of the recurring bulk action that owns the occurrence. </param>
-        /// <returns> A new <see cref="Models.OccurrenceExtensionProperties"/> instance for mocking. </returns>
-        public static OccurrenceExtensionProperties OccurrenceExtensionProperties(ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default, ResourceIdentifier scheduledActionId = default)
-        {
-            notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
-
-            return new OccurrenceExtensionProperties(
-                resourceId,
-                (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
-                scheduledOn,
-                provisioningState,
-                errorDetails,
-                scheduledActionId,
-                default);
-        }
-
-        /// <summary> The virtual machines and execution settings for a bulk deallocate action. </summary>
-        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
-        /// <param name="resources"> The target virtual machines. </param>
-        /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
-        {
-            return new ExecuteDeallocateContent(executionParameters, resources, default, default);
         }
 
         /// <summary> The execution settings for a bulk action. </summary>
@@ -1890,37 +1342,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 default,
                 default,
                 default);
-        }
-
-        /// <summary> The virtual machines and execution settings for a bulk hibernate action. </summary>
-        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
-        /// <param name="resources"> The target virtual machines. </param>
-        /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
-        {
-            return new ExecuteHibernateContent(executionParameters, resources, default, default);
-        }
-
-        /// <summary> The virtual machines and execution settings for a bulk start action. </summary>
-        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
-        /// <param name="resources"> The target virtual machines. </param>
-        /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
-        {
-            return new ExecuteStartContent(executionParameters, resources, default, default);
-        }
-
-        /// <summary> The virtual machines and execution settings for a bulk delete action. </summary>
-        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
-        /// <param name="resources"> The target virtual machines. </param>
-        /// <param name="isForceDeletion"> Indicates whether Bulk Actions uses forced deletion for the target virtual machines. </param>
-        /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, bool? isForceDeletion)
-        {
-            return new ExecuteDeleteContent(executionParameters, resources, default, isForceDeletion, default);
         }
     }
 }

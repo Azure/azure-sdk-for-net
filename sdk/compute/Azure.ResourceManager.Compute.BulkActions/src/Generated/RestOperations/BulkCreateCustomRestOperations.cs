@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreateCustom/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string name, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreateCustom/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -113,53 +113,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string name, bool? deleteInstances, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/bulkCreateCustom/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview", true);
-            if (deleteInstances != null)
-            {
-                uri.AppendQuery("deleteInstances", TypeFormatters.ConvertToString(deleteInstances), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string name, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/bulkCreateCustom/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview", true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            _userAgent.Apply(message);
             return message;
         }
 
@@ -176,7 +129,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath("/bulkCreateCustom/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/virtualMachinesGetOperationStatus", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -197,7 +150,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -218,7 +171,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreateCustom", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -239,7 +192,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -258,7 +211,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreateCustom", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -279,7 +232,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-06-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreateCustom") ?? "2026-10-16");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

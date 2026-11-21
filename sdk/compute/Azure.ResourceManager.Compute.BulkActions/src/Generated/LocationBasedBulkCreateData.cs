@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
         public LocationBasedBulkCreateData()
         {
             Zones = new ChangeTrackingList<string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LocationBasedBulkCreateData"/>. </summary>
@@ -37,18 +36,16 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="zones"> Zones in which the BulkCreate is available. </param>
         /// <param name="extendedLocation"> The extended location of the virtual machines created by the BulkCreate operation. </param>
         /// <param name="placement"> The availability zone placement constraints applied to the virtual machines created by the BulkCreate operation. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocationBasedBulkCreateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BulkCreateProperties properties, AzureLocation location, IList<string> zones, ExtendedLocation extendedLocation, BulkActionsVirtualMachinePlacement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal LocationBasedBulkCreateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BulkCreateProperties properties, AzureLocation location, IList<string> zones, ExtendedLocation extendedLocation, BulkActionsVirtualMachinePlacement placement, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
             Zones = zones;
             ExtendedLocation = extendedLocation;
             Placement = placement;
-            Tags = tags;
             Identity = identity;
             Plan = plan;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -68,9 +65,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
 
         /// <summary> The availability zone placement constraints applied to the virtual machines created by the BulkCreate operation. </summary>
         public BulkActionsVirtualMachinePlacement Placement { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
