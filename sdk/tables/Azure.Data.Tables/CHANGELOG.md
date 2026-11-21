@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- Expression-based `TableClient.Query`, `TableClient.QueryAsync`, and `TableClient.CreateQueryFilter` now throw `NotSupportedException` for member accesses such as `DateTimeOffset.Year`, `string.Length`, and `Nullable<T>.HasValue` on entity property values. Previously these expressions produced filters that did not represent the C# member access; in an Azurite reproduction the date-member filters returned no rows. ([#65074](https://github.com/Azure/azure-sdk-for-net/issues/65074)) The new behavior can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableThrowOnUnsupportedMemberFilter" to `true` or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_THROWONUNSUPPORTEDMEMBERFILTER" to "true". Note: AppContext switches can also be configured via configuration like below:
+
+```xml
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Data.Tables.DisableThrowOnUnsupportedMemberFilter" Value="true" />
+</ItemGroup>
+```
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -73,6 +73,11 @@ namespace Azure.Data.Tables.Queryable
                 throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantReferToPublicField, m.Member.Name));
             }
 
+            if (m.Expression != null && IsMemberOfPropertyValue(m) && !TablesCompatSwitches.DisableThrowOnUnsupportedMemberFilter)
+            {
+                throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantTranslateMember, m.Member.Name, m));
+            }
+
             Expression e = Visit(m.Expression);
             if (m.Member.Name == "Value" && m.Member.DeclaringType.IsGenericType
                                          && m.Member.DeclaringType.GetGenericTypeDefinition() == typeof(Nullable<>))
@@ -185,6 +190,19 @@ namespace Azure.Data.Tables.Queryable
         private static bool IsInputReference(Expression exp)
         {
             return exp is ParameterExpression;
+        }
+
+        // Members such as DateTimeOffset.Year, string.Length or Nullable<T>.HasValue are not entity properties,
+        // and the service has no function that evaluates them.
+        private static bool IsMemberOfPropertyValue(MemberExpression m)
+        {
+            Type type = m.Expression.Type;
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return m.Member.Name != "Value";
+            }
+
+            return ClientConvert.IsKnownType(type);
         }
 
         private void VisitOperand(Expression e, bool addParens = false)
