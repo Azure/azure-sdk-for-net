@@ -286,7 +286,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                         try
                         {
                             await foreach (StreamingResponseUpdate update in
-                                model.CreateResponseStreamingAsync(options, ct))
+                                await model.CreateResponseStreamingAsync(options, ct))
                             {
                                 if (update is StreamingResponseOutputTextDeltaUpdate delta
                                     && !string.IsNullOrEmpty(delta.Delta))
