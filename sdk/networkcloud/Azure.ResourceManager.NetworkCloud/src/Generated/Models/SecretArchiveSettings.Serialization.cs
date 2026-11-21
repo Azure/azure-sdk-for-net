@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("associatedIdentity"u8);
                 writer.WriteObjectValue(AssociatedIdentity, options);
             }
+            if (Optional.IsDefined(EncryptionPublicKey))
+            {
+                writer.WritePropertyName("encryptionPublicKey"u8);
+                writer.WriteStringValue(EncryptionPublicKey);
+            }
+            if (Optional.IsDefined(ProviderConfiguration))
+            {
+                writer.WritePropertyName("providerConfiguration"u8);
+                writer.WriteObjectValue(ProviderConfiguration, options);
+            }
             if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
@@ -127,6 +137,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ManagedServiceIdentitySelector associatedIdentity = default;
+            string encryptionPublicKey = default;
+            SecretArchiveProviderConfiguration providerConfiguration = default;
             Uri vaultUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -138,6 +150,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         continue;
                     }
                     associatedIdentity = ManagedServiceIdentitySelector.DeserializeManagedServiceIdentitySelector(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("encryptionPublicKey"u8))
+                {
+                    encryptionPublicKey = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("providerConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    providerConfiguration = SecretArchiveProviderConfiguration.DeserializeSecretArchiveProviderConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vaultUri"u8))
@@ -154,7 +180,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecretArchiveSettings(associatedIdentity, vaultUri, additionalBinaryDataProperties);
+            return new SecretArchiveSettings(associatedIdentity, encryptionPublicKey, providerConfiguration, vaultUri, additionalBinaryDataProperties);
         }
     }
 }

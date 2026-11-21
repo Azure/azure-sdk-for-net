@@ -422,6 +422,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The CA certificate of the edge management service. </summary>
+        public NetworkCloudCertificateInfo EdgeManagementServiceCACertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EdgeManagementServiceCACertificate;
+            }
+        }
+
         /// <summary> The date and time of the end of the last successful version update for the cluster. </summary>
         public DateTimeOffset? LastSuccessfulVersionUpdateOn
         {

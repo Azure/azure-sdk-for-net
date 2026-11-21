@@ -23,17 +23,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="SecretArchiveSettings"/>. </summary>
         /// <param name="associatedIdentity"> The selection of the managed identity to use with this vault URI. The identity type must be either system assigned or user assigned. </param>
+        /// <param name="encryptionPublicKey"> The public key used to encrypt secrets before they are written to the secret archive. Expected encoding is a PEM-encoded RSA public key with a minimum key size of 3072 bits. Additional key formats or sizes may be supported in future versions. </param>
+        /// <param name="providerConfiguration"> The configuration indicating the use of self-supplied secret archive software. Specification of a provider configuration indicates that the provided configuration will be used. Exclusion of any providerConfiguration indicates the use of Azure Key Vault. If providerConfiguration is included in a PATCH, the body must be a complete, valid configuration for the chosen provider, including all fields required for that provider; omit providerConfiguration from PATCH bodies that do not change it. </param>
         /// <param name="vaultUri"> The URI of the secret archive endpoint. The URI must use the `https://` scheme. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretArchiveSettings(ManagedServiceIdentitySelector associatedIdentity, Uri vaultUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecretArchiveSettings(ManagedServiceIdentitySelector associatedIdentity, string encryptionPublicKey, SecretArchiveProviderConfiguration providerConfiguration, Uri vaultUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssociatedIdentity = associatedIdentity;
+            EncryptionPublicKey = encryptionPublicKey;
+            ProviderConfiguration = providerConfiguration;
             VaultUri = vaultUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The selection of the managed identity to use with this vault URI. The identity type must be either system assigned or user assigned. </summary>
         public ManagedServiceIdentitySelector AssociatedIdentity { get; set; }
+
+        /// <summary> The public key used to encrypt secrets before they are written to the secret archive. Expected encoding is a PEM-encoded RSA public key with a minimum key size of 3072 bits. Additional key formats or sizes may be supported in future versions. </summary>
+        public string EncryptionPublicKey { get; set; }
+
+        /// <summary> The configuration indicating the use of self-supplied secret archive software. Specification of a provider configuration indicates that the provided configuration will be used. Exclusion of any providerConfiguration indicates the use of Azure Key Vault. If providerConfiguration is included in a PATCH, the body must be a complete, valid configuration for the chosen provider, including all fields required for that provider; omit providerConfiguration from PATCH bodies that do not change it. </summary>
+        public SecretArchiveProviderConfiguration ProviderConfiguration { get; set; }
 
         /// <summary> The URI of the secret archive endpoint. The URI must use the `https://` scheme. </summary>
         public Uri VaultUri { get; set; }

@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
+            if (options.Format != "W" && Optional.IsDefined(EncryptionPublicKey))
+            {
+                writer.WritePropertyName("encryptionPublicKey"u8);
+                writer.WriteStringValue(EncryptionPublicKey);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,6 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Uri keyVaultUri = default;
             string secretName = default;
             string secretVersion = default;
+            string encryptionPublicKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,12 +178,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     secretVersion = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("encryptionPublicKey"u8))
+                {
+                    encryptionPublicKey = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecretArchiveReference(keyVaultId, keyVaultUri, secretName, secretVersion, additionalBinaryDataProperties);
+            return new SecretArchiveReference(
+                keyVaultId,
+                keyVaultUri,
+                secretName,
+                secretVersion,
+                encryptionPublicKey,
+                additionalBinaryDataProperties);
         }
     }
 }
