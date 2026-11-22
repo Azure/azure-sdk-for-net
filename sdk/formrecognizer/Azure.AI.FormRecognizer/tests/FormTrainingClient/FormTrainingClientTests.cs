@@ -97,20 +97,14 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
+        public void FormTrainingClientThrowsWithNonExistingResourceEndpoint()
         {
-            var client = CreateClient();
+            var options = new FormRecognizerClientOptions();
+            var transport = TransportFailureTestHelpers.ConfigureConnectionFailure(options, IsAsync);
+            var client = InstrumentClient(CreateClient(options));
 
-            try
-            {
-                await client.GetAccountPropertiesAsync();
-            }
-            catch (AggregateException ex)
-            {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
-            }
+            TransportFailureTestHelpers.AssertRetryFailure(
+                async () => await client.GetAccountPropertiesAsync(), options, transport);
         }
 
         [Test]

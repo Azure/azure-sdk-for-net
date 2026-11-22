@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -31,12 +32,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Creates a fake <see cref="DocumentAnalysisClient" />.
         /// </summary>
         /// <returns>The fake <see cref="DocumentAnalysisClient" />.</returns>
-        private DocumentAnalysisClient CreateClient()
+        private DocumentAnalysisClient CreateClient(DocumentAnalysisClientOptions options = default)
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, new DocumentAnalysisClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
+            options ??= new DocumentAnalysisClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } };
+            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, options);
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
-        private DocumentAnalysisClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
+        private DocumentAnalysisClient CreateInstrumentedClient(DocumentAnalysisClientOptions options = default) => InstrumentClient(CreateClient(options));
 
         #region Client
 
@@ -88,21 +90,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task DocumentAnalysisClientThrowsWithNonExistingResourceEndpoint()
+        public void DocumentAnalysisClientThrowsWithNonExistingResourceEndpoint()
         {
-            var client = CreateInstrumentedClient();
+            var options = new DocumentAnalysisClientOptions();
+            var transport = TransportFailureTestHelpers.ConfigureConnectionFailure(options, IsAsync);
+            var client = CreateInstrumentedClient(options);
+            using var stream = new MemoryStream(Array.Empty<byte>());
 
-            try
-            {
-                using var stream = new MemoryStream(Array.Empty<byte>());
-                await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream);
-            }
-            catch (AggregateException ex)
-            {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
-            }
+            TransportFailureTestHelpers.AssertRetryFailure(
+                async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream),
+                options, transport);
         }
 
         #endregion
