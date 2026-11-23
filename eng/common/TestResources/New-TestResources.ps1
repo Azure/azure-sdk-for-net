@@ -320,21 +320,27 @@ try {
         Log "Using subscription '$subscriptionName'"
 
         # Make sure the TenantId is also updated from the current context.
-        # PSBoundParameters is not updated to avoid confusing parameter sets.
         if (!$TenantId) {
             $TenantId = $context.Subscription.TenantId
         }
     }
 
-    # This needs to happen after we set the TenantId but before we use the ResourceGroupName
-    # The SSS3PT prefix avoids flagging use of local auth in TME.
-    # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
-    $ResourceGroupName = AddTestResourceGroupPrefix $ResourceGroupName $TenantId $SubscriptionId
+    $PSBoundParameters['TenantId'] = $TenantId
+    $PSBoundParameters['Environment'] = $Environment
 
-    if ($ResourceGroupName.Length -gt 90) {
-        # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
-        Write-Warning -Message "Resource group name '$ResourceGroupName' is too long. So pruning it to be the first 90 characters."
-        $ResourceGroupName = $ResourceGroupName.Substring(0, 90)
+    if (!$PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        # The SSS3PT prefix avoids flagging use of local auth in TME.
+        # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
+        if (($wellKnownTMETenants.Contains($TenantId) -or $SubscriptionId -eq '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') -and
+            !$ResourceGroupName.StartsWith("SSS3PT_", [System.StringComparison]::OrdinalIgnoreCase)) {
+            $ResourceGroupName = "SSS3PT_" + $ResourceGroupName
+        }
+
+        if ($ResourceGroupName.Length -gt 90) {
+            # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
+            Write-Warning -Message "Resource group name '$ResourceGroupName' is too long. So pruning it to be the first 90 characters."
+            $ResourceGroupName = $ResourceGroupName.Substring(0, 90)
+        }
     }
 
     # If a provisioner service principal was provided log into it to perform the pre- and post-scripts and deployments.
