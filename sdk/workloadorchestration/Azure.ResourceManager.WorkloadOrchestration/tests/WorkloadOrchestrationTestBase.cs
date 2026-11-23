@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
         {
         }
 
-        protected ArmClient GetArmClient()
+        protected ArmClient GetArmClient(ArmClientOptions options = null)
         {
-            var options = new ArmClientOptions();
+            options ??= new ArmClientOptions();
             InstrumentClientOptions(options);
             return new ArmClient(TestEnvironment.Credential, null, options);
         }
 
-        protected ResourceGroupResource GetResourceGroup()
+        protected ResourceGroupResource GetResourceGroup(ArmClient client = null)
         {
             var subscriptionId = "973d15c6-6c57-447e-b9c6-6d79b5b784ab"; // Use the subscription ID from your test environment
             var rgName = "audapurerg";
             var resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, rgName);
-            return GetArmClient().GetResourceGroupResource(resourceGroupId);
+            return (client ?? GetArmClient()).GetResourceGroupResource(resourceGroupId);
         }
     }
 }
