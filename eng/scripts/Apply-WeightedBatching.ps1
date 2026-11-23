@@ -33,6 +33,9 @@ Indirect packages only run on Linux, so they can use a higher target than direct
 
 .PARAMETER DefaultWeight
 Weight assigned to packages not found in the weights file. Default is 1.
+
+.PARAMETER GroupByMatrixConfig
+Keep packages with different CI matrix configurations in separate buckets.
 #>
 
 [CmdletBinding()]
@@ -41,7 +44,8 @@ param (
   [Parameter(Mandatory = $true)][string]$WeightsFile,
   [Parameter()][int]$Target = 1800,
   [Parameter()][int]$IndirectTarget = 0,
-  [Parameter()][int]$DefaultWeight = 1
+  [Parameter()][int]$DefaultWeight = 1,
+  [Parameter()][switch]$GroupByMatrixConfig
 )
 
 Set-StrictMode -Version 4
@@ -188,16 +192,32 @@ function Apply-LPTBatching {
   Write-Host "  $Label`: Consolidated $($Packages.Count) files into $numBuckets batch files."
 }
 
-# Apply LPT batching to direct and indirect packages separately
-if ($directPackages.Count -gt 0) {
-  Apply-LPTBatching -Packages $directPackages -Weights $weights `
-    -Target $Target -DefaultWeight $DefaultWeight -Label "Direct"
+function Apply-PackageGroups {
+  param([object[]]$Packages, [int]$GroupTarget, [string]$Label)
+
+  if (!$Packages.Count) { return }
+  if (!$GroupByMatrixConfig) {
+    Apply-LPTBatching -Packages $Packages -Weights $weights `
+      -Target $GroupTarget -DefaultWeight $DefaultWeight -Label $Label
+    return
+  }
+
+  $groups = $Packages | Group-Object -CaseSensitive {
+    $ciParameters = $_.Json.PSObject.Properties['CIParameters']
+    $matrixConfigs = if ($ciParameters -and $ciParameters.Value) {
+      $ciParameters.Value.PSObject.Properties['CIMatrixConfigs']
+    }
+    $configs = if ($matrixConfigs -and $matrixConfigs.Value) { @($matrixConfigs.Value) } else { @() }
+    ConvertTo-Json -InputObject $configs -Depth 100 -Compress
+  }
+  foreach ($group in $groups) {
+    Apply-LPTBatching -Packages @($group.Group) -Weights $weights `
+      -Target $GroupTarget -DefaultWeight $DefaultWeight -Label $Label
+  }
 }
 
-if ($indirectPackages.Count -gt 0) {
-  Apply-LPTBatching -Packages $indirectPackages -Weights $weights `
-    -Target $IndirectTarget -DefaultWeight $DefaultWeight -Label "Indirect"
-}
+Apply-PackageGroups -Packages $directPackages -GroupTarget $Target -Label 'Direct'
+Apply-PackageGroups -Packages $indirectPackages -GroupTarget $IndirectTarget -Label 'Indirect'
 
 # Verify
 $remainingFiles = @(Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse)

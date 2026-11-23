@@ -1,0 +1,40 @@
+{
+  "matrix": {
+    "$IMPORT": "eng/pipelines/templates/stages/platform-matrix.json"
+  },
+  "displayNames": {
+    "/p:UseProjectReferenceToAzureClients=false": "PackageRef",
+    "/p:UseProjectReferenceToAzureClients=true": "ProjectRef"
+  },
+  "exclude": [
+    {
+      "Pool": "env:MACPOOL",
+      "TestTargetFramework": [ "net8.0", "net9.0" ]
+    }
+  ],
+  "include": [
+    {
+      "Agent": {
+        "Ubuntu-24.04_NET8.0": {
+          "OSVmImage": "env:LINUXVMIMAGE",
+          "Pool": "env:LINUXPOOL",
+          "TestTargetFramework": "net8.0",
+          "PRDirectOnly": true
+        }
+      },
+      "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true",
+      "BuildConfiguration": "Release"
+    },
+    {
+      "Agent": {
+        "Ubuntu-24.04_NET9.0": {
+          "OSVmImage": "env:LINUXVMIMAGE",
+          "Pool": "env:LINUXPOOL",
+          "TestTargetFramework": "net9.0"
+        }
+      },
+      "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false",
+      "BuildConfiguration": "Debug"
+    }
+  ]
+}

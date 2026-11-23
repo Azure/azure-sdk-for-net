@@ -236,6 +236,7 @@ jobs:
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
+            - 'PRDirectOnly=^$'
           PreGenerationSteps:
             - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
               parameters:

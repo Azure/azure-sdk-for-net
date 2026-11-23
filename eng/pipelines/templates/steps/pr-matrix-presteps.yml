@@ -121,7 +121,8 @@ steps:
           eng/scripts/Apply-WeightedBatching.ps1 `
             -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
             -WeightsFile $weightsFile `
-            -Target 240
+            -Target 240 `
+            -GroupByMatrixConfig
 
           # PackageInfo entries now represent weighted buckets. Slower macOS runs one
           # bucket per job, while Linux and Windows amortize setup over three buckets.

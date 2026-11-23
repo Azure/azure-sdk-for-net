@@ -33,6 +33,12 @@ extends:
   parameters:
     oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     SkipPrValidation: ${{ parameters.SkipPrValidation }}
+    ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      MatrixConfigs:
+        - Name: NET_ci_test_base
+          Path: eng/pipelines/templates/stages/pr-platform-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
     # Short term hack to get 1es canary validation working until we can fix manual runs with 'auto'
     ${{ if and(eq(parameters.oneESTemplateTag, 'canary'), eq(parameters.Service, 'auto')) }}:
       ServiceDirectory: template
