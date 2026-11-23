@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="VectorEncodingFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorEncodingFormat?(string value) => value == null ? null : new VectorEncodingFormat(value);
+        public static implicit operator VectorEncodingFormat?(string value) => value == null ? (VectorEncodingFormat?)null : new VectorEncodingFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

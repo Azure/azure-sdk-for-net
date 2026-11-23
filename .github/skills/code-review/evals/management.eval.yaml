@@ -182,6 +182,46 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: prefer-timespan-for-fixed-unit-numeric-duration
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic TypeSpec change and its
+      generated public property and return findings only. A data-plane model adds
+      `ttlInSeconds: int32` in TypeSpec, generating `public int TtlInSeconds { get; set; }`.
+      The service accepts any whole number of seconds as the item's time to live. Nothing
+      about the API benefits from callers choosing the value in seconds specifically. The
+      current generator supports TypeSpec `duration` with
+      `@encode(DurationKnownEncoding.seconds, int32)`, mapping to TimeSpan with the same wire
+      format. Serialization, validation and documentation are otherwise correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:TimeSpan)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:TimeSpan))'
+      - type: output-matches
+        config:
+          pattern: '(?i)@encode|DurationKnownEncoding'
+
+  - name: allow-fixed-unit-duration-when-it-improves-ux
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic new public property and return
+      findings only. A data-plane model adds `public int RetentionInDays { get; set; }`. The
+      service accepts only whole days from 1 to 365, and the documentation explains that users
+      choose a retention period as a number of days. A TimeSpan would allow hours, minutes and
+      fractional days that the service rejects. The contract, serialization, validation and
+      documentation are correct. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
   - name: use-guid-for-contractually-guaranteed-uuid
     prompt: >-
       First invoke the code-review skill. Review this synthetic new public API

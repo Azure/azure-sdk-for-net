@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
             uri.AppendPath("/listConnectionStrings", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
             uri.AppendPath("/promote", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/mongoClusters") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

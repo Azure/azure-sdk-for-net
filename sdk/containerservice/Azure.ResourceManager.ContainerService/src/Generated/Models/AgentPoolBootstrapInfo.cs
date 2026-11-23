@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="networking"> Network configuration for the node. </param>
         /// <param name="node"> Node-level configuration for kubelet, labels, and taints. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolBootstrapInfo(BootstrapAzureConfig azure, BootstrapComponentVersions components, BootstrapNetworkingConfig networking, BootstrapNodeConfig node, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolBootstrapInfo(AgentPoolBootstrapAzureConfig azure, AgentPoolBootstrapComponentVersions components, AgentPoolBootstrapNetworkingConfig networking, AgentPoolBootstrapNodeConfig node, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Azure = azure;
             Components = components;
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Azure environment and cluster identity information. </summary>
         [WirePath("azure")]
-        public BootstrapAzureConfig Azure { get; }
+        public AgentPoolBootstrapAzureConfig Azure { get; }
 
         /// <summary> Component versions for the node runtime. </summary>
         [WirePath("components")]
-        public BootstrapComponentVersions Components { get; }
+        public AgentPoolBootstrapComponentVersions Components { get; }
 
         /// <summary> Network configuration for the node. </summary>
         [WirePath("networking")]
-        public BootstrapNetworkingConfig Networking { get; }
+        public AgentPoolBootstrapNetworkingConfig Networking { get; }
 
         /// <summary> Node-level configuration for kubelet, labels, and taints. </summary>
         [WirePath("node")]
-        public BootstrapNodeConfig Node { get; }
+        public AgentPoolBootstrapNodeConfig Node { get; }
     }
 }

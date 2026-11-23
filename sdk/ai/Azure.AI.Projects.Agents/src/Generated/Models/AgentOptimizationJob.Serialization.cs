@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Agents
             if (options.Format != "W")
             {
                 writer.WritePropertyName("run_duration_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(RunDurationMs.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(RunDuration.TotalMilliseconds)));
             }
             if (options.Format != "W")
             {
@@ -208,7 +208,7 @@ namespace Azure.AI.Projects.Agents
             AgentOptimizationTargetConfiguration targetConfiguration = default;
             AgentOptimizationModelConfiguration optimizationModelConfiguration = default;
             AgentOptimizationConfigurationBase optimizationConfiguration = default;
-            TimeSpan runDurationMs = default;
+            TimeSpan runDuration = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset updatedOn = default;
             IReadOnlyList<string> warnings = default;
@@ -269,7 +269,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("run_duration_ms"u8))
                 {
-                    runDurationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    runDuration = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
@@ -317,7 +317,7 @@ namespace Azure.AI.Projects.Agents
                 targetConfiguration,
                 optimizationModelConfiguration,
                 optimizationConfiguration,
-                runDurationMs,
+                runDuration,
                 createdOn,
                 updatedOn,
                 warnings ?? new ChangeTrackingList<string>(),

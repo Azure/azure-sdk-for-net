@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsAvailableVersionData"/>. </summary>
         /// <param name="properties"> Whether the version is default or not and support info. </param>
-        internal ContainerServiceGuardrailsAvailableVersionData(GuardrailsAvailableVersionsProperties properties)
+        internal ContainerServiceGuardrailsAvailableVersionData(ContainerServiceGuardrailsAvailableVersionsProperties properties)
         {
             Properties = properties;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Whether the version is default or not and support info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceGuardrailsAvailableVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GuardrailsAvailableVersionsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ContainerServiceGuardrailsAvailableVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServiceGuardrailsAvailableVersionsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether the version is default or not and support info. </summary>
         [WirePath("properties")]
-        public GuardrailsAvailableVersionsProperties Properties { get; }
+        public ContainerServiceGuardrailsAvailableVersionsProperties Properties { get; }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="RecurrenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecurrenceType?(string value) => value == null ? null : new RecurrenceType(value);
+        public static implicit operator RecurrenceType?(string value) => value == null ? (RecurrenceType?)null : new RecurrenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

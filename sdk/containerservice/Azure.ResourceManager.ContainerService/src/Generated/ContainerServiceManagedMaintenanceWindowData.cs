@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of a maintenance window. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceManagedMaintenanceWindowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MaintenanceWindowResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerServiceManagedMaintenanceWindowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerServiceManagedMaintenanceWindowProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Properties of a maintenance window. </summary>
         [WirePath("properties")]
-        public MaintenanceWindowResourceProperties Properties { get; set; }
+        public ContainerServiceManagedMaintenanceWindowProperties Properties { get; set; }
     }
 }

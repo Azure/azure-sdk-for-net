@@ -12,6 +12,7 @@ using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -120,11 +121,11 @@ public class ProviderDiIntegrationTests : IDisposable
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     public void Dispose()
@@ -140,19 +141,19 @@ public class ProviderDiIntegrationTests : IDisposable
     /// </summary>
     private sealed class RecordingResponsesProvider : ResponsesProvider, IDisposable
     {
-        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+        private readonly ConcurrentDictionary<string, ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources = new();
 
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -162,7 +163,7 @@ public class ProviderDiIntegrationTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
@@ -177,8 +178,8 @@ public class ProviderDiIntegrationTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
-            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+            => Task.FromResult(new ResponseItemCollectionPage { Object = "list", HasMore = false });
 
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
@@ -328,11 +329,11 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 }
 
@@ -500,11 +501,11 @@ public class PartialProviderOverrideTests : IDisposable
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     public void Dispose()
@@ -520,18 +521,18 @@ public class PartialProviderOverrideTests : IDisposable
     /// </summary>
     private sealed class StateOnlyProvider : ResponsesProvider
     {
-        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+        private readonly ConcurrentDictionary<string, ResponseObject> _responses = new();
 
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -541,7 +542,7 @@ public class PartialProviderOverrideTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
@@ -556,8 +557,8 @@ public class PartialProviderOverrideTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
-            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+            => Task.FromResult(new ResponseItemCollectionPage { Object = "list", HasMore = false });
 
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());

@@ -51,7 +51,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="StacModelKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StacModelKind?(string value) => value == null ? null : new StacModelKind(value);
+        public static implicit operator StacModelKind?(string value) => value == null ? (StacModelKind?)null : new StacModelKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

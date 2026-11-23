@@ -107,7 +107,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Converts a string to a <see cref="EnvironmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnvironmentProvisioningState?(string value) => value == null ? null : new EnvironmentProvisioningState(value);
+        public static implicit operator EnvironmentProvisioningState?(string value) => value == null ? (EnvironmentProvisioningState?)null : new EnvironmentProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

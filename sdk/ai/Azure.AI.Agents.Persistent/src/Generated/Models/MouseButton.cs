@@ -66,7 +66,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="MouseButton"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MouseButton?(string value) => value == null ? null : new MouseButton(value);
+        public static implicit operator MouseButton?(string value) => value == null ? (MouseButton?)null : new MouseButton(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

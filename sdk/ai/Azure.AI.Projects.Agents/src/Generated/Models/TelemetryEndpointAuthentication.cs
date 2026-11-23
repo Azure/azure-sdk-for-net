@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Authentication configuration for a telemetry endpoint.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HeaderTelemetryEndpointAuth"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HeaderTelemetryEndpointAuthentication"/>.
     /// </summary>
     public abstract partial class TelemetryEndpointAuthentication
     {

@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="ImageDetailLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageDetailLevel?(string value) => value == null ? null : new ImageDetailLevel(value);
+        public static implicit operator ImageDetailLevel?(string value) => value == null ? (ImageDetailLevel?)null : new ImageDetailLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

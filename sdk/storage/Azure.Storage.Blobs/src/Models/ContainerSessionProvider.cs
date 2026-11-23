@@ -148,12 +148,6 @@ namespace Azure.Storage.Blobs.Models
                 }
             }
 
-            // Structured message requests.
-            if (message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
-            {
-                return false;
-            }
-
             return true;
         }
 

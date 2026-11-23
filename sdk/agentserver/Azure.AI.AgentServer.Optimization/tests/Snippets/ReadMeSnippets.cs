@@ -19,8 +19,9 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         [Test]
         public async Task LoadOptionsWithDefaults()
         {
+            TokenCredential credential = new StubCredential();
             #region Snippet:Optimization_ReadMe_Load
-            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), credential);
             string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
             CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
@@ -35,11 +36,9 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         [Test]
         public async Task LoadOptionsWithCandidateId()
         {
-            #region Snippet:Optimization_ReadMe_LoadWithCandidateId
             string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
             AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
             CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
-            #endregion
 
             Assert.That(candidateId, Is.Not.Null);
         }

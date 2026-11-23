@@ -37,11 +37,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="codec"> The audio codec. </param>
         /// <param name="sampleRate"> The sample rate in Hz. </param>
         /// <param name="channels"> The number of audio channels. </param>
-        /// <param name="startOffsetMs"> The offset from the session start at which this segment begins. </param>
-        /// <param name="durationMs"> The duration of the audio segment. </param>
+        /// <param name="startOffset"> The offset from the session start at which this segment begins. </param>
+        /// <param name="duration"> The duration of the audio segment. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/content` route instead. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAudioItem(string conversationId, string itemId, VoiceAudioRole? role, VoiceAudioContainerFormat? format, VoiceAudioCodec? codec, int? sampleRate, int? channels, TimeSpan? startOffsetMs, TimeSpan? durationMs, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAudioItem(string conversationId, string itemId, VoiceAudioRole? role, VoiceAudioContainerFormat? format, VoiceAudioCodec? codec, int? sampleRate, int? channels, TimeSpan? startOffset, TimeSpan? duration, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConversationId = conversationId;
             ItemId = itemId;
@@ -50,8 +50,8 @@ namespace Azure.AI.Projects.Agents
             Codec = codec;
             SampleRate = sampleRate;
             Channels = channels;
-            StartOffsetMs = startOffsetMs;
-            DurationMs = durationMs;
+            StartOffset = startOffset;
+            Duration = duration;
             BlobUri = blobUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -78,10 +78,10 @@ namespace Azure.AI.Projects.Agents
         public int? Channels { get; }
 
         /// <summary> The offset from the session start at which this segment begins. </summary>
-        public TimeSpan? StartOffsetMs { get; }
+        public TimeSpan? StartOffset { get; }
 
         /// <summary> The duration of the audio segment. </summary>
-        public TimeSpan? DurationMs { get; }
+        public TimeSpan? Duration { get; }
 
         /// <summary> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/content` route instead. </summary>
         public Uri BlobUri { get; }

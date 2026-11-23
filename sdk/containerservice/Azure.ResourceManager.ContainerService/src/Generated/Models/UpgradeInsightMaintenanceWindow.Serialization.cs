@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string maintenanceConfigurationName = default;
-            MaintenanceWindowSource? source = default;
+            UpgradeInsightMaintenanceWindowSource? source = default;
             DateTimeOffset? startsOn = default;
             DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    source = new MaintenanceWindowSource(prop.Value.GetString());
+                    source = new UpgradeInsightMaintenanceWindowSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))

@@ -6,6 +6,7 @@ using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -44,8 +45,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class WeatherHandler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -54,14 +55,13 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 // Check if the input contains a function call output (turn 2)
                 var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
-                var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+                var toolOutput = inputItems.OfType<FunctionCallOutputResponseItem>().FirstOrDefault();
 
                 if (toolOutput is not null)
                 {
                     // Turn 2: function output received — return the weather as a text message
-                    var weatherJson = toolOutput.Output is not null
-                        ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
-                        : "{}";
+                    // FunctionOutput carries the tool's output text.
+                    var weatherJson = toolOutput.FunctionOutput?.ToString() ?? "{}";
 
                     yield return stream.EmitCreated();
                     yield return stream.EmitInProgress();
@@ -93,8 +93,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class WeatherHandlerFullControl : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -103,14 +103,13 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 // Check if the input contains a function call output (turn 2)
                 var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
-                var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+                var toolOutput = inputItems.OfType<FunctionCallOutputResponseItem>().FirstOrDefault();
 
                 if (toolOutput is not null)
                 {
                     // Turn 2: function output received — return the weather as a text message
-                    var weatherJson = toolOutput.Output is not null
-                        ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
-                        : "{}";
+                    // FunctionOutput carries the tool's output text.
+                    var weatherJson = toolOutput.FunctionOutput?.ToString() ?? "{}";
 
                     yield return stream.EmitCreated();
                     yield return stream.EmitInProgress();

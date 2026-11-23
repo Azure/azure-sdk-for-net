@@ -225,7 +225,7 @@ internal sealed class InMemoryEventStreamRegistry :
         Func<string, string, ValueTask<bool>> shouldClose,
         CancellationToken cancellationToken = default)
     {
-        string? directory = _options.Configuration.StorageDirectory;
+        string? directory = _options.Configuration.EffectiveStorageDirectory;
         if (directory is null || !Directory.Exists(directory))
         {
             // Non-persistent backing: streams do not survive a restart, so there are no orphans.

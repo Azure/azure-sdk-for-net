@@ -6,6 +6,7 @@ trigger:
     include:
       - eng/packages/http-client-csharp-mgmt
       - eng/pipelines/templates/archetype-typespec-emitter.yml
+      - eng/scripts/Prepare-RegenerationHistory.ps1
       - eng/scripts/typespec
 pr:
   branches:
@@ -18,6 +19,7 @@ pr:
     include:
       - eng/packages/http-client-csharp-mgmt
       - eng/pipelines/templates/archetype-typespec-emitter.yml
+      - eng/scripts/Prepare-RegenerationHistory.ps1
       - eng/scripts/typespec
 
 parameters:
@@ -64,6 +66,7 @@ extends:
     BuildPrereleaseVersion: true
     UploadPlaygroundBundle: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
+    RegenerationHistoryDepth: 50
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
         ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:

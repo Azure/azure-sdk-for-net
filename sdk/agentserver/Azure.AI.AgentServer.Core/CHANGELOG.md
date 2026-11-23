@@ -4,9 +4,26 @@
 
 ### Features Added
 
+- Added experimental (`AAAS005`) [original-subject attribution](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/ORIGINAL_SUBJECT.md) snapshots and an explicit per-call model header helper.
+- Added memory-snapshot activation for resilient tasks. When
+  `FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, enabled task definitions remain registered
+  during capture without constructing task storage or recovery workers. Restore
+  prepares the session-bound runtime before the application callback, then starts
+  automatic recovery after the callback completes.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Ensured snapshot rollback and host disposal join owned workers before releasing
+  stores, bound cleanup waits to the host shutdown timeout, and retained failed
+  cleanup for safe retry without blocking disposal of unrelated services.
+- Paused automatic recovery and external task admission before restored
+  configuration is published, while preserving protocol scope for nested task
+  calls made by already-running workers.
+- Resolved implicit file-replay storage roots after restoration and compared
+  effective task-provider bindings so equivalent hosted endpoints and irrelevant
+  local endpoint changes do not reject a restore.
 
 ### Other Changes
 

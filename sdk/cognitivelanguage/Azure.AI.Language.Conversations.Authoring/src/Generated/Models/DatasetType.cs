@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Converts a string to a <see cref="DatasetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatasetType?(string value) => value == null ? null : new DatasetType(value);
+        public static implicit operator DatasetType?(string value) => value == null ? (DatasetType?)null : new DatasetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

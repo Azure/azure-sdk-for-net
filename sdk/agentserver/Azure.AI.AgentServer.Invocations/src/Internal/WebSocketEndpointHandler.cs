@@ -78,7 +78,10 @@ internal sealed class WebSocketEndpointHandler
 
         var clientHeaders = ClientHeaderForwarder.ExtractClientHeaders(httpContext.Request);
         var queryParams = ClientHeaderForwarder.ExtractQueryParameters(httpContext.Request);
-        var platformContext = PlatformContext.FromRequest(httpContext.Request);
+        if (!InvocationPlatformContextResolver.TryFromRequest(httpContext, out var platformContext))
+        {
+            return;
+        }
         var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
 
         // Surface the session ID on the upgrade response headers so clients can

@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             var batch = new EndpointRouteBatch();
             foreach (var destination in destinations)
             {
-                batch.GetOrAdd(destination.Endpoint).TelemetryItems.Add(
+                batch.GetOrAdd(destination.Endpoint).Add(
                     new TelemetryItem(DateTime.UtcNow, resource: null, instrumentationKey: destination.Key)
                     {
                         Data = new MonitorBase { BaseType = "MetricData", BaseData = new MetricsData(2) },

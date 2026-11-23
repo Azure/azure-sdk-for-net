@@ -1,6 +1,6 @@
 # Release History
 
-## 2.4.0-beta.1 (Unreleased)
+## 2.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.4.0 (2026-11-20)
+
+### Bugs Fixed
+
+- SignalR trigger invocation failures now return a generic error message instead of exposing internal exception details to clients.
+- Fixed SignalR trigger dispatch failures exposing internal exception details or throwing when the exception message contains line breaks.
 
 ## 2.3.0 (2026-11-02)
 

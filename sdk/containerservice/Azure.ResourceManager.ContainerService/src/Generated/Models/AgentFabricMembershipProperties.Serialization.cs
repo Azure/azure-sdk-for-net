@@ -14,13 +14,8 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Properties of the AgentFabric membership of a managed cluster. </summary>
-    public partial class AgentFabricMembershipProperties : IJsonModel<AgentFabricMembershipProperties>
+    internal partial class AgentFabricMembershipProperties : IJsonModel<AgentFabricMembershipProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentFabricMembershipProperties"/> for deserialization. </summary>
-        internal AgentFabricMembershipProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentFabricMembershipProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -84,8 +79,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("sku"u8);
-            writer.WriteStringValue(Sku.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +122,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             AgentFabricMembershipProvisioningState? provisioningState = default;
-            AgentFabricMembershipSkuName sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,17 +134,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     provisioningState = new AgentFabricMembershipProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sku"u8))
-                {
-                    sku = new AgentFabricMembershipSkuName(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentFabricMembershipProperties(provisioningState, sku, additionalBinaryDataProperties);
+            return new AgentFabricMembershipProperties(provisioningState, additionalBinaryDataProperties);
         }
     }
 }
