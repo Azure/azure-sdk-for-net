@@ -238,6 +238,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
             Argument.AssertAtLeast(maximumEventCount, 1, nameof(maximumEventCount));
 
+            using var telemetry = ConnectionScope.Telemetry.StartOperation("receive", "EventHubs.receive");
             var receivedEventCount = 0;
             var failedAttemptCount = 0;
             var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
@@ -269,12 +270,26 @@ namespace Azure.Messaging.EventHubs.Amqp
                         }
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                        var messagesReceived = await link.ReceiveMessagesAsync(maximumEventCount, ReceiveBuildBatchInterval, waitTime, cancellationToken).ConfigureAwait(false);
+                        IEnumerable<AmqpMessage> messagesReceived;
+                        using (var wait = ConnectionScope.Telemetry.StartAmqp("EventHubs.amqp.receive"))
+                        {
+                            try
+                            {
+                                messagesReceived = await link.ReceiveMessagesAsync(maximumEventCount, ReceiveBuildBatchInterval, waitTime, cancellationToken).ConfigureAwait(false);
+                                wait?.Complete();
+                            }
+                            catch (Exception ex)
+                            {
+                                wait?.Failed(ex, cancellationToken);
+                                throw;
+                            }
+                        }
 
                         // If no messages were received, then just return the empty set.
 
                         if (messagesReceived == null)
                         {
+                            telemetry?.Complete();
                             return EmptyEventSet;
                         }
 
@@ -308,6 +323,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             }
                         }
 
+                        telemetry?.Complete(receivedEventCount);
                         return receivedEvents ?? EmptyEventSet;
                     }
                     catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
@@ -316,6 +332,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // amount of time to wait for events, a timeout isn't considered an error condition,
                         // rather a sign that no events were available in the requested period.
 
+                        telemetry?.Complete();
                         return EmptyEventSet;
                     }
                     catch (Exception ex)
@@ -378,12 +395,14 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 throw new TaskCanceledException();
             }
-            catch (TaskCanceledException)
+            catch (TaskCanceledException ex)
             {
+                telemetry?.Failed(ex, cancellationToken);
                 throw;
             }
             catch (Exception ex)
             {
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, ex.Message);
                 throw;
             }

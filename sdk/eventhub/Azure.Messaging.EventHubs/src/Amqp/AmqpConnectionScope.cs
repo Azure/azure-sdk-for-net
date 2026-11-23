@@ -55,6 +55,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
+        /// <summary>The diagnostics shared by this connection and its links.</summary>
+        internal EventHubsTelemetry Telemetry { get; }
+
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private volatile bool _disposed;
 
@@ -246,6 +249,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNegative(idleTimeout, nameof(idleTimeout));
             ValidateTransport(transport);
 
+            Telemetry = new EventHubsTelemetry(serviceEndpoint.Host, eventHubName);
             ServiceEndpoint = serviceEndpoint;
             ConnectionEndpoint = connectionEndpoint;
             EventHubName = eventHubName;
@@ -268,6 +272,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         protected AmqpConnectionScope()
         {
+            Telemetry = new EventHubsTelemetry(string.Empty, string.Empty);
         }
 
         /// <summary>
@@ -291,6 +296,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+            using var telemetry = Telemetry.StartLifecycle("management");
+
             try
             {
                 EventHubsEventSource.Log.AmqpManagementLinkCreateStart(EventHubName);
@@ -305,10 +312,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var link = await CreateManagementLinkAsync(connection, operationTimeout, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
                 await OpenAmqpObjectAsync(link, cancellationToken: cancellationToken).ConfigureAwait(false);
+                telemetry?.Complete();
                 return link;
             }
             catch (Exception ex)
             {
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.AmqpManagementLinkCreateError(EventHubName, ex.Message);
                 throw;
             }
@@ -354,6 +363,8 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+            using var telemetry = Telemetry.StartLifecycle("receiver");
+
             var ownerLevelLog = ownerLevel?.ToString(CultureInfo.InvariantCulture);
             var eventPositionLog = eventPosition.ToString();
 
@@ -389,10 +400,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 ).ConfigureAwait(false);
 
                 await OpenAmqpObjectAsync(link, cancellationToken: cancellationToken).ConfigureAwait(false);
+                telemetry?.Complete();
                 return link;
             }
             catch (Exception ex)
             {
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.AmqpConsumerLinkCreateError(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog, ex.Message, linkIdentifier);
                 throw;
             }
@@ -427,6 +440,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+            using var telemetry = Telemetry.StartLifecycle("sender");
+
             var featuresLog = features.ToString();
 
             try
@@ -450,10 +465,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, operationTimeout, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), linkIdentifier, cancellationToken).ConfigureAwait(false);
                 await OpenAmqpObjectAsync(link, cancellationToken: cancellationToken).ConfigureAwait(false);
 
+                telemetry?.Complete();
                 return link;
             }
             catch (Exception ex)
             {
+                telemetry?.Failed(ex, cancellationToken);
                 EventHubsEventSource.Log.AmqpProducerLinkCreateError(EventHubName, partitionId, featuresLog, ex.Message, linkIdentifier);
                 throw;
             }
@@ -510,6 +527,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                   string scopeIdentifier,
                                                                                   TimeSpan timeout)
         {
+            using var telemetry = Telemetry.StartLifecycle("connection");
             var serviceEndpointLog = serviceEndpoint.AbsoluteUri;
             var transportTypeLog = transportType.ToString();
 
@@ -551,14 +569,20 @@ namespace Azure.Messaging.EventHubs.Amqp
                         link.SafeClose();
                     }
 
+                    if (!IsDisposed && connection.TerminalException != null)
+                    {
+                        telemetry?.Invalidate();
+                    }
                     connection.Closed -= closeHandler;
                 };
 
                 connection.Closed += closeHandler;
+                telemetry?.Complete();
                 return connection;
             }
             catch (Exception ex)
             {
+                telemetry?.Failed(ex);
                 EventHubsEventSource.Log.AmqpConnectionCreateStartError(serviceEndpointLog, transportTypeLog, ex.Message);
                 throw;
             }
@@ -596,7 +620,19 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
 
-                await OpenAmqpObjectAsync(session, cancellationToken: cancellationToken).ConfigureAwait(false);
+                using (var telemetry = Telemetry.StartLifecycle("session"))
+                {
+                    try
+                    {
+                        await OpenAmqpObjectAsync(session, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        telemetry?.Complete();
+                    }
+                    catch (Exception ex)
+                    {
+                        telemetry?.Failed(ex, cancellationToken);
+                        throw;
+                    }
+                }
 
                 // Create and open the link.
 
@@ -674,7 +710,19 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
 
-                await OpenAmqpObjectAsync(session, cancellationToken: cancellationToken).ConfigureAwait(false);
+                using (var telemetry = Telemetry.StartLifecycle("session"))
+                {
+                    try
+                    {
+                        await OpenAmqpObjectAsync(session, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        telemetry?.Complete();
+                    }
+                    catch (Exception ex)
+                    {
+                        telemetry?.Failed(ex, cancellationToken);
+                        throw;
+                    }
+                }
 
                 // Create and open the link.
 
@@ -797,7 +845,19 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
 
-                await OpenAmqpObjectAsync(session, cancellationToken: cancellationToken).ConfigureAwait(false);
+                using (var telemetry = Telemetry.StartLifecycle("session"))
+                {
+                    try
+                    {
+                        await OpenAmqpObjectAsync(session, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        telemetry?.Complete();
+                    }
+                    catch (Exception ex)
+                    {
+                        telemetry?.Failed(ex, cancellationToken);
+                        throw;
+                    }
+                }
 
                 // Create and open the link.
 

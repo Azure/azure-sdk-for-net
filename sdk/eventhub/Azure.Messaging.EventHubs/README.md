@@ -373,6 +373,27 @@ The Event Hubs client logs are available to any `EventListener` by opting into t
 
 The Event Hubs client library is also instrumented for distributed tracing using Application Insights or OpenTelemetry.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing).
 
+### OpenTelemetry metrics and transport tracing
+
+Subscribe to the `Azure.Messaging.EventHubs` meter to collect native .NET metrics. No OpenTelemetry dependency or exporter is required by the library. Applications own their providers and should flush or dispose them at shutdown. Metrics are independent of distributed tracing and are inactive without a listener.
+
+| Instrument | Type | Unit | Meaning |
+| --- | --- | --- | --- |
+| `az.eventhubs.operations` | Counter | `{operation}` | Completed logical sends and receives, including errors and cancellation |
+| `az.eventhubs.events` | Counter | `{event}` | Events in accepted sends and successful receives |
+| `az.eventhubs.operation.duration` | Histogram | `s` | Logical operation duration, including preparation and retries |
+| `az.eventhubs.amqp.lifecycle` | Counter | `{transition}` | Completed AMQP creation attempts and connection fault invalidations |
+
+Operation metrics use `server.address`, `messaging.destination.name`, `messaging.operation` (`send` or `receive`), and `outcome` (`success`, `error`, or `cancelled`). Lifecycle metrics use server, destination, `component`, and `outcome`. Client identifiers, attempt generations, partition keys, message contents, and error descriptions are excluded from metric labels. Counts describe SDK observations, not exactly-once delivery; retries can result in duplicate delivery.
+
+Buffered send metrics start when the worker begins preparing a batch. Queue time, waits to fill a batch, and application callbacks are excluded. Preparation failures are recorded even when no batch can be sent; successful empty background polls are not counted as sends. Receive metrics describe transport batch requests, including empty successful reads, and finish before application processing. Retry attempts do not increment logical operation counters.
+
+To collect traces, enable `Azure.Experimental.EnableActivitySource` before creating clients and subscribe to `Azure.Messaging.EventHubs.*`. Existing producer and processor tracing and message context propagation are retained. Each receive poll, including an empty poll, can produce a logical receive span and a child wait span for each transport attempt. Additional scopes cover direct and buffered sends, connection/session opening, link attachment, send disposition, and receive waits. Transport spans carry no message-operation label. Buffered span wall-clock duration can include batch-fill waits even though the duration metric excludes them. Failed attempts mark child spans as errors; a successful retry leaves the logical operation successful.
+
+The `AmqpLifecycle` EventSource record identifies a connection scope, component, and unique creation-attempt generation. The same identity accompanies `started` and terminal `success`, `error`, or `cancelled` records. Faulted connections also emit `invalidated`. These diagnostic generations are not partition ownership epochs. Existing diagnostic events remain available.
+
+See the runnable [OpenTelemetry sample](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/OpenTelemetry) for provider setup, second-scale histogram buckets, an EventSource log bridge, OTLP export, and a smoke run that requires no Azure credentials.
+
 ## Next steps
 
 Beyond the introductory scenarios discussed, the Azure Event Hubs client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the Event Hubs client library offers a project of samples to serve as an illustration for common scenarios.  Please see the samples [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/README.md) for details.

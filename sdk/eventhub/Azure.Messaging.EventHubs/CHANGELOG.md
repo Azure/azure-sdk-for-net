@@ -10,6 +10,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
+- Added opt-in logical send, receive, and AMQP distributed tracing, structured AMQP lifecycle records, and native .NET metrics for logical send/receive operations, accepted/received events, operation duration, and AMQP lifecycles. Metrics can be collected using OpenTelemetry or `MeterListener`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
