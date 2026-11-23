@@ -17,13 +17,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a subvolume data model for mocking. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version.")]
-        public static NetAppSubvolumeInfoData NetAppSubvolumeInfoData(
-            ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default,
-            string path = default, long? size = default, string parentPath = default, string provisioningState = default)
+        public static NetAppSubvolumeInfoData NetAppSubvolumeInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, long? size = default, string parentPath = default, string provisioningState = default)
         {
-            return new NetAppSubvolumeInfoData(id, name, resourceType, systemData,
-                path is null && size is null && parentPath is null && provisioningState is null
-                    ? null : new SubvolumeProperties(path, size, parentPath, provisioningState, default),
+            return new NetAppSubvolumeInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                path is null && size is null && parentPath is null && provisioningState is null ? default : new SubvolumeProperties(path, size, parentPath, provisioningState, default),
                 default);
         }
 
@@ -32,23 +33,31 @@ namespace Azure.ResourceManager.NetApp.Models
         [Obsolete("This method is obsolete and will be removed in a future version.")]
         public static NetAppSubvolumeInfoPatch NetAppSubvolumeInfoPatch(long? size = default, string path = default)
         {
-            return new NetAppSubvolumeInfoPatch(size is null && path is null ? null : new SubvolumePatchParams(size, path, default), default);
+            return new NetAppSubvolumeInfoPatch(size is null && path is null ? default : new SubvolumePatchParams(size, path, default), default);
         }
 
         /// <summary> Initializes subvolume metadata for mocking. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version.")]
-        public static NetAppSubvolumeMetadata NetAppSubvolumeMetadata(
-            ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default,
-            string path = default, string parentPath = default, long? size = default, long? bytesUsed = default, string permissions = default,
-            DateTimeOffset? createdOn = default, DateTimeOffset? accessedOn = default, DateTimeOffset? modifiedOn = default,
-            DateTimeOffset? changedOn = default, string provisioningState = default)
+        public static NetAppSubvolumeMetadata NetAppSubvolumeMetadata(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, string parentPath = default, long? size = default, long? bytesUsed = default, string permissions = default, DateTimeOffset? createdOn = default, DateTimeOffset? accessedOn = default, DateTimeOffset? modifiedOn = default, DateTimeOffset? changedOn = default, string provisioningState = default)
         {
-            return new NetAppSubvolumeMetadata(id, name, resourceType, systemData,
-                path is null && parentPath is null && size is null && bytesUsed is null && permissions is null && createdOn is null &&
-                accessedOn is null && modifiedOn is null && changedOn is null && provisioningState is null
-                    ? null : new SubvolumeModelProperties(path, parentPath, size, bytesUsed, permissions, createdOn, accessedOn, modifiedOn,
-                        changedOn, provisioningState, default),
+            return new NetAppSubvolumeMetadata(
+                id,
+                name,
+                resourceType,
+                systemData,
+                path is null && parentPath is null && size is null && bytesUsed is null && permissions is null && createdOn is null && accessedOn is null && modifiedOn is null && changedOn is null && provisioningState is null ? default : new SubvolumeModelProperties(
+                    path,
+                    parentPath,
+                    size,
+                    bytesUsed,
+                    permissions,
+                    createdOn,
+                    accessedOn,
+                    modifiedOn,
+                    changedOn,
+                    provisioningState,
+                    default),
                 default);
         }
 
