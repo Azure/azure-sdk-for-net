@@ -71,7 +71,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
         /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
-        /// <param name="signatureParameters">Optional published parameter shape to use when building the method.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             ParameterContextRegistry parameterMappings,
@@ -83,8 +82,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             FormattableString? description = null,
             bool forceLro = false,
             ResourceClientProvider? explicitResourceClient = null,
-            ParameterProvider? scopeParameter = null,
-            IReadOnlyList<ParameterProvider>? signatureParameters = null)
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _scopeParameter = scopeParameter;
@@ -122,10 +120,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
-            if (signatureParameters is not null)
-            {
-                _signature.Update(parameters: signatureParameters);
-            }
             _bodyStatements = BuildBodyStatements();
         }
 

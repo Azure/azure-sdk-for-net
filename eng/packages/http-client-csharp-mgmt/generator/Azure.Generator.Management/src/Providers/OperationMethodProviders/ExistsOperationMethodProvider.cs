@@ -7,7 +7,6 @@ using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
@@ -22,8 +21,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         RestClientInfo restClientInfo,
         InputServiceMethod method,
         ResourceOperationKind operationKind,
-        bool isAsync,
-        IReadOnlyList<ParameterProvider>? signatureParameters = null
+        bool isAsync
         )
         : ResourceOperationMethodProvider(
             collection,
@@ -33,8 +31,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             operationKind,
             isAsync,
             methodName: isAsync ? "ExistsAsync" : "Exists",
-            description: $"Checks to see if the resource exists in azure.",
-            signatureParameters: signatureParameters)
+            description: $"Checks to see if the resource exists in azure.")
     {
         protected override bool ShouldApplyLroHandling => false;
 
