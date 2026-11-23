@@ -149,7 +149,12 @@ Describe "TypeSpec emitter regeneration commits" -Tag "UnitTest" {
         $pushSteps = @(Find-PipelineNode $jobs[0] "template" "/eng/common/pipelines/templates/steps/git-push-changes.yml")
         $pushSteps.Count | Should -Be 1
 
-        $pushSteps[0].parameters.CommitMsg | Should -BeExactly $ExpectedMessage
+        if ($Job -eq 'Initialize') {
+            $pushSteps[0].parameters['${{ else }}'].CommitMsg | Should -BeExactly $ExpectedMessage
+            $pushSteps[0].parameters['${{ if eq(parameters.EmitterPackagePath, ''eng/packages/http-client-csharp'') }}'].CommitMsg | Should -BeExactly 'Regenerate repository SDK with TypeSpec build $(Build.BuildNumber)'
+        } else {
+            $pushSteps[0].parameters.CommitMsg | Should -BeExactly $ExpectedMessage
+        }
         $pushSteps[0].parameters.BaseRepoBranch | Should -BeExactly '$(branchName)'
     }
 

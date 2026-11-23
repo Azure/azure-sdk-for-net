@@ -5,8 +5,8 @@
 Install-ModuleIfNotInstalled 'Pester' '5.3.3' | Import-Module
 
 BeforeAll {
-    $scriptPath = Join-Path $PSScriptRoot '..' 'typespec' 'Update-MgmtGeneratorDependency.ps1'
-    $pushScript = Join-Path $PSScriptRoot '..' 'typespec' 'Push-MgmtDependencyBranch.ps1'
+    $scriptPath = Join-Path $PSScriptRoot '..' 'mgmt-dependency' 'Update-MgmtGeneratorDependency.ps1'
+    $pushScript = Join-Path $PSScriptRoot '..' 'mgmt-dependency' 'Push-MgmtDependencyBranch.ps1'
     # Windows resolves npm to npm.ps1; Pester otherwise mocks that script under
     # its suffixed name and the updater's extensionless npm call bypasses it.
     function npm { throw 'Unexpected real npm call in a mocked test.' }

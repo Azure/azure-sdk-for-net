@@ -6,7 +6,6 @@ trigger:
     include:
       - eng/packages/http-client-csharp
       - eng/pipelines/templates/archetype-typespec-emitter.yml
-      - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
       - eng/scripts/typespec
 pr:
   branches:
@@ -19,7 +18,6 @@ pr:
     include:
       - eng/packages/http-client-csharp
       - eng/pipelines/templates/archetype-typespec-emitter.yml
-      - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
       - eng/scripts/typespec
 
 parameters:
@@ -63,7 +61,6 @@ extends:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
     BuildPrereleaseVersion: true
-    UpdateMgmtGeneratorDependency: true
     UploadPlaygroundBundle: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:

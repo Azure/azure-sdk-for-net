@@ -11,33 +11,26 @@ BeforeAll {
 }
 
 Describe 'Branded release management dependency automation' -Tag 'UnitTest' {
-    It 'opts in only the branded emitter and only for public publishing' {
-        $branded = Get-Content $brandedPath -Raw
-        $template = Get-Content $templatePath -Raw
-        $branded | Should -Match 'UpdateMgmtGeneratorDependency: true'
+    It 'keeps updater changes out of branded generator CI and validates them in eng CI' {
+        $branded = Get-Content $brandedPath -Raw | ConvertFrom-Yaml
+        $branded.trigger.paths.include | Should -Not -Contain 'eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml'
         $engCi = Get-Content (Join-Path $repo 'eng' 'scripts' 'ci.yml') -Raw | ConvertFrom-Yaml
         $engCi.trigger.paths.include | Should -Contain 'eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml'
-        $engCi.pr.paths.include | Should -Contain 'eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml'
-        $template | Should -Match 'and\(parameters\.UpdateMgmtGeneratorDependency, parameters\.ShouldPublish, parameters\.PublishPublic\)'
-        $template | Should -Match 'variable=publicNpmPublished;isOutput=true'
-        $template.IndexOf('name: markPublicNpm') | Should -BeGreaterThan $template.IndexOf('task: EsrpRelease@11')
-        $template.IndexOf('if parameters.UploadPlaygroundBundle') | Should -BeGreaterThan $template.IndexOf('name: markPublicNpm')
+        $engCi.pr.paths.include | Should -Contain 'eng/pipelines/update-mgmt-generator-dependency.yml'
     }
 
-    It 'waits for build and publish and restricts updates to main' {
+    It 'restricts updates to changed approved pins on main' {
         $pipeline = Get-Content $pipelinePath -Raw | ConvertFrom-Yaml
         $stage = $pipeline.stages[0]
-        $stage.dependsOn | Should -Contain 'Build'
-        $stage.dependsOn | Should -Contain 'Publish'
-        $stage.condition | Should -Match "refs/heads/main"
-        $stage.condition | Should -Match "Publish.Publish.markPublicNpm.publicNpmPublished"
-        $stage.condition | Should -Match 'not\(canceled\(\)\)'
+        $stage.condition | Should -Match 'refs/heads/main'
+        $stage.jobs[1].dependsOn | Should -Contain 'ReadApproval'
+        $stage.jobs[1].condition | Should -Match 'approval.pinChanged'
     }
 
-    It 'marks npm-only releases as drafts and refreshes the GitHub token after regeneration' {
+    It 'checks the matching NuGet publication and refreshes the GitHub token after regeneration' {
         $pipeline = Get-Content $pipelinePath -Raw
-        $pipeline | Should -Match 'not\(parameters\.HasNugetPackages\)'
-        $pipeline | Should -Match 'Matching NuGet package was not published'
+        $pipeline | Should -Match 'Verify matching NuGet publication'
+        $pipeline | Should -Match 'azure.generator/index.json'
         $pipeline.IndexOf('login-to-github.yml') | Should -BeGreaterThan $pipeline.IndexOf('Regenerate management test projects')
     }
 
@@ -50,11 +43,11 @@ Describe 'Branded release management dependency automation' -Tag 'UnitTest' {
         $pipeline | Should -Match 'Push-MgmtDependencyBranch.ps1'
     }
 
-    It 'runs updater tests in branded CI and makes failed tests fail eng scripts CI' {
-        $template = Get-Content $templatePath -Raw
-        $template | Should -Match 'Update-MgmtGeneratorDependency.Tests.ps1'
-        $template | Should -Match 'Mgmt-Dependency-Pipeline.Tests.ps1'
+    It 'makes failed updater tests fail eng scripts CI' {
         $engCi = Get-Content (Join-Path $repo 'eng' 'scripts' 'ci.yml') -Raw
+        $engCi | Should -Match 'Update-MgmtGeneratorDependency.Tests.ps1'
+        $engCi | Should -Match 'Mgmt-Dependency-Pipeline.Tests.ps1'
+        $engCi | Should -Match 'Approved-Mgmt-Trigger.Tests.ps1'
         $engCi | Should -Match 'CustomTestSteps'
         $engCi | Should -Match 'FailedContainersCount'
     }
@@ -65,7 +58,7 @@ Describe 'Branded release management dependency automation' -Tag 'UnitTest' {
         $pipeline | Should -Not -Match '(?i)-filter\b'
         $pipeline | Should -Match 'MgmtDependencyFailed'
         $pipeline | Should -Match '-(?:OpenAsDraft|Draft) \$failed'
-        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
         foreach ($name in @('Install locked management dependencies', 'Regenerate management test projects')) {
             ($steps | Where-Object displayName -eq $name).condition | Should -Match "eq\(variables\['MgmtDependencyFailed'\], 'false'\)"
         }
@@ -97,7 +90,7 @@ Describe 'Branded release management dependency automation' -Tag 'UnitTest' {
             git push origin typespec/update-mgmt-branded-123 2>&1 | Out-Null
             $before = git rev-parse HEAD
             git switch main 2>&1 | Out-Null
-            $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+            $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
             $command = ($steps | Where-Object displayName -eq 'Detect previous update attempt').pwsh
             $command = $command.Replace('$(dependencyBranch)', 'typespec/update-mgmt-branded-123').Replace('$(emitterVersion)', '1.0.0-alpha.20261117.1')
             $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
@@ -117,7 +110,7 @@ Describe 'Branded release management dependency automation' -Tag 'UnitTest' {
         New-Item -ItemType Directory -Force $common | Out-Null
         Set-Content -Path (Join-Path $common 'common.ps1') -Value 'function Get-GitHubPullRequests { param($RepoOwner,$RepoName,$State,$Head,$Base,$AuthToken) @(@{ state = "closed" }) }'
         Set-Content -Path (Join-Path $common 'Submit-PullRequest.ps1') -Value 'throw "A closed PR must not be recreated"'
-        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
         $command = ($steps | Where-Object displayName -eq 'Create dependency update pull request').pwsh
         $command = $command.Replace('$(MgmtDependencyFailed)', 'false').Replace('$(ReuseExistingDependencyPR)', 'true').Replace('$(emitterVersion)', '1.0.0-alpha.20261117.1').Replace('$(System.CollectionUri)', 'https://example.test/').Replace('$(System.TeamProject)', 'internal').Replace('$(Build.BuildId)', '123').Replace('$(dependencyBranch)', 'typespec/update-mgmt-branded-123').Replace('${{ parameters.HasNugetPackages }}', 'true')
         $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
@@ -142,7 +135,7 @@ function Get-GitHubPullRequests {
 }
 function New-GitHubPullRequest { throw 'Another attempt created the PR' }
 '@
-        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
         $command = ($steps | Where-Object displayName -eq 'Create dependency update pull request').pwsh
         $command = $command.Replace('$(MgmtDependencyFailed)', 'false').Replace('$(ReuseExistingDependencyPR)', 'false').Replace('$(emitterVersion)', '1.0.0-alpha.20261117.1').Replace('$(System.CollectionUri)', 'https://example.test/').Replace('$(System.TeamProject)', 'internal').Replace('$(Build.BuildId)', '123').Replace('$(dependencyBranch)', 'typespec/update-mgmt-branded-123').Replace('${{ parameters.HasNugetPackages }}', 'true')
         $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
@@ -162,7 +155,7 @@ function New-GitHubPullRequest { throw 'Another attempt created the PR' }
 function Get-GitHubPullRequests { param($RepoOwner,$RepoName,$State,$Head,$Base,$AuthToken) }
 function New-GitHubPullRequest { throw 'GitHub unavailable' }
 '@
-        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
         $command = ($steps | Where-Object displayName -eq 'Create dependency update pull request').pwsh
         $command = $command.Replace('$(MgmtDependencyFailed)', 'false').Replace('$(ReuseExistingDependencyPR)', 'false').Replace('$(emitterVersion)', '1.0.0-alpha.20261117.1').Replace('$(System.CollectionUri)', 'https://example.test/').Replace('$(System.TeamProject)', 'internal').Replace('$(Build.BuildId)', '123').Replace('$(dependencyBranch)', 'typespec/update-mgmt-branded-123').Replace('${{ parameters.HasNugetPackages }}', 'true')
         $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
@@ -176,7 +169,7 @@ function New-GitHubPullRequest { throw 'GitHub unavailable' }
 
     It 'checks the approved descriptor in management CI for generated PRs' {
         $template = Get-Content $templatePath -Raw
-        $template | Should -Match "or\(parameters.UpdateMgmtGeneratorDependency, eq\(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp-mgmt'\)\)"
+        $template | Should -Match "eq\(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp-mgmt'\)"
         $template | Should -Match 'git sparse-checkout add .*/doc/GeneratorVersions/Emitter_Version_Dashboard.ps1'
         $template | Should -Match 'Emitter_Version_Dashboard.ps1.*-ValidateOnly'
         $engCi = Get-Content (Join-Path $repo 'eng' 'scripts' 'ci.yml') -Raw | ConvertFrom-Yaml
@@ -234,10 +227,11 @@ function New-GitHubPullRequest { throw 'GitHub unavailable' }
         $template = Get-Content $templatePath -Raw | ConvertFrom-Yaml
         $stageKey = '${{ if ne(length(parameters.TestMatrix), 0) }}'
         $conditionalStage = @($template.extends.parameters.stages | Where-Object { $_ -is [System.Collections.IDictionary] -and $_.Contains($stageKey) })[0][$stageKey][0]
-        $includeKey = '${{ if or(parameters.UpdateMgmtGeneratorDependency, eq(parameters.EmitterPackagePath, ''eng/packages/http-client-csharp-mgmt'')) }}'
+        $includeKey = '${{ if eq(parameters.EmitterPackagePath, ''eng/packages/http-client-csharp-mgmt'') }}'
         $include = @($conditionalStage.jobs[0].steps | Where-Object { $_ -is [System.Collections.IDictionary] -and $_.Contains($includeKey) })[0][$includeKey][0]
         $stepKey = '${{ if eq(parameters.EmitterPackagePath, ''eng/packages/http-client-csharp-mgmt'') }}'
-        $step = @($conditionalStage.jobs[0].steps | Where-Object { $_ -is [System.Collections.IDictionary] -and $_.Contains($stepKey) })[0][$stepKey][0]
+        $step = @($conditionalStage.jobs[0].steps | Where-Object { $_ -is [System.Collections.IDictionary] -and $_.Contains($stepKey) })[1][$stepKey][0]
+        $step.displayName | Should -Be 'Validate approved management versions'
         $includeCommand = $include.pwsh + "`nexit `$LASTEXITCODE"
         $includeEncoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($includeCommand))
         $command = $step.pwsh.Replace('$(Build.SourcesDirectory)', $checkout) + "`nexit `$LASTEXITCODE"
@@ -280,7 +274,7 @@ function New-GitHubPullRequest { throw 'GitHub unavailable' }
             New-Item -ItemType Directory -Force (Split-Path $path) | Out-Null
             Set-Content -Path $path -Value $entry.Value -NoNewline
         }
-        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
         $step = $steps | Where-Object displayName -eq 'Validate approved management versions'
         $step | Should -Not -BeNullOrEmpty
         $command = $step.pwsh + "`nexit `$LASTEXITCODE"
@@ -305,7 +299,7 @@ function New-GitHubPullRequest { throw 'GitHub unavailable' }
         $scripts = Join-Path $fixture 'eng' 'packages' 'http-client-csharp-mgmt' 'eng' 'scripts'
         New-Item -ItemType Directory -Force $scripts | Out-Null
         Set-Content -Path (Join-Path $scripts 'Generate.ps1') -Value "Write-Error 'injected generation failure'; `$global:LASTEXITCODE = 0"
-        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
         $command = ($steps | Where-Object displayName -eq 'Regenerate management test projects').pwsh
         $command = $command.Replace('$(Build.SourcesDirectory)', $fixture) + "`nexit `$LASTEXITCODE"
         $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
@@ -320,10 +314,10 @@ function New-GitHubPullRequest { throw 'GitHub unavailable' }
 
     It 'records an update failure while allowing the draft PR steps to run' {
         $fixture = Join-Path $TestDrive 'fake-repo'
-        $script = Join-Path $fixture 'eng' 'scripts' 'typespec' 'Update-MgmtGeneratorDependency.ps1'
+        $script = Join-Path $fixture 'eng' 'scripts' 'mgmt-dependency' 'Update-MgmtGeneratorDependency.ps1'
         New-Item -ItemType Directory -Force (Split-Path $script) | Out-Null
         Set-Content -Path $script -Value "Write-Host '##vso[task.setvariable variable=MgmtDependencyUpdateNeeded]true'; exit 1"
-        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[0].steps)
+        $steps = @((Get-Content $pipelinePath -Raw | ConvertFrom-Yaml).stages[0].jobs[1].steps)
         $command = ($steps | Where-Object displayName -eq 'Update management dependencies').pwsh
         $command = $command.Replace('$(Build.SourcesDirectory)', $fixture).Replace('$(Pipeline.Workspace)', $TestDrive).Replace('$(emitterVersion)', '1.0.0-alpha.20261117.1')
         # PowerShell@2 propagates LASTEXITCODE after a script unless it is reset.

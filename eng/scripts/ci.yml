@@ -15,6 +15,7 @@ trigger:
       - eng/packages/http-client-csharp-provisioning/ci.yml
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
+      - eng/pipelines/update-mgmt-generator-dependency.yml
       - .github/workflows/close-stale-generator-upgrade-prs.yml
     exclude:
       - eng/scripts/typespec
@@ -33,6 +34,7 @@ pr:
       - eng/packages/http-client-csharp-provisioning/ci.yml
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
+      - eng/pipelines/update-mgmt-generator-dependency.yml
       - .github/workflows/close-stale-generator-upgrade-prs.yml
       - eng/centralpackagemanagement/Directory.Generation.Packages.props
       - eng/azure-typespec-http-client-csharp-emitter-package.json
@@ -59,7 +61,7 @@ extends:
           $config.Filter.Tag = @('UnitTest', 'SdkCompatibilityTest')
           $env:PESTER_TEST_RUN = 'true'
           Invoke-Pester -Configuration $config | Out-Host
-          $result = Invoke-Pester -Path ./tests/Update-MgmtGeneratorDependency.Tests.ps1,./tests/Mgmt-Dependency-Pipeline.Tests.ps1,./tests/TypeSpec-Emitter-PullRequest.Tests.ps1 -Tag UnitTest -PassThru
+          $result = Invoke-Pester -Path ./tests/Approved-Mgmt-Trigger.Tests.ps1,./tests/Update-MgmtGeneratorDependency.Tests.ps1,./tests/Mgmt-Dependency-Pipeline.Tests.ps1,./tests/TypeSpec-Emitter-PullRequest.Tests.ps1 -Tag UnitTest -PassThru
           if ($result.FailedCount -gt 0 -or $result.FailedContainersCount -gt 0 -or $result.TotalCount -eq 0) {
             throw 'Management dependency automation tests failed or were not discovered.'
           }

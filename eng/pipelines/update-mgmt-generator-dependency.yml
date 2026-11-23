@@ -1,0 +1,47 @@
+# Register this pipeline separately in Azure Pipelines. Merges that change the
+# approved pin must not use [skip ci]: Azure Pipelines cannot observe skipped pushes.
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - eng/azure-typespec-http-client-csharp-emitter-package.json
+
+pr: none
+
+# After registering this pipeline, run once on main with SeedBaseline=true before
+# enabling CI. The seed records a comparison point without opening an update PR.
+# To reconcile an existing gap or retry a failed run, run manually on main with
+# RetryApprovedVersion=true. A failed existing update branch needs manual repair.
+parameters:
+  - name: SeedBaseline
+    type: boolean
+    default: false
+  # Manual retry or initial reconciliation; existing update branches are never overwritten.
+  - name: RetryApprovedVersion
+    type: boolean
+    default: false
+
+variables:
+  - template: /eng/pipelines/templates/variables/image.yml
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+      - template: /eng/pipelines/templates/stages/update-mgmt-generator-dependency.yml
+        parameters:
+          SeedBaseline: ${{ parameters.SeedBaseline }}
+          RetryApprovedVersion: ${{ parameters.RetryApprovedVersion }}
+          Pool:
+            name: $(LINUXPOOL)
+            image: $(LINUXVMIMAGE)
+            os: linux
+          InitializationSteps:
+            - task: UseNode@1
+              displayName: 'Install Node.js 22.x'
+              inputs:
+                version: '22.x'
+            - template: /eng/pipelines/templates/steps/install-dotnet.yml
