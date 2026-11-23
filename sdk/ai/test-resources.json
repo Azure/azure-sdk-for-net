@@ -227,9 +227,9 @@
         },
         "computerUseModelName": {
             "type": "string",
-            "defaultValue": "computer-use-preview",
+            "defaultValue": "gpt-5.4",
             "metadata": {
-                "description": "The name of the computer-use model to deploy. computer-use-preview is a limited-access model; the subscription must have access and the GlobalStandard SKU in the deployment region (for example eastus2 or swedencentral). eastus and westus3 only offer the Provisioned SKU."
+                "description": "The name of the computer-use model to deploy. Requires a region where the subscription has the model and GlobalStandard SKU enabled (for example eastus2 or swedencentral)."
             }
         },
         "computerUseModelFormat": {
@@ -238,7 +238,7 @@
         },
         "computerUseModelVersion": {
             "type": "string",
-            "defaultValue": "2025-03-11"
+            "defaultValue": "2026-03-05"
         },
         "computerUseModelSkuName": {
             "type": "string",

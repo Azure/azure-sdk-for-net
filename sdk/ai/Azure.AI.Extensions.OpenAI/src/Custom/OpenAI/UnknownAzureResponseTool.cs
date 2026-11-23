@@ -28,6 +28,7 @@ namespace Azure.AI.Extensions.OpenAI
         // (DeserializeFromDiscriminator) and to decide whether an already materialized tool still needs
         // normalization (TryGetAzureToolType), so the two never drift apart.
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
         private static readonly IReadOnlyDictionary<ResponseToolKind, (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseTool> Deserialize)> AzureToolDispatch =
         new Dictionary<ResponseToolKind, (Type, Func<JsonElement, ModelReaderWriterOptions, ResponseTool>)>
         {
@@ -50,7 +51,9 @@ namespace Azure.AI.Extensions.OpenAI
             [ResponseToolKind.WorkIQPreview] = (typeof(WorkIQPreviewTool), WorkIQPreviewTool.DeserializeWorkIQPreviewTool),
             [ResponseToolKind.GitHubCopilotToolsetPreviewValue] = (typeof(GitHubCopilotToolsetPreview), GitHubCopilotToolsetPreview.DeserializeGitHubCopilotToolsetPreview),
             [ResponseToolKind.MicrosoftCopilotToolsetPreview] = (typeof(MicrosoftCopilotToolsetPreview), MicrosoftCopilotToolsetPreview.DeserializeMicrosoftCopilotToolsetPreview),
+            [ResponseToolKind.Computer] = (typeof(ComputerTool), ComputerTool.DeserializeComputerTool),
         };
+#pragma warning restore AAIP002
 #pragma warning restore AAIP001
 
         internal UnknownAzureResponseTool()
