@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Invocations.Tests.Snippets;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
@@ -1496,6 +1497,40 @@ public partial class SampleEndToEndTests
     }
 
     [Test]
+    public async Task ResilientResearch_TestHostsHaveIsolatedTaskStores()
+    {
+        var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var first = await CreateControlledResilientResearchServerAsync(
+            async (_, cancellationToken) =>
+            {
+                started.TrySetResult();
+                await release.Task.WaitAsync(cancellationToken);
+                return new("completed", Array.Empty<string>());
+            });
+        string sessionId = "research-isolation-" + Guid.NewGuid().ToString("N");
+        string invocationId = Guid.NewGuid().ToString("N");
+        try
+        {
+            using var response = await PostResearchAsync(first.Client, sessionId, invocationId, "isolated turn");
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+            await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            await using var second = await CreateControlledResilientResearchServerAsync(
+                (_, _) => Task.FromResult(
+                    new Snippets.SampleResilientResearchSnippets.ResearchResult("unexpected", Array.Empty<string>())));
+            string taskId = $"research-{sessionId}";
+            Assert.That(await first.Services.GetRequiredService<ITaskStore>().GetAsync(taskId), Is.Not.Null);
+            Assert.That(await second.Services.GetRequiredService<ITaskStore>().GetAsync(taskId), Is.Null,
+                "A test host must not discover or recover tasks belonging to another host.");
+        }
+        finally
+        {
+            release.TrySetResult();
+        }
+    }
+
+    [Test]
     public async Task ResilientResearch_CancelQueuedInvocation_PreventsExecution()
     {
         var activeStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -2200,6 +2235,8 @@ public partial class SampleEndToEndTests
         builder.WebHost.UseTestServer();
         builder.Services.AddInvocationsServer();
         builder.Services.AddScoped<InvocationHandler, THandler>();
+        string taskStoreRoot = Path.Combine(Path.GetTempPath(), "invocations-sample-tasks-" + Guid.NewGuid().ToString("N"));
+        builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(taskStoreRoot));
         configureServices?.Invoke(builder.Services);
 
         var app = builder.Build();
@@ -2213,11 +2250,15 @@ public partial class SampleEndToEndTests
             app.MapInvocationsServer();
             await app.StartAsync();
 
-            return new TestEnv(app);
+            return new TestEnv(app, taskStoreRoot);
         }
         catch
         {
             await app.DisposeAsync();
+            if (Directory.Exists(taskStoreRoot))
+            {
+                Directory.Delete(taskStoreRoot, recursive: true);
+            }
             throw;
         }
     }
@@ -2228,10 +2269,12 @@ public partial class SampleEndToEndTests
     private sealed class TestEnv : IAsyncDisposable
     {
         private readonly WebApplication _app;
+        private readonly string _taskStoreRoot;
 
-        public TestEnv(WebApplication app)
+        public TestEnv(WebApplication app, string taskStoreRoot)
         {
             _app = app;
+            _taskStoreRoot = taskStoreRoot;
             Client = app.GetTestClient();
         }
 
@@ -2251,6 +2294,10 @@ public partial class SampleEndToEndTests
             finally
             {
                 await _app.DisposeAsync();
+                if (Directory.Exists(_taskStoreRoot))
+                {
+                    Directory.Delete(_taskStoreRoot, recursive: true);
+                }
             }
         }
     }

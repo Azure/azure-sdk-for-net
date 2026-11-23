@@ -15,6 +15,8 @@
 
 ### Bugs Fixed
 
+- Preserve native Agent Card identity on A2A protocol spans while retaining
+  Foundry deployment identity on the enclosing hosted invocation span.
 - Ensured snapshot rollback and host disposal join owned workers before releasing
   stores, bound cleanup waits to the host shutdown timeout, and retained failed
   cleanup for safe retry without blocking disposal of unrelated services.

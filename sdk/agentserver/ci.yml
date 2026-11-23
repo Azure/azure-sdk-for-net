@@ -19,6 +19,8 @@ extends:
     Artifacts:
       - name: Azure.AI.AgentServer.Core
         safeName: AzureAIAgentServerCore
+      - name: Azure.AI.AgentServer.A2A
+        safeName: AzureAIAgentServerA2A
       - name: Azure.AI.AgentServer.Responses
         safeName: AzureAIAgentServerResponses
       - name: Azure.AI.AgentServer.Invocations
