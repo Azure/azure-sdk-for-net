@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBasicAuthRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetBasicAuthRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListBasicAuthRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateListBasicAuthRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

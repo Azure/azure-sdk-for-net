@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBasicAuthRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetBasicAuthRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListBasicAuthRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateListBasicAuthRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
