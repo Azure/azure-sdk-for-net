@@ -5,9 +5,10 @@ using System;
 
 namespace Azure.ResourceManager.Batch.Models
 {
+    // Batch API version 2026-10-01 removed TaskAuthenticationToken, so the generated converters no longer map it.
+    // Preserve the original wire value in both directions for callers using older API versions such as 2025-06-01.
     internal static partial class BatchAuthenticationModeExtensions
     {
-        // The current spec no longer maps TaskAuthenticationToken, but older versions still use it.
         public static string ToSerialString(this BatchAuthenticationMode value) => value switch
         {
             BatchAuthenticationMode.SharedKey => "SharedKey",

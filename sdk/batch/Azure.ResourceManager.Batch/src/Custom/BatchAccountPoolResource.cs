@@ -11,7 +11,10 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchAccountPoolResource
     {
-        // Keep the 1.7.0 overloads and serialize the original data model alongside the new patch API.
+        // Batch API version 2026-10-01 introduced a separate PATCH request model, so the generator now emits
+        // Update and UpdateAsync with BatchAccountPoolPatch instead of BatchAccountPoolData.
+        // Restore the overloads shipped in SDK 1.7.0 and keep serializing BatchAccountPoolData directly to
+        // preserve the original request body.
 
         /// <summary> Updates the properties of an existing pool. </summary>
         /// <param name="data"> Pool properties to update. Properties not supplied are unchanged. </param>

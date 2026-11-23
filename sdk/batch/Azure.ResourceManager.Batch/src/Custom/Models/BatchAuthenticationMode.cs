@@ -5,7 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    // Older API versions can still return TaskAuthenticationToken.
+    // Batch API version 2026-10-01 removed TaskAuthenticationToken from AuthenticationMode.
+    // Restore the member here so regeneration does not remove a public enum value shipped in SDK 1.7.0.
     /// <summary> The authentication mode for the Batch account. </summary>
     [CodeGenType("BatchAuthenticationMode")]
     public enum BatchAuthenticationMode
