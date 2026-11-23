@@ -4,11 +4,18 @@
 
 ### Features Added
 
+- Upgraded the default service API version to `2026-09-01`. Subvolume operations continue to use `2026-08-01` by default.
+
 ### Breaking Changes
+
+- The `2026-09-01` service API no longer exposes the geographic namespace origin, asynchronous directory deletion, or bucket Key Vault user-assigned identity settings from `2026-08-15-preview`.
+- The wire value of `NetAppLdapServerType.OpenLdap` is now `OpenLdap` rather than `OpenLDAP`, matching the service specification.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Entra ID account configuration is still available in the SDK for callers that opt into a preview API version that supports it.
 
 ## 1.20.0-beta.1 (2026-10-30)
 

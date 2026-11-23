@@ -517,8 +517,22 @@ namespace Azure.ResourceManager.NetApp.Models
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfigurationPatch ldapConfiguration)
+            => NetAppAccountPatch(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain, null, ldapConfiguration);
+
+        // The current service API omits Entra ID configuration, so this earlier factory signature is no longer generated.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, EntraIdConfigPatch entraIdConfig, LdapConfigurationPatch ldapConfiguration)
         {
-            return NetAppAccountPatch(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain, (EntraIdConfigPatch)null, ldapConfiguration);
+            var patch = CreateNetAppAccountPatchCompat(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain);
+            if (entraIdConfig != null)
+            {
+                patch.EntraIdConfig = entraIdConfig;
+            }
+            if (ldapConfiguration != null)
+            {
+                (patch.Properties ??= new AccountPropertiesPatch()).LdapConfiguration = ldapConfiguration;
+            }
+            return patch;
         }
 
         private static NetAppAccountPatch CreateNetAppAccountPatchCompat(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain)
@@ -650,7 +664,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     throughputMibps,
                     dataProtection,
                     isDefaultQuotaEnabled,
-                    null,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     unixPermissions,
@@ -661,9 +674,8 @@ namespace Azure.ResourceManager.NetApp.Models
                     isSnapshotDirectoryVisible,
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
-                    null,
-                    null,
-                    null),
+                    smbOplocks: null,
+                    additionalBinaryDataProperties: null),
                 additionalBinaryDataProperties: null);
         }
 

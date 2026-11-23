@@ -11,7 +11,6 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account properties. </summary>
     internal partial class AccountProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -35,8 +34,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
+        /// <param name="entraIdConfig"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, EntraIdConfig entraIdConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _nfsV4IdDomain = nfsV4IdDomain;
             MultiAdStatus = multiAdStatus;
             LdapConfiguration = ldapConfiguration;
+            EntraIdConfig = entraIdConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

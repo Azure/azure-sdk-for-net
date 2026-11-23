@@ -23,6 +23,16 @@ namespace Azure.ResourceManager.NetApp
         // These public ArmClient extensions are the static counterparts to the virtual methods
         // in MockableNetAppArmClient. Keep this block aligned 1:1 with that mockable surface.
 
+        /// <summary> Gets a subvolume resource by ID without making a service request. </summary>
+        /// <param name="client"> The ARM client. </param>
+        /// <param name="id"> The ID of the subvolume. </param>
+        /// <returns> The subvolume resource. </returns>
+        public static NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            return GetMockableNetAppArmClient(client).GetNetAppSubvolumeInfoResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppAccountBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountBackupResource" /> <see cref="ResourceIdentifier" /> from its components.

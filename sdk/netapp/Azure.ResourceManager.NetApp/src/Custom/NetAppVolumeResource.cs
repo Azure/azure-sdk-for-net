@@ -28,6 +28,25 @@ namespace Azure.ResourceManager.NetApp
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("ReplicationStatusAsync", typeof(CancellationToken))]
     public partial class NetAppVolumeResource
     {
+        /// <summary> Gets the subvolumes in this volume. </summary>
+        /// <returns> The subvolume collection. </returns>
+        public virtual NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos()
+            => GetCachedClient(client => new NetAppSubvolumeInfoCollection(client, Id));
+
+        /// <summary> Gets a subvolume in this volume. </summary>
+        /// <param name="subvolumeName"> The name of the subvolume. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <returns> The subvolume resource. </returns>
+        public virtual Task<Response<NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, CancellationToken cancellationToken = default)
+            => GetNetAppSubvolumeInfos().GetAsync(subvolumeName, cancellationToken);
+
+        /// <summary> Gets a subvolume in this volume. </summary>
+        /// <param name="subvolumeName"> The name of the subvolume. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <returns> The subvolume resource. </returns>
+        public virtual Response<NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, CancellationToken cancellationToken = default)
+            => GetNetAppSubvolumeInfos().Get(subvolumeName, cancellationToken);
+
         /// <summary> Get the status of the backup for a volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppVolumeBackupStatus> GetBackupStatus(CancellationToken cancellationToken = default)

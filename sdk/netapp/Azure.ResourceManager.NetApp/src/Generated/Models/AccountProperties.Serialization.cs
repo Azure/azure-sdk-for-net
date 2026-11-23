@@ -13,7 +13,6 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account properties. </summary>
     internal partial class AccountProperties : IJsonModel<AccountProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -128,6 +127,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ldapConfiguration"u8);
                 writer.WriteObjectValue(LdapConfiguration, options);
             }
+            if (Optional.IsDefined(EntraIdConfig))
+            {
+                writer.WritePropertyName("entraIdConfig"u8);
+                writer.WriteObjectValue(EntraIdConfig, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -179,6 +183,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
             LdapConfiguration ldapConfiguration = default;
+            EntraIdConfig entraIdConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -250,6 +255,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("entraIdConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -263,6 +277,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 nfsV4IdDomain,
                 multiAdStatus,
                 ldapConfiguration,
+                entraIdConfig,
                 additionalBinaryDataProperties)
             {
                 _disableShowmountIsDefined = disableShowmountIsDefined,

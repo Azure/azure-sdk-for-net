@@ -11,7 +11,6 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account patch properties. </summary>
     internal partial class AccountPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -30,13 +29,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
+        /// <param name="entraIdConfig"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountPropertiesPatch(IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountPropertiesPatch(IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfigurationPatch ldapConfiguration, EntraIdConfigPatch entraIdConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectories = activeDirectories;
             Encryption = encryption;
             _nfsV4IdDomain = nfsV4IdDomain;
             LdapConfiguration = ldapConfiguration;
+            EntraIdConfig = entraIdConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

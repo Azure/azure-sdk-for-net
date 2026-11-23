@@ -19,6 +19,14 @@ namespace Azure.ResourceManager.NetApp
         private BreakthroughMode? _breakthroughMode;
         private BreakthroughMode? _breakthroughModeOld;
 
+        // The current service API omits this field; retain it for callers using older versions.
+        /// <summary> Gets or sets whether subvolumes are enabled. </summary>
+        public EnableNetAppSubvolume? EnableSubvolumes
+        {
+            get => Properties?.EnableSubvolumes;
+            set => (Properties ??= new VolumeProperties()).EnableSubvolumes = value;
+        }
+
         // The new spec marks isRestoring as read-only; restore the GA setter for source compat.
         /// <summary> Restoring. </summary>
         public bool? IsRestoring

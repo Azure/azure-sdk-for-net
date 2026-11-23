@@ -13,7 +13,6 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account patch properties. </summary>
     internal partial class AccountPropertiesPatch : IJsonModel<AccountPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
@@ -106,6 +105,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ldapConfiguration"u8);
                 writer.WriteObjectValue(LdapConfiguration, options);
             }
+            if (Optional.IsDefined(EntraIdConfig))
+            {
+                writer.WritePropertyName("entraIdConfig"u8);
+                writer.WriteObjectValue(EntraIdConfig, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -153,6 +157,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool nfsV4IdDomainIsDefined = false;
             string nfsV4IdDomain = default;
             LdapConfigurationPatch ldapConfiguration = default;
+            EntraIdConfigPatch entraIdConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,12 +204,27 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapConfiguration = LdapConfigurationPatch.DeserializeLdapConfigurationPatch(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("entraIdConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    entraIdConfig = EntraIdConfigPatch.DeserializeEntraIdConfigPatch(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccountPropertiesPatch(activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(), encryption, nfsV4IdDomain, ldapConfiguration, additionalBinaryDataProperties)
+            return new AccountPropertiesPatch(
+                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                encryption,
+                nfsV4IdDomain,
+                ldapConfiguration,
+                entraIdConfig,
+                additionalBinaryDataProperties)
             {
                 _nfsV4IdDomainIsDefined = nfsV4IdDomainIsDefined
             };

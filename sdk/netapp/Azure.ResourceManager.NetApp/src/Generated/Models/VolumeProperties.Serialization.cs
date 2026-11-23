@@ -14,7 +14,6 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume properties. </summary>
     internal partial class VolumeProperties : IJsonModel<VolumeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="VolumeProperties"/> for deserialization. </summary>
@@ -443,6 +442,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("breakthroughMode"u8);
                 writer.WriteStringValue(BreakthroughMode.Value.ToString());
             }
+            if (Optional.IsDefined(EnableSubvolumes))
+            {
+                writer.WritePropertyName("enableSubvolumes"u8);
+                this.WriteEnableSubvolumes(writer, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -551,6 +555,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool inheritedSizeInBytesIsDefined = false;
             long? inheritedSizeInBytes = default;
             BreakthroughMode? breakthroughMode = default;
+            EnableNetAppSubvolume? enableSubvolumes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1096,6 +1101,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     breakthroughMode = new BreakthroughMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("enableSubvolumes"u8))
+                {
+                    ReadEnableSubvolumes(prop, ref enableSubvolumes);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -1162,6 +1172,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 originatingResourceId,
                 inheritedSizeInBytes,
                 breakthroughMode,
+                enableSubvolumes,
                 additionalBinaryDataProperties)
             {
                 _smbAccessBasedEnumerationIsDefined = smbAccessBasedEnumerationIsDefined,

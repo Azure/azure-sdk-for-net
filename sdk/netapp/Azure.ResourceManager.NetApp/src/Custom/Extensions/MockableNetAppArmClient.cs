@@ -13,6 +13,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
     {
         // These virtual methods back the ArmClient extension methods in NetAppExtensions.
 
+        /// <summary> Gets a subvolume resource by ID without making a service request. </summary>
+        /// <param name="id"> The ID of the subvolume. </param>
+        /// <returns> The subvolume resource. </returns>
+        public virtual NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(ResourceIdentifier id)
+        {
+            NetAppSubvolumeInfoResource.ValidateResourceId(id);
+            return new NetAppSubvolumeInfoResource(Client, id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppAccountBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
