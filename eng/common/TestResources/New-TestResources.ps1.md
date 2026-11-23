@@ -57,9 +57,8 @@ This script runs in the context of credentials already specified in Connect-AzAc
 or those specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 If no subscription is specified, it signs in to the TME tenant if necessary and uses the
 Azure SDK Test Resources - TME subscription for `-Environment AzureCloud`. Specify `-SubscriptionId`
-to use another subscription or to deploy to a sovereign cloud. When Azure CLI commands are used
-by local tests, run `az login --tenant 70a036f6-8e4d-4615-bad6-149c02e7720d` and
-`az account set --subscription 4d042dc6-fe17-4698-a23f-ec6a8d1e98f4`.
+to use another subscription or to deploy to a sovereign cloud. Pre- and post-deployment scripts
+that invoke Azure CLI are responsible for configuring its tenant and subscription context.
 
 ## EXAMPLES
 
@@ -532,6 +531,11 @@ Accept wildcard characters: False
 
 ### -AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s) and pre-post scripts.
+The pre- and post-deployment scripts receive these values as named parameters, along with
+`-ResourceGroupName`, `-SubscriptionId`, `-TenantId`, and `-Environment`. Scripts that invoke
+the Azure CLI must set it to the appropriate tenant and subscription themselves. For TME
+deployments in AzureCloud, use tenant `70a036f6-8e4d-4615-bad6-149c02e7720d` and subscription
+`4d042dc6-fe17-4698-a23f-ec6a8d1e98f4`.
 
 ```yaml
 Type: Hashtable
