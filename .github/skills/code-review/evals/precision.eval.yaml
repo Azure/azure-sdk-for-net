@@ -100,6 +100,91 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: report-parent-package-referencing-child-named-package
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic csproj diff and
+      return findings only. The shipping library `Azure.Widgets`, at version `1.3.0-beta.1`, adds
+      a `ProjectReference` to `..\..\Azure.Widgets.Gadgets\src\Azure.Widgets.Gadgets.csproj` so
+      that `WidgetsClient` can return the `GadgetsClient` defined in the shipping library
+      `Azure.Widgets.Gadgets`, version `1.0.0-beta.1`, which lives in the same `sdk/widgets/`
+      directory. Both libraries' API listings, tests, and CHANGELOG entries are correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:Azure\.Widgets\.Gadgets|extends|parent|revers|invert)[^\n]*🟡|🟡[^\n]*(?:Azure\.Widgets\.Gadgets|extends|parent|revers|invert))'
+      - type: output-matches
+        config:
+          pattern: '(?i)🟡[\s\S]{0,400}?(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)|(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)[^\n]*🟡'
+
+  - name: report-new-metapackage-bundling-child-named-packages
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It adds the new package `Azure.Widgets.Extensions`, version `1.0.0-beta.1`,
+      so customers can install the existing shipping libraries `Azure.Widgets.Extensions.Blobs`
+      and `Azure.Widgets.Extensions.Queues` with one reference. Its csproj sets
+      `IncludeBuildOutput` to `false` and contains only `ProjectReference` items to those two
+      libraries, which live in the same `sdk/widgets/` directory, so it ships no code of its own.
+      Its Description, README, and CHANGELOG are complete and correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends|parent|revers|invert)[^\n]*🟡|🟡[^\n]*(?:metapackage|meta-package|Azure\.Widgets\.Extensions|extends|parent|revers|invert))'
+      - type: output-matches
+        config:
+          pattern: '(?i)🟡[\s\S]{0,400}?(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)|(?:invert|revers|wrong direction|opposite direction|extends its own|must not depend|should not depend|cycle)[^\n]*🟡'
+
+  - name: allow-existing-parent-to-child-reference-on-version-bump
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. Azure.Widgets 1.3.0-beta.1 shipped yesterday. On `main`, its csproj already
+      has a `ProjectReference` to the shipping library `Azure.Widgets.Gadgets` in the same
+      `sdk/widgets/` directory. This automated post-release PR changes only that csproj's
+      `Version` from `1.3.0-beta.1` to `1.3.0-beta.2` and adds a new
+      `## 1.3.0-beta.2 (Unreleased)` entry at the top of CHANGELOG.md with empty
+      `### Features Added`, `### Breaking Changes`, `### Bugs Fixed`, and `### Other Changes`
+      headings. The reference is unchanged. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: allow-new-parent-to-child-reference-between-test-projects
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. The existing test project `Azure.Widgets.Tests` in
+      `sdk/widgets/Azure.Widgets/tests/` adds a `ProjectReference` to the existing test helper
+      project `Azure.Widgets.Tests.Common` in the same folder so it can reuse shared fixtures.
+      Neither project is packable, and neither ships. There are no other changes. If there is
+      no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
   - name: same-type-different-concept-parameters-are-not-flagged
     prompt: >-
       First invoke the code-review skill. Then use it to review this synthetic new
@@ -932,3 +1017,60 @@ stimuli:
       - type: output-not-matches
         config:
           pattern: '(?i)"recommendation"\s*:\s*"(?:[^"\\]|\\.)*?\b(?:do not|don''t|no need to|needn''t)\s+(?:add|take|accept|require|introduce|declare|use)\b'
+
+  - name: report-new-review-rule-without-anchor
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It edits `.github/skills/code-review/references/repository-rules.md`. In the
+      Client Design section, where every existing rule bullet starts with an anchor such as
+      `<a name="client-virtual-methods" href="#client-virtual-methods">§</a>`, it adds a bullet
+      whose text is the bold sentence "Clients expose the endpoint they were constructed with as a
+      public Uri Endpoint property." The new bullet has no anchor. The rule's content is correct and
+      does not duplicate another rule, and nothing else changes.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:anchor|permalink|§)[^\n]*🟡|🟡[^\n]*(?:anchor|permalink|§))'
+
+  - name: report-renamed-review-rule-anchor
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It edits `.github/skills/code-review/references/repository-rules.md` and
+      changes only the anchor at the start of an existing Client Design rule, from
+      `<a name="client-virtual-methods" href="#client-virtual-methods">§</a>` to
+      `<a name="client-mockable-methods" href="#client-mockable-methods">§</a>`. The rule's text
+      is unchanged, and nothing else changes.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:client-virtual-methods|anchor|permalink|link)[^\n]*🟡|🟡[^\n]*(?:client-virtual-methods|anchor|permalink|link))'
+
+  - name: allow-new-review-rule-with-unique-anchor
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic PR and return
+      findings only. It edits `.github/skills/code-review/references/repository-rules.md`. In the
+      Client Design section, it adds a bullet that starts with
+      `<a name="client-endpoint-property" href="#client-endpoint-property">§</a>`, a name no other
+      rule uses, followed by the bold sentence "Clients expose the endpoint they were constructed
+      with as a public Uri Endpoint property." The rule's content is correct and does not duplicate
+      another rule, and nothing else changes. If there is no finding, return exactly
+      `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '(?i)((?:anchor|permalink|§)[^\n]*(?:🔴|🟡)|(?:🔴|🟡)[^\n]*(?:anchor|permalink|§))'

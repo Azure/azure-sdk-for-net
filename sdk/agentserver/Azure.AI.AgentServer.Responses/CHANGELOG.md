@@ -3,6 +3,7 @@
 ## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
+- Preserve experimental (`AAAS005`) original-subject context during response handler execution, including active resilient tasks. Queued non-streaming steering turns and recovered tasks do not retain attribution.
 - Either `ResilientBackground` or `SteerableConversations` now activates the Core
   durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
   deployments retain durable task bookkeeping but mark interrupted background responses

@@ -54,7 +54,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="EvaluatorCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorCategory?(string value) => value == null ? null : new EvaluatorCategory(value);
+        public static implicit operator EvaluatorCategory?(string value) => value == null ? (EvaluatorCategory?)null : new EvaluatorCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Azure.AI.AgentServer.Activity;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Agents.Builder;
 using Microsoft.Agents.Builder.App;
 using Microsoft.Agents.Builder.State;
 using Microsoft.Agents.Core.Models;
 using Microsoft.Agents.Storage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
