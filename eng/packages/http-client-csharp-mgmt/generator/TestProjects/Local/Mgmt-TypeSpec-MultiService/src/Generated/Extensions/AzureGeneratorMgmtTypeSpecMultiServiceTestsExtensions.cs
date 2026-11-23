@@ -189,7 +189,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// Tests that the generator handles operations defined directly on the namespace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsSubscriptionResource.CheckAvailabilityAsync(AzureLocation, CheckAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsSubscriptionResource.CheckAvailabilityAsync(AzureLocation, CheckAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -197,7 +197,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckAvailabilityResult>> CheckAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckAvailabilityResult>> CheckAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -209,7 +209,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// Tests that the generator handles operations defined directly on the namespace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsSubscriptionResource.CheckAvailability(AzureLocation, CheckAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsSubscriptionResource.CheckAvailability(AzureLocation, CheckAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -217,7 +217,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckAvailabilityResult> CheckAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckAvailabilityResult> CheckAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

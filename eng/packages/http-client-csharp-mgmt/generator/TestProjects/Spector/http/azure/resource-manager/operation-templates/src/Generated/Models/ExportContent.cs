@@ -11,26 +11,26 @@ using Azure.ResourceManager.OperationTemplates;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The ExportRequest. </summary>
-    public partial class ExportRequest
+    /// <summary> The ExportContent. </summary>
+    public partial class ExportContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportContent"/>. </summary>
         /// <param name="format"> Format of the exported order. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
-        public ExportRequest(string format)
+        public ExportContent(string format)
         {
             Argument.AssertNotNull(format, nameof(format));
 
             Format = format;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportContent"/>. </summary>
         /// <param name="format"> Format of the exported order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportRequest(string format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportContent(string format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

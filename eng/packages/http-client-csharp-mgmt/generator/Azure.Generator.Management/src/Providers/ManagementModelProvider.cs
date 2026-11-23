@@ -1,9 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Input;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Providers;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -18,6 +22,13 @@ namespace Azure.Generator.Management.Providers
         }
 
         internal string NormalizeRequestModelName(string name) => NormalizeTypeNameForNewContract(name);
+
+        protected override IReadOnlyList<ConstructorProvider> BuildConstructorsForBackCompatibility(IEnumerable<ConstructorProvider> originalConstructors)
+        {
+            var original = originalConstructors.ToArray();
+            return ConstructorProviderHelpers.RestoreValueTypeNullabilityOverloads(
+                this, original, base.BuildConstructorsForBackCompatibility(original));
+        }
 
         // Non-resource management-plane models are emitted under .Models. Build their
         // Type there up front so references cached before namespace visitors run do not
