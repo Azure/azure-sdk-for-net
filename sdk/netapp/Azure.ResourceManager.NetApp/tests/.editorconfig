@@ -1,0 +1,3 @@
+[Sample_NetAppSubvolumeInfo{Collection,Resource}.cs]
+# These generated samples still exercise the obsolete subvolume APIs.
+dotnet_diagnostic.CS0618.severity = none

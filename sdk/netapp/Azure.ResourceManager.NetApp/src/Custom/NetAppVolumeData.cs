@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.NetApp
 
         // The current service API omits this field; retain it for callers using older versions.
         /// <summary> Gets or sets whether subvolumes are enabled. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version.")]
         public EnableNetAppSubvolume? EnableSubvolumes
         {
             get => Properties?.EnableSubvolumes;

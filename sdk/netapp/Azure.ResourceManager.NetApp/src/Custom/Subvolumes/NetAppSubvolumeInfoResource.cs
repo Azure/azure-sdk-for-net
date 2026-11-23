@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace Azure.ResourceManager.NetApp
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppSubvolumeInfoResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppSubvolumeInfos method.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class NetAppSubvolumeInfoResource : ArmResource
     {
         private readonly ClientDiagnostics _subvolumesClientDiagnostics;

@@ -7,12 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Result of the post subvolume and action is to get metadata of the subvolume. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class NetAppSubvolumeMetadata : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

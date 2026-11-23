@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.NetApp
     {
         /// <summary> Gets the subvolumes in this volume. </summary>
         /// <returns> The subvolume collection. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public virtual NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos()
             => GetCachedClient(client => new NetAppSubvolumeInfoCollection(client, Id));
 
@@ -37,6 +39,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="subvolumeName"> The name of the subvolume. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <returns> The subvolume resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public virtual Task<Response<NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, CancellationToken cancellationToken = default)
             => GetNetAppSubvolumeInfos().GetAsync(subvolumeName, cancellationToken);
 
@@ -44,6 +48,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="subvolumeName"> The name of the subvolume. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <returns> The subvolume resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public virtual Response<NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, CancellationToken cancellationToken = default)
             => GetNetAppSubvolumeInfos().Get(subvolumeName, cancellationToken);
 

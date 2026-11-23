@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -17,6 +18,8 @@ namespace Azure.ResourceManager.NetApp
     /// Subvolume Information properties
     /// Deprecated. This resource type will be removed in a future API version.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class NetAppSubvolumeInfoData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

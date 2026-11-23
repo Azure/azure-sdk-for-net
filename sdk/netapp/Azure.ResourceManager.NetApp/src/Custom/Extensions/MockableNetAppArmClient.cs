@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -16,6 +17,8 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <summary> Gets a subvolume resource by ID without making a service request. </summary>
         /// <param name="id"> The ID of the subvolume. </param>
         /// <returns> The subvolume resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public virtual NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(ResourceIdentifier id)
         {
             NetAppSubvolumeInfoResource.ValidateResourceId(id);

@@ -7,10 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Subvolume Patch Request properties. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class NetAppSubvolumeInfoPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -10,10 +10,12 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(EntraIdConfigPatch))]
     [ModelReaderWriterBuildable(typeof(EntraIdAkvConfig))]
     [ModelReaderWriterBuildable(typeof(EntraIdAkvConfigPatch))]
+#pragma warning disable CS0618 // Keep model reader/writer support for the obsolete subvolume types.
     [ModelReaderWriterBuildable(typeof(NetAppSubvolumeInfoData))]
     [ModelReaderWriterBuildable(typeof(NetAppSubvolumeInfoPatch))]
     [ModelReaderWriterBuildable(typeof(NetAppSubvolumeInfoResource))]
     [ModelReaderWriterBuildable(typeof(NetAppSubvolumeMetadata))]
+#pragma warning restore CS0618
     [ModelReaderWriterBuildable(typeof(SubvolumeModelProperties))]
     [ModelReaderWriterBuildable(typeof(SubvolumePatchParams))]
     [ModelReaderWriterBuildable(typeof(SubvolumeProperties))]

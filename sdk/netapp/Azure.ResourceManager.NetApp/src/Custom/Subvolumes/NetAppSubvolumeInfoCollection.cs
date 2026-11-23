@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace Azure.ResourceManager.NetApp
     /// Each <see cref="NetAppSubvolumeInfoResource"/> in the collection will belong to the same instance of <see cref="NetAppVolumeResource"/>.
     /// To get a <see cref="NetAppSubvolumeInfoCollection"/> instance call the GetNetAppSubvolumeInfos method from an instance of <see cref="NetAppVolumeResource"/>.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class NetAppSubvolumeInfoCollection : ArmCollection, IEnumerable<NetAppSubvolumeInfoResource>, IAsyncEnumerable<NetAppSubvolumeInfoResource>
     {
         private readonly ClientDiagnostics _subvolumesClientDiagnostics;

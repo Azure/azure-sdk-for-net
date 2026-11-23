@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="client"> The ARM client. </param>
         /// <param name="id"> The ID of the subvolume. </param>
         /// <returns> The subvolume resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         public static NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));

@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
     /// Flag indicating whether subvolume operations are enabled on the volume
     /// Deprecated. This type will be removed in a future API version.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public readonly partial struct EnableNetAppSubvolume : IEquatable<EnableNetAppSubvolume>
     {
         private readonly string _value;

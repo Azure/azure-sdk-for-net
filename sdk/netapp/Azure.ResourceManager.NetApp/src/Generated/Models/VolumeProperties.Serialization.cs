@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(EnableSubvolumes))
             {
                 writer.WritePropertyName("enableSubvolumes"u8);
-                this.WriteEnableSubvolumes(writer, options);
+                WriteEnableSubvolumes(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
