@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resources"> The resources the operation should apply to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
         public ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
-            : this(executionParameters)
+            : this(executionParameters, resources, null)
         {
+            if (executionParameters is null)
+            {
+                throw new ArgumentNullException(nameof(executionParameters));
+            }
+
             if (resources is null)
             {
                 throw new ArgumentNullException(nameof(resources));
             }
-
-            Resources = resources;
         }
     }
 }
