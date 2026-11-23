@@ -8,11 +8,21 @@
   },
   "exclude": [
     {
-      "Pool": "env:MACPOOL",
-      "TestTargetFramework": [ "net8.0", "net9.0" ]
+      "Pool": "env:MACPOOL"
     }
   ],
   "include": [
+    {
+      "Agent": {
+        "MacOS_NET10.0": {
+          "OSVmImage": "env:MACVMIMAGE",
+          "Pool": "env:MACPOOL",
+          "TestTargetFramework": "net10.0"
+        }
+      },
+      "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true",
+      "BuildConfiguration": "Release"
+    },
     {
       "Agent": {
         "Ubuntu-24.04_NET8.0": {

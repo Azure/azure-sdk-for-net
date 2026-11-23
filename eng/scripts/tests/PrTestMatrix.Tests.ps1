@@ -82,6 +82,22 @@ Describe 'PR test platform matrix' -Tag 'UnitTest' {
     $presteps | Should -Match '(?s)Apply-WeightedBatching\.ps1\s*`.*?-Target 240\s*`\s*-GroupByMatrixConfig'
   }
 
+  It 'keeps one macOS leg when the base matrix adds another framework' {
+    . (Join-Path $repoRoot 'eng/common/scripts/job-matrix/job-matrix-functions.ps1')
+    $base = Get-Content (Join-Path $repoRoot 'eng/pipelines/templates/stages/platform-matrix.json') -Raw | ConvertFrom-Json
+    $base.matrix.Agent | Add-Member -NotePropertyName 'MacOS_SYNTHETIC' -NotePropertyValue ([pscustomobject]@{
+      OSVmImage = 'env:MACVMIMAGE'; Pool = 'env:MACPOOL'; TestTargetFramework = 'net99.0'
+    })
+    $basePath = Join-Path $TestDrive 'future-platform-matrix.json'
+    $base | ConvertTo-Json -Depth 100 | Set-Content $basePath
+    $prConfig = Get-Content (Join-Path $repoRoot $matrixPath) -Raw | ConvertFrom-Json
+    $prConfig.matrix.'$IMPORT' = $basePath
+    $config = GetMatrixConfigFromJson ($prConfig | ConvertTo-Json -Depth 100)
+    $matrix = @(GenerateMatrix -config $config -selectFromMatrixType 'sparse' -filters @('Pool=.*MacPool$'))
+    $matrix.Count | Should -Be 1
+    $matrix[0].parameters.TestTargetFramework | Should -Be 'net10.0'
+  }
+
   It 'runs one macOS job for each direct batch' {
     $matrix = Get-PRMatrix 'Mac' -directCount 2
     @($matrix.Keys).Count | Should -Be 2
@@ -90,33 +106,39 @@ Describe 'PR test platform matrix' -Tag 'UnitTest' {
   }
 
   It 'preserves an explicitly configured package matrix' {
+    $base = Get-PRMatrix 'Mac' 'eng/pipelines/templates/stages/platform-matrix.json'
     $matrix = Get-PRMatrix 'Mac' -customPath 'eng/pipelines/templates/stages/platform-matrix.json'
-    @($matrix.Keys).Count | Should -Be 3
+    @($matrix.Keys | Sort-Object) | Should -Be @($base.Keys | Sort-Object)
     @($matrix.Values | Where-Object { $_.ProjectNames -ne 'Sample.Direct' }).Count | Should -Be 0
   }
 
   It 'preserves default and custom matrices when runtime weighting batches packages' {
+    $base = Get-PRMatrix 'Mac' 'eng/pipelines/templates/stages/platform-matrix.json'
     $matrix = Get-PRMatrix 'Mac' -directCount 2 -mixedWeighted
-    @($matrix.Keys).Count | Should -Be 4
+    @($matrix.Keys).Count | Should -Be (1 + $base.Count)
     @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct' }).Count | Should -Be 1
-    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' }).Count | Should -Be 3
+    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' }).Count | Should -Be $base.Count
+    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' } | ForEach-Object { $_.TestTargetFramework } | Sort-Object) |
+      Should -Be @($base.Values.TestTargetFramework | Sort-Object)
   }
 
   It 'preserves overlapping matrix configurations through weighted batching' {
+    $base = Get-PRMatrix 'Mac' 'eng/pipelines/templates/stages/platform-matrix.json'
     $matrix = Get-PRMatrix 'Mac' -directCount 2 -customPath 'eng/pipelines/templates/stages/platform-matrix.json' -overlapWeighted
-    @($matrix.Keys).Count | Should -Be 7
-    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct' }).Count | Should -Be 3
-    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' }).Count | Should -Be 4
+    @($matrix.Keys).Count | Should -Be (2 * $base.Count + 1)
+    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct' }).Count | Should -Be $base.Count
+    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' }).Count | Should -Be ($base.Count + 1)
     @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' -and $_.TestTargetFramework -eq 'net10.0' -and $_.BuildConfiguration -eq 'Debug' }).Count | Should -Be 1
   }
 
   It 'still batches packages that share the default matrix' {
+    $base = Get-PRMatrix 'Mac' 'eng/pipelines/templates/stages/platform-matrix.json'
     $matrix = Get-PRMatrix 'Mac' -directCount 4 -mixedWeighted
-    @($matrix.Keys).Count | Should -Be 4
+    @($matrix.Keys).Count | Should -Be (1 + $base.Count)
     $defaultJob = @($matrix.Values | Where-Object { $_.ProjectNames -like '*Sample.Direct3*' })
     $defaultJob.Count | Should -Be 1
     @($defaultJob[0].ProjectNames -split ',' | Sort-Object) | Should -Be @('Sample.Direct', 'Sample.Direct3', 'Sample.Direct4')
-    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' }).Count | Should -Be 3
+    @($matrix.Values | Where-Object { $_.ProjectNames -eq 'Sample.Direct2' }).Count | Should -Be $base.Count
   }
 
   It 'keeps matrix configurations with case-sensitive paths in separate weighted buckets' {
@@ -143,7 +165,9 @@ Describe 'PR test platform matrix' -Tag 'UnitTest' {
     $matrix['Ubuntu2404_NET100_PackageRef_Debug'].ProjectNames | Should -Be 'Sample.Direct'
     $indirectJobs = @($matrix.Values | Where-Object { $_.ProjectNames -like 'Sample.Indirect*' })
     $indirectJobs.Count | Should -Be 2
-    @($indirectJobs | Where-Object { $_.TestTargetFramework -ne 'net9.0' }).Count | Should -Be 0
+    $base = Get-PRMatrix 'Linux' 'eng/pipelines/templates/stages/platform-matrix.json'
+    $baseIndirectJobs = @($base.Values | Where-Object { $_.ProjectNames -like 'Sample.Indirect*' })
+    @($indirectJobs.TestTargetFramework | Sort-Object) | Should -Be @($baseIndirectJobs.TestTargetFramework | Sort-Object)
   }
 
   It 'applies the direct-only filter to indirect packages in the PR pipeline' {
@@ -152,13 +176,15 @@ Describe 'PR test platform matrix' -Tag 'UnitTest' {
   }
 
   It 'leaves the Windows matrix intact' {
+    $base = Get-PRMatrix 'Windows' 'eng/pipelines/templates/stages/platform-matrix.json'
     $matrix = Get-PRMatrix 'Windows'
-    @($matrix.Keys).Count | Should -Be 5
+    @($matrix.Keys | Sort-Object) | Should -Be @($base.Keys | Sort-Object)
     $matrix['Windows2022_NET100_Coverage_Record_PackageRef'].CollectCoverage | Should -BeTrue
   }
 
   It 'leaves the original matrix available for scheduled jobs' {
     $matrix = Get-PRMatrix 'Mac' 'eng/pipelines/templates/stages/platform-matrix.json'
-    @($matrix.Keys).Count | Should -Be 3
+    @($matrix.Keys).Count | Should -BeGreaterThan 1
+    @($matrix.Values | Where-Object { $_.TestTargetFramework -eq 'net10.0' }).Count | Should -Be 1
   }
 }
