@@ -844,6 +844,14 @@ Describe 'Re-review prompt' {
         $step3 | Should -Match '(?i)generated files such as compiled `\*\.lock\.yml`'
     }
 
+    It 'treats a large change set as a batching problem and tracks progress' {
+        $step3 = [regex]::Match($script:PromptBody, '(?ms)^## Step 3\b.*?(?=^## |\z)').Value
+        $step3 | Should -Match '(?i)size as a batching problem, not a reason to stop'
+        $step3 | Should -Match '(?i)compact progress ledger'
+        $step3 | Should -Match '(?i)Do not load all patches at once'
+        $step3 | Should -Match '(?i)Complete every file before moving to Step 4'
+    }
+
     It 'routes <Area> to the changelog rule even when the changelog is unchanged' -ForEach @(
         @{ Area = '`api/*.cs`, new or changed `public`/`protected` API' }
         @{ Area = 'Client or model implementation under `src/**`' }
