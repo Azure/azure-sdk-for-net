@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="ifMatch"> The entity tag of the pool. Omit it or use "*" to update unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BatchAccountPoolResource>> UpdateAsync(BatchAccountPoolData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="ifMatch"> The entity tag of the pool. Omit it or use "*" to update unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BatchAccountPoolResource> Update(BatchAccountPoolData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
