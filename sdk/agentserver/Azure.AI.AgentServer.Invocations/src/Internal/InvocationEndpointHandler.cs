@@ -48,7 +48,10 @@ internal sealed class InvocationEndpointHandler
         // Extract headers and query params
         var clientHeaders = ClientHeaderForwarder.ExtractClientHeaders(request);
         var queryParams = ClientHeaderForwarder.ExtractQueryParameters(request);
-        var platformContext = PlatformContext.FromRequest(request);
+        if (!InvocationPlatformContextResolver.TryFromRequest(httpContext, out var platformContext))
+        {
+            return;
+        }
 
         // Construct context
         var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
@@ -95,7 +98,10 @@ internal sealed class InvocationEndpointHandler
     /// </summary>
     internal async Task HandleGetAsync(HttpContext httpContext, string invocationId, InvocationHandler handler)
     {
-        var context = BuildContext(httpContext, invocationId);
+        if (!TryBuildContext(httpContext, invocationId, out var context))
+        {
+            return;
+        }
         _logger.LogInformation(
             "Getting invocation {InvocationId}: HasUserId={HasUserId} HasCallId={HasCallId}",
             invocationId, context.PlatformContext.UserIdKey is not null, context.PlatformContext.CallId is not null);
@@ -111,7 +117,10 @@ internal sealed class InvocationEndpointHandler
     /// </summary>
     internal async Task HandleCancelAsync(HttpContext httpContext, string invocationId, InvocationHandler handler)
     {
-        var context = BuildContext(httpContext, invocationId);
+        if (!TryBuildContext(httpContext, invocationId, out var context))
+        {
+            return;
+        }
         _logger.LogInformation(
             "Cancelling invocation {InvocationId}: HasUserId={HasUserId} HasCallId={HasCallId}",
             invocationId, context.PlatformContext.UserIdKey is not null, context.PlatformContext.CallId is not null);
@@ -160,7 +169,7 @@ internal sealed class InvocationEndpointHandler
     /// from the environment variable only, falling back to a generated UUID.
     /// </para>
     /// </summary>
-    private static InvocationContext BuildContext(HttpContext httpContext, string invocationId)
+    private static bool TryBuildContext(HttpContext httpContext, string invocationId, out InvocationContext context)
     {
         var request = httpContext.Request;
 
@@ -172,8 +181,14 @@ internal sealed class InvocationEndpointHandler
 
         var clientHeaders = ClientHeaderForwarder.ExtractClientHeaders(request);
         var queryParams = ClientHeaderForwarder.ExtractQueryParameters(request);
-        var platformContext = PlatformContext.FromRequest(request);
-        return new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
+        if (!InvocationPlatformContextResolver.TryFromRequest(httpContext, out var platformContext))
+        {
+            context = null!;
+            return false;
+        }
+
+        context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
+        return true;
     }
 
     /// <summary>

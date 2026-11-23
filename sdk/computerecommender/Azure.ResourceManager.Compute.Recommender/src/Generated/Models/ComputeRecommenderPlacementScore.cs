@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> The spot placement score for sku/region/zone combination. </summary>
+    /// <summary> The placement score for a virtual machine SKU, region, and availability zone combination. </summary>
     public partial class ComputeRecommenderPlacementScore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -26,15 +26,17 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
         /// <param name="region"> The region. </param>
         /// <param name="availabilityZone"> The availability zone. </param>
-        /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
-        /// <param name="isQuotaAvailable"> Whether the desired quota is available. </param>
+        /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified virtual machines. </param>
+        /// <param name="placementPreference"> Placement preference from 0 to 10 (inclusive). Higher is better. </param>
+        /// <param name="isQuotaAvailable"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, bool? isQuotaAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, int? placementPreference, bool? isQuotaAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Region = region;
             AvailabilityZone = availabilityZone;
             Score = score;
+            PlacementPreference = placementPreference;
             IsQuotaAvailable = isQuotaAvailable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,10 +50,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> The availability zone. </summary>
         public string AvailabilityZone { get; }
 
-        /// <summary> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </summary>
+        /// <summary> A placement score indicating the likelihood of successfully allocating the specified virtual machines. </summary>
         public string Score { get; }
 
-        /// <summary> Whether the desired quota is available. </summary>
-        public bool? IsQuotaAvailable { get; }
+        /// <summary> Placement preference from 0 to 10 (inclusive). Higher is better. </summary>
+        public int? PlacementPreference { get; }
     }
 }

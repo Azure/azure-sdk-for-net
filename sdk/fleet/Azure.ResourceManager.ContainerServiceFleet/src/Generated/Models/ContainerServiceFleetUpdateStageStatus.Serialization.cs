@@ -84,16 +84,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailureCount))
-            {
-                writer.WritePropertyName("failureCount"u8);
-                writer.WriteNumberValue(FailureCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxAllowedFailures))
-            {
-                writer.WritePropertyName("maxAllowedFailures"u8);
-                writer.WriteNumberValue(MaxAllowedFailures.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(MaxConcurrency))
             {
                 writer.WritePropertyName("maxConcurrency"u8);
@@ -178,8 +168,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             ContainerServiceFleetUpdateStatus status = default;
             string name = default;
-            int? failureCount = default;
-            int? maxAllowedFailures = default;
             int? maxConcurrency = default;
             IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups = default;
             IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates = default;
@@ -200,24 +188,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("failureCount"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    failureCount = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("maxAllowedFailures"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxAllowedFailures = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrency"u8))
@@ -288,8 +258,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateStageStatus(
                 status,
                 name,
-                failureCount,
-                maxAllowedFailures,
                 maxConcurrency,
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>(),
                 beforeGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>(),

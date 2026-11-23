@@ -16,11 +16,11 @@ the server crashes mid-response:
 - Stream events are preserved for client reconnection.
 - Conversation state is maintained across crashes.
 
-When `ResilientBackground` is `false` and the application has not explicitly called
-`SetResilientTasksEnabled()`, stored responses still execute and persist normally, but they
-run in-process: no task store is initialized and an ungraceful crash does not recover or
-mark the in-flight response. Applications may explicitly enable Core tasks while leaving
-`ResilientBackground` false; those requests use durable tasks with mark-failed recovery
+When both Responses options are `false`, stored responses still execute and persist
+normally, but they run in-process: Responses does not activate task storage or
+recover or mark the in-flight response after an ungraceful crash. Another
+protocol's explicit Core opt-in does not change Responses behavior. Enabling
+`SteerableConversations` alone activates durable tasks with mark-failed recovery
 rather than handler re-invocation.
 
 **Opting in (`ResilientBackground = true`) gets you the framework half for
@@ -31,12 +31,13 @@ this way still produces a correct response (it just re-runs the whole turn). The
 repeat non-idempotent side effects — is optional work you take on when you want
 it; see [Choosing a resume strategy](#choosing-a-resume-strategy).
 
-> **Default**: `ResilientBackground` defaults to `false`. Without the opt-in, a
-> crash mid-handler leaves the response in the "crash-failed" state: the
-> next-lifetime recovery scanner marks it `failed` (`server_error`,
-> `shutdown_reason = crash_recovery`) instead of re-invoking the handler. Set
-> `ResilientBackground = true` on `ResponsesServerOptions` to engage the
-> re-invoke recovery path.
+> **Default**: Both Responses feature flags default to `false`; without an
+> Responses opt-in, stored work runs in-process and there is no task-based
+> crash recovery. When steering enables the Responses runtime while
+> `ResilientBackground` remains `false`, the next-lifetime recovery
+> scanner marks interrupted work `failed` (`server_error`,
+> `shutdown_reason = crash_recovery`) without re-invoking its handler. Set
+> `ResilientBackground = true` for handler re-invocation.
 
 ## What the Framework Provides (Zero Code)
 
@@ -106,7 +107,8 @@ When steering is enabled:
 | `SteerableConversations` | `false` | Enable multi-turn steering with queued follow-up turns. |
 
 `ResilientBackground` and `SteerableConversations` are **independent** options.
-Enabling steering does not require resilience and vice versa.
+Either one enables the Core task runtime; enabling steering does not enable
+handler re-invocation on recovery.
 
 ## Configuration Matrix
 
@@ -195,7 +197,7 @@ resilient task classifiers and are safe to read regardless of `IsRecovery`:
 | Member | Type | Meaning |
 |--------|------|---------|
 | `IsRecovery` | `bool` | `true` when this invocation re-enters after a crash. |
-| `PersistedResponse` | `ResponseObject?` | The last durable snapshot from the prior lifetime (only on recovery). |
+| `PersistedResponse` | `ResponseResult?` | The last durable snapshot from the prior lifetime (only on recovery). |
 | `ConversationChainId` | `string` | Stable id shared across every turn/attempt of a conversation chain. |
 | `IsSteeredTurn` | `bool` | `true` on a steering-drain re-entry. |
 | `PendingInputCount` | `int` | Steering inputs queued behind the current turn. |
@@ -258,7 +260,7 @@ question: **where does your resilient progress state live?**
 |---|---|---|
 | Nowhere (cheap to re-run) | **Naive re-run** | Do nothing recovery-specific; the whole turn re-runs. Correct, just duplicative — only unsafe if it repeats non-idempotent side effects. |
 | In the response snapshot | **Framework checkpoint** | Emit `stream.Checkpoint()` at phase boundaries. `context.PersistedResponse` is the last snapshot — seed the stream from it and resume past the items already there. |
-| In an upstream framework/store | **Upstream-owned** | Rebuild a resumption `ResponseObject` from upstream state and seed the stream from it. Use metadata watermarks to fence non-idempotent side effects. |
+| In an upstream framework/store | **Upstream-owned** | Rebuild a resumption `ResponseResult` from upstream state and seed the stream from it. Use metadata watermarks to fence non-idempotent side effects. |
 
 All three strategies still emit `response.created` unconditionally (see
 [The recovery handler pattern](#the-recovery-handler-pattern)); they differ only
@@ -361,8 +363,8 @@ The only thing that differs on recovery is **which snapshot you seed the stream
 from**:
 
 ```csharp
-public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request,
+public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request,
     ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
@@ -425,14 +427,14 @@ Three distinct facilities exist — pick by lifetime and audience:
 
 | Facility | Scope / lifetime | Visible to client? | Use for |
 |----------|------------------|--------------------|---------|
-| `ResponseObject.Metadata` | Single response; client-owned | **Yes** | Values the caller set and expects back on their response. |
+| `ResponseResult.Metadata` | Single response; client-owned | **Yes** | Values the caller set and expects back on their response. |
 | `internal_metadata` (item- and response-level) | Single turn; framework-internal | **No** — stripped on egress | Per-turn bookkeeping you want to persist for recovery but never leak (for example an upstream run id you re-read from `PersistedResponse`). |
 | `FoundryStateStore` | Application-defined scope; survives crash **and** spans turns | **No** | Cross-turn / cross-crash resume state: phase watermarks, turn counts, side-effect fences. |
 
 Rule of thumb: reach for `FoundryStateStore` for anything that must be
 read on a **later turn or a recovery**; use `internal_metadata` for **this
 turn's** private state that should ride along on the persisted response; use
-`ResponseObject.Metadata` only for values the **client** owns.
+`ResponseResult.Metadata` only for values the **client** owns.
 
 ### Internal metadata (persist-but-strip)
 

@@ -56,7 +56,7 @@ namespace Azure.AI.Discovery
 
         /// <summary> Converts a string to a <see cref="InvestigationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InvestigationStatus?(string value) => value == null ? null : new InvestigationStatus(value);
+        public static implicit operator InvestigationStatus?(string value) => value == null ? (InvestigationStatus?)null : new InvestigationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

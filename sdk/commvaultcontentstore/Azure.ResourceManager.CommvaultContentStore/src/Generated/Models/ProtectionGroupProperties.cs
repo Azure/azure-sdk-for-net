@@ -19,35 +19,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Initializes a new instance of <see cref="ProtectionGroupProperties"/>. </summary>
         /// <param name="plan"> The Commvault Plan to be associated with the Protection Group. </param>
-        /// <param name="resources"> The resources to be protected under Protection Group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="plan"/> or <paramref name="resources"/> is null. </exception>
-        public ProtectionGroupProperties(string plan, ProtectionGroupResources resources)
+        /// <param name="resourceSelection"> The resources to be protected under Protection Group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="plan"/> or <paramref name="resourceSelection"/> is null. </exception>
+        public ProtectionGroupProperties(string plan, ProtectionGroupResourceSelection resourceSelection)
         {
             Argument.AssertNotNull(plan, nameof(plan));
-            Argument.AssertNotNull(resources, nameof(resources));
+            Argument.AssertNotNull(resourceSelection, nameof(resourceSelection));
 
             Plan = plan;
-            Resources = resources;
+            ResourceSelection = resourceSelection;
         }
 
         /// <summary> Initializes a new instance of <see cref="ProtectionGroupProperties"/>. </summary>
         /// <param name="dataSourceType"> The datasource type of Commvault Protection Group. </param>
         /// <param name="plan"> The Commvault Plan to be associated with the Protection Group. </param>
-        /// <param name="resources"> The resources to be protected under Protection Group. </param>
+        /// <param name="resourceSelection"> The resources to be protected under Protection Group. </param>
         /// <param name="protectionStatus"> The protection group schedule. </param>
-        /// <param name="numberOfProtectedItems"> The number of ProtectedItems under the Protection Group. </param>
-        /// <param name="lastBackUpTime"> The Commvault Protection Group backup time. </param>
+        /// <param name="protectedItemCount"> The number of ProtectedItems under the Protection Group. </param>
+        /// <param name="lastBackupTime"> The Commvault Protection Group backup time. </param>
         /// <param name="backupActivityStatus"> The backup activity status indicating if backup is enabled or not on the protection group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionGroupProperties(string dataSourceType, string plan, ProtectionGroupResources resources, CommvaultProtectionStatus? protectionStatus, int? numberOfProtectedItems, long? lastBackUpTime, string backupActivityStatus, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectionGroupProperties(string dataSourceType, string plan, ProtectionGroupResourceSelection resourceSelection, CommvaultProtectionStatus protectionStatus, int protectedItemCount, long lastBackupTime, string backupActivityStatus, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataSourceType = dataSourceType;
             Plan = plan;
-            Resources = resources;
+            ResourceSelection = resourceSelection;
             ProtectionStatus = protectionStatus;
-            NumberOfProtectedItems = numberOfProtectedItems;
-            LastBackUpTime = lastBackUpTime;
+            ProtectedItemCount = protectedItemCount;
+            LastBackupTime = lastBackupTime;
             BackupActivityStatus = backupActivityStatus;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -60,16 +60,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string Plan { get; set; }
 
         /// <summary> The resources to be protected under Protection Group. </summary>
-        public ProtectionGroupResources Resources { get; set; }
+        public ProtectionGroupResourceSelection ResourceSelection { get; set; }
 
         /// <summary> The protection group schedule. </summary>
-        public CommvaultProtectionStatus? ProtectionStatus { get; }
+        public CommvaultProtectionStatus ProtectionStatus { get; }
 
         /// <summary> The number of ProtectedItems under the Protection Group. </summary>
-        public int? NumberOfProtectedItems { get; }
+        public int ProtectedItemCount { get; }
 
         /// <summary> The Commvault Protection Group backup time. </summary>
-        public long? LastBackUpTime { get; }
+        public long LastBackupTime { get; }
 
         /// <summary> The backup activity status indicating if backup is enabled or not on the protection group. </summary>
         public string BackupActivityStatus { get; }

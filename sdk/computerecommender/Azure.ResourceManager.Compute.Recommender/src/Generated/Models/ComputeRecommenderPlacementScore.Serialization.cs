@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> The spot placement score for sku/region/zone combination. </summary>
+    /// <summary> The placement score for a virtual machine SKU, region, and availability zone combination. </summary>
     public partial class ComputeRecommenderPlacementScore : IJsonModel<ComputeRecommenderPlacementScore>
     {
         /// <param name="data"> The data to parse. </param>
@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WritePropertyName("score"u8);
                 writer.WriteStringValue(Score);
             }
+            if (Optional.IsDefined(PlacementPreference))
+            {
+                writer.WritePropertyName("placementPreference"u8);
+                writer.WriteNumberValue(PlacementPreference.Value);
+            }
             if (Optional.IsDefined(IsQuotaAvailable))
             {
                 writer.WritePropertyName("isQuotaAvailable"u8);
@@ -146,6 +151,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             AzureLocation? region = default;
             string availabilityZone = default;
             string score = default;
+            int? placementPreference = default;
             bool? isQuotaAvailable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -174,10 +180,20 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     score = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("placementPreference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placementPreference = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("isQuotaAvailable"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        isQuotaAvailable = null;
                         continue;
                     }
                     isQuotaAvailable = prop.Value.GetBoolean();
@@ -193,6 +209,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 region,
                 availabilityZone,
                 score,
+                placementPreference,
                 isQuotaAvailable,
                 additionalBinaryDataProperties);
         }

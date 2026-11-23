@@ -27,8 +27,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private bool _maxStoragePerIndexInBytesIsDefined;
         private long? _maxCumulativeIndexerRuntimeSeconds;
         private bool _maxCumulativeIndexerRuntimeSecondsIsDefined;
-        private long? _maxVectorIndexSizePerIndexInBytes;
-        private bool _maxVectorIndexSizePerIndexInBytesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceLimits"/>. </summary>
         internal SearchServiceLimits()
@@ -42,9 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
         /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative indexer runtime in seconds allowed for the service. </param>
-        /// <param name="maxVectorIndexSizePerIndexInBytes"> The maximum vector index size (vector memory quota) allowed per index in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, long? maxVectorIndexSizePerIndexInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _maxFieldsPerIndex = maxFieldsPerIndex;
             _maxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
@@ -52,7 +49,6 @@ namespace Azure.Search.Documents.Indexes.Models
             _maxComplexObjectsInCollectionsPerDocument = maxComplexObjectsInCollectionsPerDocument;
             _maxStoragePerIndexInBytes = maxStoragePerIndexInBytes;
             _maxCumulativeIndexerRuntimeSeconds = maxCumulativeIndexerRuntimeSeconds;
-            _maxVectorIndexSizePerIndexInBytes = maxVectorIndexSizePerIndexInBytes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -107,15 +103,6 @@ namespace Azure.Search.Documents.Indexes.Models
             get
             {
                 return _maxCumulativeIndexerRuntimeSeconds;
-            }
-        }
-
-        /// <summary> The maximum vector index size (vector memory quota) allowed per index in bytes. </summary>
-        public long? MaxVectorIndexSizePerIndexInBytes
-        {
-            get
-            {
-                return _maxVectorIndexSizePerIndexInBytes;
             }
         }
     }

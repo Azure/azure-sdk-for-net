@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.6 (Unreleased)
+## 1.4.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.6 (2026-11-10)
+
+### Features Added
+
+- Added managed identity support to autoscale settings.
+- Added tenant action group management and test notification operations.
+
+### Breaking Changes
+
+- VM Insights onboarding status JSON now uses generated serialization for the required `resourceId`, `onboardingStatus`, and `dataStatus` fields instead of the legacy omission and null-tolerant customization.
+
+### Bugs Fixed
+
+- Restored generated diagnostic setting operations, model serialization, and model factory support instead of throwing compatibility stubs.
 
 ## 1.4.0-beta.5 (2026-06-13)
 

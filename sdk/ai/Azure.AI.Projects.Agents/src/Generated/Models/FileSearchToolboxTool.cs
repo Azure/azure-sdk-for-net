@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -31,23 +33,25 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
+        /// <param name="maxResultCount"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
         /// <param name="rankingOptions"> Ranking options for search. </param>
         /// <param name="filters"></param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxNumResults, object rankingOptions, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxResultCount, FileSearchToolRankingOptions rankingOptions, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
-            MaxNumResults = maxNumResults;
+            MaxResultCount = maxResultCount;
             RankingOptions = rankingOptions;
             _filters = filters;
             VectorStoreIds = vectorStoreIds;
         }
 
         /// <summary> The maximum number of results to return. This number should be between 1 and 50 inclusive. </summary>
-        public long? MaxNumResults { get; set; }
+        public long? MaxResultCount { get; set; }
 
         /// <summary> Ranking options for search. </summary>
-        public object RankingOptions { get; set; }
+        [Experimental("AAIP002")]
+        public FileSearchToolRankingOptions RankingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the Filters.

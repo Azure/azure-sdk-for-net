@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> Reference to the subnet resource. </param>
-        /// <param name="primary"> Whether the ip configuration is primary or not. </param>
+        /// <param name="isPrimary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayPrivateLinkIPConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkSubResource subnet, bool? primary, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayPrivateLinkIPConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkSubResource subnet, bool? isPrimary, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
-            Primary = primary;
+            IsPrimary = isPrimary;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether the ip configuration is primary or not. </summary>
         [WirePath("primary")]
-        public bool? Primary { get; set; }
+        public bool? IsPrimary { get; set; }
 
         /// <summary> The provisioning state of the application gateway private link IP configuration. </summary>
         [WirePath("provisioningState")]

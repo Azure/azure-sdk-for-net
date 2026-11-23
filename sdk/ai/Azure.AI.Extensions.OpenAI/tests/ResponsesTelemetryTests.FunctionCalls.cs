@@ -226,6 +226,7 @@ public partial class ResponsesTelemetryTests
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestFunctionCallStreamingWithContentRecordingEnabled()
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
@@ -244,7 +245,7 @@ public partial class ResponsesTelemetryTests
         };
 
         ResponseResult completedResponse = null;
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(options))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(options))
         {
             if (update is StreamingResponseCompletedUpdate completed)
             {
@@ -297,7 +298,7 @@ public partial class ResponsesTelemetryTests
             }
 
             completedResponse = null;
-            await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(followUpOptions))
+            await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(followUpOptions))
             {
                 if (update is StreamingResponseCompletedUpdate completed)
                 {
@@ -324,6 +325,7 @@ public partial class ResponsesTelemetryTests
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestFunctionCallStreamingWithContentRecordingDisabled()
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
@@ -342,7 +344,7 @@ public partial class ResponsesTelemetryTests
         };
 
         ResponseResult completedResponse = null;
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(options))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(options))
         {
             if (update is StreamingResponseCompletedUpdate completed)
             {
@@ -396,7 +398,7 @@ public partial class ResponsesTelemetryTests
             }
 
             completedResponse = null;
-            await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(followUpOptions))
+            await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(followUpOptions))
             {
                 if (update is StreamingResponseCompletedUpdate completed)
                 {

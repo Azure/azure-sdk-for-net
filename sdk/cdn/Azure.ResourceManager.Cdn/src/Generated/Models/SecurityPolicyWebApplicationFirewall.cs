@@ -26,10 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewall(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, additionalBinaryDataProperties)
+        /// <param name="isProfileLevel"> Indicates if this is a profile-level WAF policy. </param>
+        internal SecurityPolicyWebApplicationFirewall(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations, bool? isProfileLevel) : base(policyType, additionalBinaryDataProperties)
         {
             WafPolicy = wafPolicy;
             Associations = associations;
+            IsProfileLevel = isProfileLevel;
         }
 
         /// <summary> Resource ID. </summary>
@@ -39,6 +41,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Waf associations. </summary>
         [WirePath("associations")]
         public IList<SecurityPolicyWebApplicationFirewallAssociation> Associations { get; }
+
+        /// <summary> Indicates if this is a profile-level WAF policy. </summary>
+        [WirePath("isProfileLevel")]
+        public bool? IsProfileLevel { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("wafPolicy.id")]

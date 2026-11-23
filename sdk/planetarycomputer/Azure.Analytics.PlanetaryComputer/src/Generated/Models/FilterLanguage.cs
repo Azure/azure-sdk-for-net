@@ -63,7 +63,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="FilterLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilterLanguage?(string value) => value == null ? null : new FilterLanguage(value);
+        public static implicit operator FilterLanguage?(string value) => value == null ? (FilterLanguage?)null : new FilterLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

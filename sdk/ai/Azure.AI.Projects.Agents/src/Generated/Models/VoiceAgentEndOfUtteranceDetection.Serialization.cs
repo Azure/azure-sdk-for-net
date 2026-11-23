@@ -82,10 +82,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("threshold_level"u8);
                 writer.WriteStringValue(ThresholdLevel.Value.ToString());
             }
-            if (Optional.IsDefined(TimeoutMs))
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(TimeoutMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(Timeout.Value.TotalMilliseconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Agents
             }
             VoiceAgentEndOfUtteranceDetectionModel model = default;
             VoiceAgentEndOfUtteranceThresholdLevel? thresholdLevel = default;
-            TimeSpan? timeoutMs = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    timeoutMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    timeout = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentEndOfUtteranceDetection(model, thresholdLevel, timeoutMs, additionalBinaryDataProperties);
+            return new VoiceAgentEndOfUtteranceDetection(model, thresholdLevel, timeout, additionalBinaryDataProperties);
         }
     }
 }

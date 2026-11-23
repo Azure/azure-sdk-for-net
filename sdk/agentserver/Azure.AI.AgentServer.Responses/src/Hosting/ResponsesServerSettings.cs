@@ -53,8 +53,8 @@ public class ResponsesServerSettings : ClientSettings
 
     /// <summary>
     /// Gets or sets whether in-flight conversations accept steering (mid-turn additional input).
-    /// Mirrors <see cref="ResponsesServerOptions.SteerableConversations"/>. Steering requires
-    /// resilient tasks to be enabled explicitly or through <see cref="ResilientBackground"/>.
+    /// Mirrors <see cref="ResponsesServerOptions.SteerableConversations"/>. Either Responses
+    /// feature flag automatically enables the Core resilient-task runtime.
     /// </summary>
     public bool SteerableConversations { get; set; }
 
@@ -64,7 +64,8 @@ public class ResponsesServerSettings : ClientSettings
     /// <see cref="ResponsesServerOptions.ResponseAcceptor"/>. Not configuration-bindable; set it
     /// via the <c>configureSettings</c> callback.
     /// </summary>
-    public Func<Models.CreateResponse, ResponseContext, Models.ResponseObject>? ResponseAcceptor { get; set; }
+    [Experimental("OPENAI001")]
+    public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 
     /// <summary>
     /// Binds the configuration values above from the given section. The inherited credential

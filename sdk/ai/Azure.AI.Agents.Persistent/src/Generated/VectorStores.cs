@@ -119,7 +119,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PersistentAgentsVectorStore> CreateVectorStore(IEnumerable<string> fileIds = default, string name = default, VectorStoreConfiguration storeConfiguration = default, VectorStoreExpirationPolicy expiresAfter = default, VectorStoreChunkingStrategy chunkingStrategy = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreRequest spreadModel = new CreateVectorStoreRequest(
+            CreateVectorStoreContent spreadModel = new CreateVectorStoreContent(
                 fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 name,
                 storeConfiguration,
@@ -142,7 +142,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PersistentAgentsVectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = default, string name = default, VectorStoreConfiguration storeConfiguration = default, VectorStoreExpirationPolicy expiresAfter = default, VectorStoreChunkingStrategy chunkingStrategy = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreRequest spreadModel = new CreateVectorStoreRequest(
+            CreateVectorStoreContent spreadModel = new CreateVectorStoreContent(
                 fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 name,
                 storeConfiguration,
@@ -327,7 +327,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            ModifyVectorStoreRequest spreadModel = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            ModifyVectorStoreContent spreadModel = new ModifyVectorStoreContent(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = ModifyVectorStore(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((PersistentAgentsVectorStore)result, result);
         }
@@ -345,7 +345,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            ModifyVectorStoreRequest spreadModel = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+            ModifyVectorStoreContent spreadModel = new ModifyVectorStoreContent(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             Response result = await ModifyVectorStoreAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PersistentAgentsVectorStore)result, result);
         }

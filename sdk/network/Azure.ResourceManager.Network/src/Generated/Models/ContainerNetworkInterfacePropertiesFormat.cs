@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfacePropertiesFormat"/>. </summary>
-        internal ContainerNetworkInterfacePropertiesFormat()
+        public ContainerNetworkInterfacePropertiesFormat()
         {
             IPConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to the container to which this container network interface is attached. </summary>
         [WirePath("container")]
-        internal Container Container { get; }
+        internal Container Container { get; set; }
 
         /// <summary> Reference to the ip configuration on this container nic. </summary>
         [WirePath("ipConfigurations")]
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Container is null ? default : Container.Id;
+            }
+            set
+            {
+                if (Container is null)
+                {
+                    Container = new Container();
+                }
+                Container.Id = value;
             }
         }
     }

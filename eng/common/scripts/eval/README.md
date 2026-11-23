@@ -67,11 +67,17 @@ publishing to another account does not redirect the reader. Service-connection
 authorization, approved branch checks and existing RBAC remain required.
 
 Publishing policy stays in YAML: organization `https://dev.azure.com/azure-sdk/`,
-project `internal`, repository `Azure/azure-sdk-tools`, exact `refs/heads/main`, and
-a CI, scheduled or manual reason. There is no hardcoded definition-ID allowlist or
-variable template in shared code. Feature branches, other repositories, PRs, pull
-refs and public-project runs do not get the credential-bearing task. At runtime it
-also requires a complete summary and a configured storage account.
+project `internal`, an Azure-owned repository whose name does not end in `-pr`,
+exact `refs/heads/main`, and a CI, scheduled or manual reason. There is no per-repo
+or definition-ID allowlist in shared code. New Azure SDK repos do not need another
+shared-template edit. Personal forks, private `-pr` repos, feature branches, PRs,
+pull refs and public-project runs do not get the credential-bearing task. At runtime
+it also requires a complete summary and a configured storage account.
+
+Each consuming pipeline must opt in through its repo-local entrypoint. A repo-local
+1ES redirect must expose the existing `AllowAzureStorage` hook. The pipeline owner
+must authorize the publisher service connection and configure storage before uploads
+can run. This support does not enable the separate TypeSpec authoring benchmarks.
 
 There is no separate automatic-publication, feature-branch override or network-access
 flag. Publication requests the documented
@@ -185,10 +191,9 @@ relax TLS or broaden permissions to hide a failed request.
 ## TypeScript (no build step)
 
 The `*.ts` sources run directly through Node's native type stripping (erasable syntax only —
-no `enum`/`namespace`/parameter properties, no emit). Shard/Summary jobs and publisher
-CI use Node `24.x`; the publisher requires `>=24.14.1`. The older dependency-free
-glue still supports its declared Node 22 minimum, but that is not the publisher's
-runtime requirement. Relative imports use explicit `.ts` specifiers, as Node requires.
+no `enum`/`namespace`/parameter properties, no emit). Matrix/Shard/Summary jobs and publisher
+CI use Node `24.x`; both evaluator projects and the publisher require `>=24.14.1`,
+matching azure-rest-api-specs. Relative imports use explicit `.ts` specifiers, as Node requires.
 The standalone Blob publisher uses the same execution model; it adds no compiler or TypeScript runtime dependency.
 
 ## Vendored files

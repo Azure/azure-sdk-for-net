@@ -19,6 +19,15 @@ namespace Azure.Generator.Tests.Providers.Abstractions
     internal class AzureClientResponseProviderTests
     {
         [Test]
+        public void SupportsPageResumptionIsEnabled()
+        {
+            MockHelpers.LoadMockGenerator();
+
+            Assert.IsTrue(AzureClientResponseProvider.Instance.SupportsPageResumption);
+            Assert.IsTrue(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.SupportsPageResumption);
+        }
+
+        [Test]
         public void ValidateReturnTypeIsOverridden()
         {
             ClientProvider clientProvider = CreateMockClientProvider();

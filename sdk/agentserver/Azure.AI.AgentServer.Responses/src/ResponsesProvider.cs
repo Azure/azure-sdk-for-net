@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -36,8 +38,9 @@ public abstract class ResponsesProvider
     /// <param name="request">The create-response request containing the response snapshot, input items, and history item IDs.</param>
     /// <param name="context">The platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
+    [Experimental("OPENAI001")]
     public abstract Task CreateResponseAsync(
-        CreateResponseRequest request,
+        CreateResponsePersistRequest request,
         PlatformContext context,
         CancellationToken cancellationToken = default);
 
@@ -49,7 +52,8 @@ public abstract class ResponsesProvider
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The response.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response does not exist.</exception>
-    public abstract Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default);
+    [Experimental("OPENAI001")]
+    public abstract Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Persists an updated response snapshot. Handles all state transitions
@@ -58,7 +62,8 @@ public abstract class ResponsesProvider
     /// <param name="response">The updated response snapshot.</param>
     /// <param name="context">The platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    public abstract Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default);
+    [Experimental("OPENAI001")]
+    public abstract Task UpdateResponseAsync(ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a response envelope by its identifier.
@@ -81,10 +86,11 @@ public abstract class ResponsesProvider
     /// <param name="after">Cursor: return items after this item ID.</param>
     /// <param name="before">Cursor: return items before this item ID.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    /// <returns>A paged result of output items.</returns>
+    /// <returns>A page of input items, serialized as an OpenAI <c>list</c> envelope.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response was never created.</exception>
     /// <exception cref="BadRequestException">Thrown when the response has been deleted.</exception>
-    public abstract Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    [Experimental("OPENAI001")]
+    public abstract Task<ResponseItemCollectionPage> GetInputItemsAsync(
         string responseId,
         PlatformContext context,
         int limit = 20,
@@ -101,6 +107,7 @@ public abstract class ResponsesProvider
     /// <param name="context">The platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>Output items matching the requested IDs (null for missing).</returns>
+    [Experimental("OPENAI001")]
     public abstract Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
         PlatformContext context,

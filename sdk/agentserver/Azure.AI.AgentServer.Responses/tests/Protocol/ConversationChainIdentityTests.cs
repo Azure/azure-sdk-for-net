@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
+using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -215,5 +218,38 @@ public class ConversationChainIdentityTests
             steerable: false);
 
         Assert.That(taskId, Is.EqualTo("caresp_one_shot"));
+    }
+
+    [Test]
+    public async Task DeprecatedAgentProperty_IsUsedWhenAgentReferenceIsAbsent()
+    {
+        var handler = new TestHandler();
+        using var factory = new TestWebApplicationFactory(handler);
+        using var client = factory.CreateClient();
+
+        async Task<string> PostAsync(object payload)
+        {
+            using var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("/responses", content);
+            Assert.That(response.IsSuccessStatusCode, Is.True, await response.Content.ReadAsStringAsync());
+            return handler.LastContext!.ConversationChainId;
+        }
+
+        string viaAgent = await PostAsync(new
+        {
+            model = "test",
+            conversation = "conv_abc",
+            agent = new { type = "agent_reference", name = "alice" },
+        });
+        string otherAgent = await PostAsync(new
+        {
+            model = "test",
+            conversation = "conv_abc",
+            agent = new { type = "agent_reference", name = "bob" },
+        });
+
+        // The deprecated "agent" name scopes the chain, so different agents in the same
+        // conversation must not share one.
+        Assert.That(otherAgent, Is.Not.EqualTo(viaAgent));
     }
 }

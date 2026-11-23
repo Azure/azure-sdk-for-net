@@ -45,11 +45,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="ingestionPermissionOptions"> Optional list of permission types to ingest together with document content. If specified, it will set the indexer permission options for the data source. </param>
         /// <param name="contentExtractionMode"> Optional content extraction mode. Default is 'minimal'. </param>
         /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
-        /// <param name="assetStore"> Optional asset store configuration for storing extracted assets such as images. </param>
-        /// <param name="freshnessPolicy"> Optional freshness policy for biasing retrieval toward newer documents. </param>
         /// <param name="networkAccessMode"> Optional network access mode for ingestion. Set to 'private' to run ingestion in a private execution environment that can reach data sources and dependencies over a private network. Default is 'public'. This is a create-time setting and cannot be changed after the knowledge source is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, AssetStore assetStore, FreshnessPolicy freshnessPolicy, KnowledgeSourceNetworkAccessMode? networkAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, KnowledgeSourceNetworkAccessMode? networkAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _identity = identity;
             _embeddingModel = embeddingModel;
@@ -59,8 +57,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IngestionPermissionOptions = ingestionPermissionOptions;
             _contentExtractionMode = contentExtractionMode;
             _aiServices = aiServices;
-            AssetStore = assetStore;
-            FreshnessPolicy = freshnessPolicy;
             NetworkAccessMode = networkAccessMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -154,12 +150,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 _aiServicesIsDefined = true;
             }
         }
-
-        /// <summary> Optional asset store configuration for storing extracted assets such as images. </summary>
-        public AssetStore AssetStore { get; set; }
-
-        /// <summary> Optional freshness policy for biasing retrieval toward newer documents. </summary>
-        public FreshnessPolicy FreshnessPolicy { get; set; }
 
         /// <summary> Optional network access mode for ingestion. Set to 'private' to run ingestion in a private execution environment that can reach data sources and dependencies over a private network. Default is 'public'. This is a create-time setting and cannot be changed after the knowledge source is created. </summary>
         public KnowledgeSourceNetworkAccessMode? NetworkAccessMode { get; set; }

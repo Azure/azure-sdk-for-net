@@ -5,4 +5,6 @@ overrides:
     words:
       - DHERSAAES
       - ECDHERSAAES
+      - MLKEM
+      - Secp
       - TLSAES

@@ -181,7 +181,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Converts a string to a <see cref="AttackStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttackStrategy?(string value) => value == null ? null : new AttackStrategy(value);
+        public static implicit operator AttackStrategy?(string value) => value == null ? (AttackStrategy?)null : new AttackStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

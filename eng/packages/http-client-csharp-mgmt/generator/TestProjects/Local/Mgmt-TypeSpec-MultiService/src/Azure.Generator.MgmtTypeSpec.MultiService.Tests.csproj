@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.Generator.MgmtTypeSpec.MultiService.Tests client library for developing .NET applications with rich experience.</Description>
+    <Description>The Azure.Generator.MgmtTypeSpec.MultiService.Tests client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Azure.Generator.MgmtTypeSpec.MultiService.Tests</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.Generator.MgmtTypeSpec.MultiService.Tests</PackageTags>

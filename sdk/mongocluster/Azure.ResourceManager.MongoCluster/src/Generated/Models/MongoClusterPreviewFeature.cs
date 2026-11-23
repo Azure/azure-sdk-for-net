@@ -11,7 +11,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Preview features that can be enabled on a mongo cluster. </summary>
+    /// <summary> Preview features that can be enabled on a DocumentDB cluster. </summary>
     public readonly partial struct MongoClusterPreviewFeature : IEquatable<MongoClusterPreviewFeature>
     {
         private readonly string _value;

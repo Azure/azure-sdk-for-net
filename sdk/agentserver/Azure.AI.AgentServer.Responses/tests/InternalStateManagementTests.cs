@@ -10,11 +10,11 @@ namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
 /// Verifies SDK internal state management after ResponseState removal.
-/// Models.ResponseObject now has public setters via @@usage, so ResponseState is no longer needed.
+/// ResponseObject now has public setters via @@usage, so ResponseState is no longer needed.
 /// </summary>
 public class InternalStateManagementTests
 {
-    private static readonly Assembly ContractsAssembly = typeof(Models.ResponseObject).Assembly;
+    private static readonly Assembly ContractsAssembly = typeof(ResponseObject).Assembly;
     private static readonly Assembly SdkAssembly = typeof(ResponseHandler).Assembly;
 
     [Test]
@@ -29,10 +29,7 @@ public class InternalStateManagementTests
     [Test]
     public void Response_CanBeConstructedAndMutatedDirectly()
     {
-        var response = new Models.ResponseObject("resp_test", "gpt-4o")
-        {
-            Status = ResponseStatus.InProgress,
-        };
+        var response = new ResponseObject { Id = "resp_test", Model = "gpt-4o", Status = ResponseStatus.InProgress };
 
         Assert.That(response.Id, Is.EqualTo("resp_test"));
         Assert.That(response.Model, Is.EqualTo("gpt-4o"));
@@ -58,11 +55,11 @@ public class InternalStateManagementTests
     {
         // R2 confirmed: @@usage generates { get; set; } on all properties.
         // This is accepted as beneficial for consumer construction.
-        var statusProp = typeof(Models.ResponseObject).GetProperty("Status");
+        var statusProp = typeof(ResponseObject).GetProperty("Status");
         Assert.That(statusProp, Is.Not.Null);
         Assert.That(statusProp!.GetSetMethod(), Is.Not.Null);
 
-        var errorProp = typeof(Models.ResponseObject).GetProperty("Error");
+        var errorProp = typeof(ResponseObject).GetProperty("Error");
         Assert.That(errorProp, Is.Not.Null);
         Assert.That(errorProp!.GetSetMethod(), Is.Not.Null);
     }

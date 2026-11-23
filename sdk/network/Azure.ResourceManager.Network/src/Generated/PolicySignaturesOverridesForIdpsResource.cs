@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string policySignaturesOverridesForIdpsApiVersion);
             _firewallPolicyIdpsSignaturesOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policySignaturesOverridesForIdpsApiVersion ?? "2026-01-01");
+            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policySignaturesOverridesForIdpsApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Will contain all properties of the object to put. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<PolicySignaturesOverridesForIdpsResource>> PatchAsync(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicySignaturesOverridesForIdpsResource>> UpdateAsync(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Patch");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Update");
             scope.Start();
             try
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,11 +374,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Will contain all properties of the object to put. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<PolicySignaturesOverridesForIdpsResource> Patch(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
+        public virtual Response<PolicySignaturesOverridesForIdpsResource> Update(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Patch");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Update");
             scope.Start();
             try
             {
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 if (response.Value == null)

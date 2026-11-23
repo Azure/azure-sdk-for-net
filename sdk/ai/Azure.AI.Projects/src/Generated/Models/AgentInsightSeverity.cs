@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="AgentInsightSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentInsightSeverity?(string value) => value == null ? null : new AgentInsightSeverity(value);
+        public static implicit operator AgentInsightSeverity?(string value) => value == null ? (AgentInsightSeverity?)null : new AgentInsightSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

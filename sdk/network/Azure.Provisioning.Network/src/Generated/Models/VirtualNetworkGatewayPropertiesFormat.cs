@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _enableBgp;
         private BicepValue<bool> _enablePrivateIPAddress;
         private VirtualNetworkGatewayMigrationStatus _virtualNetworkGatewayMigrationStatus;
-        private BicepValue<bool> _activeActive;
+        private BicepValue<bool> _isActive;
         private BicepValue<bool> _enableHighBandwidthVpnGateway;
         private BicepValue<bool> _disableIPSecReplayProtection;
         private NetworkSubResource _gatewayDefaultSite;
@@ -169,18 +169,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ActiveActive. </summary>
-        public BicepValue<bool> ActiveActive
+        /// <summary> Gets or sets the IsActive. </summary>
+        public BicepValue<bool> IsActive
         {
             get
             {
                 Initialize();
-                return _activeActive;
+                return _isActive;
             }
             set
             {
                 Initialize();
-                _activeActive.Assign(value);
+                _isActive.Assign(value);
             }
         }
 
@@ -500,7 +500,7 @@ namespace Azure.Provisioning.Network
             _enableBgp = DefineProperty<bool>(nameof(EnableBgp), new string[] { "enableBgp" });
             _enablePrivateIPAddress = DefineProperty<bool>(nameof(EnablePrivateIPAddress), new string[] { "enablePrivateIpAddress" });
             _virtualNetworkGatewayMigrationStatus = DefineModelProperty<VirtualNetworkGatewayMigrationStatus>(nameof(VirtualNetworkGatewayMigrationStatus), new string[] { "virtualNetworkGatewayMigrationStatus" });
-            _activeActive = DefineProperty<bool>(nameof(ActiveActive), new string[] { "activeActive" });
+            _isActive = DefineProperty<bool>(nameof(IsActive), new string[] { "activeActive" });
             _enableHighBandwidthVpnGateway = DefineProperty<bool>(nameof(EnableHighBandwidthVpnGateway), new string[] { "enableHighBandwidthVpnGateway" });
             _disableIPSecReplayProtection = DefineProperty<bool>(nameof(DisableIPSecReplayProtection), new string[] { "disableIPSecReplayProtection" });
             _gatewayDefaultSite = DefineModelProperty<NetworkSubResource>(nameof(GatewayDefaultSite), new string[] { "gatewayDefaultSite" });

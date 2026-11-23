@@ -8,6 +8,7 @@ trigger:
     - release/*
   paths:
     include:
+    - sdk/serialconsole/Azure.Provisioning.SerialConsole
     - sdk/serialconsole/Azure.ResourceManager.SerialConsole
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -15,5 +16,7 @@ extends:
     ServiceDirectory: serialconsole
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.Provisioning.SerialConsole
+      safeName: AzureProvisioningSerialConsole
     - name: Azure.ResourceManager.SerialConsole
       safeName: AzureManagementSerialConsole

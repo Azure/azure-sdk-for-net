@@ -15,11 +15,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of an EventRate metric definition. Calculates the percentage of events satisfying a specified condition. </summary>
     public partial class EventRateMetricDefinition : ExperimentMetricDefinition, IJsonModel<EventRateMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="EventRateMetricDefinition"/> for deserialization. </summary>
-        internal EventRateMetricDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -57,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="ForwardingRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ForwardingRequired?(string value) => value == null ? null : new ForwardingRequired(value);
+        public static implicit operator ForwardingRequired?(string value) => value == null ? (ForwardingRequired?)null : new ForwardingRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

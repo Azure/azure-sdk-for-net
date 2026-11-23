@@ -61,7 +61,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="ImageCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageCategory?(string value) => value == null ? null : new ImageCategory(value);
+        public static implicit operator ImageCategory?(string value) => value == null ? (ImageCategory?)null : new ImageCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

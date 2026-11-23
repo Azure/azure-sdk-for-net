@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Converts a string to a <see cref="FilePropertySemantics"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilePropertySemantics?(string value) => value == null ? null : new FilePropertySemantics(value);
+        public static implicit operator FilePropertySemantics?(string value) => value == null ? (FilePropertySemantics?)null : new FilePropertySemantics(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

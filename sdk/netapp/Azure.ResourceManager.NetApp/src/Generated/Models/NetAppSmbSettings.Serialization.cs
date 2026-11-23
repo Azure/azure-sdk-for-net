@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbNonBrowsable"u8);
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
             }
+            if (Optional.IsDefined(SmbOplocks))
+            {
+                writer.WritePropertyName("smbOplocks"u8);
+                writer.WriteStringValue(SmbOplocks.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppSmbEncryptionState? smbEncryption = default;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
+            SmbOplocks? smbOplocks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +170,21 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbNonBrowsable = new SmbNonBrowsable(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("smbOplocks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smbOplocks = new SmbOplocks(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetAppSmbSettings(smbEncryption, smbAccessBasedEnumeration, smbNonBrowsable, additionalBinaryDataProperties);
+            return new NetAppSmbSettings(smbEncryption, smbAccessBasedEnumeration, smbNonBrowsable, smbOplocks, additionalBinaryDataProperties);
         }
     }
 }

@@ -20,11 +20,9 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IngestionSource"/>. </summary>
-        /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
-        private protected IngestionSource(Guid id, IngestionSourceKind kind)
+        private protected IngestionSource(IngestionSourceKind kind)
         {
-            Id = id;
             Kind = kind;
         }
 

@@ -40,7 +40,14 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the URI used to communicate with the service.
         /// </summary>
-        public Uri Endpoint { get; }
+        public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets whether this client can call <see cref="GetTcbBaselines(AttestationType, CancellationToken)"/> and
+        /// <see cref="GetTcbBaselinesAsync(AttestationType, CancellationToken)"/>: <c>true</c> when it targets
+        /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later. When <c>false</c>, those methods throw <see cref="NotSupportedException"/>.
+        /// </summary>
+        public virtual bool CanGetTcbBaselines { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
@@ -76,13 +83,14 @@ namespace Azure.Security.Attestation
             _clientDiagnostics = new ClientDiagnostics(options);
 
             Endpoint = endpoint;
+            CanGetTcbBaselines = AttestationClient.IsVersion2025_06_01OrLater(options.Version);
 
-            // Initialize the Policy Rest Client.
-            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            // Initialize the Policy Rest Client. The constructor uses the endpoint parameter rather than the virtual Endpoint property.
+            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
 
             // Initialize the Certificates Rest Client.
-            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
-            _tcbBaselinesClient = new TcbBaselinesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tcbBaselinesClient = new TcbBaselinesRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
 
             // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
@@ -713,7 +721,7 @@ namespace Azure.Security.Attestation
         /// A policy selects a baseline by setting the <c>x-ms-sgx-tcbidentifier</c> claim to its <see cref="TcbBaseline.TcbIdentifier"/>.
         /// Requires <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later.
         /// </remarks>
-        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines.</exception>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines; see <see cref="CanGetTcbBaselines"/>.</exception>
         public virtual Response<TcbBaselineResult> GetTcbBaselines(AttestationType attestationType, CancellationToken cancellationToken = default)
             => GetTcbBaselinesInternalAsync(attestationType, false, cancellationToken).EnsureCompleted();
 
@@ -728,13 +736,13 @@ namespace Azure.Security.Attestation
         /// A policy selects a baseline by setting the <c>x-ms-sgx-tcbidentifier</c> claim to its <see cref="TcbBaseline.TcbIdentifier"/>.
         /// Requires <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later.
         /// </remarks>
-        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines.</exception>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines; see <see cref="CanGetTcbBaselines"/>.</exception>
         public virtual async Task<Response<TcbBaselineResult>> GetTcbBaselinesAsync(AttestationType attestationType, CancellationToken cancellationToken = default)
             => await GetTcbBaselinesInternalAsync(attestationType, true, cancellationToken).ConfigureAwait(false);
 
         private async Task<Response<TcbBaselineResult>> GetTcbBaselinesInternalAsync(AttestationType attestationType, bool async, CancellationToken cancellationToken)
         {
-            if (string.CompareOrdinal(_options.Version, "2025-06-01") < 0)
+            if (!AttestationClient.IsVersion2025_06_01OrLater(_options.Version))
             {
                 throw new NotSupportedException($"TCB baselines require service version {AttestationClientOptions.ServiceVersion.V2025_06_01} or later.");
             }

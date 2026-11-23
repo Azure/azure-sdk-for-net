@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineProperties"/>. </summary>
         /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="flexProfile"> [Preview Feature] Specifies a FlexProfile for VM size. Azure may deploy a compatible alternative VM size based on capacity and placement considerations, and returns the deployed size in hardwareProfile.vmSize. A request that adds flexProfile must omit hardwareProfile.vmSize. For a virtual machine that uses FlexProfile, a hardwareProfile.vmSize equal to the deployed size is ignored, so a GET response can be sent back unchanged. A PATCH request that omits flexProfile keeps it. A PUT request that omits flexProfile and sets hardwareProfile.vmSize clears it. This property cannot exist along with a non-null properties.availabilitySet, properties.capacityReservation, properties.host, properties.hostGroup, properties.proximityPlacementGroup or properties.virtualMachineScaleSet. </param>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
@@ -53,9 +54,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="resiliencyProfile"> Resiliency profile for the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, ComputeWriteableSubResourceData virtualMachineScaleSet, ComputeWriteableSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeWriteableSubResourceData host, ComputeWriteableSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, InterconnectBlockProfile interconnectBlockProfile, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, ResiliencyProfile resiliencyProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, FlexProfile flexProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, ComputeWriteableSubResourceData virtualMachineScaleSet, ComputeWriteableSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeWriteableSubResourceData host, ComputeWriteableSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, InterconnectBlockProfile interconnectBlockProfile, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, ResiliencyProfile resiliencyProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
+            FlexProfile = flexProfile;
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
@@ -89,6 +91,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
         public VirtualMachineHardwareProfile HardwareProfile { get; set; }
+
+        /// <summary> [Preview Feature] Specifies a FlexProfile for VM size. Azure may deploy a compatible alternative VM size based on capacity and placement considerations, and returns the deployed size in hardwareProfile.vmSize. A request that adds flexProfile must omit hardwareProfile.vmSize. For a virtual machine that uses FlexProfile, a hardwareProfile.vmSize equal to the deployed size is ignored, so a GET response can be sent back unchanged. A PATCH request that omits flexProfile keeps it. A PUT request that omits flexProfile and sets hardwareProfile.vmSize clears it. This property cannot exist along with a non-null properties.availabilitySet, properties.capacityReservation, properties.host, properties.hostGroup, properties.proximityPlacementGroup or properties.virtualMachineScaleSet. </summary>
+        internal FlexProfile FlexProfile { get; set; }
 
         /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </summary>
         public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
@@ -173,6 +178,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Resiliency profile for the virtual machine. </summary>
         internal ResiliencyProfile ResiliencyProfile { get; set; }
+
+        /// <summary> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </summary>
+        public string FlexPreferredVmSize
+        {
+            get
+            {
+                return FlexProfile is null ? default : FlexProfile.PreferredVmSize;
+            }
+            set
+            {
+                FlexProfile = new FlexProfile(value);
+            }
+        }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics

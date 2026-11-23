@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
-            if (Optional.IsDefined(EnableProbeProxyProtocolHeader))
+            if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
             {
                 writer.WritePropertyName("enableProbeProxyProtocolHeader"u8);
-                writer.WriteBooleanValue(EnableProbeProxyProtocolHeader.Value);
+                writer.WriteBooleanValue(IsProbeProxyProtocolHeaderEnabled.Value);
             }
             if (Optional.IsDefined(Match))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
             string path = default;
             int? timeout = default;
             bool? pickHostNameFromBackendHttpSettings = default;
-            bool? enableProbeProxyProtocolHeader = default;
+            bool? isProbeProxyProtocolHeaderEnabled = default;
             ApplicationGatewayProbeHealthResponseMatch match = default;
             NetworkSubResource backendAddressPool = default;
             NetworkSubResource backendHttpSettings = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    enableProbeProxyProtocolHeader = prop.Value.GetBoolean();
+                    isProbeProxyProtocolHeaderEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("match"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network.Models
                 path,
                 timeout,
                 pickHostNameFromBackendHttpSettings,
-                enableProbeProxyProtocolHeader,
+                isProbeProxyProtocolHeaderEnabled,
                 match,
                 backendAddressPool,
                 backendHttpSettings,

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Tests
                 "vaultStorageMappings" => vaultPath + "/replicationFabrics/fabric/replicationStorageClassifications/classification" + suffix,
                 _ => path
             };
-            string nextLink = $"https://management.azure.com{path}?api-version=2026-02-01&$skiptoken=next";
+            string nextLink = $"https://management.azure.com{path}?api-version=2026-11-01&$skiptoken=next";
             var transport = new MockTransport(
                 new MockResponse(200).SetContent($"{{\"value\":[{{\"id\":\"{itemPath}/first\",\"name\":\"first\"}}],\"nextLink\":\"{nextLink}\"}}"),
                 new MockResponse(200).SetContent($"{{\"value\":[{{\"id\":\"{itemPath}/second\",\"name\":\"second\"}}]}}"));

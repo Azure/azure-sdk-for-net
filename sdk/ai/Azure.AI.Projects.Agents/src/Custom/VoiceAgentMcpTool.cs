@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
@@ -16,4 +17,7 @@ public partial class VoiceAgentMcpTool
     /// The approval policy used by the tool.
     /// </summary>
     public McpToolCallApprovalPolicy ToolCallApprovalPolicy { get => ModelReaderWriter.Read<McpToolCallApprovalPolicy>(RequireApprovalInternal, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); set => RequireApprovalInternal = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); }
+
+    /// <summary> Gets the AllowedCallers. </summary>
+    public IList<CallableToolAllowedCaller> AllowedCallers { get; }
 }

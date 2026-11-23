@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
 
         private ClientDiagnostics CloudAccountsClientDiagnostics => _cloudAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Commvault.ContentStore/cloudAccounts", out string apiVersion) ? apiVersion : "2026-07-03-preview");
+        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Commvault.ContentStore/cloudAccounts", out string apiVersion) ? apiVersion : "2026-11-03");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-03");
 
         /// <summary>
         /// List CloudAccount resources by subscription ID
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaaSResourceDetailsData>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaasResourceDetailsData>> ActivateSaasResourceAsync(WaitUntil waitUntil, CommvaultSaasActivationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateResource");
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateSaasResource");
             scope.Start();
             try
             {
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateSaasResourceRequest(Guid.Parse(Id.SubscriptionId), CommvaultSaasActivationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CommvaultContentStoreArmOperation<SaaSResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaaSResourceDetailsData>(
-                    new SaaSResourceDetailsDataOperationSource(),
+                CommvaultContentStoreArmOperation<SaasResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaasResourceDetailsData>(
+                    new SaasResourceDetailsDataOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SaaSResourceDetailsData> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaasResourceDetailsData> ActivateSaasResource(WaitUntil waitUntil, CommvaultSaasActivationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateResource");
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreSubscriptionResource.ActivateSaasResource");
             scope.Start();
             try
             {
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateSaasResourceRequest(Guid.Parse(Id.SubscriptionId), CommvaultSaasActivationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CommvaultContentStoreArmOperation<SaaSResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaaSResourceDetailsData>(
-                    new SaaSResourceDetailsDataOperationSource(),
+                CommvaultContentStoreArmOperation<SaasResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaasResourceDetailsData>(
+                    new SaasResourceDetailsDataOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,

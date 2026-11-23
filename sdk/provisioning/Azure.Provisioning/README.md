@@ -140,6 +140,14 @@ ProvisioningParameter parameter = new(nameof(parameter), typeof(object));
 BicepDictionary<string> dynamicTags = parameter;
 ```
 
+#### Free-form JSON and Bicep values
+
+Properties typed as `BicepValue<BinaryData>` accept free-form JSON or an
+explicitly tagged raw Bicep expression. See
+[BinaryData provisioning values](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/provisioning/Azure.Provisioning/docs/BinaryDataValues.md)
+for supported media types, executable examples, parsing behavior, and security
+guidance.
+
 #### Working with Azure Resources
 
 **`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualNetwork`, `WebSite`, etc. An instance of type `ProvisionableResource` corresponds to a resource statement in `bicep` language.
@@ -445,6 +453,37 @@ ResourceGroup rg = new("rg_test", "2024-03-01");
 infra.Add(rg);
 ```
 
+### Lock A Single Resource
+
+This example demonstrates how to protect a single storage account from deletion with a management lock, instead of locking the whole deployment scope.
+
+```C# Snippet:ProvisioningManagementLock
+Infrastructure infra = new();
+StorageAccount storage = new("storage", "2023-05-01")
+{
+    Name = "lockedstorage",
+    Location = AzureLocation.EastUS,
+    Kind = StorageKind.StorageV2,
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+infra.Add(storage);
+
+ManagementLock storageLock = new("storageLock")
+{
+    Name = "protect-storage",
+    Scope = storage,
+    Level = ManagementLockLevel.CanNotDelete,
+    Notes = "Protect the storage account from accidental deletion."
+};
+infra.Add(storageLock);
+```
+
+Setting `Scope` emits `scope: storage` on the lock. Because the storage account is deployed by the same infrastructure, the reference also establishes an implicit deployment dependency, so `DependsOn` is not needed. To lock a resource that already exists, declare it with `FromExisting` (for example, `StorageAccount.FromExisting`) and add it to the same infrastructure.
+
+Leaving `Scope` unset, or assigning `null` to clear it, applies the lock to the deployment scope; in a resource group deployment, that is the whole resource group. Assigning `null` removes the reference instead of emitting `scope: null`. Adding a resource to `DependsOn` alone does not scope the lock to that resource.
+
+`Scope` cannot change the deployment scope. With `TargetScope = DeploymentScope.Subscription`, assigning a `ResourceGroup` produces Bicep that fails to compile (BCP139). To lock a resource group, deploy the lock at resource group scope and leave `Scope` unset.
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
@@ -476,4 +515,3 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-

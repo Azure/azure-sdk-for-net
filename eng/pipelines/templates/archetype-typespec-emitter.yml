@@ -42,6 +42,11 @@ parameters:
   type: boolean
   default: false
 
+# Publish a standalone browser bundle to the TypeSpec playground package storage.
+- name: UploadPlaygroundBundle
+  type: boolean
+  default: false
+
 # Indicates if the Publish stage should depend on the Test stage
 - name: PublishDependsOnTest
   type: boolean
@@ -51,6 +56,11 @@ parameters:
 - name: ShouldRegenerate
   type: boolean
   default: false
+
+# Fetch recent main/source history before regeneration pushes when greater than zero.
+- name: RegenerationHistoryDepth
+  type: number
+  default: 0
 
 # Number of jobs to generate. This is the maximum number of jobs that will be generated. The actual number of jobs will be reduced if it would result in fewer than MinimumPerJob packages per job.
 - name: RegenerationJobCount
@@ -145,6 +155,7 @@ extends:
               -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
               -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
               -GeneratorVersion: $(initialize.emitterVersion)
+              -BuildPlaygroundBundle:$${{ parameters.UploadPlaygroundBundle }}
           env:
             npm_config_userconfig: $(emitterNpmrcPath)
 
@@ -287,6 +298,97 @@ extends:
                       ServiceEndpointUrl: https://api.esrp.microsoft.com
                       MainPublisher: ESRPRELPACMANTEST
 
+                  - ${{ if parameters.UploadPlaygroundBundle }}:
+                    - task: AzureCLI@2
+                      displayName: Publish TypeSpec playground bundle
+                      inputs:
+                        azureSubscription: TypeSpec Storage
+                        scriptType: pscore
+                        scriptLocation: inlineScript
+                        inlineScript: |
+                          $ErrorActionPreference = 'Stop'
+                          $root = "$(buildArtifactsPath)/playground"
+                          $files = Get-ChildItem -LiteralPath $root -Recurse -File
+                          $indexes = @($files | Where-Object Name -eq 'latest.json')
+                          if ($indexes.Count -ne 1) {
+                            throw "Expected one playground package index, found $($indexes.Count)."
+                          }
+
+                          function Confirm-PlaygroundBlobContent($blob, $localFile) {
+                            $download = [System.IO.Path]::GetTempFileName()
+                            try {
+                              az storage blob download --account-name typespec --container-name pkgs --name $blob --file $download --overwrite true --auth-mode login --only-show-errors --output none
+                              if ($LASTEXITCODE -ne 0) { throw "Failed to download existing playground blob $blob." }
+                              if ((Get-FileHash -LiteralPath $download).Hash -ne (Get-FileHash -LiteralPath $localFile).Hash) {
+                                throw "Existing playground blob $blob differs from the built artifact."
+                              }
+                            }
+                            finally {
+                              Remove-Item -LiteralPath $download -Force
+                            }
+                          }
+
+                          # Publish the pointer only after every versioned file is available.
+                          $orderedFiles = @($files | Where-Object Name -ne 'latest.json') + $indexes
+                          foreach ($file in $orderedFiles) {
+                            $blob = [System.IO.Path]::GetRelativePath($root, $file.FullName).Replace('\', '/')
+                            $contentType = switch ($file.Extension) {
+                              '.json' { 'application/json; charset=utf-8' }
+                              '.tgz' { 'application/gzip' }
+                              default { 'application/javascript; charset=utf-8' }
+                            }
+                            $overwrite = if ($file.Name -eq 'latest.json') { 'true' } else { 'false' }
+                            if ($overwrite -eq 'false') {
+                              $exists = az storage blob exists --account-name typespec --container-name pkgs --name $blob --auth-mode login --query exists --output tsv
+                              if ($LASTEXITCODE -ne 0) { throw "Failed to check playground blob $blob." }
+                              if ($exists -eq 'true') {
+                                Confirm-PlaygroundBlobContent $blob $file.FullName
+                                continue
+                              }
+                            }
+                            $uploadError = az storage blob upload --account-name typespec --container-name pkgs --name $blob --file $file.FullName --content-type $contentType --overwrite $overwrite --auth-mode login --only-show-errors --output none 2>&1 | Out-String
+                            if ($LASTEXITCODE -ne 0) {
+                              if ($overwrite -eq 'false' -and $uploadError -match '(?m)^\s*(?:ERROR:\s*)?(?:ErrorCode:\s*|\()BlobAlreadyExists(?:\)|\s|$)') {
+                                Confirm-PlaygroundBlobContent $blob $file.FullName
+                              }
+                              else {
+                                throw "Failed to upload playground blob ${blob}: $uploadError"
+                              }
+                            }
+                          }
+
+    - ${{ if and(parameters.ShouldPublish, parameters.PublishPublic, parameters.UploadPlaygroundBundle) }}:
+      - stage: DeployPlayground
+        displayName: Deploy C# playground server
+        dependsOn: Publish
+        pool: ${{ parameters.Pool }}
+        jobs:
+        - deployment: DeployPlayground
+          environment: none
+          timeoutInMinutes: 90
+          templateContext:
+            type: releaseJob
+            isProduction: true
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                - task: AzureCLI@2
+                  displayName: Build and deploy matching playground runtimes
+                  inputs:
+                    azureSubscription: Azure SDK Engineering System
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      set -euo pipefail
+                      source="$(mktemp -d "$(Agent.TempDirectory)/typespec-playground.XXXXXX")"
+                      git clone --quiet --depth 1 --single-branch --branch main --filter=blob:none --sparse \
+                        https://github.com/microsoft/typespec.git "$source"
+                      git -C "$source" sparse-checkout set packages/http-client-csharp
+                      echo "Building playground server from TypeSpec commit $(git -C "$source" rev-parse HEAD)"
+                      context="$source/packages/http-client-csharp"
+                      bash "$context/playground-server/deploy.sh" "$context" "azsdk-$(Build.BuildId)"
+
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
     - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
@@ -303,9 +405,7 @@ extends:
         jobs:
         - job: Initialize
           steps:
-          # Regeneration does not read repository history, so fetch only the
-          # checked-out commit. git-branch-push.ps1's retry path diffs the branch
-          # tip against its parent, which stays inside the depth-1 boundary.
+          # Start shallow; callers may opt in to fetching push history later.
           - checkout: self
             fetchDepth: 1
             fetchTags: false
@@ -362,6 +462,23 @@ extends:
               npm_config_userconfig: $(tspClientNpmrcPath)
 
           - ${{ parameters.InitializationSteps }}
+
+          - ${{ if gt(parameters.RegenerationHistoryDepth, 0) }}:
+            - task: PowerShell@2
+              displayName: Check for regeneration push changes
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/common/scripts/check-for-git-changes.ps1
+                ignoreLASTEXITCODE: true
+            - task: PowerShell@2
+              displayName: Prepare regeneration push history
+              condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/scripts/Prepare-RegenerationHistory.ps1
+                arguments: '-Depth ${{ parameters.RegenerationHistoryDepth }} -SourceVersion "$(Build.SourceVersion)"'
 
           - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
             parameters:
@@ -443,6 +560,23 @@ extends:
             continueOnError: true
             env:
               npm_config_userconfig: $(emitterNpmrcPath)
+
+          - ${{ if gt(parameters.RegenerationHistoryDepth, 0) }}:
+            - task: PowerShell@2
+              displayName: Check for regeneration push changes
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/common/scripts/check-for-git-changes.ps1
+                ignoreLASTEXITCODE: true
+            - task: PowerShell@2
+              displayName: Prepare regeneration push history
+              condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/scripts/Prepare-RegenerationHistory.ps1
+                arguments: '-Depth ${{ parameters.RegenerationHistoryDepth }} -SourceVersion "$(Build.SourceVersion)"'
 
           - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
             parameters:

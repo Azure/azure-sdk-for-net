@@ -3267,7 +3267,7 @@ namespace Azure.Storage.Queues
             // Assigned builder's QueueName if it is null
             builder.QueueName ??= Name;
 
-            if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
+            if (!builder.QueueName.Equals(Name, StringComparison.Ordinal))
             {
                 // TODO: throw proper exception for non-matching builder name
                 // e.g. containerName doesn't match or leave the containerName in builder
@@ -3520,7 +3520,7 @@ namespace Azure.Storage.Queues
             builder.QueueName ??= Name;
 
             // Validate that builder is properly set
-            if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
+            if (!builder.QueueName.Equals(Name, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.QueueName),

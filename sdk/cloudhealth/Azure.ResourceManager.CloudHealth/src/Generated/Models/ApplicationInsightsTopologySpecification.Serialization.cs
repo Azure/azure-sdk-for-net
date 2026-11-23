@@ -15,7 +15,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Discovery rule specification for an Application Insights topology query. </summary>
-    public partial class ApplicationInsightsTopologySpecification : DiscoveryRuleSpecification, IJsonModel<ApplicationInsightsTopologySpecification>
+    public partial class ApplicationInsightsTopologySpecification : HealthModelDiscoveryRuleSpecification, IJsonModel<ApplicationInsightsTopologySpecification>
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsTopologySpecification"/> for deserialization. </summary>
         internal ApplicationInsightsTopologySpecification()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DiscoveryRuleSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override HealthModelDiscoveryRuleSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsTopologySpecification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DiscoveryRuleSpecification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override HealthModelDiscoveryRuleSpecification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsTopologySpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

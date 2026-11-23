@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="GitHubIssueEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GitHubIssueEvent?(string value) => value == null ? null : new GitHubIssueEvent(value);
+        public static implicit operator GitHubIssueEvent?(string value) => value == null ? (GitHubIssueEvent?)null : new GitHubIssueEvent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -1,6 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using System;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -37,17 +38,18 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
             string indexName = "nycjobs";
 
-            // Get the service endpoint and API key from the environment
+            // Get the service endpoint and authenticate with Microsoft Entra ID
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a client
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
@@ -82,19 +84,20 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Client
-            // Get the service endpoint and API key from the environment
+            // Get the service endpoint and authenticate with Microsoft Entra ID
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
             string indexName = "hotels";
 #if !SNIPPET
             indexName = resources.IndexName;
 #endif
 
             // Create a client
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             SearchClient client = new SearchClient(endpoint, indexName, credential);
 #if !SNIPPET
             client = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
@@ -210,14 +213,15 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a service client
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
             client = resources.GetIndexClient();
@@ -313,21 +317,20 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this, true);
             SearchClient client = resources.GetQueryClient();
-            try
+            #region Snippet:Azure_Search_Tests_Samples_Readme_Index
+            // Merge requires an existing document, so seed the key before batching the merge.
+            client.UploadDocuments(new[]
             {
-                #region Snippet:Azure_Search_Tests_Samples_Readme_Index
-                IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
-                    IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
-                    IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
+                new Hotel { Id = "12", Name = "Existing Ranch" }
+            });
 
-                IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = true };
-                client.IndexDocuments(batch, options);
-                #endregion Snippet:Azure_Search_Tests_Samples_Readme_Index
-            }
-            catch (RequestFailedException)
-            {
-                // Ignore the non-existent merge failure
-            }
+            IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
+                IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
+                IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
+
+            IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = true };
+            client.IndexDocuments(batch, options);
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_Index
         }
 
         [Test]

@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="LoadTestingManagedIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadTestingManagedIdentityType?(string value) => value == null ? null : new LoadTestingManagedIdentityType(value);
+        public static implicit operator LoadTestingManagedIdentityType?(string value) => value == null ? (LoadTestingManagedIdentityType?)null : new LoadTestingManagedIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

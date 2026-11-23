@@ -271,13 +271,13 @@ public partial class AIProjectMemoryStores
     public virtual CollectionResult<MemoryItem> GetMemories(string name, string scope, MemoryItemKind? kind = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
-        ListMemoriesRequest spreadModel = new ListMemoriesRequest(scope, default);
+        ListMemoriesContent spreadModel = new ListMemoriesContent(scope, default);
         return new InternalOpenAICollectionResultOfT<MemoryItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoriesRequest(
                     name: localCollectionOptions.Filters[0],
-                    content: new ListMemoriesRequest(localCollectionOptions.Filters[1], default),
+                    content: new ListMemoriesContent(localCollectionOptions.Filters[1], default),
                     kind: localCollectionOptions.Filters.Count > 2 ? localCollectionOptions.Filters[2] : default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
@@ -324,7 +324,7 @@ public partial class AIProjectMemoryStores
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoriesRequest(
                     name: localCollectionOptions.Filters[0],
-                    content: new ListMemoriesRequest(localCollectionOptions.Filters[1], default),
+                    content: new ListMemoriesContent(localCollectionOptions.Filters[1], default),
                     kind: localCollectionOptions.Filters.Count > 2 ? localCollectionOptions.Filters[2] : default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,

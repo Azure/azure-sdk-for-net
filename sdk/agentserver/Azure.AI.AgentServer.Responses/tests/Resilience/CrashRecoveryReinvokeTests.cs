@@ -12,6 +12,8 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
+#pragma warning disable AAAS005 // Verify recovery does not invent experimental attribution.
+
 namespace Azure.AI.AgentServer.Responses.Tests.Resilience;
 
 /// <summary>
@@ -55,14 +57,14 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         // created, and its Core durable task record was written, but the response never
         // reached a terminal state before the process died.
         var provider = new FileResponsesProvider(_responsesDir);
-        var envelope = new Models.ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         await CoreTaskRecoveryTestHelpers.SeedInterruptedTaskAsync(_tasksDir, new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: disposition,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
     }
 
     private TestWebApplicationFactory NewRecoveringHost(TestHandler handler)
@@ -112,6 +114,8 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
             {
                 Assert.That(ctx.IsRecovery, Is.True, "recovered handler must observe IsRecovery == true");
                 Assert.That(ctx.PersistedResponse, Is.Not.Null, "recovered handler must see the prior snapshot");
+                Assert.That(ctx.PlatformContext.OriginalSubject, Is.Null);
+                Assert.That(FoundryAgentRequestContext.Current.OriginalSubject, Is.Null);
                 return CompletingLifecycle(ctx, reinvoked);
             },
         };
@@ -151,7 +155,7 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         await CoreTaskRecoveryTestHelpers.SeedInterruptedTaskAsync(_tasksDir, new ResponseRecoveryPayload(
             responseId: IdGenerator.NewResponseId(),
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
 
         var handler = new TestHandler();
         using var factory = NewRecoveringHost(handler);
@@ -196,11 +200,11 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         TaskCompletionSource signal,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await Task.Yield();
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
         signal.TrySetResult();
     }
 }

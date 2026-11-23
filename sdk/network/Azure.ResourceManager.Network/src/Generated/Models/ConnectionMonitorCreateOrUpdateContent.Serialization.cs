@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -56,6 +57,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="connectionMonitorCreateOrUpdateContent"> The <see cref="ConnectionMonitorCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectionMonitorCreateOrUpdateContent connectionMonitorCreateOrUpdateContent)
+        {
+            if (connectionMonitorCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(connectionMonitorCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectionMonitorCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -74,71 +85,29 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Destination))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
-            }
-            if (Optional.IsDefined(AutoStart))
-            {
-                writer.WritePropertyName("autoStart"u8);
-                writer.WriteBooleanValue(AutoStart.Value);
-            }
-            if (Optional.IsDefined(MonitoringIntervalInSeconds))
-            {
-                writer.WritePropertyName("monitoringIntervalInSeconds"u8);
-                writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
-            }
-            if (Optional.IsCollectionDefined(Endpoints))
-            {
-                writer.WritePropertyName("endpoints"u8);
-                writer.WriteStartArray();
-                foreach (ConnectionMonitorEndpoint item in Endpoints)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TestConfigurations))
-            {
-                writer.WritePropertyName("testConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (ConnectionMonitorTestConfiguration item in TestConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TestGroups))
-            {
-                writer.WritePropertyName("testGroups"u8);
-                writer.WriteStartArray();
-                foreach (ConnectionMonitorTestGroup item in TestGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Outputs))
-            {
-                writer.WritePropertyName("outputs"u8);
-                writer.WriteStartArray();
-                foreach (ConnectionMonitorOutput item in Outputs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Notes))
-            {
-                writer.WritePropertyName("notes"u8);
-                writer.WriteStringValue(Notes);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -181,113 +150,45 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ConnectionMonitorSource source = default;
-            ConnectionMonitorDestination destination = default;
-            bool? autoStart = default;
-            int? monitoringIntervalInSeconds = default;
-            IList<ConnectionMonitorEndpoint> endpoints = default;
-            IList<ConnectionMonitorTestConfiguration> testConfigurations = default;
-            IList<ConnectionMonitorTestGroup> testGroups = default;
-            IList<ConnectionMonitorOutput> outputs = default;
-            string notes = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            ConnectionMonitorParameters properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("source"u8))
+                if (prop.NameEquals("location"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(prop.Value, options);
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("destination"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(prop.Value, options);
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("autoStart"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    autoStart = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("monitoringIntervalInSeconds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    monitoringIntervalInSeconds = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("endpoints"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item, options));
-                    }
-                    endpoints = array;
-                    continue;
-                }
-                if (prop.NameEquals("testConfigurations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item, options));
-                    }
-                    testConfigurations = array;
-                    continue;
-                }
-                if (prop.NameEquals("testGroups"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item, options));
-                    }
-                    testGroups = array;
-                    continue;
-                }
-                if (prop.NameEquals("outputs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item, options));
-                    }
-                    outputs = array;
-                    continue;
-                }
-                if (prop.NameEquals("notes"u8))
-                {
-                    notes = prop.Value.GetString();
+                    properties = ConnectionMonitorParameters.DeserializeConnectionMonitorParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -295,17 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectionMonitorCreateOrUpdateContent(
-                source,
-                destination,
-                autoStart,
-                monitoringIntervalInSeconds,
-                endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
-                testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
-                testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
-                outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
-                notes,
-                additionalBinaryDataProperties);
+            return new ConnectionMonitorCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }

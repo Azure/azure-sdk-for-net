@@ -15,10 +15,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     internal static class CredentialTestHelpers
@@ -473,6 +472,68 @@ namespace Azure.Core.Tests.Identity
   }}
 }}";
             return Encoding.UTF8.GetBytes(cacheString);
+        }
+
+        public static TestEnvVar CreateArcManagedIdentityEnvironment(bool useDefaultCredential = false)
+        {
+            return new TestEnvVar(new()
+            {
+                { "IDENTITY_ENDPOINT", "http://localhost:40342/metadata/identity/oauth2/token" },
+                { "IMDS_ENDPOINT", "http://localhost:40342" },
+                { "IDENTITY_HEADER", null },
+                { "IDENTITY_SERVER_THUMBPRINT", null },
+                { "MSI_ENDPOINT", null },
+                { "MSI_SECRET", null },
+                { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null },
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_FEDERATED_TOKEN_FILE", null },
+                { "AZURE_TOKEN_CREDENTIALS", useDefaultCredential ? "ManagedIdentityCredential" : null }
+            });
+        }
+
+        public static MockResponse CreateMockArcTokenResponse(string token, string identityParameter = null, string identityId = null)
+        {
+            var content = new Dictionary<string, string>
+            {
+                { "access_token", token },
+                { "expires_on", DateTimeOffset.UtcNow.AddHours(2).ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture) },
+                { "token_type", "Bearer" }
+            };
+            if (identityParameter != null)
+            {
+                // MSAL confirms Arc UAMI selection using response metadata, not access-token claims.
+                content.Add(identityParameter, identityId);
+            }
+
+            var response = new MockResponse(200);
+            response.SetContent(JsonSerializer.Serialize(content));
+            return response;
+        }
+
+        public static void AssertArcManagedIdentityRequest(MockRequest request, string identityParameter, string identityId)
+        {
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual("localhost", request.Uri.Host);
+            Assert.AreEqual(40342, request.Uri.Port);
+            Assert.AreEqual("/metadata/identity/oauth2/token", request.Uri.Path);
+            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadata));
+            Assert.AreEqual("true", metadata);
+
+            var query = Array.ConvertAll(request.Uri.Query.TrimStart('?').Split('&'), Uri.UnescapeDataString);
+            CollectionAssert.Contains(query, "api-version=2020-06-01");
+            CollectionAssert.Contains(query, $"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}");
+            foreach (string parameter in new[] { "client_id", "msi_res_id", "object_id", "mi_res_id" })
+            {
+                if (parameter == identityParameter)
+                {
+                    CollectionAssert.Contains(query, $"{parameter}={identityId}");
+                }
+                else
+                {
+                    Assert.That(query, Has.None.StartsWith($"{parameter}="));
+                }
+            }
         }
 
         public static MockResponse CreateMockMsalTokenResponse(int responseCode, string token, string tenantId, string userName, string objectId = null)

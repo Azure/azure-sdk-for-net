@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualNetwork"> A reference to a virtual network. </param>
         /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendAddressPoolPropertiesFormat(string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, NetworkSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, NetworkSubResource virtualNetwork, BackendAddressSyncMode? syncMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendAddressPoolPropertiesFormat(AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, NetworkSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, NetworkSubResource virtualNetwork, BackendAddressSyncMode? syncMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             TunnelInterfaces = tunnelInterfaces;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The location of the backend address pool. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> An array of gateway load balancer tunnel interfaces. </summary>
         [WirePath("tunnelInterfaces")]

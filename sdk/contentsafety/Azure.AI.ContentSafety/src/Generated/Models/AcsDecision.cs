@@ -56,7 +56,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Converts a string to a <see cref="AcsDecision"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsDecision?(string value) => value == null ? null : new AcsDecision(value);
+        public static implicit operator AcsDecision?(string value) => value == null ? (AcsDecision?)null : new AcsDecision(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

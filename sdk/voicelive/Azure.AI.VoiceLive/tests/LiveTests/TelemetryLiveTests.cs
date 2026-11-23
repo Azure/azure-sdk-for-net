@@ -75,8 +75,17 @@ namespace Azure.AI.VoiceLive.Tests
                 "connect span must carry gen_ai.request.model");
             Assert.IsNotNull(connectSpan.GetTagItem("server.address"),
                 "connect span must carry server.address");
-            Assert.IsNotNull(connectSpan.GetTagItem("server.port"),
-                "connect span must carry server.port");
+            int serverPort = new Uri(TestEnvironment.Endpoint).Port;
+            if (serverPort == 443)
+            {
+                Assert.IsNull(connectSpan.GetTagItem("server.port"),
+                    "connect span must omit the default secure port");
+            }
+            else
+            {
+                Assert.AreEqual(serverPort, connectSpan.GetTagItem("server.port"),
+                    "connect span must carry the non-default port");
+            }
 
             // Verify parent-child hierarchy: recv and send spans are children of connect.
             Assert.AreEqual(connectSpan.SpanId, recvSpan!.ParentSpanId,

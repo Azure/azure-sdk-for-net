@@ -494,10 +494,10 @@ namespace Azure.AI.Discovery
 
         /// <summary> Request body for starting a task. </summary>
         /// <param name="assignee"> Assignee that will execute the task. Optional. </param>
-        /// <returns> A new <see cref="Discovery.StartTaskRequest"/> instance for mocking. </returns>
-        public static StartTaskRequest StartTaskRequest(TaskAssignee assignee = default)
+        /// <returns> A new <see cref="Discovery.StartTaskContent"/> instance for mocking. </returns>
+        public static StartTaskContent StartTaskContent(TaskAssignee assignee = default)
         {
-            return new StartTaskRequest(assignee, additionalBinaryDataProperties: null);
+            return new StartTaskContent(assignee, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A knowledgeBase. </summary>
@@ -691,10 +691,10 @@ namespace Azure.AI.Discovery
 
         /// <summary> The search action request body. </summary>
         /// <param name="query"> The query text to search against the knowledge base. </param>
-        /// <returns> A new <see cref="Discovery.SearchRequest"/> instance for mocking. </returns>
-        public static SearchRequest SearchRequest(string query = default)
+        /// <returns> A new <see cref="Discovery.SearchContent"/> instance for mocking. </returns>
+        public static SearchContent SearchContent(string query = default)
         {
-            return new SearchRequest(query, additionalBinaryDataProperties: null);
+            return new SearchContent(query, additionalBinaryDataProperties: null);
         }
     }
 }

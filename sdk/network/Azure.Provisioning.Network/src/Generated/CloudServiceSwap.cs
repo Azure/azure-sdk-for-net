@@ -19,12 +19,12 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SwapResourceProperties _properties;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CloudServiceSwap. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CloudServiceSwap(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/cloudServiceSlots", resourceVersion ?? "2026-01-01")
+        public CloudServiceSwap(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/cloudServiceSlots", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -93,12 +93,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the SlotType. </summary>
-        public BicepValue<SwapSlotType> SwapResourceSlotType
+        /// <summary> Gets or sets the CloudServiceSwapSlotType. </summary>
+        public BicepValue<SwapSlotType> CloudServiceSwapSlotType
         {
             get
             {
-                return Properties is null ? default : Properties.SlotType;
+                return Properties is null ? default : Properties.CloudServiceSwapSlotType;
             }
             set
             {
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new SwapResourceProperties();
                 }
-                Properties.SlotType = value;
+                Properties.CloudServiceSwapSlotType = value;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SwapResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 
@@ -138,6 +138,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

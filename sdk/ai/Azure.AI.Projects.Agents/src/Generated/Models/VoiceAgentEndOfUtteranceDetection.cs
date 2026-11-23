@@ -25,13 +25,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentEndOfUtteranceDetection"/>. </summary>
         /// <param name="model"> The semantic detection model. </param>
         /// <param name="thresholdLevel"> The sensitivity threshold. </param>
-        /// <param name="timeoutMs"> The detection timeout in milliseconds. </param>
+        /// <param name="timeout"> The detection timeout in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentEndOfUtteranceDetection(VoiceAgentEndOfUtteranceDetectionModel model, VoiceAgentEndOfUtteranceThresholdLevel? thresholdLevel, TimeSpan? timeoutMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentEndOfUtteranceDetection(VoiceAgentEndOfUtteranceDetectionModel model, VoiceAgentEndOfUtteranceThresholdLevel? thresholdLevel, TimeSpan? timeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             ThresholdLevel = thresholdLevel;
-            TimeoutMs = timeoutMs;
+            Timeout = timeout;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.AI.Projects.Agents
         public VoiceAgentEndOfUtteranceThresholdLevel? ThresholdLevel { get; set; }
 
         /// <summary> The detection timeout in milliseconds. </summary>
-        public TimeSpan? TimeoutMs { get; set; }
+        public TimeSpan? Timeout { get; set; }
     }
 }

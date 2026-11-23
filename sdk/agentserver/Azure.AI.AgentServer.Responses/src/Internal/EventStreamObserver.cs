@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net.ServerSentEvents;
 using System.Threading;
@@ -39,6 +40,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// completion is a no-op because Core closes the transport after the task's terminal transition.
 /// </para>
 /// </remarks>
+[Experimental("OPENAI001")]
 internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
 {
     private readonly Func<SseItem<string>, CancellationToken, ValueTask> _emit;
@@ -129,7 +131,7 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
             _hasCreated = true;
         }
 
-        value.SequenceNumber = _nextSequenceNumber++;
+        value.SequenceNumber = (int)_nextSequenceNumber++;
         return _emit(
             ResponseWireStreamCodec.ToWireItem(value, SharedJsonOptions.Instance),
             CancellationToken.None);

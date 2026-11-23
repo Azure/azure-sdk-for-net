@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Billing
     {
         private readonly Products _client;
         private readonly string _billingAccountName;
-        private readonly string _customerName;
+        private readonly string _billingProfileName;
         private readonly string _filter;
         private readonly string _orderBy;
         private readonly long? _maxCount;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of BillingProductDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Products client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
+        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
         /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BillingProductDataAsync0CollectionResultOfT(Products client, string billingAccountName, string customerName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BillingProductDataAsync0CollectionResultOfT(Products client, string billingAccountName, string billingProfileName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountName = billingAccountName;
-            _customerName = customerName;
+            _billingProfileName = billingProfileName;
             _filter = filter;
             _orderBy = orderBy;
             _maxCount = maxCount;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByCustomerRequest(nextLink, _billingAccountName, _customerName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByCustomerRequest(_billingAccountName, _customerName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetProductsRequest(nextLink, _billingAccountName, _billingProfileName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetProductsRequest(_billingAccountName, _billingProfileName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

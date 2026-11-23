@@ -11,9 +11,11 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
-    internal partial class SoftDeletePolicy : ProvisionableConstruct
+    public partial class SoftDeletePolicy : ProvisionableConstruct
     {
         private BicepValue<bool> _isSoftDeleteEnabled;
+        private BicepValue<int> _retentionPeriodInDays;
+        private BicepValue<int> _gracePeriodInDays;
 
         /// <summary> Creates a new SoftDeletePolicy. </summary>
         public SoftDeletePolicy()
@@ -35,11 +37,43 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the RetentionPeriodInDays. </summary>
+        public BicepValue<int> RetentionPeriodInDays
+        {
+            get
+            {
+                Initialize();
+                return _retentionPeriodInDays;
+            }
+            set
+            {
+                Initialize();
+                _retentionPeriodInDays.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the GracePeriodInDays. </summary>
+        public BicepValue<int> GracePeriodInDays
+        {
+            get
+            {
+                Initialize();
+                return _gracePeriodInDays;
+            }
+            set
+            {
+                Initialize();
+                _gracePeriodInDays.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for SoftDeletePolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _isSoftDeleteEnabled = DefineProperty<bool>(nameof(IsSoftDeleteEnabled), new string[] { "isSoftDeleteEnabled" });
+            _retentionPeriodInDays = DefineProperty<int>(nameof(RetentionPeriodInDays), new string[] { "retentionPeriodInDays" });
+            _gracePeriodInDays = DefineProperty<int>(nameof(GracePeriodInDays), new string[] { "gracePeriodInDays" });
             DefineAdditionalProperties();
         }
 

@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Log Analytics Query recommendation configuration. </summary>
-    public partial class LogAnalyticsQueryRecommendationConfiguration : SignalRecommendationConfiguration
+    public partial class LogAnalyticsQueryRecommendationConfiguration : HealthModelSignalRecommendationConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryRecommendationConfiguration"/>. </summary>
         /// <param name="queryText"> Query text in KQL syntax. Supported entity template variables, such as `{{entity.azureResourceId}}`, may appear in the query. </param>

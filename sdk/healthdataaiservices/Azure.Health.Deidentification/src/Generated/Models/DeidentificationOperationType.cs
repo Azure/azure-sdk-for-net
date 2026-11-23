@@ -61,7 +61,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Converts a string to a <see cref="DeidentificationOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeidentificationOperationType?(string value) => value == null ? null : new DeidentificationOperationType(value);
+        public static implicit operator DeidentificationOperationType?(string value) => value == null ? (DeidentificationOperationType?)null : new DeidentificationOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
