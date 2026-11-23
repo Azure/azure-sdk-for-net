@@ -99,7 +99,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<RealtimeResponseStatus?>(Status.Value, options);
+                SerializeStatusValue(writer, options);
             }
             if (Optional.IsDefined(StatusDetails))
             {
@@ -157,12 +157,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsCollectionDefined(OutputModalities))
             {
                 writer.WritePropertyName("output_modalities"u8);
-                writer.WriteStartArray();
-                foreach (RealtimeOutputModality item in OutputModalities)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                SerializeOutputModalitiesValue(writer, options);
             }
             if (Optional.IsDefined(MaxOutputTokens))
             {
@@ -271,11 +266,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    DeserializeStatusValue(prop, ref status, options);
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -345,16 +336,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("output_modalities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<RealtimeOutputModality> array = new List<RealtimeOutputModality>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
-                    }
-                    outputModalities = array;
+                    DeserializeOutputModalitiesValue(prop, ref outputModalities, options);
                     continue;
                 }
                 if (prop.NameEquals("max_output_tokens"u8))
